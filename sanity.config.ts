@@ -11,6 +11,5 @@ export default defineConfig<Config>({
   projectId,
   schema,
   title: 'Zwirner Gallery Website',
-
   plugins: [deskTool(), visionTool()],
 })
