@@ -5,7 +5,7 @@ export default defineType({
   name: 'heroObject',
   title: 'Hero',
   icon: DocumentIcon,
-  type: 'document',
+  type: 'object',
   fields: [
     defineField({
       name: 'categoryTitle',

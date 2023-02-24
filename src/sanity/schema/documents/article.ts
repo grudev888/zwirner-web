@@ -1,7 +1,7 @@
 import {DocumentTextIcon} from '@sanity/icons'
 import {defineField, defineType} from 'sanity'
 
-export const articleType = defineType({
+export default defineType({
   type: 'document',
   name: 'article',
   title: 'Article',

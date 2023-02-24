@@ -28,13 +28,14 @@ export default defineType({
     defineField({
       name: 'summary',
       title: 'Summary',
-      type: 'text',
+      type: 'string',
+      validation: (Rule) => Rule.max(120).error(`A summary shouldn't be more than 120 characters.`),
     }),
     defineField({
-      name: 'description2',
+      name: 'description',
       title: 'Description, bio',
       type: 'array',
-      of: [{type: 'block'}],
+      of: [{type: 'block'}, {type: 'image'}],
     }),
     defineField({
       name: 'picture',
@@ -68,6 +69,11 @@ export default defineType({
       name: 'photos',
       type: 'array',
       of: [{type: 'image'}],
+    }),
+    defineField({
+      title: 'Social media',
+      name: 'social',
+      type: 'social',
     }),
     defineField({
       name: 'affiliation',

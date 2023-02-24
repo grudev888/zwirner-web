@@ -1,9 +1,9 @@
 import {DocumentIcon} from '@sanity/icons'
 import {defineArrayMember, defineField, defineType, isRecord, isString} from 'sanity'
 
-import {previewSecretId} from '../constants'
-import {apiVersion} from '../env'
-import {getSecret} from '../secret'
+import {previewSecretId} from '../../constants'
+import {apiVersion} from '../../env'
+import {getSecret} from '../../secret'
 import {PagePreview} from './PagePreview'
 
 export const pageType = defineType({
