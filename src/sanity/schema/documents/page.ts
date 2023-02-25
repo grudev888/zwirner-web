@@ -1,5 +1,5 @@
-import { defineType, defineField } from 'sanity'
 import {MasterDetailIcon} from '@sanity/icons'
+import {defineField,defineType} from 'sanity'
 
 export default defineType({
   name: 'page',
@@ -25,7 +25,7 @@ export default defineType({
       name: 'exhibition',
       title: 'Exhibition',
       type: 'reference',
-      to: [{ type: 'exhibition' }],
-    })
-  ]
+      to: [{type: 'exhibition'}],
+    }),
+  ],
 })

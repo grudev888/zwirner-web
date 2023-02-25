@@ -1,5 +1,5 @@
-import { PinIcon } from '@sanity/icons'
-import { defineField, defineType } from 'sanity'
+import {PinIcon} from '@sanity/icons'
+import {defineField, defineType} from 'sanity'
 
 import addressType from '../objects/utils/address'
 
@@ -11,8 +11,8 @@ export default defineType({
   type: 'document',
   fields: [
     defineField({
-      name: 'locationName',
       title: 'Name',
+      name: 'name',
       type: 'string',
       validation: (rule) => rule.required(),
     }),
@@ -25,20 +25,18 @@ export default defineType({
     defineField({
       title: 'Geo-location',
       name: 'geoLocation',
-      type: 'geopoint'
+      type: 'geopoint',
     }),
     defineField({
-      name: 'hours',
       title: 'Hours',
-      type: 'text',
-      // todo create a custom validation or custom type
-      // https://www.sanity.io/docs/validation#4dc8b38bc411
+      name: 'hours',
+      type: 'availability',
     }),
     defineField({
       name: 'phone',
       title: 'Phone number',
       type: 'string',
-      // todo create a custom validation
+      // todo create a custom field with country selection, masks and validation
       // https://www.sanity.io/docs/validation#4dc8b38bc411
     }),
     defineField({
@@ -50,7 +48,7 @@ export default defineType({
       name: 'description',
       title: 'Description, body',
       type: 'array',
-      of: [{ type: 'block' }],
+      of: [{type: 'block'}, {type: 'image'}],
     }),
     defineField({
       name: 'url',
@@ -63,22 +61,22 @@ export default defineType({
     }),
     defineField({
       title: 'Location type',
-      name: 'locationType',
-      type: 'array',
-      of: [{ type: 'string' }],
+      name: 'type',
+      type: 'string',
       options: {
+        layout: 'dropdown',
         list: [
-          { title: 'Gallery', value: 'gallery' },
-          { title: 'Dz gallery', value: 'dz-gallery' },
-          { title: 'Museum', value: 'museum' },
+          {title: 'Gallery', value: 'gallery'},
+          {title: 'Dz gallery', value: 'dz-gallery'},
+          {title: 'Museum', value: 'museum'},
         ],
       },
     }),
     defineField({
       title: 'Location photos',
-      name: 'locationPhotos',
+      name: 'photos',
       type: 'array',
-      of: [{ type: 'image' }],
+      of: [{type: 'image'}],
     }),
   ],
 })

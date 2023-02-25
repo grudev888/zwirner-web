@@ -1,5 +1,6 @@
 import {SchemaTypeDefinition} from 'sanity'
 
+import article from './documents/article'
 import artist from './documents/artist'
 import artwork from './documents/artwork'
 import authorType from './documents/author'
@@ -10,9 +11,10 @@ import exhibition from './documents/exhibition'
 import locationType from './documents/location'
 import pageType from './documents/page'
 import postType from './documents/post'
+import press from './documents/press'
 import drawingType from './objects/artTypes/drawing'
 import paintingType from './objects/artTypes/painting'
-import photographType from './objects/artTypes/photograph'
+import photographType from './objects/artTypes/photography'
 import sculptureType from './objects/artTypes/sculpture'
 import social from './objects/data/social'
 import heroType from './objects/presentational/hero'
@@ -25,6 +27,8 @@ export const previewTypes = [artwork.name, postType.name]
 
 export const schema: {types: SchemaTypeDefinition[]} = {
   types: [
+    article,
+    press,
     heroType,
     pageType,
     paintingType,

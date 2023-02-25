@@ -1,5 +1,5 @@
 import {TagIcon} from '@sanity/icons'
-import {defineField,defineType} from 'sanity'
+import {defineField, defineType} from 'sanity'
 
 import dateSelection from '../objects/utils/dateSelection'
 import locationType from './location'
@@ -22,20 +22,25 @@ export default defineType({
       type: dateSelection.name,
     }),
     defineField({
-      name: 'eventPhotos',
+      name: 'summary',
+      title: 'Summary',
+      type: 'text',
+    }),
+    defineField({
+      name: 'photos',
       title: 'Event photos',
       type: 'image',
       options: {hotspot: true},
     }),
     defineField({
-      name: 'eventLocation',
+      name: 'location',
       title: 'Location',
       type: 'reference',
       to: [{type: locationType.name}],
       validation: (rule) => rule.required(),
     }),
     defineField({
-      name: 'eventType',
+      name: 'type',
       title: 'Type',
       type: 'string',
       options: {

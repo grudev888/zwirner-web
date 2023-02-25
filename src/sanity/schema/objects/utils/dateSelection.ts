@@ -12,7 +12,6 @@ export default defineType({
       type: 'string',
       title: 'Year',
       hidden: ({parent, value}) => {
-
         return !!(!value && (parent?.dateRange?.from || parent?.approximate))
       },
     }),

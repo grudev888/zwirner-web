@@ -55,13 +55,13 @@ export default defineType({
     defineField({
       name: 'summary',
       title: 'Summary',
-      type: 'text',
+      type: 'string',
     }),
     defineField({
       name: 'description',
       title: 'Description, body',
       type: 'array',
-      of: [{type: 'block'}],
+      of: [{type: 'block'}, {type: 'image'}],
     }),
     defineField({
       name: 'publishDate',
