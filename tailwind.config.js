@@ -47,12 +47,7 @@ module.exports = {
         tight: 1.2,
       },
       fontFamily: {
-        sans: [
-          'avenir-medium',
-          'avenir-medium-italic',
-          'avenir-regular',
-          'sans-serif',
-        ],
+        sans: ['avenir-medium', 'avenir-medium-italic', 'avenir-regular', 'sans-serif'],
       },
       fontSize: {
         xs: ['0.75rem', '1.125rem'],
