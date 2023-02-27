@@ -1,28 +1,33 @@
 import '../global.css'
 
-import {IBM_Plex_Mono, Inter, PT_Serif} from '@next/font/google'
-import {AppProps} from 'next/app'
+import {NextPage} from 'next'
+import type {AppProps} from 'next/app'
+import {DefaultSeo} from 'next-seo'
+import SEO from 'next-seo.config'
+import {ReactElement, ReactNode} from 'react'
+import DefaultLayout from 'src/common/components/Layout'
+import {mono, sans, serif} from 'src/common/styles/fonts'
 
-const mono = IBM_Plex_Mono({
-  variable: '--font-mono',
-  subsets: ['latin'],
-  weight: ['500', '700'],
-})
+export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
+  getLayout?: (page: ReactElement) => ReactNode
+}
 
-const sans = Inter({
-  variable: '--font-sans',
-  subsets: ['latin'],
-  weight: ['500', '700', '800'],
-})
+type AppPropsWithLayout = AppProps & {
+  Component: NextPageWithLayout
+}
 
-const serif = PT_Serif({
-  variable: '--font-serif',
-  style: ['normal', 'italic'],
-  subsets: ['latin'],
-  weight: ['400', '700'],
-})
+const Wrapper = ({Component, pageProps}: {Component: NextPageWithLayout; pageProps: any}) => {
+  const getLayout = Component.getLayout || ((page) => <DefaultLayout>{page}</DefaultLayout>)
 
-export default function App({Component, pageProps}: AppProps) {
+  return (
+    <>
+      <DefaultSeo {...SEO} />
+      {getLayout(<Component {...pageProps} />)}
+    </>
+  )
+}
+
+export default function App({Component, pageProps}: AppPropsWithLayout) {
   return (
     <>
       <style jsx global>
@@ -35,7 +40,7 @@ export default function App({Component, pageProps}: AppProps) {
         `}
       </style>
 
-      <Component {...pageProps} />
+      <Wrapper Component={Component} pageProps={pageProps} />
     </>
   )
 }
