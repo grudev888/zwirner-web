@@ -1,4 +1,4 @@
-import { defineType, defineField } from 'sanity'
+import {defineField,defineType} from 'sanity'
 
 export default defineType({
   name: 'sculpture',
@@ -9,7 +9,7 @@ export default defineType({
       name: 'abstract',
       title: 'abstract',
       type: 'text',
-      description: 'An abstract is a short description that summarizes a CreativeWork.'
+      description: 'An abstract is a short description that summarizes a CreativeWork.',
     }),
-  ]
+  ],
 })

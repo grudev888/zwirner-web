@@ -13,8 +13,8 @@ export default defineField({
   options: {columns: 2},
   fields: [
     defineField({
-      name: 'city',
-      title: 'City',
+      name: 'country',
+      title: 'Country',
       type: 'string',
     }),
     defineField({
@@ -23,13 +23,18 @@ export default defineField({
       type: 'string',
     }),
     defineField({
-      name: 'country',
-      title: 'Country',
+      name: 'city',
+      title: 'City',
       type: 'string',
     }),
     defineField({
       name: 'zipCode',
       title: 'Zip Code',
+      type: 'string',
+    }),
+    defineField({
+      name: 'streetAddress',
+      title: 'Street Address',
       type: 'string',
     }),
   ],

@@ -25,13 +25,23 @@ export default defineType({
     defineField({
       name: 'summary',
       title: 'Summary',
-      type: 'text',
+      type: 'string',
     }),
     defineField({
-      name: 'exhibitionDescription',
+      name: 'description',
       title: 'Description',
       type: 'array',
-      of: [{type: 'block'}],
+      of: [{type: 'block'}, {type: 'image'}],
+    }),
+    defineField({
+      name: 'startDate',
+      title: 'Start Date',
+      type: 'date',
+    }),
+    defineField({
+      name: 'endDate',
+      title: 'End Date',
+      type: 'date',
     }),
     defineField({
       name: 'events',
@@ -43,16 +53,6 @@ export default defineType({
           to: [{type: eventType.name}],
         }),
       ],
-    }),
-    defineField({
-      name: 'startDate',
-      title: 'Start Date',
-      type: 'date',
-    }),
-    defineField({
-      name: 'endDate',
-      title: 'End Date',
-      type: 'date',
     }),
     defineField({
       name: 'artworks',
@@ -86,6 +86,11 @@ export default defineType({
           to: [{type: artistType.name}],
         }),
       ],
+    }),
+    defineField({
+      name: 'code',
+      title: 'Code',
+      type: 'string',
     }),
   ],
 })

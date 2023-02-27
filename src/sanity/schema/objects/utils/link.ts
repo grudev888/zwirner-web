@@ -1,4 +1,4 @@
-import { defineType, defineField } from 'sanity'
+import {defineField,defineType} from 'sanity'
 
 export default defineType({
   name: 'link',
@@ -9,14 +9,14 @@ export default defineType({
       name: 'external',
       type: 'url',
       title: 'URL',
-      hidden: ({ parent, value }) => {
+      hidden: ({parent, value}) => {
         return !!(!value && parent?.internal)
       },
     }),
     defineField({
       name: 'internal',
       type: 'url',
-      hidden: ({ parent, value }) => {
+      hidden: ({parent, value}) => {
         return !!(!value && parent?.external)
       },
     }),

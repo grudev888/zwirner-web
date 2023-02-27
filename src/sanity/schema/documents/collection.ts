@@ -1,7 +1,8 @@
-import { defineType, defineField, defineArrayMember } from 'sanity'
 import {UsersIcon} from '@sanity/icons'
-import bookType from './book'
+import {defineArrayMember, defineField, defineType} from 'sanity'
+
 import artworkType from './artwork'
+import bookType from './book'
 
 export default defineType({
   name: 'collection',
@@ -26,9 +27,9 @@ export default defineType({
       of: [
         defineArrayMember({
           type: 'reference',
-          to: [{ type: artworkType.name }],
+          to: [{type: artworkType.name}],
         }),
-      ]
+      ],
     }),
     defineField({
       name: 'books',
@@ -37,9 +38,9 @@ export default defineType({
       of: [
         defineArrayMember({
           type: 'reference',
-          to: [{ type: bookType.name }],
+          to: [{type: bookType.name}],
         }),
-      ]
-    })
-  ]
+      ],
+    }),
+  ],
 })

@@ -1,7 +1,9 @@
-import { defineField, defineType } from 'sanity'
-import { DocumentsIcon } from '@sanity/icons'
-import locationType from './location'
+import {DocumentsIcon} from '@sanity/icons'
+import {defineField, defineType} from 'sanity'
+
+import article from './article'
 import authorType from './author'
+import locationType from './location'
 
 export default defineType({
   name: 'press',
@@ -23,20 +25,20 @@ export default defineType({
         {
           type: 'reference',
           title: 'Author',
-          to: [{ type: authorType.name }],
+          to: [{type: authorType.name}],
         },
       ],
     }),
     defineField({
-      name: 'pressSummary',
+      name: 'summary',
       title: 'Summary',
-      type: 'text',
+      type: 'string',
     }),
     defineField({
-      name: 'pressDescription',
+      name: 'description',
       title: 'Description',
       type: 'array',
-      of: [{ type: 'block' }],
+      of: [{type: 'block'}, {type: 'image'}],
     }),
     defineField({
       name: 'publishDate',
@@ -45,25 +47,40 @@ export default defineType({
       validation: (rule) => rule.required(),
     }),
     defineField({
-      name: 'eventLocation',
-      title: 'Location',
-      type: 'reference',
-      to: [{ type: locationType.name }],
+      name: 'url',
+      type: 'url',
+      title: 'Press url',
+      validation: (Rule) =>
+        Rule.uri({
+          scheme: ['https', 'http'],
+        }),
     }),
     defineField({
-      name: 'pressType',
+      name: 'article',
+      title: 'Article',
+      type: 'reference',
+      to: [{type: article.name}],
+    }),
+    defineField({
+      name: 'location',
+      title: 'Location',
+      type: 'reference',
+      to: [{type: locationType.name}],
+    }),
+    defineField({
+      name: 'type',
       title: 'Press type',
       type: 'string',
       options: {
         list: [
-          { title: 'Review', value: 'review' },
-          { title: 'Article', value: 'article' },
+          {title: 'Review', value: 'review'},
+          {title: 'Article', value: 'article'},
         ],
       },
     }),
     defineField({
       name: 'language',
-      title: 'language',
+      title: 'Language',
       type: 'string',
     }),
   ],

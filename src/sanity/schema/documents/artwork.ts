@@ -1,9 +1,9 @@
-import { ThLargeIcon } from '@sanity/icons'
-import { defineArrayMember,defineField, defineType } from 'sanity'
+import {ThLargeIcon} from '@sanity/icons'
+import {defineArrayMember, defineField, defineType} from 'sanity'
 
 import drawing from '../objects/artTypes/drawing'
 import painting from '../objects/artTypes/painting'
-import photograph from '../objects/artTypes/photograph'
+import photography from '../objects/artTypes/photography'
 import sculpture from '../objects/artTypes/sculpture'
 import dateSelection from '../objects/utils/dateSelection'
 import artistType from './artist'
@@ -23,7 +23,7 @@ export default defineType({
         defineArrayMember({
           type: 'reference',
           title: 'Artist',
-          to: [{ type: artistType.name }],
+          to: [{type: artistType.name}],
         }),
       ],
       validation: (rule) => rule.required(),
@@ -46,7 +46,7 @@ export default defineType({
         defineArrayMember({
           type: 'reference',
           title: 'Artwork',
-          to: [{ type: 'artwork' }],
+          to: [{type: 'artwork'}],
         }),
       ],
     }),
@@ -54,17 +54,17 @@ export default defineType({
       title: 'Artwork photos',
       name: 'photos',
       type: 'array',
-      of: [defineArrayMember({ type: 'image' })],
+      of: [defineArrayMember({type: 'image'})],
     }),
     defineField({
       title: 'Artworks Type to fill',
       name: 'artworkTypeToFill',
       type: 'array',
       of: [
-        defineArrayMember({ type: drawing.name }),
-        defineArrayMember({ type: painting.name }),
-        defineArrayMember({ type: photograph.name }),
-        defineArrayMember({ type: sculpture.name }),
+        defineArrayMember({type: drawing.name}),
+        defineArrayMember({type: painting.name}),
+        defineArrayMember({type: photography.name}),
+        defineArrayMember({type: sculpture.name}),
       ],
     }),
     defineField({
@@ -89,18 +89,17 @@ export default defineType({
       options: {
         list: [
           {title: 'Available', value: 'available'},
-          {title: 'Unavailable', value: 'unavailable'}
+          {title: 'Unavailable', value: 'unavailable'},
         ],
-      }
+      },
     }),
   ],
   preview: {
     select: {
       title: 'title',
     },
-    prepare({ title }) {
-
-      return { title }
+    prepare({title}) {
+      return {title}
     },
   },
 })

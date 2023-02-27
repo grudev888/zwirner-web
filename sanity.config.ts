@@ -1,5 +1,6 @@
 import {visionTool} from '@sanity/vision'
 import {Config, defineConfig} from 'sanity'
+import {availability} from 'sanity-plugin-availability'
 
 import {schema} from './src/sanity'
 import {dataset, projectId} from './src/sanity/env'
@@ -11,5 +12,5 @@ export default defineConfig<Config>({
   projectId,
   schema,
   title: 'Zwirner Gallery Website',
-  plugins: [deskTool(), visionTool()],
+  plugins: [deskTool(), visionTool(), availability()],
 })
