@@ -1,12 +1,12 @@
 import {GetStaticProps} from 'next'
 import {PreviewSuspense} from 'next-sanity/preview'
 
-import {LazyPreviewPage} from '../page/LazyPreviewPage'
-import {LoadingScreen} from '../page/LoadingScreen'
-import {PageScreen} from '../page/PageScreen'
-import {PAGE_DATA_QUERY, PAGE_PATHS_QUERY} from '../page/query'
-import {PageData} from '../page/types'
 import {client} from '../sanity/client'
+import {LazyPreviewPage} from '../sanity/page/LazyPreviewPage'
+import {LoadingScreen} from '../sanity/page/LoadingScreen'
+import {PageScreen} from '../sanity/page/PageScreen'
+import {PAGE_DATA_QUERY, PAGE_PATHS_QUERY} from '../sanity/page/query'
+import {PageData} from '../sanity/page/types'
 
 interface PageProps {
   data: PageData | null

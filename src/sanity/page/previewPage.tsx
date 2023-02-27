@@ -1,4 +1,4 @@
-import {usePreview} from '../sanity/preview'
+import {usePreview} from '../preview'
 import {PageScreen} from './PageScreen'
 import {PAGE_DATA_QUERY} from './query'
 
