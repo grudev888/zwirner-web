@@ -10,8 +10,6 @@ const GlobalStyle = createGlobalStyle(({theme}) => ({
   html: {backgroundColor: theme.sanity.color.base.bg},
 }))
 
-StudioPage.getLayout = (page: ReactNode) => <>{page}</>
-
 export default function StudioPage() {
   return (
     <>
@@ -28,3 +26,5 @@ export default function StudioPage() {
     </>
   )
 }
+
+StudioPage.getLayout = (page: ReactNode) => <>{page}</>
