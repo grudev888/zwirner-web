@@ -15,10 +15,10 @@
     "format": "npx prettier --write . --ignore-path .gitignore",
     "postinstall": "husky install",
     "lint": "next lint -- --ignore-path .gitignore",
-    "lint:fix": "npm run format && npm run lint -- --fix",
+    "lint:fix": "npm run lint -- --fix",
     "start": "next start",
     "test": "yarn type-check && yarn jest --runInBand",
-    "test-all": "yarn type-check && yarn format && yarn lint:fix",
+    "test-all": "yarn type-check && yarn lint:fix && yarn format",
     "type-check": "tsc --noEmit --pretty"
   },
   "prettier": {
