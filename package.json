@@ -18,7 +18,7 @@
     "lint:fix": "npm run format && npm run lint -- --fix",
     "start": "next start",
     "test": "yarn type-check && yarn jest --runInBand",
-    "test-all": "yarn format && yarn lint:fix && yarn lint && yarn type-check",
+    "test-all": "yarn type-check && yarn format && yarn lint:fix && yarn lint",
     "type-check": "tsc --noEmit --pretty"
   },
   "prettier": {
