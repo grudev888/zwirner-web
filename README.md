@@ -20,13 +20,15 @@ Follow these instructions to deploy a local environment of the webpage.
 git clone https://github.com/Zwirner/zwirnerweb.git
 ```
 
-5. Open the project folder and let Docker Compose to install everything for you running the following command.
+5. Duplicate the `.env.local.example` file and rename it as `.env`. Ask engineering for the `SANITY_API_READ_TOKEN` value and replace it in that file.
+
+6. Open the project folder and let Docker Compose to install everything for you running the following command.
 
 ```sh
 docker-compose up -d
 ```
 
-6. Voilà! Open this URL http://localhost:3000/ and you should see the system working.
+7. Voilà! Open this URL http://localhost:3000/ and you should see the system working.
 
 ## Features
 
