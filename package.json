@@ -19,7 +19,8 @@
     "start": "next start",
     "test": "yarn type-check && yarn jest --runInBand",
     "test-all": "yarn type-check && yarn lint:fix && yarn format",
-    "type-check": "tsc --noEmit --pretty"
+    "type-check": "tsc --noEmit --pretty",
+    "sync-dev-db": "sanity dataset export production production.tar.gz --overwrite && sanity dataset import production.tar.gz dev --replace"
   },
   "prettier": {
     "bracketSpacing": false,
