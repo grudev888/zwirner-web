@@ -10,6 +10,8 @@
   ],
   "exclude": ["node_modules"],
   "compilerOptions": {
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
     "target": "ES2017",
     "module": "ESNext",
     "lib": ["dom", "dom.iterable", "esnext"],
@@ -19,6 +21,7 @@
     "resolveJsonModule": true,
     "jsx": "preserve",
     "plugins": [{"name": "next"}],
-    "paths": {"sanity.config": ["./sanity.config.ts"]}
+    "paths": {"sanity.config": ["./sanity.config.ts"], "@/*": ["./src/*"]},
+    "baseUrl": "."
   }
 }

@@ -1,6 +1,6 @@
 import {defineField, defineType} from 'sanity'
 
-import {strings} from '../../../../constants/descriptions/visualArtwork'
+import {strings} from '@/sanity/constants/descriptions/visualArtwork'
 
 export default defineType({
   name: 'visualArtWork',

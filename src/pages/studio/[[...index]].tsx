@@ -1,6 +1,7 @@
 import Head from 'next/head'
 import {NextStudio} from 'next-sanity/studio'
 import {NextStudioHead} from 'next-sanity/studio/head'
+import {ReactNode} from 'react'
 import {StudioLayout, StudioProvider} from 'sanity'
 import config from 'sanity.config'
 import {createGlobalStyle} from 'styled-components'
@@ -25,3 +26,5 @@ export default function StudioPage() {
     </>
   )
 }
+
+StudioPage.getLayout = (page: ReactNode) => <>{page}</>
