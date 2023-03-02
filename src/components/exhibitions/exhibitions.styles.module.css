@@ -1,34 +1,28 @@
 .container {
-  @apply
-    flex
+  @apply flex
     flex-col
-    gap-5
-  ;
+    gap-5;
 }
 
 .exhibitionItem {
-  @apply
-    my-5
+  @apply my-5;
 }
 
 .showcase {
-  @apply
+  @apply relative
     flex
-    bg-black-60
-    text-white-100
     h-[39.25rem]
     w-full
-    p-[3.75rem]
+    cursor-pointer
     flex-col
     justify-end
-    relative
-    cursor-pointer
-  ;
+    bg-black-60
+    p-[3.75rem]
+    text-white-100;
 }
 
 .overlay {
-  @apply
-    absolute
+  @apply absolute
     top-0
     right-0
     bottom-0
@@ -40,54 +34,44 @@
     bg-fixed
     transition
     duration-300
-    ease-in-out
+    ease-in-out;
 }
 
 .titleContainer {
-  @apply
+  @apply z-20
     mt-auto
-    border-t
-    border-white-100
     flex
-    justify-between
-    z-20
     cursor-pointer
-  ;
+    justify-between
+    border-t
+    border-white-100;
 }
 
-.leftChild, .rightChild {
-  @apply
-    flex
-    flex-col
-  ;
+.leftChild,
+.rightChild {
+  @apply flex
+    flex-col;
 }
 
 .image {
-  @apply
-    w-full
-    h-full
+  @apply h-full
+    w-full;
 }
 
 .year {
-  @apply
-    text-black-40
-    text-xxl
-  ;
+  @apply text-xxl
+    text-black-40;
 }
 
 .sectionTitle {
-  @apply
-    text-xxl
-  ;
+  @apply text-xxl;
 }
 
 .descriptionElement {
   @apply text-md;
 }
 
-.location{
-  @apply
-    text-md
-    text-black-40
-  ;
+.location {
+  @apply text-md
+    text-black-40;
 }

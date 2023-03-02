@@ -1,6 +1,6 @@
 import {groq} from 'next-sanity'
 
-import {exhibitionComplexFields,exhibitionSimpleFields} from './exhibition.queries';
+import {exhibitionComplexFields, exhibitionSimpleFields} from './exhibition.queries'
 
 const pageSimpleFields = groq`
   _id,

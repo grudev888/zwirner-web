@@ -17,7 +17,11 @@ interface ExhibitionProps {
   exhibition: any
 }
 
-const getSlug = (title='') => title.toLowerCase().replace(/[|&;$%@"-.<>:()+,]/g, '').replace(/ /g, '-')
+const getSlug = (title = '') =>
+  title
+    .toLowerCase()
+    .replace(/[|&;$%@"-.<>:()+,]/g, '')
+    .replace(/ /g, '-')
 
 const Exhibition: FC<ExhibitionProps> = ({exhibition}) => {
   const {title, summary, startDate, events = []} = exhibition

@@ -1,55 +1,45 @@
 .exhibition {
-  @apply
-    mx-auto
+  @apply mx-auto
     mt-20
-    px-5
     flex
-    gap-5
     flex-col
-  ;
+    gap-5
+    px-5;
 }
 .image {
-  @apply
-    w-full
+  @apply w-full;
 }
 .header {
-  @apply
-    bg-black-60
-    text-white-100
+  @apply relative
     h-[39.25rem]
     w-full
+    bg-black-60
     p-[3.75rem]
-    relative
-  ;
+    text-white-100;
 }
 
 .artData {
-  @apply
-    p-10
-    w-full
-    bg-black-10
+  @apply flex
     h-fit
-    flex
-    gap-5
+    w-full
     flex-col
-  ;
+    gap-5
+    bg-black-10
+    p-10;
 }
 
 .sectionTitle {
-  @apply
-    text-xxl
-    text-black-80
+  @apply text-xxl
+    text-black-80;
 }
 
-.descriptionElement{
-  @apply
-  text-lg
-  text-black-80
+.descriptionElement {
+  @apply text-lg
+  text-black-80;
 }
 
 .overlay {
-  @apply
-    absolute
+  @apply absolute
     top-0
     right-0
     bottom-0
@@ -59,8 +49,8 @@
     overflow-hidden
     bg-black-100
     bg-fixed
+    opacity-25
     transition
     duration-300
-    ease-in-out
-    opacity-25
+    ease-in-out;
 }

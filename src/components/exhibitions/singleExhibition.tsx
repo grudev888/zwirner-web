@@ -8,7 +8,9 @@ interface SingleExhibitionProps {
   exhibition: any
 }
 
-export const SingleExhibition: React.FunctionComponent<SingleExhibitionProps> = ({exhibition={}}) => {
+export const SingleExhibition: React.FunctionComponent<SingleExhibitionProps> = ({
+  exhibition = {},
+}) => {
   const {title, summary, startDate, events = []} = exhibition ?? {}
   const {photos} = events?.[0] ?? {}
   const url = photos?.[0]?.asset ? builder.image(photos[0].asset).width(1472).height(729).url() : ''

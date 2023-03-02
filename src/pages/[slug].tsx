@@ -1,11 +1,10 @@
 import {GetStaticProps} from 'next'
 import {PreviewSuspense} from 'next-sanity/preview'
-import { lazy } from "react";
+import {lazy} from 'react'
 
-import {SingleExhibition} from '@/components/exhibitions/singleExhibition';
-import {getAllPageSlugs, getPageBySlug} from '@/sanity/services/page.service';
-const SinglePreview = lazy(() => import("@/components/exhibitions/preview/singlePreview"));
-
+import {SingleExhibition} from '@/components/exhibitions/singleExhibition'
+import {getAllPageSlugs, getPageBySlug} from '@/sanity/services/page.service'
+const SinglePreview = lazy(() => import('@/components/exhibitions/preview/singlePreview'))
 
 interface PageProps {
   data: any
@@ -23,17 +22,17 @@ interface PreviewData {
 }
 
 export default function Page({data = {}, preview}: PageProps) {
-  const {exhibition = {}, queryParams} = data;
+  const {exhibition = {}, queryParams} = data
 
   if (preview) {
     return (
       <PreviewSuspense fallback="Loading...">
-        <SinglePreview queryParams={queryParams}/>
+        <SinglePreview queryParams={queryParams} />
       </PreviewSuspense>
     )
   }
 
-  return <SingleExhibition exhibition={exhibition}/>
+  return <SingleExhibition exhibition={exhibition} />
 }
 
 export const getStaticPaths = async () => {
@@ -44,7 +43,7 @@ export const getStaticPaths = async () => {
 export const getStaticProps: GetStaticProps<PageProps, Query, PreviewData> = async (ctx) => {
   const {params = {}, preview = false, previewData = {}} = ctx
 
-  const queryParams = { slug: params?.slug ?? `` };
+  const queryParams = {slug: params?.slug ?? ``}
 
   if (preview && previewData.token) {
     return {
@@ -57,7 +56,7 @@ export const getStaticProps: GetStaticProps<PageProps, Query, PreviewData> = asy
     }
   }
 
-  const data = await getPageBySlug(queryParams);
+  const data = await getPageBySlug(queryParams)
 
   return {
     props: {
@@ -68,5 +67,3 @@ export const getStaticProps: GetStaticProps<PageProps, Query, PreviewData> = asy
     },
   }
 }
-
-

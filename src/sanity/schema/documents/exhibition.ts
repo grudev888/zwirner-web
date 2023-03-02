@@ -6,9 +6,7 @@ import artworkType from './artwork'
 import collectionType from './collection'
 import eventType from './event'
 
-export interface Exhibition {
-
-}
+export interface Exhibition {}
 
 export default defineType({
   name: 'exhibition',

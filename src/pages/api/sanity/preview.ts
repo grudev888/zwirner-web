@@ -7,8 +7,7 @@ import {readToken} from '../../../sanity/env'
 import {getSecret} from '../../../sanity/secret'
 
 const handler: NextApiHandler = async function preview(req, res) {
-
-  const previewData: { token?: string } = {}
+  const previewData: {token?: string} = {}
   if (!readToken) {
     return res.status(404).end()
   }
@@ -43,7 +42,7 @@ const handler: NextApiHandler = async function preview(req, res) {
 
   if (!slug) {
     res.setPreviewData(previewData)
-    res.writeHead(307, { Location: '/' })
+    res.writeHead(307, {Location: '/'})
     res.end()
   }
 

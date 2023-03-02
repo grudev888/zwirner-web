@@ -1,11 +1,10 @@
 import {GetStaticProps} from 'next'
 import {PreviewSuspense} from 'next-sanity/preview'
-import { lazy } from "react";
+import {lazy} from 'react'
 
 import {ExhibitionsContainer} from '@/components/exhibitions/exhibitionContainer'
-const ExhibitionsPreview = lazy(() => import("@/components/exhibitions/preview/exhibitionsPreview"));
+const ExhibitionsPreview = lazy(() => import('@/components/exhibitions/preview/exhibitionsPreview'))
 import {getAllExhibitions} from '@/sanity/services/exhibition.service'
-
 
 interface PageProps {
   exhibitions: any
