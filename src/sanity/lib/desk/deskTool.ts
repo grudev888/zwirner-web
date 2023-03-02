@@ -32,6 +32,8 @@ const defaultDocumentNode: DefaultDocumentNodeResolver = (S, ctx) => {
     ? `https://${env.NEXT_PUBLIC_VERCEL_URL}`
     : 'http://localhost:3000'
 
+    console.log('env.NEXT_PUBLIC_VERCEL_ENV', env.NEXT_PUBLIC_VERCEL_ENV)
+
   const schemaType = ctx.schema.get(ctx.schemaType)
   const {schemaType: schema} = ctx
   const schemaOptions: DocumentOptions | undefined = schemaType?.options
