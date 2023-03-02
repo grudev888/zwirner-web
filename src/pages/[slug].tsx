@@ -1,15 +1,14 @@
 import {GetStaticProps} from 'next'
 import {PreviewSuspense} from 'next-sanity/preview'
+import { lazy } from "react";
 
-import {client} from '../sanity/client'
-import {LazyPreviewPage} from '../sanity/page/LazyPreviewPage'
-import {LoadingScreen} from '../sanity/page/LoadingScreen'
-import {PageScreen} from '../sanity/page/PageScreen'
-import {PAGE_DATA_QUERY, PAGE_PATHS_QUERY} from '../sanity/page/query'
-import {PageData} from '../sanity/page/types'
+import {SingleExhibition} from '@/components/exhibitions/singleExhibition';
+import {getAllPageSlugs, getPageBySlug} from '@/sanity/services/page.service';
+const SinglePreview = lazy(() => import("@/components/exhibitions/preview/singlePreview"));
+
 
 interface PageProps {
-  data: PageData | null
+  data: any
   preview: boolean
   slug: string | null
   token: string | null
@@ -23,13 +22,34 @@ interface PreviewData {
   token?: string
 }
 
+export default function Page({data = {}, preview}: PageProps) {
+  const {exhibition = {}, queryParams} = data;
+
+  if (preview) {
+    return (
+      <PreviewSuspense fallback="Loading...">
+        <SinglePreview queryParams={queryParams}/>
+      </PreviewSuspense>
+    )
+  }
+
+  return <SingleExhibition exhibition={exhibition}/>
+}
+
+export const getStaticPaths = async () => {
+  const paths = await getAllPageSlugs()
+  return {paths, fallback: true}
+}
+
 export const getStaticProps: GetStaticProps<PageProps, Query, PreviewData> = async (ctx) => {
   const {params = {}, preview = false, previewData = {}} = ctx
+
+  const queryParams = { slug: params?.slug ?? `` };
 
   if (preview && previewData.token) {
     return {
       props: {
-        data: null,
+        data: {queryParams},
         preview,
         slug: params?.slug || null,
         token: previewData.token,
@@ -37,11 +57,11 @@ export const getStaticProps: GetStaticProps<PageProps, Query, PreviewData> = asy
     }
   }
 
-  const data = await client.fetch<PageData | null>(PAGE_DATA_QUERY, params)
+  const data = await getPageBySlug(queryParams);
 
   return {
     props: {
-      data,
+      data: {...data, queryParams},
       preview,
       slug: params?.slug || null,
       token: null,
@@ -49,22 +69,4 @@ export const getStaticProps: GetStaticProps<PageProps, Query, PreviewData> = asy
   }
 }
 
-export const getStaticPaths = async () => {
-  const data = await client.fetch<{slug: string}[] | null>(PAGE_PATHS_QUERY)
 
-  return {paths: data?.map((d) => `/${d.slug}`) || [], fallback: false}
-}
-
-export default function Page(props: PageProps) {
-  const {data, preview, slug, token} = props
-
-  if (preview) {
-    return (
-      <PreviewSuspense fallback={<LoadingScreen>Loading preview…</LoadingScreen>}>
-        <LazyPreviewPage slug={slug} token={token} />
-      </PreviewSuspense>
-    )
-  }
-
-  return <PageScreen data={data} />
-}

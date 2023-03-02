@@ -29,8 +29,8 @@ export default defineType({
     defineField({
       name: 'photos',
       title: 'Event photos',
-      type: 'image',
-      options: {hotspot: true},
+      type: 'array',
+      of: [{type: 'image'}],
     }),
     defineField({
       name: 'location',

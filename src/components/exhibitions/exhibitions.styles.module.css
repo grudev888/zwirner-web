@@ -1,0 +1,93 @@
+.container {
+  @apply
+    flex
+    flex-col
+    gap-5
+  ;
+}
+
+.exhibitionItem {
+  @apply
+    my-5
+}
+
+.showcase {
+  @apply
+    flex
+    bg-black-60
+    text-white-100
+    h-[39.25rem]
+    w-full
+    p-[3.75rem]
+    flex-col
+    justify-end
+    relative
+    cursor-pointer
+  ;
+}
+
+.overlay {
+  @apply
+    absolute
+    top-0
+    right-0
+    bottom-0
+    left-0
+    h-full
+    w-full
+    overflow-hidden
+    bg-black-100
+    bg-fixed
+    transition
+    duration-300
+    ease-in-out
+}
+
+.titleContainer {
+  @apply
+    mt-auto
+    border-t
+    border-white-100
+    flex
+    justify-between
+    z-20
+    cursor-pointer
+  ;
+}
+
+.leftChild, .rightChild {
+  @apply
+    flex
+    flex-col
+  ;
+}
+
+.image {
+  @apply
+    w-full
+    h-full
+}
+
+.year {
+  @apply
+    text-black-40
+    text-xxl
+  ;
+}
+
+.sectionTitle {
+  @apply
+    text-xxl
+  ;
+}
+
+.descriptionElement {
+  @apply text-md;
+}
+
+.location{
+  @apply
+    text-md
+    text-black-40
+  ;
+}

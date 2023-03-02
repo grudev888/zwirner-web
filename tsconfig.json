@@ -21,7 +21,11 @@
     "resolveJsonModule": true,
     "jsx": "preserve",
     "plugins": [{"name": "next"}],
-    "paths": {"sanity.config": ["./sanity.config.ts"], "@/*": ["./src/*"]},
+    "paths": {
+      "sanity.config": ["./sanity.config.ts"],
+      "@/*": ["./src/*"],
+      "@/sanity/*": ["./src/sanity/*"]
+    },
     "baseUrl": "."
   }
 }

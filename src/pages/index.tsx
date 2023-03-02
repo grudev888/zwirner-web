@@ -1,15 +1,14 @@
 import {GetStaticProps} from 'next'
 import {PreviewSuspense} from 'next-sanity/preview'
+import { lazy } from "react";
 
-import {client} from '../sanity/client'
-import {LazyPreviewPage} from '../sanity/page/LazyPreviewPage'
-import {LoadingScreen} from '../sanity/page/LoadingScreen'
-import {PageScreen} from '../sanity/page/PageScreen'
-import {PAGE_DATA_QUERY} from '../sanity/page/query'
-import {PageData} from '../sanity/page/types'
+import {ExhibitionsContainer} from '@/components/exhibitions/exhibitionContainer'
+const ExhibitionsPreview = lazy(() => import("@/components/exhibitions/preview/exhibitionsPreview"));
+import {getAllExhibitions} from '@/sanity/services/exhibition.service'
+
 
 interface PageProps {
-  data: PageData | null
+  exhibitions: any
   preview: boolean
   slug: string | null
   token: string | null
@@ -23,6 +22,24 @@ interface PreviewData {
   token?: string
 }
 
+export default function Page({exhibitions, preview}: PageProps) {
+  if (preview) {
+    return (
+      <PreviewSuspense fallback="Loading...">
+        <main className="mt-5 flex min-h-screen justify-center">
+          <ExhibitionsPreview />
+        </main>
+      </PreviewSuspense>
+    )
+  }
+
+  return (
+    <main className="mt-5 flex min-h-screen justify-center">
+      <ExhibitionsContainer exhibitions={exhibitions} />
+    </main>
+  )
+}
+
 export const getStaticProps: GetStaticProps<PageProps, Query, PreviewData> = async (ctx) => {
   const {preview = false, previewData = {}} = ctx
 
@@ -31,7 +48,7 @@ export const getStaticProps: GetStaticProps<PageProps, Query, PreviewData> = asy
   if (preview && previewData.token) {
     return {
       props: {
-        data: null,
+        exhibitions: null,
         preview,
         slug: params?.slug || null,
         token: previewData.token,
@@ -39,28 +56,14 @@ export const getStaticProps: GetStaticProps<PageProps, Query, PreviewData> = asy
     }
   }
 
-  const data = await client.fetch<PageData | null>(PAGE_DATA_QUERY, params)
+  const [exhibitions] = await Promise.all([getAllExhibitions()])
 
   return {
     props: {
-      data,
+      exhibitions,
       preview,
       slug: params?.slug || null,
       token: null,
     },
   }
-}
-
-export default function Page(props: PageProps) {
-  const {data, preview, slug, token} = props
-
-  if (preview) {
-    return (
-      <PreviewSuspense fallback={<LoadingScreen>Loading preview…</LoadingScreen>}>
-        <LazyPreviewPage slug={slug} token={token} />
-      </PreviewSuspense>
-    )
-  }
-
-  return <PageScreen data={data} />
 }
