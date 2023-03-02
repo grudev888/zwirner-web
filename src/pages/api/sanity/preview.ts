@@ -8,6 +8,7 @@ import {getSecret} from '../../../sanity/secret'
 
 const handler: NextApiHandler = async function preview(req, res) {
   const previewData: {token?: string} = {}
+  console.log('SANITY_API_READ_TOKEN::', readToken)
   if (!readToken) {
     return res.status(404).end()
   }
