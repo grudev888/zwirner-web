@@ -1,9 +1,6 @@
 import {GetStaticProps} from 'next'
-import {PreviewSuspense} from 'next-sanity/preview'
-import {lazy} from 'react'
 
 import {ExhibitionsContainer} from '@/components/exhibitions/exhibitionContainer'
-const ExhibitionsPreview = lazy(() => import('@/components/exhibitions/preview/exhibitionsPreview'))
 import {getAllExhibitions} from '@/sanity/services/exhibition.service'
 
 interface PageProps {
@@ -21,17 +18,7 @@ interface PreviewData {
   token?: string
 }
 
-export default function Page({exhibitions, preview}: PageProps) {
-  if (preview) {
-    return (
-      <PreviewSuspense fallback="Loading...">
-        <main className="mt-5 flex min-h-screen justify-center">
-          <ExhibitionsPreview />
-        </main>
-      </PreviewSuspense>
-    )
-  }
-
+export default function Page({exhibitions}: PageProps) {
   return (
     <main className="mt-5 flex min-h-screen justify-center">
       <ExhibitionsContainer exhibitions={exhibitions} />

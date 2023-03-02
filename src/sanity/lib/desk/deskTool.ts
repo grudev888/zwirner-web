@@ -36,18 +36,6 @@ const defaultDocumentNode: DefaultDocumentNodeResolver = (S, ctx) => {
   const schemaOptions: DocumentOptions | undefined = schemaType?.options
   const viewsResolver = schemaOptions?.views
 
-  if (schema === 'exhibition') {
-    return S.document().views([
-      S.view.form(),
-      S.view
-        .component(Iframe)
-        .options({
-          url: `${envHost}/api/sanity/preview`,
-        })
-        .title('Preview'),
-    ])
-  }
-
   if (schema === 'page') {
     return S.document().views([
       S.view.form(),
