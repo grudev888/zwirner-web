@@ -43,7 +43,7 @@ const defaultDocumentNode: DefaultDocumentNodeResolver = (S, ctx) => {
       S.view
         .component(Iframe)
         .options({
-          url: `http://localhost:3000/api/sanity/preview`,
+          url: `${envHost}/api/sanity/preview`,
         })
         .title('Preview'),
     ])
@@ -57,8 +57,8 @@ const defaultDocumentNode: DefaultDocumentNodeResolver = (S, ctx) => {
         .options({
           url: (doc: any) => {
             return doc?.slug?.current
-              ? `http://localhost:3000/api/sanity/preview?slug=${doc.slug.current}`
-              : `http://localhost:3000/api/sanity/preview`
+              ? `${envHost}/api/sanity/preview?slug=${doc.slug.current}`
+              : `${envHost}/api/sanity/preview`
           },
         })
         .title('Preview'),
