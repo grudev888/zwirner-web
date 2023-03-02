@@ -22,6 +22,7 @@ interface PreviewData {
 }
 
 export default function Page({exhibitions, preview}: PageProps) {
+  console.log('env.NEXT_PUBLIC_VERCEL_ENV11', process.env.NEXT_PUBLIC_VERCEL_ENV)
   if (preview) {
     return (
       <PreviewSuspense fallback="Loading...">
