@@ -1,4 +1,3 @@
-import {env} from 'process'
 import {definePlugin, DocumentOptions, DocumentPluginOptions} from 'sanity'
 import {deskTool as baseDeskTool} from 'sanity/desk'
 import {DefaultDocumentNodeResolver} from 'sanity/desk'
