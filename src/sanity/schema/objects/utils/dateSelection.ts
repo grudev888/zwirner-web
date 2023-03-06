@@ -20,7 +20,6 @@ export default defineType({
       type: 'string',
       title: 'Approximate date',
       hidden: ({parent, value}) => {
-        console.log('parent', parent)
         return !!(!value && (parent?.dateRange?.from || parent?.year))
       },
     }),
@@ -28,7 +27,6 @@ export default defineType({
       name: 'dateRange',
       type: dateRange.name,
       hidden: ({parent, value}) => {
-        console.log('parent', parent)
         return !!(!value?.from && (parent?.year || parent?.approximate))
       },
     }),
