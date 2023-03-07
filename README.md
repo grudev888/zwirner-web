@@ -1,12 +1,34 @@
-# sanity-template-nextjs
+## David Zwirner webapp
 
-This is a template for new projects using Next.js with embedded Sanity integration and Sanity Studio
-on the `/studio` route.
+This system contains the codebase of our main webapp.
 
-NOTE: This template intentionally does NOT use Next.js’s experimental `appDir` feature since there
-are known issues with this. I’ll wait until their `appDir` feature is stable.
+You will find the Sanity studio under the `/studio` route.
 
-[![Deploy with Vercel](https://vercel.com/button)][vercel-deploy]
+## Running the system locally
+
+Follow these instructions to deploy a local environment of the webpage.
+
+1. Install Docker in your machine. [Here](https://docs.docker.com/get-docker/) the official guide for Windows, Mac and Linux users.
+
+2. **Windows and Linux only**: Install [Docker compose](https://docs.docker.com/compose/install/) in your machine. ([Docker for Mac already includes Compose](https://docs.docker.com.xy2401.com/v17.12/compose/install/#:~:text=Docker%20for%20Mac%20and%20Docker,need%20to%20install%20Compose%20separately.)).
+
+3. Install Git. [Here](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git) the guide.
+
+4. Clone this repository in your machine using Git.
+
+```sh
+git clone https://github.com/Zwirner/zwirnerweb.git
+```
+
+5. Duplicate the `.env.local.example` file and rename it as `.env`. Ask engineering for the `SANITY_API_READ_TOKEN` value and replace it in that file.
+
+6. Open the project folder and let Docker Compose to install everything for you running the following command.
+
+```sh
+docker-compose up -d
+```
+
+7. Voilà! Open this URL http://localhost:3000/ and you should see the system working.
 
 ## Features
 

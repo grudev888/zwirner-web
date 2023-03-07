@@ -6,8 +6,9 @@ import type {AppProps} from 'next/app'
 import {DefaultSeo} from 'next-seo'
 import SEO from 'next-seo.config'
 import {ReactElement, ReactNode} from 'react'
-import DefaultLayout from 'src/common/components/Layout'
-import {mono, sans, serif} from 'src/common/styles/fonts'
+
+import DefaultLayout from '@/common/components/Layout'
+import {mono, sans, serif} from '@/common/styles/fonts'
 
 export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
   getLayout?: (page: ReactElement) => ReactNode

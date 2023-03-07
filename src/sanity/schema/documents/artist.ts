@@ -41,18 +41,17 @@ export default defineType({
       name: 'picture',
       title: 'Profile picture',
       type: 'image',
-      options: {hotspot: true},
       validation: (rule) => rule.required(),
     }),
     defineField({
       name: 'birthdate',
-      type: 'datetime',
+      type: 'date',
       title: 'Birthdate',
       validation: (rule) => rule.required(),
     }),
     defineField({
       name: 'deathDate',
-      type: 'datetime',
+      type: 'date',
       title: 'Death date',
     }),
     defineField({

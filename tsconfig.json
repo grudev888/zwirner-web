@@ -11,6 +11,8 @@
   ],
   "exclude": ["node_modules/*", "dist/*", "www/*"],
   "compilerOptions": {
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
     "target": "ES2017",
     "module": "ESNext",
     "lib": ["dom", "dom.iterable", "esnext"],
@@ -20,8 +22,12 @@
     "resolveJsonModule": true,
     "jsx": "preserve",
     "plugins": [{"name": "next"}],
-    "paths": {"sanity.config": ["./sanity.config.ts"], "@/*": ["./src/*"]},
-    "baseUrl": ".",
-    "preserveSymlinks": true
+    "paths": {
+      "sanity.config": ["./sanity.config.ts"],
+      "@/*": ["./src/*"],
+      "@/sanity/*": ["./src/sanity/*"]
+    },
+    "preserveSymlinks": true,
+    "baseUrl": "."
   }
 }
