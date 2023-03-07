@@ -3,12 +3,13 @@
   "include": [
     ".next/types/**/*.ts",
     "./next-env.d.ts",
-    "./src",
     "./sanity-env.d.ts",
     "./sanity.cli.ts",
-    "./sanity.config.ts"
+    "./sanity.config.ts",
+    "./src/**/*.ts",
+    "./src/**/*.tsx"
   ],
-  "exclude": ["node_modules"],
+  "exclude": ["node_modules/*", "dist/*", "www/*"],
   "compilerOptions": {
     "target": "ES2017",
     "module": "ESNext",
@@ -19,6 +20,8 @@
     "resolveJsonModule": true,
     "jsx": "preserve",
     "plugins": [{"name": "next"}],
-    "paths": {"sanity.config": ["./sanity.config.ts"], "@/*": ["./src/*"]}
+    "paths": {"sanity.config": ["./sanity.config.ts"], "@/*": ["./src/*"]},
+    "baseUrl": ".",
+    "preserveSymlinks": true
   }
 }

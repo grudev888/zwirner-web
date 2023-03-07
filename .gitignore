@@ -46,3 +46,7 @@ studio/.env.development
 
 .cache
 .stackbit/cache
+
+.yarn
+
+package-lock.json

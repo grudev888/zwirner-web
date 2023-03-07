@@ -1,4 +1,5 @@
 import '../global.css'
+import '@zwirner/design-system/dist/tailwind.css'
 
 import {NextPage} from 'next'
 import type {AppProps} from 'next/app'
