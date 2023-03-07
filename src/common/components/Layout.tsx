@@ -21,7 +21,7 @@ const Layout = ({children}: {children: ReactNode}) => (
         ))}
       </DzGridColumns>
     </main>
-    {/* <footer></footer> */}
+    <footer></footer>
   </>
 )
 
