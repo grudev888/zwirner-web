@@ -1,8 +1,14 @@
 services:
   zwirnerweb:
     build:
-      context: .
-    ports:
-      - '3000:3000'
+      context: ./
     volumes:
-      - ./:/app
+      - .:/app
+      - zwirner:/app/node_modules
+    ports:
+      - "3000:3000"
+    environment:
+      NODE_ENV: development
+
+volumes:
+  zwirner:

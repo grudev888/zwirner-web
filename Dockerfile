@@ -1,11 +1,12 @@
 FROM node:19-alpine
 
 RUN apk add --no-cache libc6-compat
+
 WORKDIR /app
-COPY package.json yarn.lock ./
+COPY . .
 
 RUN yarn set version berry
-RUN yarn install --frozen-lockfile
+RUN yarn --frozen-lockfile
 
 EXPOSE 3000
 
