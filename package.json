@@ -37,7 +37,7 @@
     "@sanity/ui": "^1.0.14",
     "@sanity/vision": "^3.2.4",
     "@tailwindcss/typography": "^0.5.9",
-    "@zwirner/design-system": "^0.1.4",
+    "@zwirner/design-system": "0.0.1",
     "next": "^13.1.2",
     "next-sanity": "^4.1.0",
     "next-seo": "^5.15.0",
@@ -50,6 +50,9 @@
     "sanity-plugin-iframe-pane": "^2.1.1",
     "styled-components": "^5.3.6",
     "suspend-react": "^0.0.9"
+  },
+  "publishConfig": {
+    "@zwirner:registry": "https://npm.pkg.github.com"
   },
   "devDependencies": {
     "@sanity/color": "^2.2.2",
