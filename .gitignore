@@ -45,12 +45,10 @@ yarn-error.log*
 studio/.env.development
 
 .cache
-.stackbit/cache
 
 .yarn
 
-package-lock.json
-
+# Yarn 2
 .pnp.*
 .yarn/*
 !.yarn/patches
@@ -58,3 +56,6 @@ package-lock.json
 !.yarn/releases
 !.yarn/sdks
 !.yarn/versions
+
+# Sanity Database sync
+production.tar.gz
