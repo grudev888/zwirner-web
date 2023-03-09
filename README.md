@@ -4,15 +4,15 @@ This system contains the codebase of our main webapp.
 
 You will find the Sanity studio under the `/studio` route.
 
-## Running the system locally
+## Local development setup
 
 Follow these instructions to deploy a local environment of the webpage.
 
-1. Install Docker in your machine. [Here](https://docs.docker.com/get-docker/) the official guide for Windows, Mac and Linux users.
+1. Install Git. [Here](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git) the guide.
 
-2. **Windows and Linux only**: Install [Docker compose](https://docs.docker.com/compose/install/) in your machine. ([Docker for Mac already includes Compose](https://docs.docker.com.xy2401.com/v17.12/compose/install/#:~:text=Docker%20for%20Mac%20and%20Docker,need%20to%20install%20Compose%20separately.)).
+2. Install Docker in your machine. [Here](https://docs.docker.com/get-docker/) the official guide for Windows, Mac and Linux users.
 
-3. Install Git. [Here](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git) the guide.
+3. **Windows and Linux only**: Install [Docker compose](https://docs.docker.com/compose/install/) in your machine. ([Docker for Mac already includes Compose](https://docs.docker.com.xy2401.com/v17.12/compose/install/#:~:text=Docker%20for%20Mac%20and%20Docker,need%20to%20install%20Compose%20separately.)).
 
 4. Clone this repository in your machine using Git.
 
@@ -29,6 +29,26 @@ docker-compose up -d
 ```
 
 7. Voilà! Open this URL http://localhost:3000/ and you should see the system working.
+
+# Updating your the dev database with latest changes done in prod
+
+Login to sanity cli running the following command in a terminal.
+
+```bash
+docker-compose exec zwirnerweb yarn sanity login
+```
+
+Choose *Google* as the login type, open the URL that the terminal will show you, and sign in with your David Zwirner google account. If everything went well you should see a message like this:
+
+```bash
+Login successful
+```
+
+Run this script to sync the dev database with prod
+
+```bash
+docker-compose exec zwirnerweb yarn sync-dev-db
+```
 
 ## Features
 
