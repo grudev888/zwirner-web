@@ -46,6 +46,8 @@ studio/.env.development
 
 .cache
 
+.yarn
+
 # Yarn 2
 .pnp.*
 .yarn/*
