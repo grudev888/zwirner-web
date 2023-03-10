@@ -40,7 +40,7 @@ export const generalStructure = (S: StructureBuilder) =>
         .icon(DocumentsIcon)
         .child(
           S.list()
-            .title('Settings Documents')
+            .title('Pages Content')
             .items([
               S.listItem()
                 .title('Home')
