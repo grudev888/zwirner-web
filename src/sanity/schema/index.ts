@@ -9,6 +9,7 @@ import bookType from './documents/book'
 import collection from './documents/collection'
 import event from './documents/event'
 import exhibition from './documents/exhibition'
+import exhibitionPage from './documents/exhibitionPage'
 import fairPage from './documents/fairPage'
 import footer from './documents/footer'
 import locationType from './documents/location'
@@ -64,6 +65,7 @@ export const schema: {types: SchemaTypeDefinition[]} = {
     navigation,
     settings,
     artistPage,
+    exhibitionPage,
     fairPage,
     availableArtworks,
     ...singletons,

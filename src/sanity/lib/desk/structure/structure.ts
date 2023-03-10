@@ -7,7 +7,9 @@ import {UsersIcon} from '@sanity/icons'
 import {DashboardIcon} from '@sanity/icons'
 import {StructureBuilder} from 'sanity/desk'
 
-export const settingsStructure = (S: StructureBuilder) =>
+import {getSectionsByYear} from '@/sanity/services/pages.service'
+
+export const generalStructure = (S: StructureBuilder) =>
   S.list()
     .title('Content')
     .items([
@@ -21,7 +23,7 @@ export const settingsStructure = (S: StructureBuilder) =>
               S.listItem()
                 .title('Redirects')
                 .icon(LinkRemovedIcon)
-                .child(S.document().schemaType('redirect').documentId('redirect')),
+                .child(S.documentList().title('Page Redirects').filter('_type == "redirect"')),
               S.listItem()
                 .title('Navigation')
                 .icon(BlockElementIcon)
@@ -66,35 +68,37 @@ export const settingsStructure = (S: StructureBuilder) =>
               S.listItem()
                 .title('Artist Pages')
                 .icon(UsersIcon)
-                .child((pageId) =>
+                .child(
                   S.documentList()
                     .title('Artist Pages Posted')
                     .filter('_type == "artistPage"')
-                    .params({pageId})
                     .defaultOrdering([{field: 'title', direction: 'asc'}])
                 ),
               S.listItem()
                 .title('Exhibition Pages')
                 .icon(DashboardIcon)
-                .child(
-                  S.documentList()
-                    .title('Exhibition Pages Posted')
-                    .filter('_type == "exhibitionPage"')
-                    .defaultOrdering([{field: 'publishedAt', direction: 'asc'}])
-                ),
+                .child(() => {
+                  return getSectionsByYear({
+                    S,
+                    sectionTitle: 'Exhibition',
+                    type: 'exhibitionPage',
+                    dateKey: 'endDate',
+                  })
+                }),
               S.listItem()
                 .title('Fair Pages')
                 .icon(DashboardIcon)
-                .child(
-                  S.documentList()
-                    .title('Fair Pages Posted')
-                    .filter('_type == "fairPage"')
-                    .defaultOrdering([{field: 'publishedAt', direction: 'asc'}])
-                ),
+                .child(() => {
+                  return getSectionsByYear({
+                    S,
+                    sectionTitle: 'Fair',
+                    type: 'fairPage',
+                    dateKey: 'endDate',
+                  })
+                }),
             ])
         ),
       S.divider(),
-
       S.listItem()
         .title('Artists')
         .icon(DocumentsIcon)
@@ -105,25 +109,45 @@ export const settingsStructure = (S: StructureBuilder) =>
               S.listItem()
                 .title('Dz Gallery Artists')
                 .icon(UsersIcon)
-                .child((pageId) =>
+                .child(
                   S.documentList()
                     .title('Artists')
                     .filter('_type == "artist" && affiliation == true')
-                    .params({pageId})
                     .defaultOrdering([{field: 'lastName', direction: 'asc'}])
                 ),
               S.listItem()
                 .title('Non Dz Gallery Artists')
                 .icon(UsersIcon)
-                .child((pageId) =>
+                .child(
                   S.documentList()
                     .title('Artists')
                     .filter('_type == "artist" && affiliation == false')
-                    .params({pageId})
                     .defaultOrdering([{field: 'lastName', direction: 'asc'}])
                 ),
             ])
         ),
+        S.listItem()
+        .title('Exhibitions and Fairs')
+        .icon(DashboardIcon)
+        .child(() => {
+          return getSectionsByYear({
+            S,
+            sectionTitle: 'Exhibitions & Fairs',
+            type: 'exhibition',
+            dateKey: 'endDate',
+          })
+        }),
+      S.listItem()
+        .title('Press')
+        .icon(DocumentsIcon)
+        .child(() => {
+          return getSectionsByYear({
+            S,
+            sectionTitle: 'Press',
+            type: 'press',
+            dateKey: 'publishDate',
+          })
+        }),
       ...S.documentTypeListItems()
         .filter(
           (listItem) =>
@@ -144,6 +168,8 @@ export const settingsStructure = (S: StructureBuilder) =>
               'article',
               'location',
               'page',
+              'press',
+              'exhibition'
             ].includes(listItem?.getId() ?? '')
         )
         .sort((a, b) => {

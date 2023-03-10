@@ -10,6 +10,11 @@ export const exhibitionSimpleFields = groq`
   endDate,
 `
 
+const exhibitionDateFields = groq`
+  _id,
+  "date": endDate,
+`
+
 export const exhibitionComplexFields = groq`
   "artists": artists[]->,
   "artworks": artworks[]->,
@@ -22,3 +27,9 @@ export const allExhibitions = groq`
   ${exhibitionSimpleFields}
   ${exhibitionComplexFields}
 }`
+
+export const getExhibitionByDate = groq`
+*[_type == "press"] {
+  ${exhibitionDateFields}
+}`
+

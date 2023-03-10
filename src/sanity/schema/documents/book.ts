@@ -6,7 +6,7 @@ import author from './author'
 
 export default defineType({
   name: 'book',
-  title: 'Book',
+  title: 'Books',
   icon: BookIcon,
   type: 'document',
   fields: [

@@ -3,7 +3,7 @@ import {deskTool as baseDeskTool} from 'sanity/desk'
 import {DefaultDocumentNodeResolver} from 'sanity/desk'
 import Iframe from 'sanity-plugin-iframe-pane'
 
-import {settingsStructure} from './structure/structure'
+import {generalStructure} from './structure/structure'
 
 /**
  * A modified version of Sanity’s desk tool.
@@ -14,7 +14,7 @@ import {settingsStructure} from './structure/structure'
 export const deskTool = definePlugin(() => {
   const {name: _, ...base} = baseDeskTool({
     defaultDocumentNode,
-    structure: settingsStructure,
+    structure: generalStructure,
   })
 
   return {
