@@ -1,17 +1,22 @@
-import {SchemaTypeDefinition} from 'sanity'
+import {type DocumentDefinition, SchemaTypeDefinition} from 'sanity'
 
 import article from './documents/article'
 import artist from './documents/artist'
+import artistPage from './documents/artistPage'
 import artwork from './documents/artwork'
 import authorType from './documents/author'
 import bookType from './documents/book'
 import collection from './documents/collection'
 import event from './documents/event'
 import exhibition from './documents/exhibition'
+import fairPage from './documents/fairPage'
+import footer from './documents/footer'
 import locationType from './documents/location'
+import navigation from './documents/navigation'
 import pageType from './documents/page'
 import postType from './documents/post'
 import press from './documents/press'
+import redirects from './documents/redirects'
 import drawingType from './objects/artTypes/drawing'
 import paintingType from './objects/artTypes/painting'
 import photographType from './objects/artTypes/photography'
@@ -22,9 +27,14 @@ import accessibleImage from './objects/utils/accessibleImage'
 import addressType from './objects/utils/address'
 import dateRange from './objects/utils/dateRange'
 import dateSelection from './objects/utils/dateSelection'
+import availableArtworks from './singletons/availableArtworks'
+import collect from './singletons/collect'
+import home from './singletons/home'
+import settings from './singletons/settings'
+import stories from './singletons/stories'
+import utopiaEditions from './singletons/utopiaEditions'
 
-export const previewTypes = [artwork.name, postType.name]
-
+export const singletons: DocumentDefinition[] = [stories, home, collect, utopiaEditions]
 export const schema: {types: SchemaTypeDefinition[]} = {
   types: [
     article,
@@ -49,5 +59,13 @@ export const schema: {types: SchemaTypeDefinition[]} = {
     dateSelection,
     addressType,
     social,
+    redirects,
+    footer,
+    navigation,
+    settings,
+    artistPage,
+    fairPage,
+    availableArtworks,
+    ...singletons,
   ],
 }

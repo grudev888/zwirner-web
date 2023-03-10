@@ -78,7 +78,7 @@ export default defineType({
       name: 'affiliation',
       type: 'boolean',
       readOnly: ({currentUser}) => {
-        return !currentUser?.roles.find(({name}) => name === 'administrator')
+        return !currentUser?.roles.find(({name}) => name !== 'administrator')
       },
       title: 'Affiliated to DZ',
       initialValue: false,
