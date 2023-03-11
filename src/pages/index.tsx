@@ -23,7 +23,6 @@ export default function Page({exhibitions}: PageProps) {
   return (
     <DzColumn
       className="z-0 h-screen border border-black-20 bg-black-10"
-      key={i}
       span={12}
     >
       <ExhibitionsContainer exhibitions={exhibitions} />
