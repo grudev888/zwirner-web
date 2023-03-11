@@ -21,10 +21,7 @@ interface PreviewData {
 
 export default function Page({exhibitions}: PageProps) {
   return (
-    <DzColumn
-      className="z-0 h-screen border border-black-20 bg-black-10"
-      span={12}
-    >
+    <DzColumn className="h-screen" span={12}>
       <ExhibitionsContainer exhibitions={exhibitions} />
     </DzColumn>
   )

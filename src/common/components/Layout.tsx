@@ -7,12 +7,7 @@ const Layout = ({children}: {children: ReactNode}) => (
       <nav aria-label="primary"></nav>
     </header>
     <main>
-      <DzGridColumns
-        position="absolute"
-        className="pointer-events-none absolute top-0 left-0 m-0 h-full w-full"
-      >
-        {children}
-      </DzGridColumns>
+      <DzGridColumns className="m-0 h-full w-full">{children}</DzGridColumns>
     </main>
     <footer></footer>
   </>
