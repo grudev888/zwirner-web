@@ -20,9 +20,13 @@ interface PreviewData {
 
 export default function Page({exhibitions}: PageProps) {
   return (
-    <main className="mt-5 flex min-h-screen justify-center">
+    <DzColumn
+      className="z-0 h-screen border border-black-20 bg-black-10"
+      key={i}
+      span={12}
+    >
       <ExhibitionsContainer exhibitions={exhibitions} />
-    </main>
+    </DzColumn>
   )
 }
 
