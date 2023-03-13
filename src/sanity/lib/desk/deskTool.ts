@@ -2,16 +2,19 @@ import {definePlugin, DocumentOptions, DocumentPluginOptions} from 'sanity'
 import {deskTool as baseDeskTool} from 'sanity/desk'
 import {DefaultDocumentNodeResolver} from 'sanity/desk'
 import Iframe from 'sanity-plugin-iframe-pane'
+
+import {generalStructure} from './structure/structure'
+
 /**
  * A modified version of Sanity’s desk tool.
  *
  * - Adds a default document node resolver that uses the `views` option on schema types.
  * - Adds a default production URL resolver that uses the `url` option on schema types.
  */
-
 export const deskTool = definePlugin(() => {
   const {name: _, ...base} = baseDeskTool({
     defaultDocumentNode,
+    structure: generalStructure,
   })
 
   return {

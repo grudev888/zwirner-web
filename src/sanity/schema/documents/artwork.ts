@@ -11,7 +11,7 @@ import artistType from './artist'
 // Check If we will need prefilled fields
 export default defineType({
   name: 'artwork',
-  title: 'Artwork',
+  title: 'Artworks',
   type: 'document',
   icon: ThLargeIcon,
   fields: [

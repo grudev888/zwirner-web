@@ -10,7 +10,7 @@ export interface Exhibition {}
 
 export default defineType({
   name: 'exhibition',
-  title: 'Exhibition',
+  title: 'Exhibitions and Fairs ',
   icon: DashboardIcon,
   type: 'document',
   fields: [

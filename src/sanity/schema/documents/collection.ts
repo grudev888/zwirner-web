@@ -6,7 +6,7 @@ import bookType from './book'
 
 export default defineType({
   name: 'collection',
-  title: 'Collection',
+  title: 'Collections',
   icon: UsersIcon,
   type: 'document',
   fields: [
