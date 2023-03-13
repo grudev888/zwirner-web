@@ -24,9 +24,9 @@ const getSlug = (title = '') =>
     .replace(/ /g, '-')
 
 const Exhibition: FC<ExhibitionProps> = ({exhibition}) => {
-  const {title, summary, startDate, events = []} = exhibition
-  const {photos} = events[0]
-  const url = photos[0]?.asset ? builder.image(photos[0].asset).width(1472).height(729).url() : ''
+  const {title, summary, startDate, events = []} = exhibition ?? {}
+  const {photos} = events?.[0] ?? {}
+  const url = photos?.[0]?.asset ? builder.image(photos[0].asset).width(1472).height(729).url() : ''
 
   return (
     <Link href={getSlug(title)}>

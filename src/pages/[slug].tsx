@@ -1,3 +1,4 @@
+import {DzColumn} from '@zwirner/design-system'
 import {GetStaticProps} from 'next'
 import {PreviewSuspense} from 'next-sanity/preview'
 import {lazy} from 'react'
@@ -26,13 +27,19 @@ export default function Page({data = {}, preview}: PageProps) {
 
   if (preview) {
     return (
-      <PreviewSuspense fallback="Loading...">
-        <SinglePreview queryParams={queryParams} />
-      </PreviewSuspense>
+      <DzColumn className="h-screen" span={12}>
+        <PreviewSuspense fallback="Loading...">
+          <SinglePreview queryParams={queryParams} />
+        </PreviewSuspense>
+      </DzColumn>
     )
   }
 
-  return <SingleExhibition exhibition={exhibition} />
+  return (
+    <DzColumn className="h-screen" span={12}>
+      <SingleExhibition exhibition={exhibition} />
+    </DzColumn>
+  )
 }
 
 export const getStaticPaths = async () => {
