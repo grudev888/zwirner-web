@@ -1,5 +1,5 @@
-import {GetStaticProps} from 'next'
 import {DzColumn} from '@zwirner/design-system'
+import {GetStaticProps} from 'next'
 
 import {ExhibitionsContainer} from '@/components/exhibitions/exhibitionContainer'
 import {getAllExhibitions} from '@/sanity/services/exhibition.service'
@@ -21,7 +21,7 @@ interface PreviewData {
 
 export default function Page({exhibitions}: PageProps) {
   return (
-    <DzColumn className="h-screen" span={12}>
+    <DzColumn className="h-screen" start={[1, 2]} span={[12, 10]}>
       <ExhibitionsContainer exhibitions={exhibitions} />
     </DzColumn>
   )
