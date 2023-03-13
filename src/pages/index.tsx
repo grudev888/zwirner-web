@@ -1,3 +1,4 @@
+import {DzColumn} from '@zwirner/design-system'
 import {GetStaticProps} from 'next'
 
 import {ExhibitionsContainer} from '@/components/exhibitions/exhibitionContainer'
@@ -20,9 +21,9 @@ interface PreviewData {
 
 export default function Page({exhibitions}: PageProps) {
   return (
-    <main className="mt-5 flex min-h-screen justify-center">
+    <DzColumn className="h-screen" start={[1, 2]} span={[12, 10]}>
       <ExhibitionsContainer exhibitions={exhibitions} />
-    </main>
+    </DzColumn>
   )
 }
 

@@ -44,7 +44,10 @@
     cursor-pointer
     justify-between
     border-t
-    border-white-100;
+    border-white-100
+    flex-wrap
+    md:flex-nowrap
+  ;
 }
 
 .leftChild,
@@ -54,8 +57,11 @@
 }
 
 .image {
-  @apply h-full
-    w-full;
+  @apply
+    h-full
+    w-full
+    object-cover
+  ;
 }
 
 .year {
