@@ -9,6 +9,7 @@ services:
       - '3000:3000'
     environment:
       NODE_ENV: development
+      GH_TOKEN: ${GH_TOKEN}
 
 volumes:
   zwirner:
