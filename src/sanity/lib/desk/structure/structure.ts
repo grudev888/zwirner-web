@@ -1,4 +1,6 @@
 import {CogIcon} from '@sanity/icons'
+import {BookIcon} from '@sanity/icons'
+import {TagIcon} from '@sanity/icons'
 import {BlockElementIcon} from '@sanity/icons'
 import {LinkRemovedIcon} from '@sanity/icons'
 import {DocumentsIcon} from '@sanity/icons'
@@ -126,7 +128,52 @@ export const generalStructure = (S: StructureBuilder) =>
                 ),
             ])
         ),
-        S.listItem()
+      S.listItem()
+        .title('Artworks')
+        .icon(ThLargeIcon)
+        .child(
+          S.documentList()
+            .title('Artworks')
+            .filter('_type == "artwork"')
+            .defaultOrdering([{field: 'title', direction: 'asc'}])
+        ),
+      S.listItem()
+        .title('Authors')
+        .icon(UsersIcon)
+        .child(
+          S.documentList()
+            .title('Authors')
+            .filter('_type == "author"')
+            .defaultOrdering([{field: 'name', direction: 'asc'}])
+        ),
+      S.listItem()
+        .title('Books')
+        .icon(BookIcon)
+        .child(
+          S.documentList()
+            .title('Books')
+            .filter('_type == "book"')
+            .defaultOrdering([{field: 'title', direction: 'asc'}])
+        ),
+      S.listItem()
+        .title('Collections')
+        .icon(UsersIcon)
+        .child(
+          S.documentList()
+            .title('Collections')
+            .filter('_type == "collection"')
+            .defaultOrdering([{field: 'title', direction: 'asc'}])
+        ),
+      S.listItem()
+        .title('Events')
+        .icon(TagIcon)
+        .child(
+          S.documentList()
+            .title('Events')
+            .filter('_type == "event"')
+            .defaultOrdering([{field: 'title', direction: 'asc'}])
+        ),
+      S.listItem()
         .title('Exhibitions and Fairs')
         .icon(DashboardIcon)
         .child(() => {
@@ -137,6 +184,15 @@ export const generalStructure = (S: StructureBuilder) =>
             dateKey: 'endDate',
           })
         }),
+      S.listItem()
+        .title('Posts')
+        .icon(BookIcon)
+        .child(
+          S.documentList()
+            .title('Posts')
+            .filter('_type == "post"')
+            .defaultOrdering([{field: 'title', direction: 'asc'}])
+        ),
       S.listItem()
         .title('Press')
         .icon(DocumentsIcon)
@@ -169,7 +225,13 @@ export const generalStructure = (S: StructureBuilder) =>
               'location',
               'page',
               'press',
-              'exhibition'
+              'exhibition',
+              'author',
+              'book',
+              'collection',
+              'event',
+              'post',
+              'artwork',
             ].includes(listItem?.getId() ?? '')
         )
         .sort((a, b) => {
