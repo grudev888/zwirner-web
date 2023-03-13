@@ -5,6 +5,8 @@ RUN apk add --no-cache libc6-compat
 WORKDIR /app
 COPY . .
 
+ENV GH_TOKEN ${GH_TOKEN}
+
 RUN yarn set version berry
 RUN yarn --frozen-lockfile
 
