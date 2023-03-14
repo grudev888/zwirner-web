@@ -7,7 +7,10 @@
     px-5;
 }
 .image {
-  @apply w-full;
+  @apply
+    w-full
+    object-cover
+  ;
 }
 .header {
   @apply relative
