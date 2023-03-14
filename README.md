@@ -30,6 +30,8 @@ docker-compose up -d
 
 7. Voilà! Open this URL http://localhost:3000/ and you should see the system working.
 
+> In case you want to manually install node and yarn to run this app outside the docker container, please make sure you use **Node 19**, and **Yarn 3 (berry)**.
+
 # Updating your the dev database with latest changes done in prod
 
 Login to sanity cli running the following command in a terminal.
@@ -38,7 +40,7 @@ Login to sanity cli running the following command in a terminal.
 docker-compose exec zwirnerweb yarn sanity login
 ```
 
-Choose *Google* as the login type, open the URL that the terminal will show you, and sign in with your David Zwirner google account. If everything went well you should see a message like this:
+Choose _Google_ as the login type, open the URL that the terminal will show you, and sign in with your David Zwirner google account. If everything went well you should see a message like this:
 
 ```bash
 Login successful

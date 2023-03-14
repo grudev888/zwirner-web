@@ -1,5 +1,5 @@
-import {GetStaticProps} from 'next'
 import {DzColumn} from '@zwirner/design-system'
+import {GetStaticProps} from 'next'
 
 import {ExhibitionsContainer} from '@/components/exhibitions/exhibitionContainer'
 import {getAllExhibitions} from '@/sanity/services/exhibition.service'
