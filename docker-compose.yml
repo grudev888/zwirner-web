@@ -2,6 +2,8 @@ services:
   zwirnerweb:
     build:
       context: ./
+      args:
+        - GH_TOKEN=${GH_TOKEN}
     volumes:
       - .:/app
       - zwirner:/app/node_modules

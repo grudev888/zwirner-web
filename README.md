@@ -20,15 +20,17 @@ Follow these instructions to deploy a local environment of the webpage.
 git clone https://github.com/Zwirner/zwirnerweb.git
 ```
 
-5. Duplicate the `.env.local.example` file and rename it as `.env`. Ask engineering for the `SANITY_API_READ_TOKEN` value and replace it in that file.
+5. Create a Github access token: Go to https://github.com/settings/tokens, click on the _Generate new token_ button, choose _Generate new token (classic)_, set a meaningful name like "DZ Package", and make sure you **tick the _read:packages | Download packages from GitHub Package Registry_ option**. Click on Save and copy the token you just created.
 
-6. Open the project folder and let Docker Compose to install everything for you running the following command.
+6. Duplicate the `.env.local.example` file and rename it as `.env`. Ask engineering for the `SANITY_API_READ_TOKEN` value, and replace it in that file. Also, replace the value of the `GH_TOKEN` variable with the token you created in the previous step.
+
+7. Open the project folder and let Docker Compose to install everything for you running the following command.
 
 ```sh
 docker-compose up -d
 ```
 
-7. Voilà! Open this URL http://localhost:3000/ and you should see the system working.
+8. Voilà! Open this URL http://localhost:3000/ and you should see the system working.
 
 > In case you want to manually install node and yarn to run this app outside the docker container, please make sure you use **Node 19**, and **Yarn 3 (berry)**.
 
