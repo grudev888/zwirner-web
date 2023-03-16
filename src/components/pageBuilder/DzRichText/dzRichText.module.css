@@ -1,0 +1,12 @@
+.editorContainer {
+  @apply
+    py-8
+  ;
+}
+
+.mainTitle{
+  @apply
+    text-xxl
+    py-5
+  ;
+}
