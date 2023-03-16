@@ -1,5 +1,6 @@
 import {PortableText} from '@portabletext/react'
 import {getImageDimensions} from '@sanity/asset-utils'
+import Image from 'next/image'
 import {FC} from 'react'
 
 import {builder} from '@/sanity/imageBuilder'
@@ -28,7 +29,7 @@ interface DzRichTextProps {
 const SampleImageComponent = ({value, isInline}: any) => {
   const {width, height} = getImageDimensions(value)
   return (
-    <img
+    <Image
       src={builder
         .image(value)
         .width(isInline ? 100 : 800)
@@ -36,6 +37,8 @@ const SampleImageComponent = ({value, isInline}: any) => {
         .auto('format')
         .url()}
       alt={value.alt || ' '}
+      width={800}
+      height={800}
       loading="lazy"
       style={{
         // Display alongside text if image appears inside a block text span
