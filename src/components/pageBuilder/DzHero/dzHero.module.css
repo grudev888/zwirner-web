@@ -8,7 +8,7 @@
   @apply flex
   flex-col
   flex-wrap
-  p-5;
+  py-5;
 }
 
 .imgContainer {
