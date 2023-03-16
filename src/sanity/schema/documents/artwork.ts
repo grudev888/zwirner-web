@@ -54,7 +54,21 @@ export default defineType({
       title: 'Artwork photos',
       name: 'photos',
       type: 'array',
-      of: [defineArrayMember({type: 'image'})],
+      of: [
+        defineArrayMember({
+          type: 'image',
+          options: {
+            hotspot: true,
+          },
+          fields: [
+            {
+              name: 'alt',
+              type: 'string',
+              title: 'Alternative text',
+            },
+          ],
+        }),
+      ],
     }),
     defineField({
       title: 'Artworks Type to fill',

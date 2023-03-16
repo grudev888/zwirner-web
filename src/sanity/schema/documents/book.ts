@@ -61,7 +61,22 @@ export default defineType({
       name: 'description',
       title: 'Description, body',
       type: 'array',
-      of: [{type: 'block'}, {type: 'image'}],
+      of: [
+        {type: 'block'},
+        {
+          type: 'image',
+          options: {
+            hotspot: true,
+          },
+          fields: [
+            {
+              name: 'alt',
+              type: 'string',
+              title: 'Alternative text',
+            },
+          ],
+        },
+      ],
     }),
     defineField({
       name: 'publishDate',

@@ -30,7 +30,6 @@ import dzRichText from './objects/page/components/dzRichText'
 import pageContent from './objects/page/pageContent'
 import seo from './objects/page/seo'
 import heroType from './objects/presentational/hero'
-import accessibleImage from './objects/utils/accessibleImage'
 import addressType from './objects/utils/address'
 import dateRange from './objects/utils/dateRange'
 import dateSelection from './objects/utils/dateSelection'
@@ -69,7 +68,6 @@ export const schema: {types: SchemaTypeDefinition[]} = {
     artist,
     postType,
     authorType,
-    accessibleImage,
     dateRange,
     redirects,
     footer,
