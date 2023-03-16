@@ -10,13 +10,8 @@ import {DashboardIcon} from '@sanity/icons'
 import {StructureBuilder} from 'sanity/desk'
 import Iframe from 'sanity-plugin-iframe-pane'
 
+import {envHost} from '@/sanity/env'
 import {getSectionsByYear} from '@/sanity/services/structure.service'
-
-const envHost = ['production', 'development', 'preview'].includes(
-  process.env.NEXT_PUBLIC_VERCEL_ENV || ''
-)
-  ? `https://${process.env.NEXT_PUBLIC_VERCEL_URL}`
-  : 'http://localhost:3000'
 
 export const generalStructure = (S: StructureBuilder) =>
   S.list()

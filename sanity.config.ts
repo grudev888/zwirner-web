@@ -2,7 +2,7 @@ import {visionTool} from '@sanity/vision'
 import {Config, defineConfig} from 'sanity'
 import {availability} from 'sanity-plugin-availability'
 
-import {Logo} from '@/components/atoms/DzLogoWrapper'
+import {Logo} from '@/components/wrappers/DzLogoWrapper'
 
 import {schema} from './src/sanity'
 import {dataset, projectId} from './src/sanity/env'
