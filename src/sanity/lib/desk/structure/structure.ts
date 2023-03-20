@@ -8,8 +8,10 @@ import {ThLargeIcon} from '@sanity/icons'
 import {UsersIcon} from '@sanity/icons'
 import {DashboardIcon} from '@sanity/icons'
 import {StructureBuilder} from 'sanity/desk'
+import Iframe from 'sanity-plugin-iframe-pane'
 
-import {getSectionsByYear} from '@/sanity/services/pages.service'
+import {envHost} from '@/sanity/env'
+import {getSectionsByYear} from '@/sanity/services/structure.service'
 
 export const generalStructure = (S: StructureBuilder) =>
   S.list()
@@ -42,12 +44,25 @@ export const generalStructure = (S: StructureBuilder) =>
         .icon(DocumentsIcon)
         .child(
           S.list()
-            .title('Pages Content')
+            .title('Pages')
             .items([
               S.listItem()
                 .title('Home')
                 .icon(BlockElementIcon)
-                .child(S.document().schemaType('home').documentId('home')),
+                .child(
+                  S.document()
+                    .schemaType('home')
+                    .documentId('home')
+                    .views([
+                      S.view.form(),
+                      S.view
+                        .component(Iframe)
+                        .options({
+                          url: `${envHost}/api/sanity/preview`,
+                        })
+                        .title('Preview'),
+                    ])
+                ),
               S.listItem()
                 .title('Collect')
                 .icon(BlockElementIcon)
@@ -72,7 +87,7 @@ export const generalStructure = (S: StructureBuilder) =>
                 .icon(UsersIcon)
                 .child(
                   S.documentList()
-                    .title('Artist Pages Posted')
+                    .title('Artist Pages')
                     .filter('_type == "artistPage"')
                     .defaultOrdering([{field: 'title', direction: 'asc'}])
                 ),
@@ -106,7 +121,7 @@ export const generalStructure = (S: StructureBuilder) =>
         .icon(DocumentsIcon)
         .child(
           S.list()
-            .title('Affiliated to DZ')
+            .title('Artists')
             .items([
               S.listItem()
                 .title('Dz Gallery Artists')
@@ -212,7 +227,6 @@ export const generalStructure = (S: StructureBuilder) =>
               'settings',
               'navigation',
               'footer',
-              'home',
               'collect',
               'stories',
               'availableArtworks',
@@ -223,7 +237,7 @@ export const generalStructure = (S: StructureBuilder) =>
               'artist',
               'article',
               'location',
-              'page',
+              'home',
               'press',
               'exhibition',
               'author',
@@ -232,6 +246,7 @@ export const generalStructure = (S: StructureBuilder) =>
               'event',
               'post',
               'artwork',
+              'page',
             ].includes(listItem?.getId() ?? '')
         )
         .sort((a, b) => {

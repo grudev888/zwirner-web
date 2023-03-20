@@ -1,0 +1,42 @@
+.cardContainer {
+  @apply
+   py-5
+   flex
+   gap-10
+  ;
+}
+
+.imgContainer {
+  @apply
+    relative
+    min-h-[540px]
+    bg-black-20
+    flex-1
+    w-full
+  ;
+}
+
+.infoContainer {
+  @apply
+    flex
+    flex-1
+    flex-col
+    gap-[10px]
+}
+
+.image {
+  @apply
+    object-cover
+    p-8
+  ;
+}
+
+.subtitle {
+  @apply
+  text-black-80
+}
+
+.mainTitle {
+  @apply
+  text-xxl
+}

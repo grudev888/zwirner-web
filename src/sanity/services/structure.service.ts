@@ -49,7 +49,7 @@ export async function getSectionsByYear({
     }
 
     return S.list()
-      .title(`${sectionTitle} pages by year`)
+      .title(`${sectionTitle} by year`)
       .id('year')
       .items(
         Object.keys(years).map((year) => {
@@ -60,7 +60,7 @@ export async function getSectionsByYear({
               S.documentList()
                 .id(type)
                 .schemaType(type)
-                .title(`${sectionTitle} pages from ${year}`)
+                .title(`${sectionTitle} from ${year}`)
                 .filter(`_id in $ids`)
                 .params({ids: years[year]})
             )

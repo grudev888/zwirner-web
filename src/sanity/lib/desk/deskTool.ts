@@ -3,6 +3,8 @@ import {deskTool as baseDeskTool} from 'sanity/desk'
 import {DefaultDocumentNodeResolver} from 'sanity/desk'
 import Iframe from 'sanity-plugin-iframe-pane'
 
+import {envHost} from '@/sanity/env'
+
 import {generalStructure} from './structure/structure'
 
 /**
@@ -28,11 +30,6 @@ export const deskTool = definePlugin(() => {
 })
 
 const defaultDocumentNode: DefaultDocumentNodeResolver = (S, ctx) => {
-  const envHost = ['production', 'development', 'preview'].includes(
-    process.env.NEXT_PUBLIC_VERCEL_ENV || ''
-  )
-    ? `https://${process.env.NEXT_PUBLIC_VERCEL_URL}`
-    : 'http://localhost:3000'
 
   const schemaType = ctx.schema.get(ctx.schemaType)
   const {schemaType: schema} = ctx

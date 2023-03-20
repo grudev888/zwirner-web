@@ -1,4 +1,4 @@
-import {type DocumentDefinition, SchemaTypeDefinition} from 'sanity'
+import {type DocumentDefinition, type ObjectDefinition, SchemaTypeDefinition} from 'sanity'
 
 import article from './documents/article'
 import artist from './documents/artist'
@@ -23,8 +23,13 @@ import paintingType from './objects/artTypes/painting'
 import photographType from './objects/artTypes/photography'
 import sculptureType from './objects/artTypes/sculpture'
 import social from './objects/data/social'
+import dzCard from './objects/page/components/dzCard'
+import dzHero from './objects/page/components/dzHero'
+import dzImage from './objects/page/components/dzImage'
+import dzRichText from './objects/page/components/dzRichText'
+import pageContent from './objects/page/pageContent'
+import seo from './objects/page/seo'
 import heroType from './objects/presentational/hero'
-import accessibleImage from './objects/utils/accessibleImage'
 import addressType from './objects/utils/address'
 import dateRange from './objects/utils/dateRange'
 import dateSelection from './objects/utils/dateSelection'
@@ -35,15 +40,25 @@ import settings from './singletons/settings'
 import stories from './singletons/stories'
 import utopiaEditions from './singletons/utopiaEditions'
 
+export const pageComponents: ObjectDefinition[] = [dzHero, dzCard, dzRichText, dzImage]
+export const objects: ObjectDefinition[] = [
+  drawingType,
+  paintingType,
+  photographType,
+  sculptureType,
+  social,
+  heroType,
+  addressType,
+  dateSelection,
+  seo,
+]
+
 export const singletons: DocumentDefinition[] = [stories, home, collect, utopiaEditions]
 export const schema: {types: SchemaTypeDefinition[]} = {
   types: [
     article,
     press,
-    heroType,
     pageType,
-    paintingType,
-    drawingType,
     bookType,
     locationType,
     event,
@@ -51,15 +66,9 @@ export const schema: {types: SchemaTypeDefinition[]} = {
     collection,
     exhibition,
     artist,
-    sculptureType,
-    photographType,
     postType,
     authorType,
-    accessibleImage,
     dateRange,
-    dateSelection,
-    addressType,
-    social,
     redirects,
     footer,
     navigation,
@@ -68,6 +77,9 @@ export const schema: {types: SchemaTypeDefinition[]} = {
     exhibitionPage,
     fairPage,
     availableArtworks,
+    pageContent,
+    ...objects,
+    ...pageComponents,
     ...singletons,
   ],
 }
