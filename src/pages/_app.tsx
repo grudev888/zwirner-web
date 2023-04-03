@@ -3,10 +3,12 @@ import '@zwirner/design-system/dist/tailwind.css'
 
 import {NextPage} from 'next'
 import type {AppProps} from 'next/app'
+import {ReCaptchaProvider} from 'next-recaptcha-v3'
 import {DefaultSeo} from 'next-seo'
 import SEO from 'next-seo.config'
 import {ReactElement, ReactNode} from 'react'
 
+import {APIProvider} from '@/common/api'
 import DefaultLayout from '@/common/components/Layout'
 import {mono, sans, serif} from '@/common/styles/fonts'
 
@@ -22,10 +24,12 @@ const Wrapper = ({Component, pageProps}: {Component: NextPageWithLayout; pagePro
   const getLayout = Component.getLayout || ((page) => <DefaultLayout>{page}</DefaultLayout>)
 
   return (
-    <>
-      <DefaultSeo {...SEO} />
-      {getLayout(<Component {...pageProps} />)}
-    </>
+    <ReCaptchaProvider reCaptchaKey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}>
+      <APIProvider>
+        <DefaultSeo {...SEO} />
+        {getLayout(<Component {...pageProps} />)}
+      </APIProvider>
+    </ReCaptchaProvider>
   )
 }
 
