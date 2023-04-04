@@ -23,10 +23,15 @@ import paintingType from './objects/artTypes/painting'
 import photographType from './objects/artTypes/photography'
 import sculptureType from './objects/artTypes/sculpture'
 import social from './objects/data/social'
-import dzCard from './objects/page/components/dzCard'
-import dzHero from './objects/page/components/dzHero'
-import dzImage from './objects/page/components/dzImage'
-import dzRichText from './objects/page/components/dzRichText'
+import dzCard from './objects/page/components/molecules/dzCard'
+import dzEditorial from './objects/page/components/molecules/dzEditorial'
+import dzHero from './objects/page/components/molecules/dzHero'
+import dzInterstitial from './objects/page/components/molecules/dzInterstitial'
+import dzSplit from './objects/page/components/molecules/dzSplit'
+import dzTitle from './objects/page/components/molecules/dzTitle'
+import textComplex from './objects/page/components/utils/textComplex'
+import editorialContent from './objects/page/editorialContent'
+import row from './objects/page/layout'
 import pageContent from './objects/page/pageContent'
 import seo from './objects/page/seo'
 import heroType from './objects/presentational/hero'
@@ -40,7 +45,16 @@ import settings from './singletons/settings'
 import stories from './singletons/stories'
 import utopiaEditions from './singletons/utopiaEditions'
 
-export const pageComponents: ObjectDefinition[] = [dzHero, dzCard, dzRichText, dzImage]
+export const utilsObjects: ObjectDefinition[] = [textComplex]
+export const pageComponents: ObjectDefinition[] = [
+  dzHero,
+  dzCard,
+  dzEditorial,
+  dzInterstitial,
+  dzSplit,
+  dzTitle,
+]
+
 export const objects: ObjectDefinition[] = [
   drawingType,
   paintingType,
@@ -51,6 +65,7 @@ export const objects: ObjectDefinition[] = [
   addressType,
   dateSelection,
   seo,
+  row,
 ]
 
 export const singletons: DocumentDefinition[] = [stories, home, collect, utopiaEditions]
@@ -78,8 +93,10 @@ export const schema: {types: SchemaTypeDefinition[]} = {
     fairPage,
     availableArtworks,
     pageContent,
+    editorialContent,
     ...objects,
     ...pageComponents,
     ...singletons,
+    ...utilsObjects,
   ],
 }

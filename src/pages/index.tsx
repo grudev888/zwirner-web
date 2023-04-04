@@ -24,21 +24,16 @@ interface PreviewData {
 }
 
 export default function Page({data, preview}: PageProps) {
+  console.log('DAAATAAA', data)
   if (preview) {
     return (
-      <DzColumn className="h-screen" start={[1, 2]} span={[12, 10]}>
-        <PreviewSuspense fallback="Loading...">
-          <PreviewPageBuilder />
-        </PreviewSuspense>
-      </DzColumn>
+      <PreviewSuspense fallback="Loading...">
+        <PreviewPageBuilder />
+      </PreviewSuspense>
     )
   }
-  return (
-    <DzColumn className="h-screen" start={[1, 2]} span={[12, 10]}>
-      <PageBuilder sections={data.home} />
-      {/* <ExhibitionsContainer exhibitions={data.exhibitions} /> */}
-    </DzColumn>
-  )
+
+  return <PageBuilder rows={data.home} />
 }
 
 export const getStaticProps: GetStaticProps<PageProps, Query, PreviewData> = async (ctx) => {
@@ -67,6 +62,7 @@ export const getStaticProps: GetStaticProps<PageProps, Query, PreviewData> = asy
       data: {
         exhibitions,
         home: homeMapper(homePage),
+        unmapped: homePage,
       },
       preview,
       slug: params?.slug || null,

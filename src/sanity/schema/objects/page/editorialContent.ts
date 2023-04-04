@@ -1,31 +1,25 @@
 import {MasterDetailIcon} from '@sanity/icons'
 import {defineArrayMember, defineType} from 'sanity'
 
-// Artists, artworks and exhibitions
+// Books and press
 export default defineType({
-  name: 'pageContent',
+  name: 'editorialContent',
   title: 'Content',
   type: 'array',
   icon: MasterDetailIcon,
   validation: (rule) => rule.max(1),
   of: [
     defineArrayMember({
-      name: 'artist',
-      title: 'Artist',
+      name: 'book',
+      title: 'Book',
       type: 'reference',
-      to: [{type: 'artist'}],
+      to: [{type: 'book'}],
     }),
     defineArrayMember({
-      name: 'artwork',
-      title: 'Artwork',
+      name: 'press',
+      title: 'Press',
       type: 'reference',
-      to: [{type: 'artwork'}],
-    }),
-    defineArrayMember({
-      name: 'exhibition',
-      title: 'Exhibition',
-      type: 'reference',
-      to: [{type: 'exhibition'}],
+      to: [{type: 'press'}],
     }),
   ],
 })

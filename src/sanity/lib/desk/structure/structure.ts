@@ -239,7 +239,7 @@ export const generalStructure = (S: StructureBuilder) =>
               'location',
               'home',
               'press',
-              'exhibition',
+
               'author',
               'book',
               'collection',

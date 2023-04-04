@@ -2,8 +2,8 @@ import {ComposeIcon, EditIcon, MasterDetailIcon} from '@sanity/icons'
 import {defineField, defineType} from 'sanity'
 
 export default defineType({
-  name: 'dzImage',
-  title: 'Image',
+  name: 'dzEditorial',
+  title: 'Editorial',
   type: 'object',
   icon: MasterDetailIcon,
   groups: [
@@ -18,10 +18,31 @@ export default defineType({
       group: 'content',
     }),
     defineField({
-      name: 'content',
-      title: 'Content',
-      type: 'pageContent',
+      title: 'Type',
+      name: 'editorialType',
+      type: 'string',
       group: 'content',
+      options: {
+        list: [
+          {title: 'Simple', value: 'simple'},
+          {title: 'Complex', value: 'complex'},
+          {title: 'Quote', value: 'quote'},
+        ],
+      },
+      initialValue: 'simple',
+    }),
+    defineField({
+      name: 'content',
+      title: 'Editorial Content',
+      type: 'editorialContent',
+      group: 'content',
+    }),
+    defineField({
+      name: 'editorialTextOverrides',
+      title: 'Text Content',
+      type: 'array',
+      group: 'overrides',
+      of: [{type: 'textComplex'}],
     }),
     defineField({
       name: 'image',

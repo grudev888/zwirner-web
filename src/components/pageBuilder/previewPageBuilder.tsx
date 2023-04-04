@@ -11,7 +11,7 @@ export const PreviewPageBuilder: FC<PreviewPageBuilderProps> = () => {
   const data = usePreview(null, homePage)
   return (
     <>
-      <PageBuilder sections={homeMapper(data)} />
+      <PageBuilder rows={homeMapper(data)} />
       <Link
         className="text-white fixed bottom-0 right-0 bg-blue-500 p-6 font-bold"
         href="/api/sanity/exit-preview"

@@ -79,10 +79,30 @@ export default defineType({
       ],
     }),
     defineField({
-      name: 'publishDate',
-      type: 'date',
-      title: 'Publish Date',
+      title: 'publishDate',
+      name: 'dateSelection',
+      type: 'dateSelection',
       validation: (rule) => rule.required(),
+    }),
+    defineField({
+      title: 'Book photos',
+      name: 'photos',
+      type: 'array',
+      of: [
+        {
+          type: 'image',
+          options: {
+            hotspot: true,
+          },
+          fields: [
+            {
+              name: 'alt',
+              type: 'string',
+              title: 'Alternative text',
+            },
+          ],
+        },
+      ],
     }),
     defineField({
       name: 'price',
@@ -90,7 +110,7 @@ export default defineType({
       title: 'Price',
       validation: (rule) => rule.required(),
       readOnly: ({currentUser}) => {
-        return !currentUser?.roles.find(({name}) => name === 'administrator')
+        return !currentUser?.roles.find(({name}) => name !== 'administrator')
       },
     }),
   ],

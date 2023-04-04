@@ -21,15 +21,30 @@ const pageBuilderFields = groq`
   components[] {
     _type,
     title,
-    // content[0]->{...}
-    'exhibition': content[ _type == 'exhibition']->{
-      ${exhibitionSimpleFields}
-      ${exhibitionComplexFields}
-    },
-    'artist': content[ _type == 'artist']->{..., },
-    'artwork': content[ _type == 'artwork']->{..., },
-    'book': content[ _type == 'book']->{..., },
-    'press': content[ _type == 'press']->{..., },
+    components[] {
+      ...,
+      _type,
+      title,
+      'exhibition': content[ _type == 'exhibition']->{
+        ${exhibitionSimpleFields}
+        ${exhibitionComplexFields}
+      },
+      'artist': content[ _type == 'artist']->{..., },
+      'artwork': content[ _type == 'artwork']->{
+        ...,
+        "artists": artists[]->
+      },
+      'book': content[ _type == 'book']->{
+        ...,
+        "authors": authors[]->,
+        "artists": artists[]->,
+      },
+      'press': content[ _type == 'press']->{
+        ...,
+        "authors": authors[]->
+      },
+
+    }
   },
 `
 

@@ -1,9 +1,9 @@
-import {ComposeIcon, EditIcon, MasterDetailIcon} from '@sanity/icons'
+import {ComposeIcon, EditIcon,MasterDetailIcon} from '@sanity/icons'
 import {defineField, defineType} from 'sanity'
 
 export default defineType({
-  name: 'dzRichText',
-  title: 'RichText',
+  name: 'dzInterstitial',
+  title: 'Interstitial',
   type: 'object',
   icon: MasterDetailIcon,
   groups: [
@@ -18,17 +18,34 @@ export default defineType({
       group: 'content',
     }),
     defineField({
+      name: 'split',
+      title: 'Split',
+      type: 'boolean',
+      group: 'content',
+      initialValue: false,
+      validation: (rule) => rule.required(),
+    }),
+    defineField({
       name: 'content',
       title: 'Content',
       type: 'pageContent',
       group: 'content',
     }),
     defineField({
-      title: 'Complex Text',
-      name: 'complexText',
-      type: 'array',
+      name: 'image',
+      type: 'image',
+      title: 'Image',
       group: 'overrides',
-      of: [{type: 'block'}],
+      options: {
+        hotspot: true,
+      },
+      fields: [
+        {
+          name: 'alt',
+          type: 'string',
+          title: 'Alternative text',
+        },
+      ],
     }),
   ],
 })
