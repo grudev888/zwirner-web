@@ -5,8 +5,10 @@ import {client} from '@/common/api'
 import {IFormInput} from '../types'
 import {Params} from './types'
 
-const BASE_URL = (digest = '') =>
-  `https://zksx0lbaai.execute-api.us-east-1.amazonaws.com/default/FormsAPIPOC-Mailchimp/${digest}`
+const BASE_URL = (path = '', queryParams: any = null) =>
+  `https://zksx0lbaai.execute-api.us-east-1.amazonaws.com/default/FormsAPIPOC-Mailchimp/${path}${
+    queryParams ? '?' + new URLSearchParams(queryParams).toString() : ''
+  }`
 
 export const useForms = (params: Params) => {
   const {data, error, isLoading} = useSWR(BASE_URL(params.digest))
@@ -19,5 +21,8 @@ export const useForms = (params: Params) => {
       token,
     })
 
-  return {data, error, isLoading, addOrUpdate}
+  const getEmailToken = async (email: string) =>
+    (await client.get(BASE_URL('token', {email})))?.data
+
+  return {data, error, isLoading, addOrUpdate, getEmailToken}
 }

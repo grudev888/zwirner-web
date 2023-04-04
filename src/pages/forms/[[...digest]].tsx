@@ -5,6 +5,7 @@ import {
   DzInput,
   DzInputGroups,
   DzInputText,
+  DzLink,
   DzTitle,
   INPUT_GROUP_TYPES,
   TITLE_SIZES,
@@ -15,7 +16,7 @@ import {useRouter} from 'next/router'
 import {useReCaptcha} from 'next-recaptcha-v3'
 import {useCallback, useEffect, useState} from 'react'
 import {SubmitHandler, useForm} from 'react-hook-form'
-import { uuid } from 'uuidv4';
+import {uuid} from 'uuidv4'
 
 import {useForms as useFormsAPI} from '@/forms/api/useForms'
 import {IFormInput} from '@/forms/types'
@@ -23,10 +24,9 @@ import {EMAIL_REGEX} from '@/forms/utils'
 
 const Forms = () => {
   const router = useRouter()
+  const digest = router.query.digest?.[0]
 
-  const {data, addOrUpdate, isLoading, error} = useFormsAPI({
-    digest: router.query.digest?.[0],
-  })
+  const {data, addOrUpdate, getEmailToken, isLoading, error} = useFormsAPI({digest})
 
   const {
     register,
@@ -38,6 +38,7 @@ const Forms = () => {
   const {executeRecaptcha} = useReCaptcha()
 
   const [formId, _] = useState(uuid())
+  const [token, setToken] = useState<string | null>(null)
 
   useEffect(() => {
     if (data?.interests) {
@@ -78,7 +79,8 @@ const Forms = () => {
               ...formData.interests.reduce((prev, i) => ({...prev, [i]: true}), {}),
             },
           },
-          token
+          token,
+          digest
         )
 
         alert('Thanks for your subscription')
@@ -90,9 +92,14 @@ const Forms = () => {
         }
 
         alert(msg)
+
+        if (msg === 'Email already submitted') {
+          const {token} = await getEmailToken(formData.email)
+          setToken(token)
+        }
       }
     },
-    [addOrUpdate, data?.interests, executeRecaptcha]
+    [addOrUpdate, data?.interests, digest, executeRecaptcha, getEmailToken]
   )
 
   if (isLoading || error) return null
@@ -167,6 +174,13 @@ const Forms = () => {
             hasError={!!errors.terms?.message}
             {...register('terms', {required: 'Please accept the terms and conditions'})}
           />
+        )}
+
+        {token && (
+          <DzLink href={`/forms/${token}`}>
+            You are already registered in our newsletter.{' '}
+            <strong>Click here to update your preferences</strong>.
+          </DzLink>
         )}
 
         <DzButton className="mt-5 w-full" type="submit">
