@@ -1,4 +1,3 @@
-import {DzColumn} from '@zwirner/design-system'
 import {GetStaticProps} from 'next'
 import {PreviewSuspense} from 'next-sanity/preview'
 
