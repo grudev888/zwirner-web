@@ -19,10 +19,10 @@ interface PageBuilderProps {
 export const PageBuilder: FC<PageBuilderProps> = ({sections = []}) => {
   return (
     <DzColumn className="h-screen divide-y" span={12}>
-      {Object.entries(sections).map((section, k) => {
+      {Object.entries(sections).map((section) => {
         const [type, data] = section
         const Component = componentsIndex[type]
-        return <Component className=""key={`${k}-${type}`} data={data}/>
+        return Component && <Component key={data._id} data={data} />
       })}
     </DzColumn>
   )
