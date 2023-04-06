@@ -6,7 +6,7 @@ import {IFormInput} from '../types'
 import {Params} from './types'
 
 const BASE_URL = (path = '', queryParams: any = null) =>
-  `https://zksx0lbaai.execute-api.us-east-1.amazonaws.com/default/FormsAPIPOC-Mailchimp/${path}${
+  `${process.env.NEXT_PUBLIC_FORMS_API}${path}${
     queryParams ? '?' + new URLSearchParams(queryParams).toString() : ''
   }`
 
