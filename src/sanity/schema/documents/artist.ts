@@ -69,8 +69,10 @@ export default defineType({
       type: 'url',
       title: 'Artist url',
       validation: (Rule) =>
-        Rule.uri({
-          scheme: ['https', 'mailto', 'tel'],
+        Rule.required().uri({
+          allowRelative: true,
+          relativeOnly: false,
+          scheme: ['https', 'http', 'mailto'],
         }),
     }),
     defineField({

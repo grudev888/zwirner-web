@@ -23,12 +23,7 @@ export default defineType({
       validation: (rule) => rule.required(),
     }),
     defineField({
-      title: 'Geo-location',
-      name: 'geoLocation',
-      type: 'geopoint',
-    }),
-    defineField({
-      title: 'Hours',
+      title: 'Operating Hours',
       name: 'hours',
       type: 'availability',
     }),
@@ -36,13 +31,12 @@ export default defineType({
       name: 'phone',
       title: 'Phone number',
       type: 'string',
+      validation: (Rule) =>
+        Rule.regex(
+          /^\s*(?:\+?(\d{1,3}))?[-. (]*(\d{3})[-. )]*(\d{3})[-. ]*(\d{4})(?: *x(\d+))?\s*$/
+        ).error('Check the phone number format'),
       // todo create a custom field with country selection, masks and validation
       // https://www.sanity.io/docs/validation#4dc8b38bc411
-    }),
-    defineField({
-      name: 'summary',
-      title: 'Summary',
-      type: 'text',
     }),
     defineField({
       name: 'description',
@@ -56,7 +50,9 @@ export default defineType({
       title: 'Location url',
       validation: (Rule) =>
         Rule.uri({
-          scheme: ['https', 'mailto', 'tel'],
+          allowRelative: true,
+          relativeOnly: false,
+          scheme: ['https', 'http', 'mailto'],
         }),
     }),
     defineField({
@@ -71,6 +67,7 @@ export default defineType({
           {title: 'Museum', value: 'museum'},
         ],
       },
+      validation: (rule) => rule.required(),
     }),
     defineField({
       title: 'Location photos',
