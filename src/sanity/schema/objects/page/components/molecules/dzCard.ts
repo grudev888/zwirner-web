@@ -16,6 +16,19 @@ export default defineType({
       type: 'string',
       title: 'Component title',
       group: 'content',
+      validation: (rule) => rule.required(),
+    }),
+    defineField({
+      name: 'primaryCTA',
+      title: 'Primary CTA',
+      type: 'cta',
+      group: 'content',
+    }),
+    defineField({
+      name: 'secondaryCTA',
+      title: 'Secondary CTA',
+      type: 'cta',
+      group: 'content',
     }),
     defineField({
       name: 'content',

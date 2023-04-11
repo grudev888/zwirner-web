@@ -10,7 +10,6 @@ interface DzSplitProps {
 export const DzSplit: FC<DzSplitProps> = ({data}) => {
   const {_type} = data ?? {}
   const mappedData = (splitMappers[_type] ?? ((a: any) => a))(data)
-  console.log('DATAAAA:::', _type, data)
 
   return <DzSplitMolecule {...mappedData} />
 }

@@ -23,7 +23,6 @@ interface PreviewData {
 }
 
 export default function Page({data, preview}: PageProps) {
-  console.log('DAAATAAA', data)
   if (preview) {
     return (
       <PreviewSuspense fallback="Loading...">

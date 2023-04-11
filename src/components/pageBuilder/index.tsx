@@ -25,7 +25,6 @@ const getRows = (numberOfSections: number): ColumnSpan | ColumnSpan[] => {
   return (12 / numberOfSections) as ColumnSpan
 }
 export const PageBuilder: FC<PageBuilderProps> = ({rows = []}) => {
-  console.log('rows', rows)
   return (
     <DzColumn className="h-screen px-5" span={12}>
       <DzGridColumns className="h-full w-full">
