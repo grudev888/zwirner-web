@@ -8,9 +8,9 @@ import {ThLargeIcon} from '@sanity/icons'
 import {UsersIcon} from '@sanity/icons'
 import {DashboardIcon} from '@sanity/icons'
 import {StructureBuilder} from 'sanity/desk'
-import Iframe from 'sanity-plugin-iframe-pane'
 
 import {envHost} from '@/sanity/env'
+import {PreviewIframe} from '@/sanity/lib/preview/customIframe/previewIframe'
 import {getSectionsByYear} from '@/sanity/services/structure.service'
 
 export const generalStructure = (S: StructureBuilder) =>
@@ -56,7 +56,7 @@ export const generalStructure = (S: StructureBuilder) =>
                     .views([
                       S.view.form(),
                       S.view
-                        .component(Iframe)
+                        .component(PreviewIframe)
                         .options({
                           url: `${envHost}/api/sanity/preview`,
                         })

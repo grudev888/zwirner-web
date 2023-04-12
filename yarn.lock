@@ -1865,6 +1865,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@headlessui/tailwindcss@npm:^0.1.2":
+  version: 0.1.2
+  resolution: "@headlessui/tailwindcss@npm:0.1.2"
+  peerDependencies:
+    tailwindcss: ^3.0
+  checksum: 3499f69eee3d127c2c43c3ba87f8d13bd5778cad4257801314b9aaf6bc085d8f9fcb9f400c4613df5faaa2b9c5e1721500a9abaf9138fa7ca74fe81e6fb9803d
+  languageName: node
+  linkType: hard
+
 "@heroicons/react@npm:^2.0.15":
   version: 2.0.16
   resolution: "@heroicons/react@npm:2.0.16"
@@ -12181,6 +12190,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "zwirnerweb@workspace:."
   dependencies:
+    "@headlessui/tailwindcss": ^0.1.2
     "@next/font": ^13.1.2
     "@portabletext/react": ^2.0.0
     "@sanity/color": ^2.2.2

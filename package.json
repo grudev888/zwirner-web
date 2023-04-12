@@ -28,6 +28,7 @@
     "singleQuote": true
   },
   "dependencies": {
+    "@headlessui/tailwindcss": "^0.1.2",
     "@next/font": "^13.1.2",
     "@portabletext/react": "^2.0.0",
     "@sanity/demo": "^1.0.1",
@@ -47,7 +48,6 @@
     "sanity": "^3.3.1",
     "sanity-plugin-asset-source-unsplash": "^1.0.6",
     "sanity-plugin-availability": "^1.0.1",
-    "sanity-plugin-iframe-pane": "^2.1.1",
     "styled-components": "^5.3.6",
     "suspend-react": "^0.0.9"
   },
