@@ -1,5 +1,5 @@
 import {MasterDetailIcon} from '@sanity/icons'
-import {defineArrayMember, defineType} from 'sanity'
+import {defineType} from 'sanity'
 
 export default defineType({
   name: 'pageContentList',
