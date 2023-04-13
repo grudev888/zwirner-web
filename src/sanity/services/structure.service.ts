@@ -6,8 +6,8 @@ import {getEndDateExhibitionsDate} from '@/sanity/queries/exhibitionPage.queries
 import {getEndDateFairPagesDate} from '@/sanity/queries/fairPage.queries'
 import {getPressByDate} from '@/sanity/queries/press.queries'
 import exhibition from '@/sanity/schema/documents/exhibition'
-import exhibitionPage from '@/sanity/schema/documents/exhibitionPage'
-import fairPage from '@/sanity/schema/documents/fairPage'
+import exhibitionPage from '@/sanity/schema/documents/pages/exhibitionPage'
+import fairPage from '@/sanity/schema/documents/pages/fairPage'
 import press from '@/sanity/schema/documents/press'
 
 interface StructureBuilderProps {

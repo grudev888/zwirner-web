@@ -1,12 +1,15 @@
-import {CogIcon} from '@sanity/icons'
-import {BookIcon} from '@sanity/icons'
-import {TagIcon} from '@sanity/icons'
-import {BlockElementIcon} from '@sanity/icons'
-import {LinkRemovedIcon} from '@sanity/icons'
-import {DocumentsIcon} from '@sanity/icons'
-import {ThLargeIcon} from '@sanity/icons'
-import {UsersIcon} from '@sanity/icons'
-import {DashboardIcon} from '@sanity/icons'
+import {
+  BlockElementIcon,
+  BookIcon,
+  CogIcon,
+  DashboardIcon,
+  DocumentsIcon,
+  LinkRemovedIcon,
+  PinIcon,
+  TagIcon,
+  ThLargeIcon,
+  UsersIcon,
+} from '@sanity/icons'
 import {StructureBuilder} from 'sanity/desk'
 
 import {envHost} from '@/sanity/env'
@@ -36,6 +39,16 @@ export const generalStructure = (S: StructureBuilder) =>
                 .title('Footer')
                 .icon(BlockElementIcon)
                 .child(S.document().schemaType('footer').documentId('footer')),
+              S.divider(),
+              S.listItem()
+                .title('Locations')
+                .icon(PinIcon)
+                .child(
+                  S.documentList()
+                    .title('Locations')
+                    .filter('_type == "location"')
+                    .defaultOrdering([{field: 'name', direction: 'asc'}])
+                ),
             ])
         ),
       S.divider(),
@@ -236,13 +249,13 @@ export const generalStructure = (S: StructureBuilder) =>
               'fairPage',
               'artist',
               'article',
-              'location',
               'home',
               'press',
-
+              'location',
               'author',
               'book',
               'collection',
+              'exhibition',
               'event',
               'post',
               'artwork',
