@@ -1,9 +1,6 @@
 import {definePlugin, DocumentOptions, DocumentPluginOptions} from 'sanity'
 import {deskTool as baseDeskTool} from 'sanity/desk'
 import {DefaultDocumentNodeResolver} from 'sanity/desk'
-import Iframe from 'sanity-plugin-iframe-pane'
-
-import {envHost} from '@/sanity/env'
 
 import {generalStructure} from './structure/structure'
 
@@ -30,27 +27,9 @@ export const deskTool = definePlugin(() => {
 })
 
 const defaultDocumentNode: DefaultDocumentNodeResolver = (S, ctx) => {
-
   const schemaType = ctx.schema.get(ctx.schemaType)
-  const {schemaType: schema} = ctx
   const schemaOptions: DocumentOptions | undefined = schemaType?.options
   const viewsResolver = schemaOptions?.views
-
-  if (schema === 'page') {
-    return S.document().views([
-      S.view.form(),
-      S.view
-        .component(Iframe)
-        .options({
-          url: (doc: any) => {
-            return doc?.slug?.current
-              ? `${envHost}/api/sanity/preview?slug=${doc.slug.current}`
-              : `${envHost}/api/sanity/preview`
-          },
-        })
-        .title('Preview'),
-    ])
-  }
 
   if (viewsResolver) {
     return S.document().views(viewsResolver(S, ctx))

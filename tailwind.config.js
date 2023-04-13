@@ -69,6 +69,5 @@ module.exports = {
       },
     },
   },
-  // TODO check if needed
-  plugins: [require('@tailwindcss/typography')],
+  plugins: [require('@headlessui/tailwindcss'), require('@tailwindcss/typography')],
 }
