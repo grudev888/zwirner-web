@@ -6,7 +6,7 @@ import {FC, useState} from 'react'
 
 import styles from './previewIframe.module.css'
 
-// ToDO: import it from the design system
+// TODO: import it from the design system
 const breakpoints = [
   {
     id: 1,
