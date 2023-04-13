@@ -21,7 +21,7 @@ export const PageBuilder: FC<PageBuilderProps> = ({sections = []}) => {
     <DzColumn className="h-screen divide-y" span={12}>
       {Object.entries(sections).map((section, k) => {
         const [type, data] = section
-        const Component = componentsIndex[type]
+        const Component = componentsIndex[type] ?? 'div'
         return <Component className=""key={`${k}-${type}`} data={data}/>
       })}
     </DzColumn>
