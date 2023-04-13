@@ -51,8 +51,10 @@ export default defineType({
       type: 'url',
       title: 'Press url',
       validation: (Rule) =>
-        Rule.uri({
-          scheme: ['https', 'http'],
+        Rule.required().uri({
+          allowRelative: true,
+          relativeOnly: false,
+          scheme: ['https', 'http', 'mailto'],
         }),
     }),
     defineField({
