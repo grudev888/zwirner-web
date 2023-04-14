@@ -47,6 +47,7 @@ export const generalStructure = (S: StructureBuilder) =>
                   S.documentList()
                     .title('Locations')
                     .filter('_type == "location"')
+                    .schemaType('location')
                     .defaultOrdering([{field: 'name', direction: 'asc'}])
                 ),
             ])

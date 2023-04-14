@@ -31,7 +31,7 @@ export const PageBuilder: FC<PageBuilderProps> = ({rows = []}) => {
         {rows.map((row: any) => {
           const {components} = row
           const getColSpan = getRows(components?.length ?? 0)
-          return components.map((section: any, k: number) => {
+          return components?.map((section: any, k: number) => {
             const {type, data} = section
             const Component = componentsIndex[type]
             const renderComponent = !Component ? (

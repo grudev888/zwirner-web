@@ -21,7 +21,7 @@ export const exhibitionPageSlugs = groq`
 export const exhibitionPageBySlug = groq`
 *[_type == "exhibitionPage" && slug.current == $slug][0] {
   ...,
-  "artist": artist->,
+  "exhibition": exhibition->,
   components[] {
     _type,
     title,

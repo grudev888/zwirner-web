@@ -91,7 +91,7 @@ export default defineType({
       validation: (rule) => rule.required(),
     }),
     defineField({
-      name: 'sections',
+      name: 'components',
       title: 'Sections',
       type: 'array',
       group: 'content',
