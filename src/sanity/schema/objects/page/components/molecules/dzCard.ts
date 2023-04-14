@@ -1,4 +1,4 @@
-import {ComposeIcon, EditIcon,MasterDetailIcon} from '@sanity/icons'
+import {ComposeIcon, EditIcon, MasterDetailIcon} from '@sanity/icons'
 import {defineField, defineType} from 'sanity'
 
 export default defineType({

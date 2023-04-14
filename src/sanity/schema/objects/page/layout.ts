@@ -1,9 +1,11 @@
+import { MasterDetailIcon} from '@sanity/icons'
 import {defineArrayMember, defineField, defineType} from 'sanity'
 
 export default defineType({
   name: 'row',
   title: 'Row',
   type: 'object',
+  icon: MasterDetailIcon,
   fields: [
     defineField({
       name: 'title',
@@ -25,6 +27,11 @@ export default defineType({
           name: 'dzHeroCarousel',
           title: 'HeroCarousel',
           type: 'dzHeroCarousel',
+        }),
+        defineArrayMember({
+          name: 'grid',
+          title: 'Grid',
+          type: 'grid',
         }),
         defineArrayMember({
           name: 'dzCard',
