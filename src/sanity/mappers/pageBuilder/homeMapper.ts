@@ -11,7 +11,7 @@ export const homeMapper = (data: any[]) => {
         const {_type, ...rest} = component
         const mapper: any = componentMapper?.[_type] ?? ((d: any) => d)
         return {
-          type:_type,
+          type: _type,
           data: mapper(contentTransformer(rest)),
         }
       }) ?? []

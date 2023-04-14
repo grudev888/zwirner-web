@@ -35,7 +35,6 @@ export default defineType({
           title: 'Row',
           type: 'row',
         }),
-
       ],
     }),
   ],

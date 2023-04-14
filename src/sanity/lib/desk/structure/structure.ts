@@ -103,6 +103,21 @@ export const generalStructure = (S: StructureBuilder) =>
                     .title('Artist Pages')
                     .filter('_type == "artistPage"')
                     .defaultOrdering([{field: 'title', direction: 'asc'}])
+                    .child(
+                      S.document()
+                      .schemaType('artistPage')
+                      .views([
+                        S.view.form(),
+                        S.view
+                          .component(PreviewIframe)
+                          .options({
+                            url: (doc:any)=> {
+                              return `${envHost}/api/sanity/preview?slug=${doc?.slug?.current}&section=artists`
+                            },
+                          })
+                          .title('Preview'),
+                      ])
+                    )
                 ),
               S.listItem()
                 .title('Exhibition Pages')
@@ -112,7 +127,9 @@ export const generalStructure = (S: StructureBuilder) =>
                     S,
                     sectionTitle: 'Exhibition',
                     type: 'exhibitionPage',
-                    dateKey: 'endDate',
+                    preview: {
+                      section: 'exhibitions'
+                    }
                   })
                 }),
               S.listItem()
@@ -123,7 +140,9 @@ export const generalStructure = (S: StructureBuilder) =>
                     S,
                     sectionTitle: 'Fair',
                     type: 'fairPage',
-                    dateKey: 'endDate',
+                    preview: {
+                      section: 'fairs'
+                    }
                   })
                 }),
             ])
@@ -209,7 +228,6 @@ export const generalStructure = (S: StructureBuilder) =>
             S,
             sectionTitle: 'Exhibitions & Fairs',
             type: 'exhibition',
-            dateKey: 'endDate',
           })
         }),
       S.listItem()
@@ -229,7 +247,6 @@ export const generalStructure = (S: StructureBuilder) =>
             S,
             sectionTitle: 'Press',
             type: 'press',
-            dateKey: 'publishDate',
           })
         }),
       ...S.documentTypeListItems()

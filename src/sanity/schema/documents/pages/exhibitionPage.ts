@@ -91,7 +91,7 @@ export default defineType({
       to: [{type: exhibition.name}],
     }),
     defineField({
-      name: 'sections',
+      name: 'components',
       title: 'Sections',
       type: 'array',
       group: 'content',

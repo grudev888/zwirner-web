@@ -92,7 +92,7 @@ export default defineType({
       to: [{type: artist.name}],
     }),
     defineField({
-      name: 'sections',
+      name: 'components',
       title: 'Sections',
       type: 'array',
       group: 'content',

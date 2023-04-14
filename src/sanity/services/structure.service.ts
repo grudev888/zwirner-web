@@ -1,6 +1,8 @@
 import {type DocumentListBuilder, type ListBuilder, StructureBuilder} from 'sanity/desk'
 
 import {client} from '@/sanity/client'
+import {envHost} from '@/sanity/env'
+import {PreviewIframe} from '@/sanity/lib/preview/customIframe/previewIframe'
 import {getExhibitionByDate} from '@/sanity/queries/exhibition.queries'
 import {getEndDateExhibitionsDate} from '@/sanity/queries/exhibitionPage.queries'
 import {getEndDateFairPagesDate} from '@/sanity/queries/fairPage.queries'
@@ -9,13 +11,16 @@ import exhibition from '@/sanity/schema/documents/exhibition'
 import exhibitionPage from '@/sanity/schema/documents/pages/exhibitionPage'
 import fairPage from '@/sanity/schema/documents/pages/fairPage'
 import press from '@/sanity/schema/documents/press'
-
 interface StructureBuilderProps {
   S: StructureBuilder
   sectionTitle: string
   type: string
-  dateKey: string
+  preview?: PreviewProps
 }
+interface PreviewProps {
+  section: 'exhibitions' | 'fairs' | 'artists'
+}
+
 const queryByType: any = {
   [exhibitionPage.name]: getEndDateExhibitionsDate,
   [fairPage.name]: getEndDateFairPagesDate,
@@ -26,6 +31,7 @@ export async function getSectionsByYear({
   S,
   sectionTitle,
   type,
+  preview,
 }: StructureBuilderProps): Promise<ListBuilder | DocumentListBuilder> {
   const defaultView = S.documentList()
     .title(`${sectionTitle} Pages Posted`)
@@ -48,6 +54,19 @@ export async function getSectionsByYear({
       return defaultView
     }
 
+    const includePreview = preview
+      ? [
+          S.view
+            .component(PreviewIframe)
+            .options({
+              url: (doc: any) => {
+                return `${envHost}/api/sanity/preview?slug=${doc?.slug?.current}&section=${preview.section}`
+              },
+            })
+            .title('Preview'),
+        ]
+      : []
+
     return S.list()
       .title(`${sectionTitle} by year`)
       .id('year')
@@ -59,10 +78,17 @@ export async function getSectionsByYear({
             .child(
               S.documentList()
                 .id(type)
-                .schemaType(type)
                 .title(`${sectionTitle} from ${year}`)
                 .filter(`_id in $ids`)
                 .params({ids: years[year]})
+                .child(
+                  S.document()
+                    .schemaType(type)
+                    .views([
+                      S.view.form(),
+                      ...includePreview
+                    ])
+                )
             )
         })
       )
