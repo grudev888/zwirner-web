@@ -19,6 +19,12 @@ export default defineType({
       hidden: ({parent, value}) => {
         return !!(!value && parent?.external)
       },
+      validation: (Rule) =>
+        Rule.required().uri({
+          allowRelative: true,
+          relativeOnly: true,
+          scheme: ['https', 'http', 'mailto'],
+        }),
     }),
   ],
 })

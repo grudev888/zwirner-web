@@ -44,6 +44,10 @@ export default defineType({
       name: 'endDate',
       title: 'End Date',
       type: 'date',
+      validation: (Rule) =>
+        Rule.required()
+          .min(Rule.valueOfField('startDate'))
+          .error('The end date should be greater than the start date'),
     }),
     defineField({
       name: 'events',

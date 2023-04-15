@@ -1,0 +1,157 @@
+.container {
+  @apply flex
+    h-full
+    flex-col
+    bg-black-10;
+}
+
+.headerMenu {
+  @apply flex
+    max-h-11
+    w-full
+    gap-3
+    border-b
+    border-black-40
+    bg-white-100
+    p-2;
+}
+
+.mobileContainer {
+  @apply flex
+    cursor-pointer
+    items-center
+    rounded-md
+    border
+    border-black-80
+    bg-white-100
+    p-1
+    text-black-100
+    hover:bg-black-100
+    hover:text-white-100;
+}
+
+.copyBtn {
+  @apply flex
+    items-center
+    rounded-md
+    bg-black-60
+    p-2
+    text-white-100
+    hover:bg-black-100;
+}
+
+.copyIcon {
+  @apply min-h-[1.25rem]
+    min-w-[1.25rem];
+}
+
+.openBtn {
+  @apply flex
+    items-center
+    gap-2
+    rounded-md
+    bg-black-100
+    p-2
+    text-sm
+    text-white-100;
+}
+
+.inputUrl {
+  @apply w-full
+    text-md
+    text-black-80
+    outline-none;
+}
+
+.mobileViewer {
+  @apply flex
+    min-h-[2.5rem]
+    w-full
+    content-center
+    justify-center
+    gap-4
+    bg-white-100;
+}
+
+.openMobile {
+  @apply bg-black-100
+    text-white-100;
+}
+
+.visualizeScreen {
+  @apply flex
+    items-center
+    justify-center
+    gap-1;
+}
+
+.inputViewport {
+  @apply max-w-[5rem]
+    rounded-md
+    bg-black-20
+    px-1
+    text-center
+    text-sm;
+}
+
+.rotateViewport {
+  @apply my-2
+    flex
+    cursor-pointer
+    items-center
+    justify-center
+    rounded-md
+    border
+    border-black-40
+    hover:bg-black-100
+    hover:text-white-100;
+}
+
+.rotateIcon {
+  @apply min-h-[1.25rem]
+    min-w-[1.25rem];
+}
+
+.selectionSection {
+  @apply relative
+    flex
+    content-center
+    items-center
+    gap-2;
+}
+
+.selector {
+  @apply flex
+    items-center
+    gap-1
+    rounded-md
+    border
+    px-2
+    text-sm;
+}
+
+.selectorOptions {
+  @apply absolute
+    top-8
+    right-0
+    rounded-md
+    bg-white-100;
+}
+
+.selectorOption {
+  @apply cursor-pointer
+    p-2
+    text-sm
+    hover:bg-black-20
+    ui-selected:bg-black-40;
+}
+
+.optionSelected {
+  @apply bg-black-60;
+}
+
+.frame {
+  @apply h-full
+    max-h-[100%]
+    w-full;
+}
