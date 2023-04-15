@@ -11,15 +11,12 @@ const BASE_URL = (path = '', queryParams: any = null) =>
   }`
 
 export const useForms = (params: Params) => {
-  const {data, error, isLoading} = useSWR(BASE_URL(params.digest))
+  const {data, error, isLoading} = useSWR(
+    BASE_URL(`forms/${params.digest ? `submissions/${encodeURIComponent(params.digest)}` : ''}`)
+  )
 
   const addOrUpdate = async (form: IFormInput, token: string, digest = '') =>
-    await client.post(BASE_URL(digest), {
-      ...form,
-      Email: form.email,
-      interests: form.interests,
-      token,
-    })
+    await client.post(BASE_URL(`forms/submissions/${encodeURIComponent(digest)}`), {...form, token})
 
   const getEmailToken = async (email: string) =>
     (await client.get(BASE_URL('token', {email})))?.data
