@@ -24,6 +24,7 @@ import photographType from './objects/artTypes/photography'
 import sculptureType from './objects/artTypes/sculpture'
 import social from './objects/data/social'
 import dzCard from './objects/page/components/molecules/dzCard'
+import dzCarousel from './objects/page/components/molecules/dzCarousel'
 import dzEditorial from './objects/page/components/molecules/dzEditorial'
 import dzHero from './objects/page/components/molecules/dzHero'
 import dzHeroCarousel from './objects/page/components/molecules/DzHeroCarousel'
@@ -60,6 +61,7 @@ export const pageComponents: ObjectDefinition[] = [
   dzSplit,
   dzTitle,
   dzHeroCarousel,
+  dzCarousel,
 ]
 
 export const objects: ObjectDefinition[] = [
