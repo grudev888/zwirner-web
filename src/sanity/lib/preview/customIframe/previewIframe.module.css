@@ -58,7 +58,7 @@
 
 .inputUrl {
   @apply w-full
-    text-md
+    text-sm
     text-black-80
     outline-none;
 }

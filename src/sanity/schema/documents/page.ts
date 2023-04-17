@@ -1,5 +1,5 @@
 import {ComposeIcon, MasterDetailIcon, SearchIcon} from '@sanity/icons'
-import {defineArrayMember,defineField, defineType} from 'sanity'
+import {defineArrayMember, defineField, defineType} from 'sanity'
 
 export default defineType({
   name: 'page',
@@ -42,27 +42,12 @@ export default defineType({
       group: 'content',
       of: [
         defineArrayMember({
-          name: 'dzHero',
-          title: 'Hero',
-          type: 'dzHero',
+          name: 'row',
+          title: 'Row',
+          type: 'row',
         }),
-        defineArrayMember({
-          name: 'dzCard',
-          title: 'Card',
-          type: 'dzCard',
-        }),
-        defineArrayMember({
-          name: 'dzRichText',
-          title: 'RichText',
-          type: 'dzRichText',
-        }),
-        defineArrayMember({
-          name: 'dzImage',
-          title: 'Image',
-          type: 'dzImage',
-        }),
+
       ],
     }),
-
   ],
 })

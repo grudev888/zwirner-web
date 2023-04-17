@@ -1,6 +1,7 @@
 import {MasterDetailIcon} from '@sanity/icons'
 import {defineArrayMember, defineType} from 'sanity'
 
+// Artists, artworks and exhibitions
 export default defineType({
   name: 'pageContent',
   title: 'Content',
@@ -21,22 +22,10 @@ export default defineType({
       to: [{type: 'artwork'}],
     }),
     defineArrayMember({
-      name: 'book',
-      title: 'Book',
-      type: 'reference',
-      to: [{type: 'book'}],
-    }),
-    defineArrayMember({
       name: 'exhibition',
       title: 'Exhibition',
       type: 'reference',
       to: [{type: 'exhibition'}],
-    }),
-    defineArrayMember({
-      name: 'press',
-      title: 'Press',
-      type: 'reference',
-      to: [{type: 'press'}],
     }),
   ],
 })

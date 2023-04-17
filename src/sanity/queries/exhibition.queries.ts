@@ -1,5 +1,7 @@
 import {groq} from 'next-sanity'
 
+import exhibitionType from '@/sanity/schema/documents/exhibition'
+
 export const exhibitionSimpleFields = groq`
   _id,
   title,
@@ -23,13 +25,17 @@ export const exhibitionComplexFields = groq`
 `
 
 export const allExhibitions = groq`
-*[_type == "exhibition"] | order(date desc, _updatedAt desc) {
+*[_type == "${exhibitionType.name}"] | order(date desc, _updatedAt desc) {
   ${exhibitionSimpleFields}
   ${exhibitionComplexFields}
 }`
 
 export const getExhibitionByDate = groq`
-*[_type == "press"] {
+*[_type == "${exhibitionType.name}"] {
   ${exhibitionDateFields}
 }`
 
+export const exhibitionById = groq`
+*[_type == "${exhibitionType.name}" && _id == $exhibitionId ] {
+  ...
+}`

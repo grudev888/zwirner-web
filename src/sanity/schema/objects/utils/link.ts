@@ -4,20 +4,37 @@ export default defineType({
   name: 'link',
   type: 'object',
   title: 'Link',
+  options: {
+    collapsible: true,
+    collapsed: false,
+  },
   fields: [
     defineField({
-      name: 'external',
-      type: 'url',
-      title: 'URL',
+      name: 'externalLink',
+      type: 'object',
+      title: 'External link',
+      fields: [
+        {
+          name: 'href',
+          type: 'url',
+          title: 'URL',
+        },
+        {
+          title: 'Open in new tab',
+          name: 'blank',
+          description: 'Read https://css-tricks.com/use-target_blank/',
+          type: 'boolean',
+        },
+      ],
       hidden: ({parent, value}) => {
-        return !!(!value && parent?.internal)
+        return !!(!value && parent?.internalLink)
       },
     }),
     defineField({
-      name: 'internal',
+      name: 'internalLink',
       type: 'url',
       hidden: ({parent, value}) => {
-        return !!(!value && parent?.external)
+        return !!(!value && parent?.externalLink)
       },
       validation: (Rule) =>
         Rule.required().uri({

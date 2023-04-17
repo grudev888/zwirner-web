@@ -3669,9 +3669,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@zwirner/design-system@npm:^0.0.6":
-  version: 0.0.6
-  resolution: "@zwirner/design-system@npm:0.0.6::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40zwirner%2Fdesign-system%2F0.0.6%2F4b60ce350cf302644cb974a3a2ccde928d82a278"
+"@zwirner/design-system@npm:^0.0.8-beta":
+  version: 0.0.8-beta
+  resolution: "@zwirner/design-system@npm:0.0.8-beta::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40zwirner%2Fdesign-system%2F0.0.8-beta%2F3845777d8f427b515df9393297052d063a17b7dd"
   dependencies:
     "@headlessui/react": ^1.7.10
     "@heroicons/react": ^2.0.15
@@ -3679,9 +3679,10 @@ __metadata:
     classnames: ^2.3.2
     uuid: ^9.0.0
   peerDependencies:
+    plyr-react: ^5.1.2
     react: ">=16"
     react-dom: ^17.0.1
-  checksum: dfb639bcf6b89d7f0abc3d8846887267ba628ce509b60b7a31888fa7d24a286a5b46790360f72a900481e64c4572fcdc9708541712b3c79632293d2790482625
+  checksum: 1f167e57a181b60c250e8a89fe582252fe6cd28725c763b469eb11782b88c0a2e8a5f28032d243cf0450f9f66889c259cf60d20a896b467631240d272c3fea80
   languageName: node
   linkType: hard
 
@@ -4780,6 +4781,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"core-js@npm:^3.26.1":
+  version: 3.29.1
+  resolution: "core-js@npm:3.29.1"
+  checksum: b38446dbfcfd3887b3d4922990da487e2c95044cb4c5717aaf95e786a4c6b218f05c056c7ed6c699169b9794a49fec890e402659d54661fc56965a0eb717e7bd
+  languageName: node
+  linkType: hard
+
 "core-util-is@npm:~1.0.0":
   version: 1.0.3
   resolution: "core-util-is@npm:1.0.3"
@@ -4902,6 +4910,13 @@ __metadata:
   version: 3.1.1
   resolution: "csstype@npm:3.1.1"
   checksum: 1f7b4f5fdd955b7444b18ebdddf3f5c699159f13e9cf8ac9027ae4a60ae226aef9bbb14a6e12ca7dba3358b007cee6354b116e720262867c398de6c955ea451d
+  languageName: node
+  linkType: hard
+
+"custom-event-polyfill@npm:^1.0.7":
+  version: 1.0.7
+  resolution: "custom-event-polyfill@npm:1.0.7"
+  checksum: f9ff2cf13e482a75b3cf83dce9e2c6e3063c5ac1b9c23ac440e4f27e875b0873445b11811237f3f30aeb1216e9ad20f9f9d30ccf5b1b658a4e50dd0b3e67b629
   languageName: node
   linkType: hard
 
@@ -8230,6 +8245,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"loadjs@npm:^4.2.0":
+  version: 4.2.0
+  resolution: "loadjs@npm:4.2.0"
+  checksum: 2144723f55c75260ce6781b36009c40d098d96fe06e3ec5c85ba250cf96c3a0aa37169b829e818c40bcba7c5141a8e52736fec193333bb6260ab95f9a493a2ef
+  languageName: node
+  linkType: hard
+
 "locate-path@npm:^5.0.0":
   version: 5.0.0
   resolution: "locate-path@npm:5.0.0"
@@ -9419,6 +9441,37 @@ __metadata:
   languageName: node
   linkType: hard
 
+"plyr-react@npm:^5.1.2":
+  version: 5.1.2
+  resolution: "plyr-react@npm:5.1.2"
+  dependencies:
+    plyr: ^3.7.3
+    react-aptor: ^2.0.0-alpha.1
+  peerDependencies:
+    plyr: ^3.7.3
+    react: ">=16.8"
+  peerDependenciesMeta:
+    plyr:
+      optional: false
+    react:
+      optional: true
+  checksum: 7bbef91c2a6a7b603213c6ab8003d7438ea72d05efd0ff3a708c679e7e059c2ee3f4c0ee9569cbd4fb8249d612e210d8d156ccc472956f4abc74a28cf7498a97
+  languageName: node
+  linkType: hard
+
+"plyr@npm:^3.7.3":
+  version: 3.7.8
+  resolution: "plyr@npm:3.7.8"
+  dependencies:
+    core-js: ^3.26.1
+    custom-event-polyfill: ^1.0.7
+    loadjs: ^4.2.0
+    rangetouch: ^2.0.1
+    url-polyfill: ^1.1.12
+  checksum: 7eac9ea02269059a95f2ed945ab03932f472ae1c2e2c4789c6d3b08b62c4b477fe5a1a507f3530c7394a3450a937df8ef9c0fdedb6819f86b1ccc05ef1935d62
+  languageName: node
+  linkType: hard
+
 "polished@npm:^4.2.2":
   version: 4.2.2
   resolution: "polished@npm:4.2.2"
@@ -9823,6 +9876,25 @@ __metadata:
   dependencies:
     performance-now: ^2.1.0
   checksum: 50ba284e481c8185dbcf45fc4618ba3aec580bb50c9121385d5698cb6012fe516d2015b1df6dd407a7b7c58d44be8086108236affbce1861edd6b44637c8cd52
+  languageName: node
+  linkType: hard
+
+"rangetouch@npm:^2.0.1":
+  version: 2.0.1
+  resolution: "rangetouch@npm:2.0.1"
+  checksum: 2aa7c0901d28356ef0c02021656ed7d11fc6652f01ffe92806862fc4593e75f7a5d52d4455fa1b0ab2123d438e03dc091315949dbfad9562a680440ac0dfeb7d
+  languageName: node
+  linkType: hard
+
+"react-aptor@npm:^2.0.0-alpha.1":
+  version: 2.0.0
+  resolution: "react-aptor@npm:2.0.0"
+  peerDependencies:
+    react: ">=16.8"
+  peerDependenciesMeta:
+    react:
+      optional: true
+  checksum: 8bad4074b6b1afa194c15e1a14e2ceb1bf1349fa21cb666ba195931f8db3f68c286456aa9f2db1cac9efd9a5c642eb84b5ace52d8576191ca0b5465ca822fd28
   languageName: node
   linkType: hard
 
@@ -11723,6 +11795,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"url-polyfill@npm:^1.1.12":
+  version: 1.1.12
+  resolution: "url-polyfill@npm:1.1.12"
+  checksum: 3214cc82424c215e921dacadac56b4b099f995d24e14078369bea9ff8aa74d1a4c803ab03021e61e0a275bee7979d212d046092dba3aab73cf232ee6739ddee4
+  languageName: node
+  linkType: hard
+
 "use-callback-ref@npm:^1.3.0":
   version: 1.3.0
   resolution: "use-callback-ref@npm:1.3.0"
@@ -12183,7 +12262,7 @@ __metadata:
     "@types/react": ^18.0.26
     "@types/react-dom": ^18.0.10
     "@types/styled-components": ^5.1.26
-    "@zwirner/design-system": ^0.0.6
+    "@zwirner/design-system": ^0.0.8-beta
     autoprefixer: ^10.4.13
     del-cli: ^5.0.0
     eslint: ^8.32.0
@@ -12194,6 +12273,7 @@ __metadata:
     next: ^13.1.2
     next-sanity: ^4.1.0
     next-seo: ^5.15.0
+    plyr-react: ^5.1.2
     postcss: ^8.4.21
     prettier: ^2.8.3
     prettier-plugin-packagejson: ^2.4.0
