@@ -2,7 +2,7 @@ import useSWR from 'swr'
 
 import {client} from '@/common/api'
 
-import {IFormInput} from '../types'
+import {IFormInput, ILocation} from '../types'
 import {Params} from './types'
 
 const BASE_URL = (path = '', queryParams: any = null) =>
@@ -15,7 +15,7 @@ export const useForms = (params: Params) => {
     BASE_URL(`forms/${params.digest ? `submissions/${encodeURIComponent(params.digest)}` : ''}`)
   )
 
-  const addOrUpdate = async (form: IFormInput, token: string, digest = '') =>
+  const addOrUpdate = async (form: IFormInput & {location: ILocation}, token: string, digest = '') =>
     await client.post(BASE_URL(`forms/submissions/${encodeURIComponent(digest)}`), {...form, token})
 
   const getEmailToken = async (email: string) =>
