@@ -16,22 +16,18 @@ import {useRouter} from 'next/router'
 import {useReCaptcha} from 'next-recaptcha-v3'
 import {useCallback, useEffect, useState} from 'react'
 import {SubmitHandler, useForm} from 'react-hook-form'
-import useSWR from 'swr'
 import {uuid} from 'uuidv4'
 
 import {useForms as useFormsAPI} from '@/forms/api/useForms'
-import {IFormInput} from '@/forms/types'
+import { useLocation } from '@/forms/api/useLocation'
+import {IFormInput, ILocation} from '@/forms/types'
 import {EMAIL_REGEX} from '@/forms/utils'
 
 const Forms = () => {
   const router = useRouter()
   const digest = router.query.digest?.[0]
 
-  const testApi = useSWR('/api/handler')
-
-  useEffect(() => {
-    console.log(testApi.data)
-  }, [testApi.data])
+  const {data: location} = useLocation()
 
   const {data, addOrUpdate, getEmailToken, isLoading, error} = useFormsAPI({digest})
 
@@ -85,6 +81,7 @@ const Forms = () => {
               ),
               ...formData.interests.reduce((prev, i) => ({...prev, [i]: true}), {}),
             },
+            location: location as ILocation
           },
           token,
           digest
