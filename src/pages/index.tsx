@@ -3,7 +3,7 @@ import {PreviewSuspense} from 'next-sanity/preview'
 
 import {PageBuilder} from '@/components/pageBuilder'
 import {PreviewPageBuilder} from '@/components/pageBuilder/previewPageBuilder'
-import {homeMapper} from '@/sanity/mappers/pageBuilder/homeMapper'
+import {pageBuilderMap} from '@/sanity/mappers/pageBuilder/pagebuilderMapper'
 import {homePage} from '@/sanity/queries/page.queries'
 import {getAllExhibitions} from '@/sanity/services/exhibition.service'
 import {getHomePage} from '@/sanity/services/page.service'
@@ -32,7 +32,7 @@ export default function Page({data, preview}: PageProps) {
     )
   }
 
-  return <PageBuilder rows={data.home} />
+  return <PageBuilder components={data.home} />
 }
 
 export const getStaticProps: GetStaticProps<PageProps, Query, PreviewData> = async (ctx) => {
@@ -60,7 +60,7 @@ export const getStaticProps: GetStaticProps<PageProps, Query, PreviewData> = asy
     props: {
       data: {
         exhibitions,
-        home: homeMapper(homePage),
+        home: pageBuilderMap(homePage),
         unmapped: homePage,
       },
       preview,

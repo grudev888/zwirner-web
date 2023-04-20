@@ -67,7 +67,6 @@ export async function getSectionsByYear({
         ]
       : []
 
-    console.log('YEARS::', years)
     return S.list()
       .title(`${sectionTitle} by year`)
       .id('year')
@@ -101,10 +100,7 @@ export async function getSectionsByYear({
                 .child(
                   S.document()
                     .schemaType(type)
-                    .views([
-                      S.view.form(),
-                      ...includePreview
-                    ])
+                    .views([S.view.form(), ...includePreview])
                 )
             )
         })

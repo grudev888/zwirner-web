@@ -3,7 +3,7 @@ import {PreviewSuspense} from 'next-sanity/preview'
 
 import {PageBuilder} from '@/components/pageBuilder'
 import {PreviewPageBuilder} from '@/components/pageBuilder/previewPageBuilder'
-import {homeMapper} from '@/sanity/mappers/pageBuilder/homeMapper'
+import {pageBuilderMap} from '@/sanity/mappers/pageBuilder/pagebuilderMapper'
 import {artistPageBySlug} from '@/sanity/queries/artist.queries'
 import {getAllArtistPageSlugs, getArtistPageBySlug} from '@/sanity/services/artist.service'
 
@@ -31,8 +31,7 @@ export default function ArtistPage({data = {}, preview}: PageProps) {
       </PreviewSuspense>
     )
   }
-
-  return <PageBuilder rows={data.sections} />
+  return <PageBuilder components={data.sections} />
 }
 
 export const getStaticPaths = async () => {
@@ -60,7 +59,7 @@ export const getStaticProps: GetStaticProps<PageProps, Query, PreviewData> = asy
 
   return {
     props: {
-      data: {...data, queryParams, sections: homeMapper([data]), unmapped: [data]},
+      data: {...data, queryParams, sections: pageBuilderMap([data]), unmapped: [data]},
       preview,
       slug: params?.slug || null,
       token: null,

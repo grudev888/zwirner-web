@@ -5,6 +5,7 @@ import {PreviewSuspense} from 'next-sanity/preview'
 import {PageBuilder} from '@/components/pageBuilder'
 import {PreviewPageBuilder} from '@/components/pageBuilder/previewPageBuilder'
 import {homeMapper} from '@/sanity/mappers/pageBuilder/homeMapper'
+import {pageBuilderMap} from '@/sanity/mappers/pageBuilder/pagebuilderMapper'
 import {fairPageBySlug} from '@/sanity/queries/fairPage.queries'
 import {getAllFairPagesSlugs, getFairPageBySlug} from '@/sanity/services/fairs.service'
 
@@ -26,7 +27,6 @@ interface PreviewData {
 export default function FairsPage({data = {}, preview}: PageProps) {
   if (preview) {
     const {queryParams} = data
-    console.log('DATA:::', data)
     return (
       <DzColumn className="h-screen" span={12}>
         <PreviewSuspense fallback="Loading...">
@@ -36,7 +36,7 @@ export default function FairsPage({data = {}, preview}: PageProps) {
     )
   }
 
-  return <PageBuilder rows={data.sections} />
+  return <PageBuilder components={data.sections} />
 }
 
 export const getStaticPaths = async () => {
@@ -64,7 +64,7 @@ export const getStaticProps: GetStaticProps<PageProps, Query, PreviewData> = asy
 
   return {
     props: {
-      data: {...data, queryParams, sections: homeMapper([data]), unmapped: [data]},
+      data: {...data, queryParams, sections: pageBuilderMap([data]), unmapped: [data]},
       preview,
       slug: params?.slug || null,
       token: null,

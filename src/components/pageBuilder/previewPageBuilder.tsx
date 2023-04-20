@@ -1,7 +1,7 @@
 import {FC} from 'react'
 
 import {PageBuilder} from '@/components/pageBuilder'
-import {homeMapper} from '@/sanity/mappers/pageBuilder/homeMapper'
+import {pageBuilderMap} from '@/sanity/mappers/pageBuilder/pagebuilderMapper'
 import {usePreview} from '@/sanity/preview'
 
 interface PreviewPageBuilderProps {
@@ -18,7 +18,7 @@ export const PreviewPageBuilder: FC<PreviewPageBuilderProps> = ({
   const data = usePreview(null, query, params)
   const dataToMap = isSingle ? [data] : data
 
-  return <PageBuilder rows={homeMapper(dataToMap)} />
+  return <PageBuilder components={pageBuilderMap(dataToMap)} />
 }
 
 export default PreviewPageBuilder

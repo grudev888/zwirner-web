@@ -15,9 +15,5 @@ export const artistPageBySlug = groq`
 *[_type == "artistPage" && slug.current == $slug][0] {
   ...,
   "artist": artist->,
-  components[] {
-    _type,
-    title,
-    ${componentsByDataScheme}
-  }
+  ${componentsByDataScheme}
 }`

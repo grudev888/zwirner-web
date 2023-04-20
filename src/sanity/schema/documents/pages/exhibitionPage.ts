@@ -1,5 +1,5 @@
 import {BlockElementIcon, ComposeIcon, SearchIcon} from '@sanity/icons'
-import {defineArrayMember, defineField, defineType} from 'sanity'
+import {defineField, defineType} from 'sanity'
 
 import {apiVersion} from '@/sanity/env'
 import {exhibitionById} from '@/sanity/queries/exhibition.queries'
@@ -13,16 +13,6 @@ export default defineType({
   groups: [
     {name: 'content', title: 'Content', icon: ComposeIcon, default: true},
     {name: 'seo', title: 'SEO', icon: SearchIcon},
-  ],
-  fieldsets: [
-    {
-      name: 'overrides',
-      title: 'Schema Overrides',
-      options: {
-        collapsible: true,
-        collapsed: false,
-      },
-    },
   ],
   fields: [
     defineField({
@@ -75,33 +65,10 @@ export default defineType({
       validation: (rule) => rule.required(),
     }),
     defineField({
-      name: 'overrideLocation',
-      title: 'Location',
-      type: 'reference',
-      fieldset: 'overrides',
-      group: 'seo',
-      to: [{type: 'location'}],
-    }),
-    defineField({
-      name: 'overrideExhibition',
-      title: 'Exhibition',
-      type: 'reference',
-      fieldset: 'overrides',
-      group: 'seo',
-      to: [{type: exhibition.name}],
-    }),
-    defineField({
       name: 'components',
-      title: 'Sections',
-      type: 'array',
+      title: 'Components',
+      type: 'pageBuilderComponents',
       group: 'content',
-      of: [
-        defineArrayMember({
-          name: 'row',
-          title: 'Row',
-          type: 'row',
-        }),
-      ],
     }),
   ],
 })

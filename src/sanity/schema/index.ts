@@ -34,6 +34,7 @@ import dzTitle from './objects/page/components/molecules/dzTitle'
 import editorialContent from './objects/page/editorialContent'
 import grid from './objects/page/grid'
 import row from './objects/page/layout'
+import pageBuilderComponents from './objects/page/pageBuilderComponents'
 import pageContent from './objects/page/pageContent'
 import pageContentList from './objects/page/pageContentList'
 import seo from './objects/page/seo'
@@ -104,6 +105,7 @@ export const schema: {types: SchemaTypeDefinition[]} = {
     pageContent,
     pageContentList,
     editorialContent,
+    pageBuilderComponents,
     ...objects,
     ...pageComponents,
     ...singletons,

@@ -6,8 +6,11 @@ import {heroMapper} from '@/components/pageBuilder/DzHero/heroMapper'
 const dzInterstitialKeys = ['split']
 const dzSplitKeys = ['splitType', 'reverse', 'animate']
 const dzEditorialKeys = ['editorialType', 'editorialTextOverrides']
-const extraInfo = [...dzEditorialKeys, ...dzSplitKeys, ...dzInterstitialKeys]
+const gridProps = ['gridProps']
+const extraInfo = [...dzEditorialKeys, ...dzSplitKeys, ...dzInterstitialKeys, ...gridProps]
+
 const documentNames = ['artist', 'artwork', 'exhibition', 'book', 'press']
+
 export const contentTransformer = (data: any) => {
   return Object.entries(data ?? {}).reduce((prev, curr) => {
     const [key, structuredData] = curr
@@ -20,6 +23,7 @@ export const contentTransformer = (data: any) => {
     return prev
   }, {})
 }
+
 export const componentMapper: any = {
   dzHero: heroMapper,
   dzCard: cardMapper,

@@ -11,6 +11,15 @@ export default defineType({
   },
   fields: [
     defineField({
+      name: 'overrideSchema',
+      title: 'Json Override Schema',
+      description: 'This .json file will override the current page SEO schema',
+      type: 'file',
+      options: {
+        accept: 'application/json',
+      },
+    }),
+    defineField({
       name: 'noIndex',
       description: `Hide this page from search engines and the sitemap`,
       type: 'boolean',

@@ -188,7 +188,7 @@ export const PreviewIframe: FC<PreviewIframeProps> = ({options, document}) => {
         marginRight: 'auto',
         width: viewportWidth,
         height: viewportHeight,
-        border: '1px solid rgb(77 77 77)',
+        boxShadow: '0px 2px 18px rgba(0, 0, 0, 0.06)',
       }
     : {}
 
