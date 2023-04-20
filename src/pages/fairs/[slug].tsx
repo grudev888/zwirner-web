@@ -4,7 +4,6 @@ import {PreviewSuspense} from 'next-sanity/preview'
 
 import {PageBuilder} from '@/components/pageBuilder'
 import {PreviewPageBuilder} from '@/components/pageBuilder/previewPageBuilder'
-import {homeMapper} from '@/sanity/mappers/pageBuilder/homeMapper'
 import {pageBuilderMap} from '@/sanity/mappers/pageBuilder/pagebuilderMapper'
 import {fairPageBySlug} from '@/sanity/queries/fairPage.queries'
 import {getAllFairPagesSlugs, getFairPageBySlug} from '@/sanity/services/fairs.service'
