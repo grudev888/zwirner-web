@@ -9,6 +9,7 @@ import collection from './documents/collection'
 import event from './documents/event'
 import exhibition from './documents/exhibition'
 import footer from './documents/footer'
+import globalSEO from './documents/globalSEO'
 import locationType from './documents/location'
 import navigation from './documents/navigation'
 import pageType from './documents/page'
@@ -53,6 +54,7 @@ import settings from './singletons/settings'
 import stories from './singletons/stories'
 import utopiaEditions from './singletons/utopiaEditions'
 
+
 export const utilsObjects: ObjectDefinition[] = [textComplex, cta, link, media, brickAndMortar]
 export const pageComponents: ObjectDefinition[] = [
   dzHero,
@@ -78,7 +80,7 @@ export const objects: ObjectDefinition[] = [
   grid,
 ]
 
-export const singletons: DocumentDefinition[] = [stories, home, collect, utopiaEditions]
+export const singletons: DocumentDefinition[] = [stories, home, collect, utopiaEditions, globalSEO]
 export const schema: {types: SchemaTypeDefinition[]} = {
   types: [
     article,
