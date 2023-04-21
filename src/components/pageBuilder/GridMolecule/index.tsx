@@ -2,8 +2,12 @@ import {ColumnSpan, DzColumn, DzGridColumns} from '@zwirner/design-system'
 import {FC} from 'react'
 
 import {componentsIndex} from '@/components/pageBuilder'
-import {pageBuilderMap} from '@/sanity/mappers/pageBuilder/pagebuilderMapper'
+import {gridBuilderMapper} from '@/sanity/mappers/pageBuilder/gridBuilderMapper'
 
+interface GridMappedComponent {
+  type: string
+  data: any
+}
 interface GridMoleculeProps {
   data: any
 }
@@ -15,7 +19,6 @@ const getRows = (numberOfSections: number): ColumnSpan | ColumnSpan[] => {
 }
 
 export const GridMolecule: FC<GridMoleculeProps> = ({data = {}}) => {
-
   const {gridProps = {}} = data
   const {
     itemsPerRow = 1,
@@ -25,14 +28,14 @@ export const GridMolecule: FC<GridMoleculeProps> = ({data = {}}) => {
     wrap = false,
   } = gridProps
 
-  const mappedComponents = pageBuilderMap([gridProps])
+  const mappedComponents = gridBuilderMapper([gridProps])
   const getColSpan = getRows(itemsPerRow ?? 0)
 
   return (
     <DzColumn className="mb-12" span={12}>
       <DzGridColumns className="h-full w-full">
-        {Object.entries(mappedComponents).map((component, key) => {
-          const [type, data] = component
+        {mappedComponents.map((component: GridMappedComponent, key: number) => {
+          const {type, data} = component
           const ComponentModule = componentsIndex[type]
           if (!ComponentModule) {
             return (
