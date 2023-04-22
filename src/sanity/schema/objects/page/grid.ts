@@ -1,5 +1,15 @@
 import {MasterDetailIcon} from '@sanity/icons'
-import {defineField, defineType} from 'sanity'
+import {defineArrayMember,defineField, defineType} from 'sanity'
+
+
+export interface GridMoleculeTypeProps {
+  title: string
+  masonryGrid: boolean
+  wrap: boolean
+  itemsPerRow: number
+  sortField: 'date' | 'lastName' | 'title'
+  sortOrder: 'asc' | 'desc'
+}
 
 export default defineType({
   name: 'grid',
@@ -86,9 +96,30 @@ export default defineType({
       initialValue: 'asc',
     }),
     defineField({
-      name: 'components',
-      title: 'Components',
-      type: 'pageBuilderComponents',
+      name: 'content',
+      title: 'Content',
+      type: 'array',
+      icon: MasterDetailIcon,
+      of: [
+        defineArrayMember({
+          name: 'artist',
+          title: 'Artist',
+          type: 'reference',
+          to: [{type: 'artist'}],
+        }),
+        defineArrayMember({
+          name: 'artwork',
+          title: 'Artwork',
+          type: 'reference',
+          to: [{type: 'artwork'}],
+        }),
+        defineArrayMember({
+          name: 'exhibition',
+          title: 'Exhibition',
+          type: 'reference',
+          to: [{type: 'exhibition'}],
+        }),
+      ],
     }),
   ],
 })

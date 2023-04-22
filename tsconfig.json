@@ -25,7 +25,6 @@
     "paths": {
       "sanity.config": ["./sanity.config.ts"],
       "@/*": ["./src/*"],
-      "@/sanity/*": ["./src/sanity/*"]
     },
     "preserveSymlinks": true,
     "baseUrl": "."

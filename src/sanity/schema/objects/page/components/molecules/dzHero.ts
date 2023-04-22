@@ -1,6 +1,12 @@
 import {ComposeIcon, EditIcon, MasterDetailIcon} from '@sanity/icons'
 import {defineField, defineType} from 'sanity'
 
+export interface DzHeroSchemaProps {
+  title: string
+  headingOverride?: string
+  imageOverride?: any
+}
+
 export default defineType({
   name: 'dzHero',
   title: 'Hero',
@@ -16,6 +22,7 @@ export default defineType({
       type: 'string',
       title: 'Component title',
       group: 'content',
+      validation: (rule) => rule.required(),
     }),
     defineField({
       name: 'content',
@@ -24,13 +31,13 @@ export default defineType({
       group: 'content',
     }),
     defineField({
-      name: 'heading',
+      name: 'headingOverride',
       type: 'string',
       title: 'Heading',
       group: 'overrides',
     }),
     defineField({
-      name: 'image',
+      name: 'imageOverride',
       type: 'image',
       title: 'Image',
       group: 'overrides',

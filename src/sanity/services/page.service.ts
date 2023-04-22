@@ -1,5 +1,5 @@
 import {client} from '@/sanity/client'
-import {homePage,pageBySlug, pageSlugs} from '@/sanity/queries/page.queries'
+import {homePage, pageBySlug, pageSlugs} from '@/sanity/queries/page.queries'
 
 export async function getHomePage(): Promise<any[]> {
   if (client) {
@@ -7,7 +7,6 @@ export async function getHomePage(): Promise<any[]> {
   }
   return []
 }
-
 
 export async function getAllPageSlugs(): Promise<any[]> {
   if (client) {

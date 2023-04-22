@@ -1,6 +1,14 @@
 import {ComposeIcon, EditIcon, MasterDetailIcon} from '@sanity/icons'
 import {defineField, defineType} from 'sanity'
 
+import {CTASchemaType} from '@/sanity/schema/objects/utils/cta'
+export interface DzCardSchemaProps {
+  title: string
+  image?: any
+  primaryCTA?: CTASchemaType
+  secondaryCTA?: CTASchemaType
+}
+
 export default defineType({
   name: 'dzCard',
   title: 'Card',
@@ -30,6 +38,7 @@ export default defineType({
       type: 'cta',
       group: 'content',
     }),
+    // Content is not part of the props
     defineField({
       name: 'content',
       title: 'Content',
@@ -37,7 +46,7 @@ export default defineType({
       group: 'content',
     }),
     defineField({
-      name: 'image',
+      name: 'imageOverride',
       type: 'image',
       title: 'Image',
       group: 'overrides',

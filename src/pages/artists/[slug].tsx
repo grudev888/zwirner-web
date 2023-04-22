@@ -1,10 +1,11 @@
+import {DzColumn} from '@zwirner/design-system'
 import {GetStaticProps} from 'next'
 import {PreviewSuspense} from 'next-sanity/preview'
+import {ErrorBoundary} from 'react-error-boundary'
 
 import {PageBuilder} from '@/components/pageBuilder'
 import {PreviewPageBuilder} from '@/components/pageBuilder/previewPageBuilder'
-import {pageBuilderMap} from '@/sanity/mappers/pageBuilder/pagebuilderMapper'
-import {artistPageBySlug} from '@/sanity/queries/artist.queries'
+import {artistPageBySlug} from '@/sanity/queries/artistPage.queries'
 import {getAllArtistPageSlugs, getArtistPageBySlug} from '@/sanity/services/artist.service'
 
 interface PageProps {
@@ -23,15 +24,25 @@ interface PreviewData {
 }
 
 export default function ArtistPage({data = {}, preview}: PageProps) {
+  const {pageData} = data
+  const {components} = pageData
   if (preview) {
     const {queryParams} = data
     return (
       <PreviewSuspense fallback="Loading...">
-        <PreviewPageBuilder query={artistPageBySlug} params={queryParams} isSingle />
+        <ErrorBoundary
+          fallback={
+            <DzColumn className="mb-12 h-full" span={12}>
+              <div className="flex justify-center p-5">Something went wrong</div>
+            </DzColumn>
+          }
+        >
+          <PreviewPageBuilder query={artistPageBySlug} params={queryParams} />
+        </ErrorBoundary>
       </PreviewSuspense>
     )
   }
-  return <PageBuilder components={data.sections} />
+  return <PageBuilder components={components} />
 }
 
 export const getStaticPaths = async () => {
@@ -55,14 +66,28 @@ export const getStaticProps: GetStaticProps<PageProps, Query, PreviewData> = asy
     }
   }
 
-  const data: any = await getArtistPageBySlug(queryParams)
-
-  return {
-    props: {
-      data: {...data, queryParams, sections: pageBuilderMap([data]), unmapped: [data]},
-      preview,
-      slug: params?.slug || null,
-      token: null,
-    },
+  try {
+    const data: any = await getArtistPageBySlug(queryParams)
+    return {
+      props: {
+        data: {queryParams, pageData: data},
+        preview,
+        slug: params?.slug || null,
+        token: null,
+      },
+    }
+  } catch (e: any) {
+    console.error(
+      `ERROR FETCHING ARTISTS DATA - Slug: ${params?.slug}: `,
+      e?.response?.statusMessage
+    )
+    return {
+      props: {
+        data: {queryParams},
+        preview,
+        slug: params?.slug || null,
+        token: null,
+      },
+    }
   }
 }

@@ -1,5 +1,17 @@
 import {groq} from 'next-sanity'
 
+import {
+  dzCardProps,
+  dzCarouselProps,
+  dzEditorialProps,
+  dzHeroCarouselProps,
+  dzHeroProps,
+  dzInterstitialProps,
+  dzSplitProps,
+  dzTitleProps,
+  gridMoleculeProps,
+} from '@/sanity/queries/components.queries'
+
 import {exhibitionComplexFields, exhibitionSimpleFields} from './exhibition.queries'
 
 const pageSimpleFields = groq`
@@ -16,47 +28,49 @@ const pageComplexFields = groq`
    },
 `
 const componentTypesData = groq`
-  'exhibition': content[ _type == 'exhibition']->{
-    ${exhibitionSimpleFields}
-    ${exhibitionComplexFields}
-  },
-  'artist': content[ _type == 'artist']->{..., },
-  'artwork': content[ _type == 'artwork']->{
-    ...,
-    "artists": artists[]->
-  },
-  'book': content[ _type == 'book']->{
-    ...,
-    "authors": authors[]->,
-    "artists": artists[]->,
-  },
-  'press': content[ _type == 'press']->{
-    ...,
-    "authors": authors[]->
-  },
+  content[]-> {
+    _type,
+    _type =='exhibition' => {
+      ${exhibitionSimpleFields}
+      ${exhibitionComplexFields}
+    },
+    _type =='artist' => {
+      ...
+    },
+    _type =='artwork' => {
+      ...,
+      "artists": artists[]->
+    },
+    _type == 'book' => {
+      "authors": authors[]->,
+      "artists": artists[]->,
+    },
+    _type == 'press' => {
+      ...,
+      "authors": authors[]->
+    }
+  }
 `
 
-const gridProps = groq`
-  'gridProps': {
-    itemsPerRow,
-    masonryGrid,
-    sortOrder,
-    sortField,
-    wrap,
-    components[] {
-      _type,
-      title,
-      ${componentTypesData}
-    }
-  },
+export const moleculesProps = groq`
+  ${gridMoleculeProps}
+  ${dzCardProps}
+  ${dzCarouselProps}
+  ${dzEditorialProps}
+  ${dzHeroProps}
+  ${dzHeroCarouselProps}
+  ${dzInterstitialProps}
+  ${dzSplitProps}
+  ${dzTitleProps}
 `
+
 export const componentsByDataScheme = groq`
   components[] {
     _type,
     title,
-    ${gridProps}
+    ${moleculesProps}
     ${componentTypesData}
-  }
+  },
 `
 
 export const pageSlugs = groq`*[_type == "page" && defined(slug.current)][]{
@@ -71,6 +85,7 @@ export const pageBySlug = groq`
 
 export const homePage = groq`
 *[_type == "home"] {
+  _id,
   _type,
   title,
   ${componentsByDataScheme}

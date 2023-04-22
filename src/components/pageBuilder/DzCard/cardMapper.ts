@@ -7,7 +7,7 @@ export const cardMapper = (data: any) => {
 }
 
 export const contentTypesMapper: any = {
-  artist: (data: any) => {
+  artist: (data: any, props: any) => {
     const {birthdate, picture, fullName, description} = data
     const {asset, alt} = picture ?? {}
     const imgSrc = asset ? builder.image(asset).url() : ''
@@ -28,7 +28,7 @@ export const contentTypesMapper: any = {
       },
     }
   },
-  artwork: (data: any) => {
+  artwork: (data: any, props: any) => {
     const {photos, artists, dimensions, title, dateSelection, medium, edition} = data
     const [mainArtist] = artists ?? []
     const [mainPicture] = photos ?? []
@@ -65,7 +65,7 @@ export const contentTypesMapper: any = {
       },
     }
   },
-  exhibition: (data: any) => {
+  exhibition: (data: any, props: any) => {
     const {events, subtitle, title, description} = data
     const [event] = events ?? []
     const {photos} = event ?? {}

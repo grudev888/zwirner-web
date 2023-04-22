@@ -18,20 +18,32 @@ export const componentsIndex: any = {
   dzInterstitial: DzInterstitial,
   grid: GridMolecule,
 }
-interface PageBuilderProps {
-  components: any[]
+
+interface ComponentsShape {
+  content: any
+  props: any
+  _type: string
 }
 
-export const PageBuilder: FC<PageBuilderProps> = ({components = {}}) => {
+interface PageBuilderProps {
+  components: ComponentsShape[]
+}
+
+export const PageBuilder: FC<PageBuilderProps> = ({components = []}) => {
   return (
     <DzColumn className="mb-12 h-full" span={12}>
-      {Object.entries(components).map((component, key) => {
-        const [type, data] = component
-        const ComponentModule = componentsIndex[type]
+      {components.map((component, key) => {
+        const {_type, props, content = []} = component
+        const ComponentModule = componentsIndex[_type]
+        const multipleContent = ComponentModule.multipleContentTypes ?? false
+        const componentContent = multipleContent ? content : content[0]
+
         if (!ComponentModule) {
-          return <div key={`${type}-${key}`}>Not supported component: {type}</div>
+          return <div key={`${_type}-${key}`}>Not supported component: {_type}</div>
         }
-        return <ComponentModule key={`${type}-${key}`} data={data} />
+        return (
+          <ComponentModule key={`${_type}-${key}`} data={componentContent} componentProps={props} />
+        )
       })}
     </DzColumn>
   )

@@ -1,6 +1,12 @@
 import {ComposeIcon, EditIcon,MasterDetailIcon} from '@sanity/icons'
 import {defineField, defineType} from 'sanity'
 
+export interface DzInterstitialTypeProps {
+  title: string
+  split: boolean
+  imageOverride?: any
+}
+
 export default defineType({
   name: 'dzInterstitial',
   title: 'Interstitial',
@@ -32,7 +38,7 @@ export default defineType({
       group: 'content',
     }),
     defineField({
-      name: 'image',
+      name: 'imageOverride',
       type: 'image',
       title: 'Image',
       group: 'overrides',

@@ -6,6 +6,13 @@ import {artistById} from '@/sanity/queries/artist.queries'
 
 import artist from '../artist'
 
+export interface ArtistPageSchemaProps {
+  title: string
+  slug: any
+  seo: any
+  artist: any
+}
+
 export default defineType({
   name: 'artistPage',
   title: 'Artist Page',
