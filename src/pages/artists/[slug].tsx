@@ -24,7 +24,7 @@ interface PreviewData {
 }
 
 export default function ArtistPage({data = {}, preview}: PageProps) {
-  const {pageData} = data
+  const {pageData = {}} = data
   const {components} = pageData
   if (preview) {
     const {queryParams} = data

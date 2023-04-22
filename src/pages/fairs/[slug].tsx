@@ -24,7 +24,7 @@ interface PreviewData {
 }
 
 export default function FairsPage({data = {}, preview}: PageProps) {
-  const {pageData} = data
+  const {pageData = {}} = data
   const {components} = pageData
   if (preview) {
     const {queryParams} = data
@@ -78,10 +78,7 @@ export const getStaticProps: GetStaticProps<PageProps, Query, PreviewData> = asy
       },
     }
   } catch (e: any) {
-    console.error(
-      `ERROR FETCHING FAIRS DATA - Slug: ${params?.slug}: `,
-      e?.response?.statusMessage
-    )
+    console.error(`ERROR FETCHING FAIRS DATA - Slug: ${params?.slug}: `, e?.response?.statusMessage)
     return {
       props: {
         data: {queryParams},
