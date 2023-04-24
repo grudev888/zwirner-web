@@ -1,4 +1,4 @@
-import {CogIcon} from '@sanity/icons'
+import {CogIcon, TiersIcon} from '@sanity/icons'
 import {BookIcon} from '@sanity/icons'
 import {TagIcon} from '@sanity/icons'
 import {BlockElementIcon} from '@sanity/icons'
@@ -28,6 +28,10 @@ export const generalStructure = (S: StructureBuilder) =>
                 .title('Redirects')
                 .icon(LinkRemovedIcon)
                 .child(S.documentList().title('Page Redirects').filter('_type == "redirect"')),
+              S.listItem()
+                .title('Strings')
+                .icon(TiersIcon)
+                .child(S.documentList().title('Strings').filter('_type == "strings"')),
               S.listItem()
                 .title('Navigation')
                 .icon(BlockElementIcon)

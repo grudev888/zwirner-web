@@ -1,3 +1,4 @@
+import {toPlainText} from '@portabletext/react'
 import {
   DzButton,
   DzCheckbox,
@@ -16,11 +17,13 @@ import {useRouter} from 'next/router'
 import {useReCaptcha} from 'next-recaptcha-v3'
 import {useCallback, useEffect, useState} from 'react'
 import {SubmitHandler, useForm} from 'react-hook-form'
+import {TypedObject} from 'sanity'
 import {uuid} from 'uuidv4'
 
 import {useForms as useFormsAPI} from '@/forms/api/useForms'
 import {IFormInput} from '@/forms/types'
 import {EMAIL_REGEX} from '@/forms/utils'
+import {getErrors} from '@/stringsManager/api'
 
 const Forms = () => {
   const router = useRouter()
@@ -38,7 +41,19 @@ const Forms = () => {
   const {executeRecaptcha} = useReCaptcha()
 
   const [formId, _] = useState(uuid())
+  const [newsletterErrors, setNewsletterErrors] = useState<{
+    [key: string]: TypedObject[]
+  }>({})
+
   const [token, setToken] = useState<string | null>(null)
+
+  useEffect(() => {
+    ;(async () => {
+      const errors = await getErrors()
+
+      setNewsletterErrors(errors)
+    })()
+  }, [])
 
   useEffect(() => {
     if (data?.interests) {
@@ -131,7 +146,10 @@ const Forms = () => {
           disabled={!!data?.payload?.email}
           {...register('email', {
             required: 'Please enter your email address',
-            pattern: {value: EMAIL_REGEX, message: 'This email address is not valid'},
+            pattern: {
+              value: EMAIL_REGEX,
+              message: toPlainText(newsletterErrors['newsletter-error-email']),
+            },
           })}
         />
 
@@ -141,7 +159,9 @@ const Forms = () => {
           placeholder="Enter your first name"
           errorMsg={errors?.firstName?.message}
           hasError={!!errors?.firstName?.message}
-          {...register('firstName', {required: 'Please enter your first name'})}
+          {...register('firstName', {
+            required: toPlainText(newsletterErrors['newsletter-error-name']),
+          })}
         />
 
         <DzInputText
@@ -150,7 +170,9 @@ const Forms = () => {
           placeholder="Enter your last name"
           errorMsg={errors?.lastName?.message}
           hasError={!!errors?.lastName?.message}
-          {...register('lastName', {required: 'Please enter your last name'})}
+          {...register('lastName', {
+            required: toPlainText(newsletterErrors['newsletter-error-lastname']),
+          })}
         />
 
         <DzInputGroups
@@ -162,7 +184,9 @@ const Forms = () => {
             id: opt.id,
             title: opt.name,
             value: opt.id,
-            ...register('interests', {required: 'Please choose at least one group'}),
+            ...register('interests', {
+              required: toPlainText(newsletterErrors['newsletter-error-interests']),
+            }),
           }))}
         />
 
@@ -172,7 +196,9 @@ const Forms = () => {
             title="I have read and agree to the Terms"
             value="true"
             hasError={!!errors.terms?.message}
-            {...register('terms', {required: 'Please accept the terms and conditions'})}
+            {...register('terms', {
+              required: toPlainText(newsletterErrors['newsletter-error-terms']),
+            })}
           />
         )}
 
