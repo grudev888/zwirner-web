@@ -35,11 +35,14 @@ export const PageBuilder: FC<PageBuilderProps> = ({components = []}) => {
       {components.map((component, key) => {
         const {_type, props, content = []} = component
         const ComponentModule = componentsIndex[_type]
-        const multipleContent = ComponentModule.multipleContentTypes ?? false
-        const componentContent = multipleContent ? content : content[0]
+        const multipleContent = ComponentModule?.multipleContentTypes ?? false
+        const componentContent = multipleContent ? content : content?.[0]
 
         if (!ComponentModule) {
           return <div key={`${_type}-${key}`}>Not supported component: {_type}</div>
+        }
+        if(!componentContent) {
+          return <div key={`${_type}-${key}`}>Please add content types to this component: {props?.title ?? _type}</div>
         }
         return (
           <ComponentModule key={`${_type}-${key}`} data={componentContent} componentProps={props} />

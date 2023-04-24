@@ -93,8 +93,9 @@ export const generalStructure = (S: StructureBuilder) =>
                     .title('Artist Pages')
                     .filter('_type == "artistPage"')
                     .defaultOrdering([{field: 'title', direction: 'asc'}])
-                    .child(
+                    .child((childId) =>
                       S.document()
+                        .id(childId)
                         .schemaType('artistPage')
                         .views([
                           S.view.form(),
