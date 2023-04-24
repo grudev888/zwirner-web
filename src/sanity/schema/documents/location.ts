@@ -3,7 +3,6 @@ import {defineField, defineType} from 'sanity'
 
 import addressType from '../objects/utils/address'
 
-// create hours schema
 export default defineType({
   name: 'location',
   title: 'Location',

@@ -2,13 +2,21 @@ import {componentMapper, contentTransformer} from '@/sanity/mappers/components'
 export const homeMapper = (data: any[]) => {
   if (!data.length) return data
   const [fetchedData = {}] = data
-  const {components} = fetchedData
-  if (!components || !components.length) return data
-  const mappedData = components.reduce((prev: any, component: any) => {
-    const {_type, ...rest} = component
-    const mapper: any = componentMapper[_type] ?? ((d: any) => d)
-    prev[_type] = mapper(contentTransformer(rest))
-    return prev
+  const {components: rows} = fetchedData
+  if (!rows || !rows.length) return data
+  const rowData = rows.map((row: any) => {
+    const {components, ...restOfRow} = row
+    const rowComponents =
+      components?.map((component: any) => {
+        const {_type, ...rest} = component
+        const mapper: any = componentMapper?.[_type] ?? ((d: any) => d)
+        return {
+          type: _type,
+          data: mapper(contentTransformer(rest)),
+        }
+      }) ?? []
+
+    return {...restOfRow, components: rowComponents}
   }, {})
-  return mappedData
+  return rowData
 }
