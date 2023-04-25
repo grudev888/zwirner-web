@@ -1,10 +1,10 @@
-import {DzColumn} from '@zwirner/design-system'
 import {GetStaticProps} from 'next'
 import {PreviewSuspense} from 'next-sanity/preview'
 
 import {PageBuilder} from '@/components/pageBuilder'
 import {PreviewPageBuilder} from '@/components/pageBuilder/previewPageBuilder'
 import {homeMapper} from '@/sanity/mappers/pageBuilder/homeMapper'
+import {homePage} from '@/sanity/queries/page.queries'
 import {getAllExhibitions} from '@/sanity/services/exhibition.service'
 import {getHomePage} from '@/sanity/services/page.service'
 
@@ -26,19 +26,13 @@ interface PreviewData {
 export default function Page({data, preview}: PageProps) {
   if (preview) {
     return (
-      <DzColumn className="h-screen" start={[1, 2]} span={[12, 10]}>
-        <PreviewSuspense fallback="Loading...">
-          <PreviewPageBuilder />
-        </PreviewSuspense>
-      </DzColumn>
+      <PreviewSuspense fallback="Loading...">
+        <PreviewPageBuilder query={homePage} />
+      </PreviewSuspense>
     )
   }
-  return (
-    <DzColumn className="h-screen" start={[1, 2]} span={[12, 10]}>
-      <PageBuilder sections={data.home} />
-      {/* <ExhibitionsContainer exhibitions={data.exhibitions} /> */}
-    </DzColumn>
-  )
+
+  return <PageBuilder rows={data.home} />
 }
 
 export const getStaticProps: GetStaticProps<PageProps, Query, PreviewData> = async (ctx) => {
@@ -67,6 +61,7 @@ export const getStaticProps: GetStaticProps<PageProps, Query, PreviewData> = asy
       data: {
         exhibitions,
         home: homeMapper(homePage),
+        unmapped: homePage,
       },
       preview,
       slug: params?.slug || null,

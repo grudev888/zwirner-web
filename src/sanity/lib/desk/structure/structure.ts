@@ -1,12 +1,16 @@
-import {CogIcon, TiersIcon} from '@sanity/icons'
-import {BookIcon} from '@sanity/icons'
-import {TagIcon} from '@sanity/icons'
-import {BlockElementIcon} from '@sanity/icons'
-import {LinkRemovedIcon} from '@sanity/icons'
-import {DocumentsIcon} from '@sanity/icons'
-import {ThLargeIcon} from '@sanity/icons'
-import {UsersIcon} from '@sanity/icons'
-import {DashboardIcon} from '@sanity/icons'
+import {
+  BlockElementIcon,
+  BookIcon,
+  CogIcon,
+  DashboardIcon,
+  DocumentsIcon,
+  LinkRemovedIcon,
+  PinIcon,
+  TagIcon,
+  ThLargeIcon,
+  TiersIcon,
+  UsersIcon,
+} from '@sanity/icons'
 import {StructureBuilder} from 'sanity/desk'
 
 import {envHost} from '@/sanity/env'
@@ -40,6 +44,17 @@ export const generalStructure = (S: StructureBuilder) =>
                 .title('Footer')
                 .icon(BlockElementIcon)
                 .child(S.document().schemaType('footer').documentId('footer')),
+              S.divider(),
+              S.listItem()
+                .title('Locations')
+                .icon(PinIcon)
+                .child(
+                  S.documentList()
+                    .title('Locations')
+                    .filter('_type == "location"')
+                    .schemaType('location')
+                    .defaultOrdering([{field: 'name', direction: 'asc'}])
+                ),
             ])
         ),
       S.divider(),
@@ -94,6 +109,21 @@ export const generalStructure = (S: StructureBuilder) =>
                     .title('Artist Pages')
                     .filter('_type == "artistPage"')
                     .defaultOrdering([{field: 'title', direction: 'asc'}])
+                    .child(
+                      S.document()
+                      .schemaType('artistPage')
+                      .views([
+                        S.view.form(),
+                        S.view
+                          .component(PreviewIframe)
+                          .options({
+                            url: (doc:any)=> {
+                              return `${envHost}/api/sanity/preview?slug=${doc?.slug?.current}&section=artists`
+                            },
+                          })
+                          .title('Preview'),
+                      ])
+                    )
                 ),
               S.listItem()
                 .title('Exhibition Pages')
@@ -103,7 +133,9 @@ export const generalStructure = (S: StructureBuilder) =>
                     S,
                     sectionTitle: 'Exhibition',
                     type: 'exhibitionPage',
-                    dateKey: 'endDate',
+                    preview: {
+                      section: 'exhibitions'
+                    }
                   })
                 }),
               S.listItem()
@@ -114,7 +146,9 @@ export const generalStructure = (S: StructureBuilder) =>
                     S,
                     sectionTitle: 'Fair',
                     type: 'fairPage',
-                    dateKey: 'endDate',
+                    preview: {
+                      section: 'fairs'
+                    }
                   })
                 }),
             ])
@@ -200,7 +234,6 @@ export const generalStructure = (S: StructureBuilder) =>
             S,
             sectionTitle: 'Exhibitions & Fairs',
             type: 'exhibition',
-            dateKey: 'endDate',
           })
         }),
       S.listItem()
@@ -220,7 +253,6 @@ export const generalStructure = (S: StructureBuilder) =>
             S,
             sectionTitle: 'Press',
             type: 'press',
-            dateKey: 'publishDate',
           })
         }),
       ...S.documentTypeListItems()
@@ -240,13 +272,13 @@ export const generalStructure = (S: StructureBuilder) =>
               'fairPage',
               'artist',
               'article',
-              'location',
               'home',
               'press',
-              'exhibition',
+              'location',
               'author',
               'book',
               'collection',
+              'exhibition',
               'event',
               'post',
               'artwork',

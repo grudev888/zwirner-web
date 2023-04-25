@@ -16,6 +16,7 @@ const handler: NextApiHandler = async function preview(req, res) {
 
   const secret = isString(query.secret) ? query.secret : undefined
   const slug = isString(query.slug) ? query.slug : undefined
+  const section = isString(query.section) ? query.section : undefined
 
   // if (!secret) {
   //   return res.status(401).send('Invalid secret')
@@ -48,7 +49,7 @@ const handler: NextApiHandler = async function preview(req, res) {
 
   if (slug) {
     res.setPreviewData(previewData)
-    res.writeHead(307, {Location: `/${slug}`})
+    res.writeHead(307, {Location: `/${section}/${slug}`})
     res.end()
     return
   }

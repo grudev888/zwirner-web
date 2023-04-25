@@ -1,9 +1,9 @@
-import {ComposeIcon, EditIcon, MasterDetailIcon} from '@sanity/icons'
+import {ComposeIcon, EditIcon,MasterDetailIcon} from '@sanity/icons'
 import {defineField, defineType} from 'sanity'
 
 export default defineType({
-  name: 'dzImage',
-  title: 'Image',
+  name: 'dzInterstitial',
+  title: 'Interstitial',
   type: 'object',
   icon: MasterDetailIcon,
   groups: [
@@ -16,6 +16,14 @@ export default defineType({
       type: 'string',
       title: 'Component title',
       group: 'content',
+    }),
+    defineField({
+      name: 'split',
+      title: 'Split',
+      type: 'boolean',
+      group: 'content',
+      initialValue: false,
+      validation: (rule) => rule.required(),
     }),
     defineField({
       name: 'content',
