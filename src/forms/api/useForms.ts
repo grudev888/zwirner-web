@@ -15,8 +15,16 @@ export const useForms = (params: Params) => {
     BASE_URL(`forms/${params.digest ? `submissions/${encodeURIComponent(params.digest)}` : ''}`)
   )
 
-  const addOrUpdate = async (form: IFormInput & {location: ILocation}, token: string, digest = '') =>
-    await client.post(BASE_URL(`forms/submissions/${encodeURIComponent(digest)}`), {...form, token})
+  const addOrUpdate = async (
+    form: IFormInput & {location: ILocation},
+    token: string,
+    digest = ''
+  ) =>
+    await client.post(BASE_URL(`forms/submissions/${encodeURIComponent(digest)}`), {
+      ...form,
+      timestamp: new Date().toISOString(),
+      token,
+    })
 
   const getEmailToken = async (email: string) =>
     (await client.get(BASE_URL('token', {email})))?.data
