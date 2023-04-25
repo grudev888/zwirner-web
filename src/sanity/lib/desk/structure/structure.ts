@@ -29,13 +29,9 @@ export const generalStructure = (S: StructureBuilder) =>
             .title('Settings Documents')
             .items([
               S.listItem()
-              .title('Global SEO')
-              .icon(TrendUpwardIcon)
-              .child(
-                S.document()
-                  .schemaType('globalSEO')
-                  .documentId('globalSEO')
-              ),
+                .title('Global SEO')
+                .icon(TrendUpwardIcon)
+                .child(S.document().schemaType('globalSEO').documentId('globalSEO')),
               S.listItem()
                 .title('Redirects')
                 .icon(LinkRemovedIcon)

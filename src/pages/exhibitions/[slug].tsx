@@ -3,6 +3,7 @@ import {GetStaticProps} from 'next'
 import {PreviewSuspense} from 'next-sanity/preview'
 import {ErrorBoundary} from 'react-error-boundary'
 
+import {SEOComponent} from '@/common/components/seo/seo'
 import {PageBuilder} from '@/components/pageBuilder'
 import {PreviewPageBuilder} from '@/components/pageBuilder/previewPageBuilder'
 import {exhibitionPageBySlug} from '@/sanity/queries/exhibitionPage.queries'
@@ -28,25 +29,34 @@ interface PreviewData {
 
 export default function ExhibitionsPage({data = {}, preview}: PageProps) {
   const {pageData = {}} = data ?? {}
-  const {components} = pageData ?? {}
+  const {components, seo} = pageData ?? {}
+
   if (preview) {
     const {queryParams} = data
     return (
-      <PreviewSuspense fallback="Loading...">
-        <ErrorBoundary
-          fallback={
-            <DzColumn className="mb-12 h-full" span={12}>
-              <div className="flex justify-center p-5">Something went wrong</div>
-            </DzColumn>
-          }
-        >
-          <PreviewPageBuilder query={exhibitionPageBySlug} params={queryParams} />
-        </ErrorBoundary>
-      </PreviewSuspense>
+      <>
+        <SEOComponent data={seo} />
+        <PreviewSuspense fallback="Loading...">
+          <ErrorBoundary
+            fallback={
+              <DzColumn className="mb-12 h-full" span={12}>
+                <div className="flex justify-center p-5">Something went wrong</div>
+              </DzColumn>
+            }
+          >
+            <PreviewPageBuilder query={exhibitionPageBySlug} params={queryParams} />
+          </ErrorBoundary>
+        </PreviewSuspense>
+      </>
     )
   }
 
-  return <PageBuilder components={components} />
+  return (
+    <>
+      <SEOComponent data={seo} />
+      <PageBuilder components={components} />
+    </>
+  )
 }
 
 export const getStaticPaths = async () => {

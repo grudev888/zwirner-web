@@ -1,6 +1,22 @@
 import {getExtension, getImageDimensions} from '@sanity/asset-utils'
 import {defineField, defineType} from 'sanity'
 
+type CanonicalURL = {
+  current: string
+}
+export interface PageSEOSchema {
+  pageTitle?: string
+  metaDescription?: string
+  h1Header?: string
+  canonicalURL?: CanonicalURL
+  robotsNoIndex?: boolean
+  robotsNoFollow?: boolean
+  imageMeta?: any
+  socialTitle?: string
+  socialDescription?: string
+  overrideSchema?: any
+}
+
 export default defineType({
   name: 'seo',
   title: 'SEO',
@@ -9,6 +25,28 @@ export default defineType({
     collapsible: true,
     collapsed: false,
   },
+  fieldsets: [
+    {
+      name: 'robots',
+      title: 'Robots Meta',
+      description:
+        'Sets the robots meta tag for this page. This tag controls how search engines crawl and index your site.',
+      options: {
+        collapsible: true,
+        collapsed: false,
+      },
+    },
+    {
+      name: 'openGraph',
+      title: 'Open Graph Protocol Fields',
+      description:
+        'The Open Graph protocol enables any web page to become a rich object in a social graph.',
+      options: {
+        collapsible: true,
+        collapsed: false,
+      },
+    },
+  ],
   fields: [
     defineField({
       name: `pageTitle`,
@@ -16,7 +54,11 @@ export default defineType({
       description:
         'The page title tag. Maximum 70 characters. Must be unique. If left empty, will default to global title.',
       type: `string`,
-      validation: (Rule) => [Rule.max(70).warning(`Title shouldn't be more than 70 characters.`)],
+      validation: (Rule) => [
+        Rule.required(),
+        Rule.max(70).warning(`Title shouldn't be more than 70 characters.`),
+        Rule.min(5).warning('Title should be at least 5 characters'),
+      ],
     }),
     defineField({
       name: `metaDescription`,
@@ -25,6 +67,7 @@ export default defineType({
         'The meta description for this page. Maximum 160 characters. If left empty, will default to global description.',
       type: `text`,
       validation: (Rule) => [
+        Rule.required(),
         Rule.max(160).warning('Description should be less than 160 characters.'),
         Rule.min(5).warning('Description should be at least 5 characters'),
       ],
@@ -47,7 +90,7 @@ export default defineType({
         source: 'title',
         isUnique: (value, context) => context.defaultIsUnique(value, context),
         slugify: (input) => {
-          const normalized = input.replace(/\s+/g, '-').toLowerCase()
+          const normalized = input.trim().replace(/\s+/g, '-').toLowerCase()
           const hasSlash = input.substring(0, 1) === '/'
           return hasSlash ? normalized : `/${normalized}`
         },
@@ -66,23 +109,26 @@ export default defineType({
         }),
     }),
     defineField({
-      title: 'Robots Meta',
-      description: 'Sets the robots meta tag for this page. This tag controls how search engines crawl and index your site.',
-      name: 'robotsMeta',
-      type: 'string',
-      options: {
-        list: [
-          {title: 'NoIndex', value: 'noindex'},
-          {title: 'NoFollow', value: 'nofollow'}
-        ],
-        layout: 'radio'
-      },
-      initialValue: 'noindex'
+      name: 'robotsNoIndex',
+      description: `Hide this page from search engines and the sitemap.`,
+      type: 'boolean',
+      initialValue: false,
+      fieldset: 'robots',
     }),
     defineField({
-      name: `image`,
+      name: 'robotsNoFollow',
+      description: `Hide this page from search engines and the sitemap.`,
+      type: 'boolean',
+      initialValue: false,
+      fieldset: 'robots',
+    }),
+    defineField({
+      name: 'imageMeta',
       type: `image`,
+      description:
+        'This is the meta image presented in search, Open Graph, Twitter and other social for this page when shared. If left empty, will default to global image.',
       options: {hotspot: true},
+      fieldset: 'openGraph',
       validation: (rule) =>
         rule.custom((value) => {
           if (!value?.asset?._ref) {
@@ -105,6 +151,31 @@ export default defineType({
         }),
     }),
     defineField({
+      name: `socialTitle`,
+      title: `Social Title`,
+      description:
+        'This is the title presented in search, Open Graph, Twitter and other social for this page when shared. If left empty, will default to global title.',
+      type: `string`,
+      fieldset: 'openGraph',
+      validation: (Rule) => [
+        Rule.required(),
+        Rule.max(60).warning(`Social title shouldn't be more than 60 characters.`),
+      ],
+    }),
+    defineField({
+      name: `socialDescription`,
+      title: `Social Description`,
+      description:
+        'This is the description presented in search, Open Graph, Twitter and other social for this page when shared. If left empty, will default to global description.',
+      type: `text`,
+      fieldset: 'openGraph',
+      validation: (Rule) => [
+        Rule.required(),
+        Rule.max(75).warning('Social description should be less than 75 characters.'),
+        Rule.min(5).warning('Social description should be at least 5 characters'),
+      ],
+    }),
+    defineField({
       name: 'overrideSchema',
       title: 'Json Override Schema',
       description: 'This .json file will override the current page SEO schema.',
@@ -112,12 +183,6 @@ export default defineType({
       options: {
         accept: 'application/json',
       },
-    }),
-    defineField({
-      name: 'noIndex',
-      description: `Hide this page from search engines and the sitemap.`,
-      type: 'boolean',
-      initialValue: false,
     }),
   ],
 })

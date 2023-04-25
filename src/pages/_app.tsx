@@ -1,40 +1,43 @@
 import '../global.css'
-import "plyr-react/plyr.css"
+import 'plyr-react/plyr.css'
 import '@zwirner/design-system/dist/tailwind.css'
 
 import {NextPage} from 'next'
-import type {AppProps} from 'next/app'
+import App, {AppContext, AppInitialProps, AppProps} from 'next/app'
 import {ReCaptchaProvider} from 'next-recaptcha-v3'
-import {DefaultSeo} from 'next-seo'
-import SEO from 'next-seo.config'
 import {ReactElement, ReactNode} from 'react'
 
 import {APIProvider} from '@/common/api'
 import DefaultLayout from '@/common/components/Layout'
+import {SEOComponent} from '@/common/components/seo/seo'
 import {mono, sans, serif} from '@/common/styles/fonts'
+import {GlobalSEOScheme} from '@/sanity/schema/documents/globalSEO'
+import {getGeneralSettings} from '@/sanity/services/settings.service'
 
 export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
   getLayout?: (page: ReactElement) => ReactNode
 }
 
-type AppPropsWithLayout = AppProps & {
+type AppGeneralProps = {globalSEO?: GlobalSEOScheme}
+
+type WrapperProps = AppGeneralProps & {
   Component: NextPageWithLayout
+  pageProps: any
 }
 
-const Wrapper = ({Component, pageProps}: {Component: NextPageWithLayout; pageProps: any}) => {
+const Wrapper = ({Component, pageProps, globalSEO}: WrapperProps) => {
   const getLayout = Component.getLayout || ((page) => <DefaultLayout>{page}</DefaultLayout>)
-
   return (
     <ReCaptchaProvider reCaptchaKey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}>
       <APIProvider>
-        <DefaultSeo {...SEO} />
+        <SEOComponent isDefault data={globalSEO} />
         {getLayout(<Component {...pageProps} />)}
       </APIProvider>
     </ReCaptchaProvider>
   )
 }
 
-export default function App({Component, pageProps}: AppPropsWithLayout) {
+function DzApp({Component, pageProps, globalSEO}: AppProps & WrapperProps) {
   return (
     <>
       <style jsx global>
@@ -47,7 +50,27 @@ export default function App({Component, pageProps}: AppPropsWithLayout) {
         `}
       </style>
 
-      <Wrapper Component={Component} pageProps={pageProps} />
+      <Wrapper Component={Component} pageProps={pageProps} globalSEO={globalSEO} />
     </>
   )
 }
+
+DzApp.getInitialProps = async (context: AppContext): Promise<AppGeneralProps & AppInitialProps> => {
+  const ctx = await App.getInitialProps(context)
+  try {
+    const generalSettings = await getGeneralSettings()
+    const {globalSEO} = generalSettings ?? {}
+    const [SEOSettings = {}] = globalSEO ?? []
+
+    return {...ctx, globalSEO: SEOSettings}
+  } catch (e: any) {
+    console.error(
+      'ERROR FETCHING GENERAL DATA:',
+      `Status: ${e?.statusCode} `,
+      e?.details?.description
+    )
+    return {...ctx}
+  }
+}
+
+export default DzApp
