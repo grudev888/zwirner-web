@@ -1,4 +1,5 @@
 import {Listbox} from '@headlessui/react'
+import {SanityDocument} from '@sanity/client'
 import {ChevronDownIcon, CopyIcon, LaunchIcon, MobileDeviceIcon} from '@sanity/icons'
 import {TransferIcon} from '@sanity/icons'
 import cn from 'classnames'
@@ -172,9 +173,10 @@ const breakpoints = [
 
 interface PreviewIframeProps {
   options: any
+  document: SanityDocument
 }
 
-export const PreviewIframe: FC<PreviewIframeProps> = ({options}) => {
+export const PreviewIframe: FC<PreviewIframeProps> = ({options, document}) => {
   const [openMobile, setOpenMobile] = useState(false)
   const [rotateViewport, setRotateViewport] = useState(false)
   const [selectedBreakpoint, setSelectedBreakpoint] = useState(breakpoints[10])
@@ -189,7 +191,9 @@ export const PreviewIframe: FC<PreviewIframeProps> = ({options}) => {
         border: '1px solid rgb(77 77 77)',
       }
     : {}
+
   const {url} = options
+  const source = typeof url === 'function' ? url(document.draft ?? document.displayed) : url
   return (
     <div className={styles.container}>
       <div className={styles.headerMenu}>
@@ -201,11 +205,11 @@ export const PreviewIframe: FC<PreviewIframeProps> = ({options}) => {
         >
           <MobileDeviceIcon className={styles.copyIcon} />
         </div>
-        <input className={styles.inputUrl} value={url} readOnly />
+        <input className={styles.inputUrl} value={source} readOnly />
         <button
           className={styles.copyBtn}
           onClick={() => {
-            navigator.clipboard.writeText(url)
+            navigator.clipboard.writeText(source)
           }}
         >
           <CopyIcon className={styles.copyIcon} />
@@ -213,7 +217,7 @@ export const PreviewIframe: FC<PreviewIframeProps> = ({options}) => {
         <button
           className={styles.openBtn}
           onClick={() => {
-            window.open(url, '_blank', 'noreferrer')
+            window.open(source, '_blank', 'noreferrer')
           }}
         >
           <div>
@@ -270,7 +274,7 @@ export const PreviewIframe: FC<PreviewIframeProps> = ({options}) => {
         style={mobileIframeStyle}
         title={`preview`}
         frameBorder="0"
-        src={url}
+        src={source}
         sandbox="allow-same-origin allow-forms allow-scripts"
       ></iframe>
     </div>

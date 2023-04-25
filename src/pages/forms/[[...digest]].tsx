@@ -16,7 +16,7 @@ import {useRouter} from 'next/router'
 import {useReCaptcha} from 'next-recaptcha-v3'
 import {useCallback, useEffect, useState} from 'react'
 import {SubmitHandler, useForm} from 'react-hook-form'
-import {uuid} from 'uuidv4'
+import {v4 as uuid} from 'uuid'
 
 import {useForms as useFormsAPI} from '@/forms/api/useForms'
 import { useLocation } from '@/forms/api/useLocation'

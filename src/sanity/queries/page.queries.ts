@@ -15,22 +15,37 @@ const pageComplexFields = groq`
      ${exhibitionComplexFields}
    },
 `
-const pageBuilderFields = groq`
-  _type,
-  title,
+
+export const componentsByDataScheme = groq`
   components[] {
     _type,
     title,
-    // content[0]->{...}
     'exhibition': content[ _type == 'exhibition']->{
       ${exhibitionSimpleFields}
       ${exhibitionComplexFields}
     },
     'artist': content[ _type == 'artist']->{..., },
-    'artwork': content[ _type == 'artwork']->{..., },
-    'book': content[ _type == 'book']->{..., },
-    'press': content[ _type == 'press']->{..., },
-  },
+    'artwork': content[ _type == 'artwork']->{
+      ...,
+      "artists": artists[]->
+    },
+    'book': content[ _type == 'book']->{
+      ...,
+      "authors": authors[]->,
+      "artists": artists[]->,
+    },
+    'press': content[ _type == 'press']->{
+      ...,
+      "authors": authors[]->
+    },
+
+  }
+`
+
+const pageBuilderFields = groq`
+  _type,
+  title,
+  ${componentsByDataScheme}
 `
 
 export const pageSlugs = groq`*[_type == "page" && defined(slug.current)][]{
@@ -45,6 +60,10 @@ export const pageBySlug = groq`
 
 export const homePage = groq`
 *[_type == "home"] {
- ${pageBuilderFields}
+  _type,
+  title,
+  components[]{
+    ${pageBuilderFields}
+  }
 }
 `
