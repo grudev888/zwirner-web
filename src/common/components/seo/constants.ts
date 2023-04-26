@@ -131,4 +131,8 @@ export const DEFAULT_SEO_PROPERTIES = {
     url: 'https://www.davidzwirner.com/',
     siteName: 'David Zwirner',
   },
+  twitter: {
+    site: '@davidzwirner',
+    cardType: 'summary_large_image',
+  }
 }

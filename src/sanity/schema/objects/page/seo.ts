@@ -55,7 +55,6 @@ export default defineType({
         'The page title tag. Maximum 70 characters. Must be unique. If left empty, will default to global title.',
       type: `string`,
       validation: (Rule) => [
-        Rule.required(),
         Rule.max(70).warning(`Title shouldn't be more than 70 characters.`),
         Rule.min(5).warning('Title should be at least 5 characters'),
       ],
@@ -67,7 +66,6 @@ export default defineType({
         'The meta description for this page. Maximum 160 characters. If left empty, will default to global description.',
       type: `text`,
       validation: (Rule) => [
-        Rule.required(),
         Rule.max(160).warning('Description should be less than 160 characters.'),
         Rule.min(5).warning('Description should be at least 5 characters'),
       ],
@@ -78,7 +76,7 @@ export default defineType({
       description: 'The H1 header for this page. Maximum 60 characters.',
       type: `text`,
       validation: (Rule) => [
-        Rule.required().max(60).warning('The H1 header should be less than 60 characters.'),
+        Rule.max(60).warning('The H1 header should be less than 60 characters.'),
       ],
     }),
     defineField({
@@ -158,7 +156,6 @@ export default defineType({
       type: `string`,
       fieldset: 'openGraph',
       validation: (Rule) => [
-        Rule.required(),
         Rule.max(60).warning(`Social title shouldn't be more than 60 characters.`),
       ],
     }),
@@ -170,7 +167,6 @@ export default defineType({
       type: `text`,
       fieldset: 'openGraph',
       validation: (Rule) => [
-        Rule.required(),
         Rule.max(75).warning('Social description should be less than 75 characters.'),
         Rule.min(5).warning('Social description should be at least 5 characters'),
       ],

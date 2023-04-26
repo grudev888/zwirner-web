@@ -12,6 +12,19 @@ export const defaultSeoMapper = (data: GlobalSEOScheme | undefined): DefaultSeoP
   const imgSrc = asset ? builder.image(asset).url() : ''
   const title = globalSEOTitle ?? DEFAULT_SEO_PROPERTIES.title
   const description = globalSEODescription ?? DEFAULT_SEO_PROPERTIES?.description
+  const imageOG = imgSrc
+    ? {
+        images: [
+          {
+            url: imgSrc,
+            width: 800,
+            height: 600,
+            alt: alt,
+            type: 'image/jpeg',
+          },
+        ],
+      }
+    : {}
   return {
     title,
     description,
@@ -21,16 +34,9 @@ export const defaultSeoMapper = (data: GlobalSEOScheme | undefined): DefaultSeoP
       ...DEFAULT_SEO_PROPERTIES.openGraph,
       title,
       description,
-      images: [
-        {
-          url: imgSrc,
-          width: 800,
-          height: 600,
-          alt: alt,
-          type: 'image/jpeg',
-        },
-      ],
+      ...imageOG,
     },
+    twitter: DEFAULT_SEO_PROPERTIES.twitter,
   }
 }
 
@@ -49,32 +55,42 @@ export const perPageSeoMapper = (data: PageSEOSchema): NextSeoProps => {
   const {alt, asset} = imageMeta ?? {}
   const imgSrc = asset ? builder.image(asset).url() : ''
 
-  const title = pageTitle ?? DEFAULT_SEO_PROPERTIES.title
-  const description = metaDescription ?? DEFAULT_SEO_PROPERTIES?.description
+  const title = pageTitle ? {title: pageTitle} : {}
+  const description = metaDescription ? {description: metaDescription} : {}
   const canonical = canonicalURL?.current
     ? `${DEFAULT_SEO_PROPERTIES?.canonical}${canonicalURL?.current}`
     : DEFAULT_SEO_PROPERTIES?.canonical
+
+  const titleOG = socialTitle? {title:socialTitle}: {}
+  const descriptionOG = socialDescription? {description:socialDescription}: {}
+
   const noindex = robotsNoIndex ?? false
   const nofollow = robotsNoFollow ?? false
+
+  const imageOG = imgSrc
+    ? {
+        images: [
+          {
+            url: imgSrc,
+            width: 800,
+            height: 600,
+            alt: alt,
+            type: 'image/jpeg',
+          },
+        ],
+      }
+    : {}
   return {
-    title,
-    description,
+    ...title,
+    ...description,
     canonical,
     noindex,
     nofollow,
     openGraph: {
-      ...DEFAULT_SEO_PROPERTIES.openGraph,
-      title: socialTitle ?? title,
-      description: socialDescription ?? description,
-      images: [
-        {
-          url: imgSrc,
-          width: 800,
-          height: 600,
-          alt: alt,
-          type: 'image/jpeg',
-        },
-      ],
+      ...titleOG,
+      ...descriptionOG,
+      ...imageOG,
     },
+
   }
 }
