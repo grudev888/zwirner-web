@@ -1,5 +1,14 @@
 import {ComposeIcon, EditIcon, MasterDetailIcon} from '@sanity/icons'
+import {SplitTypes} from '@zwirner/design-system'
 import {defineField, defineType} from 'sanity'
+
+export interface DzSplitTypeProps {
+  title: string
+  splitType: SplitTypes
+  reverse: boolean
+  animate: boolean
+  imageOverride?: any
+}
 
 export default defineType({
   name: 'dzSplit',
@@ -54,7 +63,7 @@ export default defineType({
       group: 'content',
     }),
     defineField({
-      name: 'image',
+      name: 'imageOverride',
       type: 'image',
       title: 'Image',
       group: 'overrides',

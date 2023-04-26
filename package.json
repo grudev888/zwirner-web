@@ -44,12 +44,14 @@
     "next-seo": "^5.15.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-error-boundary": "^4.0.4",
     "react-is": "^18.2.0",
     "sanity": "^3.3.1",
     "sanity-plugin-asset-source-unsplash": "^1.0.6",
     "sanity-plugin-availability": "^1.0.1",
     "styled-components": "^5.3.6",
-    "suspend-react": "^0.0.9"
+    "suspend-react": "^0.0.9",
+    "tailwind-scrollbar": "^2.1.0"
   },
   "devDependencies": {
     "@sanity/color": "^2.2.2",

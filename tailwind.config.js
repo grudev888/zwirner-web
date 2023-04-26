@@ -69,5 +69,9 @@ module.exports = {
       },
     },
   },
-  plugins: [require('@headlessui/tailwindcss'), require('@tailwindcss/typography')],
+  plugins: [
+    require('@headlessui/tailwindcss'),
+    require('@tailwindcss/typography'),
+    require('tailwind-scrollbar')({ nocompatible: true }),
+  ],
 }

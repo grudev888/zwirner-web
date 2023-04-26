@@ -1,13 +1,15 @@
 import {DzColumn} from '@zwirner/design-system'
 import {GetStaticProps} from 'next'
 import {PreviewSuspense} from 'next-sanity/preview'
+import {ErrorBoundary} from 'react-error-boundary'
 
 import {PageBuilder} from '@/components/pageBuilder'
 import {PreviewPageBuilder} from '@/components/pageBuilder/previewPageBuilder'
-import {homeMapper} from '@/sanity/mappers/pageBuilder/homeMapper'
 import {exhibitionPageBySlug} from '@/sanity/queries/exhibitionPage.queries'
-import {getAllExhibitionPagesSlugs, getExhibitionPageBySlug} from '@/sanity/services/exhibition.service'
-
+import {
+  getAllExhibitionPagesSlugs,
+  getExhibitionPageBySlug,
+} from '@/sanity/services/exhibition.service'
 
 interface PageProps {
   data: any
@@ -25,18 +27,26 @@ interface PreviewData {
 }
 
 export default function ExhibitionsPage({data = {}, preview}: PageProps) {
+  const {pageData = {}} = data
+  const {components} = pageData
   if (preview) {
     const {queryParams} = data
     return (
-      <DzColumn className="h-screen" span={12}>
-        <PreviewSuspense fallback="Loading...">
-          <PreviewPageBuilder query={exhibitionPageBySlug} params={queryParams} isSingle/>
-        </PreviewSuspense>
-      </DzColumn>
+      <PreviewSuspense fallback="Loading...">
+        <ErrorBoundary
+          fallback={
+            <DzColumn className="mb-12 h-full" span={12}>
+              <div className="flex justify-center p-5">Something went wrong</div>
+            </DzColumn>
+          }
+        >
+          <PreviewPageBuilder query={exhibitionPageBySlug} params={queryParams} />
+        </ErrorBoundary>
+      </PreviewSuspense>
     )
   }
 
-  return <PageBuilder rows={data.sections} />
+  return <PageBuilder components={components} />
 }
 
 export const getStaticPaths = async () => {
@@ -60,14 +70,28 @@ export const getStaticProps: GetStaticProps<PageProps, Query, PreviewData> = asy
     }
   }
 
-  const data: any = await getExhibitionPageBySlug(queryParams)
-
-  return {
-    props: {
-      data: {...data, queryParams, sections: homeMapper([data]), unmapped: [data]},
-      preview,
-      slug: params?.slug || null,
-      token: null,
-    },
+  try {
+    const data: any = await getExhibitionPageBySlug(queryParams)
+    return {
+      props: {
+        data: {queryParams, pageData: data},
+        preview,
+        slug: params?.slug || null,
+        token: null,
+      },
+    }
+  } catch (e: any) {
+    console.error(
+      `ERROR FETCHING EXHIBITIONS DATA - Slug: ${params?.slug}: `,
+      e?.response?.statusMessage
+    )
+    return {
+      props: {
+        data: {queryParams},
+        preview,
+        slug: params?.slug || null,
+        token: null,
+      },
+    }
   }
 }

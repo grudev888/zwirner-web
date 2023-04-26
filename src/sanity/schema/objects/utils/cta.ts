@@ -1,5 +1,14 @@
-import {BUTTON_VARIANTS} from '@zwirner/design-system'
+import {BUTTON_VARIANTS, ButtonVariant} from '@zwirner/design-system'
 import {defineField} from 'sanity'
+
+import {linkSchemaType} from '@/sanity/schema/objects/utils/link'
+
+export interface CTASchemaType {
+  type: 'button' | 'link'
+  text: string
+  link?: linkSchemaType
+  variant?: ButtonVariant
+}
 
 export default defineField({
   name: 'cta',
@@ -16,6 +25,7 @@ export default defineField({
           {title: 'Link', value: 'link'},
         ],
       },
+      validation: (rule) => rule.required(),
     }),
     defineField({
       name: 'text',
@@ -24,6 +34,7 @@ export default defineField({
       hidden: ({parent}) => {
         return !parent?.type
       },
+      validation: (rule) => rule.required(),
     }),
     defineField({
       name: 'link',
