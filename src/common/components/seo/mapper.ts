@@ -8,7 +8,7 @@ import {DEFAULT_SEO_PROPERTIES} from './constants'
 
 export const defaultSeoMapper = (data: GlobalSEOScheme | undefined): DefaultSeoProps => {
   const {globalSEODescription, globalSEOImage, globalSEOTitle} = data ?? {}
-  const {alt, asset} = globalSEOImage
+  const {alt, asset} = globalSEOImage ?? {}
   const imgSrc = asset ? builder.image(asset).url() : ''
   const title = globalSEOTitle ?? DEFAULT_SEO_PROPERTIES.title
   const description = globalSEODescription ?? DEFAULT_SEO_PROPERTIES?.description
