@@ -44,7 +44,7 @@ export const perPageSeoMapper = (data: PageSEOSchema): NextSeoProps => {
     imageMeta,
     socialTitle,
     socialDescription,
-  } = data
+  } = data ?? {}
 
   const {alt, asset} = imageMeta ?? {}
   const imgSrc = asset ? builder.image(asset).url() : ''
