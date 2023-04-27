@@ -1,6 +1,10 @@
 import {ComposeIcon, EditIcon,MasterDetailIcon} from '@sanity/icons'
 import {defineField, defineType} from 'sanity'
 
+export interface DzTitleTypeProps {
+  title: string
+}
+
 export default defineType({
   name: 'dzTitle',
   title: 'Title',

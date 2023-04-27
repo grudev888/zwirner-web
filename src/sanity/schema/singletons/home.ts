@@ -1,5 +1,5 @@
 import {ComposeIcon, MasterDetailIcon, SearchIcon} from '@sanity/icons'
-import {defineArrayMember, defineField, defineType} from 'sanity'
+import {defineField, defineType} from 'sanity'
 
 export default defineType({
   name: 'home',
@@ -27,15 +27,8 @@ export default defineType({
     defineField({
       name: 'components',
       title: 'Components',
-      type: 'array',
+      type: 'pageBuilderComponents',
       group: 'content',
-      of: [
-        defineArrayMember({
-          name: 'row',
-          title: 'Row',
-          type: 'row',
-        }),
-      ],
     }),
   ],
 })

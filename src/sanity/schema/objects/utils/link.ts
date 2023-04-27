@@ -1,5 +1,15 @@
 import {defineField, defineType} from 'sanity'
 
+interface externalLinkType {
+  href: string
+  blank: boolean
+}
+
+export interface linkSchemaType {
+  externalLink?: externalLinkType
+  internalLink?: string
+}
+
 export default defineType({
   name: 'link',
   type: 'object',
@@ -37,7 +47,7 @@ export default defineType({
         return !!(!value && parent?.externalLink)
       },
       validation: (Rule) =>
-        Rule.required().uri({
+        Rule.uri({
           allowRelative: true,
           relativeOnly: true,
           scheme: ['https', 'http', 'mailto'],

@@ -39,17 +39,6 @@ export const generalStructure = (S: StructureBuilder) =>
                 .title('Footer')
                 .icon(BlockElementIcon)
                 .child(S.document().schemaType('footer').documentId('footer')),
-              S.divider(),
-              S.listItem()
-                .title('Locations')
-                .icon(PinIcon)
-                .child(
-                  S.documentList()
-                    .title('Locations')
-                    .filter('_type == "location"')
-                    .schemaType('location')
-                    .defaultOrdering([{field: 'name', direction: 'asc'}])
-                ),
             ])
         ),
       S.divider(),
@@ -104,20 +93,21 @@ export const generalStructure = (S: StructureBuilder) =>
                     .title('Artist Pages')
                     .filter('_type == "artistPage"')
                     .defaultOrdering([{field: 'title', direction: 'asc'}])
-                    .child(
+                    .child((childId) =>
                       S.document()
-                      .schemaType('artistPage')
-                      .views([
-                        S.view.form(),
-                        S.view
-                          .component(PreviewIframe)
-                          .options({
-                            url: (doc:any)=> {
-                              return `${envHost}/api/sanity/preview?slug=${doc?.slug?.current}&section=artists`
-                            },
-                          })
-                          .title('Preview'),
-                      ])
+                        .id(childId)
+                        .schemaType('artistPage')
+                        .views([
+                          S.view.form(),
+                          S.view
+                            .component(PreviewIframe)
+                            .options({
+                              url: (doc: any) => {
+                                return `${envHost}/api/sanity/preview?slug=${doc?.slug?.current}&section=artists`
+                              },
+                            })
+                            .title('Preview'),
+                        ])
                     )
                 ),
               S.listItem()
@@ -129,8 +119,8 @@ export const generalStructure = (S: StructureBuilder) =>
                     sectionTitle: 'Exhibition',
                     type: 'exhibitionPage',
                     preview: {
-                      section: 'exhibitions'
-                    }
+                      section: 'exhibitions',
+                    },
                   })
                 }),
               S.listItem()
@@ -142,8 +132,8 @@ export const generalStructure = (S: StructureBuilder) =>
                     sectionTitle: 'Fair',
                     type: 'fairPage',
                     preview: {
-                      section: 'fairs'
-                    }
+                      section: 'fairs',
+                    },
                   })
                 }),
             ])
@@ -250,6 +240,16 @@ export const generalStructure = (S: StructureBuilder) =>
             type: 'press',
           })
         }),
+      S.listItem()
+        .title('Locations')
+        .icon(PinIcon)
+        .child(
+          S.documentList()
+            .title('Locations')
+            .filter('_type == "location"')
+            .schemaType('location')
+            .defaultOrdering([{field: 'name', direction: 'asc'}])
+        ),
       ...S.documentTypeListItems()
         .filter(
           (listItem) =>

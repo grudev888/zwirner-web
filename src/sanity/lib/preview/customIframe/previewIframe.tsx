@@ -1,9 +1,9 @@
 import {Listbox} from '@headlessui/react'
-import {SanityDocument} from '@sanity/client'
 import {ChevronDownIcon, CopyIcon, LaunchIcon, MobileDeviceIcon} from '@sanity/icons'
 import {TransferIcon} from '@sanity/icons'
 import cn from 'classnames'
-import {FC, useState} from 'react'
+import {useState} from 'react'
+import {UserViewComponent} from 'sanity/desk'
 
 import styles from './previewIframe.module.css'
 
@@ -171,12 +171,7 @@ const breakpoints = [
   },
 ]
 
-interface PreviewIframeProps {
-  options: any
-  document: SanityDocument
-}
-
-export const PreviewIframe: FC<PreviewIframeProps> = ({options, document}) => {
+export const PreviewIframe: UserViewComponent = ({options, document}) => {
   const [openMobile, setOpenMobile] = useState(false)
   const [rotateViewport, setRotateViewport] = useState(false)
   const [selectedBreakpoint, setSelectedBreakpoint] = useState(breakpoints[10])
@@ -188,7 +183,7 @@ export const PreviewIframe: FC<PreviewIframeProps> = ({options, document}) => {
         marginRight: 'auto',
         width: viewportWidth,
         height: viewportHeight,
-        border: '1px solid rgb(77 77 77)',
+        boxShadow: '0px 2px 18px rgba(0, 0, 0, 0.06)',
       }
     : {}
 
