@@ -3,6 +3,7 @@ import {DefaultSeoProps, NextSeoProps} from 'next-seo'
 import {builder} from '@/sanity/imageBuilder'
 import {GlobalSEOScheme} from '@/sanity/schema/documents/globalSEO'
 import {PageSEOSchema} from '@/sanity/schema/objects/page/seo'
+import {BreadcrumbItemSchema} from '@/sanity/schema/objects/utils/breadcrumbItem'
 
 import {DEFAULT_SEO_PROPERTIES} from './constants'
 
@@ -61,8 +62,8 @@ export const perPageSeoMapper = (data: PageSEOSchema): NextSeoProps => {
     ? `${DEFAULT_SEO_PROPERTIES?.canonical}${canonicalURL?.current}`
     : DEFAULT_SEO_PROPERTIES?.canonical
 
-  const titleOG = socialTitle? {title:socialTitle}: {}
-  const descriptionOG = socialDescription? {description:socialDescription}: {}
+  const titleOG = socialTitle ? {title: socialTitle} : {}
+  const descriptionOG = socialDescription ? {description: socialDescription} : {}
 
   const noindex = robotsNoIndex ?? false
   const nofollow = robotsNoFollow ?? false
@@ -91,6 +92,64 @@ export const perPageSeoMapper = (data: PageSEOSchema): NextSeoProps => {
       ...descriptionOG,
       ...imageOG,
     },
+  }
+}
 
+const getSanityImageLink = (image: any) => {
+  const {asset} = image ?? {}
+  const imgSrc = asset ? builder.image(asset).url() : ''
+  return imgSrc
+}
+
+const processImages = (images = []) => {
+  return images.map((image) => getSanityImageLink(image)).filter((value) => !!value)
+}
+
+export const articleJSONLDMapper = (data: any, url: string) => {
+  const {author, description, images, publisherLogo, publisherName, title, _createdAt, _updatedAt} =
+    data ?? {}
+  const imagesSchema = processImages(images)
+  const publisherLogoSchema = getSanityImageLink(publisherLogo)
+  const {name} = author ?? {}
+  return {
+    url,
+    title,
+    images: imagesSchema,
+    datePublished: _createdAt,
+    dateModified: _updatedAt,
+    authorName: [
+      {
+        name,
+        // url: 'https://example.com',
+      },
+    ],
+    publisherName,
+    publisherLogo: publisherLogoSchema,
+    description,
+    isAccessibleForFree: true,
+  }
+}
+
+const processBreadcrumbs = (breadcrumbs: BreadcrumbItemSchema[]) =>
+  breadcrumbs.map((breadcrumb, key) => ({
+    position: key + 1,
+    name: breadcrumb.name,
+    item: breadcrumb.item,
+  }))
+
+export const breadcrumbsJSONLDMapper = (data: any) => {
+  const itemListElements = processBreadcrumbs(data)
+  return {
+    itemListElements,
+  }
+}
+
+const processAction = (actions: any) =>
+  actions.map((action: any) => ({target: action.target, queryInput: 'search_term_string'}))
+export const searchBoxJSONLDMapper = (data: any, url: string) => {
+  const potentialActions = processAction(data)
+  return {
+    url,
+    potentialActions,
   }
 }

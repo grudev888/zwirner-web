@@ -1,5 +1,33 @@
 import {groq} from 'next-sanity'
 
+import {SCHEMA_TYPE_JSON_LD} from '@/sanity/schema/objects/utils/jsonLdSchema'
+
+// Must follow JSONLDSchema
+const jsonLDFields = groq`
+    schemaType,
+    (schemaType == '${SCHEMA_TYPE_JSON_LD.ARTICLE}' || schemaType == '${SCHEMA_TYPE_JSON_LD.BLOG}') => {
+      article-> {
+        _updatedAt,
+        _createdAt,
+        author->,
+        title,
+        images,
+        publisherName,
+        description,
+        publisherLogo
+      }
+    },
+    schemaType == '${SCHEMA_TYPE_JSON_LD.BREADCRUMB}' => {
+      breadcrumbs
+    },
+    schemaType == '${SCHEMA_TYPE_JSON_LD.SITELINKS}' => {
+      searchPotentialActions
+    },
+    schemaType == '${SCHEMA_TYPE_JSON_LD.MANUAL}' => {
+      manualSchema
+    },
+`
+
 // Must follow PageSEOSchema
 export const pageSEOFields = groq`
   pageTitle,
@@ -11,7 +39,9 @@ export const pageSEOFields = groq`
   imageMeta,
   socialTitle,
   socialDescription,
-  overrideSchema
+  jsonLD {
+    ${jsonLDFields}
+  }
 `
 
 export const pageSEO = groq`

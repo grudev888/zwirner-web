@@ -11163,6 +11163,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"string-sanitizer@npm:^2.0.2":
+  version: 2.0.2
+  resolution: "string-sanitizer@npm:2.0.2"
+  checksum: 978be8325ee29c6ca97b97e86a578eea637db3da35fe6f1b260f917e984a8520c3f58bc4c83c0c2000da3cd5d6405117ef3e20af3feae5be44f90d7d1a12fe42
+  languageName: node
+  linkType: hard
+
 "string-width@npm:^1.0.2 || 2 || 3 || 4, string-width@npm:^4.1.0, string-width@npm:^4.2.0, string-width@npm:^4.2.3":
   version: 4.2.3
   resolution: "string-width@npm:4.2.3"
@@ -12492,6 +12499,7 @@ __metadata:
     sanity: ^3.3.1
     sanity-plugin-asset-source-unsplash: ^1.0.6
     sanity-plugin-availability: ^1.0.1
+    string-sanitizer: ^2.0.2
     styled-components: ^5.3.6
     suspend-react: ^0.0.9
     swr: ^2.1.1

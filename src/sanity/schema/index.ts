@@ -40,10 +40,12 @@ import pageContent from './objects/page/pageContent'
 import pageContentList from './objects/page/pageContentList'
 import seo from './objects/page/seo'
 import addressType from './objects/utils/address'
+import breadcrumbItem from './objects/utils/breadcrumbItem'
 import brickAndMortar from './objects/utils/brickAndMortar'
 import cta from './objects/utils/cta'
 import dateRange from './objects/utils/dateRange'
 import dateSelection from './objects/utils/dateSelection'
+import jsonLD from './objects/utils/jsonLdSchema'
 import link from './objects/utils/link'
 import media from './objects/utils/media'
 import textComplex from './objects/utils/textComplex'
@@ -54,8 +56,15 @@ import settings from './singletons/settings'
 import stories from './singletons/stories'
 import utopiaEditions from './singletons/utopiaEditions'
 
-
-export const utilsObjects: ObjectDefinition[] = [textComplex, cta, link, media, brickAndMortar]
+export const utilsObjects: ObjectDefinition[] = [
+  textComplex,
+  cta,
+  link,
+  media,
+  brickAndMortar,
+  jsonLD,
+  breadcrumbItem,
+]
 export const pageComponents: ObjectDefinition[] = [
   dzHero,
   dzCard,

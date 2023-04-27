@@ -1,6 +1,8 @@
 import {getExtension, getImageDimensions} from '@sanity/asset-utils'
 import {defineField, defineType} from 'sanity'
 
+import JsonLDType, {JSONLDSchema} from '@/sanity/schema/objects/utils/jsonLdSchema'
+
 type CanonicalURL = {
   current: string
 }
@@ -14,7 +16,7 @@ export interface PageSEOSchema {
   imageMeta?: any
   socialTitle?: string
   socialDescription?: string
-  overrideSchema?: any
+  jsonLD?: JSONLDSchema
 }
 
 export default defineType({
@@ -172,13 +174,10 @@ export default defineType({
       ],
     }),
     defineField({
-      name: 'overrideSchema',
-      title: 'Json Override Schema',
+      name: JsonLDType.name,
+      title: 'Json LD Schema',
       description: 'This .json file will override the current page SEO schema.',
-      type: 'file',
-      options: {
-        accept: 'application/json',
-      },
+      type: 'jsonLD',
     }),
   ],
 })
