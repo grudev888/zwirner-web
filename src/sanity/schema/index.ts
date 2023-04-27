@@ -23,6 +23,7 @@ import paintingType from './objects/artTypes/painting'
 import photographType from './objects/artTypes/photography'
 import sculptureType from './objects/artTypes/sculpture'
 import social from './objects/data/social'
+import menu from './objects/navigation/menu'
 import dzCard from './objects/page/components/molecules/dzCard'
 import dzCarousel from './objects/page/components/molecules/dzCarousel'
 import dzEditorial from './objects/page/components/molecules/dzEditorial'
@@ -76,6 +77,7 @@ export const objects: ObjectDefinition[] = [
   seo,
   row,
   grid,
+  menu,
 ]
 
 export const singletons: DocumentDefinition[] = [stories, home, collect, utopiaEditions]
