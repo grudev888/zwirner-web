@@ -5,7 +5,7 @@ import page from './page'
 
 export default defineType({
   name: 'navigation',
-  title: 'Navigation',
+  title: 'Header',
   type: 'document',
   icon: BlockElementIcon,
   preview: {

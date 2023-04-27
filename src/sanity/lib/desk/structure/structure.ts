@@ -38,7 +38,7 @@ export const generalStructure = (S: StructureBuilder) =>
               S.listItem()
                 .title('Footer')
                 .icon(BlockElementIcon)
-                .child(S.document().schemaType('footer').documentId('footer')),
+                .child(S.documentList().title('Footer').filter('_type == "footer"')),
             ])
         ),
       S.divider(),
