@@ -1,4 +1,4 @@
-import {ColumnSpan, DzColumn, DzGridColumns} from '@zwirner/design-system'
+import {DzColumn} from '@zwirner/design-system'
 import {FC} from 'react'
 
 import {DzCard} from './DzCard/DzCard'
@@ -7,46 +7,47 @@ import {DzHero} from './DzHero/DzHero'
 import {DzInterstitial} from './DzInterstitial/DzInterstitial'
 import {DzSplit} from './DzSplit/DzSplit'
 import {DzTitle} from './DzTitle/DzTitle'
+import {GridMolecule} from './GridMolecule'
 
-const componentsIndex: any = {
+export const componentsIndex: any = {
   dzHero: DzHero,
   dzCard: DzCard,
   dzEditorial: DzEditorial,
   dzSplit: DzSplit,
   dzTitle: DzTitle,
   dzInterstitial: DzInterstitial,
+  grid: GridMolecule,
 }
+
+interface ComponentsShape {
+  content: any
+  props: any
+  _type: string
+}
+
 interface PageBuilderProps {
-  rows: any[]
+  components: ComponentsShape[]
 }
-const getRows = (numberOfSections: number): ColumnSpan | ColumnSpan[] => {
-  if (!numberOfSections) return 1
-  if (numberOfSections > 4) return 3
-  return (12 / numberOfSections) as ColumnSpan
-}
-export const PageBuilder: FC<PageBuilderProps> = ({rows = []}) => {
+
+export const PageBuilder: FC<PageBuilderProps> = ({components = []}) => {
   return (
-    <DzColumn className="h-screen px-5" span={12}>
-      <DzGridColumns className="h-full w-full">
-        {rows.map((row: any) => {
-          const {components} = row
-          const getColSpan = getRows(components?.length ?? 0)
-          return components?.map((section: any, k: number) => {
-            const {type, data} = section
-            const Component = componentsIndex[type]
-            const renderComponent = !Component ? (
-              <DzColumn className="mb-5" key={`${k}-${type}`} span={getColSpan}>
-                <div key={`${k}-${type}`}>Not supported component: {type}</div>
-              </DzColumn>
-            ) : (
-              <DzColumn className="mb-5" key={`${k}-${type}`} span={getColSpan}>
-                <Component className="" data={data} />
-              </DzColumn>
-            )
-            return renderComponent
-          })
-        })}
-      </DzGridColumns>
+    <DzColumn className="mb-12 h-full" span={12}>
+      {components.map((component, key) => {
+        const {_type, props, content = []} = component
+        const ComponentModule = componentsIndex[_type]
+        const multipleContent = ComponentModule?.multipleContentTypes ?? false
+        const componentContent = multipleContent ? content : content?.[0]
+
+        if (!ComponentModule) {
+          return <div key={`${_type}-${key}`}>Not supported component: {_type}</div>
+        }
+        if(!componentContent) {
+          return <div key={`${_type}-${key}`}>Please add content types to this component: {props?.title ?? _type}</div>
+        }
+        return (
+          <ComponentModule key={`${_type}-${key}`} data={componentContent} componentProps={props} />
+        )
+      })}
     </DzColumn>
   )
 }

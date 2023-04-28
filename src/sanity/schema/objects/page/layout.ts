@@ -29,6 +29,11 @@ export default defineType({
           type: 'dzHeroCarousel',
         }),
         defineArrayMember({
+          name: 'dzCarousel',
+          title: 'Carousel',
+          type: 'dzCarousel',
+        }),
+        defineArrayMember({
           name: 'grid',
           title: 'Grid',
           type: 'grid',

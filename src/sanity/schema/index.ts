@@ -25,6 +25,7 @@ import photographType from './objects/artTypes/photography'
 import sculptureType from './objects/artTypes/sculpture'
 import social from './objects/data/social'
 import dzCard from './objects/page/components/molecules/dzCard'
+import dzCarousel from './objects/page/components/molecules/dzCarousel'
 import dzEditorial from './objects/page/components/molecules/dzEditorial'
 import dzHero from './objects/page/components/molecules/dzHero'
 import dzHeroCarousel from './objects/page/components/molecules/DzHeroCarousel'
@@ -34,6 +35,7 @@ import dzTitle from './objects/page/components/molecules/dzTitle'
 import editorialContent from './objects/page/editorialContent'
 import grid from './objects/page/grid'
 import row from './objects/page/layout'
+import pageBuilderComponents from './objects/page/pageBuilderComponents'
 import pageContent from './objects/page/pageContent'
 import pageContentList from './objects/page/pageContentList'
 import seo from './objects/page/seo'
@@ -61,6 +63,7 @@ export const pageComponents: ObjectDefinition[] = [
   dzSplit,
   dzTitle,
   dzHeroCarousel,
+  dzCarousel,
 ]
 
 export const objects: ObjectDefinition[] = [
@@ -104,6 +107,7 @@ export const schema: {types: SchemaTypeDefinition[]} = {
     pageContent,
     pageContentList,
     editorialContent,
+    pageBuilderComponents,
     ...objects,
     ...pageComponents,
     ...singletons,

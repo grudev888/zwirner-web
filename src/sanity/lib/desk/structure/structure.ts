@@ -44,17 +44,6 @@ export const generalStructure = (S: StructureBuilder) =>
                 .title('Footer')
                 .icon(BlockElementIcon)
                 .child(S.document().schemaType('footer').documentId('footer')),
-              S.divider(),
-              S.listItem()
-                .title('Locations')
-                .icon(PinIcon)
-                .child(
-                  S.documentList()
-                    .title('Locations')
-                    .filter('_type == "location"')
-                    .schemaType('location')
-                    .defaultOrdering([{field: 'name', direction: 'asc'}])
-                ),
             ])
         ),
       S.divider(),
@@ -109,8 +98,9 @@ export const generalStructure = (S: StructureBuilder) =>
                     .title('Artist Pages')
                     .filter('_type == "artistPage"')
                     .defaultOrdering([{field: 'title', direction: 'asc'}])
-                    .child(
+                    .child((childId) =>
                       S.document()
+                        .id(childId)
                         .schemaType('artistPage')
                         .views([
                           S.view.form(),
@@ -255,6 +245,16 @@ export const generalStructure = (S: StructureBuilder) =>
             type: 'press',
           })
         }),
+      S.listItem()
+        .title('Locations')
+        .icon(PinIcon)
+        .child(
+          S.documentList()
+            .title('Locations')
+            .filter('_type == "location"')
+            .schemaType('location')
+            .defaultOrdering([{field: 'name', direction: 'asc'}])
+        ),
       ...S.documentTypeListItems()
         .filter(
           (listItem) =>

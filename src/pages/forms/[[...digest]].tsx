@@ -6,19 +6,17 @@ import {
   DzInput,
   DzInputGroups,
   DzInputText,
-  DzLink,
   DzTitle,
   INPUT_GROUP_TYPES,
   TITLE_SIZES,
   TITLE_TYPES,
 } from '@zwirner/design-system'
 import axios from 'axios'
-import {useRouter} from 'next/router'
 import {useReCaptcha} from 'next-recaptcha-v3'
 import {useCallback, useEffect, useState} from 'react'
 import {SubmitHandler, useForm} from 'react-hook-form'
 import {TypedObject} from 'sanity'
-import {uuid} from 'uuidv4'
+import {v4 as uuid} from 'uuid'
 
 import {useForms as useFormsAPI} from '@/forms/api/useForms'
 import {IFormInput} from '@/forms/types'
@@ -26,10 +24,7 @@ import {EMAIL_REGEX} from '@/forms/utils'
 import {getErrors} from '@/stringsManager/api'
 
 const Forms = () => {
-  const router = useRouter()
-  const digest = router.query.digest?.[0]
-
-  const {data, addOrUpdate, getEmailToken, isLoading, error} = useFormsAPI({digest})
+  const {data, addOrUpdate, isLoading, error} = useFormsAPI()
 
   const {
     register,
@@ -45,12 +40,9 @@ const Forms = () => {
     [key: string]: TypedObject[]
   }>({})
 
-  const [token, setToken] = useState<string | null>(null)
-
   useEffect(() => {
     ;(async () => {
       const errors = await getErrors()
-
       setNewsletterErrors(errors)
     })()
   }, [])
@@ -58,23 +50,7 @@ const Forms = () => {
   useEffect(() => {
     if (data?.interests) {
       const availableInterests = data.interests.map(({id}: {id: string}) => id)
-      const selectedInterests = Object.keys(data.user?.interests || {}).filter(
-        (i) => availableInterests.includes(i) && data.user?.interests?.[i] === true
-      )
-
-      setValue('interests', data.user?.interests ? selectedInterests : availableInterests)
-    }
-
-    if (data?.payload) {
-      setValue('email', data.payload.email)
-    }
-
-    if (data?.user?.firstName) {
-      setValue('firstName', data.user?.firstName)
-    }
-
-    if (data?.user?.lastName) {
-      setValue('lastName', data.user?.lastName)
+      setValue('interests', availableInterests)
     }
   }, [data, setValue])
 
@@ -94,8 +70,7 @@ const Forms = () => {
               ...formData.interests.reduce((prev, i) => ({...prev, [i]: true}), {}),
             },
           },
-          token,
-          digest
+          token
         )
 
         alert('Thanks for your subscription')
@@ -107,14 +82,9 @@ const Forms = () => {
         }
 
         alert(msg)
-
-        if (msg === 'Email already submitted') {
-          const {token} = await getEmailToken(formData.email)
-          setToken(token)
-        }
       }
     },
-    [addOrUpdate, data?.interests, digest, executeRecaptcha, getEmailToken]
+    [addOrUpdate, data?.interests, executeRecaptcha]
   )
 
   if (isLoading || error) return null
@@ -202,15 +172,8 @@ const Forms = () => {
           />
         )}
 
-        {token && (
-          <DzLink href={`/forms/${token}`}>
-            You are already registered in our newsletter.{' '}
-            <strong>Click here to update your preferences</strong>.
-          </DzLink>
-        )}
-
         <DzButton className="mt-5 w-full" type="submit">
-          {data?.payload?.email ? 'Update preferences' : 'Submit'}
+          Submit
         </DzButton>
       </form>
     </DzColumn>

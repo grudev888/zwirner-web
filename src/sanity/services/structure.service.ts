@@ -67,7 +67,6 @@ export async function getSectionsByYear({
         ]
       : []
 
-    console.log('YEARS::', years)
     return S.list()
       .title(`${sectionTitle} by year`)
       .id('year')
@@ -77,34 +76,16 @@ export async function getSectionsByYear({
             .id(year)
             .title(year)
             .child(
-              // Todo determine how to assign and id on document lists
-              // S.list()
-              //   .title(`${sectionTitle} from ${year}`)
-              //   .items(
-              //     (years[year] ?? []).map((objectId: string) => {
-              //       return S.documentListItem().id(objectId).schemaType(type).child(
-              //         S.document()
-              //         .id(objectId)
-              //         .schemaType(type)
-              //         .views([
-              //           S.view.form(),
-              //           ...includePreview
-              //         ])
-              //       )
-              //     })
-              //   )
               S.documentList()
                 .schemaType(type)
                 .title(`${sectionTitle} from ${year}`)
                 .filter(`_id in $ids`)
                 .params({ids: years[year]})
-                .child(
+                .child((childId) =>
                   S.document()
+                    .id(childId)
                     .schemaType(type)
-                    .views([
-                      S.view.form(),
-                      ...includePreview
-                    ])
+                    .views([S.view.form(), ...includePreview])
                 )
             )
         })

@@ -3,9 +3,7 @@ import {PreviewSuspense} from 'next-sanity/preview'
 
 import {PageBuilder} from '@/components/pageBuilder'
 import {PreviewPageBuilder} from '@/components/pageBuilder/previewPageBuilder'
-import {homeMapper} from '@/sanity/mappers/pageBuilder/homeMapper'
 import {homePage} from '@/sanity/queries/page.queries'
-import {getAllExhibitions} from '@/sanity/services/exhibition.service'
 import {getHomePage} from '@/sanity/services/page.service'
 
 interface PageProps {
@@ -24,6 +22,10 @@ interface PreviewData {
 }
 
 export default function Page({data, preview}: PageProps) {
+  const {home = []} = data
+  const [homeData] = home ?? []
+  const {components} = homeData ?? {}
+
   if (preview) {
     return (
       <PreviewSuspense fallback="Loading...">
@@ -32,7 +34,7 @@ export default function Page({data, preview}: PageProps) {
     )
   }
 
-  return <PageBuilder rows={data.home} />
+  return <PageBuilder components={components} />
 }
 
 export const getStaticProps: GetStaticProps<PageProps, Query, PreviewData> = async (ctx) => {
@@ -54,18 +56,29 @@ export const getStaticProps: GetStaticProps<PageProps, Query, PreviewData> = asy
     }
   }
 
-  const [exhibitions, homePage] = await Promise.all([getAllExhibitions(), getHomePage()])
-
-  return {
-    props: {
-      data: {
-        exhibitions,
-        home: homeMapper(homePage),
-        unmapped: homePage,
+  try {
+    const homePage = await getHomePage()
+    return {
+      props: {
+        data: {
+          home: homePage,
+        },
+        preview,
+        slug: params?.slug || null,
+        token: null,
       },
-      preview,
-      slug: params?.slug || null,
-      token: null,
-    },
+    }
+  } catch (e: any) {
+    console.error('ERROR FETCHING HOME DATA:', e?.response?.statusMessage)
+    return {
+      props: {
+        data: {
+          home: [],
+        },
+        preview,
+        slug: params?.slug || null,
+        token: null,
+      },
+    }
   }
 }
