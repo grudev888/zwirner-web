@@ -1,6 +1,7 @@
 import {groq} from 'next-sanity'
 
 import {componentsByDataScheme} from '@/sanity/queries/page.queries'
+import {pageSEOFields} from '@/sanity/queries/seo.queries'
 
 const exhibitionDateFields = groq`
   _id,
@@ -22,5 +23,8 @@ export const exhibitionPageBySlug = groq`
 *[_type == "exhibitionPage" && slug.current == $slug][0] {
   ...,
   "exhibition": exhibition->,
+  seo {
+    ${pageSEOFields}
+  },
   ${componentsByDataScheme}
 }`

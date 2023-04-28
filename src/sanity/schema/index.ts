@@ -9,6 +9,7 @@ import collection from './documents/collection'
 import event from './documents/event'
 import exhibition from './documents/exhibition'
 import footer from './documents/footer'
+import globalSEO from './documents/globalSEO'
 import locationType from './documents/location'
 import navigation from './documents/navigation'
 import pageType from './documents/page'
@@ -18,6 +19,7 @@ import fairPage from './documents/pages/fairPage'
 import postType from './documents/post'
 import press from './documents/press'
 import redirects from './documents/redirects'
+import strings from './documents/strings'
 import drawingType from './objects/artTypes/drawing'
 import paintingType from './objects/artTypes/painting'
 import photographType from './objects/artTypes/photography'
@@ -40,10 +42,12 @@ import pageContent from './objects/page/pageContent'
 import pageContentList from './objects/page/pageContentList'
 import seo from './objects/page/seo'
 import addressType from './objects/utils/address'
+import breadcrumbItem from './objects/utils/breadcrumbItem'
 import brickAndMortar from './objects/utils/brickAndMortar'
 import cta from './objects/utils/cta'
 import dateRange from './objects/utils/dateRange'
 import dateSelection from './objects/utils/dateSelection'
+import jsonLD from './objects/utils/jsonLdSchema'
 import link from './objects/utils/link'
 import media from './objects/utils/media'
 import textComplex from './objects/utils/textComplex'
@@ -54,7 +58,15 @@ import settings from './singletons/settings'
 import stories from './singletons/stories'
 import utopiaEditions from './singletons/utopiaEditions'
 
-export const utilsObjects: ObjectDefinition[] = [textComplex, cta, link, media, brickAndMortar]
+export const utilsObjects: ObjectDefinition[] = [
+  textComplex,
+  cta,
+  link,
+  media,
+  brickAndMortar,
+  jsonLD,
+  breadcrumbItem,
+]
 export const pageComponents: ObjectDefinition[] = [
   dzHero,
   dzCard,
@@ -80,7 +92,7 @@ export const objects: ObjectDefinition[] = [
   menu,
 ]
 
-export const singletons: DocumentDefinition[] = [stories, home, collect, utopiaEditions]
+export const singletons: DocumentDefinition[] = [stories, home, collect, utopiaEditions, globalSEO]
 export const schema: {types: SchemaTypeDefinition[]} = {
   types: [
     article,
@@ -91,6 +103,7 @@ export const schema: {types: SchemaTypeDefinition[]} = {
     event,
     artwork,
     collection,
+    strings,
     exhibition,
     artist,
     postType,

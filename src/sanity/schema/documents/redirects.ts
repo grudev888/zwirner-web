@@ -1,6 +1,11 @@
 import {LinkRemovedIcon} from '@sanity/icons'
 import {defineField, defineType} from 'sanity'
 
+export interface RedirectSchema {
+  from: string,
+  to: string,
+}
+
 export default defineType({
   name: 'redirect',
   type: 'document',

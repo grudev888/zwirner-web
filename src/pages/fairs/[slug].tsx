@@ -3,6 +3,7 @@ import {GetStaticProps} from 'next'
 import {PreviewSuspense} from 'next-sanity/preview'
 import {ErrorBoundary} from 'react-error-boundary'
 
+import {SEOComponent} from '@/common/components/seo/seo'
 import {PageBuilder} from '@/components/pageBuilder'
 import {PreviewPageBuilder} from '@/components/pageBuilder/previewPageBuilder'
 import {fairPageBySlug} from '@/sanity/queries/fairPage.queries'
@@ -24,26 +25,43 @@ interface PreviewData {
 }
 
 export default function FairsPage({data = {}, preview}: PageProps) {
-  const {pageData = {}} = data
-  const {components} = pageData
+  const {pageData = {}} = data ?? {}
+  const {components, seo} = pageData ?? {}
+
   if (preview) {
     const {queryParams} = data
     return (
-      <PreviewSuspense fallback="Loading...">
-        <ErrorBoundary
-          fallback={
-            <DzColumn className="mb-12 h-full" span={12}>
-              <div className="flex justify-center p-5">Something went wrong</div>
-            </DzColumn>
-          }
-        >
-          <PreviewPageBuilder query={fairPageBySlug} params={queryParams} />
-        </ErrorBoundary>
-      </PreviewSuspense>
+      <>
+        <SEOComponent data={seo} />
+        <PreviewSuspense fallback="Loading...">
+          <ErrorBoundary
+            fallback={
+              <DzColumn className="mb-12 h-full" span={12}>
+                <div className="flex justify-center p-5">Something went wrong</div>
+              </DzColumn>
+            }
+          >
+            <PreviewPageBuilder query={fairPageBySlug} params={queryParams} />
+          </ErrorBoundary>
+        </PreviewSuspense>
+      </>
     )
   }
 
-  return <PageBuilder components={components} />
+  return (
+    <>
+      <ErrorBoundary
+        fallback={
+          <DzColumn className="mb-12 h-full" span={12}>
+            <div className="flex justify-center p-5">Something went wrong</div>
+          </DzColumn>
+        }
+      >
+        <SEOComponent data={seo} />
+        <PageBuilder components={components} />
+      </ErrorBoundary>
+    </>
+  )
 }
 
 export const getStaticPaths = async () => {

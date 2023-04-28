@@ -8,6 +8,8 @@ import {
   PinIcon,
   TagIcon,
   ThLargeIcon,
+  TiersIcon,
+  TrendUpwardIcon,
   UsersIcon,
 } from '@sanity/icons'
 import {StructureBuilder} from 'sanity/desk'
@@ -28,9 +30,17 @@ export const generalStructure = (S: StructureBuilder) =>
             .title('Settings Documents')
             .items([
               S.listItem()
+                .title('Global SEO')
+                .icon(TrendUpwardIcon)
+                .child(S.document().schemaType('globalSEO').documentId('globalSEO')),
+              S.listItem()
                 .title('Redirects')
                 .icon(LinkRemovedIcon)
                 .child(S.documentList().title('Page Redirects').filter('_type == "redirect"')),
+              S.listItem()
+                .title('Strings')
+                .icon(TiersIcon)
+                .child(S.documentList().title('Strings').filter('_type == "strings"')),
               S.listItem()
                 .title('Navigation')
                 .icon(BlockElementIcon)
@@ -278,6 +288,8 @@ export const generalStructure = (S: StructureBuilder) =>
               'post',
               'artwork',
               'page',
+              'strings',
+              'globalSEO',
             ].includes(listItem?.getId() ?? '')
         )
         .sort((a, b) => {
