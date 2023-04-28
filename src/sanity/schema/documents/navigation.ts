@@ -1,6 +1,7 @@
 import {BlockElementIcon} from '@sanity/icons'
 import {defineField, defineType} from 'sanity'
 
+import menu from '../objects/navigation/menu'
 import page from './page'
 
 export default defineType({
@@ -33,7 +34,7 @@ export default defineType({
     defineField({name: 'logo', type: 'image'}),
     defineField({
       name: 'Menu',
-      type: 'menu',
+      type: menu.name,
     }),
   ],
 })

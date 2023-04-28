@@ -16,7 +16,8 @@ export default defineType({
       of: [
         defineArrayMember({
           type: 'object',
-          name: 'MenuItemPage',
+          name: 'menuItemPage',
+          title: 'Internal page',
           preview: {select: {title: 'title'}},
           fields: [
             defineField({type: 'string', name: 'title', title: 'Title'}),
@@ -42,7 +43,8 @@ export default defineType({
         }),
         defineArrayMember({
           type: 'object',
-          name: 'MenuItemLink',
+          name: 'menuItemLink',
+          title: 'External link',
           preview: {select: {title: 'title'}},
           fields: [
             defineField({type: 'string', name: 'title', title: 'Title'}),
