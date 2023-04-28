@@ -1,15 +1,22 @@
-import {defineType} from 'sanity'
+import {defineField, defineType} from 'sanity'
+
+const capitalize = (str: string): string => str[0].toUpperCase() + str.slice(1)
+
+const socialItem = (name: string) =>
+  defineField({
+    name,
+    title: capitalize(name),
+    type: 'url',
+  })
 
 export default defineType({
   name: 'social',
   title: 'Social media',
   type: 'object',
   fields: [
-    {name: 'instagram', title: 'Instagram', type: 'string'},
-    {name: 'twitter', title: 'Twitter', type: 'string'},
-    {name: 'facebook', title: 'Facebook', type: 'string'},
-    {name: 'youtube', title: 'Youtube', type: 'string'},
-    {name: 'tiktok', title: 'Tiktok', type: 'string'},
-    {name: 'twitch', title: 'Twitch', type: 'string'},
+    socialItem('twitter'),
+    socialItem('facebook'),
+    socialItem('instagram'),
+    socialItem('weChat'),
   ],
 })

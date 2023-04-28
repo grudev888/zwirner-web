@@ -42,13 +42,13 @@ export const generalStructure = (S: StructureBuilder) =>
                 .icon(TiersIcon)
                 .child(S.documentList().title('Strings').filter('_type == "strings"')),
               S.listItem()
-                .title('Navigation')
+                .title('Header')
                 .icon(BlockElementIcon)
                 .child(S.document().schemaType('navigation').documentId('navigation')),
               S.listItem()
                 .title('Footer')
                 .icon(BlockElementIcon)
-                .child(S.documentList().title('Footer').filter('_type == "footer"')),
+                .child(S.document().schemaType('footer').documentId('footer')),
             ])
         ),
       S.divider(),

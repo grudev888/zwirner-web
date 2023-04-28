@@ -26,6 +26,8 @@ import photographType from './objects/artTypes/photography'
 import sculptureType from './objects/artTypes/sculpture'
 import social from './objects/data/social'
 import menu from './objects/navigation/menu'
+import menuItemLink from './objects/navigation/menuItemLink'
+import menuItemPage from './objects/navigation/menuItemPage'
 import dzCard from './objects/page/components/molecules/dzCard'
 import dzCarousel from './objects/page/components/molecules/dzCarousel'
 import dzEditorial from './objects/page/components/molecules/dzEditorial'
@@ -90,6 +92,8 @@ export const objects: ObjectDefinition[] = [
   row,
   grid,
   menu,
+  menuItemLink,
+  menuItemPage,
 ]
 
 export const singletons: DocumentDefinition[] = [stories, home, collect, utopiaEditions, globalSEO]
