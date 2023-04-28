@@ -111,18 +111,18 @@ export const generalStructure = (S: StructureBuilder) =>
                     .defaultOrdering([{field: 'title', direction: 'asc'}])
                     .child(
                       S.document()
-                      .schemaType('artistPage')
-                      .views([
-                        S.view.form(),
-                        S.view
-                          .component(PreviewIframe)
-                          .options({
-                            url: (doc:any)=> {
-                              return `${envHost}/api/sanity/preview?slug=${doc?.slug?.current}&section=artists`
-                            },
-                          })
-                          .title('Preview'),
-                      ])
+                        .schemaType('artistPage')
+                        .views([
+                          S.view.form(),
+                          S.view
+                            .component(PreviewIframe)
+                            .options({
+                              url: (doc: any) => {
+                                return `${envHost}/api/sanity/preview?slug=${doc?.slug?.current}&section=artists`
+                              },
+                            })
+                            .title('Preview'),
+                        ])
                     )
                 ),
               S.listItem()
@@ -134,8 +134,8 @@ export const generalStructure = (S: StructureBuilder) =>
                     sectionTitle: 'Exhibition',
                     type: 'exhibitionPage',
                     preview: {
-                      section: 'exhibitions'
-                    }
+                      section: 'exhibitions',
+                    },
                   })
                 }),
               S.listItem()
@@ -147,8 +147,8 @@ export const generalStructure = (S: StructureBuilder) =>
                     sectionTitle: 'Fair',
                     type: 'fairPage',
                     preview: {
-                      section: 'fairs'
-                    }
+                      section: 'fairs',
+                    },
                   })
                 }),
             ])
@@ -283,6 +283,7 @@ export const generalStructure = (S: StructureBuilder) =>
               'post',
               'artwork',
               'page',
+              'strings',
             ].includes(listItem?.getId() ?? '')
         )
         .sort((a, b) => {
