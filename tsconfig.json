@@ -20,12 +20,11 @@
     "noEmit": true,
     "incremental": true,
     "resolveJsonModule": true,
-    "jsx": "preserve",
+    "jsx": "react-jsx",
     "plugins": [{"name": "next"}],
     "paths": {
       "sanity.config": ["./sanity.config.ts"],
       "@/*": ["./src/*"],
-      "@/sanity/*": ["./src/sanity/*"]
     },
     "preserveSymlinks": true,
     "baseUrl": "."

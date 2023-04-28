@@ -1,5 +1,15 @@
 import {ComposeIcon, EditIcon, MasterDetailIcon} from '@sanity/icons'
+import {EditorialType} from '@zwirner/design-system'
 import {defineField, defineType} from 'sanity'
+
+import {TextComplexSchemaType} from '@/sanity/schema/objects/utils/textComplex'
+
+export interface DzEditorialSchemaProps {
+  title: string
+  editorialType: EditorialType
+  editorialTextOverrides?: TextComplexSchemaType[]
+  imageOverride?: any
+}
 
 export default defineType({
   name: 'dzEditorial',
@@ -16,6 +26,7 @@ export default defineType({
       type: 'string',
       title: 'Component title',
       group: 'content',
+      validation: (rule) => rule.required(),
     }),
     defineField({
       title: 'Type',
@@ -30,6 +41,7 @@ export default defineType({
         ],
       },
       initialValue: 'simple',
+      validation: (rule) => rule.required(),
     }),
     defineField({
       name: 'content',
@@ -45,7 +57,7 @@ export default defineType({
       of: [{type: 'textComplex'}],
     }),
     defineField({
-      name: 'image',
+      name: 'imageOverride',
       type: 'image',
       title: 'Image',
       group: 'overrides',

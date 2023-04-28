@@ -34,7 +34,7 @@ export default defineType({
     defineField({
       name: 'description',
       title: 'Description, bio',
-      type: 'string'
+      type: 'text'
     }),
     defineField({
       name: 'picture',

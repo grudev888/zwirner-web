@@ -22,10 +22,6 @@ export const fairPageBySlug = groq`
 *[_type == "fairPage" && slug.current == $slug][0] {
   ...,
   "exhibition": exhibition->,
-  components[] {
-    _type,
-    title,
-    ${componentsByDataScheme}
-  }
+  ${componentsByDataScheme}
 }`
 

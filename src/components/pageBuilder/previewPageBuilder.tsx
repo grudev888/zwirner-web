@@ -1,24 +1,23 @@
 import {FC} from 'react'
 
 import {PageBuilder} from '@/components/pageBuilder'
-import {homeMapper} from '@/sanity/mappers/pageBuilder/homeMapper'
 import {usePreview} from '@/sanity/preview'
 
 interface PreviewPageBuilderProps {
   query: string
   params?: any
-  isSingle?: boolean
 }
 
-export const PreviewPageBuilder: FC<PreviewPageBuilderProps> = ({
-  query,
-  params = {},
-  isSingle = false,
-}) => {
+export const PreviewPageBuilder: FC<PreviewPageBuilderProps> = ({query, params = {}}) => {
   const data = usePreview(null, query, params)
-  const dataToMap = isSingle ? [data] : data
-
-  return <PageBuilder rows={homeMapper(dataToMap)} />
+  if (Array.isArray(data)) {
+    const [previewData] = data ?? []
+    const {components} = previewData ?? {}
+    return <PageBuilder components={components} />
+  } else {
+    const {components} = data
+    return <PageBuilder components={components} />
+  }
 }
 
 export default PreviewPageBuilder

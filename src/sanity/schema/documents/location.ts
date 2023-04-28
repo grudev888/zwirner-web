@@ -22,6 +22,22 @@ export default defineType({
       validation: (rule) => rule.required(),
     }),
     defineField({
+      title: 'Timezone',
+      name: 'timezone',
+      type: 'string',
+      options: {
+        list: [
+          // IANA timezone values
+          {title: 'New york, USA (UTC/GMT-4)', value: 'America/New_York'},
+          {title: 'London, England (UTC/GMT+1)', value: 'Europe/London'},
+          {title: 'Paris, France (UTC/GMT+2)', value: 'Europe/Paris'},
+          {title: 'Hong Kong, SAR China (UTC/GMT+8)', value: 'Asia/Hong_Kong'},
+        ],
+      },
+      initialValue: 'America/New_York',
+      validation: (rule) => rule.required(),
+    }),
+    defineField({
       title: 'Operating Hours',
       name: 'hours',
       type: 'availability',

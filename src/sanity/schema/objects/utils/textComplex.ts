@@ -1,4 +1,11 @@
+// Todo with the design system version update
+// import {EditorialTextType} from '@zwirner/design-system'
 import {defineField, defineType} from 'sanity'
+
+export interface TextComplexSchemaType {
+  text: string
+  textType: any
+}
 
 export default defineType({
   title: 'Text complex',
@@ -9,6 +16,7 @@ export default defineType({
       name: 'text',
       type: 'string',
       title: 'Text',
+      validation: (rule) => rule.required(),
     }),
     defineField({
       title: 'Type',
@@ -18,10 +26,10 @@ export default defineType({
         list: [
           {title: 'Paragraph', value: 'paragraph'},
           {title: 'Quote', value: 'quote'},
-          {title: 'Heading', value: 'heading'},
         ],
       },
       initialValue: 'simple',
+      validation: (rule) => rule.required(),
     }),
   ],
 })
