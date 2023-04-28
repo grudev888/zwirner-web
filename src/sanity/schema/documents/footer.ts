@@ -1,6 +1,7 @@
 import {BlockElementIcon} from '@sanity/icons'
 import {defineArrayMember, defineField, defineType} from 'sanity'
 
+import location from './location'
 import page from './page'
 
 export default defineType({
@@ -37,16 +38,7 @@ export default defineType({
       of: [
         defineArrayMember({
           name: 'gallery',
-          type: 'object',
-          fields: [
-            defineField({name: 'name', type: 'string', title: 'Name'}),
-            defineField({name: 'address', type: 'string', title: 'Address'}),
-            defineField({
-              title: 'Working Hours',
-              name: 'hours',
-              type: 'availability',
-            }),
-          ],
+          type: location.name,
         }),
       ],
     }),
