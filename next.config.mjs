@@ -1,8 +1,10 @@
+import analyzer from '@next/bundle-analyzer'
+
 /** @type {import('next').NextConfig} */
 const config = {
   compiler: {
     // Enables the styled-components SWC transform
-    styledComponents: true
+    styledComponents: true,
   },
   images: {
     remotePatterns: [
@@ -15,4 +17,8 @@ const config = {
   reactStrictMode: true,
 }
 
-export default config
+const withBundleAnalyzer = analyzer({
+  enabled: process.env.ANALYZE === 'true',
+})
+
+export default withBundleAnalyzer(config)

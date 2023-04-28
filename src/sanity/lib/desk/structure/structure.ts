@@ -8,6 +8,7 @@ import {
   PinIcon,
   TagIcon,
   ThLargeIcon,
+  TrendUpwardIcon,
   UsersIcon,
 } from '@sanity/icons'
 import {StructureBuilder} from 'sanity/desk'
@@ -27,6 +28,10 @@ export const generalStructure = (S: StructureBuilder) =>
           S.list()
             .title('Settings Documents')
             .items([
+              S.listItem()
+                .title('Global SEO')
+                .icon(TrendUpwardIcon)
+                .child(S.document().schemaType('globalSEO').documentId('globalSEO')),
               S.listItem()
                 .title('Redirects')
                 .icon(LinkRemovedIcon)
@@ -278,6 +283,7 @@ export const generalStructure = (S: StructureBuilder) =>
               'post',
               'artwork',
               'page',
+              'globalSEO',
             ].includes(listItem?.getId() ?? '')
         )
         .sort((a, b) => {

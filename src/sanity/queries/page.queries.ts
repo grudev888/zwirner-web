@@ -11,8 +11,8 @@ import {
   dzTitleProps,
   gridMoleculeProps,
 } from '@/sanity/queries/components.queries'
-
-import {exhibitionComplexFields, exhibitionSimpleFields} from './exhibition.queries'
+import {exhibitionComplexFields, exhibitionSimpleFields} from '@/sanity/queries/exhibition.queries'
+import {pageSEOFields} from '@/sanity/queries/seo.queries'
 
 const pageSimpleFields = groq`
   _id,
@@ -88,6 +88,9 @@ export const homePage = groq`
   _id,
   _type,
   title,
+  seo {
+    ${pageSEOFields}
+  },
   ${componentsByDataScheme}
 }
 `
