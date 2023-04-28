@@ -37,6 +37,24 @@ export default defineType({
       group: 'overrides',
     }),
     defineField({
+      name: 'subHeadingOverride',
+      type: 'string',
+      title: 'SubHeading',
+      group: 'overrides',
+    }),
+    defineField({
+      name: 'secondaryTitleOverride',
+      type: 'string',
+      title: 'Secondary Title',
+      group: 'overrides',
+    }),
+    defineField({
+      name: 'descriptionOverride',
+      type: 'string',
+      title: 'Description',
+      group: 'overrides',
+    }),
+    defineField({
       name: 'imageOverride',
       type: 'image',
       title: 'Image',
@@ -49,6 +67,11 @@ export default defineType({
           name: 'alt',
           type: 'string',
           title: 'Alternative text',
+        },
+        {
+          name: 'url',
+          type: 'string',
+          title: 'Url redirect',
         },
       ],
     }),

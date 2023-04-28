@@ -5,7 +5,42 @@ import {builder} from '@/sanity/imageBuilder'
 export const heroMapper = (data: any) => {
   return data
 }
+export const dzHeroOverrides = (props: any) => {
+  const {
+    headingOverride,
+    subHeadingOverride,
+    secondaryTitleOverride,
+    descriptionOverride,
+    imageOverride,
+  } = props
+  const {asset, alt, url} = imageOverride ?? {}
+  const imgSrc = asset ? builder.image(asset).url() : ''
+  console.log('url:::', url)
 
+  const title = headingOverride ? {title: headingOverride} : {}
+  const subtitle = subHeadingOverride ? {subtitle: subHeadingOverride} : {}
+  const secondaryTitle = secondaryTitleOverride ? {secondaryTitle: secondaryTitleOverride} : {}
+  const description = descriptionOverride ? {description: descriptionOverride} : {}
+  const media = imgSrc
+    ? {
+        media: {
+          url,
+          type: MEDIA_TYPES.IMAGE,
+          imgProps: {
+            src: imgSrc,
+            alt,
+          },
+        },
+      }
+    : {}
+  return {
+    ...media,
+    ...title,
+    ...subtitle,
+    ...secondaryTitle,
+    ...description,
+  }
+}
 export const contentTypesMapper: any = {
   artist: (data: any) => {
     const {birthdate, fullName, deathDate, picture, summary, description} = data

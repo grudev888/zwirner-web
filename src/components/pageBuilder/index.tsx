@@ -30,6 +30,7 @@ interface PageBuilderProps {
 }
 
 export const PageBuilder: FC<PageBuilderProps> = ({components = []}) => {
+  console.log('COMPONENTS::', components)
   return (
     <DzColumn className="mb-12 h-full" span={12}>
       {components.map((component, key) => {

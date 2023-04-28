@@ -63,6 +63,9 @@ export const dzHeroProps = groq`
     'props': {
       title,
       headingOverride,
+      subHeadingOverride,
+      secondaryTitleOverride,
+      descriptionOverride,
       imageOverride
     }
   },

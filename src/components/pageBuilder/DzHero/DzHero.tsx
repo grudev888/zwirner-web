@@ -3,7 +3,7 @@ import {FC} from 'react'
 
 import {DzHeroSchemaProps} from '@/sanity/schema/objects/page/components/molecules/dzHero'
 
-import {contentTypesMapper} from './heroMapper'
+import {contentTypesMapper, dzHeroOverrides} from './heroMapper'
 
 interface DzHeroProps {
   data: any
@@ -12,9 +12,10 @@ interface DzHeroProps {
 
 export const DzHero: FC<DzHeroProps> = ({data, componentProps}) => {
   const {_type} = data ?? {}
-  const mappedData = (contentTypesMapper[_type] ?? ((a: any) => a))(data, componentProps)
+  const mappedData = (contentTypesMapper[_type] ?? ((a: any) => a))(data)
+  const overrideData = dzHeroOverrides(componentProps) ?? {}
 
-  return <DzHeroMolecule {...mappedData} />
+  return <DzHeroMolecule {...{...mappedData, ...overrideData}} />
 }
 
 export default DzHero
