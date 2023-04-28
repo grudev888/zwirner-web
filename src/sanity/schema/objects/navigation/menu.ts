@@ -5,6 +5,28 @@ import artistPage from '../../documents/pages/artistPage'
 import exhibitionPage from '../../documents/pages/exhibitionPage'
 import fairPage from '../../documents/pages/fairPage'
 
+const commonFields = [
+  defineField({
+    type: 'boolean',
+    name: 'desktopEnabled',
+    title: 'Enabled for desktop?',
+    initialValue: true,
+  }),
+  defineField({
+    type: 'boolean',
+    name: 'mobileEnabled',
+    title: 'Enabled for mobile?',
+    initialValue: true,
+  }),
+  defineField({
+    type: 'boolean',
+    name: 'newTab',
+    title: 'Open in a new tab?',
+    initialValue: true,
+    hidden: (params) => params.parent.submenu?.items?.length > 0,
+  }),
+]
+
 export default defineType({
   name: 'menu',
   type: 'object',
@@ -39,18 +61,7 @@ export default defineType({
               type: 'menu',
               hidden: (params) => !!params.parent.page?._type,
             }),
-            defineField({
-              type: 'boolean',
-              name: 'desktopEnabled',
-              title: 'Enabled for desktop?',
-              initialValue: true,
-            }),
-            defineField({
-              type: 'boolean',
-              name: 'mobileEnabled',
-              title: 'Enabled for mobile?',
-              initialValue: true,
-            }),
+            ...commonFields,
           ],
         }),
         defineArrayMember({
@@ -72,18 +83,7 @@ export default defineType({
               type: 'menu',
               hidden: (params) => !!params.parent.link,
             }),
-            defineField({
-              type: 'boolean',
-              name: 'desktopEnabled',
-              title: 'Enabled for desktop?',
-              initialValue: true,
-            }),
-            defineField({
-              type: 'boolean',
-              name: 'mobileEnabled',
-              title: 'Enabled for mobile?',
-              initialValue: true,
-            }),
+            ...commonFields,
           ],
         }),
       ],

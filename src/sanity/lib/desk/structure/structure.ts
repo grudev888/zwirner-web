@@ -34,7 +34,7 @@ export const generalStructure = (S: StructureBuilder) =>
               S.listItem()
                 .title('Navigation')
                 .icon(BlockElementIcon)
-                .child(S.documentList().title('Navigation').filter('_type == "navigation"')),
+                .child(S.document().schemaType('navigation').documentId('navigation')),
               S.listItem()
                 .title('Footer')
                 .icon(BlockElementIcon)
