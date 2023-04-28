@@ -8,6 +8,7 @@ import {
   PinIcon,
   TagIcon,
   ThLargeIcon,
+  TiersIcon,
   TrendUpwardIcon,
   UsersIcon,
 } from '@sanity/icons'
@@ -36,6 +37,10 @@ export const generalStructure = (S: StructureBuilder) =>
                 .title('Redirects')
                 .icon(LinkRemovedIcon)
                 .child(S.documentList().title('Page Redirects').filter('_type == "redirect"')),
+              S.listItem()
+                .title('Strings')
+                .icon(TiersIcon)
+                .child(S.documentList().title('Strings').filter('_type == "strings"')),
               S.listItem()
                 .title('Navigation')
                 .icon(BlockElementIcon)
@@ -283,6 +288,7 @@ export const generalStructure = (S: StructureBuilder) =>
               'post',
               'artwork',
               'page',
+              'strings',
               'globalSEO',
             ].includes(listItem?.getId() ?? '')
         )

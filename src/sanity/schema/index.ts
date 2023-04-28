@@ -19,6 +19,7 @@ import fairPage from './documents/pages/fairPage'
 import postType from './documents/post'
 import press from './documents/press'
 import redirects from './documents/redirects'
+import strings from './documents/strings'
 import drawingType from './objects/artTypes/drawing'
 import paintingType from './objects/artTypes/painting'
 import photographType from './objects/artTypes/photography'
@@ -100,6 +101,7 @@ export const schema: {types: SchemaTypeDefinition[]} = {
     event,
     artwork,
     collection,
+    strings,
     exhibition,
     artist,
     postType,
