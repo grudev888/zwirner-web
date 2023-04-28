@@ -11,8 +11,8 @@ interface PreviewPageBuilderProps {
 export const PreviewPageBuilder: FC<PreviewPageBuilderProps> = ({query, params = {}}) => {
   const data = usePreview(null, query, params)
   if (Array.isArray(data)) {
-    const [previewData = {}] = data
-    const {components} = previewData
+    const [previewData] = data ?? []
+    const {components} = previewData ?? {}
     return <PageBuilder components={components} />
   } else {
     const {components} = data

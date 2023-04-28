@@ -23,8 +23,8 @@ interface PreviewData {
 
 export default function Page({data, preview}: PageProps) {
   const {home = []} = data
-  const [homeData] = home
-  const {components} = homeData
+  const [homeData] = home ?? []
+  const {components} = homeData ?? {}
 
   if (preview) {
     return (
