@@ -39,6 +39,18 @@ export default defineType({
               type: 'menu',
               hidden: (params) => !!params.parent.page?._type,
             }),
+            defineField({
+              type: 'boolean',
+              name: 'desktopEnabled',
+              title: 'Enabled for desktop?',
+              initialValue: true,
+            }),
+            defineField({
+              type: 'boolean',
+              name: 'mobileEnabled',
+              title: 'Enabled for mobile?',
+              initialValue: true,
+            }),
           ],
         }),
         defineArrayMember({
@@ -60,21 +72,21 @@ export default defineType({
               type: 'menu',
               hidden: (params) => !!params.parent.link,
             }),
+            defineField({
+              type: 'boolean',
+              name: 'desktopEnabled',
+              title: 'Enabled for desktop?',
+              initialValue: true,
+            }),
+            defineField({
+              type: 'boolean',
+              name: 'mobileEnabled',
+              title: 'Enabled for mobile?',
+              initialValue: true,
+            }),
           ],
         }),
       ],
-    }),
-    defineField({
-      type: 'boolean',
-      name: 'desktopEnabled',
-      title: 'Enabled for desktop?',
-      initialValue: true,
-    }),
-    defineField({
-      type: 'boolean',
-      name: 'mobileEnabled',
-      title: 'Enabled for mobile?',
-      initialValue: true,
     }),
   ],
 })
