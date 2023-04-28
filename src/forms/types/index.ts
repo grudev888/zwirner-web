@@ -7,3 +7,13 @@ export interface IFormInput {
   terms: boolean
   currentUrl: string
 }
+
+export interface ILocation {
+  ip: string;
+  timezone: string;
+  latitude: string;
+  longitude: string;
+  country: string;
+  region: string;
+  city: string;
+}

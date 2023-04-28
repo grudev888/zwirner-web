@@ -17,10 +17,13 @@ import {SubmitHandler, useForm} from 'react-hook-form'
 import {v4 as uuid} from 'uuid'
 
 import {useForms as useFormsAPI} from '@/forms/api/useForms'
-import {IFormInput} from '@/forms/types'
+import {useLocation} from '@/forms/api/useLocation'
+import {IFormInput, ILocation} from '@/forms/types'
 import {EMAIL_REGEX} from '@/forms/utils'
 
 const Forms = () => {
+  const {data: location} = useLocation()
+
   const {data, addOrUpdate, isLoading, error} = useFormsAPI()
 
   const {
@@ -56,6 +59,7 @@ const Forms = () => {
               ),
               ...formData.interests.reduce((prev, i) => ({...prev, [i]: true}), {}),
             },
+            location: location as ILocation,
           },
           token
         )
@@ -71,7 +75,7 @@ const Forms = () => {
         alert(msg)
       }
     },
-    [addOrUpdate, data?.interests, executeRecaptcha]
+    [addOrUpdate, data?.interests, executeRecaptcha, location]
   )
 
   if (isLoading || error) return null

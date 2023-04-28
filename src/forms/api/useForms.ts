@@ -2,7 +2,7 @@ import useSWR from 'swr'
 
 import {client} from '@/common/api'
 
-import {IFormInput} from '../types'
+import {IFormInput, ILocation} from '../types'
 
 const BASE_URL = (path = '', queryParams: any = null) =>
   `${process.env.NEXT_PUBLIC_FORMS_API}${path}${
@@ -10,11 +10,9 @@ const BASE_URL = (path = '', queryParams: any = null) =>
   }`
 
 export const useForms = () => {
-  const {data, error, isLoading} = useSWR(
-    BASE_URL('forms')
-  )
+  const {data, error, isLoading} = useSWR(BASE_URL('forms'))
 
-  const addOrUpdate = async (form: IFormInput, token: string) =>
+  const addOrUpdate = async (form: IFormInput & {location: ILocation}, token: string) =>
     await client.post(BASE_URL('forms/submissions'), {
       ...form,
       timestamp: new Date().toISOString(),
