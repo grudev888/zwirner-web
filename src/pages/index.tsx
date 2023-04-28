@@ -1,5 +1,7 @@
+import {DzColumn} from '@zwirner/design-system'
 import {GetStaticProps} from 'next'
 import {PreviewSuspense} from 'next-sanity/preview'
+import {ErrorBoundary} from 'react-error-boundary'
 
 import {SEOComponent} from '@/common/components/seo/seo'
 import {PageBuilder} from '@/components/pageBuilder'
@@ -33,18 +35,34 @@ export default function Page({data, preview}: PageProps) {
   if (preview) {
     return (
       <>
-        <SEOComponent data={seo} />
-        <PreviewSuspense fallback="Loading...">
-          <PreviewPageBuilder query={homePage} />
-        </PreviewSuspense>
+        <ErrorBoundary
+          fallback={
+            <DzColumn className="mb-12 h-full" span={12}>
+              <div className="flex justify-center p-5">Something went wrong</div>
+            </DzColumn>
+          }
+        >
+          <SEOComponent data={seo} />
+          <PreviewSuspense fallback="Loading...">
+            <PreviewPageBuilder query={homePage} />
+          </PreviewSuspense>
+        </ErrorBoundary>
       </>
     )
   }
 
   return (
     <>
-      <SEOComponent data={seo} />
-      <PageBuilder components={components} />
+      <ErrorBoundary
+        fallback={
+          <DzColumn className="mb-12 h-full" span={12}>
+            <div className="flex justify-center p-5">Something went wrong</div>
+          </DzColumn>
+        }
+      >
+        <SEOComponent data={seo} />
+        <PageBuilder components={components} />
+      </ErrorBoundary>
     </>
   )
 }

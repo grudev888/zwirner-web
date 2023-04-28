@@ -53,8 +53,16 @@ export default function ExhibitionsPage({data = {}, preview}: PageProps) {
 
   return (
     <>
-      <SEOComponent data={seo} />
-      <PageBuilder components={components} />
+      <ErrorBoundary
+        fallback={
+          <DzColumn className="mb-12 h-full" span={12}>
+            <div className="flex justify-center p-5">Something went wrong</div>
+          </DzColumn>
+        }
+      >
+        <SEOComponent data={seo} />
+        <PageBuilder components={components} />
+      </ErrorBoundary>
     </>
   )
 }
