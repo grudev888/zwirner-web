@@ -1,11 +1,12 @@
 import {defineField, defineType} from 'sanity'
 
-import SelectPageAnchor from '../../../components/SelectPageAnchor'
+import SelectPageAnchor from '@/sanity/components/SelectPageAnchor'
+
 import page from '../../documents/page'
 import artistPage from '../../documents/pages/artistPage'
 import exhibitionPage from '../../documents/pages/exhibitionPage'
 import fairPage from '../../documents/pages/fairPage'
-import {commonFields} from '../utils/menu'
+import {menuCommonFields} from '../utils/menu'
 
 export default defineType({
   type: 'object',
@@ -39,6 +40,6 @@ export default defineType({
       title: 'Open in a new tab?',
       initialValue: true,
     }),
-    ...commonFields,
+    ...menuCommonFields,
   ],
 })

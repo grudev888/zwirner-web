@@ -1,6 +1,6 @@
 import {defineArrayMember, defineField, defineType} from 'sanity'
 
-import {commonFields} from '../utils/menu'
+import {menuCommonFields} from '../utils/menu'
 
 export default defineType({
   name: 'menu',
@@ -25,7 +25,7 @@ export default defineType({
               title: 'Submenu',
               type: 'menu',
             }),
-            ...commonFields,
+            ...menuCommonFields,
           ],
         }),
       ],

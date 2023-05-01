@@ -1,6 +1,6 @@
 import {defineField} from 'sanity'
 
-export const commonFields = [
+export const menuCommonFields = [
   defineField({
     type: 'boolean',
     name: 'desktopEnabled',

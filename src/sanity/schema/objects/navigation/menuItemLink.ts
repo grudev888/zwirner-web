@@ -1,6 +1,6 @@
 import {defineField, defineType} from 'sanity'
 
-import {commonFields} from '../utils/menu'
+import {menuCommonFields} from '../utils/menu'
 
 export default defineType({
   type: 'object',
@@ -20,6 +20,6 @@ export default defineType({
       title: 'Open in a new tab?',
       initialValue: true,
     }),
-    ...commonFields,
+    ...menuCommonFields,
   ],
 })
