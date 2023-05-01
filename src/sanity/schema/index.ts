@@ -1,5 +1,6 @@
 import {type DocumentDefinition, type ObjectDefinition, SchemaTypeDefinition} from 'sanity'
 
+import {addCommonFields} from './common/fields'
 import article from './documents/article'
 import artist from './documents/artist'
 import artwork from './documents/artwork'
@@ -69,6 +70,7 @@ export const utilsObjects: ObjectDefinition[] = [
   jsonLD,
   breadcrumbItem,
 ]
+
 export const pageComponents: ObjectDefinition[] = [
   dzHero,
   dzCard,
@@ -78,7 +80,7 @@ export const pageComponents: ObjectDefinition[] = [
   dzTitle,
   dzHeroCarousel,
   dzCarousel,
-]
+].map(addCommonFields)
 
 export const objects: ObjectDefinition[] = [
   drawingType,

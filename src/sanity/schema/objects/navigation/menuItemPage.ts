@@ -1,5 +1,6 @@
 import {defineField, defineType} from 'sanity'
 
+import SelectPageAnchor from '../../../components/SelectPageAnchor'
 import page from '../../documents/page'
 import artistPage from '../../documents/pages/artistPage'
 import exhibitionPage from '../../documents/pages/exhibitionPage'
@@ -23,6 +24,14 @@ export default defineType({
         {type: exhibitionPage.name},
         {type: fairPage.name},
       ],
+    }),
+    defineField({
+      name: 'anchor',
+      title: 'Anchor',
+      type: 'string',
+      components: {input: SelectPageAnchor},
+      // Will be populated on the React component
+      options: {list: []},
     }),
     defineField({
       type: 'boolean',
