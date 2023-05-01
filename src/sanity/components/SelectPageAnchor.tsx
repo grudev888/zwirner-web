@@ -2,7 +2,7 @@ import {useEffect, useState} from 'react'
 import {StringInputProps, TitledListValue} from 'sanity'
 import {useFormValue} from 'sanity'
 
-import {useSanityClient} from '../client'
+import {useSanityClient} from '@/sanity/client'
 
 const SelectPageAnchor = (props: StringInputProps) => {
   const client = useSanityClient()
