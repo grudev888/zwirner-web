@@ -1,0 +1,26 @@
+.mainContainer {
+  @apply
+    p-5
+  ;
+}
+.loadingState {
+  @apply
+    text-lg
+    p-2
+  ;
+}
+.sectionContainer {
+  @apply
+    flex
+    flex-col
+    gap-1
+    mb-3
+  ;
+}
+.title {
+  @apply
+    text-md
+    font-bold
+    py-3
+  ;
+}

@@ -28,6 +28,12 @@ export default defineType({
       type: 'pageContent',
       group: 'content',
     }),
-
+    defineField({
+      name: 'enableOverrides',
+      type: 'boolean',
+      title: 'Enable Overrides',
+      group: 'overrides',
+      initialValue: false
+    }),
   ],
 })

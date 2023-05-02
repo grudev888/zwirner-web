@@ -15,6 +15,7 @@ import {
 import {StructureBuilder} from 'sanity/desk'
 
 import {envHost} from '@/sanity/env'
+import {ReferenceByTab} from '@/sanity/lib/overrides/overrides'
 import {PreviewIframe} from '@/sanity/lib/preview/customIframe/previewIframe'
 import {getSectionsByYear} from '@/sanity/services/structure.service'
 
@@ -170,9 +171,18 @@ export const generalStructure = (S: StructureBuilder) =>
                 .icon(UsersIcon)
                 .child(
                   S.documentList()
+                    .schemaType('artist')
                     .title('Artists')
                     .filter('_type == "artist" && affiliation == false')
                     .defaultOrdering([{field: 'lastName', direction: 'asc'}])
+                    .child(
+                      S.document()
+                        .schemaType('artist')
+                        .views([
+                          S.view.form(),
+                          S.view.component(ReferenceByTab).title('References'),
+                        ])
+                    )
                 ),
             ])
         ),

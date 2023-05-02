@@ -38,6 +38,13 @@ export default defineType({
       group: 'content',
     }),
     defineField({
+      name: 'enableOverrides',
+      type: 'boolean',
+      title: 'Enable Overrides',
+      group: 'overrides',
+      initialValue: false
+    }),
+    defineField({
       name: 'imageOverride',
       type: 'image',
       title: 'Image',
