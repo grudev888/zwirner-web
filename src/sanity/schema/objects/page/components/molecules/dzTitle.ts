@@ -3,6 +3,7 @@ import {defineField, defineType} from 'sanity'
 
 export interface DzTitleTypeProps {
   title: string
+  enableOverrides: boolean
 }
 
 export default defineType({

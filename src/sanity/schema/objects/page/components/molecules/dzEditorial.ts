@@ -9,6 +9,7 @@ export interface DzEditorialSchemaProps {
   editorialType: EditorialType
   editorialTextOverrides?: TextComplexSchemaType[]
   imageOverride?: any
+  enableOverrides: boolean
 }
 
 export default defineType({
@@ -76,6 +77,11 @@ export default defineType({
           name: 'alt',
           type: 'string',
           title: 'Alternative text',
+        },
+        {
+          name: 'url',
+          type: 'string',
+          title: 'Url redirect',
         },
       ],
     }),

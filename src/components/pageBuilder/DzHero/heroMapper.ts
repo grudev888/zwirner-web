@@ -1,21 +1,23 @@
 import {MEDIA_TYPES} from '@zwirner/design-system'
 
 import {builder} from '@/sanity/imageBuilder'
+import {DzHeroSchemaProps} from '@/sanity/schema/objects/page/components/molecules/dzHero'
 
 export const heroMapper = (data: any) => {
   return data
 }
-export const dzHeroOverrides = (props: any) => {
+export const dzHeroOverrides = (props: DzHeroSchemaProps) => {
   const {
     headingOverride,
     subHeadingOverride,
     secondaryTitleOverride,
     descriptionOverride,
     imageOverride,
+    enableOverrides,
   } = props
+  if(!enableOverrides) return {}
   const {asset, alt, url} = imageOverride ?? {}
   const imgSrc = asset ? builder.image(asset).url() : ''
-  console.log('url:::', url)
 
   const title = headingOverride ? {title: headingOverride} : {}
   const subtitle = subHeadingOverride ? {subtitle: subHeadingOverride} : {}

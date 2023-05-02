@@ -86,7 +86,6 @@ function ReferencesList({referringDocuments}: ReferenceListProps) {
       {Object.entries(referencesByType).map((listItem) => {
         const [_, section] = listItem
         const {title, data} = section ?? {}
-        console.log('SECTION', section)
         if (title && Array.isArray(data) && data.length) {
           return (
             <div key={`section-${title}`}>

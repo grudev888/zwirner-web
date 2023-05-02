@@ -5,6 +5,7 @@ export interface DzHeroCarouselSchemaProps {
   title: string
   headingOverride?: string
   pictures?: any
+  enableOverrides: boolean
 }
 
 export default defineType({

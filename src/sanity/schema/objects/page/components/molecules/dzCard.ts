@@ -7,6 +7,8 @@ export interface DzCardSchemaProps {
   image?: any
   primaryCTA?: CTASchemaType
   secondaryCTA?: CTASchemaType
+  enableOverrides: boolean
+  imageOverride?: any
 }
 
 export default defineType({

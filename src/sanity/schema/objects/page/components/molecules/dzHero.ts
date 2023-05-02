@@ -4,7 +4,11 @@ import {defineField, defineType} from 'sanity'
 export interface DzHeroSchemaProps {
   title: string
   headingOverride?: string
+  subHeadingOverride?: string
+  secondaryTitleOverride?: string
+  descriptionOverride?: string
   imageOverride?: any
+  enableOverrides: boolean
 }
 
 export default defineType({

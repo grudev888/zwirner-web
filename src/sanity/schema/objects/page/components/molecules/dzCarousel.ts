@@ -3,6 +3,7 @@ import {defineField, defineType} from 'sanity'
 
 export interface DzCarouselSchemaProps {
   title: string
+  enableOverrides: boolean
 }
 
 export default defineType({

@@ -7,7 +7,7 @@ import {contentTypesMapper, dzHeroOverrides} from './heroMapper'
 
 interface DzHeroProps {
   data: any
-  componentProps?: DzHeroSchemaProps
+  componentProps: DzHeroSchemaProps
 }
 
 export const DzHero: FC<DzHeroProps> = ({data, componentProps}) => {

@@ -8,6 +8,7 @@ export interface DzSplitTypeProps {
   reverse: boolean
   animate: boolean
   imageOverride?: any
+  enableOverrides: boolean
 }
 
 export default defineType({
