@@ -1,4 +1,4 @@
-import {useMemo,useState} from 'react'
+import {useMemo, useState} from 'react'
 import {
   IntentButton,
   Preview,
@@ -8,6 +8,8 @@ import {
   WithReferringDocuments,
 } from 'sanity'
 import {UserViewComponent} from 'sanity/desk'
+
+import {pageDocuments} from '@/sanity/schema/index'
 
 import styles from './overrides.module.css'
 
@@ -63,7 +65,7 @@ function ReferencesList({referringDocuments}: ReferenceListProps) {
       (prev: DataReferenceShape, doc: SanityDocument) => {
         const prevCopy = {...prev}
         const {_type, components} = doc ?? {}
-        const isPage = ['artistPage', 'exhibitionPage'].includes(_type)
+        const isPage = pageDocuments.map((doc) => doc.name).includes(_type)
         if (isPage && Array.isArray(components) && components.length) {
           const overrideEnables = components.filter((cmp) => !!cmp.enableOverrides)
           if (overrideEnables.length) {
@@ -120,7 +122,7 @@ export const ReferenceByTab: UserViewComponent = (props) => {
             return <div className={styles.loadingState}>Looking for referring documents...</div>
           }
 
-          if (!referringDocuments.length) return <></>
+          if (!referringDocuments.length) return <>There are no references for this document</>
 
           return <ReferencesList referringDocuments={referringDocuments} />
         }}

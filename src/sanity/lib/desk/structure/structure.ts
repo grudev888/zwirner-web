@@ -118,6 +118,7 @@ export const generalStructure = (S: StructureBuilder) =>
                               },
                             })
                             .title('Preview'),
+                          S.view.component(ReferenceByTab).title('References'),
                         ])
                     )
                 ),
@@ -165,6 +166,14 @@ export const generalStructure = (S: StructureBuilder) =>
                     .title('Artists')
                     .filter('_type == "artist" && affiliation == true')
                     .defaultOrdering([{field: 'lastName', direction: 'asc'}])
+                    .child(
+                      S.document()
+                        .schemaType('artist')
+                        .views([
+                          S.view.form(),
+                          S.view.component(ReferenceByTab).title('References'),
+                        ])
+                    )
                 ),
               S.listItem()
                 .title('Non Dz Gallery Artists')
@@ -194,6 +203,11 @@ export const generalStructure = (S: StructureBuilder) =>
             .title('Artworks')
             .filter('_type == "artwork"')
             .defaultOrdering([{field: 'title', direction: 'asc'}])
+            .child(
+              S.document()
+                .schemaType('artwork')
+                .views([S.view.form(), S.view.component(ReferenceByTab).title('References')])
+            )
         ),
       S.listItem()
         .title('Authors')
@@ -203,6 +217,11 @@ export const generalStructure = (S: StructureBuilder) =>
             .title('Authors')
             .filter('_type == "author"')
             .defaultOrdering([{field: 'name', direction: 'asc'}])
+            .child(
+              S.document()
+                .schemaType('author')
+                .views([S.view.form(), S.view.component(ReferenceByTab).title('References')])
+            )
         ),
       S.listItem()
         .title('Books')
@@ -212,6 +231,11 @@ export const generalStructure = (S: StructureBuilder) =>
             .title('Books')
             .filter('_type == "book"')
             .defaultOrdering([{field: 'title', direction: 'asc'}])
+            .child(
+              S.document()
+                .schemaType('book')
+                .views([S.view.form(), S.view.component(ReferenceByTab).title('References')])
+            )
         ),
       S.listItem()
         .title('Collections')
@@ -221,6 +245,11 @@ export const generalStructure = (S: StructureBuilder) =>
             .title('Collections')
             .filter('_type == "collection"')
             .defaultOrdering([{field: 'title', direction: 'asc'}])
+            .child(
+              S.document()
+                .schemaType('collection')
+                .views([S.view.form(), S.view.component(ReferenceByTab).title('References')])
+            )
         ),
       S.listItem()
         .title('Events')
@@ -230,6 +259,11 @@ export const generalStructure = (S: StructureBuilder) =>
             .title('Events')
             .filter('_type == "event"')
             .defaultOrdering([{field: 'title', direction: 'asc'}])
+            .child(
+              S.document()
+                .schemaType('event')
+                .views([S.view.form(), S.view.component(ReferenceByTab).title('References')])
+            )
         ),
       S.listItem()
         .title('Exhibitions and Fairs')
@@ -249,6 +283,11 @@ export const generalStructure = (S: StructureBuilder) =>
             .title('Posts')
             .filter('_type == "post"')
             .defaultOrdering([{field: 'title', direction: 'asc'}])
+            .child(
+              S.document()
+                .schemaType('post')
+                .views([S.view.form(), S.view.component(ReferenceByTab).title('References')])
+            )
         ),
       S.listItem()
         .title('Press')
@@ -269,6 +308,11 @@ export const generalStructure = (S: StructureBuilder) =>
             .filter('_type == "location"')
             .schemaType('location')
             .defaultOrdering([{field: 'name', direction: 'asc'}])
+            .child(
+              S.document()
+                .schemaType('location')
+                .views([S.view.form(), S.view.component(ReferenceByTab).title('References')])
+            )
         ),
       ...S.documentTypeListItems()
         .filter(
