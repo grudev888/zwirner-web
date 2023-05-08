@@ -1,5 +1,6 @@
 import {type DocumentDefinition, type ObjectDefinition, SchemaTypeDefinition} from 'sanity'
 
+import {addCommonFields} from './common/fields'
 import article from './documents/article'
 import artist from './documents/artist'
 import artwork from './documents/artwork'
@@ -25,6 +26,9 @@ import paintingType from './objects/artTypes/painting'
 import photographType from './objects/artTypes/photography'
 import sculptureType from './objects/artTypes/sculpture'
 import social from './objects/data/social'
+import menu from './objects/navigation/menu'
+import menuItemLink from './objects/navigation/menuItemLink'
+import menuItemPage from './objects/navigation/menuItemPage'
 import dzCard from './objects/page/components/molecules/dzCard'
 import dzCarousel from './objects/page/components/molecules/dzCarousel'
 import dzEditorial from './objects/page/components/molecules/dzEditorial'
@@ -66,6 +70,7 @@ export const utilsObjects: ObjectDefinition[] = [
   jsonLD,
   breadcrumbItem,
 ]
+
 export const pageComponents: ObjectDefinition[] = [
   dzHero,
   dzCard,
@@ -75,7 +80,7 @@ export const pageComponents: ObjectDefinition[] = [
   dzTitle,
   dzHeroCarousel,
   dzCarousel,
-]
+].map(addCommonFields)
 
 export const objects: ObjectDefinition[] = [
   drawingType,
@@ -88,6 +93,9 @@ export const objects: ObjectDefinition[] = [
   seo,
   row,
   grid,
+  menu,
+  menuItemLink,
+  menuItemPage,
 ]
 
 export const singletons: DocumentDefinition[] = [stories, home, collect, utopiaEditions, globalSEO]

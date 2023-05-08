@@ -42,7 +42,7 @@ export const generalStructure = (S: StructureBuilder) =>
                 .icon(TiersIcon)
                 .child(S.documentList().title('Strings').filter('_type == "strings"')),
               S.listItem()
-                .title('Navigation')
+                .title('Header')
                 .icon(BlockElementIcon)
                 .child(S.document().schemaType('navigation').documentId('navigation')),
               S.listItem()

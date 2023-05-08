@@ -1,19 +1,18 @@
 import {BlockElementIcon} from '@sanity/icons'
 import {defineField, defineType} from 'sanity'
 
+import menu from '../objects/navigation/menu'
+
 export default defineType({
   name: 'navigation',
-  title: 'Navigation',
+  title: 'Header',
   type: 'document',
   icon: BlockElementIcon,
-  preview: {select: {title: 'title'}},
+  preview: {prepare: () => ({title: 'Header'})},
   fields: [
     defineField({
-      name: 'title',
-      description: 'This field is the navigation title',
-      title: 'Title',
-      type: 'string',
-      validation: (rule) => rule.required(),
+      name: 'Menu',
+      type: menu.name,
     }),
   ],
 })
