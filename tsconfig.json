@@ -9,22 +9,38 @@
     "./src/**/*.ts",
     "./src/**/*.tsx"
   ],
-  "exclude": ["node_modules/*", "dist/*", "www/*"],
+  "exclude": [
+    "node_modules/*",
+    "dist/*",
+    "www/*"
+  ],
   "compilerOptions": {
     "strict": true,
     "forceConsistentCasingInFileNames": true,
     "target": "ES2017",
     "module": "ESNext",
-    "lib": ["dom", "dom.iterable", "esnext"],
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
     "allowJs": false,
     "noEmit": true,
     "incremental": true,
     "resolveJsonModule": true,
-    "jsx": "react-jsx",
-    "plugins": [{"name": "next"}],
+    "jsx": "preserve",
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ],
     "paths": {
-      "sanity.config": ["./sanity.config.ts"],
-      "@/*": ["./src/*"],
+      "sanity.config": [
+        "./sanity.config.ts"
+      ],
+      "@/*": [
+        "./src/*"
+      ]
     },
     "preserveSymlinks": true,
     "baseUrl": "."

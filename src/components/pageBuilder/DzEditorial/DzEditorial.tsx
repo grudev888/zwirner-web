@@ -1,7 +1,7 @@
 import {DzEditorial as DzEditorialMolecule} from '@zwirner/design-system'
 import {FC} from 'react'
 
-import {DzEditorialSchemaProps} from '@/sanity/schema/objects/page/components/molecules/dzEditorial'
+import {DzEditorialSchemaProps} from '@/sanity/types'
 
 import {contentTypesMapper, dzEditorialOverrides} from './editorialMapper'
 

@@ -1,7 +1,7 @@
 import {DzSplit as DzSplitMolecule} from '@zwirner/design-system'
 import {FC} from 'react'
 
-import {DzSplitTypeProps} from '@/sanity/schema/objects/page/components/molecules/dzSplit'
+import {DzSplitTypeProps} from '@/sanity/types'
 
 import {dzSplitOverrides,splitMappers} from './splitMappers'
 

@@ -1,7 +1,7 @@
 import {DzCard as DzCardMolecule} from '@zwirner/design-system'
 import {FC} from 'react'
 
-import {DzCardSchemaProps} from '@/sanity/schema/objects/page/components/molecules/dzCard'
+import {DzCardSchemaProps} from '@/sanity/types'
 
 import {contentTypesMapper, dzCardOverrides} from './cardMapper'
 

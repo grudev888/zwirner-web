@@ -9,9 +9,7 @@ import {
 } from 'next-seo'
 import {FC} from 'react'
 
-import {GlobalSEOScheme} from '@/sanity/schema/documents/globalSEO'
-import {PageSEOSchema} from '@/sanity/schema/objects/page/seo'
-import {JSONLDSchema, SCHEMA_TYPE_JSON_LD} from '@/sanity/schema/objects/utils/jsonLdSchema'
+import {GlobalSEOScheme, JSONLDSchema, PageSEOSchema, SCHEMA_TYPE_JSON_LD} from '@/sanity/types'
 
 import {
   articleJSONLDMapper,
@@ -43,10 +41,7 @@ const JsonLDSchemaTypes = {
     const {manualSchema} = data ?? {}
     return (
       <Head>
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{__html: manualSchema}}
-        />
+        <script type="application/ld+json" dangerouslySetInnerHTML={{__html: manualSchema}} />
       </Head>
     )
   },

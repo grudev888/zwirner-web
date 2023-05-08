@@ -1,7 +1,7 @@
 import {DzTitleMolecule} from '@zwirner/design-system'
 import {FC} from 'react'
 
-import {DzTitleTypeProps} from '@/sanity/schema/objects/page/components/molecules/dzTitle'
+import {DzTitleTypeProps} from '@/sanity/types'
 
 import {dzTitleOverrides,titleMappers} from './titleMapper'
 

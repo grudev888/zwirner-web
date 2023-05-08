@@ -1,18 +1,8 @@
 import {groq} from 'next-sanity'
 
-import dzCardTypeSchema from '@/sanity/schema/objects/page/components/molecules/dzCard'
-import dzCarouselTypeSchema from '@/sanity/schema/objects/page/components/molecules/dzCarousel'
-import dzEditorialTypeSchema from '@/sanity/schema/objects/page/components/molecules/dzEditorial'
-import dzHeroTypeSchema from '@/sanity/schema/objects/page/components/molecules/dzHero'
-import dzHeroCarouselTypeSchema from '@/sanity/schema/objects/page/components/molecules/DzHeroCarousel'
-import dzInterstitialTypeScheme from '@/sanity/schema/objects/page/components/molecules/dzInterstitial'
-import dzSplitTypeSchema from '@/sanity/schema/objects/page/components/molecules/dzSplit'
-import dzTitleTypeSchema from '@/sanity/schema/objects/page/components/molecules/dzTitle'
-import gridTypeSchema from '@/sanity/schema/objects/page/grid'
-
 // Must follow GridMoleculeTypeProps
 export const gridMoleculeProps = groq`
-  _type == '${gridTypeSchema.name}' => {
+  _type == 'grid' => {
     'props': {
       title,
       masonryGrid,
@@ -27,7 +17,7 @@ export const gridMoleculeProps = groq`
 
 // Must follow DzCardSchemaProps
 export const dzCardProps = groq`
-  _type == '${dzCardTypeSchema.name}' => {
+  _type == 'dzCard' => {
     'props': {
       title,
       primaryCTA,
@@ -40,7 +30,7 @@ export const dzCardProps = groq`
 
 // Must follow DzCarouselSchemaProps
 export const dzCarouselProps = groq`
-  _type == '${dzCarouselTypeSchema.name}' => {
+  _type == 'dzCarousel' => {
     'props': {
       title,
       enableOverrides,
@@ -50,7 +40,7 @@ export const dzCarouselProps = groq`
 
 // Must follow DzEditorialSchemaProps
 export const dzEditorialProps = groq`
-  _type == '${dzEditorialTypeSchema.name}' => {
+  _type == 'dzEditorial' => {
     'props': {
       title,
       editorialType,
@@ -63,7 +53,7 @@ export const dzEditorialProps = groq`
 
 // Must follow DzHeroSchemaProps
 export const dzHeroProps = groq`
-  _type == '${dzHeroTypeSchema.name}' => {
+  _type == 'dzHero' => {
     'props': {
       title,
       headingOverride,
@@ -78,7 +68,7 @@ export const dzHeroProps = groq`
 
 // Must follow DzHeroCarouselSchemaProps
 export const dzHeroCarouselProps = groq`
-  _type == '${dzHeroCarouselTypeSchema.name}' => {
+  _type == 'dzHeroCarousel' => {
     'props': {
       title,
       headingOverride,
@@ -90,7 +80,7 @@ export const dzHeroCarouselProps = groq`
 
 // Must follow DzInterstitialTypeProps
 export const dzInterstitialProps = groq`
-  _type == '${dzInterstitialTypeScheme.name}' => {
+  _type == 'dzInterstitial' => {
     'props': {
       title,
       split,
@@ -102,7 +92,7 @@ export const dzInterstitialProps = groq`
 
 // Must follow DzSplitTypeProps
 export const dzSplitProps = groq`
-  _type == '${dzSplitTypeSchema.name}' => {
+  _type == 'dzSplit' => {
     'props': {
       title,
       splitType,
@@ -116,7 +106,7 @@ export const dzSplitProps = groq`
 
 // Must follow DzTitleTypeProps
 export const dzTitleProps = groq`
-  _type == '${dzTitleTypeSchema.name}' => {
+  _type == 'dzTitle' => {
     'props': {
       title,
       enableOverrides,

@@ -1,7 +1,7 @@
 import {DzInterstitial as DzInterstitialMolecule} from '@zwirner/design-system'
 import {FC} from 'react'
 
-import {DzInterstitialTypeProps} from '@/sanity/schema/objects/page/components/molecules/dzInterstitial'
+import {DzInterstitialTypeProps} from '@/sanity/types'
 
 import {dzInterstitialOverrides,interstitialMap} from './interstitialMapper'
 

@@ -1,6 +1,6 @@
 import {groq} from 'next-sanity'
 
-import {SCHEMA_TYPE_JSON_LD} from '@/sanity/schema/objects/utils/jsonLdSchema'
+import {SCHEMA_TYPE_JSON_LD} from '@/sanity/types'
 
 // Must follow JSONLDSchema
 const jsonLDFields = groq`

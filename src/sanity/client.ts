@@ -1,6 +1,5 @@
 import {createClient} from 'next-sanity'
 import {useMemo} from 'react'
-import {useClient} from 'sanity'
 
 import {apiVersion, dataset, projectId} from './env'
 
@@ -14,6 +13,6 @@ const config = {
 export const client = createClient(config)
 
 export function useSanityClient() {
-  const client = useClient(config)
+  const client = createClient(config)
   return useMemo(() => client.withConfig(config), [client])
 }

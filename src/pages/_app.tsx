@@ -1,5 +1,4 @@
 import '../global.css'
-import 'plyr-react/plyr.css'
 import '@zwirner/design-system/dist/tailwind.css'
 
 import {NextPage} from 'next'
@@ -11,8 +10,8 @@ import {APIProvider} from '@/common/api'
 import DefaultLayout from '@/common/components/Layout'
 import {SEOComponent} from '@/common/components/seo/seo'
 import {mono, sans, serif} from '@/common/styles/fonts'
-import {GlobalSEOScheme} from '@/sanity/schema/documents/globalSEO'
 import {getGeneralSettings} from '@/sanity/services/settings.service'
+import {GlobalSEOScheme} from '@/sanity/types'
 
 export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
   getLayout?: (page: ReactElement) => ReactNode

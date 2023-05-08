@@ -1,5 +1,3 @@
-const {theme} = require('@sanity/demo/tailwind')
-
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
@@ -8,7 +6,6 @@ module.exports = {
     './src/plugins/**/*.{js,ts,jsx,tsx}',
   ],
   theme: {
-    ...theme,
     extend: {
       colors: {
         'accent-1': '#FAFAFA',
