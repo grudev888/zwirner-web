@@ -1,9 +1,35 @@
 import {BUTTON_VARIANTS, CARD_TYPES, MEDIA_TYPES} from '@zwirner/design-system'
 
 import {builder} from '@/sanity/imageBuilder'
+import {DzCardSchemaProps} from '@/sanity/schema/objects/page/components/molecules/dzCard'
 
 export const cardMapper = (data: any) => {
   return data
+}
+
+export const dzCardOverrides = (props: DzCardSchemaProps) => {
+  const {imageOverride, enableOverrides} = props
+  if (!enableOverrides) return {}
+  const {asset, alt, url} = imageOverride ?? {}
+  const imgSrc = asset ? builder.image(asset).url() : ''
+
+  const media = imgSrc
+    ? {
+        media: {
+          url,
+          type: MEDIA_TYPES.IMAGE,
+          imgProps: {
+            src: imgSrc,
+            alt,
+          },
+        },
+      }
+    : {}
+  return {
+    data: {
+      ...media,
+    },
+  }
 }
 
 export const contentTypesMapper: any = {

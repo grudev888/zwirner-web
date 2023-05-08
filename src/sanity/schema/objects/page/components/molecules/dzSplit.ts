@@ -8,6 +8,7 @@ export interface DzSplitTypeProps {
   reverse: boolean
   animate: boolean
   imageOverride?: any
+  enableOverrides: boolean
 }
 
 export default defineType({
@@ -61,6 +62,13 @@ export default defineType({
       title: 'Content',
       type: 'pageContent',
       group: 'content',
+    }),
+    defineField({
+      name: 'enableOverrides',
+      type: 'boolean',
+      title: 'Enable Overrides',
+      group: 'overrides',
+      initialValue: false
     }),
     defineField({
       name: 'imageOverride',

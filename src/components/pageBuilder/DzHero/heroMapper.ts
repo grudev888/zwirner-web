@@ -1,11 +1,48 @@
 import {MEDIA_TYPES} from '@zwirner/design-system'
 
 import {builder} from '@/sanity/imageBuilder'
+import {DzHeroSchemaProps} from '@/sanity/schema/objects/page/components/molecules/dzHero'
 
 export const heroMapper = (data: any) => {
   return data
 }
+export const dzHeroOverrides = (props: DzHeroSchemaProps) => {
+  const {
+    headingOverride,
+    subHeadingOverride,
+    secondaryTitleOverride,
+    descriptionOverride,
+    imageOverride,
+    enableOverrides,
+  } = props
+  if(!enableOverrides) return {}
+  const {asset, alt, url} = imageOverride ?? {}
+  const imgSrc = asset ? builder.image(asset).url() : ''
 
+  const title = headingOverride ? {title: headingOverride} : {}
+  const subtitle = subHeadingOverride ? {subtitle: subHeadingOverride} : {}
+  const secondaryTitle = secondaryTitleOverride ? {secondaryTitle: secondaryTitleOverride} : {}
+  const description = descriptionOverride ? {description: descriptionOverride} : {}
+  const media = imgSrc
+    ? {
+        media: {
+          url,
+          type: MEDIA_TYPES.IMAGE,
+          imgProps: {
+            src: imgSrc,
+            alt,
+          },
+        },
+      }
+    : {}
+  return {
+    ...media,
+    ...title,
+    ...subtitle,
+    ...secondaryTitle,
+    ...description,
+  }
+}
 export const contentTypesMapper: any = {
   artist: (data: any) => {
     const {birthdate, fullName, deathDate, picture, summary, description} = data

@@ -3,7 +3,7 @@ import {FC} from 'react'
 
 import {DzEditorialSchemaProps} from '@/sanity/schema/objects/page/components/molecules/dzEditorial'
 
-import {contentTypesMapper} from './editorialMapper'
+import {contentTypesMapper, dzEditorialOverrides} from './editorialMapper'
 
 export const EDITORIAL_TEXT_TYPES = {
   PARAGRAPH: 'paragraph',
@@ -17,14 +17,15 @@ export const EDITORIAL_TEXT_NAMES = [
 
 interface DzEditorialProps {
   data: any
-  componentProps?: DzEditorialSchemaProps
+  componentProps: DzEditorialSchemaProps
 }
 
 export const DzEditorial: FC<DzEditorialProps> = ({data, componentProps}) => {
   const {_type} = data ?? {}
   const mappedData = (contentTypesMapper[_type] ?? ((a: any) => a))(data, componentProps)
+  const overrideData = dzEditorialOverrides(componentProps) ?? {}
 
-  return <DzEditorialMolecule {...mappedData} />
+  return <DzEditorialMolecule {...{...mappedData, ...overrideData}}  />
 }
 
 export default DzEditorial

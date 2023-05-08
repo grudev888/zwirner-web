@@ -98,6 +98,7 @@ export const objects: ObjectDefinition[] = [
   menuItemPage,
 ]
 
+export const pageDocuments: DocumentDefinition[] = [artistPage, exhibitionPage, fairPage]
 export const singletons: DocumentDefinition[] = [stories, home, collect, utopiaEditions, globalSEO]
 export const schema: {types: SchemaTypeDefinition[]} = {
   types: [
@@ -119,14 +120,12 @@ export const schema: {types: SchemaTypeDefinition[]} = {
     footer,
     navigation,
     settings,
-    artistPage,
-    exhibitionPage,
-    fairPage,
     availableArtworks,
     pageContent,
     pageContentList,
     editorialContent,
     pageBuilderComponents,
+    ...pageDocuments,
     ...objects,
     ...pageComponents,
     ...singletons,

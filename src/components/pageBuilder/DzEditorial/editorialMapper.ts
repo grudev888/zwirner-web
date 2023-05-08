@@ -1,6 +1,7 @@
 import {MEDIA_TYPES} from '@zwirner/design-system'
 
 import {builder} from '@/sanity/imageBuilder'
+import {DzEditorialSchemaProps} from '@/sanity/schema/objects/page/components/molecules/dzEditorial'
 
 export const editorialMapper = (data: any) => {
   return data
@@ -22,6 +23,31 @@ const getTextFromOverride = (override: any) => {
     const {text, textType: type} = t
     return {text, type}
   })
+}
+
+export const dzEditorialOverrides = (props: DzEditorialSchemaProps) => {
+  const {imageOverride, enableOverrides} = props
+  if (!enableOverrides) return {}
+  const {asset, alt, url} = imageOverride ?? {}
+  const imgSrc = asset ? builder.image(asset).url() : ''
+
+  const media = imgSrc
+    ? {
+        media: {
+          url,
+          type: MEDIA_TYPES.IMAGE,
+          imgProps: {
+            src: imgSrc,
+            alt,
+          },
+        },
+      }
+    : {}
+  return {
+    data: {
+      ...media,
+    },
+  }
 }
 
 export const contentTypesMapper: any = {

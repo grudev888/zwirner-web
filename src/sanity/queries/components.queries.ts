@@ -20,6 +20,7 @@ export const gridMoleculeProps = groq`
       itemsPerRow,
       sortField,
       sortOrder,
+      enableOverrides,
     }
   },
 `
@@ -32,6 +33,7 @@ export const dzCardProps = groq`
       primaryCTA,
       secondaryCTA,
       imageOverride,
+      enableOverrides,
     }
   },
 `
@@ -40,7 +42,8 @@ export const dzCardProps = groq`
 export const dzCarouselProps = groq`
   _type == '${dzCarouselTypeSchema.name}' => {
     'props': {
-      title
+      title,
+      enableOverrides,
     }
   },
 `
@@ -53,6 +56,7 @@ export const dzEditorialProps = groq`
       editorialType,
       editorialTextOverrides,
       imageOverride,
+      enableOverrides,
     }
   },
 `
@@ -63,7 +67,11 @@ export const dzHeroProps = groq`
     'props': {
       title,
       headingOverride,
-      imageOverride
+      subHeadingOverride,
+      secondaryTitleOverride,
+      descriptionOverride,
+      imageOverride,
+      enableOverrides,
     }
   },
 `
@@ -74,7 +82,8 @@ export const dzHeroCarouselProps = groq`
     'props': {
       title,
       headingOverride,
-      pictures
+      pictures,
+      enableOverrides,
     }
   },
 `
@@ -85,7 +94,8 @@ export const dzInterstitialProps = groq`
     'props': {
       title,
       split,
-      imageOverride
+      imageOverride,
+      enableOverrides,
     }
   },
 `
@@ -98,7 +108,8 @@ export const dzSplitProps = groq`
       splitType,
       reverse,
       animate,
-      imageOverride
+      imageOverride,
+      enableOverrides,
     }
   },
 `
@@ -108,6 +119,7 @@ export const dzTitleProps = groq`
   _type == '${dzTitleTypeSchema.name}' => {
     'props': {
       title,
+      enableOverrides,
     }
   },
 `

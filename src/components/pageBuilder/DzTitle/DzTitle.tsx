@@ -3,18 +3,19 @@ import {FC} from 'react'
 
 import {DzTitleTypeProps} from '@/sanity/schema/objects/page/components/molecules/dzTitle'
 
-import {titleMappers} from './titleMapper'
+import {dzTitleOverrides,titleMappers} from './titleMapper'
 
 interface DzTitleProps {
   data: any
-  componentProps?: DzTitleTypeProps
+  componentProps: DzTitleTypeProps
 }
 
 export const DzTitle: FC<DzTitleProps> = ({data, componentProps}) => {
   const {_type} = data ?? {}
   const mappedData = (titleMappers[_type] ?? ((a: any) => a))(data, componentProps)
+  const overrideData = dzTitleOverrides(componentProps) ?? {}
 
-  return <DzTitleMolecule {...mappedData} />
+  return <DzTitleMolecule {...{...mappedData, ...overrideData}} />
 }
 
 export default DzTitle

@@ -5,6 +5,7 @@ export interface DzHeroCarouselSchemaProps {
   title: string
   headingOverride?: string
   pictures?: any
+  enableOverrides: boolean
 }
 
 export default defineType({
@@ -28,6 +29,13 @@ export default defineType({
       title: 'Content',
       type: 'pageContentList',
       group: 'content',
+    }),
+    defineField({
+      name: 'enableOverrides',
+      type: 'boolean',
+      title: 'Enable Overrides',
+      group: 'overrides',
+      initialValue: false
     }),
     defineField({
       name: 'headingOverride',

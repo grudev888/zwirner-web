@@ -3,6 +3,7 @@ import {defineField, defineType} from 'sanity'
 
 export interface DzCarouselSchemaProps {
   title: string
+  enableOverrides: boolean
 }
 
 export default defineType({
@@ -28,6 +29,12 @@ export default defineType({
       type: 'pageContent',
       group: 'content',
     }),
-
+    defineField({
+      name: 'enableOverrides',
+      type: 'boolean',
+      title: 'Enable Overrides',
+      group: 'overrides',
+      initialValue: false
+    }),
   ],
 })

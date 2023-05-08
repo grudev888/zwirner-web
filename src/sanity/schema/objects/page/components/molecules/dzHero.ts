@@ -4,7 +4,11 @@ import {defineField, defineType} from 'sanity'
 export interface DzHeroSchemaProps {
   title: string
   headingOverride?: string
+  subHeadingOverride?: string
+  secondaryTitleOverride?: string
+  descriptionOverride?: string
   imageOverride?: any
+  enableOverrides: boolean
 }
 
 export default defineType({
@@ -31,9 +35,34 @@ export default defineType({
       group: 'content',
     }),
     defineField({
+      name: 'enableOverrides',
+      type: 'boolean',
+      title: 'Enable Overrides',
+      group: 'overrides',
+      initialValue: false
+    }),
+    defineField({
       name: 'headingOverride',
       type: 'string',
       title: 'Heading',
+      group: 'overrides',
+    }),
+    defineField({
+      name: 'subHeadingOverride',
+      type: 'string',
+      title: 'SubHeading',
+      group: 'overrides',
+    }),
+    defineField({
+      name: 'secondaryTitleOverride',
+      type: 'string',
+      title: 'Secondary Title',
+      group: 'overrides',
+    }),
+    defineField({
+      name: 'descriptionOverride',
+      type: 'string',
+      title: 'Description',
       group: 'overrides',
     }),
     defineField({
@@ -49,6 +78,11 @@ export default defineType({
           name: 'alt',
           type: 'string',
           title: 'Alternative text',
+        },
+        {
+          name: 'url',
+          type: 'string',
+          title: 'Url redirect',
         },
       ],
     }),

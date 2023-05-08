@@ -1,3 +1,12 @@
+import {DzTitleTypeProps} from '@/sanity/schema/objects/page/components/molecules/dzTitle'
+
+export const dzTitleOverrides = (props: DzTitleTypeProps) => {
+  const {enableOverrides} = props
+  if (!enableOverrides) return {}
+
+  return {}
+}
+
 export const titleMappers: any = {
   artist: (data: any) => {
     const {birthdate, fullName, summary, description} = data

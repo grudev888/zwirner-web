@@ -7,6 +7,8 @@ export interface DzCardSchemaProps {
   image?: any
   primaryCTA?: CTASchemaType
   secondaryCTA?: CTASchemaType
+  enableOverrides: boolean
+  imageOverride?: any
 }
 
 export default defineType({
@@ -44,6 +46,13 @@ export default defineType({
       title: 'Content',
       type: 'pageContent',
       group: 'content',
+    }),
+    defineField({
+      name: 'enableOverrides',
+      type: 'boolean',
+      title: 'Enable Overrides',
+      group: 'overrides',
+      initialValue: false
     }),
     defineField({
       name: 'imageOverride',

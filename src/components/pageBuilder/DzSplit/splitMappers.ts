@@ -1,6 +1,32 @@
 import {MEDIA_TYPES} from '@zwirner/design-system'
 
 import {builder} from '@/sanity/imageBuilder'
+import {DzSplitTypeProps} from '@/sanity/schema/objects/page/components/molecules/dzSplit'
+
+export const dzSplitOverrides = (props: DzSplitTypeProps) => {
+  const {imageOverride, enableOverrides} = props
+  if (!enableOverrides) return {}
+  const {asset, alt, url} = imageOverride ?? {}
+  const imgSrc = asset ? builder.image(asset).url() : ''
+
+  const media = imgSrc
+    ? {
+        media: {
+          url,
+          type: MEDIA_TYPES.IMAGE,
+          imgProps: {
+            src: imgSrc,
+            alt,
+          },
+        },
+      }
+    : {}
+  return {
+    data: {
+      ...media,
+    },
+  }
+}
 
 export const splitMappers: any = {
   artist: (data: any) => {

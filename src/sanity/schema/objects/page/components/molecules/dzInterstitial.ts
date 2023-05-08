@@ -5,6 +5,7 @@ export interface DzInterstitialTypeProps {
   title: string
   split: boolean
   imageOverride?: any
+  enableOverrides: boolean
 }
 
 export default defineType({
@@ -38,6 +39,13 @@ export default defineType({
       group: 'content',
     }),
     defineField({
+      name: 'enableOverrides',
+      type: 'boolean',
+      title: 'Enable Overrides',
+      group: 'overrides',
+      initialValue: false
+    }),
+    defineField({
       name: 'imageOverride',
       type: 'image',
       title: 'Image',
@@ -50,6 +58,11 @@ export default defineType({
           name: 'alt',
           type: 'string',
           title: 'Alternative text',
+        },
+        {
+          name: 'url',
+          type: 'string',
+          title: 'Url redirect',
         },
       ],
     }),
