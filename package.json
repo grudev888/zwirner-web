@@ -35,7 +35,6 @@
     "@sanity/demo": "^1.0.1",
     "@sanity/icons": "^2.2.2",
     "@sanity/image-url": "^1.0.2",
-    "@sanity/production-preview": "^2.35.3",
     "@sanity/ui": "^1.0.14",
     "@sanity/vision": "^3.2.4",
     "@tailwindcss/typography": "^0.5.9",
