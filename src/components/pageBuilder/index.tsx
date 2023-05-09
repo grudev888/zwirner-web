@@ -32,7 +32,7 @@ interface PageBuilderProps {
 export const PageBuilder: FC<PageBuilderProps> = ({components = []}) => {
   return (
     <DzColumn className="mb-12 h-full" span={12}>
-      {components.map((component, key) => {
+      {components?.map((component, key) => {
         const {_type, props, content = []} = component
         const ComponentModule = componentsIndex[_type]
         const multipleContent = ComponentModule?.multipleContentTypes ?? false
