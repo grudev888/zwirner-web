@@ -1,7 +1,7 @@
 import {DzHero as DzHeroMolecule} from '@zwirner/design-system'
 import {FC} from 'react'
 
-import {DzHeroSchemaProps} from '@/sanity/schema/objects/page/components/molecules/dzHero'
+import {DzHeroSchemaProps} from '@/sanity/types'
 
 import {contentTypesMapper, dzHeroOverrides} from './heroMapper'
 

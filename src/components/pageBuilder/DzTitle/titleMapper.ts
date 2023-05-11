@@ -1,4 +1,4 @@
-import {DzTitleTypeProps} from '@/sanity/schema/objects/page/components/molecules/dzTitle'
+import {DzTitleTypeProps} from '@/sanity/types'
 
 export const dzTitleOverrides = (props: DzTitleTypeProps) => {
   const {enableOverrides} = props

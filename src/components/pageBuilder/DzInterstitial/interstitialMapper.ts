@@ -1,7 +1,7 @@
 import {MEDIA_TYPES} from '@zwirner/design-system'
 
 import {builder} from '@/sanity/imageBuilder'
-import {DzInterstitialTypeProps} from '@/sanity/schema/objects/page/components/molecules/dzInterstitial'
+import {DzInterstitialTypeProps} from '@/sanity/types'
 
 export const interstitialMapper = (data: any) => {
   return data

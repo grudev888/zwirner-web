@@ -1,7 +1,7 @@
 import {MEDIA_TYPES} from '@zwirner/design-system'
 
 import {builder} from '@/sanity/imageBuilder'
-import {DzSplitTypeProps} from '@/sanity/schema/objects/page/components/molecules/dzSplit'
+import {DzSplitTypeProps} from '@/sanity/types'
 
 export const dzSplitOverrides = (props: DzSplitTypeProps) => {
   const {imageOverride, enableOverrides} = props

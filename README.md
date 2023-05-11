@@ -2,7 +2,7 @@
 
 This system contains the codebase of our main webapp.
 
-You will find the Sanity studio under the `/studio` route.
+You will find the Sanity studio under the `[/studio](https://cms.zwirner.tech/)`.
 
 ## Local development setup
 
@@ -57,7 +57,6 @@ docker-compose exec zwirnerweb yarn sync-dev-db
 ## Features
 
 - Live previews using `next-sanity`.
-- Customized Sanity Desk Tool.
 - Just TypeScript.
 - Eslint configuration.
 - Environment variables.

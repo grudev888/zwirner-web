@@ -1,7 +1,7 @@
 import {BUTTON_VARIANTS, CARD_TYPES, MEDIA_TYPES} from '@zwirner/design-system'
 
 import {builder} from '@/sanity/imageBuilder'
-import {DzCardSchemaProps} from '@/sanity/schema/objects/page/components/molecules/dzCard'
+import {DzCardSchemaProps} from '@/sanity/types'
 
 export const cardMapper = (data: any) => {
   return data

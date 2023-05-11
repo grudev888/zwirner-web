@@ -15,7 +15,6 @@ import axios from 'axios'
 import {useReCaptcha} from 'next-recaptcha-v3'
 import {useCallback, useEffect, useState} from 'react'
 import {SubmitHandler, useForm} from 'react-hook-form'
-import {TypedObject} from 'sanity'
 import {v4 as uuid} from 'uuid'
 
 import {useForms as useFormsAPI} from '@/forms/api/useForms'
@@ -40,7 +39,7 @@ const Forms = () => {
 
   const [formId, _] = useState(uuid())
   const [newsletterErrors, setNewsletterErrors] = useState<{
-    [key: string]: TypedObject[]
+    [key: string]: any[]
   }>({})
 
   useEffect(() => {

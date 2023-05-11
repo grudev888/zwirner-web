@@ -1,7 +1,7 @@
 import {MEDIA_TYPES} from '@zwirner/design-system'
 
 import {builder} from '@/sanity/imageBuilder'
-import {DzEditorialSchemaProps} from '@/sanity/schema/objects/page/components/molecules/dzEditorial'
+import {DzEditorialSchemaProps} from '@/sanity/types'
 
 export const editorialMapper = (data: any) => {
   return data

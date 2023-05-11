@@ -1,9 +1,9 @@
 import {DefaultSeoProps, NextSeoProps} from 'next-seo'
 
 import {builder} from '@/sanity/imageBuilder'
-import {GlobalSEOScheme} from '@/sanity/schema/documents/globalSEO'
-import {PageSEOSchema} from '@/sanity/schema/objects/page/seo'
-import {BreadcrumbItemSchema} from '@/sanity/schema/objects/utils/breadcrumbItem'
+import {GlobalSEOScheme} from '@/sanity/types'
+import {PageSEOSchema} from '@/sanity/types'
+import {BreadcrumbItemSchema} from '@/sanity/types'
 
 import {DEFAULT_SEO_PROPERTIES} from './constants'
 

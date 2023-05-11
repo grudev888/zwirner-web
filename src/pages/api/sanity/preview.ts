@@ -1,10 +1,13 @@
 import {NextApiHandler} from 'next'
-import {isString} from 'sanity'
 
 import {client} from '../../../sanity/client'
 import {previewSecretId} from '../../../sanity/constants'
 import {readToken} from '../../../sanity/env'
 import {getSecret} from '../../../sanity/secret'
+
+const isString = (text: any) => {
+  return typeof text === 'string' || text instanceof String
+}
 
 const handler: NextApiHandler = async function preview(req, res) {
   const previewData: {token?: string} = {}

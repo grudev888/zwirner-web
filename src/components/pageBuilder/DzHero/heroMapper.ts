@@ -1,7 +1,7 @@
 import {MEDIA_TYPES} from '@zwirner/design-system'
 
 import {builder} from '@/sanity/imageBuilder'
-import {DzHeroSchemaProps} from '@/sanity/schema/objects/page/components/molecules/dzHero'
+import {DzHeroSchemaProps} from '@/sanity/types'
 
 export const heroMapper = (data: any) => {
   return data
