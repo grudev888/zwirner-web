@@ -6,7 +6,7 @@ COPY . .
 ARG GH_TOKEN
 ENV GH_TOKEN $GH_TOKEN
 
-RUN yarn set version 3.4.1
+RUN yarn set version 3.5.1
 RUN yarn --immutable
 
 EXPOSE 3000
