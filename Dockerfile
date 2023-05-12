@@ -1,6 +1,4 @@
-FROM node:19-alpine
-
-RUN apk add --no-cache libc6-compat
+FROM node:19
 
 WORKDIR /app
 COPY . .
