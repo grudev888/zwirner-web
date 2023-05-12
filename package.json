@@ -15,7 +15,6 @@
     "lint": "next lint -- --ignore-path .gitignore",
     "lint:fix": "npm run lint -- --fix",
     "start": "next start",
-
     "test": "yarn type-check && yarn jest --runInBand",
     "test-all": "yarn type-check && yarn lint:fix && yarn format",
     "type-check": "tsc --noEmit --pretty",
@@ -75,5 +74,5 @@
   "publishConfig": {
     "@zwirner:registry": "https://npm.pkg.github.com"
   },
-  "packageManager": "yarn@3.4.1"
+  "packageManager": "yarn@3.5.1"
 }
