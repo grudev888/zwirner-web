@@ -1,0 +1,19 @@
+.mainLayout {
+  @apply
+    px-5
+  ;
+}
+
+.header {
+  @apply
+    sticky
+    top-0
+  ;
+}
+
+.footer {
+  @apply
+    relative
+    bottom-0
+  ;
+}

@@ -83,12 +83,15 @@ export const contentTypesMapper: any = {
     }
   },
   exhibition: (data: any) => {
-    const {events, subtitle, title, summary, description} = data
+    const {events, subtitle, title, summary, description, artworks} = data
+    const [mainArtWork]= artworks?? []
+
     const [event] = events ?? []
-    const {photos} = event ?? {}
+    const {photos} = event ?? mainArtWork ?? {}
     const [mainPicture] = photos ?? []
     const {asset, alt} = mainPicture ?? {}
     const imgSrc = asset ? builder.image(asset).url() : ''
+
     return {
       media: {
         url: '/',

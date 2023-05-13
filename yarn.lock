@@ -1605,23 +1605,22 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@zwirner/design-system@npm:0.0.8-beta-2":
-  version: 0.0.8-beta-2
-  resolution: "@zwirner/design-system@npm:0.0.8-beta-2::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40zwirner%2Fdesign-system%2F0.0.8-beta-2%2F7bf52224852a621483d8ce7d6f362e705bca4d0d"
+"@zwirner/design-system@portal:/home/joan/Documents/DZ/design-system::locator=zwirnerweb%40workspace%3A.":
+  version: 0.0.0-use.local
+  resolution: "@zwirner/design-system@portal:/home/joan/Documents/DZ/design-system::locator=zwirnerweb%40workspace%3A."
   dependencies:
     "@headlessui/react": ^1.7.10
     "@heroicons/react": ^2.0.15
     "@seznam/compose-react-refs": ^1.0.6
     classnames: ^2.3.2
     plyr-react: ^5.1.2
+    swiper: ^9.3.1
     uuid: ^9.0.0
   peerDependencies:
-    plyr-react: ^5.1.2
     react: ">=16"
     react-dom: ^17.0.1
-  checksum: 941337a377a724f4daca523356393db456a04ec2ee838540dc6e9c7ec0220a0e9b588303f83106172a2e0c7160a5c313ceb279f5a7403ea0db736b82ca4410a6
   languageName: node
-  linkType: hard
+  linkType: soft
 
 "abab@npm:^2.0.6":
   version: 2.0.6
@@ -7232,6 +7231,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"ssr-window@npm:^4.0.2":
+  version: 4.0.2
+  resolution: "ssr-window@npm:4.0.2"
+  checksum: df182600927f4f3225224cf8c02338ea637c9750519505bbfb9a9236741a2a7ec088386fb948bca7b447b8303d9109e7dc7672e3de041c79ac2a0e03665af7d2
+  languageName: node
+  linkType: hard
+
 "ssri@npm:^9.0.0":
   version: 9.0.1
   resolution: "ssri@npm:9.0.1"
@@ -7469,6 +7475,15 @@ __metadata:
   peerDependencies:
     react: ">=17.0"
   checksum: cad7348dc2d13b909201a6a7909f1528596ff2114eeb1bfa0f3556b4acda55dc966f1d2c53ad5ba0201fe301abdfed5f55446e6bd3c61faee4c4a8f4b415e1d9
+  languageName: node
+  linkType: hard
+
+"swiper@npm:^9.3.1":
+  version: 9.3.1
+  resolution: "swiper@npm:9.3.1"
+  dependencies:
+    ssr-window: ^4.0.2
+  checksum: e418d5462fc11f7f26624897203decef131a1c7f2a46bc197b2813857631674c0b44a6943f5b784644a7051fa56f807cca4803813b7456ee2d2d6dbfb8708f16
   languageName: node
   linkType: hard
 

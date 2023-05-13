@@ -1,0 +1,45 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@tailwind screens;
+
+
+html,
+body,
+#__next {
+  height: 100%;
+  background-color: white;
+  /* TODO verify if we want default scrollbar */
+  /* @apply
+    mr-[1px]
+    scrollbar
+    scrollbar-h-[0.1875rem]
+    scrollbar-w-[6px]
+    scrollbar-thumb-black-60
+    scrollbar-track-black-10
+    ; */
+}
+
+body {
+  -webkit-font-smoothing: antialiased;
+  margin: 0;
+}
+
+
+@layer base {
+  @font-face {
+    font-family: avenir-regular;
+    font-weight: 500;
+    src: url(fonts/avenir/AvenirNext-Regular.woff) format("woff");
+  }
+  @font-face {
+    font-family: avenir-medium;
+    font-weight: 500;
+    src: url(fonts/avenir/AvenirNext-Medium.woff) format("woff");
+  }
+  @font-face {
+    font-family: avenir-medium-italic;
+    font-weight: 500;
+    src: url(fonts/avenir/AvenirNext-MediumItalic.woff) format("woff");
+  }
+}

@@ -2,6 +2,7 @@ import {groq} from 'next-sanity'
 
 export const exhibitionSimpleFields = groq`
   _id,
+  _type,
   title,
   subtitle,
   description,
@@ -16,6 +17,7 @@ const exhibitionDateFields = groq`
 `
 
 export const exhibitionComplexFields = groq`
+  photos[],
   "artists": artists[]->,
   "artworks": artworks[]->,
   "collections": collections[]->,
