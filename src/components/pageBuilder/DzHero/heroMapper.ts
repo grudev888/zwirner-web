@@ -15,7 +15,7 @@ export const dzHeroOverrides = (props: DzHeroSchemaProps) => {
     imageOverride,
     enableOverrides,
   } = props
-  if(!enableOverrides) return {}
+  if (!enableOverrides) return {}
   const {asset, alt, url} = imageOverride ?? {}
   const imgSrc = asset ? builder.image(asset).url() : ''
 

@@ -3,7 +3,7 @@ import {FC} from 'react'
 
 import {DzSplitTypeProps} from '@/sanity/types'
 
-import {dzSplitOverrides,splitMappers} from './splitMappers'
+import {dzSplitOverrides, splitMappers} from './splitMappers'
 
 interface DzSplitProps {
   data: any

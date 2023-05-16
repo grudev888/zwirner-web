@@ -1,10 +1,8 @@
 .mainLayout {
-  @apply
-    overflow-y-auto
+  @apply overflow-y-auto
     scrollbar
-    scrollbar-h-[0.1875rem]
-    scrollbar-w-[6px]
-    scrollbar-thumb-black-60
     scrollbar-track-black-10
-  ;
+    scrollbar-thumb-black-60
+    scrollbar-w-[6px]
+    scrollbar-h-[0.1875rem];
 }
