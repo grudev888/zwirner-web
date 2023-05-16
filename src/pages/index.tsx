@@ -6,7 +6,7 @@ import {ErrorBoundary} from 'react-error-boundary'
 import {SEOComponent} from '@/common/components/seo/seo'
 import {PreviewHome} from '@/components/containers/home/previewHome'
 
-import { homeData as homeDataQuery} from '@/sanity/queries/home.queries'
+import {homeData as homeDataQuery} from '@/sanity/queries/home.queries'
 import {getHomeData} from '@/sanity/services/home.service'
 import {HomeContainer} from '@/components/containers/home'
 
@@ -46,7 +46,7 @@ export default function Home({data, preview}: PageProps) {
         >
           <SEOComponent data={seo} />
           <PreviewSuspense fallback="Loading...">
-            <PreviewHome query={homeDataQuery}/>
+            <PreviewHome query={homeDataQuery} />
           </PreviewSuspense>
         </ErrorBoundary>
       </>
@@ -63,7 +63,7 @@ export default function Home({data, preview}: PageProps) {
         }
       >
         <SEOComponent data={seo} />
-        <HomeContainer data={homeData}/>
+        <HomeContainer data={homeData} />
       </ErrorBoundary>
     </>
   )

@@ -5,9 +5,11 @@ const emptySocialMedia = {
   twitter: '',
   facebook: '',
 }
-const defaultFooterCopies = {copies: {
-  rights: `David Zwirner - All rights reserved ${new Date().getFullYear()}`,
-}}
+const defaultFooterCopies = {
+  copies: {
+    rights: `David Zwirner - All rights reserved ${new Date().getFullYear()}`,
+  },
+}
 
 export const getHeaderProps = (data: any) => {
   const {headerData = {}} = data ?? {}
@@ -26,9 +28,9 @@ export const getFooterProps = (data: any) => {
   const {links, socialMedia} = footerData ?? {}
   return {
     data: {
-      links: links?? [],
-      socialMedia:socialMedia ?? emptySocialMedia,
-      ...defaultFooterCopies
-    }
+      links: links ?? [],
+      socialMedia: socialMedia ?? emptySocialMedia,
+      ...defaultFooterCopies,
+    },
   }
 }

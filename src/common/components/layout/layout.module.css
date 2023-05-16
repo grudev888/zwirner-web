@@ -1,19 +1,13 @@
 .mainLayout {
-  @apply
-    px-5
-  ;
+  @apply px-5;
 }
 
 .header {
-  @apply
-    sticky
-    top-0
-  ;
+  @apply sticky
+    top-0;
 }
 
 .footer {
-  @apply
-    relative
-    bottom-0
-  ;
+  @apply relative
+    bottom-0;
 }

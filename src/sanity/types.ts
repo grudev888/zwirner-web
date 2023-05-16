@@ -1,4 +1,4 @@
-import {ButtonVariant,EditorialType, SplitTypes} from '@zwirner/design-system'
+import {ButtonVariant, EditorialType, SplitTypes} from '@zwirner/design-system'
 
 export interface GlobalSEOScheme {
   _id: string
@@ -23,7 +23,6 @@ export interface PageSEOSchema {
   jsonLD?: JSONLDSchema
 }
 
-
 export interface ArticleSchema {
   title?: string
   images?: any
@@ -33,10 +32,9 @@ export interface ArticleSchema {
   publisherLogo?: string
 }
 
-
 export interface RedirectSchema {
-  from: string,
-  to: string,
+  from: string
+  to: string
 }
 
 export interface ArtistPageSchemaProps {
@@ -46,11 +44,10 @@ export interface ArtistPageSchemaProps {
   artist: any
 }
 
-
 // UTILS
 
 export interface BreadcrumbItemSchema {
-  name: string,
+  name: string
   item: string
 }
 
@@ -84,7 +81,7 @@ export const JSON_LD_SCHEMA_TYPE_NAMES = [
 type SchemaType = (typeof JSON_LD_SCHEMA_TYPE_NAMES)[number]
 
 interface SearchActionType {
-  target: string;
+  target: string
 }
 
 export interface JSONLDSchema {
@@ -94,7 +91,6 @@ export interface JSONLDSchema {
   searchPotentialActions?: SearchActionType[]
   manualSchema?: any
 }
-
 
 interface externalLinkType {
   href: string

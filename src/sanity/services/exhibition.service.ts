@@ -1,6 +1,6 @@
 import {client} from '@/sanity/client'
 import {allExhibitions, exhibitionById} from '@/sanity/queries/exhibition.queries'
-import {exhibitionPageBySlug,exhibitionPageSlugs} from '@/sanity/queries/exhibitionPage.queries'
+import {exhibitionPageBySlug, exhibitionPageSlugs} from '@/sanity/queries/exhibitionPage.queries'
 
 export async function getAllExhibitions(): Promise<any[]> {
   if (client) {

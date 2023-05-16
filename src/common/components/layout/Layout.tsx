@@ -4,8 +4,6 @@ import {ReactNode} from 'react'
 import styles from './layout.module.css'
 import {getHeaderProps, getFooterProps} from './mappers'
 
-
-
 export const footerData = {
   copies: {
     rights: 'David Zwirner - All rights reserved 2023',

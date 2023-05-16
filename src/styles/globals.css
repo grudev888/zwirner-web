@@ -3,7 +3,6 @@
 @tailwind utilities;
 @tailwind screens;
 
-
 html,
 body,
 #__next {
@@ -25,21 +24,20 @@ body {
   margin: 0;
 }
 
-
 @layer base {
   @font-face {
     font-family: avenir-regular;
     font-weight: 500;
-    src: url(fonts/avenir/AvenirNext-Regular.woff) format("woff");
+    src: url(fonts/avenir/AvenirNext-Regular.woff) format('woff');
   }
   @font-face {
     font-family: avenir-medium;
     font-weight: 500;
-    src: url(fonts/avenir/AvenirNext-Medium.woff) format("woff");
+    src: url(fonts/avenir/AvenirNext-Medium.woff) format('woff');
   }
   @font-face {
     font-family: avenir-medium-italic;
     font-weight: 500;
-    src: url(fonts/avenir/AvenirNext-MediumItalic.woff) format("woff");
+    src: url(fonts/avenir/AvenirNext-MediumItalic.woff) format('woff');
   }
 }
