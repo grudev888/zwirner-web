@@ -3,17 +3,17 @@ import {FC} from 'react'
 
 import {DzSplitTypeProps} from '@/sanity/types'
 
-import {dzSplitOverrides,splitMappers} from './splitMappers'
+import {dzSplitOverrides, splitMappers} from './splitMappers'
 
 interface DzSplitProps {
   data: any
-  componentProps: DzSplitTypeProps
+  componentProps?: DzSplitTypeProps
 }
 
 export const DzSplit: FC<DzSplitProps> = ({data, componentProps}) => {
   const {_type} = data ?? {}
   const mappedData = (splitMappers[_type] ?? ((a: any) => a))(data, componentProps)
-  const overrideData = dzSplitOverrides(componentProps) ?? {}
+  const overrideData = componentProps ? dzSplitOverrides(componentProps) : {}
 
   return <DzSplitMolecule {...{...mappedData, ...overrideData}} />
 }

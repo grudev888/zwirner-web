@@ -7,13 +7,13 @@ import {contentTypesMapper, dzHeroOverrides} from './heroMapper'
 
 interface DzHeroProps {
   data: any
-  componentProps: DzHeroSchemaProps
+  componentProps?: DzHeroSchemaProps
 }
 
 export const DzHero: FC<DzHeroProps> = ({data, componentProps}) => {
   const {_type} = data ?? {}
   const mappedData = (contentTypesMapper[_type] ?? ((a: any) => a))(data)
-  const overrideData = dzHeroOverrides(componentProps) ?? {}
+  const overrideData = componentProps ? dzHeroOverrides(componentProps) : {}
 
   return <DzHeroMolecule {...{...mappedData, ...overrideData}} />
 }

@@ -6,15 +6,8 @@ const config = {
     // Enables the styled-components SWC transform
     styledComponents: true,
   },
-  images: {
-    remotePatterns: [
-      {
-        hostname: 'cdn.sanity.io',
-      },
-    ],
-  },
-
-  reactStrictMode: true,
+  images: {remotePatterns: [{hostname: 'cdn.sanity.io'}]},
+  transpilePackages: ['@zwirner/design-system'],
 }
 
 const withBundleAnalyzer = analyzer({

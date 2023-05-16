@@ -1,0 +1,19 @@
+.homeContainer {
+  @apply
+    w-full
+    flex
+    flex-col
+    gap-[3.75rem]
+    md:gap-[7.5rem]
+  ;
+}
+.spacer{
+  @apply
+    md:w-full
+    md:h-[3.75rem]
+  ;
+}
+
+.fullSection {
+  @apply -mx-5;
+}

@@ -4,12 +4,10 @@ import {PreviewSuspense} from 'next-sanity/preview'
 import {ErrorBoundary} from 'react-error-boundary'
 
 import {SEOComponent} from '@/common/components/seo/seo'
-import {PreviewHome} from '@/components/containers/home/previewHome'
-
-import { homeData as homeDataQuery} from '@/sanity/queries/home.queries'
-import {getHomeData} from '@/sanity/services/home.service'
-import {HomeContainer} from '@/components/containers/home'
-
+import {PageBuilder} from '@/components/pageBuilder'
+import {PreviewPageBuilder} from '@/components/pageBuilder/previewPageBuilder'
+import {homePage} from '@/sanity/queries/page.queries'
+import {getHomePage} from '@/sanity/services/page.service'
 interface HomeDataCMS {
   home: any
 }
@@ -29,10 +27,10 @@ interface PreviewData {
   token?: string
 }
 
-export default function Home({data, preview}: PageProps) {
+export default function Page({data, preview}: PageProps) {
   const {home = []} = data
   const [homeData] = home ?? []
-  const {seo} = homeData ?? {}
+  const {components, seo} = homeData ?? {}
 
   if (preview) {
     return (
@@ -46,7 +44,7 @@ export default function Home({data, preview}: PageProps) {
         >
           <SEOComponent data={seo} />
           <PreviewSuspense fallback="Loading...">
-            <PreviewHome query={homeDataQuery}/>
+            <PreviewPageBuilder query={homePage} />
           </PreviewSuspense>
         </ErrorBoundary>
       </>
@@ -63,7 +61,7 @@ export default function Home({data, preview}: PageProps) {
         }
       >
         <SEOComponent data={seo} />
-        <HomeContainer data={homeData}/>
+        <PageBuilder components={components} />
       </ErrorBoundary>
     </>
   )
@@ -88,7 +86,7 @@ export const getStaticProps: GetStaticProps<PageProps, Query, PreviewData> = asy
   }
 
   try {
-    const homePage = await getHomeData()
+    const homePage = await getHomePage()
     return {
       props: {
         data: {

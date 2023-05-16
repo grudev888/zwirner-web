@@ -1,4 +1,4 @@
-import '../global.css'
+import '../styles/globals.css'
 import '@zwirner/design-system/dist/tailwind.css'
 
 import {NextPage} from 'next'
@@ -7,25 +7,32 @@ import {ReCaptchaProvider} from 'next-recaptcha-v3'
 import {ReactElement, ReactNode} from 'react'
 
 import {APIProvider} from '@/common/api'
-import DefaultLayout from '@/common/components/Layout'
+import DefaultLayout from '@/common/components/layout/Layout'
 import {SEOComponent} from '@/common/components/seo/seo'
 import {mono, sans, serif} from '@/common/styles/fonts'
 import {getGeneralSettings} from '@/sanity/services/settings.service'
+import {getHeaderData, getFooterData} from '@/sanity/services/layout.service'
 import {GlobalSEOScheme} from '@/sanity/types'
 
 export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
   getLayout?: (page: ReactElement) => ReactNode
 }
 
-type AppGeneralProps = {globalSEO?: GlobalSEOScheme}
+type LayoutData = {
+  headerData: any
+  footerData: any
+}
+
+type AppGeneralProps = {globalSEO?: GlobalSEOScheme; layoutData?: LayoutData}
 
 type WrapperProps = AppGeneralProps & {
   Component: NextPageWithLayout
   pageProps: any
 }
 
-const Wrapper = ({Component, pageProps, globalSEO}: WrapperProps) => {
-  const getLayout = Component.getLayout || ((page) => <DefaultLayout>{page}</DefaultLayout>)
+const Wrapper = ({Component, pageProps, globalSEO, layoutData}: WrapperProps) => {
+  const getLayout =
+    Component.getLayout || ((page) => <DefaultLayout layoutData={layoutData}>{page}</DefaultLayout>)
   return (
     <ReCaptchaProvider reCaptchaKey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}>
       <APIProvider>
@@ -36,7 +43,7 @@ const Wrapper = ({Component, pageProps, globalSEO}: WrapperProps) => {
   )
 }
 
-function DzApp({Component, pageProps, globalSEO}: AppProps & WrapperProps) {
+function DzApp({Component, pageProps, globalSEO, layoutData}: AppProps & WrapperProps) {
   return (
     <>
       <style jsx global>
@@ -49,7 +56,12 @@ function DzApp({Component, pageProps, globalSEO}: AppProps & WrapperProps) {
         `}
       </style>
 
-      <Wrapper Component={Component} pageProps={pageProps} globalSEO={globalSEO} />
+      <Wrapper
+        Component={Component}
+        pageProps={pageProps}
+        globalSEO={globalSEO}
+        layoutData={layoutData}
+      />
     </>
   )
 }
@@ -61,7 +73,19 @@ DzApp.getInitialProps = async (context: AppContext): Promise<AppGeneralProps & A
     const {globalSEO} = generalSettings ?? {}
     const [SEOSettings = {}] = globalSEO ?? []
 
-    return {...ctx, globalSEO: SEOSettings}
+    const headerDataFetched = await getHeaderData()
+    const [headerData] = headerDataFetched ?? []
+    const footerDataFetched = await getFooterData()
+    const [footerData] = footerDataFetched ?? []
+
+    return {
+      ...ctx,
+      globalSEO: SEOSettings,
+      layoutData: {
+        headerData,
+        footerData,
+      },
+    }
   } catch (e: any) {
     console.error(
       'ERROR FETCHING GENERAL DATA:',
