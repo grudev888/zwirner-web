@@ -17,6 +17,9 @@ jobs:
         with:
           node-version: 19
           cache: 'yarn'
+      - run: yarn install --immutable
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
       - name: Check prettier
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
