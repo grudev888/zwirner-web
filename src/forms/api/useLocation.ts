@@ -1,6 +1,6 @@
 import useSWR from 'swr'
 
-import {ILocation} from '../types'
+import { ILocation } from '../types'
 
 const BASE_URL = () => `/api/location`
 

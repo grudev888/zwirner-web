@@ -1,7 +1,7 @@
 import {DzGridColumns} from '@zwirner/design-system'
 import {ReactNode} from 'react'
 
-import styles from './layout.module.css'
+import styles from './layout.module.css';
 
 const Layout = ({children}: {children: ReactNode}) => (
   <>

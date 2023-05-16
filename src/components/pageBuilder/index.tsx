@@ -41,12 +41,8 @@ export const PageBuilder: FC<PageBuilderProps> = ({components = []}) => {
         if (!ComponentModule) {
           return <div key={`${_type}-${key}`}>Not supported component: {_type}</div>
         }
-        if (!componentContent) {
-          return (
-            <div key={`${_type}-${key}`}>
-              Please add content types to this component: {props?.title ?? _type}
-            </div>
-          )
+        if(!componentContent) {
+          return <div key={`${_type}-${key}`}>Please add content types to this component: {props?.title ?? _type}</div>
         }
         return (
           <ComponentModule key={`${_type}-${key}`} data={componentContent} componentProps={props} />

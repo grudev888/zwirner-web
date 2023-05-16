@@ -134,5 +134,5 @@ export const DEFAULT_SEO_PROPERTIES = {
   twitter: {
     site: '@davidzwirner',
     cardType: 'summary_large_image',
-  },
+  }
 }

@@ -25,7 +25,7 @@ export const DzEditorial: FC<DzEditorialProps> = ({data, componentProps}) => {
   const mappedData = (contentTypesMapper[_type] ?? ((a: any) => a))(data, componentProps)
   const overrideData = dzEditorialOverrides(componentProps) ?? {}
 
-  return <DzEditorialMolecule {...{...mappedData, ...overrideData}} />
+  return <DzEditorialMolecule {...{...mappedData, ...overrideData}}  />
 }
 
 export default DzEditorial

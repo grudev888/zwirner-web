@@ -3,7 +3,7 @@ import {FC} from 'react'
 
 import {DzInterstitialTypeProps} from '@/sanity/types'
 
-import {dzInterstitialOverrides, interstitialMap} from './interstitialMapper'
+import {dzInterstitialOverrides,interstitialMap} from './interstitialMapper'
 
 interface DzInterstitialProps {
   data: any

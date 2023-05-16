@@ -1,13 +1,26 @@
 {
   "extends": "./tsconfig.settings",
-  "include": [".next/types/**/*.ts", "./next-env.d.ts", "./src/**/*.ts", "./src/**/*.tsx"],
-  "exclude": ["node_modules/*", "dist/*", "www/*"],
+  "include": [
+    ".next/types/**/*.ts",
+    "./next-env.d.ts",
+    "./src/**/*.ts",
+    "./src/**/*.tsx"
+  ],
+  "exclude": [
+    "node_modules/*",
+    "dist/*",
+    "www/*"
+  ],
   "compilerOptions": {
     "strict": true,
     "forceConsistentCasingInFileNames": true,
     "target": "ES2017",
     "module": "ESNext",
-    "lib": ["dom", "dom.iterable", "esnext"],
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
     "allowJs": false,
     "noEmit": true,
     "incremental": true,
@@ -19,7 +32,9 @@
       }
     ],
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": [
+        "./src/*"
+      ]
     },
     "preserveSymlinks": true,
     "baseUrl": "."

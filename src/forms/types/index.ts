@@ -9,11 +9,11 @@ export interface IFormInput {
 }
 
 export interface ILocation {
-  ip: string
-  timezone: string
-  latitude: string
-  longitude: string
-  country: string
-  region: string
-  city: string
+  ip: string;
+  timezone: string;
+  latitude: string;
+  longitude: string;
+  country: string;
+  region: string;
+  city: string;
 }
