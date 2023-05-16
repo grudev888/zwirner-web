@@ -129,7 +129,7 @@ export const mapTabsLocations = (data: any) => {
         },
         title: name,
         secondaryTitle: addressLine,
-        description: `${state},${city},${zipCode}`,
+        description: `${state}, ${city}, ${zipCode}`,
       }
 
       if (prev[city] && prev[city].cards && Array.isArray(prev[city].cards)) {

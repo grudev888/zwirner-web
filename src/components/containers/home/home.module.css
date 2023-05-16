@@ -9,7 +9,11 @@
 }
 .spacer{
   @apply
-    w-full
-    h-[3.75rem]
+    md:w-full
+    md:h-[3.75rem]
   ;
+}
+
+.fullSection {
+  @apply -mx-5;
 }

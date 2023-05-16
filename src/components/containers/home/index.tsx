@@ -20,14 +20,12 @@ import {
 } from './mapper'
 import {FC} from 'react'
 import styles from './home.module.css'
-// import {DzInterstitial} from '@/components/pageBuilder/DzInterstitial/DzInterstitial';
 
 interface HomeContainerProps {
   data: any
 }
 
 export const HomeContainer: FC<HomeContainerProps> = ({data}) => {
-
   const {header, featured, articles, interstitial, locations, firstCarousel, secondCarousel} = data
   const itemsHeroCarousel = mapHeaderCarousel(header)
   const featuredContent = mapFeaturedContentSplit(featured)
@@ -39,10 +37,14 @@ export const HomeContainer: FC<HomeContainerProps> = ({data}) => {
   const secondCarouselCards = mapCarouselCards(secondCarousel)
 
   const renderCarousel = (data: any) => (
-    <DzColumn span={12}>
-      <DzCarousel slidesPerView={2}>
+    <DzColumn span={12} className={styles.fullSection}>
+      <DzCarousel slidesPerViewDesktop={2}>
         {data.map((card: any) => {
-          return <DzCard data={card} type="content" />
+          return (
+            <div className="w-full">
+              <DzCard data={card} type="content" />
+            </div>
+          )
         })}
       </DzCarousel>
     </DzColumn>
@@ -64,8 +66,8 @@ export const HomeContainer: FC<HomeContainerProps> = ({data}) => {
             )
           })}
         </DzGridColumns>
-        <DzInterstitial data={interstitialData} />
-        <DzTabsCards tabs={tabsLocations} span={3} />
+        <DzInterstitial data={{...interstitialData, customClass: styles.fullSection}} />
+        <DzTabsCards tabs={tabsLocations} span={[12, 3]} />
         <div className={styles.spacer}></div>
       </div>
     </DzColumn>
