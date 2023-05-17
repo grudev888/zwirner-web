@@ -3,7 +3,7 @@ import {FC} from 'react'
 
 import {DzTitleTypeProps} from '@/sanity/types'
 
-import {dzTitleOverrides,titleMappers} from './titleMapper'
+import {dzTitleOverrides, titleMappers} from './titleMapper'
 
 interface DzTitleProps {
   data: any

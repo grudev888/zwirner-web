@@ -9,6 +9,7 @@
   "license": "MIT",
   "main": "package.json",
   "scripts": {
+    "analyze": "cross-env ANALYZE=true yarn build",
     "build": "next build",
     "dev": "next",
     "format": "npx prettier --write . --ignore-path .gitignore",
@@ -17,8 +18,7 @@
     "start": "next start",
     "test": "yarn type-check && yarn jest --runInBand",
     "test-all": "yarn type-check && yarn lint:fix && yarn format",
-    "type-check": "tsc --noEmit --pretty",
-    "analyze": "cross-env ANALYZE=true yarn build"
+    "type-check": "tsc --noEmit --pretty"
   },
   "prettier": {
     "bracketSpacing": false,
@@ -71,8 +71,8 @@
     "tailwindcss": "^3.2.4",
     "typescript": "^4.9.4"
   },
+  "packageManager": "yarn@3.5.1",
   "publishConfig": {
     "@zwirner:registry": "https://npm.pkg.github.com"
-  },
-  "packageManager": "yarn@3.5.1"
+  }
 }

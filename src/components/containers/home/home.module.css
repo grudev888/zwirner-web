@@ -1,17 +1,13 @@
 .homeContainer {
-  @apply
+  @apply flex
     w-full
-    flex
     flex-col
     gap-[3.75rem]
-    md:gap-[7.5rem]
-  ;
+    md:gap-[7.5rem];
 }
-.spacer{
-  @apply
-    md:w-full
-    md:h-[3.75rem]
-  ;
+.spacer {
+  @apply md:h-[3.75rem]
+    md:w-full;
 }
 
 .fullSection {

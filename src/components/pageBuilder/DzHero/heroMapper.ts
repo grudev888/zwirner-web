@@ -15,7 +15,7 @@ export const dzHeroOverrides = (props: DzHeroSchemaProps) => {
     imageOverride,
     enableOverrides,
   } = props
-  if(!enableOverrides) return {}
+  if (!enableOverrides) return {}
   const {asset, alt, url} = imageOverride ?? {}
   const imgSrc = asset ? builder.image(asset).url() : ''
 
@@ -84,7 +84,7 @@ export const contentTypesMapper: any = {
   },
   exhibition: (data: any) => {
     const {events, subtitle, title, summary, description, artworks} = data
-    const [mainArtWork]= artworks?? []
+    const [mainArtWork] = artworks ?? []
 
     const [event] = events ?? []
     const {photos} = event ?? mainArtWork ?? {}

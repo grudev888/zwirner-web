@@ -1,0 +1,26 @@
+name: CI
+on:
+  push:
+    branches: ['main']
+  pull_request:
+    branches: ['main']
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+        with:
+          node-version: 19
+          cache: 'yarn'
+      - run: yarn install --immutable
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+      - name: Check prettier
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+        run: yarn prettier --check .

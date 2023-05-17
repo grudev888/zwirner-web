@@ -97,8 +97,9 @@ export const splitMappers: any = {
     }
   },
   exhibition: (data: any) => {
-    const {splitType, reverse, animate, events, subtitle, title, summary, description, artworks} = data
-    const [mainArtWork]= artworks?? []
+    const {splitType, reverse, animate, events, subtitle, title, summary, description, artworks} =
+      data
+    const [mainArtWork] = artworks ?? []
     const [event] = events ?? []
     const {photos} = event ?? mainArtWork ?? {}
     const [mainPicture] = photos ?? []
