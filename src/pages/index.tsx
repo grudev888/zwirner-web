@@ -30,8 +30,7 @@ interface PreviewData {
 }
 
 export default function Home({data, preview}: PageProps) {
-  const {home = []} = data
-  const [homeData] = home ?? []
+  const [homeData] = data?.home ?? []
   const {seo} = homeData ?? {}
 
   if (preview) {
@@ -39,7 +38,7 @@ export default function Home({data, preview}: PageProps) {
       <>
         <ErrorBoundary
           fallback={
-            <DzColumn className="mb-12 h-full" span={12}>
+            <DzColumn className="mb-12 h-screen" span={12}>
               <div className="flex justify-center p-5">Something went wrong</div>
             </DzColumn>
           }
@@ -57,7 +56,7 @@ export default function Home({data, preview}: PageProps) {
     <>
       <ErrorBoundary
         fallback={
-          <DzColumn className="mb-12 h-full" span={12}>
+          <DzColumn className="mb-12 h-screen" span={12}>
             <div className="flex justify-center p-5">Something went wrong</div>
           </DzColumn>
         }
@@ -91,16 +90,14 @@ export const getStaticProps: GetStaticProps<PageProps, Query, PreviewData> = asy
     const homePage = await getHomeData()
     return {
       props: {
-        data: {
-          home: homePage,
-        },
+        data: {home: homePage},
         preview,
         slug: params?.slug || null,
         token: null,
       },
     }
   } catch (e: any) {
-    console.error('ERROR FETCHING HOME DATA:', e?.response?.statusMessage)
+    console.error('ERROR FETCHING HOME DATA:', JSON.stringify(e?.response))
     return {
       props: {
         data: {

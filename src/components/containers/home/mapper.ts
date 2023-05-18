@@ -60,8 +60,7 @@ export const mapFeaturedContentSplit = (data: any) => {
 export const mapArticlesGrid = (data = []) => {
   return data?.map((item) => {
     // TODO fix typo in the sanity studio
-    const {title, subtitle, artile} = item ?? {}
-    const {images = []} = artile ?? {}
+    const {title, subtitle, images = []} = item ?? {}
     const [mainImage] = images ?? []
     const {asset, alt} = mainImage ?? {}
     const imgSrc = asset ? builder.image(asset).url() : ''
