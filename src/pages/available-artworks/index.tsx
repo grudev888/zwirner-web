@@ -6,9 +6,9 @@ import {ErrorBoundary} from 'react-error-boundary'
 import {SEOComponent} from '@/common/components/seo/seo'
 import {AvailableArtworksContainer} from '@/components/containers/availableArtworks'
 
-import {homeData as homeDataQuery} from '@/sanity/queries/home.queries'
+import {availableArtworksData} from '@/sanity/queries/availableArtworks.queries'
 import {getAvailableArtworksData} from '@/sanity/services/availableArtworks.service'
-import {HomeContainer} from '@/components/containers/home'
+import {PreviewAvailableWorks} from '@/components/containers/availableArtworks/previewAvailableWorks'
 
 interface AvailableArtworksCMS {
   artworksPage: any
@@ -32,7 +32,7 @@ interface PreviewData {
 export default function AvailableArtworks({data, preview}: PageProps) {
   const {artworksPage = []} = data
   const [pageData] = artworksPage ?? []
-  const {seo, artworks=[], displayNumberOfResults, title} = pageData ?? {}
+  const {seo, artworks = [], displayNumberOfResults, title} = pageData ?? {}
 
   if (preview) {
     return (
@@ -46,7 +46,7 @@ export default function AvailableArtworks({data, preview}: PageProps) {
         >
           <SEOComponent data={seo} />
           <PreviewSuspense fallback="Loading...">
-            <div>Preview Available artworks</div>
+            <PreviewAvailableWorks query={availableArtworksData} />
           </PreviewSuspense>
         </ErrorBoundary>
       </>

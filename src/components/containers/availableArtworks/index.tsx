@@ -1,20 +1,4 @@
-import {
-  DzColumn,
-  DzComplexGrid,
-  DzSplit,
-  DzHeroCarousel,
-  DzCard,
-  SPLIT_TYPES,
-  CARD_TYPES,
-  DzGridColumns,
-  DzInterstitial,
-  DzTabsCards,
-  DzCarousel,
-  DzTitle,
-  TITLE_TYPES,
-  TITLE_SIZES,
-} from '@zwirner/design-system'
-// import {} from './mapper'
+import {DzColumn, DzComplexGrid, DzTitle, TITLE_TYPES, TITLE_SIZES} from '@zwirner/design-system'
 import {FC} from 'react'
 import styles from './availableArtworks.module.css'
 import {mapCardsGrid} from './mapper'
