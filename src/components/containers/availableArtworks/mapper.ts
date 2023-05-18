@@ -3,7 +3,8 @@ import {builder} from '@/sanity/imageBuilder'
 
 export const mapCardsGrid = (data: any[]) => {
   return data?.map((artwork) => {
-    const {photos, artists, dimensions, title, dateSelection, medium, edition, _id, price} = artwork ?? {}
+    const {photos, artists, dimensions, title, dateSelection, medium, edition, _id, price} =
+      artwork ?? {}
     const {year} = dateSelection
     const [mainArtist] = artists ?? []
     const {fullName} = mainArtist ?? {}
@@ -31,8 +32,8 @@ export const mapCardsGrid = (data: any[]) => {
         text: 'Inquire',
         ctaProps: {
           // Todo inquire with _id
-          onClick: ()=> null
-        }
+          onClick: () => null,
+        },
       },
     }
   })
