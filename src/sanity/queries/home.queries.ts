@@ -1,6 +1,6 @@
 import {groq} from 'next-sanity'
-
-import {exhibitionComplexFields, exhibitionSimpleFields} from '@/sanity/queries/exhibition.queries'
+import {exhibitionSimpleFields, exhibitionComplexFields} from '@/sanity/queries/exhibition.queries'
+import {pageSEOFields} from '@/sanity/queries/seo.queries'
 
 export const homeData = groq`
 *[_type == 'home'] {
@@ -53,5 +53,8 @@ export const homeData = groq`
       "author": author->{...}
     }
   },
-  locations[]-> {...}
+  locations[]-> {...},
+  seo {
+    ${pageSEOFields}
+  }
 }`
