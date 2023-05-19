@@ -3717,25 +3717,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"get-it@npm:^8":
-  version: 8.0.10
-  resolution: "get-it@npm:8.0.10"
-  dependencies:
-    debug: ^4.3.4
-    decompress-response: ^7.0.0
-    follow-redirects: ^1.15.2
-    into-stream: ^6.0.0
-    is-plain-object: ^5.0.0
-    is-retry-allowed: ^2.2.0
-    is-stream: ^2.0.1
-    parse-headers: ^2.0.5
-    progress-stream: ^2.0.0
-    tunnel-agent: ^0.6.0
-  checksum: bb33c30ab69605c0cf919f9e8248ff96d0e5cf59e564b4ca1f24885f282d5a38c8a3159059b689577045343c4ec1601b0b976a9012c0237d69e4255081d7db7f
-  languageName: node
-  linkType: hard
-
-"get-it@npm:^8.1.0":
+"get-it@npm:^8, get-it@npm:^8.1.0":
   version: 8.1.1
   resolution: "get-it@npm:8.1.1"
   dependencies:
@@ -6916,16 +6898,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"rxjs@npm:^7":
-  version: 7.8.0
-  resolution: "rxjs@npm:7.8.0"
-  dependencies:
-    tslib: ^2.1.0
-  checksum: 61b4d4fd323c1043d8d6ceb91f24183b28bcf5def4f01ca111511d5c6b66755bc5578587fe714ef5d67cf4c9f2e26f4490d4e1d8cabf9bd5967687835e9866a2
-  languageName: node
-  linkType: hard
-
-"rxjs@npm:^7.0.0":
+"rxjs@npm:^7, rxjs@npm:^7.0.0":
   version: 7.8.1
   resolution: "rxjs@npm:7.8.1"
   dependencies:
