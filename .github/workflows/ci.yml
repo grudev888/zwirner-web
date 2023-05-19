@@ -12,8 +12,6 @@ jobs:
       - uses: actions/checkout@v3
       - name: Setup Node
         uses: actions/setup-node@v3
-        env:
-          GH_TOKEN: ${{ secrets.GH_TOKEN }}
         with:
           node-version: 19
           cache: "yarn"
@@ -21,8 +19,6 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
       - name: Check prettier
-        env:
-          GH_TOKEN: ${{ secrets.GH_TOKEN }}
         run: yarn prettier --check .
   type-check:
     runs-on: ubuntu-latest
@@ -30,8 +26,6 @@ jobs:
       - uses: actions/checkout@v3
       - name: Setup Node
         uses: actions/setup-node@v3
-        env:
-          GH_TOKEN: ${{ secrets.GH_TOKEN }}
         with:
           node-version: 19
           cache: "yarn"
@@ -39,8 +33,6 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
       - name: Check prettier
-        env:
-          GH_TOKEN: ${{ secrets.GH_TOKEN }}
         run: yarn type-check
   lint:
     runs-on: ubuntu-latest
@@ -48,8 +40,6 @@ jobs:
       - uses: actions/checkout@v3
       - name: Setup Node
         uses: actions/setup-node@v3
-        env:
-          GH_TOKEN: ${{ secrets.GH_TOKEN }}
         with:
           node-version: 19
           cache: "yarn"
@@ -57,6 +47,4 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
       - name: Check prettier
-        env:
-          GH_TOKEN: ${{ secrets.GH_TOKEN }}
         run: yarn lint
