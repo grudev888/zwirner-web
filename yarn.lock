@@ -878,10 +878,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@next/font@npm:^13.1.2":
-  version: 13.2.3
-  resolution: "@next/font@npm:13.2.3"
-  checksum: 241baec8c441448df2d7e7755eca4876e018a874555ddd22816585b50f03eac357f15576762ad1011b4a4c245e7dba9675ae7ec4289196943a51bc25fa203863
+"@next/font@npm:^13.4.3":
+  version: 13.4.3
+  resolution: "@next/font@npm:13.4.3"
+  checksum: 9feca5b6181505b85d9c198535ddd1dd26bc0e435dbfb53af06c14debe8eb021c78842100ef7f37e21d75701156ee4ae060db1de3d4bcb6ce6e82eb54b441634
   languageName: node
   linkType: hard
 
@@ -8235,7 +8235,7 @@ __metadata:
   dependencies:
     "@headlessui/tailwindcss": ^0.1.2
     "@next/bundle-analyzer": ^13.3.1
-    "@next/font": ^13.1.2
+    "@next/font": ^13.4.3
     "@portabletext/react": ^2.0.0
     "@sanity/client": ^6.0.1
     "@sanity/image-url": ^1.0.2
