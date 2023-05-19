@@ -18,8 +18,7 @@ jobs:
       - run: yarn install --immutable
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
-      - name: Check prettier
-        run: yarn prettier --check .
+      - run: yarn prettier --check .
   type-check:
     runs-on: ubuntu-latest
     steps:
@@ -32,8 +31,7 @@ jobs:
       - run: yarn install --immutable
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
-      - name: Check prettier
-        run: yarn type-check
+      - run: yarn type-check
   lint:
     runs-on: ubuntu-latest
     steps:
@@ -46,5 +44,4 @@ jobs:
       - run: yarn install --immutable
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
-      - name: Check prettier
-        run: yarn lint
+      - run: yarn lint
