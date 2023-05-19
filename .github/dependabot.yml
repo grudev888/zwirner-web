@@ -12,8 +12,17 @@ registries:
     replaces-base: true
 
 updates:
-  - package-ecosystem: "npm" # See documentation for possible values
+  # Maintain dependencies for GitHub Actions
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+
+  - package-ecosystem: "npm"
     directory: "/" # Location of package manifests
+    registries:
+      - npm-registry
     schedule:
       interval: "daily"
-      time: "20:40"
+      time: "20:51"
+    open-pull-requests-limit: 6
