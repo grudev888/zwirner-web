@@ -17,7 +17,7 @@ Follow these instructions to deploy a local environment of the webpage.
 4. Clone this repository in your machine using Git.
 
 ```sh
-git clone https://github.com/Zwirner/zwirnerweb.git
+git clone https://github.com/Zwirner/web.git
 ```
 
 5. Create a Github access token: Go to https://github.com/settings/tokens, click on the _Generate new token_ button, choose _Generate new token (classic)_, set a meaningful name like "DZ Package", and make sure you **tick the _read:packages | Download packages from GitHub Package Registry_ option**. Click on Save and copy the token you just created.
