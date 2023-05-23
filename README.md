@@ -34,7 +34,6 @@ docker-compose up -d
 
 > In case you want to manually install node and yarn to run this app outside the docker container, please make sure you use **Node 19**, and **Yarn 3 (berry)**.
 
-
 ## Testing
 
 ### End to end testing
