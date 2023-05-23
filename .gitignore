@@ -58,3 +58,6 @@ studio/.env.development
 
 # Sanity Database sync
 production.tar.gz
+/test-results/
+/playwright-report/
+/playwright/.cache/
