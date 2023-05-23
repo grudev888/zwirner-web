@@ -31,7 +31,13 @@ export default function AvailableArtworks({data, preview}: PageProps) {
   const {seo, artworks = [], displayNumberOfResults, title} = pageData ?? {}
 
   if (preview) {
-    return <PreviewPage query={availableArtworksData} seo={seo} type={PREVIEW_PAGE_TYPE.AVAILABLE_WORKS} />
+    return (
+      <PreviewPage
+        query={availableArtworksData}
+        seo={seo}
+        type={PREVIEW_PAGE_TYPE.AVAILABLE_WORKS}
+      />
+    )
   }
 
   return (
