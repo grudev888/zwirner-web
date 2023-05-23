@@ -10,7 +10,7 @@ import {APIProvider} from '@/common/api'
 import DefaultLayout from '@/common/components/layout/Layout'
 import {SEOComponent} from '@/common/components/seo/seo'
 import {mono, sans, serif} from '@/common/styles/fonts'
-import {getFooterData,getHeaderData} from '@/sanity/services/layout.service'
+import {getFooterData, getHeaderData} from '@/sanity/services/layout.service'
 import {getGeneralSettings} from '@/sanity/services/settings.service'
 import {GlobalSEOScheme} from '@/sanity/types'
 
