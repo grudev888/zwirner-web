@@ -4,11 +4,10 @@ import {PreviewSuspense} from 'next-sanity/preview'
 import {ErrorBoundary} from 'react-error-boundary'
 
 import {SEOComponent} from '@/common/components/seo/seo'
+import {HomeContainer} from '@/components/containers/home'
 import {PreviewHome} from '@/components/containers/home/previewHome'
-
 import {homeData as homeDataQuery} from '@/sanity/queries/home.queries'
 import {getHomeData} from '@/sanity/services/home.service'
-import {HomeContainer} from '@/components/containers/home'
 
 interface HomeDataCMS {
   home: any

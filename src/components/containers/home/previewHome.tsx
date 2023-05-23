@@ -1,7 +1,8 @@
 import {FC} from 'react'
 
-import {HomeContainer} from './index'
 import {usePreview} from '@/sanity/preview'
+
+import {HomeContainer} from './index'
 
 interface PreviewHomeProps {
   query: string
