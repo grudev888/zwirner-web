@@ -60,6 +60,9 @@ jobs:
           # TODO get GH Actions to respect .tool-version
           node-version: 19
           cache: "yarn"
+      - run: yarn install --immutable
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
       - run: yarn playwright install --with-deps
       - name: Wait for Vercel preview deployment to be ready
         uses: patrickedqvist/wait-for-vercel-preview@v1.3.1
