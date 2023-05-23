@@ -8,7 +8,6 @@ on:
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: true
-
 jobs:
   prettier:
     runs-on: ubuntu-latest
@@ -36,20 +35,19 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
       - run: yarn type-check
-  # lint:
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - uses: actions/checkout@v3
-  #     - name: Setup Node
-  #       uses: actions/setup-node@v3
-  #       with:
-  #         node-version: 19
-  #         cache: 'yarn'
-  #     - run: yarn install --immutable
-  #       env:
-  #         GH_TOKEN: ${{ secrets.GH_TOKEN }}
-  #     - run: yarn lint
-
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 19
+          cache: "yarn"
+      - run: yarn install --immutable
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+      - run: yarn lint
   test_e2e:
     name: Playwright tests
     timeout-minutes: 60
@@ -60,11 +58,6 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           # TODO get GH Actions to respect .tool-version
-          node-version: 19
-          cache: "yarn"
-      - run: yarn install --immutable
-        env:
-          GH_TOKEN: ${{ secrets.GH_TOKEN }}
       - run: yarn playwright install --with-deps
       - name: Wait for Vercel preview deployment to be ready
         uses: patrickedqvist/wait-for-vercel-preview@v1.3.1
