@@ -1,5 +1,6 @@
 import {groq} from 'next-sanity'
-import {exhibitionSimpleFields, exhibitionComplexFields} from '@/sanity/queries/exhibition.queries'
+
+import {exhibitionComplexFields, exhibitionSimpleFields} from '@/sanity/queries/exhibition.queries'
 
 export const homeData = groq`
 *[_type == 'home'] {
@@ -25,6 +26,7 @@ export const homeData = groq`
     }
   },
   firstCarousel[] -> {
+    _id,
     _type == "exhibitionPage"=> {
       title,
       _type,
@@ -35,6 +37,7 @@ export const homeData = groq`
     }
   },
   secondCarousel[] -> {
+    _id,
     _type == "exhibitionPage"=> {
       title,
       _type,
@@ -45,6 +48,7 @@ export const homeData = groq`
     }
   },
   articles[]-> {
+    _id,
     _type == "articlePage"=> {
       title,
       subtitle,
