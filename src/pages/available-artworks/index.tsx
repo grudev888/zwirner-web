@@ -1,14 +1,10 @@
-import {DzColumn} from '@zwirner/design-system'
 import {GetStaticProps} from 'next'
-import {PreviewSuspense} from 'next-sanity/preview'
-import {ErrorBoundary} from 'react-error-boundary'
 
 import {SEOComponent} from '@/common/components/seo/seo'
 import {AvailableArtworksContainer} from '@/components/containers/availableArtworks'
-
+import {PREVIEW_PAGE_TYPE, PreviewPage} from '@/components/containers/previews/pagePreview'
 import {availableArtworksData} from '@/sanity/queries/availableArtworks.queries'
 import {getAvailableArtworksData} from '@/sanity/services/availableArtworks.service'
-import {PreviewAvailableWorks} from '@/components/containers/availableArtworks/previewAvailableWorks'
 
 interface AvailableArtworksCMS {
   artworksPage: any
@@ -35,36 +31,13 @@ export default function AvailableArtworks({data, preview}: PageProps) {
   const {seo, artworks = [], displayNumberOfResults, title} = pageData ?? {}
 
   if (preview) {
-    return (
-      <>
-        <ErrorBoundary
-          fallback={
-            <DzColumn className="mb-12 h-full" span={12}>
-              <div className="flex justify-center p-5">Something went wrong</div>
-            </DzColumn>
-          }
-        >
-          <SEOComponent data={seo} />
-          <PreviewSuspense fallback="Loading...">
-            <PreviewAvailableWorks query={availableArtworksData} />
-          </PreviewSuspense>
-        </ErrorBoundary>
-      </>
-    )
+    return <PreviewPage query={availableArtworksData} seo={seo} type={PREVIEW_PAGE_TYPE.AVAILABLE_WORKS} />
   }
 
   return (
     <>
-      <ErrorBoundary
-        fallback={
-          <DzColumn className="mb-12 h-full" span={12}>
-            <div className="flex justify-center p-5">Something went wrong</div>
-          </DzColumn>
-        }
-      >
-        <SEOComponent data={seo} />
-        <AvailableArtworksContainer data={{artworks, displayNumberOfResults, title}} />
-      </ErrorBoundary>
+      <SEOComponent data={seo} />
+      <AvailableArtworksContainer data={{artworks, displayNumberOfResults, title}} />
     </>
   )
 }

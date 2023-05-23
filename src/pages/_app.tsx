@@ -1,10 +1,12 @@
 import '../styles/globals.css'
 import '@zwirner/design-system/dist/tailwind.css'
 
+import {DzColumn} from '@zwirner/design-system'
 import {NextPage} from 'next'
 import App, {AppContext, AppInitialProps, AppProps} from 'next/app'
 import {ReCaptchaProvider} from 'next-recaptcha-v3'
 import {ReactElement, ReactNode} from 'react'
+import {ErrorBoundary} from 'react-error-boundary'
 
 import {APIProvider} from '@/common/api'
 import DefaultLayout from '@/common/components/layout/Layout'
@@ -37,7 +39,15 @@ const Wrapper = ({Component, pageProps, globalSEO, layoutData}: WrapperProps) =>
     <ReCaptchaProvider reCaptchaKey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}>
       <APIProvider>
         <SEOComponent isDefault data={globalSEO} />
-        {getLayout(<Component {...pageProps} />)}
+        <ErrorBoundary
+          fallback={
+            <DzColumn className="mb-12 h-full" span={12}>
+              <div className="flex justify-center p-5">Something went wrong</div>
+            </DzColumn>
+          }
+        >
+          {getLayout(<Component {...pageProps} />)}
+        </ErrorBoundary>
       </APIProvider>
     </ReCaptchaProvider>
   )
