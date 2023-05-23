@@ -40,13 +40,11 @@ export const HomeContainer: FC<HomeContainerProps> = ({data}) => {
   const renderCarousel = (data: any) => (
     <DzColumn span={12} className={styles.fullSection}>
       <DzCarousel slidesPerViewDesktop={2}>
-        {data.map((card: any) => {
-          return (
-            <div className="w-full">
-              <DzCard data={card} type="content" />
-            </div>
-          )
-        })}
+        {data.map((card: any) => (
+          <div className="w-full" key={card.id}>
+            <DzCard data={card} type="content" />
+          </div>
+        ))}
       </DzCarousel>
     </DzColumn>
   )
@@ -57,7 +55,7 @@ export const HomeContainer: FC<HomeContainerProps> = ({data}) => {
         <DzHeroCarousel items={itemsHeroCarousel} />
         <DzSplit type={SPLIT_TYPES.SHORT} data={featuredContent} />
         {firstCarouselCards ? renderCarousel(firstCarouselCards) : null}
-        {firstCarouselCards ? renderCarousel(secondCarouselCards) : null}
+        {secondCarouselCards ? renderCarousel(secondCarouselCards) : null}
         <DzGridColumns>
           {gridData?.map((article, key) => {
             return (
