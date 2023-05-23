@@ -1095,7 +1095,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@sanity/client@npm:^6.0.0, @sanity/client@npm:^6.1.1":
+"@sanity/client@npm:^6.0.0, @sanity/client@npm:^6.0.1, @sanity/client@npm:^6.1.1":
   version: 6.1.1
   resolution: "@sanity/client@npm:6.1.1"
   dependencies:
@@ -1103,17 +1103,6 @@ __metadata:
     get-it: ^8.1.0
     rxjs: ^7.0.0
   checksum: 7a9924f47e19f276bb1a6e616e200156750ad04d9f418dd3e42daa5091fea0eeed37b43d87de087cb0606d0d0adb03603cb6e8c53191fdc5705c12b7befedf26
-  languageName: node
-  linkType: hard
-
-"@sanity/client@npm:^6.0.1":
-  version: 6.0.1
-  resolution: "@sanity/client@npm:6.0.1"
-  dependencies:
-    "@sanity/eventsource": ^5.0.0
-    get-it: ^8.1.0
-    rxjs: ^7.0.0
-  checksum: d5f71c193534066102dc8ecf94d3a1eae62c9ccaab4cd9a65b8f51987e7820236a2851153bb41819ec067896bde19556d5e0c112fdfcbb613f677d57ea459215
   languageName: node
   linkType: hard
 
@@ -1440,14 +1429,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:*":
-  version: 18.14.6
-  resolution: "@types/node@npm:18.14.6"
-  checksum: 2f88f482cabadc6dbddd627a1674239e68c3c9beab56eb4ae2309fb96fd17fc3a509d99b0309bafe13b58529574f49ecf3a583f2ebe2896dd32fe4be436dc96e
-  languageName: node
-  linkType: hard
-
-"@types/node@npm:^20.2.1":
+"@types/node@npm:*, @types/node@npm:^20.2.1":
   version: 20.2.1
   resolution: "@types/node@npm:20.2.1"
   checksum: ed774afa6e9b4ad7868ed0182a8ca40ad0dd54815a70d3051b23fa850f3bca6bea4d0cb55e1fc769666786ac2cc4c1b37aeade313cb4c4634133f18ebcded496
@@ -1475,16 +1457,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react-dom@npm:^18.0.0":
-  version: 18.0.11
-  resolution: "@types/react-dom@npm:18.0.11"
-  dependencies:
-    "@types/react": "*"
-  checksum: 579691e4d5ec09688087568037c35edf8cfb1ab3e07f6c60029280733ee7b5c06d66df6fcc90786702c93ac8cb13bc7ff16c79ddfc75d082938fbaa36e1cdbf4
-  languageName: node
-  linkType: hard
-
-"@types/react-dom@npm:^18.2.4":
+"@types/react-dom@npm:^18.0.0, @types/react-dom@npm:^18.2.4":
   version: 18.2.4
   resolution: "@types/react-dom@npm:18.2.4"
   dependencies:
@@ -3742,7 +3715,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"get-it@npm:^8, get-it@npm:^8.1.0":
+"get-it@npm:^8.1.0":
   version: 8.1.1
   resolution: "get-it@npm:8.1.1"
   dependencies:
@@ -6931,7 +6904,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"rxjs@npm:^7, rxjs@npm:^7.0.0":
+"rxjs@npm:^7.0.0":
   version: 7.8.1
   resolution: "rxjs@npm:7.8.1"
   dependencies:
