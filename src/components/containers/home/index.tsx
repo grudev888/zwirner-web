@@ -1,25 +1,26 @@
 import {
-  DzColumn,
-  DzSplit,
-  DzHeroCarousel,
-  DzCard,
-  SPLIT_TYPES,
   CARD_TYPES,
-  DzGridColumns,
-  DzInterstitial,
-  DzTabsCards,
+  DzCard,
   DzCarousel,
+  DzColumn,
+  DzGridColumns,
+  DzHeroCarousel,
+  DzInterstitial,
+  DzSplit,
+  DzTabsCards,
+  SPLIT_TYPES,
 } from '@zwirner/design-system'
-import {
-  mapHeaderCarousel,
-  mapFeaturedContentSplit,
-  mapArticlesGrid,
-  mapTabsLocations,
-  mapCarouselCards,
-  mapInterstitialComponents,
-} from './mapper'
 import {FC} from 'react'
+
 import styles from './home.module.css'
+import {
+  mapArticlesGrid,
+  mapCarouselCards,
+  mapFeaturedContentSplit,
+  mapHeaderCarousel,
+  mapInterstitialComponents,
+  mapTabsLocations,
+} from './mapper'
 
 interface HomeContainerProps {
   data: any

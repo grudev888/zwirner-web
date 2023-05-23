@@ -1,8 +1,8 @@
-import {DzGridColumns, DzHeader, DzFooter} from '@zwirner/design-system'
+import {DzFooter,DzGridColumns, DzHeader} from '@zwirner/design-system'
 import {ReactNode} from 'react'
 
 import styles from './layout.module.css'
-import {getHeaderProps, getFooterProps} from './mappers'
+import {getFooterProps,getHeaderProps} from './mappers'
 
 export const footerData = {
   copies: {
