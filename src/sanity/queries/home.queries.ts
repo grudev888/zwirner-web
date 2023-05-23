@@ -26,6 +26,7 @@ export const homeData = groq`
     }
   },
   firstCarousel[] -> {
+    _id,
     _type == "exhibitionPage"=> {
       title,
       _type,
@@ -36,6 +37,7 @@ export const homeData = groq`
     }
   },
   secondCarousel[] -> {
+    _id,
     _type == "exhibitionPage"=> {
       title,
       _type,
