@@ -55,8 +55,7 @@ jobs:
     timeout-minutes: 60
     runs-on: ubuntu-latest
     steps:
-      - name: Prepare testing env
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
         with:
           # TODO get GH Actions to respect .tool-version
