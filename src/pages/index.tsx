@@ -1,13 +1,11 @@
-import {DzColumn} from '@zwirner/design-system'
 import {GetStaticProps} from 'next'
-import {PreviewSuspense} from 'next-sanity/preview'
-import {ErrorBoundary} from 'react-error-boundary'
 
 import {SEOComponent} from '@/common/components/seo/seo'
 import {HomeContainer} from '@/components/containers/home'
-import {PreviewHome} from '@/components/containers/home/previewHome'
+import {PREVIEW_PAGE_TYPE} from '@/components/containers/previews/pagePreview'
 import {homeData as homeDataQuery} from '@/sanity/queries/home.queries'
 import {getHomeData} from '@/sanity/services/home.service'
+import {PreviewPage} from '@/components/containers/previews/pagePreview'
 
 interface HomeDataCMS {
   home: any
@@ -33,36 +31,13 @@ export default function Home({data, preview}: PageProps) {
   const {seo} = homeData ?? {}
 
   if (preview) {
-    return (
-      <>
-        <ErrorBoundary
-          fallback={
-            <DzColumn className="mb-12 h-screen" span={12}>
-              <div className="flex justify-center p-5">Something went wrong</div>
-            </DzColumn>
-          }
-        >
-          <SEOComponent data={seo} />
-          <PreviewSuspense fallback="Loading...">
-            <PreviewHome query={homeDataQuery} />
-          </PreviewSuspense>
-        </ErrorBoundary>
-      </>
-    )
+    return <PreviewPage query={homeDataQuery} seo={seo} type={PREVIEW_PAGE_TYPE.HOME} />
   }
 
   return (
     <>
-      <ErrorBoundary
-        fallback={
-          <DzColumn className="mb-12 h-screen" span={12}>
-            <div className="flex justify-center p-5">Something went wrong</div>
-          </DzColumn>
-        }
-      >
-        <SEOComponent data={seo} />
-        <HomeContainer data={homeData} />
-      </ErrorBoundary>
+      <SEOComponent data={seo} />
+      <HomeContainer data={homeData} />
     </>
   )
 }

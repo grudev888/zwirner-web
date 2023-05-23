@@ -1,5 +1,6 @@
-import {DzColumn, DzComplexGrid, DzTitle, TITLE_TYPES, TITLE_SIZES} from '@zwirner/design-system'
+import {DzColumn, DzComplexGrid, DzTitle, TITLE_SIZES,TITLE_TYPES} from '@zwirner/design-system'
 import {FC} from 'react'
+
 import styles from './availableArtworks.module.css'
 import {mapCardsGrid} from './mapper'
 
