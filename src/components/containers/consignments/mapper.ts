@@ -1,9 +1,9 @@
 import {
-  MEDIA_TYPES,
   EDITORIAL_TEXT_TYPES,
   EDITORIAL_TYPES,
   FORM_FIELD_TYPES,
   INTERSTITIAL_TEXT_COLORS,
+  MEDIA_TYPES,
 } from '@zwirner/design-system'
 
 import {builder} from '@/sanity/imageBuilder'

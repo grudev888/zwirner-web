@@ -1,4 +1,5 @@
 import {
+  CARD_TYPES,
   DzCard,
   DzCarousel,
   DzColumn,
@@ -7,7 +8,6 @@ import {
   DzInterstitial,
   DzSplit,
   DzTabsCards,
-  CARD_TYPES,
   SPLIT_TYPES,
 } from '@zwirner/design-system'
 import {FC} from 'react'
