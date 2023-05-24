@@ -1,4 +1,5 @@
 import {groq} from 'next-sanity'
+
 import {pageSEOFields} from '@/sanity/queries/seo.queries'
 
 export const consignmentsData = groq`

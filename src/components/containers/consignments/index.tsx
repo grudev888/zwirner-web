@@ -1,30 +1,27 @@
 import {
+  CARD_TYPES,
   DzCard,
   DzCarousel,
-  DzForm,
   DzColumn,
-  DzTitle,
-  DzMedia,
   DzEditorial,
-  DzInterstitial,
-  DzGridColumns,
-  DzHeroCarousel,
-  DzTabsCards,
-  DzMediaProps,
   DzEditorialProps,
-  CARD_TYPES,
+  DzForm,
+  DzInterstitial,
+  DzMedia,
+  DzMediaProps,
+  DzTitle,
   TITLE_TYPES,
-  EDITORIAL_TYPES,
 } from '@zwirner/design-system'
 import {FC, Fragment} from 'react'
+
 import styles from './consignments.module.css'
 import {
-  headerImageMap,
-  editorialSectionMap,
-  formSectionMap,
-  featuredMediaMap,
-  interstitialMap,
   bodyDataMap,
+  editorialSectionMap,
+  featuredMediaMap,
+  formSectionMap,
+  headerImageMap,
+  interstitialMap,
   mapCarouselCards,
   mapFooterInterstitial,
 } from './mapper'
