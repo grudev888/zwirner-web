@@ -1,5 +1,4 @@
 import {
-  CARD_TYPES,
   DzCard,
   DzCarousel,
   DzColumn,
@@ -8,6 +7,7 @@ import {
   DzInterstitial,
   DzSplit,
   DzTabsCards,
+  CARD_TYPES,
   SPLIT_TYPES,
 } from '@zwirner/design-system'
 import {FC} from 'react'
@@ -42,7 +42,7 @@ export const HomeContainer: FC<HomeContainerProps> = ({data}) => {
       <DzCarousel slidesPerViewDesktop={2}>
         {data?.map((card: any) => (
           <div className="w-full" key={card.id}>
-            <DzCard data={card} type="content" />
+            <DzCard data={card} type={CARD_TYPES.CONTENT} />
           </div>
         ))}
       </DzCarousel>
