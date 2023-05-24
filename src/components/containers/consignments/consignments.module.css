@@ -14,7 +14,11 @@
     md:text-xxl;
 }
 .mediaImage {
-  @apply w-full;
+  @apply
+  min-h-[27.9169rem]
+  w-full
+  md:h-auto
+  ;
 }
 .spacer {
   @apply md:h-[3.75rem]
