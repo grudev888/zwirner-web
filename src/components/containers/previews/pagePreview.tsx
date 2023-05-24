@@ -3,16 +3,19 @@ import {FC, Fragment} from 'react'
 
 import {SEOComponent} from '@/common/components/seo/seo'
 import {AvailableArtworksContainer} from '@/components/containers/availableArtworks'
+import {ConsignmentsContainer} from '@/components/containers/consignments'
 import {HomeContainer} from '@/components/containers/home'
 import {usePreview} from '@/sanity/preview'
 
 export const PREVIEW_PAGE_TYPE = {
   HOME: 'home',
   AVAILABLE_WORKS: 'available-works',
+  CONSIGNMENTS: 'consignments',
 }
 export const PREVIEW_PAGE_TYPE_NAMES = [
   PREVIEW_PAGE_TYPE.HOME,
   PREVIEW_PAGE_TYPE.AVAILABLE_WORKS,
+  PREVIEW_PAGE_TYPE.CONSIGNMENTS,
 ] as const
 
 export type PreviewPageType = (typeof PREVIEW_PAGE_TYPE_NAMES)[number]
@@ -31,6 +34,9 @@ const containerPerType = {
   [PREVIEW_PAGE_TYPE.AVAILABLE_WORKS]: (data: any) => {
     return <AvailableArtworksContainer data={data} />
   },
+  [PREVIEW_PAGE_TYPE.CONSIGNMENTS]: (data: any) => {
+    return <ConsignmentsContainer data={data} />
+  },
 }
 
 interface ContainerDataProps {
@@ -41,6 +47,7 @@ interface ContainerDataProps {
 
 const ContainerData: FC<ContainerDataProps> = ({query, params = {}, type}) => {
   const data = usePreview(null, query, params)
+  console.log('DATA::', data)
   const [previewData] = data ?? []
   const container = containerPerType?.[type]?.(previewData) ?? <Fragment />
 
