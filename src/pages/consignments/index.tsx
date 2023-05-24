@@ -2,7 +2,8 @@ import {GetStaticProps} from 'next'
 
 import {SEOComponent} from '@/common/components/seo/seo'
 import {ConsignmentsContainer} from '@/components/containers/consignments'
-// import {consignmentsData} from '@/sanity/queries/consignments.queries'
+import {PREVIEW_PAGE_TYPE, PreviewPage} from '@/components/containers/previews/pagePreview'
+import {consignmentsData as consignmentsQuery} from '@/sanity/queries/consignments.queries'
 import {getConsignmentsData} from '@/sanity/services/consignments.service'
 
 interface HomeDataCMS {
@@ -30,11 +31,7 @@ export default function Home({data, preview}: PageProps) {
   const {seo} = consignments ?? {}
 
   if (preview) {
-    return (
-      <>
-        <div>preview consignments</div>
-      </>
-    )
+    return <PreviewPage query={consignmentsQuery} seo={seo} type={PREVIEW_PAGE_TYPE.CONSIGNMENTS} />
   }
 
   return (
