@@ -102,7 +102,7 @@ const getSanityImageLink = (image: any) => {
 }
 
 const processImages = (images = []) => {
-  return images.map((image) => getSanityImageLink(image)).filter((value) => !!value)
+  return images?.map((image) => getSanityImageLink(image)).filter((value) => !!value)
 }
 
 export const articleJSONLDMapper = (data: any, url: string) => {
@@ -131,7 +131,7 @@ export const articleJSONLDMapper = (data: any, url: string) => {
 }
 
 const processBreadcrumbs = (breadcrumbs: BreadcrumbItemSchema[]) =>
-  breadcrumbs.map((breadcrumb, key) => ({
+  breadcrumbs?.map((breadcrumb, key) => ({
     position: key + 1,
     name: breadcrumb.name,
     item: breadcrumb.item,
@@ -145,7 +145,7 @@ export const breadcrumbsJSONLDMapper = (data: any) => {
 }
 
 const processAction = (actions: any) =>
-  actions.map((action: any) => ({target: action.target, queryInput: 'search_term_string'}))
+  actions?.map((action: any) => ({target: action.target, queryInput: 'search_term_string'}))
 export const searchBoxJSONLDMapper = (data: any, url: string) => {
   const potentialActions = processAction(data)
   return {
