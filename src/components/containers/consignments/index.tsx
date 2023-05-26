@@ -75,7 +75,7 @@ export const ConsignmentsContainer: FC<ConsignmentsContainerProps> = ({data}) =>
       <div className={styles.consignmentsContainer}>
         <DzMedia imgClass={styles.mediaImage} {...mediaProps} />
         <DzEditorial {...editorialProps} />
-        <DzForm {...formProps} />
+        <DzForm {...formProps} onSubmit={() => null} />
         <DzMedia imgClass={styles.mediaImage} {...featuredMediaProps} />
         <DzInterstitial {...interstitialProps} />
         {bodyData?.map(

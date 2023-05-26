@@ -1,8 +1,12 @@
 import {
+  countries,
   EDITORIAL_TEXT_TYPES,
   EDITORIAL_TYPES,
   FORM_FIELD_TYPES,
+  hasStringValue,
   INTERSTITIAL_TEXT_COLORS,
+  isEmail,
+  isPhoneNumber,
   MEDIA_TYPES,
 } from '@zwirner/design-system'
 
@@ -50,6 +54,7 @@ export const formSectionMap = (data: any) => {
     steps: [
       {
         id: '1',
+        formName: 'form-step-1',
         title: 'Share Your Details',
         primarySubtitle:
           'Kindly share your contact and artwork details here, and our team will connect with you shortly',
@@ -63,24 +68,42 @@ export const formSectionMap = (data: any) => {
                 required: true,
                 type: FORM_FIELD_TYPES.INPUT,
                 span: 6,
+                data: {
+                  validator: hasStringValue,
+                  errorMsg: 'First Name is required.',
+                },
               },
               {
                 title: 'Last Name',
                 required: true,
                 type: FORM_FIELD_TYPES.INPUT,
                 span: 6,
+                data: {
+                  validator: hasStringValue,
+                  errorMsg: 'Last Name is required.',
+                },
               },
               {
                 title: 'Email Address',
                 required: true,
                 type: FORM_FIELD_TYPES.INPUT,
                 span: 6,
+                data: {
+                  type: 'email',
+                  validator: isEmail,
+                  errorMsg: 'Please enter a valid email address.',
+                },
               },
               {
                 title: 'Phone Number',
-                required: true,
+                required: false,
                 type: FORM_FIELD_TYPES.INPUT,
                 span: 6,
+                data: {
+                  type: 'tel',
+                  validator: isPhoneNumber,
+                  errorMsg: 'Invalid phone format',
+                },
               },
             ],
           },
@@ -92,6 +115,7 @@ export const formSectionMap = (data: any) => {
       },
       {
         id: '2',
+        formName: 'form-step-2',
         title: 'Artwork Details',
         primarySubtitle:
           'Please provide as much information as possible. Unfortunately, we cannot accept submissions by artists of their own work.',
@@ -104,24 +128,42 @@ export const formSectionMap = (data: any) => {
                 required: true,
                 type: FORM_FIELD_TYPES.INPUT,
                 span: 6,
+                data: {
+                  validator: hasStringValue,
+                  errorMsg: 'Artist Name is required.',
+                },
               },
               {
                 title: 'Title',
                 required: true,
                 type: FORM_FIELD_TYPES.INPUT,
                 span: 6,
+                data: {
+                  validator: hasStringValue,
+                  errorMsg: 'Title is required.',
+                },
               },
               {
                 title: 'Year',
                 required: true,
                 type: FORM_FIELD_TYPES.INPUT,
                 span: 6,
+                data: {
+                  type: 'string',
+                  validator: hasStringValue,
+                  errorMsg: 'Year is required.',
+                },
               },
               {
                 title: 'Medium',
                 required: true,
                 type: FORM_FIELD_TYPES.INPUT,
                 span: 6,
+                data: {
+                  type: 'string',
+                  validator: hasStringValue,
+                  errorMsg: 'Medium is required.',
+                },
               },
             ],
           },
@@ -133,25 +175,25 @@ export const formSectionMap = (data: any) => {
                 required: true,
                 type: FORM_FIELD_TYPES.SELECT,
                 data: {
-                  options: [],
+                  options: countries,
                 },
                 span: 12,
               },
               {
                 title: 'Width',
-                required: true,
+                required: false,
                 type: FORM_FIELD_TYPES.INPUT,
                 span: 2,
               },
               {
                 title: 'Height',
-                required: true,
+                required: false,
                 type: FORM_FIELD_TYPES.INPUT,
                 span: 2,
               },
               {
                 title: 'Depth',
-                required: true,
+                required: false,
                 type: FORM_FIELD_TYPES.INPUT,
                 span: 2,
               },
@@ -159,7 +201,12 @@ export const formSectionMap = (data: any) => {
                 required: true,
                 type: FORM_FIELD_TYPES.SELECT,
                 span: 6,
-                data: {},
+                data: {
+                  options: [
+                    {title: 'In', value: 'in'},
+                    {title: 'Cm', value: 'cm'},
+                  ],
+                },
               },
             ],
           },
@@ -171,6 +218,7 @@ export const formSectionMap = (data: any) => {
       },
       {
         id: '3',
+        formName: 'form-step-3',
         title: 'Additional Details (optional)',
         primarySubtitle: 'Please provide any additional information you would like to share.',
         formSections: [
@@ -179,25 +227,25 @@ export const formSectionMap = (data: any) => {
             fields: [
               {
                 title: 'Signatures, inscriptions, labels',
-                required: true,
+                required: false,
                 type: FORM_FIELD_TYPES.INPUT,
                 span: 12,
               },
               {
                 title: 'Provenance, exhibitions, literature',
-                required: true,
+                required: false,
                 type: FORM_FIELD_TYPES.INPUT,
                 span: 12,
               },
               {
                 title: 'Link to artwork, if available',
-                required: true,
+                required: false,
                 type: FORM_FIELD_TYPES.INPUT,
                 span: 12,
               },
               {
                 title: 'Additional comments',
-                required: true,
+                required: false,
                 type: FORM_FIELD_TYPES.INPUT,
                 span: 12,
               },
@@ -211,6 +259,7 @@ export const formSectionMap = (data: any) => {
       },
       {
         id: '4',
+        formName: 'form-step-4',
         title: 'Upload Files',
         secondarySubtitle:
           'Please upload up to three images of your artwork including any related files such as invoices, certificates of authenticity and/or previous valuation statements in JPG, PNG or PDF format. Each file must not exceed 10MB.',
@@ -228,6 +277,7 @@ export const formSectionMap = (data: any) => {
         ],
         CTAProps: {
           text: 'Submit Artwork',
+          type: 'submit',
         },
       },
     ],
