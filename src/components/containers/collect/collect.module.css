@@ -1,0 +1,39 @@
+.fullSection {
+  @apply -mx-5;
+}
+.collectContainer {
+  @apply flex
+  w-full
+  flex-col
+  gap-[3.75rem]
+  md:gap-[7.5rem];
+}
+.pageTitle {
+  @apply text-xl
+    md:text-xxl;
+}
+.pageTitleContainer {
+  @apply my-10
+  md:my-[3.75rem];
+}
+.titleSection {
+  @apply text-md
+  md:text-xl;
+}
+.sectionWithTitleMolecule {
+  @apply flex
+    flex-col
+    gap-10;
+}
+.consignmentsSection {
+  @apply flex
+  flex-col
+  gap-20;
+}
+.textGrid {
+  @apply text-md md:text-xl;
+}
+.spacer {
+  @apply md:h-[3.75rem]
+    md:w-full;
+}

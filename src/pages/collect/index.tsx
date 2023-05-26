@@ -1,17 +1,17 @@
 import {GetStaticProps} from 'next'
 
 import {SEOComponent} from '@/common/components/seo/seo'
+import {CollectContainer} from '@/components/containers/collect'
 import {PREVIEW_PAGE_TYPE, PreviewPage} from '@/components/containers/previews/pagePreview'
-import {UtopiaEditionsContainer} from '@/components/containers/utopiaEditions'
-import {utopiaEditionsData} from '@/sanity/queries/utopiaEditions.queries'
-import {getUtopiaEditions} from '@/sanity/services/utopiaEditions.service'
+import {collectPageData} from '@/sanity/queries/collect.queries'
+import {getCollectData} from '@/sanity/services/collect.service'
 
-interface UtopiaDataCMS {
-  utopiaData: any
+interface CollectDataCMS {
+  collectData: any
 }
 
 interface PageProps {
-  data: UtopiaDataCMS
+  data: CollectDataCMS
   preview: boolean
   slug: string | null
   token: string | null
@@ -25,19 +25,19 @@ interface PreviewData {
   token?: string
 }
 
-export default function UtopiaEditions({data, preview}: PageProps) {
-  const {utopiaData = []} = data
-  const [utopia] = utopiaData ?? []
-  const {seo} = utopia ?? {}
+export default function Collect({data, preview}: PageProps) {
+  const {collectData = []} = data
+  const [collect] = collectData ?? []
+  const {seo} = collect ?? {}
 
   if (preview) {
-    return <PreviewPage query={utopiaEditionsData} seo={seo} type={PREVIEW_PAGE_TYPE.UTOPIA} />
+    return <PreviewPage query={collectPageData} seo={seo} type={PREVIEW_PAGE_TYPE.COLLECT} />
   }
 
   return (
     <>
       <SEOComponent data={seo} />
-      <UtopiaEditionsContainer data={utopia} />
+      <CollectContainer data={collect} />
     </>
   )
 }
@@ -45,13 +45,13 @@ export default function UtopiaEditions({data, preview}: PageProps) {
 export const getStaticProps: GetStaticProps<PageProps, Query, PreviewData> = async (ctx) => {
   const {preview = false, previewData = {}} = ctx
 
-  const params = {slug: 'utopia-editions'}
+  const params = {slug: 'collect'}
 
   if (preview && previewData.token) {
     return {
       props: {
         data: {
-          utopiaData: null,
+          collectData: null,
         },
         preview,
         slug: params?.slug || null,
@@ -61,11 +61,11 @@ export const getStaticProps: GetStaticProps<PageProps, Query, PreviewData> = asy
   }
 
   try {
-    const utopiaPage = await getUtopiaEditions()
+    const collectPage = await getCollectData()
     return {
       props: {
         data: {
-          utopiaData: utopiaPage,
+          collectData: collectPage,
         },
         preview,
         slug: params?.slug || null,
@@ -73,11 +73,11 @@ export const getStaticProps: GetStaticProps<PageProps, Query, PreviewData> = asy
       },
     }
   } catch (e: any) {
-    console.error('ERROR FETCHING UTOPIA EDITIONS:', e?.response?.statusMessage)
+    console.error('ERROR FETCHING COLLECT:', e?.response?.statusMessage)
     return {
       props: {
         data: {
-          utopiaData: [],
+          collectData: [],
         },
         preview,
         slug: params?.slug || null,
