@@ -18,3 +18,23 @@
 .interstitialTitle {
   @apply md:!text-lg;
 }
+
+.cardSection {
+  @apply flex
+  flex-col
+  gap-10;
+}
+
+.cardSectionTitle {
+  @apply text-md
+    md:text-xl;
+}
+
+.textGrid {
+  @apply text-md md:text-xl;
+}
+
+.spacer {
+  @apply md:h-[3.75rem]
+    md:w-full;
+}
