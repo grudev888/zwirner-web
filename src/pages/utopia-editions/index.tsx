@@ -1,17 +1,17 @@
 import {GetStaticProps} from 'next'
 
 import {SEOComponent} from '@/common/components/seo/seo'
-import {ConsignmentsContainer} from '@/components/containers/consignments'
 import {PREVIEW_PAGE_TYPE, PreviewPage} from '@/components/containers/previews/pagePreview'
-import {consignmentsData as consignmentsQuery} from '@/sanity/queries/consignments.queries'
-import {getConsignmentsData} from '@/sanity/services/consignments.service'
+import {UtopiaEditionsContainer} from '@/components/containers/utopiaEditions'
+import {utopiaEditionsData} from '@/sanity/queries/utopiaEditions.queries'
+import {getUtopiaEditions} from '@/sanity/services/utopiaEditions.service'
 
-interface ConsignmentsDataCMS {
-  consignmentsData: any
+interface UtopiaDataCMS {
+  utopiaData: any
 }
 
 interface PageProps {
-  data: ConsignmentsDataCMS
+  data: UtopiaDataCMS
   preview: boolean
   slug: string | null
   token: string | null
@@ -25,19 +25,19 @@ interface PreviewData {
   token?: string
 }
 
-export default function Consignments({data, preview}: PageProps) {
-  const {consignmentsData = []} = data
-  const [consignments] = consignmentsData ?? []
-  const {seo} = consignments ?? {}
+export default function UtopiaEditions({data, preview}: PageProps) {
+  const {utopiaData = []} = data
+  const [utopia] = utopiaData ?? []
+  const {seo} = utopia ?? {}
 
   if (preview) {
-    return <PreviewPage query={consignmentsQuery} seo={seo} type={PREVIEW_PAGE_TYPE.CONSIGNMENTS} />
+    return <PreviewPage query={utopiaEditionsData} seo={seo} type={PREVIEW_PAGE_TYPE.UTOPIA} />
   }
 
   return (
     <>
       <SEOComponent data={seo} />
-      <ConsignmentsContainer data={consignments} />
+      <UtopiaEditionsContainer data={utopia} />
     </>
   )
 }
@@ -51,7 +51,7 @@ export const getStaticProps: GetStaticProps<PageProps, Query, PreviewData> = asy
     return {
       props: {
         data: {
-          consignmentsData: null,
+          utopiaData: null,
         },
         preview,
         slug: params?.slug || null,
@@ -61,11 +61,11 @@ export const getStaticProps: GetStaticProps<PageProps, Query, PreviewData> = asy
   }
 
   try {
-    const consignmentsPage = await getConsignmentsData()
+    const consignmentsPage = await getUtopiaEditions()
     return {
       props: {
         data: {
-          consignmentsData: consignmentsPage,
+          utopiaData: consignmentsPage,
         },
         preview,
         slug: params?.slug || null,
@@ -77,7 +77,7 @@ export const getStaticProps: GetStaticProps<PageProps, Query, PreviewData> = asy
     return {
       props: {
         data: {
-          consignmentsData: [],
+          utopiaData: [],
         },
         preview,
         slug: params?.slug || null,
