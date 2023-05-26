@@ -34,11 +34,7 @@
     "@sanity/client": "^6.0.1",
     "@sanity/image-url": "^1.0.2",
     "@tailwindcss/typography": "^0.5.9",
-<<<<<<< HEAD
-    "@zwirner/design-system": "0.0.10",
-=======
-    "@zwirner/design-system": "0.0.10-beta-6",
->>>>>>> a57b090... NWEB-321: add consignments page
+    "@zwirner/design-system": "0.0.11-beta",
     "axios": "^1.3.5",
     "next": "^13.1.2",
     "next-recaptcha-v3": "^1.1.5",
