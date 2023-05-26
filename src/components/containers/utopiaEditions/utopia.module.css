@@ -1,0 +1,40 @@
+.pageContainer {
+  @apply flex
+    w-full
+    flex-col
+    gap-[3.75rem]
+    md:gap-[7.5rem];
+}
+
+.pageTitleContainer {
+  @apply my-10
+  md:my-[3.75rem];
+}
+.pageTitle {
+  @apply text-xl
+    md:text-xxl;
+}
+
+.interstitialTitle {
+  @apply md:!text-lg;
+}
+
+.cardSection {
+  @apply flex
+  flex-col
+  gap-10;
+}
+
+.cardSectionTitle {
+  @apply text-md
+    md:text-xl;
+}
+
+.textGrid {
+  @apply text-md md:text-xl;
+}
+
+.spacer {
+  @apply md:h-[3.75rem]
+    md:w-full;
+}

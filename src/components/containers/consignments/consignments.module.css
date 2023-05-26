@@ -1,0 +1,24 @@
+.consignmentsContainer {
+  @apply flex
+    w-full
+    flex-col
+    gap-[3.75rem]
+    md:gap-[7.5rem];
+}
+.pageTitleContainer {
+  @apply my-10
+  md:my-[3.75rem];
+}
+.pageTitle {
+  @apply text-xl
+    md:text-xxl;
+}
+.mediaImage {
+  @apply min-h-[27.9169rem]
+  w-full
+  md:h-auto;
+}
+.spacer {
+  @apply md:h-[3.75rem]
+    md:w-full;
+}

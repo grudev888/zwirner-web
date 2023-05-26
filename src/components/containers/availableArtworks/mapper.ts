@@ -1,4 +1,5 @@
 import {MEDIA_TYPES} from '@zwirner/design-system'
+
 import {builder} from '@/sanity/imageBuilder'
 
 export const mapCardsGrid = (data: any[]) => {

@@ -1,5 +1,6 @@
 import {groq} from 'next-sanity'
-import {exhibitionSimpleFields, exhibitionComplexFields} from '@/sanity/queries/exhibition.queries'
+
+import {exhibitionComplexFields, exhibitionSimpleFields} from '@/sanity/queries/exhibition.queries'
 import {pageSEOFields} from '@/sanity/queries/seo.queries'
 
 export const homeData = groq`
