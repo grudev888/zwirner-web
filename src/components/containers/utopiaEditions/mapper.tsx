@@ -60,12 +60,13 @@ export const cardSectionMap = (data: any) => {
   const {title, exhibitions} = data ?? {}
   const [exhibitionData] = exhibitions ?? []
   const {exhibition} = exhibitionData ?? {}
-  const {_id, artists, artworks} = exhibition ?? {}
+  const {_id, artists, artworks, photos: exhibitionPhotos = []} = exhibition
+  const [mainExhibitionPhoto] = exhibitionPhotos ?? []
   const [mainArtWork] = artworks ?? []
   const {title: artworkTitle, photos, dateSelection} = mainArtWork ?? {}
   const {year} = dateSelection ?? {}
   const [mainPicture] = photos ?? []
-  const {asset, alt} = mainPicture ?? {}
+  const {asset, alt} = mainExhibitionPhoto ?? mainPicture ?? {}
   const imgSrc = asset ? builder.image(asset).url() : ''
   const [mainArtist] = artists ?? []
   const {fullName} = mainArtist ?? {}
