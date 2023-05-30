@@ -197,6 +197,7 @@ export const platformInterstitialMap = (data: any) => {
           src: imgSrc,
           alt,
         },
+        imgClass: 'max-h-[30rem] object-cover md:object-cover',
         objectFit: MEDIA_OBJECT_FIT.COVER,
       },
     },
