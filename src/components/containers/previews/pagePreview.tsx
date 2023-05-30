@@ -3,6 +3,7 @@ import {FC, Fragment} from 'react'
 
 import {SEOComponent} from '@/common/components/seo/seo'
 import {AvailableArtworksContainer} from '@/components/containers/availableArtworks'
+import {CollectContainer} from '@/components/containers/collect'
 import {ConsignmentsContainer} from '@/components/containers/consignments'
 import {HomeContainer} from '@/components/containers/home'
 import {UtopiaEditionsContainer} from '@/components/containers/utopiaEditions'
@@ -13,12 +14,15 @@ export const PREVIEW_PAGE_TYPE = {
   AVAILABLE_WORKS: 'available-works',
   CONSIGNMENTS: 'consignments',
   UTOPIA: 'utopia-editions',
+  COLLECT: 'collect',
 }
+
 export const PREVIEW_PAGE_TYPE_NAMES = [
   PREVIEW_PAGE_TYPE.HOME,
   PREVIEW_PAGE_TYPE.AVAILABLE_WORKS,
   PREVIEW_PAGE_TYPE.CONSIGNMENTS,
   PREVIEW_PAGE_TYPE.UTOPIA,
+  PREVIEW_PAGE_TYPE.COLLECT,
 ] as const
 
 export type PreviewPageType = (typeof PREVIEW_PAGE_TYPE_NAMES)[number]
@@ -42,6 +46,9 @@ const containerPerType = {
   },
   [PREVIEW_PAGE_TYPE.UTOPIA]: (data: any) => {
     return <UtopiaEditionsContainer data={data} />
+  },
+  [PREVIEW_PAGE_TYPE.COLLECT]: (data: any) => {
+    return <CollectContainer data={data} />
   },
 }
 
