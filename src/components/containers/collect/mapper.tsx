@@ -1,4 +1,5 @@
 import {
+  DataCardType,
   EDITORIAL_TEXT_TYPES,
   EDITORIAL_TYPES,
   INTERSTITIAL_TEXT_COLORS,
@@ -45,65 +46,71 @@ export const heroMapper = (data: any) => {
 }
 
 export const exhibitionCarouselMapper = (data: any[]) => {
-  return data?.map((exhibition) => {
-    const {_id, title, subtitle, photos = [], summary} = exhibition ?? {}
-    const [mainImage] = photos ?? []
-    const {asset, alt} = mainImage ?? {}
-    const imgSrc = asset ? builder.image(asset).url() : ''
-    return {
-      id: _id,
-      media: {
-        type: MEDIA_TYPES.IMAGE,
-        imgProps: {
-          src: imgSrc,
-          alt,
+  return data
+    ?.map((exhibition) => {
+      const {_id, title, subtitle, photos = [], summary} = exhibition ?? {}
+      const [mainImage] = photos ?? []
+      const {asset, alt} = mainImage ?? {}
+      const imgSrc = asset ? builder.image(asset).url() : ''
+      if (!imgSrc) return null
+      return {
+        id: _id,
+        media: {
+          type: MEDIA_TYPES.IMAGE,
+          imgProps: {
+            src: imgSrc,
+            alt,
+          },
         },
-      },
-      category: subtitle,
-      title,
-      description: summary,
-      linkCTA: {
-        text: 'Explore Now',
-        linkElement: 'a',
-        url: '/',
-      },
-    }
-  })
+        category: subtitle,
+        title,
+        description: summary,
+        linkCTA: {
+          text: 'Explore Now',
+          linkElement: 'a',
+          url: '/',
+        },
+      }
+    })
+    .filter((v) => !!v)
 }
 
 export const mapCardsGrid = (data: any[]) => {
-  return data?.map((artwork) => {
-    const {photos, artists, dimensions, title, dateSelection, medium, edition, _id, price} =
-      artwork ?? {}
-    const {year} = dateSelection
-    const [mainArtist] = artists ?? []
-    const {fullName} = mainArtist ?? {}
-    const [mainPicture] = photos ?? []
-    const {asset, alt} = mainPicture ?? {}
-    const imgSrc = asset ? builder.image(asset).url() : ''
-    return {
-      id: _id,
-      media: {
-        url: '/',
-        type: MEDIA_TYPES.IMAGE,
-        imgProps: {
-          src: imgSrc,
-          alt,
+  return data
+    ?.map((artwork) => {
+      const {photos, artists, dimensions, title, dateSelection, medium, edition, _id, price} =
+        artwork ?? {}
+      const {year} = dateSelection ?? {}
+      const [mainArtist] = artists ?? []
+      const {fullName} = mainArtist ?? {}
+      const [mainPicture] = photos ?? []
+      const {asset, alt} = mainPicture ?? {}
+      const imgSrc = asset ? builder.image(asset).url() : ''
+      if (!imgSrc) return null
+      return {
+        id: _id,
+        media: {
+          url: '/',
+          type: MEDIA_TYPES.IMAGE,
+          imgProps: {
+            src: imgSrc,
+            alt,
+          },
         },
-      },
-      artistName: fullName,
-      artworkTitle: title,
-      artworkYear: year,
-      medium: medium,
-      dimensions: dimensions,
-      edition: edition,
-      price: price,
-    }
-  })
+        artistName: fullName,
+        artworkTitle: title,
+        artworkYear: year,
+        medium: medium,
+        dimensions: dimensions,
+        edition: edition,
+        price: price,
+      }
+    })
+    .filter((v) => !!v)
 }
 
 export const artworksGridMap = (data: any) => {
-  const cards = mapCardsGrid(data)
+  const cards = mapCardsGrid(data) as DataCardType[]
   return {
     cards,
     displayNumberOfResults: false,

@@ -1,5 +1,6 @@
 import {
   CARD_TYPES,
+  DataCardType,
   INTERSTITIAL_TEXT_COLORS,
   MEDIA_TYPES,
   MEDIA_VIDEO_SOURCE_TYPES,
@@ -98,39 +99,42 @@ export const cardSectionMap = (data: any) => {
 }
 
 export const mapCardsGrid = (data: any[]) => {
-  return data?.map((artwork) => {
-    const {photos, artists, dimensions, title, dateSelection, medium, edition, _id, price} =
-      artwork ?? {}
-    const {year} = dateSelection
-    const [mainArtist] = artists ?? []
-    const {fullName} = mainArtist ?? {}
-    const [mainPicture] = photos ?? []
-    const {asset, alt} = mainPicture ?? {}
-    const imgSrc = asset ? builder.image(asset).url() : ''
-    return {
-      id: _id,
-      media: {
-        url: '/',
-        type: MEDIA_TYPES.IMAGE,
-        imgProps: {
-          src: imgSrc,
-          alt,
+  return data
+    ?.map((artwork) => {
+      const {photos, artists, dimensions, title, dateSelection, medium, edition, _id, price} =
+        artwork ?? {}
+      const {year} = dateSelection ?? {}
+      const [mainArtist] = artists ?? []
+      const {fullName} = mainArtist ?? {}
+      const [mainPicture] = photos ?? []
+      const {asset, alt} = mainPicture ?? {}
+      const imgSrc = asset ? builder.image(asset).url() : ''
+      if (!imgSrc) return null
+      return {
+        id: _id,
+        media: {
+          url: '/',
+          type: MEDIA_TYPES.IMAGE,
+          imgProps: {
+            src: imgSrc,
+            alt,
+          },
         },
-      },
-      artistName: fullName,
-      artworkTitle: title,
-      artworkYear: year,
-      medium: medium,
-      dimensions: dimensions,
-      edition: edition,
-      price: price,
-    }
-  })
+        artistName: fullName,
+        artworkTitle: title,
+        artworkYear: year,
+        medium: medium,
+        dimensions: dimensions,
+        edition: edition,
+        price: price,
+      }
+    })
+    .filter((v) => !!v)
 }
 
 export const artworksGridMap = (data: any) => {
-  const {Title, itemsPerRow, artworks} = data
-  const cards = mapCardsGrid(artworks)
+  const {Title, itemsPerRow, artworks} = data ?? {}
+  const cards = mapCardsGrid(artworks) as DataCardType[]
   return {
     cards,
     displayNumberOfResults: false,

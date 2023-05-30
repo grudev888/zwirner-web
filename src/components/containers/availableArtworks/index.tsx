@@ -1,4 +1,11 @@
-import {DzColumn, DzComplexGrid, DzTitle, TITLE_SIZES, TITLE_TYPES} from '@zwirner/design-system'
+import {
+  DataCardType,
+  DzColumn,
+  DzComplexGrid,
+  DzTitle,
+  TITLE_SIZES,
+  TITLE_TYPES,
+} from '@zwirner/design-system'
 import {FC} from 'react'
 
 import styles from './availableArtworks.module.css'
