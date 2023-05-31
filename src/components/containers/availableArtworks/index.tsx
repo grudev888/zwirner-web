@@ -9,7 +9,7 @@ interface AvailableArtworksProps {
 }
 
 export const AvailableArtworksContainer: FC<AvailableArtworksProps> = ({data}) => {
-  const {artworks, displayNumberOfResults, title} = data ?? {}
+  const {artworks, displayNumberOfResults, title, itemsPerRow} = data ?? {}
   const complexGridCard = mapCardsGrid(artworks)
   return (
     <DzColumn span={12}>
@@ -20,7 +20,11 @@ export const AvailableArtworksContainer: FC<AvailableArtworksProps> = ({data}) =
           title={title}
           titleSize={TITLE_SIZES.XL}
         />
-        <DzComplexGrid displayNumberOfResults={displayNumberOfResults} cards={complexGridCard} />
+        <DzComplexGrid
+          maxItemsPerRow={itemsPerRow || complexGridCard.length}
+          displayNumberOfResults={displayNumberOfResults}
+          cards={complexGridCard}
+        />
       </div>
     </DzColumn>
   )
