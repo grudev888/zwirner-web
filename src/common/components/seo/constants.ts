@@ -126,7 +126,7 @@ export const DEFAULT_SEO_PROPERTIES = {
   titleTemplate: '%s | David Zwirner',
   defaultTitle: 'David Zwirner',
   canonical: 'https://www.davidzwirner.com',
-  languageAlternates: [{ hrefLang: 'en', href: envHost }],
+  languageAlternates: [{hrefLang: 'en', href: envHost}],
   openGraph: {
     type: 'website',
     locale: 'en_US',
