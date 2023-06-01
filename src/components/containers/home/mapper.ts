@@ -2,34 +2,31 @@ import {MEDIA_TYPES} from '@zwirner/design-system'
 
 import {builder} from '@/sanity/imageBuilder'
 
-export const mapHeaderCarousel = (data = []) => {
-  return (
-    data?.map((item) => {
-      const {exhibition} = item
-      const {title, subtitle, photos = []} = exhibition ?? {}
-      const [mainImage] = photos ?? []
-      const {asset, alt} = mainImage ?? {}
-      const imgSrc = asset ? builder.image(asset).url() : ''
-      return {
-        category: subtitle,
-        media: {
-          type: MEDIA_TYPES.IMAGE,
-          imgProps: {
-            url: '/',
-            src: imgSrc,
-            alt: alt,
-          },
-        },
-        title,
-        linkCTA: {
-          text: 'Learn More',
-          linkElement: 'a',
+export const mapHeaderCarousel = (data = []) =>
+  data?.map((item) => {
+    const {exhibition} = item
+    const {title, subtitle, photos = []} = exhibition ?? {}
+    const [mainImage] = photos ?? []
+    const {asset, alt} = mainImage ?? {}
+    const imgSrc = asset ? builder.image(asset).url() : ''
+    return {
+      category: subtitle,
+      media: {
+        type: MEDIA_TYPES.IMAGE,
+        imgProps: {
           url: '/',
+          src: imgSrc,
+          alt: alt,
         },
-      }
-    }) ?? []
-  )
-}
+      },
+      title,
+      linkCTA: {
+        text: 'Learn More',
+        linkElement: 'a',
+        url: '/',
+      },
+    }
+  }) ?? []
 
 export const mapFeaturedContentSplit = (data: any) => {
   const {exhibition} = data ?? {}
