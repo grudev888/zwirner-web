@@ -1,4 +1,5 @@
 import {MEDIA_TYPES} from '@zwirner/design-system'
+import Image from 'next/image'
 
 import {builder} from '@/sanity/imageBuilder'
 
@@ -17,9 +18,11 @@ export const mapCardsGrid = (data: any[]) => {
       media: {
         url: '/',
         type: MEDIA_TYPES.IMAGE,
+        ImgElement: Image,
         imgProps: {
           src: imgSrc,
           alt,
+          fill: true,
         },
       },
       artistName: fullName,
