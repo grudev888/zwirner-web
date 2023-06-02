@@ -37,6 +37,7 @@ export const defaultSeoMapper = (data: GlobalSEOScheme | undefined): DefaultSeoP
       description,
       ...imageOG,
     },
+    languageAlternates: DEFAULT_SEO_PROPERTIES.languageAlternates,
     twitter: DEFAULT_SEO_PROPERTIES.twitter,
   }
 }
