@@ -38,12 +38,10 @@ export const HomeContainer: FC<HomeContainerProps> = ({data}) => {
   const secondCarouselCards = mapCarouselCards(secondCarousel)
 
   const renderCarousel = (data: any) => (
-    <DzColumn span={12} className={styles.fullSection}>
-      <DzCarousel slidesPerViewDesktop={2}>
+    <DzColumn span={12}>
+      <DzCarousel>
         {data?.map((card: any) => (
-          <div className="w-full" key={card.id}>
-            <DzCard data={card} type={CARD_TYPES.CONTENT} />
-          </div>
+          <DzCard key={card.id} data={card} type={CARD_TYPES.CONTENT} />
         ))}
       </DzCarousel>
     </DzColumn>
