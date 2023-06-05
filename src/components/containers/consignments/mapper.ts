@@ -321,12 +321,17 @@ export const interstitialMap = (data: any) => {
 
 export const bodyDataMap = (data: any) => {
   return data
+    ?.filter((subSection: any) => {
+      const {image} = subSection ?? {}
+      const {asset} = image ?? {}
+      return !!asset
+    })
     ?.map((subSection: any, key: number) => {
       const {image, text} = subSection ?? {}
       const {title, content} = text ?? {}
       const {asset, alt} = image ?? {}
       const imgSrc = asset ? builder.image(asset).url() : ''
-      if (!imgSrc) return null
+
       return {
         id: `${title}-${key}`,
         mediaProps: {
@@ -355,16 +360,19 @@ export const bodyDataMap = (data: any) => {
         },
       }
     })
-    .filter((v: any) => !!v)
 }
 
 export const mapCarouselCards = (data: any) => {
   return data
+    ?.filter((artist: any) => {
+      const {picture} = artist ?? {}
+      const {asset} = picture ?? {}
+      return !!asset
+    })
     ?.map((artist: any) => {
       const {fullName, _id, picture} = artist ?? {}
       const {asset, alt} = picture ?? {}
       const imgSrc = asset ? builder.image(asset).url() : ''
-      if (!imgSrc) return null
       return {
         id: _id,
         media: {
@@ -377,7 +385,6 @@ export const mapCarouselCards = (data: any) => {
         title: fullName,
       }
     })
-    .filter((v: any) => !!v)
 }
 
 export const mapFooterInterstitial = (data: any) => {

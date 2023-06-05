@@ -11,7 +11,7 @@ export const mapCardsGrid = (data: any[]) => {
       const {asset} = mainPicture ?? {}
       return !!asset
     })
-    .map((artwork) => {
+    ?.map((artwork) => {
       const {photos, artists, dimensions, title, dateSelection, medium, edition, _id, price} =
         artwork ?? {}
       const {year} = dateSelection ?? {}

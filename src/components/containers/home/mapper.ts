@@ -5,13 +5,20 @@ import {builder} from '@/sanity/imageBuilder'
 export const mapHeaderCarousel = (data = []) => {
   return (
     data
+      ?.filter((item) => {
+        const {exhibition} = item ?? {}
+        const {photos = []} = exhibition ?? {}
+        const [mainImage] = photos ?? []
+        const {asset} = mainImage ?? {}
+        return !!asset
+      })
       ?.map((item) => {
         const {exhibition} = item ?? {}
         const {title, subtitle, photos = []} = exhibition ?? {}
         const [mainImage] = photos ?? []
         const {asset, alt} = mainImage ?? {}
         const imgSrc = asset ? builder.image(asset).url() : ''
-        if (!imgSrc) return null
+
         return {
           category: subtitle,
           media: {
@@ -29,8 +36,7 @@ export const mapHeaderCarousel = (data = []) => {
             url: '/',
           },
         }
-      })
-      .filter((v) => !!v) ?? []
+      }) ?? []
   )
 }
 
@@ -63,12 +69,18 @@ export const mapFeaturedContentSplit = (data: any) => {
 
 export const mapArticlesGrid = (data = []) => {
   return data
+    ?.filter((item) => {
+      const {images = []} = item ?? {}
+      const [mainImage] = images ?? []
+      const {asset} = mainImage ?? {}
+      return !!asset
+    })
     ?.map((item) => {
       const {title, subtitle, images = []} = item ?? {}
       const [mainImage] = images ?? []
       const {asset, alt} = mainImage ?? {}
       const imgSrc = asset ? builder.image(asset).url() : ''
-      if (!imgSrc) return null
+
       return {
         media: {
           type: MEDIA_TYPES.IMAGE,
@@ -88,7 +100,6 @@ export const mapArticlesGrid = (data = []) => {
         },
       }
     })
-    .filter((v) => !!v)
 }
 
 export const mapInterstitialComponents = (data: any) => {
@@ -155,13 +166,20 @@ export const mapTabsLocations = (data: any) => {
 
 export const mapCarouselCards = (data: any) => {
   return data
+    ?.filter((item: any) => {
+      const {exhibition} = item ?? {}
+      const {photos = []} = exhibition ?? {}
+      const [mainImage] = photos ?? []
+      const {asset} = mainImage ?? {}
+      return !!asset
+    })
     ?.map((item: any) => {
       const {exhibition} = item ?? {}
       const {title, subtitle, photos = [], summary} = exhibition ?? {}
       const [mainImage] = photos ?? []
       const {asset, alt} = mainImage ?? {}
       const imgSrc = asset ? builder.image(asset).url() : ''
-      if (!imgSrc) return null
+
       return {
         id: item._id,
         media: {
@@ -181,5 +199,4 @@ export const mapCarouselCards = (data: any) => {
         },
       }
     })
-    .filter((v: any) => !!v)
 }

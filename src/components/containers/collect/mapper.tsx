@@ -1,5 +1,4 @@
 import {
-  DataCardType,
   EDITORIAL_TEXT_TYPES,
   EDITORIAL_TYPES,
   INTERSTITIAL_TEXT_COLORS,
@@ -47,12 +46,18 @@ export const heroMapper = (data: any) => {
 
 export const exhibitionCarouselMapper = (data: any[]) => {
   return data
+    ?.filter((exhibition) => {
+      const {photos = []} = exhibition ?? {}
+      const [mainImage] = photos ?? []
+      const {asset} = mainImage ?? {}
+      return !!asset
+    })
     ?.map((exhibition) => {
       const {_id, title, subtitle, photos = [], summary} = exhibition ?? {}
       const [mainImage] = photos ?? []
       const {asset, alt} = mainImage ?? {}
       const imgSrc = asset ? builder.image(asset).url() : ''
-      if (!imgSrc) return null
+
       return {
         id: _id,
         media: {
@@ -72,11 +77,16 @@ export const exhibitionCarouselMapper = (data: any[]) => {
         },
       }
     })
-    .filter((v) => !!v)
 }
 
 export const mapCardsGrid = (data: any[]) => {
   return data
+    ?.filter((artwork) => {
+      const {photos} = artwork ?? {}
+      const [mainPicture] = photos ?? []
+      const {asset} = mainPicture ?? {}
+      return !!asset
+    })
     ?.map((artwork) => {
       const {photos, artists, dimensions, title, dateSelection, medium, edition, _id, price} =
         artwork ?? {}
@@ -86,7 +96,7 @@ export const mapCardsGrid = (data: any[]) => {
       const [mainPicture] = photos ?? []
       const {asset, alt} = mainPicture ?? {}
       const imgSrc = asset ? builder.image(asset).url() : ''
-      if (!imgSrc) return null
+
       return {
         id: _id,
         media: {
@@ -110,7 +120,7 @@ export const mapCardsGrid = (data: any[]) => {
 }
 
 export const artworksGridMap = (data: any) => {
-  const cards = mapCardsGrid(data) as DataCardType[]
+  const cards = mapCardsGrid(data)
   return {
     cards,
     displayNumberOfResults: false,

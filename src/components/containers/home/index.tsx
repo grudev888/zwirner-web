@@ -1,6 +1,5 @@
 import {
   CARD_TYPES,
-  DataCardType,
   DzCard,
   DzCarousel,
   DzColumn,
@@ -61,7 +60,7 @@ export const HomeContainer: FC<HomeContainerProps> = ({data}) => {
           {gridData?.map((article, key) => {
             return (
               <DzColumn className="mb-5" span={4} key={`article-${key}`}>
-                <DzCard type={CARD_TYPES.CONTENT} data={article as DataCardType} />
+                <DzCard type={CARD_TYPES.CONTENT} data={article} />
               </DzColumn>
             )
           })}
