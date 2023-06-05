@@ -116,7 +116,6 @@ export const mapCardsGrid = (data: any[]) => {
         price: price,
       }
     })
-    .filter((v) => !!v)
 }
 
 export const artworksGridMap = (data: any) => {
