@@ -28,10 +28,7 @@ interface PreviewData {
 export default function AvailableArtworks({data, preview}: PageProps) {
   const {artworksPage = []} = data
   const [pageData] = artworksPage ?? []
-  const {seo, artworksGrid, displayNumberOfResults, title} = pageData ?? {}
-
-  const artworks = artworksGrid?.artworks || []
-  const itemsPerRow = artworksGrid?.itemsPerRow
+  const {seo} = pageData ?? {}
 
   if (preview) {
     return (
@@ -46,7 +43,7 @@ export default function AvailableArtworks({data, preview}: PageProps) {
   return (
     <>
       <SEOComponent data={seo} />
-      <AvailableArtworksContainer data={{artworks, itemsPerRow, displayNumberOfResults, title}} />
+      <AvailableArtworksContainer data={pageData} />
     </>
   )
 }
