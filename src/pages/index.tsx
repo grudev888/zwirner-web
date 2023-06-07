@@ -3,9 +3,9 @@ import {GetStaticProps} from 'next'
 import {SEOComponent} from '@/common/components/seo/seo'
 import {HomeContainer} from '@/components/containers/home'
 import {PREVIEW_PAGE_TYPE} from '@/components/containers/previews/pagePreview'
+import {PreviewPage} from '@/components/containers/previews/pagePreview'
 import {homeData as homeDataQuery} from '@/sanity/queries/home.queries'
 import {getHomeData} from '@/sanity/services/home.service'
-import {PreviewPage} from '@/components/containers/previews/pagePreview'
 
 interface HomeDataCMS {
   home: any
@@ -27,8 +27,7 @@ interface PreviewData {
 }
 
 export default function Home({data, preview}: PageProps) {
-  const {home = []} = data
-  const [homeData] = home ?? []
+  const [homeData] = data?.home ?? []
   const {seo} = homeData ?? {}
 
   if (preview) {
@@ -65,16 +64,14 @@ export const getStaticProps: GetStaticProps<PageProps, Query, PreviewData> = asy
     const homePage = await getHomeData()
     return {
       props: {
-        data: {
-          home: homePage,
-        },
+        data: {home: homePage},
         preview,
         slug: params?.slug || null,
         token: null,
       },
     }
   } catch (e: any) {
-    console.error('ERROR FETCHING HOME DATA:', e?.response?.statusMessage)
+    console.error('ERROR FETCHING HOME DATA:', JSON.stringify(e?.response))
     return {
       props: {
         data: {

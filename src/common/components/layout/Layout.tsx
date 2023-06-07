@@ -22,7 +22,7 @@ const Layout = ({children, layoutData}: LayoutProps) => {
         headerClass={styles.header}
       />
       <main className={styles.mainLayout}>
-        <DzGridColumns className="h-full w-full">{children}</DzGridColumns>
+        <DzGridColumns className="h-full min-h-screen w-full">{children}</DzGridColumns>
       </main>
       <DzFooter
         footerClass={styles.footer}

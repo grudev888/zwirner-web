@@ -49,14 +49,9 @@ export const homeData = groq`
     }
   },
   articles[]-> {
-    _id,
-    _type == "articlePage"=> {
-      title,
-      subtitle,
-      _type,
-      "artile": artile-> {
-        ...
-      },
+    _type == "article"=> {
+      ...,
+      "author": author->{...}
     }
   },
   locations[]-> {...},

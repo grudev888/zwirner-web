@@ -98,38 +98,46 @@ export const cardSectionMap = (data: any) => {
 }
 
 export const mapCardsGrid = (data: any[]) => {
-  return data?.map((artwork) => {
-    const {photos, artists, dimensions, title, dateSelection, medium, edition, _id, price} =
-      artwork ?? {}
-    const {year} = dateSelection
-    const [mainArtist] = artists ?? []
-    const {fullName} = mainArtist ?? {}
-    const [mainPicture] = photos ?? []
-    const {asset, alt} = mainPicture ?? {}
-    const imgSrc = asset ? builder.image(asset).url() : ''
-    return {
-      id: _id,
-      media: {
-        url: '/',
-        type: MEDIA_TYPES.IMAGE,
-        imgProps: {
-          src: imgSrc,
-          alt,
+  return data
+    ?.filter((artwork) => {
+      const {photos} = artwork ?? {}
+      const [mainPicture] = photos ?? []
+      const {asset} = mainPicture ?? {}
+      return !!asset
+    })
+    ?.map((artwork) => {
+      const {photos, artists, dimensions, title, dateSelection, medium, edition, _id, price} =
+        artwork ?? {}
+      const {year} = dateSelection ?? {}
+      const [mainArtist] = artists ?? []
+      const {fullName} = mainArtist ?? {}
+      const [mainPicture] = photos ?? []
+      const {asset, alt} = mainPicture ?? {}
+      const imgSrc = asset ? builder.image(asset).url() : ''
+
+      return {
+        id: _id,
+        media: {
+          url: '/',
+          type: MEDIA_TYPES.IMAGE,
+          imgProps: {
+            src: imgSrc,
+            alt,
+          },
         },
-      },
-      artistName: fullName,
-      artworkTitle: title,
-      artworkYear: year,
-      medium: medium,
-      dimensions: dimensions,
-      edition: edition,
-      price: price,
-    }
-  })
+        artistName: fullName,
+        artworkTitle: title,
+        artworkYear: year,
+        medium: medium,
+        dimensions: dimensions,
+        edition: edition,
+        price: price,
+      }
+    })
 }
 
 export const artworksGridMap = (data: any) => {
-  const {Title, itemsPerRow, artworks} = data
+  const {Title, itemsPerRow, artworks} = data ?? {}
   const cards = mapCardsGrid(artworks)
   return {
     cards,

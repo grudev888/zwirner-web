@@ -51,7 +51,6 @@ export const CollectContainer: FC<CollectContainerProps> = ({data}) => {
     platformInterstitial,
     interstitial,
   } = data
-  console.log('data', data)
 
   const heroData = heroMapper(hero)
   const exhibitionsCarousel = exhibitionCarouselMapper(exhibitions)

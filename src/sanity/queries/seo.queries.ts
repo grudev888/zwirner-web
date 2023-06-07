@@ -33,7 +33,7 @@ export const pageSEOFields = groq`
   pageTitle,
   metaDescription,
   h1Header,
-  canonicalURL,
+  "canonicalURL": ^.slug,
   robotsNoIndex,
   robotsNoFollow,
   imageMeta,

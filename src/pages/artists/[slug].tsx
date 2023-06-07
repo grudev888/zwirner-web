@@ -36,7 +36,7 @@ export default function ArtistPage({data = {}, preview}: PageProps) {
         <PreviewSuspense fallback="Loading...">
           <ErrorBoundary
             fallback={
-              <DzColumn className="mb-12 h-full" span={12}>
+              <DzColumn className="mb-12 h-screen" span={12}>
                 <div className="flex justify-center p-5">Something went wrong</div>
               </DzColumn>
             }
@@ -51,7 +51,7 @@ export default function ArtistPage({data = {}, preview}: PageProps) {
     <>
       <ErrorBoundary
         fallback={
-          <DzColumn className="mb-12 h-full" span={12}>
+          <DzColumn className="mb-12 h-screen" span={12}>
             <div className="flex justify-center p-5">Something went wrong</div>
           </DzColumn>
         }

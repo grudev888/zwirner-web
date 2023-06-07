@@ -320,58 +320,71 @@ export const interstitialMap = (data: any) => {
 }
 
 export const bodyDataMap = (data: any) => {
-  return data?.map((subSection: any, key: number) => {
-    const {image, text} = subSection ?? {}
-    const {title, content} = text ?? {}
-    const {asset, alt} = image ?? {}
-    const imgSrc = asset ? builder.image(asset).url() : ''
-    return {
-      id: `${title}-${key}`,
-      mediaProps: {
-        type: MEDIA_TYPES.IMAGE,
-        imgProps: {
-          url: '/',
-          src: imgSrc,
-          alt: alt,
+  return data
+    ?.filter((subSection: any) => {
+      const {image} = subSection ?? {}
+      const {asset} = image ?? {}
+      return !!asset
+    })
+    ?.map((subSection: any, key: number) => {
+      const {image, text} = subSection ?? {}
+      const {title, content} = text ?? {}
+      const {asset, alt} = image ?? {}
+      const imgSrc = asset ? builder.image(asset).url() : ''
+
+      return {
+        id: `${title}-${key}`,
+        mediaProps: {
+          type: MEDIA_TYPES.IMAGE,
+          imgProps: {
+            url: '/',
+            src: imgSrc,
+            alt: alt,
+          },
         },
-      },
-      editorialProps: {
-        data: {
-          reverse: false,
-          paragraphs: [
-            {
-              type: EDITORIAL_TEXT_TYPES.QUOTE,
-              text: title,
-            },
-            {
-              type: EDITORIAL_TEXT_TYPES.PARAGRAPH,
-              text: content,
-            },
-          ],
+        editorialProps: {
+          data: {
+            reverse: false,
+            paragraphs: [
+              {
+                type: EDITORIAL_TEXT_TYPES.QUOTE,
+                text: title,
+              },
+              {
+                type: EDITORIAL_TEXT_TYPES.PARAGRAPH,
+                text: content,
+              },
+            ],
+          },
+          type: EDITORIAL_TYPES.COMPLEX,
         },
-        type: EDITORIAL_TYPES.COMPLEX,
-      },
-    }
-  })
+      }
+    })
 }
 
 export const mapCarouselCards = (data: any) => {
-  return data?.map((artist: any) => {
-    const {fullName, _id, picture} = artist
-    const {asset, alt} = picture ?? {}
-    const imgSrc = asset ? builder.image(asset).url() : ''
-    return {
-      id: _id,
-      media: {
-        type: 'image',
-        imgProps: {
-          src: imgSrc,
-          alt,
+  return data
+    ?.filter((artist: any) => {
+      const {picture} = artist ?? {}
+      const {asset} = picture ?? {}
+      return !!asset
+    })
+    ?.map((artist: any) => {
+      const {fullName, _id, picture} = artist ?? {}
+      const {asset, alt} = picture ?? {}
+      const imgSrc = asset ? builder.image(asset).url() : ''
+      return {
+        id: _id,
+        media: {
+          type: 'image',
+          imgProps: {
+            src: imgSrc,
+            alt,
+          },
         },
-      },
-      title: fullName,
-    }
-  })
+        title: fullName,
+      }
+    })
 }
 
 export const mapFooterInterstitial = (data: any) => {
