@@ -4,30 +4,39 @@ import {builder} from '@/sanity/imageBuilder'
 
 export const mapHeaderCarousel = (data = []) => {
   return (
-    data?.map((item) => {
-      const {exhibition} = item
-      const {title, subtitle, photos = []} = exhibition ?? {}
-      const [mainImage] = photos ?? []
-      const {asset, alt} = mainImage ?? {}
-      const imgSrc = asset ? builder.image(asset).url() : ''
-      return {
-        category: subtitle,
-        media: {
-          type: MEDIA_TYPES.IMAGE,
-          imgProps: {
-            url: '/',
-            src: imgSrc,
-            alt: alt,
+    data
+      ?.filter((item) => {
+        const {exhibition} = item ?? {}
+        const {photos = []} = exhibition ?? {}
+        const [mainImage] = photos ?? []
+        const {asset} = mainImage ?? {}
+        return !!asset
+      })
+      ?.map((item) => {
+        const {exhibition} = item ?? {}
+        const {title, subtitle, photos = []} = exhibition ?? {}
+        const [mainImage] = photos ?? []
+        const {asset, alt} = mainImage ?? {}
+        const imgSrc = asset ? builder.image(asset).url() : ''
+
+        return {
+          category: subtitle,
+          media: {
+            type: MEDIA_TYPES.IMAGE,
+            imgProps: {
+              url: '/',
+              src: imgSrc,
+              alt: alt,
+            },
           },
-        },
-        title,
-        linkCTA: {
-          text: 'Learn More',
-          linkElement: 'a',
-          url: '/',
-        },
-      }
-    }) ?? []
+          title,
+          linkCTA: {
+            text: 'Learn More',
+            linkElement: 'a',
+            url: '/',
+          },
+        }
+      }) ?? []
   )
 }
 
@@ -59,29 +68,38 @@ export const mapFeaturedContentSplit = (data: any) => {
 }
 
 export const mapArticlesGrid = (data = []) => {
-  return data?.map((item) => {
-    const {title, subtitle, mainImage} = item ?? {}
-    const {asset, alt} = mainImage ?? {}
-    const imgSrc = asset ? builder.image(asset).url() : ''
-    return {
-      media: {
-        type: MEDIA_TYPES.IMAGE,
-        imgProps: {
-          url: '/',
-          src: imgSrc,
-          alt,
+  return data
+    ?.filter((item) => {
+      const {images = []} = item ?? {}
+      const [mainImage] = images ?? []
+      const {asset} = mainImage ?? {}
+      return !!asset
+    })
+    ?.map((item) => {
+      const {title, subtitle, images = []} = item ?? {}
+      const [mainImage] = images ?? []
+      const {asset, alt} = mainImage ?? {}
+      const imgSrc = asset ? builder.image(asset).url() : ''
+
+      return {
+        media: {
+          type: MEDIA_TYPES.IMAGE,
+          imgProps: {
+            url: '/',
+            src: imgSrc,
+            alt,
+          },
         },
-      },
-      category: 'Museum Exhibitions',
-      title,
-      secondaryTitle: subtitle,
-      linkCTA: {
-        text: 'View More',
-        linkElement: 'a',
-        url: '/',
-      },
-    }
-  })
+        category: 'Museum Exhibitions',
+        title,
+        secondaryTitle: subtitle,
+        linkCTA: {
+          text: 'View More',
+          linkElement: 'a',
+          url: '/',
+        },
+      }
+    })
 }
 
 export const mapInterstitialComponents = (data: any) => {
@@ -147,29 +165,38 @@ export const mapTabsLocations = (data: any) => {
 }
 
 export const mapCarouselCards = (data: any) => {
-  return data?.map((item: any) => {
-    const {exhibition} = item
-    const {title, subtitle, photos = [], summary} = exhibition ?? {}
-    const [mainImage] = photos ?? []
-    const {asset, alt} = mainImage ?? {}
-    const imgSrc = asset ? builder.image(asset).url() : ''
-    return {
-      id: item._id,
-      media: {
-        type: 'image',
-        imgProps: {
-          src: imgSrc,
-          alt,
+  return data
+    ?.filter((item: any) => {
+      const {exhibition} = item ?? {}
+      const {photos = []} = exhibition ?? {}
+      const [mainImage] = photos ?? []
+      const {asset} = mainImage ?? {}
+      return !!asset
+    })
+    ?.map((item: any) => {
+      const {exhibition} = item ?? {}
+      const {title, subtitle, photos = [], summary} = exhibition ?? {}
+      const [mainImage] = photos ?? []
+      const {asset, alt} = mainImage ?? {}
+      const imgSrc = asset ? builder.image(asset).url() : ''
+
+      return {
+        id: item._id,
+        media: {
+          type: 'image',
+          imgProps: {
+            src: imgSrc,
+            alt,
+          },
         },
-      },
-      category: subtitle,
-      title,
-      description: summary,
-      linkCTA: {
-        text: 'Learn More',
-        linkElement: 'a',
-        url: '/',
-      },
-    }
-  })
+        category: subtitle,
+        title,
+        description: summary,
+        linkCTA: {
+          text: 'Learn More',
+          linkElement: 'a',
+          url: '/',
+        },
+      }
+    })
 }
