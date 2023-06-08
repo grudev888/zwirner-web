@@ -39,7 +39,7 @@ export const HomeContainer: FC<HomeContainerProps> = ({data}) => {
 
   const renderCarousel = (data: any) => (
     <DzColumn span={12}>
-      <DzCarousel className="-mx-5">
+      <DzCarousel className={styles.fullSection}>
         {data?.map((card: any) => (
           <DzCard key={card.id} data={card} type={CARD_TYPES.CONTENT} />
         ))}
