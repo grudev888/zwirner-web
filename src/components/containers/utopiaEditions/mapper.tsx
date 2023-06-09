@@ -43,18 +43,12 @@ export const utopiaMainMediaMap = (data: any) => {
   }
 }
 
-export const interstitialNewReleasesMap = (data: any) => {
-  const {title, cta} = data ?? {}
-  const {text} = cta ?? {}
-  return {
-    split: false,
-    description: title,
-    primaryCta: {
-      text,
-    },
-    textColor: INTERSTITIAL_TEXT_COLORS.BLACK,
-  }
-}
+export const interstitialNewReleasesMap = (data: any) => ({
+  split: false,
+  description: data?.title,
+  primaryCta: {text: data?.cta?.text},
+  textColor: INTERSTITIAL_TEXT_COLORS.BLACK,
+})
 
 export const cardSectionMap = (data: any) => {
   const {title, exhibitions} = data ?? {}
@@ -84,7 +78,12 @@ export const cardSectionMap = (data: any) => {
         },
 
         title: fullName,
-        secondaryTitle: `${artworkTitle}, ${year} (detail)`,
+        secondaryTitle: (
+          <>
+            <i>{artworkTitle}</i>
+            {`, ${year} (detail)`}
+          </>
+        ),
 
         linkCTA: {
           text: 'View More',
@@ -132,6 +131,7 @@ export const mapCardsGrid = (data: any[]) => {
         dimensions: dimensions,
         edition: edition,
         price: price,
+        framed: 'Unframed',
       }
     })
 }
@@ -144,11 +144,6 @@ export const artworksGridMap = (data: any) => {
     displayNumberOfResults: false,
     headingTitle: Title,
     useLink: true,
-    linkCTA: {
-      text: 'View all',
-      linkElement: 'a',
-      url: '/',
-    },
     steps: [
       {
         id: 1,

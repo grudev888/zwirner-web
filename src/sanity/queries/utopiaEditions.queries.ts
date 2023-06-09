@@ -40,7 +40,10 @@ export const utopiaEditionsData = groq`
   },
   artworksGrid {
     Title,
-    artworks[]->,
+    artworks[]->{
+      ...,
+      artists[]->{...}
+    },
     itemsPerRow,
   },
   seo {

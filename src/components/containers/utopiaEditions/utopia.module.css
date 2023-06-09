@@ -7,27 +7,27 @@
 }
 
 .pageTitleContainer {
-  @apply my-10
-  md:my-[3.75rem];
+  @apply my-[3.75rem];
 }
+
 .pageTitle {
   @apply text-xl
-    md:text-xxl;
+    capitalize md:text-xxl;
+}
+
+.interstitial {
+  @apply gap-10 px-0 sm:py-[3.75rem];
 }
 
 .interstitialTitle {
-  @apply md:!text-lg;
+  @apply text-md
+  md:!text-lg;
 }
 
 .cardSection {
   @apply flex
   flex-col
   gap-10;
-}
-
-.cardSectionTitle {
-  @apply text-md
-    md:text-xl;
 }
 
 .textGrid {

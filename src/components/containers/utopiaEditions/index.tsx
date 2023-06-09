@@ -6,9 +6,10 @@ import {
   DzComplexGrid,
   DzInterstitial,
   DzMedia,
-  DzText,
   DzTitle,
+  TEXT_SIZES,
   TITLE_TYPES,
+  useBreakpoints,
 } from '@zwirner/design-system'
 import {FC} from 'react'
 
@@ -37,6 +38,8 @@ export const UtopiaEditionsContainer: FC<UtopiaEditionsProps> = ({data}) => {
     interstitial,
     mediaCarousel,
   } = data ?? {}
+  const {isSmall} = useBreakpoints()
+
   const mediaProps = utopiaMainMediaMap(media)
   const interstitialProps = interstitialNewReleasesMap(newReleasesInterstitial)
   const nowAvailableData = cardSectionMap(nowAvailable)
@@ -47,11 +50,9 @@ export const UtopiaEditionsContainer: FC<UtopiaEditionsProps> = ({data}) => {
 
   const renderCarousel = (data: any) => (
     <DzColumn span={12} className={styles.fullSection}>
-      <DzCarousel slideSpanDesktop={12}>
+      <DzCarousel slideSpanDesktop={10} slideSpanMobile={10}>
         {data?.map((card: any) => (
-          <div className="w-full md:w-[calc(100vw_-_16.125rem)]" key={card.id}>
-            <DzCard data={card} type={CARD_TYPES.MEDIA} />
-          </div>
+          <DzCard key={card.id} data={card} type={CARD_TYPES.MEDIA} />
         ))}
       </DzCarousel>
     </DzColumn>
@@ -66,15 +67,31 @@ export const UtopiaEditionsContainer: FC<UtopiaEditionsProps> = ({data}) => {
       />
       <div className={styles.pageContainer}>
         <DzMedia imgClass={styles.mediaImage} {...mediaProps} />
-        <DzInterstitial data={{...interstitialProps, customTitleClass: styles.interstitialTitle}} />
-        <div className={styles.cardSection}>
-          <DzText text={nowAvailableData.title} className={styles.cardSectionTitle} />
+        <DzInterstitial
+          data={{
+            ...interstitialProps,
+            customDescriptionClass: styles.interstitialTitle,
+            classNameContent: styles.interstitial,
+          }}
+        />
+        <section className={styles.cardSection}>
+          <DzTitle
+            // Temporary fix to match text sizes with the design.
+            // A set of rules will be created by the design team to remove this logic
+            titleSize={isSmall ? TEXT_SIZES.MEDIUM : TEXT_SIZES.XL}
+            titleType={TITLE_TYPES.H2}
+            title={nowAvailableData.title}
+          />
           <DzCard {...nowAvailableData.card} />
-        </div>
-        <div className={styles.cardSection}>
-          <DzText text={comingSoonData.title} className={styles.cardSectionTitle} />
+        </section>
+        <section className={styles.cardSection}>
+          <DzTitle
+            titleSize={isSmall ? TEXT_SIZES.MEDIUM : TEXT_SIZES.XL}
+            titleType={TITLE_TYPES.H2}
+            title={comingSoonData.title}
+          />
           <DzCard {...comingSoonData.card} />
-        </div>
+        </section>
         <DzComplexGrid
           textProps={{text: artworksGrid.Text, className: styles.textGrid}}
           {...artworksData}
