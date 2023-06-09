@@ -6,7 +6,6 @@
 html,
 body,
 #__next {
-  height: 100%;
   background-color: white;
   /* TODO verify if we want default scrollbar */
   /* @apply
