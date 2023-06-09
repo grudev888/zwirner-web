@@ -4,7 +4,7 @@ import {
   DzCarousel,
   DzColumn,
   DzGridColumns,
-  DzHeroCarousel,
+  DzHero,
   DzInterstitial,
   DzSplit,
   DzTabsCards,
@@ -50,7 +50,7 @@ export const HomeContainer: FC<HomeContainerProps> = ({data}) => {
   return (
     <DzColumn span={12}>
       <div className={styles.homeContainer}>
-        <DzHeroCarousel items={itemsHeroCarousel} />
+        <DzHero items={itemsHeroCarousel} />
         <DzSplit type={SPLIT_TYPES.SHORT} data={featuredContent} />
         {firstCarouselCards ? renderCarousel(firstCarouselCards) : null}
         {secondCarouselCards ? renderCarousel(secondCarouselCards) : null}

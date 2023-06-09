@@ -15,7 +15,7 @@ export const DzHero: FC<DzHeroProps> = ({data, componentProps}) => {
   const mappedData = (contentTypesMapper[_type] ?? ((a: any) => a))(data)
   const overrideData = componentProps ? dzHeroOverrides(componentProps) : {}
 
-  return <DzHeroMolecule {...{...mappedData, ...overrideData}} />
+  return <DzHeroMolecule items={[{...mappedData, ...overrideData}]} />
 }
 
 export default DzHero
