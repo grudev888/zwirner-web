@@ -16,10 +16,10 @@ export const getHeaderProps = (data: any) => {
   const {footerData = {}} = data ?? {}
   const {socialMedia} = footerData ?? {}
 
-  const {Menu, MenuMobile} = headerData ?? {}
+  const {Menu} = headerData ?? {}
 
   return {
-    menu: {desktop: Menu ?? emptyHeaderItems, mobile: MenuMobile ?? emptyHeaderItems},
+    menu: Menu ?? emptyHeaderItems,
     socialMedia: socialMedia ?? emptySocialMedia,
   }
 }
