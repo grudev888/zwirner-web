@@ -47,7 +47,7 @@ export const UtopiaEditionsContainer: FC<UtopiaEditionsProps> = ({data}) => {
 
   const renderCarousel = (data: any) => (
     <DzColumn span={12} className={styles.fullSection}>
-      <DzCarousel slidesPerViewDesktop={1}>
+      <DzCarousel slideSpanDesktop={12}>
         {data?.map((card: any) => (
           <div className="w-full md:w-[calc(100vw_-_16.125rem)]" key={card.id}>
             <DzCard data={card} type={CARD_TYPES.MEDIA} />
