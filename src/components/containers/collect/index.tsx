@@ -82,7 +82,7 @@ export const CollectContainer: FC<CollectContainerProps> = ({data}) => {
         className={styles.pageTitleContainer}
       />
       <div className={styles.collectContainer}>
-        <DzHero {...heroData} />
+        <DzHero items={[heroData]} />
         <div className={styles.sectionWithTitleMolecule}>
           <DzTitleMolecule
             title="Online Exhibitions"
