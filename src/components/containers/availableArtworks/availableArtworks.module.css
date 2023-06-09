@@ -1,13 +1,13 @@
 .pageContainer {
-  @apply mt-10
+  @apply md:mt-[3.75rem]
+    md:mb-[7.5rem]
+    md:gap-[3.75rem]
     mb-[3.75rem]
+    mt-10
     flex
     w-full
     flex-col
-    gap-10
-    md:mt-[3.75rem]
-    md:mb-[7.5rem]
-    md:gap-[3.75rem];
+    gap-10;
 }
 .mainTitle {
   @apply capitalize
