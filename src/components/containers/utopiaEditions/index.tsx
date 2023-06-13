@@ -93,7 +93,7 @@ export const UtopiaEditionsContainer: FC<UtopiaEditionsProps> = ({data}) => {
           <DzCard {...comingSoonData.card} />
         </section>
         <DzComplexGrid
-          textProps={{text: artworksGrid.Text, className: styles.textGrid}}
+          textProps={{text: artworksGrid.Title, className: styles.textGrid}}
           {...artworksData}
         />
         <DzInterstitial {...interstitialData} />

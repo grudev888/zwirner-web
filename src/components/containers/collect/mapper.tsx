@@ -123,7 +123,6 @@ export const artworksGridMap = (data: any) => {
   return {
     cards,
     displayNumberOfResults: false,
-    headingTitle: 'Featured Available Works',
     useLink: true,
     linkCTA: {
       text: 'View all',
