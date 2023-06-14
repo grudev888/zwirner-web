@@ -20,6 +20,12 @@ export const mapCardsGrid = (data: any[]) => {
       const [mainPicture] = photos ?? []
       const {asset, alt} = mainPicture ?? {}
       const imgSrc = asset ? builder.image(asset).url() : ''
+      const framed =
+        typeof artwork.framed === 'boolean'
+          ? artwork.framed === true
+            ? 'Framed'
+            : 'Unframed'
+          : undefined
 
       return {
         id: _id,
@@ -40,6 +46,7 @@ export const mapCardsGrid = (data: any[]) => {
         dimensions: dimensions,
         edition: edition,
         price: price,
+        framed,
         primaryCTA: {
           text: 'Inquire',
           ctaProps: {

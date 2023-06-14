@@ -9,6 +9,7 @@ export const artworkFields = groq`
   photos,
   edition,
   dimensions,
+  framed,
   artists[]->,
   availability,
   dateSelection,
