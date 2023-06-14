@@ -1,4 +1,5 @@
 import {DzFooter, DzGridColumns, DzHeader} from '@zwirner/design-system'
+import {useRouter} from 'next/router'
 import {ReactNode} from 'react'
 
 import styles from './layout.module.css'
@@ -9,17 +10,24 @@ interface LayoutProps {
   layoutData?: any
 }
 const Layout = ({children, layoutData}: LayoutProps) => {
-  const {menu, socialMedia} = getHeaderProps(layoutData)
+  const {menu} = getHeaderProps(layoutData)
   const {data} = getFooterProps(layoutData)
+  const router = useRouter()
 
   return (
     <>
       <DzHeader
         menu={menu}
-        socialMedia={socialMedia}
+        footerData={data}
         // TODO handle search
         handleSearch={() => null}
         headerClass={styles.header}
+        linkProps={{
+          router,
+          useRoute: true,
+        }}
+        // TODO handle newsletter
+        newsletterAction={() => null}
       />
       <main className={styles.mainLayout}>
         <DzGridColumns className="h-full min-h-screen w-full">{children}</DzGridColumns>
