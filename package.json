@@ -30,7 +30,7 @@
   "dependencies": {
     "@headlessui/tailwindcss": "^0.1.2",
     "@next/font": "^13.4.3",
-    "@portabletext/react": "^2.0.0",
+    "@portabletext/react": "^3.0.2",
     "@sanity/client": "^6.0.1",
     "@sanity/image-url": "^1.0.2",
     "@tailwindcss/typography": "^0.5.9",

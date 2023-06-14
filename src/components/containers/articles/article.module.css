@@ -1,0 +1,43 @@
+.articleContainer {
+  @apply flex
+  w-full
+  flex-col
+  gap-[3.75rem]
+  md:gap-[7.5rem]
+  md:px-[7.5rem];
+}
+
+.downloadLink {
+  @apply mt-10 block;
+}
+.spacer {
+  @apply h-[3.75rem]
+  w-full
+  md:h-[7.5rem];
+}
+.h1 {
+  @apply text-xl
+  md:max-w-[57.9375rem]
+  md:text-xxl;
+}
+.titlePage {
+  @apply mb-[3.75rem]
+  mt-5
+  md:-mx-[7.5rem]
+  md:mb-[7.5rem];
+}
+
+.infoTitle {
+  @apply mb-2.5
+    text-md
+    md:text-lg;
+}
+
+.infoTitleContainer {
+  @apply mb-10;
+}
+
+.articleXSpacing {
+  @apply mx-auto
+  max-w-[43.125rem];
+}

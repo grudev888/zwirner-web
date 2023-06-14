@@ -44,16 +44,16 @@ const handler: NextApiHandler = async function preview(req, res) {
     previewData.token = readToken
   }
 
-  if (section) {
+  if (section && slug) {
     res.setPreviewData(previewData)
-    res.writeHead(307, {Location: `/${section}/`})
+    res.writeHead(307, {Location: `/${section}/${slug}`})
     res.end()
     return
   }
 
-  if (section && slug) {
+  if (section) {
     res.setPreviewData(previewData)
-    res.writeHead(307, {Location: `/${section}/${slug}`})
+    res.writeHead(307, {Location: `/${section}/`})
     res.end()
     return
   }
