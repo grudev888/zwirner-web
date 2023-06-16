@@ -9,10 +9,8 @@ import {
   DzHero,
   DzInterstitial,
   DzSplit,
-  DzTitle,
   DzTitleMolecule,
-  TITLE_SIZES,
-  TITLE_TYPES,
+  DzTitleMoleculeTypes,
 } from '@zwirner/design-system'
 import {FC} from 'react'
 
@@ -31,13 +29,8 @@ interface CollectContainerProps {
   data: any
 }
 
-const TITLE_MOLECULE_PROPS = {
-  titleType: TITLE_TYPES.H3,
-  titleSize: TITLE_SIZES.LG,
-  subtitleSize: TITLE_SIZES.LG,
-  subtitleType: TITLE_TYPES.H3,
-  classNameTitle: styles.titleSection,
-}
+const UPCOMING_FAIRS = '/fairs'
+const ONLINE_EXHIBITIONS_URL = '/exhibitions'
 
 export const CollectContainer: FC<CollectContainerProps> = ({data}) => {
   const {
@@ -58,7 +51,7 @@ export const CollectContainer: FC<CollectContainerProps> = ({data}) => {
   const artworksData = artworksGridMap(featuredArtworks)
   const formProps = consignmentsMap(consignmentsFeature)
   const utopiaSplitData = utopiaFeatureMap(utopiaFeature)
-  const platformData = platformInterstitialMap(platformInterstitial)
+  const platformData = platformInterstitialMap(platformInterstitial, styles.interstitial)
   const interstitialData = interstitialMap(interstitial)
 
   const renderCarousel = (data: any) => (
@@ -74,60 +67,62 @@ export const CollectContainer: FC<CollectContainerProps> = ({data}) => {
   )
 
   return (
-    <DzColumn span={12}>
-      <DzTitle
-        title={title}
-        titleType={TITLE_TYPES.H1}
-        classNameTitle={styles.pageTitle}
-        className={styles.pageTitleContainer}
-      />
-      <div className={styles.collectContainer}>
-        <DzHero items={[heroData]} />
-        <div className={styles.sectionWithTitleMolecule}>
-          <DzTitleMolecule
-            title="Online Exhibitions"
-            linkCTA={{
-              text: 'View All',
-              linkElement: 'a',
-              url: '/',
-            }}
-            titleProps={{
-              ...TITLE_MOLECULE_PROPS,
-              title: 'Online Exhibitions',
-            }}
-          />
-          {exhibitionsCarousel ? renderCarousel(exhibitionsCarousel) : null}
-        </div>
-        <div className={styles.sectionWithTitleMolecule}>
-          <DzTitleMolecule
-            title="Upcoming Fairs"
-            linkCTA={{
-              text: 'View All',
-              linkElement: 'a',
-              url: '/',
-            }}
-            titleProps={{
-              ...TITLE_MOLECULE_PROPS,
-              title: 'Upcoming Fairs',
-            }}
-          />
-          {fairsCarousel ? renderCarousel(fairsCarousel) : null}
-        </div>
-        <DzComplexGrid
-          textProps={{text: 'Featured Available Works', className: styles.textGrid}}
-          {...artworksData}
+    <>
+      <DzColumn span={12}>
+        <DzTitleMolecule
+          type={DzTitleMoleculeTypes.PAGE}
+          data={{title, customClass: styles.titleSpacing}}
         />
-        <div className={styles.consignmentsSection}>
-          <DzEditorial {...formProps.editorial} />
-          <DzForm {...formProps.form} onSubmit={() => null} />
+        <div className={styles.collectContainer}>
+          <DzHero items={[heroData]} />
+          <div className={styles.sectionWithTitleMolecule}>
+            <DzTitleMolecule
+              type={DzTitleMoleculeTypes.MOLECULE}
+              data={{
+                title: 'Online Exhibitions',
+                linkCTA: {
+                  text: 'View All',
+                  linkElement: 'a',
+                  url: ONLINE_EXHIBITIONS_URL,
+                },
+              }}
+            />
+            {exhibitionsCarousel ? renderCarousel(exhibitionsCarousel) : null}
+          </div>
+          <div className={styles.sectionWithTitleMolecule}>
+            <DzTitleMolecule
+              type={DzTitleMoleculeTypes.MOLECULE}
+              data={{
+                title: 'Upcoming Fairs',
+                linkCTA: {
+                  text: 'View All',
+                  linkElement: 'a',
+                  url: UPCOMING_FAIRS,
+                },
+              }}
+            />
+            {fairsCarousel ? renderCarousel(fairsCarousel) : null}
+          </div>
+          <DzComplexGrid
+            textProps={{text: 'Featured Available Works', className: styles.textGrid}}
+            {...artworksData}
+          />
+          <div className={styles.consignmentsSection}>
+            <DzEditorial {...formProps.editorial} />
+            <DzForm {...formProps.form} onSubmit={() => null} />
+          </div>
+          <DzSplit {...utopiaSplitData} />
+
+          <div className="-ml-5 w-full">
+            <DzInterstitial {...platformData} />
+          </div>
+
+          <div className="-ml-5 w-full">
+            <DzInterstitial {...interstitialData} />
+          </div>
+          <div></div>
         </div>
-        <DzSplit {...utopiaSplitData} />
-        <div className={styles.fullSection}>
-          <DzInterstitial {...platformData} />
-        </div>
-        <DzInterstitial {...interstitialData} />
-        <div className={styles.spacer}></div>
-      </div>
-    </DzColumn>
+      </DzColumn>
+    </>
   )
 }
