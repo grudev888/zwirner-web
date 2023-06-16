@@ -14,6 +14,15 @@ import {
 } from '@zwirner/design-system'
 import {FC} from 'react'
 
+import {
+  FEATURE_AVAILABLE_WORKS,
+  ONLINE_EXHIBITIONS_TITLE,
+  ONLINE_EXHIBITIONS_URL,
+  UPCOMING_FAIRS,
+  UPCOMING_FAIRS_TITLE,
+  VIEW_ALL_TITLE,
+} from '@/common/constants/commonCopies'
+
 import styles from './collect.module.css'
 import {
   artworksGridMap,
@@ -28,9 +37,6 @@ import {
 interface CollectContainerProps {
   data: any
 }
-
-const UPCOMING_FAIRS = '/fairs'
-const ONLINE_EXHIBITIONS_URL = '/exhibitions'
 
 export const CollectContainer: FC<CollectContainerProps> = ({data}) => {
   const {
@@ -79,9 +85,9 @@ export const CollectContainer: FC<CollectContainerProps> = ({data}) => {
             <DzTitleMolecule
               type={DzTitleMoleculeTypes.MOLECULE}
               data={{
-                title: 'Online Exhibitions',
+                title: ONLINE_EXHIBITIONS_TITLE,
                 linkCTA: {
-                  text: 'View All',
+                  text: VIEW_ALL_TITLE,
                   linkElement: 'a',
                   url: ONLINE_EXHIBITIONS_URL,
                 },
@@ -93,9 +99,9 @@ export const CollectContainer: FC<CollectContainerProps> = ({data}) => {
             <DzTitleMolecule
               type={DzTitleMoleculeTypes.MOLECULE}
               data={{
-                title: 'Upcoming Fairs',
+                title: UPCOMING_FAIRS_TITLE,
                 linkCTA: {
-                  text: 'View All',
+                  text: VIEW_ALL_TITLE,
                   linkElement: 'a',
                   url: UPCOMING_FAIRS,
                 },
@@ -104,7 +110,7 @@ export const CollectContainer: FC<CollectContainerProps> = ({data}) => {
             {fairsCarousel ? renderCarousel(fairsCarousel) : null}
           </div>
           <DzComplexGrid
-            textProps={{text: 'Featured Available Works', className: styles.textGrid}}
+            textProps={{text: FEATURE_AVAILABLE_WORKS, className: styles.textGrid}}
             {...artworksData}
           />
           <div className={styles.consignmentsSection}>

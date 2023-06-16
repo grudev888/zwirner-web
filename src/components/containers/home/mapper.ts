@@ -1,7 +1,7 @@
 import {MEDIA_TYPES} from '@zwirner/design-system'
 
+import {LEARN_MORE} from '@/common/constants/commonCopies'
 import {builder} from '@/sanity/imageBuilder'
-
 export const mapHeaderCarousel = (data = []) => {
   return (
     data
@@ -31,7 +31,7 @@ export const mapHeaderCarousel = (data = []) => {
           },
           title,
           linkCTA: {
-            text: 'Learn More',
+            text: LEARN_MORE,
             linkElement: 'a',
             url: '/',
           },
@@ -60,7 +60,7 @@ export const mapFeaturedContentSplit = (data: any) => {
     title,
     description,
     linkCTA: {
-      text: 'Learn More',
+      text: LEARN_MORE,
       linkElement: 'a',
       url: '/',
     },
@@ -193,7 +193,7 @@ export const mapCarouselCards = (data: any) => {
         title,
         description: summary,
         linkCTA: {
-          text: 'Learn More',
+          text: LEARN_MORE,
           linkElement: 'a',
           url: '/',
         },

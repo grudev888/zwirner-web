@@ -1,0 +1,7 @@
+export const LEARN_MORE = 'Learn More'
+export const VIEW_ALL_TITLE = 'View All'
+export const UPCOMING_FAIRS = '/fairs'
+export const ONLINE_EXHIBITIONS_URL = '/exhibitions'
+export const ONLINE_EXHIBITIONS_TITLE = 'Online Exhibitions'
+export const UPCOMING_FAIRS_TITLE = 'Upcoming Fairs'
+export const FEATURE_AVAILABLE_WORKS = 'Featured Available Works'
