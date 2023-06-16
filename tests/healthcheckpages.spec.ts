@@ -9,3 +9,8 @@ test('Check available artworks is up', async ({page}) => {
   const response = await page.request.get('/available-artworks')
   await expect(response).toBeOK()
 })
+
+test('Check collect is up', async ({page}) => {
+  const response = await page.request.get('/collect')
+  await expect(response).toBeOK()
+})

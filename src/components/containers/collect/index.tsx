@@ -11,15 +11,16 @@ import {
   DzSplit,
   DzTitleMolecule,
   DzTitleMoleculeTypes,
+  TITLE_TYPES,
 } from '@zwirner/design-system'
 import {FC} from 'react'
 
 import {
-  FEATURE_AVAILABLE_WORKS,
+  FEATURE_AVAILABLE_WORKS_TITLE,
   ONLINE_EXHIBITIONS_TITLE,
   ONLINE_EXHIBITIONS_URL,
-  UPCOMING_FAIRS,
   UPCOMING_FAIRS_TITLE,
+  UPCOMING_FAIRS_URL,
   VIEW_ALL_TITLE,
 } from '@/common/constants/commonCopies'
 
@@ -77,7 +78,7 @@ export const CollectContainer: FC<CollectContainerProps> = ({data}) => {
       <DzColumn span={12}>
         <DzTitleMolecule
           type={DzTitleMoleculeTypes.PAGE}
-          data={{title, customClass: styles.titleSpacing}}
+          data={{title, customClass: styles.titleSpacing, titleProps: {titleType: TITLE_TYPES.H1}}}
         />
         <div className={styles.collectContainer}>
           <DzHero items={[heroData]} />
@@ -86,6 +87,7 @@ export const CollectContainer: FC<CollectContainerProps> = ({data}) => {
               type={DzTitleMoleculeTypes.MOLECULE}
               data={{
                 title: ONLINE_EXHIBITIONS_TITLE,
+                titleProps: {titleType: TITLE_TYPES.H2},
                 linkCTA: {
                   text: VIEW_ALL_TITLE,
                   linkElement: 'a',
@@ -100,23 +102,27 @@ export const CollectContainer: FC<CollectContainerProps> = ({data}) => {
               type={DzTitleMoleculeTypes.MOLECULE}
               data={{
                 title: UPCOMING_FAIRS_TITLE,
+                titleProps: {titleType: TITLE_TYPES.H2},
                 linkCTA: {
                   text: VIEW_ALL_TITLE,
                   linkElement: 'a',
-                  url: UPCOMING_FAIRS,
+                  url: UPCOMING_FAIRS_URL,
                 },
               }}
             />
             {fairsCarousel ? renderCarousel(fairsCarousel) : null}
           </div>
           <DzComplexGrid
-            textProps={{text: FEATURE_AVAILABLE_WORKS, className: styles.textGrid}}
+            textProps={{text: FEATURE_AVAILABLE_WORKS_TITLE, className: styles.textGrid}}
             {...artworksData}
           />
           <div className={styles.consignmentsSection}>
+            <h2 className="sr-only">Consignments</h2>
             <DzEditorial {...formProps.editorial} />
             <DzForm {...formProps.form} onSubmit={() => null} />
           </div>
+
+          <h2 className="sr-only">Utopia Editions</h2>
           <DzSplit {...utopiaSplitData} />
 
           <div className="-ml-5 w-full">
