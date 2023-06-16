@@ -1,4 +1,5 @@
 import {
+  ButtonModes,
   EDITORIAL_TEXT_TYPES,
   EDITORIAL_TYPES,
   INTERSTITIAL_TEXT_COLORS,
@@ -6,6 +7,7 @@ import {
   MEDIA_TYPES,
   SPLIT_TYPES,
 } from '@zwirner/design-system'
+import Image from 'next/image'
 import {Fragment} from 'react'
 
 import {builder} from '@/sanity/imageBuilder'
@@ -13,16 +15,18 @@ import {builder} from '@/sanity/imageBuilder'
 import {formSectionMap} from '../consignments/mapper'
 
 export const heroMapper = (data: any) => {
-  const {image, heading, cta, category} = data ?? {}
-  const {link, text} = cta ?? {}
-  const {href, blank} = link ?? {}
+  const [hero] = data ?? []
+  const {exhibition, title, slug} = hero ?? {}
+  const {photos, title: titleExhibition, _type} = exhibition ?? {}
+  const [image] = photos ?? []
 
   const {asset, alt} = image ?? {}
   const imgSrc = asset ? builder.image(asset).url() : ''
-
+  const category = _type === 'exhibition' ? 'Exhibition' : 'Viewing room'
+  const exhibitionURL = `/exhibitions/${slug?.current ?? ''}`
   return {
     media: {
-      url: '/',
+      url: exhibitionURL,
       type: MEDIA_TYPES.IMAGE,
       imgProps: {
         src: imgSrc,
@@ -30,17 +34,17 @@ export const heroMapper = (data: any) => {
       },
     },
     linkCTA: {
-      text,
+      text: 'Explore now',
       linkElement: 'a',
-      url: href ?? '/',
+      url: exhibitionURL,
       linkProps: {
-        openNewTab: blank,
-        href: href,
+        openNewTab: false,
+        href: exhibitionURL,
         children: null,
       },
     },
     category,
-    title: heading,
+    title: title ?? titleExhibition,
   }
 }
 
@@ -100,7 +104,6 @@ export const mapCardsGrid = (data: any[]) => {
       return {
         id: _id,
         media: {
-          url: '/',
           type: MEDIA_TYPES.IMAGE,
           imgProps: {
             src: imgSrc,
@@ -114,6 +117,13 @@ export const mapCardsGrid = (data: any[]) => {
         dimensions: dimensions,
         edition: edition,
         price: price,
+        primaryCTA: {
+          text: 'Inquire',
+          ctaProps: {
+            // Todo inquire with _id
+            onClick: () => null,
+          },
+        },
       }
     })
 }
@@ -191,7 +201,7 @@ export const utopiaFeatureMap = (data: any) => {
   }
 }
 
-export const platformInterstitialMap = (data: any) => {
+export const platformInterstitialMap = (data: any, className: string) => {
   const {title, subtitle, cta, image} = data ?? {}
   const {text} = cta ?? {}
   const {asset, alt} = image ?? {}
@@ -205,14 +215,15 @@ export const platformInterstitialMap = (data: any) => {
       primaryCta: {
         text,
       },
+      customClass: className,
       media: {
-        url: '/',
+        ImgElement: Image,
         type: MEDIA_TYPES.IMAGE,
         imgProps: {
           src: imgSrc,
           alt,
+          fill: true,
         },
-        imgClass: 'max-h-[30rem] object-cover md:object-cover',
         objectFit: MEDIA_OBJECT_FIT.COVER,
       },
     },
@@ -228,6 +239,9 @@ export const interstitialMap = (data: any) => {
       title,
       primaryCta: {
         text,
+        ctaProps: {
+          mode: ButtonModes.DARK as ButtonModes,
+        },
       },
       textColor: INTERSTITIAL_TEXT_COLORS.BLACK,
     },
