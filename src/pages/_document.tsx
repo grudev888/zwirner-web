@@ -12,13 +12,13 @@ export default function Document() {
         <link rel="apple-touch-icon" sizes="152x152" href="/images/apple-touch-icon-152x152.png" />
         <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32" />
         <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16" />
-        <meta name="application-name" content="&nbsp;"/>
+        <meta name="application-name" content="&nbsp;" />
         <meta name="msapplication-TileColor" content="#FFFFFF" />
         <meta name="msapplication-TileImage" content="mstile-144x144.png" />
       </Head>
       <body className="bg-white text-black dark:bg-black dark:text-white">
-      <Main />
-      <NextScript />
+        <Main />
+        <NextScript />
       </body>
     </Html>
   )
