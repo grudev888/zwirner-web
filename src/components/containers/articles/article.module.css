@@ -1,10 +1,5 @@
-.articleContainer {
-  @apply flex
-  w-full
-  flex-col
-  gap-[3.75rem]
-  md:gap-[7.5rem]
-  md:px-[7.5rem];
+div.articleContainer {
+  @apply md:px-[7.5rem];
 }
 
 .downloadLink {

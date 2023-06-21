@@ -1,15 +1,7 @@
-.homeContainer {
-  @apply flex
-    w-full
-    flex-col
-    gap-[3.75rem]
-    md:gap-[7.5rem];
-}
 .spacer {
   @apply md:h-[3.75rem]
     md:w-full;
 }
-
 .fullSection {
   @apply -mx-5;
 }

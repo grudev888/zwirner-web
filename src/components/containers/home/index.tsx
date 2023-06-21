@@ -21,6 +21,7 @@ import {
   mapInterstitialComponents,
   mapTabsLocations,
 } from './mapper'
+import {FullWidthFlexCol} from '@/components/containers/layout/FullWidthFlexCol'
 
 interface HomeContainerProps {
   data: any
@@ -49,7 +50,7 @@ export const HomeContainer: FC<HomeContainerProps> = ({data}) => {
 
   return (
     <DzColumn span={12}>
-      <div className={styles.homeContainer}>
+      <FullWidthFlexCol>
         <DzHero items={itemsHeroCarousel} />
         <DzSplit type={SPLIT_TYPES.SHORT} data={featuredContent} />
         {firstCarouselCards ? renderCarousel(firstCarouselCards) : null}
@@ -66,7 +67,7 @@ export const HomeContainer: FC<HomeContainerProps> = ({data}) => {
         <DzInterstitial data={{...interstitialData, customClass: styles.fullSection}} />
         <DzTabsCards tabs={tabsLocations} span={[12, 3]} />
         <div className={styles.spacer}></div>
-      </div>
+      </FullWidthFlexCol>
     </DzColumn>
   )
 }

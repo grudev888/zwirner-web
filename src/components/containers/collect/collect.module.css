@@ -7,13 +7,6 @@
 .interstitial {
   @apply max-h-[calc(100vh_-_40px)];
 }
-.collectContainer {
-  @apply flex
-  w-full
-  flex-col
-  gap-[3.75rem]
-  md:gap-[7.5rem];
-}
 .pageTitle {
   @apply text-xl
     md:text-xxl;
