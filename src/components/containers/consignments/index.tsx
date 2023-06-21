@@ -25,6 +25,7 @@ import {
   mapCarouselCards,
   mapFooterInterstitial,
 } from './mapper'
+import {FullWidthFlexCol} from '@/components/containers/layout/FullWidthFlexCol'
 
 interface ConsignmentsContainerProps {
   data: any
@@ -72,7 +73,7 @@ export const ConsignmentsContainer: FC<ConsignmentsContainerProps> = ({data}) =>
         classNameTitle={styles.pageTitle}
         className={styles.pageTitleContainer}
       />
-      <div className={styles.consignmentsContainer}>
+      <FullWidthFlexCol>
         <DzMedia imgClass={styles.mediaImage} {...mediaProps} />
         <DzEditorial {...editorialProps} />
         <DzForm {...formProps} onSubmit={() => null} />
@@ -96,7 +97,7 @@ export const ConsignmentsContainer: FC<ConsignmentsContainerProps> = ({data}) =>
         {carouselCards ? renderCarousel(carouselCards) : null}
         <DzInterstitial {...footerInterstitialData} />
         <div className={styles.spacer}></div>
-      </div>
+      </FullWidthFlexCol>
     </DzColumn>
   )
 }

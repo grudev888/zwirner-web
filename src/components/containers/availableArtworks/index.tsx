@@ -2,6 +2,7 @@ import {DzColumn, DzComplexGrid, DzTitle, TITLE_SIZES, TITLE_TYPES} from '@zwirn
 import {FC} from 'react'
 
 import styles from './availableArtworks.module.css'
+import {FullWidthFlexCol} from '@/components/containers/layout/FullWidthFlexCol'
 import {mapCardsGrid} from './mapper'
 
 interface AvailableArtworksProps {
@@ -15,7 +16,7 @@ export const AvailableArtworksContainer: FC<AvailableArtworksProps> = ({data}) =
 
   return (
     <DzColumn span={12}>
-      <div className={styles.pageContainer}>
+      <FullWidthFlexCol className={styles.pageContainer}>
         <DzTitle
           titleType={TITLE_TYPES.H1}
           classNameTitle={styles.mainTitle}
@@ -27,7 +28,7 @@ export const AvailableArtworksContainer: FC<AvailableArtworksProps> = ({data}) =
           displayNumberOfResults={displayNumberOfResults}
           cards={complexGridCard}
         />
-      </div>
+      </FullWidthFlexCol>
     </DzColumn>
   )
 }

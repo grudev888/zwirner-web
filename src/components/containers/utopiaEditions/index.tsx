@@ -21,6 +21,8 @@ import {
   mapCarouselCards,
   utopiaMainMediaMap,
 } from './mapper'
+import {FullWidthFlexCol} from '@/components/containers/layout/FullWidthFlexCol'
+
 import styles from './utopia.module.css'
 
 interface UtopiaEditionsProps {
@@ -65,7 +67,7 @@ export const UtopiaEditionsContainer: FC<UtopiaEditionsProps> = ({data}) => {
         classNameTitle={styles.pageTitle}
         className={styles.pageTitleContainer}
       />
-      <div className={styles.pageContainer}>
+      <FullWidthFlexCol>
         <DzMedia imgClass={styles.mediaImage} {...mediaProps} />
         <DzInterstitial
           data={{
@@ -99,7 +101,7 @@ export const UtopiaEditionsContainer: FC<UtopiaEditionsProps> = ({data}) => {
         <DzInterstitial {...interstitialData} />
         {carouselCards ? renderCarousel(carouselCards) : null}
         <div className={styles.spacer}></div>
-      </div>
+      </FullWidthFlexCol>
     </DzColumn>
   )
 }

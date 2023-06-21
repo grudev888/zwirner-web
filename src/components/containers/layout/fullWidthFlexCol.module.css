@@ -1,0 +1,9 @@
+.fullWidthFlexCol {
+  @apply
+    flex
+    w-full
+    flex-col
+
+    gap-[3.75rem]
+    md:gap-[7.5rem];
+}
