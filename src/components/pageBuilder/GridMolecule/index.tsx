@@ -34,7 +34,10 @@ export const GridMolecule: FC<GridMoleculeProps> & {multipleContentTypes: boolea
         {data.map((cardSchemaType: any, key: number) => {
           return (
             <DzColumn className="mb-5" key={`grid-section-${key}`} span={getColSpan} wrap={wrap}>
-              <DzCard data={cardSchemaType} componentProps={{enableOverrides: false, title: ''}} />
+              <DzCard
+                data={{...cardSchemaType, size: getColSpan}}
+                componentProps={{enableOverrides: false, title: ''}}
+              />
             </DzColumn>
           )
         })}

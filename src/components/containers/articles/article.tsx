@@ -1,5 +1,6 @@
 import {
   CARD_TYPES,
+  CardSizes,
   DzCard,
   DzColumn,
   DzGridColumns,
@@ -100,7 +101,10 @@ export const ArticleContainer: FC<ArticleContainerProps> = ({data}) => {
                 return (
                   <article key={`article-${key}`}>
                     <DzColumn className="mb-5" span={4}>
-                      <DzCard type={CARD_TYPES.CONTENT} data={article} />
+                      <DzCard
+                        type={CARD_TYPES.CONTENT}
+                        data={{...article, size: CardSizes['4col']}}
+                      />
                     </DzColumn>
                   </article>
                 )

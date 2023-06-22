@@ -29,7 +29,7 @@ const Layout = ({children, layoutData}: LayoutProps) => {
         // TODO handle newsletter
         newsletterAction={() => null}
       />
-      <main className={styles.mainLayout}>
+      <main className={styles.mainLayout} aria-label="Main" role="main">
         <DzGridColumns className="h-full min-h-screen w-full">{children}</DzGridColumns>
       </main>
       <DzFooter
