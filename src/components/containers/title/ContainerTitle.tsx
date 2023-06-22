@@ -5,7 +5,7 @@ import styles from './titles.module.css'
 
 interface ContainerTitleProps {
   title: string
-  titleSize: string
+  titleSize?: string
 }
 
 export const ContainerTitle: FC<ContainerTitleProps> = ({title, titleSize}) => {
