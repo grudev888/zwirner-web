@@ -78,7 +78,7 @@ export const CollectContainer: FC<CollectContainerProps> = ({data}) => {
   return (
     <>
       <DzColumn span={12}>
-        <ContainerTitle title={title} titleType={TITLE_TYPES.H1} />
+        <ContainerTitle title={title} />
         <FullWidthFlexCol>
           <DzHero items={[heroData]} />
           <div className={styles.sectionWithTitleMolecule}>

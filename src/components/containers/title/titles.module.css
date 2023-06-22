@@ -1,13 +1,6 @@
-.pageTitle {
-  @apply
-    capitalize
-    md:text-xxl
-    text-xl;
-}
-
 .pageTitleContainer {
   @apply
-  mt-[3.75rem]
-  mb-[3.75rem]
-  md:mb-[7.5rem];
+    mt-[3.75rem]
+    mb-[3.75rem]
+    md:mb-[7.5rem];
 }

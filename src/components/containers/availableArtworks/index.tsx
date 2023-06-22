@@ -16,11 +16,7 @@ export const AvailableArtworksContainer: FC<AvailableArtworksProps> = ({data}) =
 
   return (
     <DzColumn span={12}>
-      <ContainerTitle
-        title={title}
-        titleSize={TITLE_SIZES.XL}
-        titleType={TITLE_TYPES.H1}
-      />
+      <ContainerTitle title={title} titleSize={TITLE_SIZES.XL} />
       <FullWidthFlexCol>
         <DzComplexGrid
           maxItemsPerRow={itemsPerRow}

@@ -62,7 +62,7 @@ export const UtopiaEditionsContainer: FC<UtopiaEditionsProps> = ({data}) => {
   )
   return (
     <DzColumn span={12}>
-      <ContainerTitle title={title} titleType={TITLE_TYPES.H1} />
+      <ContainerTitle title={title} />
       <FullWidthFlexCol>
         <DzMedia imgClass={styles.mediaImage} {...mediaProps} />
         <DzInterstitial
