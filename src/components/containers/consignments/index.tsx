@@ -9,7 +9,7 @@ import {
   DzForm,
   DzInterstitial,
   DzMedia,
-  DzMediaProps, TITLE_TYPES
+  DzMediaProps,
 } from '@zwirner/design-system'
 
 import {FullWidthFlexCol} from '@/components/containers/layout/FullWidthFlexCol'

@@ -1,5 +1,5 @@
 import {FC} from 'react'
-import {DzColumn, DzComplexGrid, TITLE_SIZES, TITLE_TYPES} from '@zwirner/design-system'
+import {DzColumn, DzComplexGrid, TITLE_SIZES} from '@zwirner/design-system'
 
 import {ContainerTitle} from '@/components/containers/title/ContainerTitle'
 import {FullWidthFlexCol} from '@/components/containers/layout/FullWidthFlexCol'
