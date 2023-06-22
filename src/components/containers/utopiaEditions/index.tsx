@@ -1,3 +1,4 @@
+import {FC} from 'react'
 import {
   CARD_TYPES,
   DzCard,
@@ -11,7 +12,6 @@ import {
   TITLE_TYPES,
   useBreakpoints,
 } from '@zwirner/design-system'
-import {FC} from 'react'
 
 import {
   artworksGridMap,
@@ -22,6 +22,7 @@ import {
   utopiaMainMediaMap,
 } from './mapper'
 import {FullWidthFlexCol} from '@/components/containers/layout/FullWidthFlexCol'
+import {ContainerTitle} from '@/components/containers/title/ContainerTitle'
 
 import styles from './utopia.module.css'
 
@@ -61,12 +62,7 @@ export const UtopiaEditionsContainer: FC<UtopiaEditionsProps> = ({data}) => {
   )
   return (
     <DzColumn span={12}>
-      <DzTitle
-        title={title}
-        titleType={TITLE_TYPES.H1}
-        classNameTitle={styles.pageTitle}
-        className={styles.pageTitleContainer}
-      />
+      <ContainerTitle title={title} titleType={TITLE_TYPES.H1} />
       <FullWidthFlexCol>
         <DzMedia imgClass={styles.mediaImage} {...mediaProps} />
         <DzInterstitial

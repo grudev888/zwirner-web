@@ -1,7 +1,7 @@
-import {DzColumn, DzComplexGrid, DzTitle, TITLE_SIZES, TITLE_TYPES} from '@zwirner/design-system'
 import {FC} from 'react'
+import {DzColumn, DzComplexGrid, TITLE_SIZES, TITLE_TYPES} from '@zwirner/design-system'
 
-import styles from './availableArtworks.module.css'
+import {ContainerTitle} from '@/components/containers/title/ContainerTitle'
 import {FullWidthFlexCol} from '@/components/containers/layout/FullWidthFlexCol'
 import {mapCardsGrid} from './mapper'
 
@@ -16,13 +16,12 @@ export const AvailableArtworksContainer: FC<AvailableArtworksProps> = ({data}) =
 
   return (
     <DzColumn span={12}>
-      <FullWidthFlexCol className={styles.pageContainer}>
-        <DzTitle
-          titleType={TITLE_TYPES.H1}
-          classNameTitle={styles.mainTitle}
-          title={title}
-          titleSize={TITLE_SIZES.XL}
-        />
+      <ContainerTitle
+        title={title}
+        titleSize={TITLE_SIZES.XL}
+        titleType={TITLE_TYPES.H1}
+      />
+      <FullWidthFlexCol>
         <DzComplexGrid
           maxItemsPerRow={itemsPerRow}
           displayNumberOfResults={displayNumberOfResults}
