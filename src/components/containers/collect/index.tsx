@@ -11,7 +11,7 @@ import {
   DzSplit,
   DzTitleMolecule,
   DzTitleMoleculeTypes,
-  TITLE_TYPES
+  TITLE_TYPES,
 } from '@zwirner/design-system'
 import {FC} from 'react'
 

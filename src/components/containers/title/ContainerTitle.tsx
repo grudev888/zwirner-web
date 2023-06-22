@@ -4,11 +4,11 @@ import {DzTitleMolecule, DzTitleMoleculeTypes, TITLE_TYPES} from '@zwirner/desig
 import styles from './titles.module.css'
 
 interface ContainerTitleProps {
-  title: string,
+  title: string
   titleSize: string
 }
 
-export const ContainerTitle: FC<ContainerTitleProps> = ({ title, titleSize }) => {
+export const ContainerTitle: FC<ContainerTitleProps> = ({title, titleSize}) => {
   return (
     <DzTitleMolecule
       type={DzTitleMoleculeTypes.PAGE}
@@ -17,8 +17,8 @@ export const ContainerTitle: FC<ContainerTitleProps> = ({ title, titleSize }) =>
         customClass: styles.pageTitleContainer,
         titleProps: {
           titleType: TITLE_TYPES.H1,
-          titleSize
-        }
+          titleSize,
+        },
       }}
     />
   )

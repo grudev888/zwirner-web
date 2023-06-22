@@ -1,6 +1,6 @@
 import {FC, PropsWithChildren} from 'react'
 
-import styles from './fullWidthFlexCol.module.css';
+import styles from './fullWidthFlexCol.module.css'
 
 interface FullWidthFlexColProps {
   /** optional style overrides; css specificity requires prefixing with element type, e.g.
@@ -8,10 +8,9 @@ interface FullWidthFlexColProps {
   className?: string
 }
 
-export const FullWidthFlexCol: FC<FullWidthFlexColProps & PropsWithChildren> = ({ children, className }) => {
-  return (
-    <div className={`${styles.fullWidthFlexCol} ${className}`}>
-      {children}
-    </div>
-  )
+export const FullWidthFlexCol: FC<FullWidthFlexColProps & PropsWithChildren> = ({
+  children,
+  className,
+}) => {
+  return <div className={`${styles.fullWidthFlexCol} ${className}`}>{children}</div>
 }

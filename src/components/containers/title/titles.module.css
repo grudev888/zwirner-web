@@ -1,6 +1,5 @@
 .pageTitleContainer {
-  @apply
-    mt-[3.75rem]
+  @apply mt-[3.75rem]
     mb-[3.75rem]
     md:mb-[7.5rem];
 }
