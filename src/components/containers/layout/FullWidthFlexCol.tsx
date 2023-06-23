@@ -1,4 +1,5 @@
 import {FC, PropsWithChildren} from 'react'
+import cn from 'classnames'
 
 import styles from './fullWidthFlexCol.module.css'
 
@@ -12,5 +13,5 @@ export const FullWidthFlexCol: FC<FullWidthFlexColProps & PropsWithChildren> = (
   children,
   className,
 }) => {
-  return <div className={`${styles.fullWidthFlexCol} ${className}`}>{children}</div>
+  return <div className={cn(styles.fullWidthFlexCol, className)}>{children}</div>
 }
