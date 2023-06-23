@@ -66,6 +66,9 @@ module.exports = {
         medium: '0 8px 30px rgba(0, 0, 0, 0.12)',
         drop: '0px 2px 18px rgba(0, 0, 0, 0.06)',
       },
+      screens: {
+        md: '769px',
+      },
     },
   },
   plugins: [
