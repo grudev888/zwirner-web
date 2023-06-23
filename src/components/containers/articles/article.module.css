@@ -1,5 +1,5 @@
-div.articleContainer {
-  @apply md:px-[7.5rem];
+.interstitial {
+  @apply -mx-5;
 }
 
 .downloadLink {
@@ -14,12 +14,6 @@ div.articleContainer {
   @apply text-xl
   md:max-w-[57.9375rem]
   md:text-xxl;
-}
-.titlePage {
-  @apply mb-[3.75rem]
-  mt-5
-  md:-mx-[7.5rem]
-  md:mb-[7.5rem];
 }
 
 .infoTitle {

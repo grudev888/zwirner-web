@@ -8,6 +8,8 @@ import {
 import {
   CARD_TYPES,
   DzCard,
+  DzColumn,
+  DzGridColumns,
   DzLink,
   DzText,
   DzTitle,
@@ -49,20 +51,22 @@ export const DzPortableText: FC<DzPortableTextProps> = ({portableProps, customSt
           const imgSrc = asset ? builder.image(asset).url() : ''
 
           return (
-            <div className={cn(styles.containerSpacer, customStyles?.['bodyImage'])}>
-              <DzCard
-                type={CARD_TYPES.MEDIA}
-                data={{
-                  id: _key,
-                  media: {
-                    type: MEDIA_TYPES.IMAGE,
-                    ImgElement: Image,
-                    imgProps: {src: imgSrc, alt, fill: true},
-                  },
-                  description: caption ?? '',
-                }}
-              />
-            </div>
+            <DzGridColumns className={cn(styles.containerSpacer, customStyles?.['bodyImage'])}>
+              <DzColumn span={10} start={2}>
+                <DzCard
+                  type={CARD_TYPES.MEDIA}
+                  data={{
+                    id: _key,
+                    media: {
+                      type: MEDIA_TYPES.IMAGE,
+                      ImgElement: Image,
+                      imgProps: {src: imgSrc, alt, fill: true},
+                    },
+                    description: caption ?? '',
+                  }}
+                />
+              </DzColumn>
+            </DzGridColumns>
           )
         },
         callToAction: ({value, isInline}: PortableTextTypeComponentProps<any>) =>
@@ -90,6 +94,7 @@ export const DzPortableText: FC<DzPortableTextProps> = ({portableProps, customSt
               href={value?.href}
               openNewTab={target}
               variant={LINK_VARIANTS.TEXT}
+              className={styles.link}
               textLinkSize={TEXT_LINK_SIZES.LARGE}
             >
               {children}

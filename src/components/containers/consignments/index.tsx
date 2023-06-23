@@ -1,6 +1,7 @@
 import {FC, Fragment} from 'react'
 import {
   CARD_TYPES,
+  CardSizes,
   DzCard,
   DzCarousel,
   DzColumn,
@@ -58,7 +59,7 @@ export const ConsignmentsContainer: FC<ConsignmentsContainerProps> = ({data}) =>
       <DzCarousel>
         {data?.map((card: any) => (
           <div className="w-full" key={card.id}>
-            <DzCard data={card} type={CARD_TYPES.CONTENT} />
+            <DzCard data={{...card, size: CardSizes['12col']}} type={CARD_TYPES.CONTENT} />
           </div>
         ))}
       </DzCarousel>

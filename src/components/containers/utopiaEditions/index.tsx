@@ -1,6 +1,7 @@
 import {FC} from 'react'
 import {
   CARD_TYPES,
+  CardSizes,
   DzCard,
   DzCarousel,
   DzColumn,
@@ -55,7 +56,11 @@ export const UtopiaEditionsContainer: FC<UtopiaEditionsProps> = ({data}) => {
     <DzColumn span={12} className={styles.fullSection}>
       <DzCarousel slideSpanDesktop={10} slideSpanMobile={10}>
         {data?.map((card: any) => (
-          <DzCard key={card.id} data={card} type={CARD_TYPES.MEDIA} />
+          <DzCard
+            key={card.id}
+            data={{...card, size: CardSizes['10col']}}
+            type={CARD_TYPES.MEDIA}
+          />
         ))}
       </DzCarousel>
     </DzColumn>

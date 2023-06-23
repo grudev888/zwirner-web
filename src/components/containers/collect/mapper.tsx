@@ -210,7 +210,7 @@ export const utopiaFeatureMap = (data: any) => {
   }
 }
 
-export const platformInterstitialMap = (data: any, className: string) => {
+export const platformInterstitialMap = (data: any) => {
   const {title, subtitle, cta, image} = data ?? {}
   const {text} = cta ?? {}
   const {asset, alt} = image ?? {}
@@ -224,7 +224,6 @@ export const platformInterstitialMap = (data: any, className: string) => {
       primaryCta: {
         text,
       },
-      customClass: className,
       media: {
         ImgElement: Image,
         type: MEDIA_TYPES.IMAGE,
