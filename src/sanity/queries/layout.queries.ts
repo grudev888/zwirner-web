@@ -12,6 +12,14 @@ export const headerData = groq`
       },
       _type == 'menuItemSubmenu' => {
         ...,
+        rootLink[]{
+          ...,
+           _type == 'menuItemPage' => {
+            page->{
+              'url':slug.current
+            }
+          },
+        },
         submenu {
           _type,
           items[] {

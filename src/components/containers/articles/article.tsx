@@ -1,11 +1,12 @@
 import {
   CARD_TYPES,
+  CardSizes,
   DzCard,
   DzColumn,
   DzGridColumns,
+  DzHero,
   DzInterstitial,
   DzLink,
-  DzMedia,
   DzTitle,
   LINK_VARIANTS,
   TITLE_TYPES,
@@ -19,7 +20,7 @@ import styles from './article.module.css'
 import {
   articlesGridMap,
   eventDatesMapper,
-  headingImageMapper,
+  heroMapper,
   interstitialMap,
   locationTitleMapper,
 } from './mapper'
@@ -32,83 +33,80 @@ export const ArticleContainer: FC<ArticleContainerProps> = ({data}) => {
   const {title, body, image, interstitial, articles, pdfURL, location, event} = data
   const locationProps = locationTitleMapper(location)
   const eventDates = eventDatesMapper(event)
-  const mediaProps = headingImageMapper(image)
   const interstitialData = interstitialMap(interstitial)
   const articlesGrid = articlesGridMap(articles)
+  const heroData = heroMapper({...image, title})
   return (
     <DzColumn span={12}>
-      {image ? <DzMedia {...mediaProps} /> : null}
-
       <div className={styles.articleContainer}>
+        <DzHero
+          className={styles.heroContainer}
+          items={[heroData]}
+          primaryTitleProps={{titleType: TITLE_TYPES.H1}}
+        />
+
         <article>
-          <DzTitle
-            className={styles.titlePage}
-            classNameTitle={styles.h1}
-            title={title}
-            titleType={TITLE_TYPES.H1}
-          />
-          <div>
-            {location ? (
-              <DzTitle
-                {...locationProps}
-                className={cn(styles.infoTitleContainer, styles.articleXSpacing)}
-                classNameTitle={styles.infoTitle}
-                classNameSubtitle={styles.infoTitle}
-              />
-            ) : null}
-            {event ? (
-              <DzTitle
-                {...eventDates}
-                className={cn(styles.infoTitleContainer, styles.articleXSpacing)}
-                classNameTitle={styles.infoTitle}
-                classNameSubtitle={styles.infoTitle}
-              />
-            ) : null}
-            {body ? (
-              <DzPortableText
-                portableProps={{value: body}}
-                customStyles={{
-                  normal: styles.articleXSpacing,
-                }}
-              />
-            ) : null}
-            {pdfURL ? (
-              <DzLink
-                className={cn(styles.downloadLink, styles.articleXSpacing)}
-                href={pdfURL}
-                openNewTab
-                variant={LINK_VARIANTS.NAV}
-              >
-                Download Press Release
-              </DzLink>
-            ) : null}
-          </div>
+          {location ? (
+            <DzTitle
+              {...locationProps}
+              className={cn(styles.infoTitleContainer, styles.articleXSpacing)}
+              classNameTitle={styles.infoTitle}
+              classNameSubtitle={styles.infoTitle}
+            />
+          ) : null}
+          {event ? (
+            <DzTitle
+              {...eventDates}
+              className={cn(styles.infoTitleContainer, styles.articleXSpacing)}
+              classNameTitle={styles.infoTitle}
+              classNameSubtitle={styles.infoTitle}
+            />
+          ) : null}
+          {body ? (
+            <DzPortableText
+              portableProps={{value: body}}
+              customStyles={{
+                normal: styles.articleXSpacing,
+              }}
+            />
+          ) : null}
+          {pdfURL ? (
+            <DzLink
+              className={cn(styles.downloadLink, styles.articleXSpacing)}
+              href={pdfURL}
+              openNewTab
+              variant={LINK_VARIANTS.TEXT}
+            >
+              Download Press Release
+            </DzLink>
+          ) : null}
         </article>
 
         {interstitial ? (
-          <section>
+          <div className={styles.interstitial}>
             <DzInterstitial {...interstitialData} />
-          </section>
+          </div>
         ) : null}
-      </div>
-      {articles ? (
-        <>
-          <div className={styles.spacer} />
+
+        {articles ? (
           <section>
             <DzGridColumns>
               {articlesGrid?.map((article, key) => {
                 return (
-                  <article key={`article-${key}`}>
-                    <DzColumn className="mb-5" span={4}>
-                      <DzCard type={CARD_TYPES.CONTENT} data={article} />
-                    </DzColumn>
-                  </article>
+                  <DzColumn key={`article-${key}`} className="mb-5" span={4}>
+                    <article>
+                      <DzCard
+                        type={CARD_TYPES.CONTENT}
+                        data={{...article, size: CardSizes['4col']}}
+                      />
+                    </article>
+                  </DzColumn>
                 )
               })}
             </DzGridColumns>
           </section>
-        </>
-      ) : null}
+        ) : null}
+      </div>
       <div className={styles.spacer} />
     </DzColumn>
   )

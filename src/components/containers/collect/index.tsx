@@ -1,5 +1,6 @@
 import {
   CARD_TYPES,
+  CardSizes,
   DzCard,
   DzCarousel,
   DzColumn,
@@ -11,8 +12,18 @@ import {
   DzSplit,
   DzTitleMolecule,
   DzTitleMoleculeTypes,
+  TITLE_TYPES,
 } from '@zwirner/design-system'
 import {FC} from 'react'
+
+import {
+  FEATURE_AVAILABLE_WORKS_TITLE,
+  ONLINE_EXHIBITIONS_TITLE,
+  ONLINE_EXHIBITIONS_URL,
+  UPCOMING_FAIRS_TITLE,
+  UPCOMING_FAIRS_URL,
+  VIEW_ALL_TITLE,
+} from '@/common/constants/commonCopies'
 
 import styles from './collect.module.css'
 import {
@@ -28,9 +39,6 @@ import {
 interface CollectContainerProps {
   data: any
 }
-
-const UPCOMING_FAIRS = '/fairs'
-const ONLINE_EXHIBITIONS_URL = '/exhibitions'
 
 export const CollectContainer: FC<CollectContainerProps> = ({data}) => {
   const {
@@ -51,7 +59,7 @@ export const CollectContainer: FC<CollectContainerProps> = ({data}) => {
   const artworksData = artworksGridMap(featuredArtworks)
   const formProps = consignmentsMap(consignmentsFeature)
   const utopiaSplitData = utopiaFeatureMap(utopiaFeature)
-  const platformData = platformInterstitialMap(platformInterstitial, styles.interstitial)
+  const platformData = platformInterstitialMap(platformInterstitial)
   const interstitialData = interstitialMap(interstitial)
 
   const renderCarousel = (data: any) => (
@@ -59,7 +67,7 @@ export const CollectContainer: FC<CollectContainerProps> = ({data}) => {
       <DzCarousel>
         {data?.map((card: any) => (
           <div className="w-full" key={card.id}>
-            <DzCard data={card} type={CARD_TYPES.CONTENT} />
+            <DzCard data={{...card, size: CardSizes['12col']}} type={CARD_TYPES.CONTENT} />
           </div>
         ))}
       </DzCarousel>
@@ -71,7 +79,7 @@ export const CollectContainer: FC<CollectContainerProps> = ({data}) => {
       <DzColumn span={12}>
         <DzTitleMolecule
           type={DzTitleMoleculeTypes.PAGE}
-          data={{title, customClass: styles.titleSpacing}}
+          data={{title, customClass: styles.titleSpacing, titleProps: {titleType: TITLE_TYPES.H1}}}
         />
         <div className={styles.collectContainer}>
           <DzHero items={[heroData]} />
@@ -79,9 +87,10 @@ export const CollectContainer: FC<CollectContainerProps> = ({data}) => {
             <DzTitleMolecule
               type={DzTitleMoleculeTypes.MOLECULE}
               data={{
-                title: 'Online Exhibitions',
+                title: ONLINE_EXHIBITIONS_TITLE,
+                titleProps: {titleType: TITLE_TYPES.H2},
                 linkCTA: {
-                  text: 'View All',
+                  text: VIEW_ALL_TITLE,
                   linkElement: 'a',
                   url: ONLINE_EXHIBITIONS_URL,
                 },
@@ -93,31 +102,35 @@ export const CollectContainer: FC<CollectContainerProps> = ({data}) => {
             <DzTitleMolecule
               type={DzTitleMoleculeTypes.MOLECULE}
               data={{
-                title: 'Upcoming Fairs',
+                title: UPCOMING_FAIRS_TITLE,
+                titleProps: {titleType: TITLE_TYPES.H2},
                 linkCTA: {
-                  text: 'View All',
+                  text: VIEW_ALL_TITLE,
                   linkElement: 'a',
-                  url: UPCOMING_FAIRS,
+                  url: UPCOMING_FAIRS_URL,
                 },
               }}
             />
             {fairsCarousel ? renderCarousel(fairsCarousel) : null}
           </div>
           <DzComplexGrid
-            textProps={{text: 'Featured Available Works', className: styles.textGrid}}
+            textProps={{text: FEATURE_AVAILABLE_WORKS_TITLE, className: styles.textGrid}}
             {...artworksData}
           />
           <div className={styles.consignmentsSection}>
+            <h2 className="sr-only">Consignments</h2>
             <DzEditorial {...formProps.editorial} />
             <DzForm {...formProps.form} onSubmit={() => null} />
           </div>
+
+          <h2 className="sr-only">Utopia Editions</h2>
           <DzSplit {...utopiaSplitData} />
 
-          <div className="-ml-5 w-full">
+          <div className="-mx-5">
             <DzInterstitial {...platformData} />
           </div>
 
-          <div className="-ml-5 w-full">
+          <div className="-mx-5">
             <DzInterstitial {...interstitialData} />
           </div>
           <div></div>

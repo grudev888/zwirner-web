@@ -10,6 +10,7 @@ import {
 import Image from 'next/image'
 import {Fragment} from 'react'
 
+import {LEARN_MORE, VIEW_ALL_TITLE} from '@/common/constants/commonCopies'
 import {builder} from '@/sanity/imageBuilder'
 
 import {formSectionMap} from '../consignments/mapper'
@@ -28,9 +29,11 @@ export const heroMapper = (data: any) => {
     media: {
       url: exhibitionURL,
       type: MEDIA_TYPES.IMAGE,
+      ImgElement: Image,
       imgProps: {
         src: imgSrc,
         alt,
+        fill: true,
       },
     },
     linkCTA: {
@@ -66,9 +69,11 @@ export const exhibitionCarouselMapper = (data: any[]) => {
         id: _id,
         media: {
           type: MEDIA_TYPES.IMAGE,
+          ImgElement: Image,
           imgProps: {
             src: imgSrc,
             alt,
+            fill: true,
           },
         },
         category: subtitle,
@@ -104,10 +109,12 @@ export const mapCardsGrid = (data: any[]) => {
       return {
         id: _id,
         media: {
+          ImgElement: Image,
           type: MEDIA_TYPES.IMAGE,
           imgProps: {
             src: imgSrc,
             alt,
+            fill: true,
           },
         },
         artistName: fullName,
@@ -135,7 +142,7 @@ export const artworksGridMap = (data: any) => {
     displayNumberOfResults: false,
     useLink: true,
     linkCTA: {
-      text: 'View all',
+      text: VIEW_ALL_TITLE,
       linkElement: 'a',
       url: '/',
     },
@@ -184,16 +191,18 @@ export const utopiaFeatureMap = (data: any) => {
     data: {
       media: {
         url,
+        ImgElement: Image,
         type: MEDIA_TYPES.IMAGE,
         imgProps: {
           src: imgSrc,
           alt,
+          fill: true,
         },
       },
       title,
       description: text,
       linkCTA: {
-        text: 'Learn More',
+        text: LEARN_MORE,
         linkElement: 'a',
         url,
       },
@@ -201,7 +210,7 @@ export const utopiaFeatureMap = (data: any) => {
   }
 }
 
-export const platformInterstitialMap = (data: any, className: string) => {
+export const platformInterstitialMap = (data: any) => {
   const {title, subtitle, cta, image} = data ?? {}
   const {text} = cta ?? {}
   const {asset, alt} = image ?? {}
@@ -215,7 +224,6 @@ export const platformInterstitialMap = (data: any, className: string) => {
       primaryCta: {
         text,
       },
-      customClass: className,
       media: {
         ImgElement: Image,
         type: MEDIA_TYPES.IMAGE,
@@ -240,7 +248,7 @@ export const interstitialMap = (data: any) => {
       primaryCta: {
         text,
         ctaProps: {
-          mode: ButtonModes.DARK as ButtonModes,
+          mode: ButtonModes.DARK,
         },
       },
       textColor: INTERSTITIAL_TEXT_COLORS.BLACK,
