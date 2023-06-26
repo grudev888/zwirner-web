@@ -17,7 +17,7 @@ export default function Document() {
         <meta name="msapplication-TileColor" content="#FFFFFF" />
         <meta name="msapplication-TileImage" content="mstile-144x144.png" />
       </Head>
-      <body className="bg-white text-black dark:bg-black dark:text-white">
+      <body className="bg-white text-black dark:bg-black dark:text-white h-fit">
         <Main />
         <NextScript />
       </body>

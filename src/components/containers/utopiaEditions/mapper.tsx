@@ -1,5 +1,6 @@
 import {
   CARD_TYPES,
+  CardSizes,
   INTERSTITIAL_TEXT_COLORS,
   MEDIA_TYPES,
   MEDIA_VIDEO_SOURCE_TYPES,
@@ -76,7 +77,7 @@ export const cardSectionMap = (data: any) => {
             alt,
           },
         },
-
+        size: CardSizes['12col'],
         title: fullName,
         secondaryTitle: (
           <>

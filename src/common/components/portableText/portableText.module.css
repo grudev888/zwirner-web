@@ -27,3 +27,7 @@
   md:-mx-[7.6875rem]
   md:mb-[7.5rem];
 }
+.link {
+  @apply text-sm
+  md:text-md;
+}

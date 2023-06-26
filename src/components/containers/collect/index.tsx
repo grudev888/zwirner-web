@@ -1,5 +1,6 @@
 import {
   CARD_TYPES,
+  CardSizes,
   DzCard,
   DzCarousel,
   DzColumn,
@@ -58,7 +59,7 @@ export const CollectContainer: FC<CollectContainerProps> = ({data}) => {
   const artworksData = artworksGridMap(featuredArtworks)
   const formProps = consignmentsMap(consignmentsFeature)
   const utopiaSplitData = utopiaFeatureMap(utopiaFeature)
-  const platformData = platformInterstitialMap(platformInterstitial, styles.interstitial)
+  const platformData = platformInterstitialMap(platformInterstitial)
   const interstitialData = interstitialMap(interstitial)
 
   const renderCarousel = (data: any) => (
@@ -66,7 +67,7 @@ export const CollectContainer: FC<CollectContainerProps> = ({data}) => {
       <DzCarousel>
         {data?.map((card: any) => (
           <div className="w-full" key={card.id}>
-            <DzCard data={card} type={CARD_TYPES.CONTENT} />
+            <DzCard data={{...card, size: CardSizes['12col']}} type={CARD_TYPES.CONTENT} />
           </div>
         ))}
       </DzCarousel>
@@ -125,11 +126,11 @@ export const CollectContainer: FC<CollectContainerProps> = ({data}) => {
           <h2 className="sr-only">Utopia Editions</h2>
           <DzSplit {...utopiaSplitData} />
 
-          <div className="-ml-5 w-full">
+          <div className="-mx-5">
             <DzInterstitial {...platformData} />
           </div>
 
-          <div className="-ml-5 w-full">
+          <div className="-mx-5">
             <DzInterstitial {...interstitialData} />
           </div>
           <div></div>
