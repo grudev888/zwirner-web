@@ -78,31 +78,23 @@ function DzApp({Component, pageProps, globalSEO, layoutData}: AppProps & Wrapper
 
 DzApp.getInitialProps = async (context: AppContext): Promise<AppGeneralProps & AppInitialProps> => {
   const ctx = await App.getInitialProps(context)
-  try {
-    const generalSettings = await getGeneralSettings()
-    const {globalSEO} = generalSettings ?? {}
-    const [SEOSettings = {}] = globalSEO ?? []
+  
+  const generalSettings = await getGeneralSettings()
+  const {globalSEO} = generalSettings ?? {}
+  const [SEOSettings = {}] = globalSEO ?? []
 
-    const headerDataFetched = await getHeaderData()
-    const [headerData] = headerDataFetched ?? []
-    const footerDataFetched = await getFooterData()
-    const [footerData] = footerDataFetched ?? []
+  const headerDataFetched = await getHeaderData()
+  const [headerData] = headerDataFetched ?? []
+  const footerDataFetched = await getFooterData()
+  const [footerData] = footerDataFetched ?? []
 
-    return {
-      ...ctx,
-      globalSEO: SEOSettings,
-      layoutData: {
-        headerData,
-        footerData,
-      },
-    }
-  } catch (e: any) {
-    console.error(
-      'ERROR FETCHING GENERAL DATA:',
-      `Status: ${e?.statusCode} `,
-      e?.details?.description
-    )
-    return {...ctx}
+  return {
+    ...ctx,
+    globalSEO: SEOSettings,
+    layoutData: {
+      headerData,
+      footerData,
+     },
   }
 }
 
