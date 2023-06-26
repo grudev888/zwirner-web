@@ -78,7 +78,7 @@ function DzApp({Component, pageProps, globalSEO, layoutData}: AppProps & Wrapper
 
 DzApp.getInitialProps = async (context: AppContext): Promise<AppGeneralProps & AppInitialProps> => {
   const ctx = await App.getInitialProps(context)
-  
+
   const generalSettings = await getGeneralSettings()
   const {globalSEO} = generalSettings ?? {}
   const [SEOSettings = {}] = globalSEO ?? []
@@ -94,7 +94,7 @@ DzApp.getInitialProps = async (context: AppContext): Promise<AppGeneralProps & A
     layoutData: {
       headerData,
       footerData,
-     },
+    },
   }
 }
 
