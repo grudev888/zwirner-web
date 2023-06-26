@@ -1,20 +1,3 @@
-.pageContainer {
-  @apply flex
-    w-full
-    flex-col
-    gap-[3.75rem]
-    md:gap-[7.5rem];
-}
-
-.pageTitleContainer {
-  @apply my-[3.75rem];
-}
-
-.pageTitle {
-  @apply text-xl
-    capitalize md:text-xxl;
-}
-
 .interstitial {
   @apply gap-10 px-0 sm:py-[3.75rem];
 }

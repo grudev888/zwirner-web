@@ -1,3 +1,4 @@
+import {FC, Fragment} from 'react'
 import {
   CARD_TYPES,
   CardSizes,
@@ -10,12 +11,10 @@ import {
   DzInterstitial,
   DzMedia,
   DzMediaProps,
-  DzTitle,
-  TITLE_TYPES,
 } from '@zwirner/design-system'
-import {FC, Fragment} from 'react'
 
-import styles from './consignments.module.css'
+import {FullWidthFlexCol} from '@/components/containers/layout/FullWidthFlexCol'
+import {ContainerTitle} from '@/components/containers/title/ContainerTitle'
 import {
   bodyDataMap,
   editorialSectionMap,
@@ -26,6 +25,8 @@ import {
   mapCarouselCards,
   mapFooterInterstitial,
 } from './mapper'
+
+import styles from './consignments.module.css'
 
 interface ConsignmentsContainerProps {
   data: any
@@ -67,13 +68,8 @@ export const ConsignmentsContainer: FC<ConsignmentsContainerProps> = ({data}) =>
 
   return (
     <DzColumn span={12}>
-      <DzTitle
-        title={title}
-        titleType={TITLE_TYPES.H1}
-        classNameTitle={styles.pageTitle}
-        className={styles.pageTitleContainer}
-      />
-      <div className={styles.consignmentsContainer}>
+      <ContainerTitle title={title} />
+      <FullWidthFlexCol>
         <DzMedia imgClass={styles.mediaImage} {...mediaProps} />
         <DzEditorial {...editorialProps} />
         <DzForm {...formProps} onSubmit={() => null} />
@@ -96,8 +92,8 @@ export const ConsignmentsContainer: FC<ConsignmentsContainerProps> = ({data}) =>
         )}
         {carouselCards ? renderCarousel(carouselCards) : null}
         <DzInterstitial {...footerInterstitialData} />
-        <div className={styles.spacer}></div>
-      </div>
+        <div className={styles.spacer} />
+      </FullWidthFlexCol>
     </DzColumn>
   )
 }
