@@ -78,14 +78,14 @@ Visit https://playwright.dev/docs/intro for more information. ✨
 
 The Dependabot configuration is located in the `.github/dependabot.yml`. It is
 configured to check daily for new versions of dependencies in the `package.json`
-and weekly for new versions of actions used in the workflows. If there is a new 
+and weekly for new versions of actions used in the workflows. If there is a new
 version, Dependabot opens a PR.
 
 ### Access to private registries
 
-The Dependabot relies on the `GH_TOKEN` secret with a personal access token of 
+The Dependabot relies on the `GH_TOKEN` secret with a personal access token of
 the dzdependabot GitHub account with the `packages:read` permission. This account
-was added to the `design-system` repository, so its token allows reading the 
+was added to the `design-system` repository, so its token allows reading the
 repo's packages.
 
 ## Repository Secrets
@@ -99,7 +99,7 @@ and for dependabot https://github.com/Zwirner/web/settings/secrets/dependabot
 Set on: Actions secrets
 
 This is a classic personal access token with read:packages scope in order to pull
-in the [`design-system`][design-system-repo] dependency. Currently, it matches 
+in the [`design-system`][design-system-repo] dependency. Currently, it matches
 the secret used by the Dependabot.
 
 #### PREVIEW_ENV_PASSWORD
