@@ -3,6 +3,9 @@ import {NextApiRequest, NextApiResponse} from 'next'
 import camelToDash from '@/utils/string/camelToDash'
 import TypesToPathsMap from '@/sanity/typesToPathsMap'
 
+/**
+ * ISR endpoint called by Sanity Webhook defined in Sanity Project -> API -> Webhooks
+ */
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.query.secret !== process.env.ISR_TOKEN) {
     return res.status(401).json({message: 'Invalid token'})
@@ -22,6 +25,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       return res.json({revalidated: false})
     }
 
+    // Reconstruct the NextJS page route to revalidate based on the respective Sanity schema
+    // e.g. /artists/tomma-abts, /utopia-editions
     if (type === 'home') {
       basePath = '/'
     } else if (slug) {
