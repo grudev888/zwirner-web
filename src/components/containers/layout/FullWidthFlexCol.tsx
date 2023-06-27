@@ -1,5 +1,5 @@
-import {FC, PropsWithChildren} from 'react'
 import cn from 'classnames'
+import {FC, PropsWithChildren} from 'react'
 
 import styles from './fullWidthFlexCol.module.css'
 

@@ -3,6 +3,8 @@ import {groq} from 'next-sanity'
 import {exhibitionComplexFields, exhibitionSimpleFields} from '@/sanity/queries/exhibition.queries'
 import {pageSEOFields} from '@/sanity/queries/seo.queries'
 
+import {artworkFields} from './artwork.queries'
+
 export const utopiaEditionsData = groq`
 *[_type == "utopiaEditions" ] {
   ...,
@@ -40,10 +42,7 @@ export const utopiaEditionsData = groq`
   },
   artworksGrid {
     Title,
-    artworks[]->{
-      ...,
-      artists[]->{...}
-    },
+    artworks[]->{${artworkFields}},
     itemsPerRow,
   },
   seo {

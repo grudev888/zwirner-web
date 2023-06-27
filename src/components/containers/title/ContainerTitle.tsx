@@ -1,5 +1,5 @@
-import {FC} from 'react'
 import {DzTitleMolecule, DzTitleMoleculeTypes, TITLE_TYPES} from '@zwirner/design-system'
+import {FC} from 'react'
 
 import styles from './titles.module.css'
 

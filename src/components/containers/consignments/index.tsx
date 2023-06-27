@@ -1,4 +1,3 @@
-import {FC, Fragment} from 'react'
 import {
   CARD_TYPES,
   CardSizes,
@@ -12,9 +11,12 @@ import {
   DzMedia,
   DzMediaProps,
 } from '@zwirner/design-system'
+import {FC, Fragment} from 'react'
 
 import {FullWidthFlexCol} from '@/components/containers/layout/FullWidthFlexCol'
 import {ContainerTitle} from '@/components/containers/title/ContainerTitle'
+
+import styles from './consignments.module.css'
 import {
   bodyDataMap,
   editorialSectionMap,
@@ -25,8 +27,6 @@ import {
   mapCarouselCards,
   mapFooterInterstitial,
 } from './mapper'
-
-import styles from './consignments.module.css'
 
 interface ConsignmentsContainerProps {
   data: any
@@ -92,7 +92,6 @@ export const ConsignmentsContainer: FC<ConsignmentsContainerProps> = ({data}) =>
         )}
         {carouselCards ? renderCarousel(carouselCards) : null}
         <DzInterstitial {...footerInterstitialData} />
-        <div className={styles.spacer} />
       </FullWidthFlexCol>
     </DzColumn>
   )

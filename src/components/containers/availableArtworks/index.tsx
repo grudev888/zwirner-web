@@ -1,8 +1,9 @@
-import {FC} from 'react'
 import {DzColumn, DzComplexGrid, TITLE_SIZES} from '@zwirner/design-system'
+import {FC} from 'react'
 
-import {ContainerTitle} from '@/components/containers/title/ContainerTitle'
 import {FullWidthFlexCol} from '@/components/containers/layout/FullWidthFlexCol'
+import {ContainerTitle} from '@/components/containers/title/ContainerTitle'
+
 import {mapCardsGrid} from './mapper'
 
 interface AvailableArtworksProps {
@@ -20,7 +21,7 @@ export const AvailableArtworksContainer: FC<AvailableArtworksProps> = ({data}) =
       <FullWidthFlexCol>
         <DzComplexGrid
           maxItemsPerRow={itemsPerRow}
-          displayNumberOfResults={displayNumberOfResults}
+          displayNumberOfResults={!!displayNumberOfResults}
           cards={complexGridCard}
         />
       </FullWidthFlexCol>
