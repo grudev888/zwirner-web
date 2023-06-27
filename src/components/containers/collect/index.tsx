@@ -35,6 +35,8 @@ import {
   platformInterstitialMap,
   utopiaFeatureMap,
 } from './mapper'
+import {FullWidthFlexCol} from '@/components/containers/layout/FullWidthFlexCol'
+import {ContainerTitle} from '@/components/containers/title/ContainerTitle'
 
 interface CollectContainerProps {
   data: any
@@ -77,11 +79,8 @@ export const CollectContainer: FC<CollectContainerProps> = ({data}) => {
   return (
     <>
       <DzColumn span={12}>
-        <DzTitleMolecule
-          type={DzTitleMoleculeTypes.PAGE}
-          data={{title, customClass: styles.titleSpacing, titleProps: {titleType: TITLE_TYPES.H1}}}
-        />
-        <div className={styles.collectContainer}>
+        <ContainerTitle title={title} />
+        <FullWidthFlexCol>
           <DzHero items={[heroData]} />
           <div className={styles.sectionWithTitleMolecule}>
             <DzTitleMolecule
@@ -134,7 +133,7 @@ export const CollectContainer: FC<CollectContainerProps> = ({data}) => {
             <DzInterstitial {...interstitialData} />
           </div>
           <div></div>
-        </div>
+        </FullWidthFlexCol>
       </DzColumn>
     </>
   )

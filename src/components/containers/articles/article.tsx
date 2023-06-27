@@ -24,6 +24,7 @@ import {
   interstitialMap,
   locationTitleMapper,
 } from './mapper'
+import {FullWidthFlexCol} from '@/components/containers/layout/FullWidthFlexCol'
 
 interface ArticleContainerProps {
   data: any
@@ -38,7 +39,7 @@ export const ArticleContainer: FC<ArticleContainerProps> = ({data}) => {
   const heroData = heroMapper({...image, title})
   return (
     <DzColumn span={12}>
-      <div className={styles.articleContainer}>
+      <FullWidthFlexCol>
         <DzHero
           className={styles.heroContainer}
           items={[heroData]}
@@ -106,7 +107,7 @@ export const ArticleContainer: FC<ArticleContainerProps> = ({data}) => {
             </DzGridColumns>
           </section>
         ) : null}
-      </div>
+      </FullWidthFlexCol>
       <div className={styles.spacer} />
     </DzColumn>
   )
