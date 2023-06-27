@@ -13,9 +13,15 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const type = req.body?._type
     let basePath
 
+    // externalNews is content hosted on an external site so we cannot update it
     if (req.body?.type === 'externalNews') {
       return res.json({revalidated: false})
     }
+    // TODO Enable ISR for these when https://zwirner.atlassian.net/browse/NWEB-553 is fixed
+    if (['exhibitionPage', 'article'].includes(type)) {
+      return res.json({revalidated: false})
+    }
+
     if (type === 'home') {
       basePath = '/'
     } else if (slug) {
