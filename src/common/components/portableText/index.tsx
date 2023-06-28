@@ -97,7 +97,7 @@ export const DzPortableText: FC<DzPortableTextProps> = ({portableProps, customSt
               openNewTab={target}
               variant={LINK_VARIANTS.TEXT}
               className={styles.link}
-              textLinkSize={TEXT_LINK_SIZES.LARGE}
+              textLinkSize={TEXT_LINK_SIZES.MD}
             >
               {children}
             </DzLink>
