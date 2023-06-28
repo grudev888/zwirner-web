@@ -38,16 +38,17 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     if (!type || !basePath) {
       return res.json({revalidated: false})
     }
-    await res.revalidate(slug ? `bad-path-${basePath}${slug}` : basePath)
+    await res.revalidate(slug ? `${basePath}${slug}` : basePath)
     return res.json({revalidated: true})
   } catch (err) {
     // TODO report an error to surface internally to notify us the revalidation failed
     // We cannot return a res.status(500) because it will cause Sanity to retry the request
     // for 30 minutes and will not allow other requests to complete until the failing request
     // is either resolved or times out https://www.sanity.io/docs/webhooks#33326b412b2d
-    
-    //return res.json({revalidated: false})
 
-    return res.status(500).json({ message: "error" })
+
+    return res.json({revalidated: false})
+
+
   }
 }
