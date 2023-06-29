@@ -37,7 +37,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     return res.json({revalidated: false})
   }
   try {
-    await res.revalidate(slug ? `${basePath}${slug}` : basePath)
+    await res.revalidate(slug ? `xxxxxx-${basePath}${slug}` : basePath)
     return res.json({revalidated: true})
   } catch (err) {
     console.error('[revalidate]', err);
