@@ -39,9 +39,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   try {
     await res.revalidate(slug ? `xxxxxx-${basePath}${slug}` : basePath)
     return res.json({revalidated: true})
-  } catch (err) {
-    console.error('[revalidate]', err);
-    // TODO check err for invalid path, return res.status(401)
-    return res.json({revalidated: false})
+  } catch (error) {
+    const message = error instanceof Error ? error.message : String(error)
+
+    console.error('[revalidate]', message);
+    return res.status(message.includes('Invalid response 404') ? 404 : 400)
   }
 }
