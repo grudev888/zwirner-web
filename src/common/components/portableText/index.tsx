@@ -65,7 +65,6 @@ export const DzPortableText: FC<DzPortableTextProps> = ({portableProps, customSt
                       imgProps: {src: imgSrc, alt, fill: true},
                     },
                     description: caption ?? '',
-                    size: CardSizes['10col'],
                   }}
                 />
               </DzColumn>
