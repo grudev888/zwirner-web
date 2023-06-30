@@ -41,7 +41,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     return res.json({revalidated: true})
   } catch (error) {
     const message = error instanceof Error ? error.message : String(error)
-    console.error('[revalidate]', message);
+    console.error('[revalidate]', message)
     return res.json({revalidated: false})
   }
 }
