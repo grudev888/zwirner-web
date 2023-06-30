@@ -1,10 +1,10 @@
 import {
-  CARD_TYPES,
-  CardSizes,
+  ButtonModes,
   INTERSTITIAL_TEXT_COLORS,
   MEDIA_TYPES,
   MEDIA_VIDEO_SOURCE_TYPES,
 } from '@zwirner/design-system'
+import Image from 'next/image'
 import {Fragment} from 'react'
 
 import {builder} from '@/sanity/imageBuilder'
@@ -47,53 +47,44 @@ export const utopiaMainMediaMap = (data: any) => {
 export const interstitialNewReleasesMap = (data: any) => ({
   split: false,
   description: data?.title,
-  primaryCta: {text: data?.cta?.text},
+  primaryCta: {text: data?.cta?.text, ctaProps: {mode: ButtonModes.DARK, className: 'mt-0'}},
   textColor: INTERSTITIAL_TEXT_COLORS.BLACK,
 })
 
-export const cardSectionMap = (data: any) => {
-  const {title, exhibitions} = data ?? {}
-  const [exhibitionData] = exhibitions ?? []
-  const {exhibition} = exhibitionData ?? {}
-  const {_id, artists, artworks, photos: exhibitionPhotos = []} = exhibition
-  const [mainExhibitionPhoto] = exhibitionPhotos ?? []
-  const [mainArtWork] = artworks ?? []
-  const {title: artworkTitle, photos, dateSelection} = mainArtWork ?? {}
-  const {year} = dateSelection ?? {}
-  const [mainPicture] = photos ?? []
-  const {asset, alt} = mainExhibitionPhoto ?? mainPicture ?? {}
+export const heroMap = (data: any) => {
+  const exhibitions = data?.exhibitions
+
+  const title = exhibitions?.[0]?.exhibition?.artists?.[0]?.fullName
+
+  const {title: artworkTitle, dateSelection} = exhibitions?.[0]?.exhibition?.artworks?.[0] || {}
+  const year = dateSelection?.year
+
+  const mainExhibitionPhoto = exhibitions?.[0]?.exhibition?.photos?.[0]
+  const mainPicture = exhibitions?.[0]?.exhibition?.artworks?.[0]?.mainArtWork?.photos?.[0]
+
+  const asset = mainExhibitionPhoto?.asset || mainPicture?.asset
+  const alt = mainExhibitionPhoto?.alt || mainPicture?.alt
+
   const imgSrc = asset ? builder.image(asset).url() : ''
-  const [mainArtist] = artists ?? []
-  const {fullName} = mainArtist ?? {}
+
   return {
-    title,
-    card: {
-      data: {
-        id: _id,
+    items: [
+      {
         media: {
           type: MEDIA_TYPES.IMAGE,
-          imgProps: {
-            src: imgSrc,
-            alt,
-          },
+          imgProps: {src: imgSrc, alt, fill: true},
+          ImgElement: Image,
         },
-        size: CardSizes['12col'],
-        title: fullName,
-        secondaryTitle: (
+        title,
+        description: (
           <>
             <i>{artworkTitle}</i>
             {`, ${year} (detail)`}
           </>
         ),
-
-        linkCTA: {
-          text: 'View More',
-          linkElement: 'a',
-          url: '/',
-        },
+        linkCTA: {text: 'View More', linkElement: 'a', url: '/'},
       },
-      type: CARD_TYPES.CONTENT,
-    },
+    ],
   }
 }
 
@@ -108,6 +99,12 @@ export const mapCardsGrid = (data: any[]) => {
     ?.map((artwork) => {
       const {photos, artists, dimensions, title, dateSelection, medium, edition, _id, price} =
         artwork ?? {}
+      const framed =
+        typeof artwork.framed === 'boolean'
+          ? artwork.framed === true
+            ? 'Framed'
+            : 'Unframed'
+          : undefined
       const {year} = dateSelection ?? {}
       const [mainArtist] = artists ?? []
       const {fullName} = mainArtist ?? {}
@@ -120,19 +117,16 @@ export const mapCardsGrid = (data: any[]) => {
         media: {
           url: '/',
           type: MEDIA_TYPES.IMAGE,
-          imgProps: {
-            src: imgSrc,
-            alt,
-          },
+          imgProps: {src: imgSrc, alt},
         },
         artistName: fullName,
         artworkTitle: title,
         artworkYear: year,
-        medium: medium,
-        dimensions: dimensions,
-        edition: edition,
-        price: price,
-        framed: 'Unframed',
+        medium,
+        dimensions,
+        edition,
+        price,
+        framed,
       }
     })
 }
@@ -162,9 +156,7 @@ export const interstitialMap = (data: any) => {
     data: {
       split: false,
       title,
-      primaryCta: {
-        text,
-      },
+      primaryCta: {text, ctaProps: {mode: ButtonModes.DARK}},
       textColor: INTERSTITIAL_TEXT_COLORS.BLACK,
     },
   }

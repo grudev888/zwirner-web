@@ -5,18 +5,21 @@ import {
   DzCarousel,
   DzColumn,
   DzComplexGrid,
+  DzHero,
   DzInterstitial,
   DzMedia,
-  DzTitle,
-  TEXT_SIZES,
+  DzTitleMolecule,
+  DzTitleMoleculeTypes,
   TITLE_TYPES,
-  useBreakpoints,
 } from '@zwirner/design-system'
 import {FC} from 'react'
 
+import {FullWidthFlexCol} from '@/components/containers/layout/FullWidthFlexCol'
+import {ContainerTitle} from '@/components/containers/title/ContainerTitle'
+
 import {
   artworksGridMap,
-  cardSectionMap,
+  heroMap,
   interstitialMap,
   interstitialNewReleasesMap,
   mapCarouselCards,
@@ -39,19 +42,18 @@ export const UtopiaEditionsContainer: FC<UtopiaEditionsProps> = ({data}) => {
     interstitial,
     mediaCarousel,
   } = data ?? {}
-  const {isSmall} = useBreakpoints()
 
   const mediaProps = utopiaMainMediaMap(media)
   const interstitialProps = interstitialNewReleasesMap(newReleasesInterstitial)
-  const nowAvailableData = cardSectionMap(nowAvailable)
-  const comingSoonData = cardSectionMap(comingSoon)
+  const nowAvailableData = heroMap(nowAvailable)
+  const comingSoonData = heroMap(comingSoon)
   const artworksData = artworksGridMap(artworksGrid)
   const interstitialData = interstitialMap(interstitial)
   const carouselCards = mapCarouselCards(mediaCarousel)
 
   const renderCarousel = (data: any) => (
     <DzColumn span={12} className={styles.fullSection}>
-      <DzCarousel slideSpanDesktop={10} slideSpanMobile={10}>
+      <DzCarousel slideSpanDesktop={10} slideSpanMobile={11}>
         {data?.map((card: any) => (
           <DzCard
             key={card.id}
@@ -64,47 +66,60 @@ export const UtopiaEditionsContainer: FC<UtopiaEditionsProps> = ({data}) => {
   )
   return (
     <DzColumn span={12}>
-      <DzTitle
-        title={title}
-        titleType={TITLE_TYPES.H1}
-        classNameTitle={styles.pageTitle}
-        className={styles.pageTitleContainer}
-      />
-      <div className={styles.pageContainer}>
+      <ContainerTitle title={title} />
+      <FullWidthFlexCol>
         <DzMedia imgClass={styles.mediaImage} {...mediaProps} />
-        <DzInterstitial
-          data={{
-            ...interstitialProps,
-            customDescriptionClass: styles.interstitialTitle,
-            classNameContent: styles.interstitial,
-          }}
-        />
-        <section className={styles.cardSection}>
-          <DzTitle
-            // Temporary fix to match text sizes with the design.
-            // A set of rules will be created by the design team to remove this logic
-            titleSize={isSmall ? TEXT_SIZES.MEDIUM : TEXT_SIZES.XL}
-            titleType={TITLE_TYPES.H2}
-            title={nowAvailableData.title}
+
+        <section>
+          <h2 className="sr-only">Get Alerts About New Releases</h2>
+          <DzInterstitial
+            data={{
+              ...interstitialProps,
+              customDescriptionClass: styles.interstitialTitle,
+              classNameContent: styles.interstitial,
+              customClass: styles.interstitialWrapper,
+            }}
           />
-          <DzCard {...nowAvailableData.card} />
         </section>
-        <section className={styles.cardSection}>
-          <DzTitle
-            titleSize={isSmall ? TEXT_SIZES.MEDIUM : TEXT_SIZES.XL}
-            titleType={TITLE_TYPES.H2}
-            title={comingSoonData.title}
+
+        <section className={styles.heroSection}>
+          <DzTitleMolecule
+            type={DzTitleMoleculeTypes.MOLECULE}
+            data={{
+              title: nowAvailable.title,
+              titleProps: {titleType: TITLE_TYPES.H2},
+            }}
           />
-          <DzCard {...comingSoonData.card} />
+          <DzHero {...nowAvailableData} />
         </section>
+        <section className={styles.heroSection}>
+          <DzTitleMolecule
+            type={DzTitleMoleculeTypes.MOLECULE}
+            data={{
+              title: comingSoon.title,
+              titleProps: {titleType: TITLE_TYPES.H2},
+            }}
+          />
+          <DzHero {...comingSoonData} />
+        </section>
+
         <DzComplexGrid
           textProps={{text: artworksGrid.Title, className: styles.textGrid}}
           {...artworksData}
         />
-        <DzInterstitial {...interstitialData} />
-        {carouselCards ? renderCarousel(carouselCards) : null}
-        <div className={styles.spacer}></div>
-      </div>
+
+        <section>
+          <h2 className="sr-only">Sign Up</h2>
+          <DzInterstitial {...interstitialData} />
+        </section>
+
+        {carouselCards ? (
+          <section>
+            <h2 className="sr-only">Highlights</h2>
+            {renderCarousel(carouselCards)}
+          </section>
+        ) : null}
+      </FullWidthFlexCol>
     </DzColumn>
   )
 }

@@ -24,6 +24,8 @@ import {
   UPCOMING_FAIRS_URL,
   VIEW_ALL_TITLE,
 } from '@/common/constants/commonCopies'
+import {FullWidthFlexCol} from '@/components/containers/layout/FullWidthFlexCol'
+import {ContainerTitle} from '@/components/containers/title/ContainerTitle'
 
 import styles from './collect.module.css'
 import {
@@ -77,11 +79,8 @@ export const CollectContainer: FC<CollectContainerProps> = ({data}) => {
   return (
     <>
       <DzColumn span={12}>
-        <DzTitleMolecule
-          type={DzTitleMoleculeTypes.PAGE}
-          data={{title, customClass: styles.titleSpacing, titleProps: {titleType: TITLE_TYPES.H1}}}
-        />
-        <div className={styles.collectContainer}>
+        <ContainerTitle title={title} />
+        <FullWidthFlexCol>
           <DzHero items={[heroData]} />
           <div className={styles.sectionWithTitleMolecule}>
             <DzTitleMolecule
@@ -133,8 +132,7 @@ export const CollectContainer: FC<CollectContainerProps> = ({data}) => {
           <div className="-mx-5">
             <DzInterstitial {...interstitialData} />
           </div>
-          <div></div>
-        </div>
+        </FullWidthFlexCol>
       </DzColumn>
     </>
   )

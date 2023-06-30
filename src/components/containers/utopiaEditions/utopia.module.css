@@ -1,22 +1,9 @@
-.pageContainer {
-  @apply flex
-    w-full
-    flex-col
-    gap-[3.75rem]
-    md:gap-[7.5rem];
-}
-
-.pageTitleContainer {
-  @apply my-[3.75rem];
-}
-
-.pageTitle {
-  @apply text-xl
-    capitalize md:text-xxl;
-}
-
 .interstitial {
-  @apply gap-10 px-0 sm:py-[3.75rem];
+  @apply w-auto gap-10 px-0 py-[3.75rem]	md:w-[57.813rem];
+}
+
+.interstitialWrapper {
+  @apply min-h-min py-0;
 }
 
 .interstitialTitle {
@@ -24,14 +11,14 @@
   md:!text-lg;
 }
 
-.cardSection {
+.heroSection {
   @apply flex
   flex-col
   gap-10;
 }
 
 .textGrid {
-  @apply text-md md:text-xl;
+  @apply mt-[3.75rem] mb-4 text-md md:mt-0 md:mb-0 md:text-xl;
 }
 
 .spacer {

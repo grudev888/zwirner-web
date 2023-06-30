@@ -1,30 +1,6 @@
 .fullSection {
   @apply -mx-5;
 }
-.titleSpacing {
-  @apply my-[3.75rem];
-}
-.collectContainer {
-  @apply flex
-  w-full
-  flex-col
-  gap-[3.75rem]
-  md:gap-[7.5rem];
-}
-.pageTitle {
-  @apply text-xl
-    md:text-xxl;
-}
-.pageTitleContainer {
-  @apply mt-10
-  mb-5
-  md:mt-[3.75rem]
-  md:mb-10;
-}
-.titleSection {
-  @apply text-md
-  md:text-xl;
-}
 .sectionWithTitleMolecule {
   @apply flex
     flex-col

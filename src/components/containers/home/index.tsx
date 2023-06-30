@@ -23,6 +23,7 @@ import {
   mapInterstitialComponents,
   mapTabsLocations,
 } from './mapper'
+import {FullWidthFlexCol} from '@/components/containers/layout/FullWidthFlexCol'
 interface HomeContainerProps {
   data: any
 }
@@ -53,57 +54,59 @@ export const HomeContainer: FC<HomeContainerProps> = ({data}) => {
   )
 
   return (
-    <DzColumn span={12} className={styles.homeContainer} display={['flex', 'flex']}>
-      <section>
-        <h2 className="sr-only">Highlights</h2>
-        <DzHero items={itemsHeroCarousel} />
-      </section>
-
-      <section>
-        <h2 className="sr-only">Featured</h2>
-        <DzSplit type={SPLIT_TYPES.SHORT} data={featuredContent} />
-      </section>
-
-      {firstCarouselCards && (
+    <DzColumn span={12}>
+      <FullWidthFlexCol>
         <section>
-          <h2 className="sr-only">Now Open</h2>
-          {renderCarousel(firstCarouselCards)}
+          <h2 className="sr-only">Highlights</h2>
+          <DzHero items={itemsHeroCarousel} />
         </section>
-      )}
 
-      {secondCarouselCards && (
         <section>
-          <h2 className="sr-only">Selected Press</h2>
-          {renderCarousel(secondCarouselCards)}
+          <h2 className="sr-only">Featured</h2>
+          <DzSplit type={SPLIT_TYPES.SHORT} data={featuredContent} />
         </section>
-      )}
 
-      {gridData && (
+        {firstCarouselCards && (
+          <section>
+            <h2 className="sr-only">Now Open</h2>
+            {renderCarousel(firstCarouselCards)}
+          </section>
+        )}
+
+        {secondCarouselCards && (
+          <section>
+            <h2 className="sr-only">Selected Press</h2>
+            {renderCarousel(secondCarouselCards)}
+          </section>
+        )}
+
+        {gridData && (
+          <section>
+            <h2 className="sr-only">News & Museum Exhibitions</h2>
+            <DzGridColumns className={styles.grid}>
+              {gridData.map((article, index) => (
+                <DzColumn span={4} key={`article-${index}`}>
+                  <DzCard type={CARD_TYPES.CONTENT} data={{...article, size: CardSizes['4col']}} />
+                </DzColumn>
+              ))}
+            </DzGridColumns>
+          </section>
+        )}
+
         <section>
-          <h2 className="sr-only">News & Museum Exhibitions</h2>
-          <DzGridColumns className={styles.grid}>
-            {gridData.map((article, index) => (
-              <DzColumn span={4} key={`article-${index}`}>
-                <DzCard type={CARD_TYPES.CONTENT} data={{...article, size: CardSizes['4col']}} />
-              </DzColumn>
-            ))}
-          </DzGridColumns>
+          <h2 className="sr-only">Subscribe</h2>
+          <DzInterstitial data={{...interstitialData, customClass: styles.fullSection}} />
         </section>
-      )}
 
-      <section>
-        <h2 className="sr-only">Subscribe</h2>
-        <DzInterstitial data={{...interstitialData, customClass: styles.fullSection}} />
-      </section>
-
-      <section>
-        <h2 className="sr-only">Locations</h2>
-        <DzTabsCards
-          className={cn(styles.spacer, styles.fullSection)}
-          tabs={tabsLocations}
-          span={[12, 3]}
-        />
-      </section>
+        <section>
+          <h2 className="sr-only">Locations</h2>
+          <DzTabsCards
+            className={cn(styles.spacer, styles.fullSection)}
+            tabs={tabsLocations}
+            span={[12, 3]}
+          />
+        </section>
+      </FullWidthFlexCol>
     </DzColumn>
   )
 }
