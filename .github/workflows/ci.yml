@@ -69,7 +69,6 @@ jobs:
         id: waitFor200
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          vercel_password: ${{ secrets.PREVIEW_ENV_PASSWORD }}
           max_timeout: 600
       - name: Run tests
         run: yarn test:e2e
