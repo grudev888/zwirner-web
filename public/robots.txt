@@ -1,20 +1,23 @@
 User-agent: *
-Allow: /
-Disallow: /api/*
-Disallow: /studio/*
+Disallow: /
+
+## TODO Re-enable before go live
+# Allow: /
+# Disallow: /api/*
+# Disallow: /studio/*
 # Sitemap: https://www.davidzwirner.com/sitemap.xml
-
-
-# MJ12bot Blocked.
-User-agent: MJ12bot
-Crawl-delay: 10
-
-# BLEXBot Delay.
-User-agent: BLEXBot
-Crawl-delay: 10
-
-# Baidu
-User-agent: Baiduspider
-User-agent: baiduspider
-User-agent: Baiduspider+
-Crawl-delay: 10
+#
+#
+# # MJ12bot Blocked.
+# User-agent: MJ12bot
+# Crawl-delay: 10
+#
+# # BLEXBot Delay.
+# User-agent: BLEXBot
+# Crawl-delay: 10
+#
+# # Baidu
+# User-agent: Baiduspider
+# User-agent: baiduspider
+# User-agent: Baiduspider+
+# Crawl-delay: 10
