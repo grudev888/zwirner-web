@@ -123,7 +123,7 @@ export const mapTabsLocations = (data: any) => {
 
       const currentTime = new Date()
 
-      const availability = parseAvailability(hours, currentTime).some(
+      const availability = parseAvailability(hours, currentTime)?.some(
         (time: {from: Date; to: Date}) =>
           currentTime.getTime() <= time.to.getTime() && currentTime.getTime() >= time.from.getTime()
       )

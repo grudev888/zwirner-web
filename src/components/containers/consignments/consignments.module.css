@@ -3,7 +3,3 @@
   w-full
   md:h-auto;
 }
-.spacer {
-  @apply md:h-[3.75rem]
-    md:w-full;
-}

@@ -7,6 +7,7 @@ import {
 } from '@portabletext/react'
 import {
   CARD_TYPES,
+  CardSizes,
   DzCard,
   DzColumn,
   DzGridColumns,
@@ -57,6 +58,7 @@ export const DzPortableText: FC<DzPortableTextProps> = ({portableProps, customSt
                   type={CARD_TYPES.MEDIA}
                   data={{
                     id: _key,
+                    size: CardSizes['10col'],
                     media: {
                       type: MEDIA_TYPES.IMAGE,
                       ImgElement: Image,
@@ -95,7 +97,7 @@ export const DzPortableText: FC<DzPortableTextProps> = ({portableProps, customSt
               openNewTab={target}
               variant={LINK_VARIANTS.TEXT}
               className={styles.link}
-              textLinkSize={TEXT_LINK_SIZES.LARGE}
+              textLinkSize={TEXT_LINK_SIZES.MD}
             >
               {children}
             </DzLink>
