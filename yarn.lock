@@ -1122,6 +1122,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@sanity/client@npm:^5":
+  version: 5.4.2
+  resolution: "@sanity/client@npm:5.4.2"
+  dependencies:
+    "@sanity/eventsource": 5
+    get-it: ^8.1
+    rxjs: 7
+  checksum: 289e83b7c12eb0789f59b546b68f12e5f36b67acd780d454b6d16cc9b9740940e6a899cf005bc93c143dde163cba8d671b8b9a73a4309d14ca07442093ea46ef
+  languageName: node
+  linkType: hard
+
 "@sanity/client@npm:^6.0.0, @sanity/client@npm:^6.0.1, @sanity/client@npm:^6.1.1":
   version: 6.1.1
   resolution: "@sanity/client@npm:6.1.1"
@@ -1169,20 +1180,20 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@sanity/preview-kit@npm:^1.5.0":
-  version: 1.5.3
-  resolution: "@sanity/preview-kit@npm:1.5.3"
+"@sanity/preview-kit@npm:^1.3":
+  version: 1.5.4
+  resolution: "@sanity/preview-kit@npm:1.5.4"
   dependencies:
     "@sanity/client": ^6.1.1
     "@sanity/eventsource": ^5.0.0
     "@sanity/groq-store": ^2.1.0
-    "@vercel/stega": ^0.0.4
+    "@vercel/stega": ^0.0.5
     lodash.isplainobject: ^4.0.6
     suspend-react: ^0.0.10
     tiny-invariant: ^1.3.1
   peerDependencies:
     react: ^18.0.0
-  checksum: 2d7b4edeba277dd61b48dd43f267ea74973a6bac03f9d62665d7c55a0974f2eb10effa5424c29eb7d7f77b5c5be2c3709931bff79d1805a721fd2233e10836e9
+  checksum: 4152f9d6ff93c61c3df34c7956da86cf689a8ab57969ba8e0eb960bc1d3efc8a646e75a47c6d8d12a56b268ebaf6d7d898bb322b0dd885f912f22514f84cda66
   languageName: node
   linkType: hard
 
@@ -1196,7 +1207,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@sanity/webhook@npm:^2.0.0":
+"@sanity/webhook@npm:^2":
   version: 2.0.0
   resolution: "@sanity/webhook@npm:2.0.0"
   dependencies:
@@ -1748,16 +1759,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vercel/stega@npm:^0.0.4":
-  version: 0.0.4
-  resolution: "@vercel/stega@npm:0.0.4"
-  checksum: af1f156d6384d1ae089769163e1c556c5b1e2144e539e25240c50a23d00bffec992b8721d7336b3cda8bf8184c29ab53ec6c5ff2037292d43537577042fc5746
+"@vercel/stega@npm:^0.0.5":
+  version: 0.0.5
+  resolution: "@vercel/stega@npm:0.0.5"
+  checksum: acf9a13333b74350630416641895aecf593fcc9ca5e0b12f3a7daf7031d2eb2a4670a499f7d6e013c0559d792582463914c33d39efb9a959c9bc1706a0a995fe
   languageName: node
   linkType: hard
 
-"@zwirner/design-system@npm:0.0.31-beta-1":
-  version: 0.0.31-beta-1
-  resolution: "@zwirner/design-system@npm:0.0.31-beta-1::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40zwirner%2Fdesign-system%2F0.0.31-beta-1%2Fff79d1f7f8e9e081ab9cbc0022af808ed5de283d"
+"@zwirner/design-system@npm:0.0.31-beta-4":
+  version: 0.0.31-beta-4
+  resolution: "@zwirner/design-system@npm:0.0.31-beta-4::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40zwirner%2Fdesign-system%2F0.0.31-beta-4%2Ff5edd56070ecdf2a44879709fc3a3d0f50d2a0fb"
   dependencies:
     "@headlessui/react": ^1.7.10
     "@heroicons/react": ^2.0.15
@@ -1770,7 +1781,7 @@ __metadata:
   peerDependencies:
     react: ">=16"
     react-dom: ^17.0.1
-  checksum: 296aafcd57491c01ec33218b3587d2e3711ee25a590139bcce7f9f3346d07756ae6663c920df37eda405eee7baf5ca725be726665a7682d53e21359cdd277530
+  checksum: f979822d8a944ed10a085d175e16e4e13716b475ad4df06ca63c135990d922eb07de8737555d29e894aff1154a2ab529dc0362cf79cd842f18b1ae1277e7d4a1
   languageName: node
   linkType: hard
 
@@ -3887,6 +3898,24 @@ __metadata:
   languageName: node
   linkType: hard
 
+"get-it@npm:^8.1":
+  version: 8.2.0
+  resolution: "get-it@npm:8.2.0"
+  dependencies:
+    debug: ^4.3.4
+    decompress-response: ^7.0.0
+    follow-redirects: ^1.15.2
+    into-stream: ^6.0.0
+    is-plain-object: ^5.0.0
+    is-retry-allowed: ^2.2.0
+    is-stream: ^2.0.1
+    parse-headers: ^2.0.5
+    progress-stream: ^2.0.0
+    tunnel-agent: ^0.6.0
+  checksum: 37432283a0b248e8151be1599f596f787ef6dbb4c08a8ed11f0a102c8baa5000556579843794e4833fe79569a7c8ea2346a0fb359d9e954295f551395e78f7ae
+  languageName: node
+  linkType: hard
+
 "get-it@npm:^8.1.0":
   version: 8.1.1
   resolution: "get-it@npm:8.1.1"
@@ -4098,10 +4127,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"groq@npm:3, groq@npm:^3.0.0":
+"groq@npm:3":
   version: 3.11.1
   resolution: "groq@npm:3.11.1"
   checksum: 47e87b4f028e0e5001f5e8a42b045f156bb5da2d5ef5307e6e8c86b37e8c22cfea12559eb45b3a47e1c782d098b61fade58a5e180c7fb89df4219748a1b3603d
+  languageName: node
+  linkType: hard
+
+"groq@npm:^3":
+  version: 3.14.1
+  resolution: "groq@npm:3.14.1"
+  checksum: 91d25675250a624fabf388de12884568a4dc925d3ee471f89a188d85f1f792f8388bb99fbe5b363cd0189add453cc71a265bfc0b49f37a809c4b6eef529cb160
   languageName: node
   linkType: hard
 
@@ -5863,24 +5899,23 @@ __metadata:
   languageName: node
   linkType: hard
 
-"next-sanity@npm:^4.3.2":
-  version: 4.3.2
-  resolution: "next-sanity@npm:4.3.2"
+"next-sanity@npm:4.1.5":
+  version: 4.1.5
+  resolution: "next-sanity@npm:4.1.5"
   dependencies:
-    "@sanity/client": ^6.0.0
-    "@sanity/preview-kit": ^1.5.0
-    "@sanity/webhook": ^2.0.0
-    groq: ^3.0.0
+    "@sanity/client": ^5
+    "@sanity/preview-kit": ^1.3
+    "@sanity/webhook": ^2
+    groq: ^3
   peerDependencies:
-    "@sanity/icons": ^2.0.0
-    "@sanity/types": ^3.0.0
-    "@sanity/ui": ^1.0.0
-    "@types/styled-components": ^5.1.0
-    next: ^13.0.0
-    react: ^18.0.0
-    sanity: ^3.0.0
-    styled-components: ^5.2.0
-  checksum: ac9b98fab9c2c662d6d8158fdba3a5bd72d96524aaab71fd0c88b071d2c062c65cb32ec5d020b1caf09a39cc019f11d21bec5c266202db5b6cd81c3caa7c5fb6
+    "@sanity/icons": ^2
+    "@sanity/types": ^3
+    "@sanity/ui": ^1
+    next: ^13
+    react: ^18
+    sanity: ^3
+    styled-components: ^5.2
+  checksum: 39e8caf86c72a0bfb5e95f5901559d24544a6a634ad2e400c0316dcd4645242a26e11324b4f6b2acb80a4efe065db0602ead05a89ba88573c4c022d8abc9772c
   languageName: node
   linkType: hard
 
@@ -7096,7 +7131,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"rxjs@npm:^7.0.0":
+"rxjs@npm:7, rxjs@npm:^7.0.0":
   version: 7.8.1
   resolution: "rxjs@npm:7.8.1"
   dependencies:
@@ -8448,7 +8483,7 @@ __metadata:
     "@types/react-dom": ^18.2.4
     "@types/styled-components": ^5.1.26
     "@typescript-eslint/eslint-plugin": ^5.59.7
-    "@zwirner/design-system": 0.0.31-beta-1
+    "@zwirner/design-system": 0.0.31-beta-4
     autoprefixer: ^10.4.13
     axios: ^1.3.5
     cross-env: ^7.0.3
@@ -8461,7 +8496,7 @@ __metadata:
     jest-environment-jsdom: ^29.4.1
     next: ^13.1.2
     next-recaptcha-v3: ^1.1.5
-    next-sanity: ^4.3.2
+    next-sanity: 4.1.5
     next-seo: ^5.15.0
     postcss: ^8.4.21
     prettier: ^2.8.3
