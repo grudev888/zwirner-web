@@ -43,6 +43,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const message = error instanceof Error ? error.message : String(error)
 
     console.error('[revalidate]', message);
-    return res.status(message.includes('Invalid response 404') ? 404 : 400)
+    //return res.status(message.includes('Invalid response 404') ? 404 : 400)
+    return res.json({revalidated: false})
   }
 }
