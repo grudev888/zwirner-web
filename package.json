@@ -20,7 +20,7 @@
     "test": "yarn type-check && yarn jest --runInBand",
     "test-all": "yarn type-check && yarn lint:fix && yarn format",
     "test:e2e": "playwright test",
-    "type-check": "tsc --noEmit --pretty",
+    "type-check": "tsc --noEmit --pretty"
   },
   "prettier": {
     "bracketSpacing": false,
