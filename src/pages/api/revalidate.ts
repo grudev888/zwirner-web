@@ -1,7 +1,7 @@
 import {NextApiRequest, NextApiResponse} from 'next'
 
-import camelToDash from '@/utils/string/camelToDash'
 import TypesToPathsMap from '@/sanity/typesToPathsMap'
+import camelToDash from '@/utils/string/camelToDash'
 
 /**
  * ISR endpoint called by Sanity Webhook defined in Sanity Project -> API -> Webhooks
