@@ -14,6 +14,8 @@ import {
 import cn from 'classnames'
 import {FC} from 'react'
 
+import {FullWidthFlexCol} from '@/components/containers/layout/FullWidthFlexCol'
+
 import styles from './home.module.css'
 import {
   mapArticlesGrid,
@@ -23,7 +25,6 @@ import {
   mapInterstitialComponents,
   mapTabsLocations,
 } from './mapper'
-import {FullWidthFlexCol} from '@/components/containers/layout/FullWidthFlexCol'
 interface HomeContainerProps {
   data: any
 }

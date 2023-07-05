@@ -15,6 +15,7 @@ import cn from 'classnames'
 import {FC} from 'react'
 
 import {DzPortableText} from '@/common/components/portableText'
+import {FullWidthFlexCol} from '@/components/containers/layout/FullWidthFlexCol'
 
 import styles from './article.module.css'
 import {
@@ -24,7 +25,6 @@ import {
   interstitialMap,
   locationTitleMapper,
 } from './mapper'
-import {FullWidthFlexCol} from '@/components/containers/layout/FullWidthFlexCol'
 
 interface ArticleContainerProps {
   data: any
