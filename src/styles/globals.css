@@ -50,3 +50,7 @@ br {
     src: url(fonts/avenir/AvenirNext-MediumItalic.woff) format('woff');
   }
 }
+
+.grecaptcha-badge {
+  visibility: hidden;
+}
