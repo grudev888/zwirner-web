@@ -9,7 +9,7 @@
 .consignmentsSection {
   @apply flex
   flex-col
-  gap-20;
+  gap-10;
 }
 .textGrid {
   @apply text-md md:text-xl;
