@@ -11,9 +11,9 @@ interface AvailableArtworksProps {
 }
 
 export const AvailableArtworksContainer: FC<AvailableArtworksProps> = ({data}) => {
-  const {artworksGrid, displayNumberOfResults, title} = data ?? {}
-  const {artworks = [], itemsPerRow = 1} = artworksGrid ?? {}
-  const complexGridCard = mapCardsGrid(artworks)
+  const {artworksGrid, title} = data ?? {}
+  const {items = [], displayNumberOfResults, itemsPerRow = 1} = artworksGrid ?? {}
+  const complexGridCard = mapCardsGrid(items)
 
   return (
     <DzColumn span={12}>

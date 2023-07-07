@@ -9,7 +9,7 @@ export const availableArtworksData = groq`
   displayNumberOfResults,
   artworksGrid {
     ...,
-    artworks[]->{${artworkFields}}
+    items[]->{${artworkFields}}
   },
   seo {
     ${pageSEOFields}
