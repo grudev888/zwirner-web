@@ -18,7 +18,7 @@
 }
 
 .textGrid {
-  @apply mb-4 mt-[3.75rem] text-md md:mb-0 md:mt-0 md:text-xl;
+  @apply mt-[3.75rem] mb-4 text-md md:mt-0 md:mb-0 md:text-xl;
 }
 
 .spacer {
