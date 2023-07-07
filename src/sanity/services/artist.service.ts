@@ -16,6 +16,14 @@ export async function getAllArtistPageSlugs(): Promise<any[]> {
   return []
 }
 
+export async function getAllArtistAvailableArtworkPageSlugs(): Promise<any[]> {
+  if (client) {
+    // TODO create artistArtworkPageSlugs query
+    return (await client.fetch(artistPageSlugs)) || []
+  }
+  return []
+}
+
 export async function getArtistPageBySlug(params: any): Promise<any[]> {
   if (client) {
     return (await client.fetch(artistPageBySlug, params)) || []
