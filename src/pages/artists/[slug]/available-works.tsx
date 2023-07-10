@@ -6,9 +6,12 @@ import {getAvailableArtworksDataByArtistSlug} from '@/sanity/services/availableA
 import {PREVIEW_PAGE_TYPE, PreviewPage} from '@/components/containers/previews/pagePreview'
 import {availableArtworksDataByArtistSlug} from '@/sanity/queries/availableArtworks.queries'
 import {SEOComponent} from '@/common/components/seo/seo'
+import ArtistsPageLayout from '@/components/containers/layout/pages/artistsPageLayout'
 
 interface AvailableArtworksCMS {
   artworksPage: any
+  slug: {current: string}
+  title: string
 }
 
 interface PageProps {
@@ -28,7 +31,9 @@ interface PreviewData {
 
 export default function AvailableWorksPage({data, preview}: PageProps) {
   const subPageData = data?.artworksPage[0].availableWorksSubpage
-  const pageData = {artworksGrid: subPageData}
+  const pageData = {artworksGrid: subPageData, title: subPageData?.title}
+  const parentPath = data?.artworksPage[0].slug?.current
+  const parentPageTitle = data?.artworksPage[0].title
   const {seo} = subPageData ?? {}
 
   if (preview) {
@@ -44,7 +49,9 @@ export default function AvailableWorksPage({data, preview}: PageProps) {
   return (
     <>
       <SEOComponent data={seo} />
-      <AvailableArtworksContainer data={pageData} />
+      <ArtistsPageLayout parentPageName={parentPageTitle} parentPath={parentPath}>
+        <AvailableArtworksContainer data={pageData} />
+      </ArtistsPageLayout>
     </>
   )
 }
