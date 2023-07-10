@@ -17,9 +17,10 @@ export const availableArtworksData = groq`
 }`
 
 export const availableArtworksDataByArtistSlug = groq`
-*[_type == "artistDetail" && slug.current == $slug] {
+*[_type == "artistPage" && slug.current == $slug]{
+  ...,
   availableWorksSubpage {
-    artwork[]->
+    ...,
+    items[]->{...}
   }
-}
- `
+}`
