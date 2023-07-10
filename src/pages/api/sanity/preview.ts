@@ -44,6 +44,13 @@ const handler: NextApiHandler = async function preview(req, res) {
     previewData.token = readToken
   }
 
+  if (typeof query.path === 'string') {
+    res.setPreviewData(previewData)
+    res.writeHead(307, {Location: `/${query.path.replace(/,/g, '/')}`})
+    res.end()
+    return
+  }
+
   if (section && slug) {
     res.setPreviewData(previewData)
     res.writeHead(307, {Location: `/${section}/${slug}`})
