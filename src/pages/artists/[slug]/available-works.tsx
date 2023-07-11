@@ -9,7 +9,6 @@ import {GetStaticProps} from 'next'
 import {SEOComponent} from '@/common/components/seo/seo'
 import {AvailableArtworksContainer} from '@/components/containers/availableArtworks'
 import ArtistsPageLayout from '@/components/containers/layout/pages/artistsPageLayout'
-import {getAllArtistAvailableArtworkPageSlugs} from '@/sanity/services/artist.service'
 import {getAvailableArtworksDataByArtistSlug} from '@/sanity/services/availableArtworks.service'
 
 interface AvailableArtworksCMS {
@@ -60,11 +59,6 @@ export default function AvailableWorksPage({data}: PageProps) {
       </ArtistsPageLayout>
     </>
   )
-}
-
-export const getStaticPaths = async () => {
-  const paths = await getAllArtistAvailableArtworkPageSlugs()
-  return {paths, fallback: true}
 }
 
 export const getStaticProps: GetStaticProps<PageProps, Query> = async (ctx) => {
