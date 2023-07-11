@@ -14,8 +14,6 @@ import {getAvailableArtworksDataByArtistSlug} from '@/sanity/services/availableA
 
 interface AvailableArtworksCMS {
   artworksPage: any
-  slug: {current: string}
-  title: string
 }
 
 interface PageProps {
@@ -82,6 +80,7 @@ export const getStaticProps: GetStaticProps<PageProps, Query> = async (ctx) => {
         data: {
           artworksPage: data,
         },
+        preview: false,
         slug: params?.slug || null,
         token: null,
       },
@@ -93,6 +92,7 @@ export const getStaticProps: GetStaticProps<PageProps, Query> = async (ctx) => {
         data: {
           artworksPage: [],
         },
+        preview: false,
         slug: params?.slug || null,
         token: null,
       },
