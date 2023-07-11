@@ -1,5 +1,5 @@
 .backNavContainer {
   height: 1.875rem;
   line-height: 1.875rem;
-  margin-top: 1rem;
+  @apply md:mt-[0.675rem];
 }
