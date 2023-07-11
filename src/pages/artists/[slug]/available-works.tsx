@@ -1,10 +1,16 @@
+import {
+  ButtonModes,
+  DzColumn,
+  DzInterstitial,
+  INTERSTITIAL_TEXT_COLORS,
+} from '@zwirner/design-system'
 import {GetStaticProps} from 'next'
 
+import {SEOComponent} from '@/common/components/seo/seo'
 import {AvailableArtworksContainer} from '@/components/containers/availableArtworks'
+import ArtistsPageLayout from '@/components/containers/layout/pages/artistsPageLayout'
 import {getAllArtistAvailableArtworkPageSlugs} from '@/sanity/services/artist.service'
 import {getAvailableArtworksDataByArtistSlug} from '@/sanity/services/availableArtworks.service'
-import {SEOComponent} from '@/common/components/seo/seo'
-import ArtistsPageLayout from '@/components/containers/layout/pages/artistsPageLayout'
 
 interface AvailableArtworksCMS {
   artworksPage: any
@@ -34,7 +40,25 @@ export default function AvailableWorksPage({data}: PageProps) {
     <>
       <SEOComponent data={seo} />
       <ArtistsPageLayout parentPageName={parentPageTitle} parentPath={parentPath}>
-        <AvailableArtworksContainer data={pageData} />
+        {pageData.artworksGrid?.items?.length === 0 ? (
+          <DzColumn span={12}>
+            <DzInterstitial
+              data={{
+                split: false,
+                title: 'No works available',
+                primaryCta: {
+                  text: 'Inquire',
+                  ctaProps: {
+                    mode: ButtonModes.DARK,
+                  },
+                },
+                textColor: INTERSTITIAL_TEXT_COLORS.BLACK,
+              }}
+            />
+          </DzColumn>
+        ) : (
+          <AvailableArtworksContainer data={pageData} />
+        )}
       </ArtistsPageLayout>
     </>
   )
