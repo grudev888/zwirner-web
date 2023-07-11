@@ -22,3 +22,13 @@ export async function getArtistPageBySlug(params: any): Promise<any[]> {
   }
   return []
 }
+
+export async function getAllArtistSubPageSlugs(subPageSlugName: string): Promise<any[]> {
+  if (client) {
+    const allArtistPageSlugs = (await client.fetch(artistPageSlugs)) || []
+    return allArtistPageSlugs.map((item: any) => ({
+      params: {slug: `${item.params.slug}/${subPageSlugName}`},
+    }))
+  }
+  return []
+}
