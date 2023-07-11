@@ -29,7 +29,7 @@ interface Query {
 
 export default function AvailableWorksPage({data}: PageProps) {
   const subPageData = data?.artworksPage[0]?.availableWorksSubpage ?? {}
-  const pageData = {artworksGrid: subPageData, title: subPageData?.title}
+  const pageData = {artworksGrid: subPageData || {items: []}, title: subPageData?.title}
   const parentPath = data?.artworksPage[0]?.slug?.current
   const parentPageTitle = data?.artworksPage?.[0]?.title
   const {seo} = subPageData ?? {}
