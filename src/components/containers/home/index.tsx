@@ -3,6 +3,7 @@ import {
   CardSizes,
   DzCard,
   DzCarousel,
+  DzCarouselCardSize,
   DzColumn,
   DzGridColumns,
   DzHero,
@@ -42,7 +43,7 @@ export const HomeContainer: FC<HomeContainerProps> = ({data}) => {
 
   const renderCarousel = (data: any) => (
     <DzColumn span={12}>
-      <DzCarousel slideSpanDesktop={6} className={styles.fullSection}>
+      <DzCarousel size={DzCarouselCardSize.L} className={styles.fullSection}>
         {data?.map((card: any) => (
           <DzCard
             key={card.id}

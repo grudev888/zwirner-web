@@ -3,6 +3,7 @@ import {
   CardSizes,
   DzCard,
   DzCarousel,
+  DzCarouselCardSize,
   DzColumn,
   DzEditorial,
   DzEditorialProps,
@@ -56,7 +57,7 @@ export const ConsignmentsContainer: FC<ConsignmentsContainerProps> = ({data}) =>
 
   const renderCarousel = (data: any) => (
     <DzColumn span={12} className={styles.fullSection}>
-      <DzCarousel>
+      <DzCarousel size={DzCarouselCardSize.L}>
         {data?.map((card: any) => (
           <div className="w-full" key={card.id}>
             <DzCard data={{...card, size: CardSizes['12col']}} type={CARD_TYPES.CONTENT} />

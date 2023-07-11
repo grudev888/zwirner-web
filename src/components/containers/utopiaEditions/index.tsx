@@ -3,6 +3,7 @@ import {
   CardSizes,
   DzCard,
   DzCarousel,
+  DzCarouselCardSize,
   DzColumn,
   DzComplexGrid,
   DzHero,
@@ -53,7 +54,7 @@ export const UtopiaEditionsContainer: FC<UtopiaEditionsProps> = ({data}) => {
 
   const renderCarousel = (data: any) => (
     <DzColumn span={12} className={styles.fullSection}>
-      <DzCarousel slideSpanDesktop={10} slideSpanMobile={11}>
+      <DzCarousel size={DzCarouselCardSize.L}>
         {data?.map((card: any) => (
           <DzCard
             key={card.id}
