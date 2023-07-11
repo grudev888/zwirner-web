@@ -18,8 +18,10 @@ export async function getAllArtistPageSlugs(): Promise<any[]> {
 
 export async function getAllArtistAvailableArtworkPageSlugs(): Promise<any[]> {
   if (client) {
-    // TODO create artistArtworkPageSlugs query
-    return (await client.fetch(artistPageSlugs)) || []
+    const allArtistPageSlugs = (await client.fetch(artistPageSlugs)) || []
+    return allArtistPageSlugs.map((item: any) => ({
+      params: {slug: `${item.params.slug}/available-works`},
+    }))
   }
   return []
 }
