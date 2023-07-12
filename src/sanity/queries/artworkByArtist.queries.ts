@@ -10,9 +10,7 @@ export const artworkByArtist = groq`
 
 export const artworksDataByArtistSlug = groq`
 *[_type == "artistPage" && slug.current == $slug]{
-  ...,
   surveySubpage {
-    ...,
     items[]->{...}
   }
 }`
