@@ -13,7 +13,10 @@ export const consignmentsData = groq`
   consignmentForm,
   interstitial,
   headerMedia,
-  bodyCarousel[]->,
+  bodyCarousel{
+    ...,
+    items[]->,
+  },
   seo {
     ${pageSEOFields}
   },
