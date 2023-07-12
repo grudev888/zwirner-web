@@ -1,6 +1,7 @@
 import {PreviewSuspense} from 'next-sanity/preview'
 import {FC, Fragment} from 'react'
 
+import ArtistSurveyPageContainer from '@/components/containers/pages/artists/survey/index'
 import {SEOComponent} from '@/common/components/seo/seo'
 import {ArticleContainer} from '@/components/containers/articles/article'
 import {AvailableArtworksContainer} from '@/components/containers/availableArtworks'
@@ -17,6 +18,7 @@ export const PREVIEW_PAGE_TYPE = {
   UTOPIA: 'utopia-editions',
   COLLECT: 'collect',
   SINGLE_ARTICLE: 'single-article',
+  ARTIST_DETAIL_SURVEY: 'artist-detail-survey',
 }
 
 export const PREVIEW_PAGE_TYPE_NAMES = [
@@ -26,6 +28,7 @@ export const PREVIEW_PAGE_TYPE_NAMES = [
   PREVIEW_PAGE_TYPE.UTOPIA,
   PREVIEW_PAGE_TYPE.COLLECT,
   PREVIEW_PAGE_TYPE.SINGLE_ARTICLE,
+  PREVIEW_PAGE_TYPE.ARTIST_DETAIL_SURVEY,
 ] as const
 
 export type PreviewPageType = (typeof PREVIEW_PAGE_TYPE_NAMES)[number]
@@ -55,6 +58,9 @@ const containerPerType = {
   },
   [PREVIEW_PAGE_TYPE.SINGLE_ARTICLE]: (data: any) => {
     return <ArticleContainer data={data} />
+  },
+  [PREVIEW_PAGE_TYPE.ARTIST_DETAIL_SURVEY]: (data: any) => {
+    return <ArtistSurveyPageContainer data={data} />
   },
 }
 
