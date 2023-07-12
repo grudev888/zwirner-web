@@ -1,6 +1,7 @@
 import {
   CARD_TYPES,
   CardSizes,
+  carouselSizeToCardSize,
   DzCard,
   DzCarousel,
   DzCarouselCardSize,
@@ -47,7 +48,7 @@ export const HomeContainer: FC<HomeContainerProps> = ({data}) => {
         {data?.map((card: any) => (
           <DzCard
             key={card.id}
-            data={{...card, size: [CardSizes['10col'], CardSizes['6col']]}}
+            data={{...card, size: [CardSizes['10col'], carouselSizeToCardSize[size]]}}
             type={CARD_TYPES.CONTENT}
           />
         ))}

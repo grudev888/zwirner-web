@@ -1,6 +1,7 @@
 import {
   CARD_TYPES,
   CardSizes,
+  carouselSizeToCardSize,
   DzCard,
   DzCarousel,
   DzCarouselCardSize,
@@ -70,7 +71,10 @@ export const CollectContainer: FC<CollectContainerProps> = ({data}) => {
       <DzCarousel size={size}>
         {data?.map((card: any) => (
           <div className="w-full" key={card.id}>
-            <DzCard data={{...card, size: CardSizes['12col']}} type={CARD_TYPES.CONTENT} />
+            <DzCard
+              data={{...card, size: [CardSizes['10col'], carouselSizeToCardSize[size]]}}
+              type={CARD_TYPES.CONTENT}
+            />
           </div>
         ))}
       </DzCarousel>
