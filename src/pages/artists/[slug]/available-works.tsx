@@ -1,63 +1,40 @@
-import {
-  ButtonModes,
-  DzColumn,
-  DzInterstitial,
-  INTERSTITIAL_TEXT_COLORS,
-} from '@zwirner/design-system'
 import {GetStaticProps} from 'next'
 
 import {SEOComponent} from '@/common/components/seo/seo'
-import {AvailableArtworksContainer} from '@/components/containers/availableArtworks'
-import ArtistsPageLayout from '@/components/containers/layout/pages/artistsPageLayout'
 import {getAllArtistAvailableArtworkPageSlugs} from '@/sanity/services/artist.service'
 import {getAvailableArtworksDataByArtistSlug} from '@/sanity/services/availableArtworks.service'
-
-interface AvailableArtworksCMS {
-  artworksPage: any
-}
+import {availableArtworksDataByArtistSlug} from '@/sanity/queries/availableArtworks.queries'
+import {PREVIEW_PAGE_TYPE, PreviewPage} from '@/components/containers/previews/pagePreview'
+import ArtistAvailableWorksPageContainer from '@/components/containers/pages/artists/available-works/index'
 
 interface PageProps {
-  data: AvailableArtworksCMS
+  data: any
   preview: boolean
-  slug: string | null
-  token: string | null
+  querySlug: any
 }
 
 interface Query {
   [key: string]: string
 }
 
-export default function AvailableWorksPage({data}: PageProps) {
-  const subPageData = data?.artworksPage[0]?.availableWorksSubpage ?? {}
-  const pageData = {artworksGrid: subPageData || {items: []}, title: subPageData?.title}
-  const parentPath = data?.artworksPage[0]?.slug?.current
-  const parentPageTitle = data?.artworksPage?.[0]?.title
-  const {seo} = subPageData ?? {}
+export default function AvailableWorksPage({data, preview, querySlug}: PageProps) {
+  const [artworksData] = data ?? []
+  const {seo} = data ?? {}
 
+  if (preview) {
+    return (
+      <PreviewPage
+        query={availableArtworksDataByArtistSlug}
+        params={querySlug}
+        seo={seo}
+        type={PREVIEW_PAGE_TYPE.ARTIST_DETAIL_AVAILABLE_WORKS}
+      />
+    )
+  }
   return (
     <>
       <SEOComponent data={seo} />
-      <ArtistsPageLayout parentPageName={parentPageTitle} parentPath={parentPath}>
-        {pageData.artworksGrid?.items?.length === 0 ? (
-          <DzColumn span={12}>
-            <DzInterstitial
-              data={{
-                split: false,
-                title: 'No works available',
-                primaryCta: {
-                  text: 'Inquire',
-                  ctaProps: {
-                    mode: ButtonModes.DARK,
-                  },
-                },
-                textColor: INTERSTITIAL_TEXT_COLORS.BLACK,
-              }}
-            />
-          </DzColumn>
-        ) : (
-          <AvailableArtworksContainer data={pageData} />
-        )}
-      </ArtistsPageLayout>
+      <ArtistAvailableWorksPageContainer data={artworksData} />
     </>
   )
 }
@@ -68,34 +45,28 @@ export const getStaticPaths = async () => {
 }
 
 export const getStaticProps: GetStaticProps<PageProps, Query> = async (ctx) => {
-  const {params = {}} = ctx
+  const {params = {}, preview = false} = ctx
+  const querySlug = {
+    slug: `/artists/${params.slug}`,
+  }
 
-  try {
-    const data = await getAvailableArtworksDataByArtistSlug({
-      slug: `/artists/${params.slug}`,
-    })
-
+  if (preview) {
     return {
       props: {
-        data: {
-          artworksPage: data,
-        },
-        preview: false,
-        slug: params?.slug || null,
-        token: null,
+        data: null,
+        preview,
+        querySlug,
       },
     }
-  } catch (e: any) {
-    console.error('ERROR FETCHING ARTIST AVAILABLE ARTWORKS DATA:', e.message)
-    return {
-      props: {
-        data: {
-          artworksPage: [],
-        },
-        preview: false,
-        slug: params?.slug || null,
-        token: null,
-      },
-    }
+  }
+
+  const data = await getAvailableArtworksDataByArtistSlug(querySlug)
+
+  return {
+    props: {
+      data,
+      preview: false,
+      querySlug: null,
+    },
   }
 }

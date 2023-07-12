@@ -18,9 +18,11 @@ export const availableArtworksData = groq`
 
 export const availableArtworksDataByArtistSlug = groq`
 *[_type == "artistPage" && slug.current == $slug]{
-  ...,
+  title,
+  slug { current },
   availableWorksSubpage {
-    ...,
+    title,
+    slug,
     items[]->{...}
   }
 }`
