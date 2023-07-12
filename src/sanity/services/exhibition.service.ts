@@ -1,5 +1,9 @@
 import {client} from '@/sanity/client'
-import {allExhibitions, exhibitionById} from '@/sanity/queries/exhibition.queries'
+import {
+  allExhibitions,
+  exhibitionById,
+  exhibitionsByArtistSlug,
+} from '@/sanity/queries/exhibition.queries'
 import {exhibitionPageBySlug, exhibitionPageSlugs} from '@/sanity/queries/exhibitionPage.queries'
 
 export async function getAllExhibitions(): Promise<any[]> {
@@ -26,6 +30,13 @@ export async function getAllExhibitionPagesSlugs(): Promise<any[]> {
 export async function getExhibitionPageBySlug(params: any): Promise<any[]> {
   if (client) {
     return (await client.fetch(exhibitionPageBySlug, params)) || []
+  }
+  return []
+}
+
+export async function getExhibitionsByArtistSlug(params: any): Promise<any[]> {
+  if (client) {
+    return (await client.fetch(exhibitionsByArtistSlug, params)) || []
   }
   return []
 }

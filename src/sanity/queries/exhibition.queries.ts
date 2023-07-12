@@ -39,3 +39,6 @@ export const exhibitionById = groq`
 *[_type == "exhibition" && _id == $exhibitionId ] {
   ...
 }`
+
+export const exhibitionsByArtistSlug = groq`
+`
