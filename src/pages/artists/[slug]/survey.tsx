@@ -3,6 +3,8 @@ import {GetStaticProps} from 'next'
 import {SEOComponent} from '@/common/components/seo/seo'
 import {AvailableArtworksContainer} from '@/components/containers/availableArtworks'
 import ArtistsPageLayout from '@/components/containers/layout/pages/artistsPageLayout'
+import {PREVIEW_PAGE_TYPE, PreviewPage} from '@/components/containers/previews/pagePreview'
+import {artworksDataByArtistSlug} from '@/sanity/queries/artworkByArtist.queries'
 import {getAllArtistSubPageSlugs} from '@/sanity/services/artist.service'
 import {getArtworkByArtist} from '@/sanity/services/artwork.service'
 
@@ -21,12 +23,23 @@ interface Query {
   [key: string]: string
 }
 
-export default function SurveyPage({data}: PageProps) {
+export default function SurveyPage({data, preview}: PageProps) {
   const subPageData = data?.surveyPage[0]?.surveySubpage ?? {}
   const pageData = {artworksGrid: subPageData || {items: []}, title: subPageData?.title}
   const parentPath = data?.surveyPage[0]?.slug?.current
   const parentPageTitle = data?.surveyPage?.[0]?.title
   const {seo} = subPageData ?? {}
+
+  if (preview) {
+    return (
+      <PreviewPage
+        query={artworksDataByArtistSlug}
+        params={{slug: parentPath}}
+        seo={seo}
+        type={PREVIEW_PAGE_TYPE.AVAILABLE_WORKS}
+      />
+    )
+  }
 
   return (
     <ArtistsPageLayout parentPageName={parentPageTitle} parentPath={parentPath}>
