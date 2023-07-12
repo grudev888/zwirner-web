@@ -6,12 +6,12 @@ import ArtistsPageLayout from '@/components/containers/layout/pages/artistsPageL
 import {getAllArtistSubPageSlugs} from '@/sanity/services/artist.service'
 import {getArtworkByArtist} from '@/sanity/services/artwork.service'
 
-interface AvailableArtworksCMS {
-  artworksPage: any
+interface SurveyCMS {
+  surveyPage: any
 }
 
 interface PageProps {
-  data: AvailableArtworksCMS
+  data: SurveyCMS
   preview: boolean
   slug: string | null
   token: string | null
@@ -22,10 +22,10 @@ interface Query {
 }
 
 export default function SurveyPage({data}: PageProps) {
-  const subPageData = data?.artworksPage[0]?.surveySubpage ?? {}
+  const subPageData = data?.surveyPage[0]?.surveySubpage ?? {}
   const pageData = {artworksGrid: subPageData || {items: []}, title: subPageData?.title}
-  const parentPath = data?.artworksPage[0]?.slug?.current
-  const parentPageTitle = data?.artworksPage?.[0]?.title
+  const parentPath = data?.surveyPage[0]?.slug?.current
+  const parentPageTitle = data?.surveyPage?.[0]?.title
   const {seo} = subPageData ?? {}
 
   return (
@@ -52,7 +52,7 @@ export const getStaticProps: GetStaticProps<PageProps, Query> = async (ctx) => {
     return {
       props: {
         data: {
-          artworksPage: data,
+          surveyPage: data,
         },
         preview: false,
         slug: params?.slug || null,
@@ -60,11 +60,11 @@ export const getStaticProps: GetStaticProps<PageProps, Query> = async (ctx) => {
       },
     }
   } catch (e: any) {
-    console.error('ERROR FETCHING ARTIST AVAILABLE ARTWORKS DATA:', e.message)
+    console.error('ERROR FETCHING ARTIST SURVEY DATA:', e.message)
     return {
       props: {
         data: {
-          artworksPage: [],
+          surveyPage: [],
         },
         preview: false,
         slug: params?.slug || null,
