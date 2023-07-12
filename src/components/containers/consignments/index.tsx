@@ -52,12 +52,12 @@ export const ConsignmentsContainer: FC<ConsignmentsContainerProps> = ({data}) =>
   const featuredMediaProps = featuredMediaMap(featuredMedia)
   const interstitialProps = interstitialMap(interstitial)
   const bodyData = bodyDataMap(body)
-  const carouselCards = mapCarouselCards(bodyCarousel)
+  const carouselCards = mapCarouselCards(bodyCarousel?.items)
   const footerInterstitialData = mapFooterInterstitial(footerInterstitial)
 
-  const renderCarousel = (data: any) => (
+  const renderCarousel = (data: any, size: DzCarouselCardSize = DzCarouselCardSize.L) => (
     <DzColumn span={12} className={styles.fullSection}>
-      <DzCarousel size={DzCarouselCardSize.L}>
+      <DzCarousel size={size}>
         {data?.map((card: any) => (
           <div className="w-full" key={card.id}>
             <DzCard data={{...card, size: CardSizes['12col']}} type={CARD_TYPES.CONTENT} />
@@ -91,7 +91,7 @@ export const ConsignmentsContainer: FC<ConsignmentsContainerProps> = ({data}) =>
             )
           }
         )}
-        {carouselCards ? renderCarousel(carouselCards) : null}
+        {carouselCards ? renderCarousel(carouselCards, bodyCarousel?.size) : null}
         <DzInterstitial {...footerInterstitialData} />
       </FullWidthFlexCol>
     </DzColumn>

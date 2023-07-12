@@ -38,12 +38,12 @@ export const HomeContainer: FC<HomeContainerProps> = ({data}) => {
   const interstitialData = mapInterstitialComponents(interstitial)
   const tabsLocations = mapTabsLocations(locations)
 
-  const firstCarouselCards = mapCarouselCards(firstCarousel)
-  const secondCarouselCards = mapCarouselCards(secondCarousel)
+  const firstCarouselCards = mapCarouselCards(firstCarousel?.items)
+  const secondCarouselCards = mapCarouselCards(secondCarousel?.items)
 
-  const renderCarousel = (data: any) => (
+  const renderCarousel = (data: any, size: DzCarouselCardSize = DzCarouselCardSize.L) => (
     <DzColumn span={12}>
-      <DzCarousel size={DzCarouselCardSize.L} className={styles.fullSection}>
+      <DzCarousel size={size} className={styles.fullSection}>
         {data?.map((card: any) => (
           <DzCard
             key={card.id}
@@ -71,14 +71,14 @@ export const HomeContainer: FC<HomeContainerProps> = ({data}) => {
         {firstCarouselCards && (
           <section>
             <h2 className="sr-only">Now Open</h2>
-            {renderCarousel(firstCarouselCards)}
+            {renderCarousel(firstCarouselCards, firstCarousel?.size)}
           </section>
         )}
 
         {secondCarouselCards && (
           <section>
             <h2 className="sr-only">Selected Press</h2>
-            {renderCarousel(secondCarouselCards)}
+            {renderCarousel(secondCarouselCards, secondCarousel?.size)}
           </section>
         )}
 
