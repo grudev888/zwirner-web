@@ -1,35 +1,31 @@
 import {GetStaticProps} from 'next'
 
-import ArtistSurveyPageContainer from '@/components/containers/pages/artists/survey/index'
 import {SEOComponent} from '@/common/components/seo/seo'
+import ArtistSurveyPageContainer from '@/components/containers/pages/artists/survey/index'
 import {PREVIEW_PAGE_TYPE, PreviewPage} from '@/components/containers/previews/pagePreview'
 import {artworksDataByArtistSlug} from '@/sanity/queries/artworkByArtist.queries'
 import {getAllArtistSubPageSlugs} from '@/sanity/services/artist.service'
 import {getArtworkByArtist} from '@/sanity/services/artwork.service'
 
-interface SurveyCMS {
-  surveyPage: any
-}
-
 interface PageProps {
-  data: SurveyCMS
+  data: any
   preview: boolean
+  querySlug: any
 }
 
 interface Query {
   [key: string]: string
 }
 
-export default function SurveyPage({data, preview}: PageProps) {
-  const subPageData = data?.surveyPage[0]?.surveySubpage ?? {}
-  const parentPath = data?.surveyPage[0]?.slug?.current
-  const {seo} = subPageData ?? {}
+export default function SurveyPage({data, preview, querySlug}: PageProps) {
+  const [surveyData] = data ?? []
+  const {seo} = surveyData ?? {}
 
   if (preview) {
     return (
       <PreviewPage
         query={artworksDataByArtistSlug}
-        params={{slug: parentPath}}
+        params={querySlug}
         seo={seo}
         type={PREVIEW_PAGE_TYPE.ARTIST_DETAIL_SURVEY}
       />
@@ -39,7 +35,7 @@ export default function SurveyPage({data, preview}: PageProps) {
   return (
     <>
       <SEOComponent data={seo} />
-      <ArtistSurveyPageContainer data={data} />
+      <ArtistSurveyPageContainer data={surveyData} />
     </>
   )
 }
@@ -50,34 +46,28 @@ export const getStaticPaths = async () => {
 }
 
 export const getStaticProps: GetStaticProps<PageProps, Query> = async (ctx) => {
-  const {params = {}} = ctx
+  const {params = {}, preview = false} = ctx
+  const querySlug = {
+    slug: `/artists/${params.slug}`,
+  }
 
-  try {
-    const data = await getArtworkByArtist({
-      slug: `/artists/${params.slug}`,
-    })
-
+  if (preview) {
     return {
       props: {
-        data: {
-          surveyPage: data,
-        },
-        preview: false,
-        slug: params?.slug || null,
-        token: null,
+        data: null,
+        preview,
+        querySlug,
       },
     }
-  } catch (e: any) {
-    console.error('ERROR FETCHING ARTIST SURVEY DATA:', e.message)
-    return {
-      props: {
-        data: {
-          surveyPage: [],
-        },
-        preview: false,
-        slug: params?.slug || null,
-        token: null,
-      },
-    }
+  }
+
+  const data = await getArtworkByArtist(querySlug)
+
+  return {
+    props: {
+      data,
+      preview: false,
+      querySlug: null,
+    },
   }
 }

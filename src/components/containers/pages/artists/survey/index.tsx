@@ -6,10 +6,10 @@ interface PageContainerProps {
 }
 
 const ArtistSurveyPageContainer = ({data}: PageContainerProps) => {
-  const subPageData = data?.surveyPage[0]?.surveySubpage ?? {}
+  const subPageData = data?.surveySubpage ?? {}
   const pageData = {artworksGrid: subPageData || {items: []}, title: subPageData?.title}
-  const parentPath = data?.surveyPage[0]?.slug?.current
-  const parentPageTitle = data?.surveyPage?.[0]?.title
+  const parentPath = data?.slug?.current
+  const parentPageTitle = data?.title
 
   return (
     <ArtistsPageLayout parentPageName={parentPageTitle} parentPath={parentPath}>
