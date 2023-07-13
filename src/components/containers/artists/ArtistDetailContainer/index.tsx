@@ -17,7 +17,7 @@ import {
   useBreakpoints,
 } from '@zwirner/design-system'
 import Link from 'next/link'
-import {FC} from 'react'
+import {FC, useCallback, useMemo} from 'react'
 
 import {FullWidthFlexCol} from '@/components/containers/layout/FullWidthFlexCol'
 
@@ -54,33 +54,41 @@ export const ArtistDetailContainer: FC<ArtistsContainerProps> = ({data}) => {
   const books = mapCarouselArtworks(data.books)
   const interstitial = mapInterstitial(data.interstitial)
 
-  const renderCarousel = (data: any, type: CardTypes, linkTitle: string, id: string) => (
-    <section className="-mx-5" id={id}>
-      <DzTitleMolecule
-        type={DzTitleMoleculeTypes.SECTION}
-        data={{
-          customClass: 'mx-5 mb-5 md:mb-10',
-          title: data.title,
-          linkCTA: {
-            text: linkTitle,
-            url: '#',
-            linkElement: Link,
-          },
-        }}
-      />
-      <DzCarousel size={data.size}>
-        {data.items?.map((card: any) => (
-          <DzCard
-            key={card.id}
-            data={{
-              ...card,
-              size: [CardSizes['10col'], carouselSizeToCardSize[data.size as DzCarouselCardSize]],
-            }}
-            type={type}
-          />
-        ))}
-      </DzCarousel>
-    </section>
+  const renderCarousel = useCallback(
+    (data: any, type: CardTypes, linkTitle: string, id: string) => (
+      <section className="-mx-5" id={id}>
+        <DzTitleMolecule
+          type={DzTitleMoleculeTypes.SECTION}
+          data={{
+            customClass: 'mx-5 mb-5 md:mb-10',
+            title: data.title,
+            linkCTA: {
+              text: linkTitle,
+              url: '#',
+              linkElement: Link,
+            },
+          }}
+        />
+        <DzCarousel size={data.size}>
+          {data.items?.map((card: any) => (
+            <DzCard
+              key={card.id}
+              data={{
+                ...card,
+                size: [CardSizes['10col'], carouselSizeToCardSize[data.size as DzCarouselCardSize]],
+              }}
+              type={type}
+            />
+          ))}
+        </DzCarousel>
+      </section>
+    ),
+    []
+  )
+
+  const Guide = useMemo(
+    () => renderCarousel(guide, CARD_TYPES.CONTENT, 'Explore Guide', 'artist-guide'),
+    [guide, renderCarousel]
   )
 
   return (
@@ -114,13 +122,15 @@ export const ArtistDetailContainer: FC<ArtistsContainerProps> = ({data}) => {
 
         {availableWorksInterstitial && <DzInterstitial data={availableWorksInterstitial} />}
 
+        {data.moveGuideUp === true && guide ? Guide : null}
+
         {latestExhibitions && (
           <Exhibitions id="artist-exhibitions" exhibitions={latestExhibitions} />
         )}
 
         {exhibitionsInterstitial && <DzInterstitial data={exhibitionsInterstitial} />}
 
-        {guide && renderCarousel(guide, CARD_TYPES.CONTENT, 'Explore Guide', 'artist-guide')}
+        {!data.moveGuideUp && guide ? Guide : null}
 
         <Biography
           id="artist-biography"
