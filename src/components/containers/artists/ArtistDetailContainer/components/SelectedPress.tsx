@@ -24,10 +24,8 @@ const SelectedPress = ({selectedPress, ...rest}: any) => {
         data={{
           title: selectedPress.title,
           linkCTA: {text: 'Explore Selected Press', linkElement: Link, url: '#'},
-          customClass: 'mb-5 md:mb-10',
         }}
       />
-
       <DzComplexGrid
         {...{
           ...selectedPress,
