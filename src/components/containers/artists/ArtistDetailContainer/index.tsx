@@ -96,12 +96,14 @@ export const ArtistDetailContainer: FC<ArtistsContainerProps> = ({data}) => {
 
   const Guide = useMemo(
     () =>
-      renderCarousel(
-        guide,
-        CARD_TYPES.CONTENT,
-        {title: 'Explore Guide', url: `/artists/${router.query.slug}/guide`},
-        'artist-guide'
-      ),
+      !!guide
+        ? renderCarousel(
+            guide,
+            CARD_TYPES.CONTENT,
+            {title: 'Explore Guide', url: `/artists/${router.query.slug}/guide`},
+            'artist-guide'
+          )
+        : null,
     [guide, renderCarousel, router.query.slug]
   )
 
