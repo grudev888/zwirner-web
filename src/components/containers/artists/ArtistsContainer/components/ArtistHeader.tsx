@@ -10,7 +10,7 @@ import {
   useBreakpoints,
 } from '@zwirner/design-system'
 
-const ArtistHeader = ({artist}: {artist: any}) => {
+const ArtistHeader = ({artist, intro}: {artist: any; intro: string}) => {
   const {isSmall} = useBreakpoints()
   return (
     <section className="space-between mt-[3.75rem] flex flex-col gap-5 md:flex-row">
@@ -26,7 +26,7 @@ const ArtistHeader = ({artist}: {artist: any}) => {
         }}
       />
       <div className="flex flex-1 flex-col gap-5 whitespace-pre-wrap">
-        <DzText textSize={TEXT_SIZES.SMALL} text={artist.summary} />
+        <DzText textSize={TEXT_SIZES.SMALL} text={intro} />
         <DzLink variant={LINK_VARIANTS.TEXT} href={'#'}>
           Learn More
         </DzLink>

@@ -71,7 +71,7 @@ export const ArtistsContainer: FC<ArtistsContainerProps> = ({data}) => {
   return (
     <DzColumn span={12}>
       <FullWidthFlexCol>
-        <ArtistHeader artist={data.artist} />
+        <ArtistHeader artist={data.artist} intro={data.artistIntro} />
 
         {hero && <DzSplit data={hero} type={SPLIT_TYPES.SHORT} />}
 
