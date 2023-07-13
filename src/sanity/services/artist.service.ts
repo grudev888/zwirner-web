@@ -20,6 +20,16 @@ export async function getAllArtistPageSlugs(): Promise<any[]> {
   return []
 }
 
+export async function getAllArtistAvailableArtworkPageSlugs(): Promise<any[]> {
+  if (client) {
+    const allArtistPageSlugs = (await client.fetch(artistPageSlugs)) || []
+    return allArtistPageSlugs.map((item: any) => ({
+      params: {slug: `${item.params.slug}/available-works`},
+    }))
+  }
+  return []
+}
+
 export async function getArtistPageData(): Promise<any[]> {
   if (client) {
     return (await client.fetch(getAllArtistsPages)) || []
@@ -30,6 +40,16 @@ export async function getArtistPageData(): Promise<any[]> {
 export async function getArtistPageBySlug(params: any): Promise<any[]> {
   if (client) {
     return (await client.fetch(artistPageBySlug, params)) || []
+  }
+  return []
+}
+
+export async function getAllArtistSubPageSlugs(subPageSlugName: string): Promise<any[]> {
+  if (client) {
+    const allArtistPageSlugs = (await client.fetch(artistPageSlugs)) || []
+    return allArtistPageSlugs.map((item: any) => ({
+      params: {slug: `${item.params.slug}/${subPageSlugName}`},
+    }))
   }
   return []
 }

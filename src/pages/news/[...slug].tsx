@@ -1,6 +1,7 @@
 import {GetStaticProps} from 'next'
 
 import {SEOComponent} from '@/common/components/seo/seo'
+import {NEWS_URL} from '@/common/constants/commonCopies'
 import {ArticleContainer} from '@/components/containers/articles/article'
 import {PREVIEW_PAGE_TYPE, PreviewPage} from '@/components/containers/previews/pagePreview'
 import {articleBySlug} from '@/sanity/queries/article.queries'
@@ -19,11 +20,10 @@ interface PageProps {
   data: ArticleCMSData
   preview: boolean
   slug: string | null
-  token: string | null
 }
 
 interface Query {
-  [key: string]: string
+  [key: string]: any
 }
 
 interface PreviewData {
@@ -60,17 +60,16 @@ export const getStaticPaths = async () => {
 }
 
 export const getStaticProps: GetStaticProps<PageProps, Query, PreviewData> = async (ctx) => {
-  const {params = {}, preview = false, previewData = {}} = ctx
+  const {params = {}, preview = false} = ctx
 
-  const queryParams = {slug: `/${params?.slug}` ?? ``}
+  const queryParams = {slug: `${NEWS_URL}/${params?.slug.join('/')}` ?? ``}
 
-  if (preview && previewData.token) {
+  if (preview) {
     return {
       props: {
         data: {queryParams, articleData: null},
         preview,
         slug: params?.slug || null,
-        token: previewData.token,
       },
     }
   }
@@ -86,7 +85,6 @@ export const getStaticProps: GetStaticProps<PageProps, Query, PreviewData> = asy
       data: {queryParams, articleData: data},
       preview,
       slug: params?.slug || null,
-      token: null,
     },
   }
 }

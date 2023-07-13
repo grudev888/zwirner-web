@@ -15,3 +15,16 @@ export const availableArtworksData = groq`
     ${pageSEOFields}
   }
 }`
+
+export const availableArtworksDataByArtistSlug = groq`
+*[_type == "artistPage" && slug.current == $slug]{
+  title,
+  slug { current },
+  availableWorksSubpage {
+    itemsPerRow,
+    displayNumberOfResults,
+    title,
+    slug,
+    items[]->{...}
+  }
+}`

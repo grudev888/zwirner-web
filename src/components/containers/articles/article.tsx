@@ -31,7 +31,7 @@ interface ArticleContainerProps {
 }
 
 export const ArticleContainer: FC<ArticleContainerProps> = ({data}) => {
-  const {title, body, image, interstitial, articles, pdfURL, location, event} = data
+  const {title, body, image, interstitial, articles, pdfURL, location, event} = data ?? {}
   const locationProps = locationTitleMapper(location)
   const eventDates = eventDatesMapper(event)
   const interstitialData = interstitialMap(interstitial)
