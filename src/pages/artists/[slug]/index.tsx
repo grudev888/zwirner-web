@@ -62,7 +62,10 @@ export default function ArtistPage({data = {}, preview}: PageProps) {
 
 export const getStaticPaths = async () => {
   const paths = await getAllArtistPageSlugs()
-  return {paths, fallback: true}
+  return {
+    paths: paths.map(({params}) => ({params: {slug: params.slug.replace('/artists/', '')}})),
+    fallback: true,
+  }
 }
 
 export const getStaticProps: GetStaticProps<PageProps, Query, PreviewData> = async (ctx) => {
