@@ -55,7 +55,7 @@ export const ArtistsContainer: FC<ArtistsContainerProps> = ({data}) => {
 
   const renderCarousel = (data: any, type: CardTypes, linkTitle: string) => (
     <section>
-      <div className="flex justify-between mb-10">
+      <div className="mb-10 flex justify-between">
         <DzTitle titleType={TITLE_TYPES.H2} title={data.title} titleSize={TITLE_SIZES.XL} />
         <DzLink LinkElement={Link} href={'#'}>
           {linkTitle}
