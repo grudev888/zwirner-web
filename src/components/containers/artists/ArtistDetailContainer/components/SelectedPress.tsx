@@ -4,11 +4,12 @@ import {
   ButtonModes,
   DzButton,
   DzComplexGrid,
+  DzTitleMolecule,
+  DzTitleMoleculeTypes,
   useBreakpoints,
 } from '@zwirner/design-system'
+import Link from 'next/link'
 import {useState} from 'react'
-
-import SectionTitle from './SectionTitle'
 
 const MOBILE_CARDS_LIMIT = 6
 
@@ -18,7 +19,14 @@ const SelectedPress = ({selectedPress}: {selectedPress: any}) => {
 
   return (
     <section>
-      <SectionTitle title={selectedPress.title} linkTitle="Explore Selected Press" />
+      <DzTitleMolecule
+        type={DzTitleMoleculeTypes.SECTION}
+        data={{
+          title: selectedPress.title,
+          linkCTA: {text: 'Explore Selected Press', linkElement: Link, url: '#'},
+        }}
+      />
+
       <DzComplexGrid
         {...{
           ...selectedPress,

@@ -1,11 +1,9 @@
-import {DzComplexGrid, DzHero} from '@zwirner/design-system'
-
-import SectionTitle from './SectionTitle'
+import {DzComplexGrid, DzHero, DzTitleMolecule, DzTitleMoleculeTypes} from '@zwirner/design-system'
 
 const Exhibitions = ({exhibitions}: {exhibitions: any}) => {
   return (
     <section>
-      <SectionTitle title={exhibitions.title} />
+      <DzTitleMolecule type={DzTitleMoleculeTypes.SECTION} data={{title: exhibitions.title}} />
 
       {exhibitions._type === 'grid' ? (
         <DzComplexGrid {...exhibitions.data} />

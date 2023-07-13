@@ -4,6 +4,8 @@ import {
   DzMedia,
   DzText,
   DzTitle,
+  DzTitleMolecule,
+  DzTitleMoleculeTypes,
   EDITORIAL_TYPES,
   LINK_VARIANTS,
   MEDIA_ASPECT_RATIOS,
@@ -13,8 +15,6 @@ import {
   TITLE_TYPES,
   useBreakpoints,
 } from '@zwirner/design-system'
-
-import SectionTitle from './SectionTitle'
 
 const ArtistFooter = ({artist}: {artist: any}) => {
   const renderUrl = (url: string, title: string) => (
@@ -64,7 +64,7 @@ const Biography = (props: any) => {
 
   return (
     <section>
-      <SectionTitle title={title} />
+      <DzTitleMolecule type={DzTitleMoleculeTypes.SECTION} data={{title: title}} />
 
       <div className="flex flex-col gap-5 md:flex-row">
         <div className="flex flex-1 flex-col gap-10">

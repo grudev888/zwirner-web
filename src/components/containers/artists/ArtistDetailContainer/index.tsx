@@ -9,9 +9,12 @@ import {
   DzColumn,
   DzInterstitial,
   DzSplit,
+  DzTitleMolecule,
+  DzTitleMoleculeTypes,
   SPLIT_TYPES,
   useBreakpoints,
 } from '@zwirner/design-system'
+import Link from 'next/link'
 import {FC} from 'react'
 
 import {FullWidthFlexCol} from '@/components/containers/layout/FullWidthFlexCol'
@@ -19,7 +22,6 @@ import {FullWidthFlexCol} from '@/components/containers/layout/FullWidthFlexCol'
 import ArtistHeader from './components/ArtistHeader'
 import Biography from './components/Biography'
 import Exhibitions from './components/Exhibitions'
-import SectionTitle from './components/SectionTitle'
 import SelectedPress from './components/SelectedPress'
 import {
   mapBiography,
@@ -52,7 +54,18 @@ export const ArtistDetailContainer: FC<ArtistsContainerProps> = ({data}) => {
 
   const renderCarousel = (data: any, type: CardTypes, linkTitle: string) => (
     <section className="-mx-5">
-      <SectionTitle className="mx-5" title={data.title} linkTitle={linkTitle} />
+      <DzTitleMolecule
+        type={DzTitleMoleculeTypes.SECTION}
+        data={{
+          customClass: 'mx-5',
+          title: data.title,
+          linkCTA: {
+            text: linkTitle,
+            url: '#',
+            linkElement: Link,
+          },
+        }}
+      />
       <DzCarousel size={data.size}>
         {data.items?.map((card: any) => (
           <DzCard
