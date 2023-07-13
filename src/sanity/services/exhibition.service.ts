@@ -34,9 +34,21 @@ export async function getExhibitionPageBySlug(params: any): Promise<any[]> {
   return []
 }
 
-export async function getExhibitionsByArtistSlug(params: any): Promise<any[]> {
+export async function getExhibitionsByArtistSlug(
+  slug: string
+): Promise<{artistFullName?: string; exhibitions: any[]}> {
   if (client) {
-    return (await client.fetch(exhibitionsByArtistSlug, params)) || []
+    const data = (await client.fetch(exhibitionsByArtistSlug, {slug})) || []
+    const artist = data[0]?.artist || {}
+
+    return {
+      artistFullName: artist.fullName,
+      exhibitions: artist.exhibitions,
+    }
   }
-  return []
+
+  return {
+    artistFullName: undefined,
+    exhibitions: [],
+  }
 }

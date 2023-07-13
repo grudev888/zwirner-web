@@ -41,4 +41,14 @@ export const exhibitionById = groq`
 }`
 
 export const exhibitionsByArtistSlug = groq`
-`
+*[_type == "artistPage" && slug.current == $slug]{
+  artist-> {
+    'exhibitions': *[_type == "exhibitionPage" && references(^._id)] {
+        ...,
+        locations[]->{name}
+      },
+
+    _id,
+    fullName
+  }
+}`

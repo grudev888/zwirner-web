@@ -1,72 +1,63 @@
 import {GetStaticProps} from 'next'
-import {SEOComponent} from '@/common/components/seo/seo'
+
 import ArtistExhibitionsPageContainer from '@/components/containers/pages/artists/exhibitions'
 import {PREVIEW_PAGE_TYPE, PreviewPage} from '@/components/containers/previews/pagePreview'
 import {getAllArtistSubPageSlugs} from '@/sanity/services/artist.service'
-import {exhibitionsByArtistSlug} from '@/sanity/queries/exhibition.queries'
 import {getExhibitionsByArtistSlug} from '@/sanity/services/exhibition.service'
+import {exhibitionsByArtistSlug} from '@/sanity/queries/exhibition.queries'
 
 interface PageProps {
   data: any
   preview: boolean
-  querySlug: any
+  queryArtistSlug?: Record<string, any>
 }
 
 interface Query {
   [key: string]: string
 }
 
-export default function ExhibitionsPage({data, preview, querySlug}: PageProps) {
-  const [exhibitionData] = data ?? []
-  const {seo} = exhibitionData ?? {}
-
+export default function ExhibitionsPage({data, preview, queryArtistSlug}: PageProps) {
   if (preview) {
     return (
       <PreviewPage
         query={exhibitionsByArtistSlug}
-        params={querySlug}
-        seo={seo}
+        params={queryArtistSlug}
+        seo={null}
         type={PREVIEW_PAGE_TYPE.ARTIST_DETAIL_EXHIBITIONS}
       />
     )
   }
 
-  return (
-    <>
-      <SEOComponent data={seo} />
-      <ArtistExhibitionsPageContainer data={exhibitionData} />
-    </>
-  )
+  return <ArtistExhibitionsPageContainer data={data} />
 }
 
 export const getStaticPaths = async () => {
-  const paths = await getAllArtistSubPageSlugs('survey')
+  const paths = await getAllArtistSubPageSlugs('exhibitions')
   return {paths, fallback: true}
 }
 
 export const getStaticProps: GetStaticProps<PageProps, Query> = async (ctx) => {
   const {params = {}, preview = false} = ctx
-  const querySlug = {
-    slug: `/artists/${params.slug}`,
-  }
+  const artistSlug = `/artists/${params.slug}`
+  const queryArtistSlug = {slug: artistSlug}
 
   if (preview) {
     return {
       props: {
         data: null,
         preview,
-        querySlug,
+        queryArtistSlug,
       },
     }
   }
 
-  const data = await getExhibitionsByArtistSlug(querySlug)
+  const data = await getExhibitionsByArtistSlug(artistSlug)
 
   return {
     props: {
       data,
       preview: false,
-      querySlug: null,
+      queryArtistSlug,
     },
   }
 }
