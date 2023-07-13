@@ -1,4 +1,5 @@
 import {
+  ButtonModes,
   countries,
   EDITORIAL_TEXT_TYPES,
   EDITORIAL_TYPES,
@@ -9,7 +10,9 @@ import {
   isPhoneNumber,
   MEDIA_TYPES,
 } from '@zwirner/design-system'
+import Image from 'next/image'
 
+import {GET_IN_TOUCH, TALK_TO_US} from '@/common/constants/commonCopies'
 import {builder} from '@/sanity/imageBuilder'
 
 export const headerImageMap = (data: any) => {
@@ -18,11 +21,8 @@ export const headerImageMap = (data: any) => {
   const imgSrc = asset ? builder.image(asset).url() : ''
   return {
     type: MEDIA_TYPES.IMAGE,
-    imgProps: {
-      url: '/',
-      src: imgSrc,
-      alt: alt,
-    },
+    ImgElement: Image,
+    imgProps: {src: imgSrc, alt, fill: true},
   }
 }
 
@@ -283,10 +283,8 @@ export const formSectionMap = (data: any) => {
     ],
     mediaProps: {
       type: MEDIA_TYPES.IMAGE,
-      imgProps: {
-        src: imgSrc,
-        alt,
-      },
+      ImgElement: Image,
+      imgProps: {src: imgSrc, alt, fill: true},
     },
   }
 }
@@ -297,11 +295,8 @@ export const featuredMediaMap = (data: any) => {
   const imgSrc = asset ? builder.image(asset).url() : ''
   return {
     type: MEDIA_TYPES.IMAGE,
-    imgProps: {
-      url: '/',
-      src: imgSrc,
-      alt: alt,
-    },
+    ImgElement: Image,
+    imgProps: {src: imgSrc, alt, fill: true},
   }
 }
 
@@ -312,7 +307,10 @@ export const interstitialMap = (data: any) => {
       split: false,
       title,
       primaryCta: {
-        text: 'Talk to Us',
+        text: TALK_TO_US,
+        ctaProps: {
+          mode: ButtonModes.DARK,
+        },
       },
       textColor: INTERSTITIAL_TEXT_COLORS.BLACK,
     },
@@ -336,11 +334,8 @@ export const bodyDataMap = (data: any) => {
         id: `${title}-${key}`,
         mediaProps: {
           type: MEDIA_TYPES.IMAGE,
-          imgProps: {
-            url: '/',
-            src: imgSrc,
-            alt: alt,
-          },
+          ImgElement: Image,
+          imgProps: {src: imgSrc, alt, fill: true},
         },
         editorialProps: {
           data: {
@@ -377,10 +372,8 @@ export const mapCarouselCards = (data: any) => {
         id: _id,
         media: {
           type: 'image',
-          imgProps: {
-            src: imgSrc,
-            alt,
-          },
+          ImgElement: Image,
+          imgProps: {src: imgSrc, alt, fill: true},
         },
         title: fullName,
       }
@@ -394,7 +387,10 @@ export const mapFooterInterstitial = (data: any) => {
       split: false,
       title,
       primaryCta: {
-        text: 'Get in Touch',
+        text: GET_IN_TOUCH,
+        ctaProps: {
+          mode: ButtonModes.DARK,
+        },
       },
       textColor: INTERSTITIAL_TEXT_COLORS.BLACK,
     },
