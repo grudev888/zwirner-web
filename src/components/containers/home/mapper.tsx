@@ -217,7 +217,7 @@ export const mapCarouselCards = (data: any) => {
       const {asset, alt} = mainImage ?? (isArticle ? image?.image : null) ?? {}
       const imgSrc = asset ? builder.image(asset).url() : ''
 
-      const url = _type == 'article' ? externalURL ?? slug.current : '/'
+      const url = _type == 'article' ? externalURL ?? slug?.current : '/'
       return {
         id: item._id,
         media: {
