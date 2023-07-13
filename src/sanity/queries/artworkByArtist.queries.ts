@@ -5,6 +5,8 @@ export const artworksDataByArtistSlug = groq`
   title,
   slug { current },
   surveySubpage {
+    itemsPerRow,
+    displayNumberOfResults,
     title,
     items[]->{...}
   }
