@@ -1,4 +1,9 @@
-import {CARD_TYPES, MEDIA_TYPES} from '@zwirner/design-system'
+import {
+  ButtonModes,
+  CARD_TYPES,
+  INTERSTITIAL_TEXT_COLORS,
+  MEDIA_TYPES,
+} from '@zwirner/design-system'
 import {format, isAfter, isValid, isWithinInterval, parse} from 'date-fns'
 import Image from 'next/image'
 
@@ -51,4 +56,22 @@ export const mapCardsGrid = (data: any[]) => {
       secondarySubtitle: exhibitionDateTitle,
     }
   })
+}
+
+export const interstitialMap = (data: any) => {
+  const {title, cta} = data ?? {}
+  const {text} = cta ?? {}
+  return {
+    data: {
+      split: false,
+      title,
+      primaryCta: {
+        text,
+        ctaProps: {
+          mode: ButtonModes.DARK,
+        },
+      },
+      textColor: INTERSTITIAL_TEXT_COLORS.BLACK,
+    },
+  }
 }
