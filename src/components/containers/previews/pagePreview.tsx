@@ -8,6 +8,7 @@ import {AvailableArtworksContainer} from '@/components/containers/availableArtwo
 import {CollectContainer} from '@/components/containers/collect'
 import {ConsignmentsContainer} from '@/components/containers/consignments'
 import {HomeContainer} from '@/components/containers/home'
+import ArtistAvailableWorksPageContainer from '@/components/containers/pages/artists/available-works'
 import ArtistSurveyPageContainer from '@/components/containers/pages/artists/survey/index'
 import {UtopiaEditionsContainer} from '@/components/containers/utopiaEditions'
 import {usePreview} from '@/sanity/preview'
@@ -19,6 +20,7 @@ export const PREVIEW_PAGE_TYPE = {
   UTOPIA: 'utopia-editions',
   COLLECT: 'collect',
   SINGLE_ARTICLE: 'single-article',
+  ARTIST_DETAIL_AVAILABLE_WORKS: 'artist-detail-available-works',
   ARTIST_DETAIL_SURVEY: 'artist-detail-survey',
   ARTISTS: 'artists',
 }
@@ -30,6 +32,7 @@ export const PREVIEW_PAGE_TYPE_NAMES = [
   PREVIEW_PAGE_TYPE.UTOPIA,
   PREVIEW_PAGE_TYPE.COLLECT,
   PREVIEW_PAGE_TYPE.SINGLE_ARTICLE,
+  PREVIEW_PAGE_TYPE.ARTIST_DETAIL_AVAILABLE_WORKS,
   PREVIEW_PAGE_TYPE.ARTIST_DETAIL_SURVEY,
   PREVIEW_PAGE_TYPE.ARTISTS,
 ] as const
@@ -61,6 +64,9 @@ const containerPerType = {
   },
   [PREVIEW_PAGE_TYPE.SINGLE_ARTICLE]: (data: any) => {
     return <ArticleContainer data={data} />
+  },
+  [PREVIEW_PAGE_TYPE.ARTIST_DETAIL_AVAILABLE_WORKS]: (data: any) => {
+    return <ArtistAvailableWorksPageContainer data={data} />
   },
   [PREVIEW_PAGE_TYPE.ARTIST_DETAIL_SURVEY]: (data: any) => {
     return <ArtistSurveyPageContainer data={data} />
