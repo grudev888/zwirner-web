@@ -16,7 +16,7 @@ export async function getArtistExhibitionsPageData(
 
     return {
       artistFullName: artist.fullName || null,
-      exhibitions: artist.exhibitions,
+      exhibitions: artist.exhibitions || [],
       interstitial: data[0]?.exhibitionsInterstitialSubpage,
       slug,
     }
