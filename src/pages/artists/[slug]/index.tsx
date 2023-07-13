@@ -39,7 +39,7 @@ export default function ArtistPage({data = {}, preview}: PageProps) {
         query={artistPageBySlug}
         params={queryParams}
         seo={seo}
-        type={PREVIEW_PAGE_TYPE.CONSIGNMENTS}
+        type={PREVIEW_PAGE_TYPE.ARTIST_DETAIL}
       />
     )
   }

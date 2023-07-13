@@ -9,12 +9,14 @@ import {
   useBreakpoints,
 } from '@zwirner/design-system'
 import Link from 'next/link'
+import {useRouter} from 'next/router'
 import {useState} from 'react'
 
 const MOBILE_CARDS_LIMIT = 2
 const LOAD_MORE_FEATURE_ENABLED = false
 
 const SelectedPress = ({selectedPress, ...rest}: any) => {
+  const router = useRouter()
   const {isSmall} = useBreakpoints()
   const [shownCards, setShownCards] = useState<number>(MOBILE_CARDS_LIMIT)
 
@@ -24,7 +26,11 @@ const SelectedPress = ({selectedPress, ...rest}: any) => {
         type={DzTitleMoleculeTypes.SECTION}
         data={{
           title: selectedPress.title,
-          linkCTA: {text: 'Explore Selected Press', linkElement: Link, url: '#'},
+          linkCTA: {
+            text: 'Explore Selected Press',
+            linkElement: Link,
+            url: `/artists/${router.query.slug}/press`,
+          },
         }}
       />
       <DzComplexGrid

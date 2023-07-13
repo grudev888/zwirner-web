@@ -10,7 +10,7 @@ import Link from 'next/link'
 
 import {builder} from '@/sanity/imageBuilder'
 
-export const mapInterstitial = (data: any) => {
+export const mapInterstitial = (data: any, onCTAClick?: () => void) => {
   if (!data?.title) return null
 
   return {
@@ -18,7 +18,10 @@ export const mapInterstitial = (data: any) => {
     title: data.title,
     description: data.description || data.subtitle,
     mode: data.mode || 'Dark',
-    primaryCta: {text: data.cta?.text},
+    primaryCta: {
+      text: data.cta?.text,
+      ctaProps: {onClick: onCTAClick},
+    },
     ...(data.image?.asset && {
       media: {
         url: '/',
@@ -167,7 +170,7 @@ export const mapBiography = (data: any) => {
   }
 }
 
-export const mapSplit = (data: any) => {
+export const mapSplit = (data: any, onCTAClick?: () => void) => {
   if (!data?.title) return null
 
   const imgSrc = data.image?.asset ? builder.image(data.image.asset).url() : ''
@@ -179,7 +182,13 @@ export const mapSplit = (data: any) => {
     },
     title: data.title,
     description: data.text,
-    buttonCTA: {text: 'Explore Works', ctaProps: {mode: ButtonModes.DARK}},
+    buttonCTA: {
+      text: 'Explore Works',
+      ctaProps: {
+        mode: ButtonModes.DARK,
+        onClick: onCTAClick,
+      },
+    },
   }
 }
 

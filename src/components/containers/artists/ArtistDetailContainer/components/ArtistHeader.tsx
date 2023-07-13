@@ -4,6 +4,7 @@ import {
   DzTitleMolecule,
   DzTitleMoleculeTypes,
   LINK_VARIANTS,
+  scrollToElementId,
   TEXT_SIZES,
   TITLE_SIZES,
   TITLE_TYPES,
@@ -14,6 +15,8 @@ interface ArtistHeaderProps {
   artist: any
   intro: string
 }
+
+const HEADER_OFFSET = 120
 
 const ArtistHeader = ({artist, intro}: ArtistHeaderProps) => {
   const {isSmall} = useBreakpoints()
@@ -32,7 +35,14 @@ const ArtistHeader = ({artist, intro}: ArtistHeaderProps) => {
       />
       <div className="flex flex-1 flex-col gap-5 whitespace-pre-wrap">
         <DzText textSize={TEXT_SIZES.SMALL} text={intro} />
-        <DzLink variant={LINK_VARIANTS.TEXT} href={'#'}>
+        <DzLink
+          variant={LINK_VARIANTS.TEXT}
+          href={'#artist-biography'}
+          onClick={(e) => {
+            e.preventDefault()
+            scrollToElementId('artist-biography', HEADER_OFFSET)
+          }}
+        >
           Learn More
         </DzLink>
       </div>

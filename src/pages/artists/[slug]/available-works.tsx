@@ -1,11 +1,11 @@
 import {GetStaticProps} from 'next'
 
 import {SEOComponent} from '@/common/components/seo/seo'
+import ArtistAvailableWorksPageContainer from '@/components/containers/pages/artists/available-works/index'
+import {PREVIEW_PAGE_TYPE, PreviewPage} from '@/components/containers/previews/pagePreview'
+import {availableArtworksDataByArtistSlug} from '@/sanity/queries/availableArtworks.queries'
 import {getAllArtistAvailableArtworkPageSlugs} from '@/sanity/services/artist.service'
 import {getAvailableArtworksDataByArtistSlug} from '@/sanity/services/availableArtworks.service'
-import {availableArtworksDataByArtistSlug} from '@/sanity/queries/availableArtworks.queries'
-import {PREVIEW_PAGE_TYPE, PreviewPage} from '@/components/containers/previews/pagePreview'
-import ArtistAvailableWorksPageContainer from '@/components/containers/pages/artists/available-works/index'
 
 interface PageProps {
   data: any

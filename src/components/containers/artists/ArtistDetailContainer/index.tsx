@@ -17,6 +17,7 @@ import {
   useBreakpoints,
 } from '@zwirner/design-system'
 import Link from 'next/link'
+import {useRouter} from 'next/router'
 import {FC, useCallback, useMemo} from 'react'
 
 import {FullWidthFlexCol} from '@/components/containers/layout/FullWidthFlexCol'
@@ -41,13 +42,20 @@ interface ArtistsContainerProps {
 
 export const ArtistDetailContainer: FC<ArtistsContainerProps> = ({data}) => {
   const {isSmall} = useBreakpoints()
+  const router = useRouter()
 
   const hero = data.showHero ? mapSplit(data.hero) : null
   const survey = mapCarouselArtworks(data.survey)
-  const availableWorksBooks = mapSplit(data.availableWorksBooks)
-  const availableWorksInterstitial = mapInterstitial(data.availableWorksInterstitial)
+  const availableWorksBooks = mapSplit(data.availableWorksBooks, () =>
+    router.push(`/artists/${router.query.slug}/available-works`)
+  )
+  const availableWorksInterstitial = mapInterstitial(data.availableWorksInterstitial, () =>
+    router.push(`/artists/${router.query.slug}/available-works`)
+  )
   const latestExhibitions = mapExhibitions(data.latestExhibitions)
-  const exhibitionsInterstitial = mapInterstitial(data.exhibitionsInterstitial)
+  const exhibitionsInterstitial = mapInterstitial(data.exhibitionsInterstitial, () =>
+    router.push(`/artists/${router.query.slug}/exhibitions`)
+  )
   const guide = mapCarouselArticles(data.guide, isSmall)
   const biography = mapBiography(data.artist)
   const selectedPress = mapGrid(data.selectedPress, 'article')
@@ -55,7 +63,7 @@ export const ArtistDetailContainer: FC<ArtistsContainerProps> = ({data}) => {
   const interstitial = mapInterstitial(data.interstitial)
 
   const renderCarousel = useCallback(
-    (data: any, type: CardTypes, linkTitle: string, id: string) => (
+    (data: any, type: CardTypes, link: {title: string; url: string}, id: string) => (
       <section className="-mx-5" id={id}>
         <DzTitleMolecule
           type={DzTitleMoleculeTypes.SECTION}
@@ -63,8 +71,8 @@ export const ArtistDetailContainer: FC<ArtistsContainerProps> = ({data}) => {
             customClass: 'mx-5 mb-5 md:mb-10',
             title: data.title,
             linkCTA: {
-              text: linkTitle,
-              url: '#',
+              text: link.title,
+              url: link.url,
               linkElement: Link,
             },
           }}
@@ -87,8 +95,14 @@ export const ArtistDetailContainer: FC<ArtistsContainerProps> = ({data}) => {
   )
 
   const Guide = useMemo(
-    () => renderCarousel(guide, CARD_TYPES.CONTENT, 'Explore Guide', 'artist-guide'),
-    [guide, renderCarousel]
+    () =>
+      renderCarousel(
+        guide,
+        CARD_TYPES.CONTENT,
+        {title: 'Explore Guide', url: `/artists/${router.query.slug}/guide`},
+        'artist-guide'
+      ),
+    [guide, renderCarousel, router.query.slug]
   )
 
   return (
@@ -110,7 +124,12 @@ export const ArtistDetailContainer: FC<ArtistsContainerProps> = ({data}) => {
         {hero && <DzSplit data={hero} type={SPLIT_TYPES.SHORT} />}
 
         {survey &&
-          renderCarousel(survey, CARD_TYPES.ARTWORK, 'Explore all Artworks', 'artist-survey')}
+          renderCarousel(
+            survey,
+            CARD_TYPES.ARTWORK,
+            {title: 'Explore all Artworks', url: `/artists/${router.query.slug}/survey`},
+            'artist-survey'
+          )}
 
         {availableWorksBooks && (
           <DzSplit
@@ -141,7 +160,13 @@ export const ArtistDetailContainer: FC<ArtistsContainerProps> = ({data}) => {
 
         {selectedPress && <SelectedPress id="artist-press" selectedPress={selectedPress} />}
 
-        {books && renderCarousel(books, CARD_TYPES.ARTWORK, 'Explore More', 'artist-books')}
+        {books &&
+          renderCarousel(
+            books,
+            CARD_TYPES.ARTWORK,
+            {title: 'Explore More', url: `/artists/${router.query.slug}/books`},
+            'artist-books'
+          )}
 
         {interstitial && <DzInterstitial data={interstitial} />}
       </FullWidthFlexCol>
