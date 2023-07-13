@@ -11,7 +11,8 @@ import {
 import Link from 'next/link'
 import {useState} from 'react'
 
-const MOBILE_CARDS_LIMIT = 6
+const MOBILE_CARDS_LIMIT = 2
+const LOAD_MORE_FEATURE_ENABLED = false
 
 const SelectedPress = ({selectedPress, ...rest}: any) => {
   const {isSmall} = useBreakpoints()
@@ -29,10 +30,13 @@ const SelectedPress = ({selectedPress, ...rest}: any) => {
       <DzComplexGrid
         {...{
           ...selectedPress,
-          cards: isSmall ? selectedPress.cards.slice(0, shownCards) : selectedPress.cards,
+          cards:
+            LOAD_MORE_FEATURE_ENABLED && isSmall
+              ? selectedPress.cards.slice(0, shownCards)
+              : selectedPress.cards,
         }}
       />
-      {isSmall && shownCards < selectedPress.cards.length ? (
+      {LOAD_MORE_FEATURE_ENABLED && isSmall && shownCards < selectedPress.cards.length ? (
         <div className="flex">
           <DzButton
             className="mx-auto mt-10"
