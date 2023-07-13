@@ -1,9 +1,12 @@
 import {DzColumn} from '@zwirner/design-system'
 import {GetStaticProps} from 'next'
+import {useRouter} from 'next/router'
 import {ErrorBoundary} from 'react-error-boundary'
 
 import {SEOComponent} from '@/common/components/seo/seo'
 import {ArtistsContainer} from '@/components/containers/artists/ArtistsContainer'
+import PreviewPage, {PREVIEW_PAGE_TYPE} from '@/components/containers/previews/pagePreview'
+import {artistPageBySlug} from '@/sanity/queries/artistPage.queries'
 import {getAllArtistPageSlugs, getArtistPageBySlug} from '@/sanity/services/artist.service'
 
 interface PageProps {
@@ -21,31 +24,25 @@ interface PreviewData {
   token?: string
 }
 
-export default function ArtistPage({data = {}}: PageProps) {
+export default function ArtistPage({data = {}, preview}: PageProps) {
+  const router = useRouter()
+
   const {pageData} = data ?? {}
   const {seo} = pageData ?? {}
 
   if (!pageData) return
 
-  // if (preview) {
-  //   const {queryParams} = data
-  //   return (
-  //     <>
-  //       <SEOComponent data={seo} />
-  //       <PreviewSuspense fallback="Loading...">
-  //         <ErrorBoundary
-  //           fallback={
-  //             <DzColumn className="mb-12 h-screen" span={12}>
-  //               <div className="flex justify-center p-5">Something went wrong</div>
-  //             </DzColumn>
-  //           }
-  //         >
-  //           <ArtistsContainer data={data} />
-  //         </ErrorBoundary>
-  //       </PreviewSuspense>
-  //     </>
-  //   )
-  // }
+  if (preview) {
+    const queryParams = {slug: `/artists/${router.query.slug ?? ``}`}
+    return (
+      <PreviewPage
+        query={artistPageBySlug}
+        params={queryParams}
+        seo={seo}
+        type={PREVIEW_PAGE_TYPE.CONSIGNMENTS}
+      />
+    )
+  }
 
   return (
     <>
