@@ -1,10 +1,6 @@
 import {client} from '@/sanity/client'
 import {artistById} from '@/sanity/queries/artist.queries'
-import {
-  artistIdAndNameBySlug,
-  artistPageBySlug,
-  artistPageSlugs,
-} from '@/sanity/queries/artistPage.queries'
+import {artistPageBySlug, artistPageSlugs} from '@/sanity/queries/artistPage.queries'
 
 export async function getArtistById(id: any): Promise<any[]> {
   if (client) {
@@ -35,12 +31,4 @@ export async function getAllArtistSubPageSlugs(subPageSlugName: string): Promise
     }))
   }
   return []
-}
-
-export async function getArtistIdAndNameBySlug(slug: string): Promise<any> {
-  if (client) {
-    const artistPage = await client.fetch(artistIdAndNameBySlug, {slug})
-    return artistPage?.[0]?.artist
-  }
-  return undefined
 }
