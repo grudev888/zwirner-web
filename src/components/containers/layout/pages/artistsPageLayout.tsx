@@ -1,7 +1,8 @@
+import {DzColumn, DzLink, TEXT_LINK_SIZES} from '@zwirner/design-system'
 import {ReactNode} from 'react'
 
 import BackArrowIcon from '@/components/containers/layout/pages/backArrowIcon'
-import {DzColumn, DzLink, TEXT_LINK_SIZES} from '@zwirner/design-system'
+
 import styles from './artistsPageLayout.module.css'
 
 interface ArtistsPageLayoutProps {

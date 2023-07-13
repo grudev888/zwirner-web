@@ -193,19 +193,31 @@ export const mapTabsLocations = (data: any) => {
 export const mapCarouselCards = (data: any) => {
   return data
     ?.filter((item: any) => {
-      const {exhibition} = item ?? {}
+      const {exhibition, image, _type} = item ?? {}
+      const isArticle = _type === 'article'
       const {photos = []} = exhibition ?? {}
       const [mainImage] = photos ?? []
-      const {asset} = mainImage ?? {}
+      const {asset} = mainImage ?? (isArticle ? image?.image : null) ?? {}
       return !!asset
     })
     ?.map((item: any) => {
-      const {exhibition} = item ?? {}
+      const {
+        exhibition,
+        title: titleArticle,
+        category,
+        image,
+        _type,
+        externalURL,
+        description,
+        slug,
+      } = item ?? {}
+      const isArticle = _type === 'article'
       const {title, subtitle, photos = [], summary} = exhibition ?? {}
       const [mainImage] = photos ?? []
-      const {asset, alt} = mainImage ?? {}
+      const {asset, alt} = mainImage ?? (isArticle ? image?.image : null) ?? {}
       const imgSrc = asset ? builder.image(asset).url() : ''
 
+      const url = _type == 'article' ? externalURL ?? slug?.current : '/'
       return {
         id: item._id,
         media: {
@@ -218,14 +230,14 @@ export const mapCarouselCards = (data: any) => {
             fill: true,
           },
         },
-        category: subtitle,
-        title,
+        category: isArticle ? category : subtitle,
+        title: isArticle ? titleArticle : title,
         titleType: TITLE_TYPES.H3,
-        description: summary,
+        description: isArticle ? description : summary,
         linkCTA: {
           text: LEARN_MORE,
           linkElement: 'a',
-          url: '/',
+          url,
         },
       }
     })
