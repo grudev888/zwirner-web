@@ -9,13 +9,33 @@ export const collectPageData = groq`
  featuredArtworks[]->{
   ${artworkFields}
  },
- exhibitions[]-> {
-  ${exhibitionSimpleFields}
-  ${exhibitionComplexFields}
+ exhibitions {
+  ...,
+  items[]->{
+    ...,
+    _type == "exhibitionPage"=> {
+      title,
+      _type,
+      "exhibition": exhibition-> {
+        ${exhibitionSimpleFields}
+        ${exhibitionComplexFields}
+      },
+    }
+  }
  },
- fairs[]-> {
-  ${exhibitionSimpleFields}
-  ${exhibitionComplexFields}
+ fairs {
+  ...,
+  items[]->{
+    ...,
+    _type == "exhibitionPage"=> {
+      title,
+      _type,
+      "exhibition": exhibition-> {
+        ${exhibitionSimpleFields}
+        ${exhibitionComplexFields}
+      },
+    }
+  }
  },
  hero[]-> {
   _type == "exhibitionPage"=> {

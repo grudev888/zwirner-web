@@ -26,26 +26,32 @@ export const homeData = groq`
       },
     }
   },
-  firstCarousel[] -> {
-    _id,
-    _type == "exhibitionPage"=> {
-      title,
-      _type,
-      "exhibition": exhibition-> {
-        ${exhibitionSimpleFields}
-        ${exhibitionComplexFields}
-      },
+  firstCarousel{
+    ...,
+    items[]->{
+      ...,
+      _type == "exhibitionPage"=> {
+        title,
+        _type,
+        "exhibition": exhibition-> {
+          ${exhibitionSimpleFields}
+          ${exhibitionComplexFields}
+        },
+      }
     }
   },
-  secondCarousel[] -> {
-    _id,
-    _type == "exhibitionPage"=> {
-      title,
-      _type,
-      "exhibition": exhibition-> {
-        ${exhibitionSimpleFields}
-        ${exhibitionComplexFields}
-      },
+  secondCarousel{
+    ...,
+    items[]->{
+      ...,
+      _type == "exhibitionPage"=> {
+        title,
+        _type,
+        "exhibition": exhibition-> {
+          ${exhibitionSimpleFields}
+          ${exhibitionComplexFields}
+        },
+      }
     }
   },
   articles[]-> { ... },

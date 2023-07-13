@@ -8,6 +8,16 @@ export const artistPageSlugs = groq`
   "params": { "slug": slug.current }
 }`
 
+export const getAllArtistsPages = groq`{
+  "pageInfo": *[_type == "artistListing"] {
+    ...
+  },
+  "artistPages":*[_type == "artistPage" && defined(slug.current) && artist->.affiliation == true] {
+    ...,
+    artist->
+  }
+}`
+
 export const artistPageBySlug = groq`
 *[_type == "artistPage" && slug.current == $slug][0] {
   _id,

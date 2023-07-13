@@ -1,8 +1,10 @@
 import {
   CARD_TYPES,
   CardSizes,
+  carouselSizeToCardSize,
   DzCard,
   DzCarousel,
+  DzCarouselCardSize,
   DzColumn,
   DzComplexGrid,
   DzEditorial,
@@ -56,20 +58,23 @@ export const CollectContainer: FC<CollectContainerProps> = ({data}) => {
   } = data
 
   const heroData = heroMapper(hero)
-  const exhibitionsCarousel = exhibitionCarouselMapper(exhibitions)
-  const fairsCarousel = exhibitionCarouselMapper(fairs)
+  const exhibitionsCarousel = exhibitionCarouselMapper(exhibitions?.items)
+  const fairsCarousel = exhibitionCarouselMapper(fairs?.items)
   const artworksData = artworksGridMap(featuredArtworks)
   const formProps = consignmentsMap(consignmentsFeature)
   const utopiaSplitData = utopiaFeatureMap(utopiaFeature)
   const platformData = platformInterstitialMap(platformInterstitial)
   const interstitialData = interstitialMap(interstitial)
 
-  const renderCarousel = (data: any) => (
+  const renderCarousel = (data: any, size: DzCarouselCardSize = DzCarouselCardSize.L) => (
     <DzColumn span={12} className={styles.fullSection}>
-      <DzCarousel>
+      <DzCarousel size={size}>
         {data?.map((card: any) => (
           <div className="w-full" key={card.id}>
-            <DzCard data={{...card, size: CardSizes['12col']}} type={CARD_TYPES.CONTENT} />
+            <DzCard
+              data={{...card, size: [CardSizes['10col'], carouselSizeToCardSize[size]]}}
+              type={CARD_TYPES.CONTENT}
+            />
           </div>
         ))}
       </DzCarousel>
@@ -95,7 +100,7 @@ export const CollectContainer: FC<CollectContainerProps> = ({data}) => {
                 },
               }}
             />
-            {exhibitionsCarousel ? renderCarousel(exhibitionsCarousel) : null}
+            {exhibitionsCarousel ? renderCarousel(exhibitionsCarousel, exhibitions?.size) : null}
           </div>
           <div className={styles.sectionWithTitleMolecule}>
             <DzTitleMolecule
@@ -110,7 +115,7 @@ export const CollectContainer: FC<CollectContainerProps> = ({data}) => {
                 },
               }}
             />
-            {fairsCarousel ? renderCarousel(fairsCarousel) : null}
+            {fairsCarousel ? renderCarousel(fairsCarousel, fairs?.size) : null}
           </div>
           <DzComplexGrid
             textProps={{text: FEATURE_AVAILABLE_WORKS_TITLE, className: styles.textGrid}}
