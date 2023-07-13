@@ -2,7 +2,7 @@ import {client} from '@/sanity/client'
 import {artistExhibitionsPageData} from '@/sanity/queries/artistExhibitionsPage.queries'
 
 interface ArtistExhibitionsPageData {
-  artistFullName?: string
+  artistFullName: string | null
   exhibitions: any[]
   interstitial: any
   slug: string
@@ -23,9 +23,9 @@ export async function getArtistExhibitionsPageData(
   }
 
   return {
-    artistFullName: undefined,
+    artistFullName: null,
     exhibitions: [],
-    interstitial: undefined,
+    interstitial: null,
     slug,
   }
 }
