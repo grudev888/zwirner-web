@@ -17,6 +17,7 @@ import {
   DzTitleMolecule,
   DzTitleMoleculeTypes,
   LINK_VARIANTS,
+  SPLIT_TYPES,
   TEXT_SIZES,
   TITLE_SIZES,
   TITLE_TYPES,
@@ -54,7 +55,7 @@ export const ArtistsContainer: FC<ArtistsContainerProps> = ({data}) => {
 
   const renderCarousel = (data: any, type: CardTypes, linkTitle: string) => (
     <section>
-      <div className="flex justify-between">
+      <div className="flex justify-between mb-10">
         <DzTitle titleType={TITLE_TYPES.H2} title={data.title} titleSize={TITLE_SIZES.XL} />
         <DzLink LinkElement={Link} href={'#'}>
           {linkTitle}
@@ -99,11 +100,11 @@ export const ArtistsContainer: FC<ArtistsContainerProps> = ({data}) => {
           </div>
         </section>
 
-        <DzSplit data={hero} />
+        <DzSplit data={hero} type={SPLIT_TYPES.SHORT} />
 
         {survey && renderCarousel(survey, CARD_TYPES.ARTWORK, 'Explore all Artworks')}
 
-        <DzSplit data={availableWorksBooks} />
+        <DzSplit data={availableWorksBooks} type={SPLIT_TYPES.SHORT} />
 
         {availableWorksInterstitial && <DzInterstitial data={availableWorksInterstitial} />}
 
