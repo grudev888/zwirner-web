@@ -3,7 +3,8 @@ import {FC, Fragment} from 'react'
 
 import {SEOComponent} from '@/common/components/seo/seo'
 import {ArticleContainer} from '@/components/containers/articles/article'
-import {ArtistsContainer} from '@/components/containers/artists/ArtistsContainer'
+import {ArtistDetailContainer} from '@/components/containers/artists/ArtistDetailContainer'
+import {ArtistsListContainer} from '@/components/containers/artists/ArtstListContainer'
 import {AvailableArtworksContainer} from '@/components/containers/availableArtworks'
 import {CollectContainer} from '@/components/containers/collect'
 import {ConsignmentsContainer} from '@/components/containers/consignments'
@@ -19,6 +20,7 @@ export const PREVIEW_PAGE_TYPE = {
   COLLECT: 'collect',
   SINGLE_ARTICLE: 'single-article',
   ARTIST_DETAIL: 'artist-detail',
+  ARTISTS: 'artists',
 }
 
 export const PREVIEW_PAGE_TYPE_NAMES = [
@@ -29,6 +31,7 @@ export const PREVIEW_PAGE_TYPE_NAMES = [
   PREVIEW_PAGE_TYPE.COLLECT,
   PREVIEW_PAGE_TYPE.SINGLE_ARTICLE,
   PREVIEW_PAGE_TYPE.ARTIST_DETAIL,
+  PREVIEW_PAGE_TYPE.ARTISTS,
 ] as const
 
 export type PreviewPageType = (typeof PREVIEW_PAGE_TYPE_NAMES)[number]
@@ -60,7 +63,10 @@ const containerPerType = {
     return <ArticleContainer data={data} />
   },
   [PREVIEW_PAGE_TYPE.ARTIST_DETAIL]: (data: any) => {
-    return <ArtistsContainer data={data} />
+    return <ArtistDetailContainer data={data} />
+  },
+  [PREVIEW_PAGE_TYPE.ARTISTS]: (data: any) => {
+    return <ArtistsListContainer data={data} />
   },
 }
 

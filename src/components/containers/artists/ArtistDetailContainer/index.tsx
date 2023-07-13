@@ -35,7 +35,7 @@ interface ArtistsContainerProps {
   data: any
 }
 
-export const ArtistsContainer: FC<ArtistsContainerProps> = ({data}) => {
+export const ArtistDetailContainer: FC<ArtistsContainerProps> = ({data}) => {
   const {isSmall} = useBreakpoints()
 
   const hero = data.showHero ? mapSplit(data.hero) : null

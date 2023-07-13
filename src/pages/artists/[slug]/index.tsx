@@ -4,7 +4,7 @@ import {useRouter} from 'next/router'
 import {ErrorBoundary} from 'react-error-boundary'
 
 import {SEOComponent} from '@/common/components/seo/seo'
-import {ArtistsContainer} from '@/components/containers/artists/ArtistsContainer'
+import {ArtistDetailContainer} from '@/components/containers/artists/ArtistDetailContainer'
 import PreviewPage, {PREVIEW_PAGE_TYPE} from '@/components/containers/previews/pagePreview'
 import {artistPageBySlug} from '@/sanity/queries/artistPage.queries'
 import {getAllArtistPageSlugs, getArtistPageBySlug} from '@/sanity/services/artist.service'
@@ -54,7 +54,7 @@ export default function ArtistPage({data = {}, preview}: PageProps) {
         }
       >
         <SEOComponent data={seo} />
-        <ArtistsContainer data={pageData} />
+        <ArtistDetailContainer data={pageData} />
       </ErrorBoundary>
     </>
   )
