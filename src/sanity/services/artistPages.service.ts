@@ -17,7 +17,7 @@ export async function getArtistExhibitionsPageData(
     return {
       artistFullName: artist.fullName || null,
       exhibitions: artist.exhibitions || [],
-      interstitial: data[0]?.exhibitionsInterstitialSubpage,
+      interstitial: data[0]?.exhibitionsInterstitialSubpage || null,
       slug,
     }
   }
