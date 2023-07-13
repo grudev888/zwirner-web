@@ -1,4 +1,5 @@
 import {
+  BUTTON_VARIANTS,
   CARD_TYPES,
   CardSizes,
   CardTypes,
@@ -8,6 +9,7 @@ import {
   DzCarouselCardSize,
   DzColumn,
   DzInterstitial,
+  DzSectionMenu,
   DzSplit,
   DzTitleMolecule,
   DzTitleMoleculeTypes,
@@ -52,12 +54,12 @@ export const ArtistDetailContainer: FC<ArtistsContainerProps> = ({data}) => {
   const books = mapCarouselArtworks(data.books)
   const interstitial = mapInterstitial(data.interstitial)
 
-  const renderCarousel = (data: any, type: CardTypes, linkTitle: string) => (
-    <section className="-mx-5">
+  const renderCarousel = (data: any, type: CardTypes, linkTitle: string, id: string) => (
+    <section className="-mx-5" id={id}>
       <DzTitleMolecule
         type={DzTitleMoleculeTypes.SECTION}
         data={{
-          customClass: 'mx-5',
+          customClass: 'mx-5 mb-5 md:mb-10',
           title: data.title,
           linkCTA: {
             text: linkTitle,
@@ -83,28 +85,53 @@ export const ArtistDetailContainer: FC<ArtistsContainerProps> = ({data}) => {
 
   return (
     <DzColumn span={12}>
+      <DzSectionMenu
+        cta={{
+          text: 'Inquire',
+          ctaProps: {
+            variant: BUTTON_VARIANTS.TERTIARY,
+          },
+        }}
+        prefix="artist-"
+        sticky
+        usePrefix
+      />
       <FullWidthFlexCol>
         <ArtistHeader artist={data.artist} intro={data.artistIntro} />
 
         {hero && <DzSplit data={hero} type={SPLIT_TYPES.SHORT} />}
 
-        {survey && renderCarousel(survey, CARD_TYPES.ARTWORK, 'Explore all Artworks')}
+        {survey &&
+          renderCarousel(survey, CARD_TYPES.ARTWORK, 'Explore all Artworks', 'artist-survey')}
 
-        {availableWorksBooks && <DzSplit data={availableWorksBooks} type={SPLIT_TYPES.SHORT} />}
+        {availableWorksBooks && (
+          <DzSplit
+            id="artist-available-works"
+            data={availableWorksBooks}
+            type={SPLIT_TYPES.SHORT}
+          />
+        )}
 
         {availableWorksInterstitial && <DzInterstitial data={availableWorksInterstitial} />}
 
-        {latestExhibitions && <Exhibitions exhibitions={latestExhibitions} />}
+        {latestExhibitions && (
+          <Exhibitions id="artist-exhibitions" exhibitions={latestExhibitions} />
+        )}
 
         {exhibitionsInterstitial && <DzInterstitial data={exhibitionsInterstitial} />}
 
-        {guide && renderCarousel(guide, CARD_TYPES.CONTENT, 'Explore Guide')}
+        {guide && renderCarousel(guide, CARD_TYPES.CONTENT, 'Explore Guide', 'artist-guide')}
 
-        <Biography biography={biography} title="Biography" artist={data.artist} />
+        <Biography
+          id="artist-biography"
+          biography={biography}
+          title="Biography"
+          artist={data.artist}
+        />
 
-        {selectedPress && <SelectedPress selectedPress={selectedPress} />}
+        {selectedPress && <SelectedPress id="artist-press" selectedPress={selectedPress} />}
 
-        {books && renderCarousel(books, CARD_TYPES.ARTWORK, 'Explore More')}
+        {books && renderCarousel(books, CARD_TYPES.ARTWORK, 'Explore More', 'artist-books')}
 
         {interstitial && <DzInterstitial data={interstitial} />}
       </FullWidthFlexCol>

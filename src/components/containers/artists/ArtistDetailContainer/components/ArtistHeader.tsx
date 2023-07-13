@@ -10,7 +10,12 @@ import {
   useBreakpoints,
 } from '@zwirner/design-system'
 
-const ArtistHeader = ({artist, intro}: {artist: any; intro: string}) => {
+interface ArtistHeaderProps {
+  artist: any
+  intro: string
+}
+
+const ArtistHeader = ({artist, intro}: ArtistHeaderProps) => {
   const {isSmall} = useBreakpoints()
   return (
     <section className="space-between mt-[3.75rem] flex flex-col gap-5 md:flex-row">
@@ -18,7 +23,7 @@ const ArtistHeader = ({artist, intro}: {artist: any; intro: string}) => {
         type={DzTitleMoleculeTypes.PAGE}
         data={{
           title: artist.fullName,
-          customClass: 'flex-1',
+          customClass: 'flex-1 mb-5 md:mb-10',
           titleProps: {
             titleType: TITLE_TYPES.H1,
             titleSize: isSmall ? TITLE_SIZES.XL : TITLE_SIZES.XXL,

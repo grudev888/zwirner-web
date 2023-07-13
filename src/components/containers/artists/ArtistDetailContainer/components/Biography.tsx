@@ -50,9 +50,8 @@ const ArtistFooter = ({artist}: {artist: any}) => {
   )
 }
 
-const Biography = (props: any) => {
+const Biography = ({title, biography, artist, ...rest}: any) => {
   const {isSmall} = useBreakpoints()
-  const {title, biography, artist} = props
 
   const dateFormatter = new Intl.DateTimeFormat('en-US', {
     timeZone: 'America/New_York',
@@ -63,8 +62,14 @@ const Biography = (props: any) => {
   const deathYear = artist.deathDate ? dateFormatter.format(new Date(artist.deathDate)) : ''
 
   return (
-    <section>
-      <DzTitleMolecule type={DzTitleMoleculeTypes.SECTION} data={{title: title}} />
+    <section {...rest}>
+      <DzTitleMolecule
+        type={DzTitleMoleculeTypes.SECTION}
+        data={{
+          title: title,
+          customClass: 'mb-5 md:mb-10',
+        }}
+      />
 
       <div className="flex flex-col gap-5 md:flex-row">
         <div className="flex flex-1 flex-col gap-10">

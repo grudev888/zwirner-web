@@ -13,17 +13,18 @@ import {useState} from 'react'
 
 const MOBILE_CARDS_LIMIT = 6
 
-const SelectedPress = ({selectedPress}: {selectedPress: any}) => {
+const SelectedPress = ({selectedPress, ...rest}: any) => {
   const {isSmall} = useBreakpoints()
   const [shownCards, setShownCards] = useState<number>(MOBILE_CARDS_LIMIT)
 
   return (
-    <section>
+    <section {...rest}>
       <DzTitleMolecule
         type={DzTitleMoleculeTypes.SECTION}
         data={{
           title: selectedPress.title,
           linkCTA: {text: 'Explore Selected Press', linkElement: Link, url: '#'},
+          customClass: 'mb-5 md:mb-10',
         }}
       />
 
