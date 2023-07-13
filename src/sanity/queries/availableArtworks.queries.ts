@@ -21,6 +21,8 @@ export const availableArtworksDataByArtistSlug = groq`
   title,
   slug { current },
   availableWorksSubpage {
+    itemsPerRow,
+    displayNumberOfResults,
     title,
     slug,
     items[]->{...}
