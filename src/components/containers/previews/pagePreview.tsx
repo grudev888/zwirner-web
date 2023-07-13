@@ -20,7 +20,7 @@ export const PREVIEW_PAGE_TYPE = {
   COLLECT: 'collect',
   SINGLE_ARTICLE: 'single-article',
   ARTIST_DETAIL: 'artist-detail',
-  ARTISTS: 'artists',
+  ARTISTS_LIST: 'artists-list',
 }
 
 export const PREVIEW_PAGE_TYPE_NAMES = [
@@ -31,7 +31,7 @@ export const PREVIEW_PAGE_TYPE_NAMES = [
   PREVIEW_PAGE_TYPE.COLLECT,
   PREVIEW_PAGE_TYPE.SINGLE_ARTICLE,
   PREVIEW_PAGE_TYPE.ARTIST_DETAIL,
-  PREVIEW_PAGE_TYPE.ARTISTS,
+  PREVIEW_PAGE_TYPE.ARTISTS_LIST,
 ] as const
 
 export type PreviewPageType = (typeof PREVIEW_PAGE_TYPE_NAMES)[number]
@@ -65,7 +65,7 @@ const containerPerType = {
   [PREVIEW_PAGE_TYPE.ARTIST_DETAIL]: (data: any) => {
     return <ArtistDetailContainer data={data} />
   },
-  [PREVIEW_PAGE_TYPE.ARTISTS]: (data: any) => {
+  [PREVIEW_PAGE_TYPE.ARTISTS_LIST]: (data: any) => {
     return <ArtistsListContainer data={data} />
   },
 }

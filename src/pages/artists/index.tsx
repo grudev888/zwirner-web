@@ -29,7 +29,9 @@ export default function Artists({data, preview}: PageProps) {
   const {seo} = pagesInfoData ?? {}
 
   if (preview) {
-    return <PreviewPage query={getAllArtistsPages} seo={seo} type={PREVIEW_PAGE_TYPE.ARTISTS} />
+    return (
+      <PreviewPage query={getAllArtistsPages} seo={seo} type={PREVIEW_PAGE_TYPE.ARTISTS_LIST} />
+    )
   }
 
   return (
