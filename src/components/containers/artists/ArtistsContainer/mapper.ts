@@ -1,21 +1,24 @@
-import {ButtonModes, CARD_TYPES, MEDIA_TYPES} from '@zwirner/design-system'
+import {
+  ButtonModes,
+  CARD_TYPES,
+  EDITORIAL_TEXT_TYPES,
+  MEDIA_ASPECT_RATIOS,
+  MEDIA_TYPES,
+} from '@zwirner/design-system'
 import Image from 'next/image'
 import Link from 'next/link'
 
 import {builder} from '@/sanity/imageBuilder'
 
-export const mapInterstitial = (data: any, variant: 'light' | 'dark') => {
-  if (!data) return null
+export const mapInterstitial = (data: any) => {
+  if (!data?.title) return null
 
   return {
     split: false,
     title: data.title,
     description: data.description || data.subtitle,
-    textColor: variant === 'dark' ? 'black-100' : 'white-100',
-    primaryCta: {
-      text: data.cta?.text,
-      ctaProps: {mode: variant === 'dark' ? ButtonModes.DARK : ButtonModes.LIGHT},
-    },
+    mode: data.mode || 'Dark',
+    primaryCta: {text: data.cta?.text},
     ...(data.image?.asset && {
       media: {
         url: '/',
@@ -26,10 +29,13 @@ export const mapInterstitial = (data: any, variant: 'light' | 'dark') => {
         },
       },
     }),
+    customClass: '-mx-5',
   }
 }
 
 export const mapCarouselArtworks = (data: any) => {
+  if (!data?.title) return null
+
   return {
     title: data.title,
     size: data.size,
@@ -75,6 +81,7 @@ export const mapCarouselArtworks = (data: any) => {
 }
 
 export const mapCarouselBooks = (data: any) => {
+  if (!data?.title) return null
   return {
     title: data.title,
     size: data.size,
@@ -99,7 +106,8 @@ export const mapCarouselBooks = (data: any) => {
   }
 }
 
-export const mapCarouselArticles = (data: any) => {
+export const mapCarouselArticles = (data: any, isSmall: boolean) => {
+  if (!data?.title) return null
   return {
     title: data.title,
     size: data.size,
@@ -112,59 +120,84 @@ export const mapCarouselArticles = (data: any) => {
         year: 'numeric',
       })
 
+      const date =
+        item.dateSelection?.approximate ||
+        item.dateSelection?.year ||
+        (item.date ? dateFormatter.format(new Date(item.date)) : null)
+
       return {
         id: item._id,
-        media: {
-          url: '/',
-          type: MEDIA_TYPES.IMAGE,
-          ImgElement: Image,
-          imgProps: {
-            src: imgSrc,
-            alt: item.image?.image?.alt,
-            fill: true,
+        ...(imgSrc && {
+          media: {
+            aspectRatio: isSmall ? MEDIA_ASPECT_RATIOS['4:3'] : MEDIA_ASPECT_RATIOS['16:9'],
+            url: '/',
+            type: MEDIA_TYPES.IMAGE,
+            ImgElement: Image,
+            imgProps: {
+              src: imgSrc,
+              alt: item.image?.image?.alt,
+              fill: true,
+            },
           },
-        },
+        }),
         title: item.title,
         category: item.category,
-        secondarySubtitle: dateFormatter.format(new Date()),
-        linkCTA: {
-          text: 'Learn More',
-          url: item.externalURL,
-        },
+        secondaryTitle: item.description,
+        secondarySubtitle: date,
       }
     }),
   }
 }
 
-export const mapEditorial = (_data: any) => {
-  return {}
+export const mapBiography = (data: any) => {
+  if (!data) return null
+
+  const imgSrc = data.biographyPicture?.asset
+    ? builder.image(data.biographyPicture.asset).url()
+    : ''
+
+  return {
+    media: {
+      url: '/',
+      type: MEDIA_TYPES.IMAGE,
+      imgProps: {src: imgSrc, alt: data.picture?.alt},
+    },
+    reverse: false,
+    paragraphs: [{type: EDITORIAL_TEXT_TYPES.PARAGRAPH, text: data.description}],
+  }
 }
 
-export const mapSplit = (props: any) => {
-  const imgSrc = props.image?.asset ? builder.image(props.image.asset).url() : ''
+export const mapSplit = (data: any) => {
+  if (!data?.title) return null
+
+  const imgSrc = data.image?.asset ? builder.image(data.image.asset).url() : ''
   return {
     media: {
       type: MEDIA_TYPES.IMAGE,
       ImgElement: Image,
-      imgProps: {src: imgSrc, alt: props.image?.alt, fill: true},
+      imgProps: {src: imgSrc, alt: data.image?.alt, fill: true},
     },
-    title: props.title,
-    description: props.text,
-    linkCTA: {
-      text: 'Learn More',
-      linkElement: 'a',
-      url: props.url,
-    },
+    title: data.title,
+    description: data.text,
+    buttonCTA: {text: 'Explore Works', ctaProps: {mode: ButtonModes.DARK}},
   }
 }
 
 export const mapExhibitions = (data: any) => {
+  if (!data) return null
+
   if (data.items?.length === 2)
-    return {_type: 'grid', data: mapGrid({...data, itemsPerRow: 2}, 'exhibition')}
-  return {_type: 'hero', data: mapHero(data)}
+    return {
+      _type: 'grid',
+      title: data.title,
+      data: mapGrid({...data, itemsPerRow: 2}, 'exhibition'),
+    }
+  return {_type: 'hero', title: data.title, data: mapHero(data)}
 }
 
 const formatExhibitionDate = (item: any): string => {
+  if (!item.startDate || !item.endDate) return ''
+
   const dateFormatter = new Intl.DateTimeFormat('en-US', {
     timeZone: 'America/New_York',
     month: 'long',
@@ -191,6 +224,7 @@ const formatExhibitionDate = (item: any): string => {
 }
 
 export const mapHero = (data: any) => {
+  if (!data) return null
   return (
     data.items?.map((item: any) => {
       const {title, subtitle, photos = []} = item ?? {}
@@ -199,7 +233,7 @@ export const mapHero = (data: any) => {
       return {
         secondaryTitle: 'New York',
         secondarySubtitle: formatExhibitionDate(item),
-        description: item.description,
+        description: item.summary,
         media: {
           ImgElement: Image,
           type: MEDIA_TYPES.IMAGE,
@@ -221,22 +255,24 @@ export const mapArticlesCard = (item: any) => {
     year: 'numeric',
   })
 
-  const year = dateFormatter.format(new Date(item.date))
+  const year = item.date ? dateFormatter.format(new Date(item.date)) : null
 
   return {
     id: item._id,
     cardType: CARD_TYPES.CONTENT,
-    media: {
-      type: 'image',
-      imgProps: {
-        src: imgSrc,
-        alt: item.image?.image?.alt,
+    ...(imgSrc && {
+      media: {
+        type: 'image',
+        imgProps: {
+          src: imgSrc,
+          alt: item.image?.image?.alt,
+        },
       },
-    },
+    }),
     title: item.title,
     subtitle: item.subtitle,
+    secondaryTitle: item.description,
     secondarySubtitle: year,
-    description: item.description,
     linkCTA: {text: 'Learn More', linkElement: Link, url: '#'},
   }
 }
@@ -247,13 +283,15 @@ export const mapExhibitionCard = (item: any) => {
   return {
     id: item._id,
     cardType: CARD_TYPES.CONTENT,
-    media: {
-      type: 'image',
-      imgProps: {
-        src: imgSrc,
-        alt: item.photos?.[0]?.alt,
+    ...(imgSrc && {
+      media: {
+        type: 'image',
+        imgProps: {
+          src: imgSrc,
+          alt: item.photos?.[0]?.alt,
+        },
       },
-    },
+    }),
     title: item.title,
     subtitle: item.subtitle,
     secondaryTitle: 'New York',
@@ -264,6 +302,7 @@ export const mapExhibitionCard = (item: any) => {
 }
 
 export const mapGrid = (data: any, type: 'exhibition' | 'article') => {
+  if (!data?.title) return null
   const {title, itemsPerRow, items} = data ?? {}
 
   return {
@@ -271,8 +310,7 @@ export const mapGrid = (data: any, type: 'exhibition' | 'article') => {
       type === 'exhibition' ? mapExhibitionCard(item) : mapArticlesCard(item)
     ),
     maxItemsPerRow: itemsPerRow,
-    displayNumberOfResults: false,
-    headingTitle: title,
+    title: title,
     useLink: true,
   }
 }

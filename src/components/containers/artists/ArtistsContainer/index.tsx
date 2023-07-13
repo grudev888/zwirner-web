@@ -7,27 +7,22 @@ import {
   DzCarousel,
   DzCarouselCardSize,
   DzColumn,
-  DzComplexGrid,
-  DzHero,
   DzInterstitial,
-  DzLink,
   DzSplit,
-  DzText,
-  DzTitle,
-  DzTitleMolecule,
-  DzTitleMoleculeTypes,
-  LINK_VARIANTS,
   SPLIT_TYPES,
-  TEXT_SIZES,
-  TITLE_SIZES,
-  TITLE_TYPES,
+  useBreakpoints,
 } from '@zwirner/design-system'
-import Link from 'next/link'
 import {FC} from 'react'
 
 import {FullWidthFlexCol} from '@/components/containers/layout/FullWidthFlexCol'
 
+import ArtistHeader from './components/ArtistHeader'
+import Biography from './components/Biography'
+import Exhibitions from './components/Exhibitions'
+import SectionTitle from './components/SectionTitle'
+import SelectedPress from './components/SelectedPress'
 import {
+  mapBiography,
   mapCarouselArticles,
   mapCarouselArtworks,
   mapExhibitions,
@@ -41,27 +36,23 @@ interface ArtistsContainerProps {
 }
 
 export const ArtistsContainer: FC<ArtistsContainerProps> = ({data}) => {
-  const hero = mapSplit(data.hero)
+  const {isSmall} = useBreakpoints()
+
+  const hero = data.showHero ? mapSplit(data.hero) : null
   const survey = mapCarouselArtworks(data.survey)
   const availableWorksBooks = mapSplit(data.availableWorksBooks)
-  const availableWorksInterstitial = mapInterstitial(data.availableWorksInterstitial, 'dark')
+  const availableWorksInterstitial = mapInterstitial(data.availableWorksInterstitial)
   const latestExhibitions = mapExhibitions(data.latestExhibitions)
-  const exhibitionsInterstitial = mapInterstitial(data.exhibitionsInterstitial, 'dark')
-  const guide = mapCarouselArticles(data.guide)
-  // const biography = mapEditorial(data.biography)
+  const exhibitionsInterstitial = mapInterstitial(data.exhibitionsInterstitial)
+  const guide = mapCarouselArticles(data.guide, isSmall)
+  const biography = mapBiography(data.artist)
   const selectedPress = mapGrid(data.selectedPress, 'article')
   const books = mapCarouselArtworks(data.books)
-  const interstitial = mapInterstitial(data.interstitial, 'light')
+  const interstitial = mapInterstitial(data.interstitial)
 
   const renderCarousel = (data: any, type: CardTypes, linkTitle: string) => (
-    <section>
-      <div className="mb-10 flex justify-between">
-        <DzTitle titleType={TITLE_TYPES.H2} title={data.title} titleSize={TITLE_SIZES.XL} />
-        <DzLink LinkElement={Link} href={'#'}>
-          {linkTitle}
-        </DzLink>
-      </div>
-
+    <section className="-mx-5">
+      <SectionTitle className="mx-5" title={data.title} linkTitle={linkTitle} />
       <DzCarousel size={data.size}>
         {data.items?.map((card: any) => (
           <DzCard
@@ -80,47 +71,25 @@ export const ArtistsContainer: FC<ArtistsContainerProps> = ({data}) => {
   return (
     <DzColumn span={12}>
       <FullWidthFlexCol>
-        <section className="space-between flex flex-row">
-          <DzTitleMolecule
-            type={DzTitleMoleculeTypes.PAGE}
-            data={{
-              title: data.artist?.fullName,
-              customClass: 'flex-1',
-              titleProps: {
-                titleType: TITLE_TYPES.H1,
-                titleSize: TITLE_SIZES.XXL,
-              },
-            }}
-          />
-          <div className="flex flex-1 flex-col">
-            <DzText textSize={TEXT_SIZES.SMALL} text={data.artist?.description} />
-            <DzLink variant={LINK_VARIANTS.TEXT} LinkElement={Link} href={'#'}>
-              Learn More
-            </DzLink>
-          </div>
-        </section>
+        <ArtistHeader artist={data.artist} />
 
-        <DzSplit data={hero} type={SPLIT_TYPES.SHORT} />
+        {hero && <DzSplit data={hero} type={SPLIT_TYPES.SHORT} />}
 
         {survey && renderCarousel(survey, CARD_TYPES.ARTWORK, 'Explore all Artworks')}
 
-        <DzSplit data={availableWorksBooks} type={SPLIT_TYPES.SHORT} />
+        {availableWorksBooks && <DzSplit data={availableWorksBooks} type={SPLIT_TYPES.SHORT} />}
 
         {availableWorksInterstitial && <DzInterstitial data={availableWorksInterstitial} />}
 
-        {latestExhibitions._type === 'grid' ? (
-          <DzComplexGrid {...latestExhibitions.data} />
-        ) : (
-          <DzHero items={latestExhibitions.data} />
-        )}
+        {latestExhibitions && <Exhibitions exhibitions={latestExhibitions} />}
 
         {exhibitionsInterstitial && <DzInterstitial data={exhibitionsInterstitial} />}
 
         {guide && renderCarousel(guide, CARD_TYPES.CONTENT, 'Explore Guide')}
 
-        {/* <DzEditorial type={EDITORIAL_TYPES.COMPLEX} data={biography} /> */}
+        <Biography biography={biography} title="Biography" artist={data.artist} />
 
-        <DzComplexGrid {...selectedPress} />
+        {selectedPress && <SelectedPress selectedPress={selectedPress} />}
 
         {books && renderCarousel(books, CARD_TYPES.ARTWORK, 'Explore More')}
 

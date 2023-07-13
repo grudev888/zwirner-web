@@ -12,13 +12,12 @@ export const artistPageBySlug = groq`
   ...,
   _id,
   title,
-  "artist": artist->,
+  "artist": artist-> { ..., "cvUrl": cv.asset->url } ,
   survey { ..., items[]-> { ..., artists[]->, } },
   latestExhibitions { ..., items[]-> { ..., exhibition->, } },
   guide { ..., items[]->, },
   selectedPress { ..., items[]->, },
   books { ..., items[]->, },
-  interstitial { ... },
   seo {
     ${pageSEOFields}
   },
