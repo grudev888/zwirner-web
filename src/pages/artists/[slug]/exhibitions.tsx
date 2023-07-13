@@ -2,9 +2,9 @@ import {GetStaticProps} from 'next'
 
 import ArtistExhibitionsPageContainer from '@/components/containers/pages/artists/exhibitions'
 import {PREVIEW_PAGE_TYPE, PreviewPage} from '@/components/containers/previews/pagePreview'
+import {artistExhibitionsPageData} from '@/sanity/queries/artistExhibitionsPage.queries'
 import {getAllArtistSubPageSlugs} from '@/sanity/services/artist.service'
-import {getExhibitionsByArtistSlug} from '@/sanity/services/exhibition.service'
-import {exhibitionsByArtistSlug} from '@/sanity/queries/exhibition.queries'
+import {getArtistExhibitionsPageData} from '@/sanity/services/artistPages.service'
 
 interface PageProps {
   data: any
@@ -20,7 +20,7 @@ export default function ExhibitionsPage({data, preview, queryArtistSlug}: PagePr
   if (preview) {
     return (
       <PreviewPage
-        query={exhibitionsByArtistSlug}
+        query={artistExhibitionsPageData}
         params={queryArtistSlug}
         seo={null}
         type={PREVIEW_PAGE_TYPE.ARTIST_DETAIL_EXHIBITIONS}
@@ -51,7 +51,7 @@ export const getStaticProps: GetStaticProps<PageProps, Query> = async (ctx) => {
     }
   }
 
-  const data = await getExhibitionsByArtistSlug(artistSlug)
+  const data = await getArtistExhibitionsPageData(artistSlug)
 
   return {
     props: {
