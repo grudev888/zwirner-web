@@ -94,7 +94,7 @@ const Biography = ({title, biography, artist, ...rest}: any) => {
           {!isSmall && <ArtistFooter artist={artist} />}
         </div>
 
-        <div className="mt-5 flex-1 md:mt-0">
+        <div className="mt-5 flex-1 md:!mt-0">
           <DzPortableText portableProps={{value: biography.description}} />
         </div>
 
