@@ -1,4 +1,5 @@
 import {DzColumn, DzComplexGrid, DzInterstitial, TITLE_SIZES} from '@zwirner/design-system'
+import {Fragment} from 'react'
 
 import {FullWidthFlexCol} from '@/components/containers/layout/FullWidthFlexCol'
 import ArtistsPageLayout from '@/components/containers/layout/pages/artistsPageLayout'
@@ -22,7 +23,18 @@ const ArtistExhibitionsPageContainer = ({data}: PageContainerProps) => {
       <DzColumn span={12}>
         {parentPageTitle && <ContainerTitle title={title} titleSize={TITLE_SIZES.XL} />}
         <FullWidthFlexCol>
-          <DzComplexGrid cards={complexGridCards} />
+          <DzComplexGrid
+            cards={complexGridCards}
+            /* Effectively hides the view slider */
+            steps={[
+              {
+                id: 1,
+                // TODO externalize this value to CMS
+                numberOfColumns: 3,
+                icon: <Fragment />,
+              },
+            ]}
+          />
         </FullWidthFlexCol>
         <DzInterstitial {...interstitialData} />
       </DzColumn>
