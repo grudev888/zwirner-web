@@ -6,6 +6,7 @@ import {ArticleContainer} from '@/components/containers/articles/article'
 import {PREVIEW_PAGE_TYPE, PreviewPage} from '@/components/containers/previews/pagePreview'
 import {articleBySlug} from '@/sanity/queries/article.queries'
 import {getAllArticlePages, getArticlePageBySlug} from '@/sanity/services/article.service'
+import {removePrefixSlug} from '@/utils/slug'
 
 interface QuerySlug {
   slug: string
@@ -56,7 +57,12 @@ export default function Article({data, preview}: PageProps) {
 
 export const getStaticPaths = async () => {
   const paths = await getAllArticlePages()
-  return {paths, fallback: true}
+  return {
+    paths: paths.map((item: any) => ({
+      params: {slug: removePrefixSlug(item.params.slug[0], '/news/').split('/')},
+    })),
+    fallback: true,
+  }
 }
 
 export const getStaticProps: GetStaticProps<PageProps, Query, PreviewData> = async (ctx) => {

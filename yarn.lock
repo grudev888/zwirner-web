@@ -1766,9 +1766,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@zwirner/design-system@npm:0.0.47":
-  version: 0.0.47
-  resolution: "@zwirner/design-system@npm:0.0.47::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40zwirner%2Fdesign-system%2F0.0.47%2F0137df51a17a580fcb077eb0992e010df64bb002"
+"@zwirner/design-system@npm:0.0.50":
+  version: 0.0.50
+  resolution: "@zwirner/design-system@npm:0.0.50::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40zwirner%2Fdesign-system%2F0.0.50%2F11913b62edf212554492d78486b19515e1b84ba5"
   dependencies:
     "@headlessui/react": ^1.7.10
     "@heroicons/react": ^2.0.15
@@ -1781,7 +1781,7 @@ __metadata:
   peerDependencies:
     react: ">=16"
     react-dom: ^17.0.1
-  checksum: 26297568f4f2d8f678f7029bda998752e8d4caa246869973fcfdefa5dda47a3fa09caa4c08bc479328a4c926fe6af17822b146defb1a1a52a9b7e24bb14dc7d3
+  checksum: 0d5fb1bfa435a77292f976db8bd9dfac8b4ab1afef8428c292b0dbcc636f80801c1dcf72eaf40e9b53519c8bf743c9909f9e21396a8e690a8593689fb8fb7323
   languageName: node
   linkType: hard
 
@@ -8492,7 +8492,7 @@ __metadata:
     "@types/react-dom": ^18.2.4
     "@types/styled-components": ^5.1.26
     "@typescript-eslint/eslint-plugin": ^5.59.7
-    "@zwirner/design-system": 0.0.47
+    "@zwirner/design-system": 0.0.50
     autoprefixer: ^10.4.13
     axios: ^1.3.5
     cross-env: ^7.0.3

@@ -1,6 +1,5 @@
 import {DzColumn} from '@zwirner/design-system'
 import {GetStaticProps} from 'next'
-import {useRouter} from 'next/router'
 import {ErrorBoundary} from 'react-error-boundary'
 
 import {SEOComponent} from '@/common/components/seo/seo'
@@ -11,10 +10,11 @@ import {getAllArtistPageSlugs, getArtistPageBySlug} from '@/sanity/services/arti
 import {removePrefixSlug} from '@/utils/slug'
 
 interface PageProps {
-  data: any
+  data?: any
   preview: boolean
   slug: string | null
   token: string | null
+  queryParams: {slug: string}
 }
 
 interface Query {
@@ -25,21 +25,12 @@ interface PreviewData {
   token?: string
 }
 
-export default function ArtistPage({data = {}, preview}: PageProps) {
-  const router = useRouter()
-
-  const {pageData} = data ?? {}
-  const {seo} = pageData ?? {}
-
-  if (!pageData) return
-
+export default function ArtistPage({data = {}, preview, queryParams}: PageProps) {
   if (preview) {
-    const queryParams = {slug: `/artists/${router.query.slug ?? ``}`}
     return (
       <PreviewPage
         query={artistPageBySlug}
         params={queryParams}
-        seo={seo}
         type={PREVIEW_PAGE_TYPE.ARTIST_DETAIL}
       />
     )
@@ -54,8 +45,8 @@ export default function ArtistPage({data = {}, preview}: PageProps) {
           </DzColumn>
         }
       >
-        <SEOComponent data={seo} />
-        {pageData.artist ? <ArtistDetailContainer data={pageData} /> : null}
+        <SEOComponent data={data.seo} />
+        {data.artist ? <ArtistDetailContainer data={data} /> : null}
       </ErrorBoundary>
     </>
   )
@@ -79,10 +70,10 @@ export const getStaticProps: GetStaticProps<PageProps, Query, PreviewData> = asy
   if (preview && previewData.token) {
     return {
       props: {
-        data: {queryParams},
         preview,
         slug: params?.slug || null,
         token: previewData.token,
+        queryParams,
       },
     }
   }
@@ -90,12 +81,15 @@ export const getStaticProps: GetStaticProps<PageProps, Query, PreviewData> = asy
   try {
     const data: any = await getArtistPageBySlug(queryParams)
 
+    if (!data) return {notFound: true}
+
     return {
       props: {
-        data: {queryParams, pageData: data},
+        data,
         preview,
         slug: params?.slug || null,
         token: null,
+        queryParams,
       },
     }
   } catch (e: any) {
@@ -103,13 +97,6 @@ export const getStaticProps: GetStaticProps<PageProps, Query, PreviewData> = asy
       `ERROR FETCHING ARTISTS DATA - Slug: ${params?.slug}: `,
       e?.response?.statusMessage
     )
-    return {
-      props: {
-        data: {queryParams},
-        preview,
-        slug: params?.slug || null,
-        token: null,
-      },
-    }
+    return {notFound: true}
   }
 }

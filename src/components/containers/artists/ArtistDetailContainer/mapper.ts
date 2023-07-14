@@ -155,7 +155,6 @@ export const mapBiography = (data: any) => {
 
   return {
     media: {
-      url: '/',
       type: MEDIA_TYPES.IMAGE,
       imgProps: {src: imgSrc, alt: data.picture?.alt},
     },

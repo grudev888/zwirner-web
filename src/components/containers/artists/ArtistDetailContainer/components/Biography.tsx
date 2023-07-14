@@ -86,10 +86,12 @@ const Biography = ({title, biography, artist, ...rest}: any) => {
             />
           </div>
 
-          <DzText
-            textSize={TEXT_SIZES.SMALL}
-            text={`${deathYear ? '' : 'b.'}${birthYear}${deathYear ? ' — ' + deathYear : ''}`}
-          />
+          {birthYear && (
+            <DzText
+              textSize={TEXT_SIZES.SMALL}
+              text={`${deathYear ? '' : 'b.'}${birthYear}${deathYear ? ' — ' + deathYear : ''}`}
+            />
+          )}
 
           {!isSmall && <ArtistFooter artist={artist} />}
         </div>

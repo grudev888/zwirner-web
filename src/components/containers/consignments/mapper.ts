@@ -304,6 +304,7 @@ export const interstitialMap = (data: any) => {
   const {title} = data ?? {}
   return {
     data: {
+      fullWidth: true,
       split: false,
       title,
       primaryCta: {
@@ -384,6 +385,7 @@ export const mapFooterInterstitial = (data: any) => {
   const {title} = data ?? {}
   return {
     data: {
+      fullWidth: true,
       split: false,
       title,
       primaryCta: {

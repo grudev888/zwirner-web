@@ -5,11 +5,13 @@ import {SEOComponent} from '@/common/components/seo/seo'
 import {ArticleContainer} from '@/components/containers/articles/article'
 import {ArtistDetailContainer} from '@/components/containers/artists/ArtistDetailContainer'
 import {ArtistsListContainer} from '@/components/containers/artists/ArtstListContainer'
+import {ArtistGuideContainer} from '@/components/containers/artists/guide'
 import {AvailableArtworksContainer} from '@/components/containers/availableArtworks'
 import {CollectContainer} from '@/components/containers/collect'
 import {ConsignmentsContainer} from '@/components/containers/consignments'
 import {HomeContainer} from '@/components/containers/home'
 import ArtistAvailableWorksPageContainer from '@/components/containers/pages/artists/available-works'
+import ArtistExhibitionsPageContainer from '@/components/containers/pages/artists/exhibitions'
 import ArtistSurveyPageContainer from '@/components/containers/pages/artists/survey/index'
 import {UtopiaEditionsContainer} from '@/components/containers/utopiaEditions'
 import {usePreview} from '@/sanity/preview'
@@ -21,6 +23,8 @@ export const PREVIEW_PAGE_TYPE = {
   UTOPIA: 'utopia-editions',
   COLLECT: 'collect',
   SINGLE_ARTICLE: 'single-article',
+  ARTIST_DETAIL_EXHIBITIONS: 'artist-detail-exhibitions',
+  SINGLE_ARTISTS_GUIDE_PAGE: 'single-artist-guide',
   ARTIST_DETAIL: 'artist-detail',
   ARTISTS_LIST: 'artists-list',
   ARTIST_DETAIL_AVAILABLE_WORKS: 'artist-detail-available-works',
@@ -34,6 +38,8 @@ export const PREVIEW_PAGE_TYPE_NAMES = [
   PREVIEW_PAGE_TYPE.UTOPIA,
   PREVIEW_PAGE_TYPE.COLLECT,
   PREVIEW_PAGE_TYPE.SINGLE_ARTICLE,
+  PREVIEW_PAGE_TYPE.ARTIST_DETAIL_EXHIBITIONS,
+  PREVIEW_PAGE_TYPE.SINGLE_ARTISTS_GUIDE_PAGE,
   PREVIEW_PAGE_TYPE.ARTIST_DETAIL,
   PREVIEW_PAGE_TYPE.ARTISTS_LIST,
   PREVIEW_PAGE_TYPE.ARTIST_DETAIL_AVAILABLE_WORKS,
@@ -43,7 +49,7 @@ export const PREVIEW_PAGE_TYPE_NAMES = [
 export type PreviewPageType = (typeof PREVIEW_PAGE_TYPE_NAMES)[number]
 
 interface PreviewPageProps {
-  seo: any
+  seo?: any
   query: string
   params?: any
   type: PreviewPageType
@@ -68,8 +74,14 @@ const containerPerType = {
   [PREVIEW_PAGE_TYPE.SINGLE_ARTICLE]: (data: any) => {
     return <ArticleContainer data={data} />
   },
+  [PREVIEW_PAGE_TYPE.ARTIST_DETAIL_EXHIBITIONS]: (data: any) => {
+    return <ArtistExhibitionsPageContainer data={data} />
+  },
+  [PREVIEW_PAGE_TYPE.SINGLE_ARTISTS_GUIDE_PAGE]: (data: any) => {
+    return <ArtistGuideContainer data={data} />
+  },
   [PREVIEW_PAGE_TYPE.ARTIST_DETAIL]: (data: any) => {
-    return data.artist ? <ArtistDetailContainer data={data} /> : null
+    return data?.artist ? <ArtistDetailContainer data={data} /> : null
   },
   [PREVIEW_PAGE_TYPE.ARTISTS_LIST]: (data: any) => {
     return <ArtistsListContainer data={data} />
@@ -86,6 +98,7 @@ interface ContainerDataProps {
   query: string
   params?: any
   type: PreviewPageType
+  seo?: any
 }
 
 const getData = (data: any) => {
@@ -99,21 +112,24 @@ const getData = (data: any) => {
   return null
 }
 
-const ContainerData: FC<ContainerDataProps> = ({query, params = {}, type}) => {
+const ContainerData: FC<ContainerDataProps> = ({seo, query, params = {}, type}) => {
   const data = usePreview(null, query, params)
-
   const componentData = getData(data)
   const container = containerPerType?.[type]?.(componentData) ?? <Fragment />
+  const componentSEO = seo || componentData.seo
 
-  return <>{container}</>
+  return (
+    <>
+      {componentSEO && <SEOComponent data={componentSEO} />} {container}
+    </>
+  )
 }
 
 export const PreviewPage: FC<PreviewPageProps> = ({seo, query, params = {}, type}) => {
   return (
     <>
-      <SEOComponent data={seo} />
       <PreviewSuspense fallback="Loading...">
-        <ContainerData query={query} params={params} type={type} />
+        <ContainerData seo={seo} query={query} params={params} type={type} />
       </PreviewSuspense>
     </>
   )
