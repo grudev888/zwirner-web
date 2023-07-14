@@ -98,7 +98,7 @@ export const HomeContainer: FC<HomeContainerProps> = ({data}) => {
 
         <section>
           <h2 className="sr-only">Subscribe</h2>
-          <DzInterstitial data={{...interstitialData, customClass: styles.fullSection}} />
+          <DzInterstitial data={interstitialData} />
         </section>
 
         <section>

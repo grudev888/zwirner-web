@@ -5,6 +5,7 @@ import {SEOComponent} from '@/common/components/seo/seo'
 import {ArticleContainer} from '@/components/containers/articles/article'
 import {ArtistDetailContainer} from '@/components/containers/artists/ArtistDetailContainer'
 import {ArtistsListContainer} from '@/components/containers/artists/ArtstListContainer'
+import {ArtistGuideContainer} from '@/components/containers/artists/guide'
 import {AvailableArtworksContainer} from '@/components/containers/availableArtworks'
 import {CollectContainer} from '@/components/containers/collect'
 import {ConsignmentsContainer} from '@/components/containers/consignments'
@@ -23,6 +24,7 @@ export const PREVIEW_PAGE_TYPE = {
   COLLECT: 'collect',
   SINGLE_ARTICLE: 'single-article',
   ARTIST_DETAIL_EXHIBITIONS: 'artist-detail-exhibitions',
+  SINGLE_ARTISTS_GUIDE_PAGE: 'single-artist-guide',
   ARTIST_DETAIL: 'artist-detail',
   ARTISTS_LIST: 'artists-list',
   ARTIST_DETAIL_AVAILABLE_WORKS: 'artist-detail-available-works',
@@ -37,6 +39,7 @@ export const PREVIEW_PAGE_TYPE_NAMES = [
   PREVIEW_PAGE_TYPE.COLLECT,
   PREVIEW_PAGE_TYPE.SINGLE_ARTICLE,
   PREVIEW_PAGE_TYPE.ARTIST_DETAIL_EXHIBITIONS,
+  PREVIEW_PAGE_TYPE.SINGLE_ARTISTS_GUIDE_PAGE,
   PREVIEW_PAGE_TYPE.ARTIST_DETAIL,
   PREVIEW_PAGE_TYPE.ARTISTS_LIST,
   PREVIEW_PAGE_TYPE.ARTIST_DETAIL_AVAILABLE_WORKS,
@@ -74,8 +77,11 @@ const containerPerType = {
   [PREVIEW_PAGE_TYPE.ARTIST_DETAIL_EXHIBITIONS]: (data: any) => {
     return <ArtistExhibitionsPageContainer data={data} />
   },
+  [PREVIEW_PAGE_TYPE.SINGLE_ARTISTS_GUIDE_PAGE]: (data: any) => {
+    return <ArtistGuideContainer data={data} />
+  },
   [PREVIEW_PAGE_TYPE.ARTIST_DETAIL]: (data: any) => {
-    return data.artist ? <ArtistDetailContainer data={data} /> : null
+    return data?.artist ? <ArtistDetailContainer data={data} /> : null
   },
   [PREVIEW_PAGE_TYPE.ARTISTS_LIST]: (data: any) => {
     return <ArtistsListContainer data={data} />
@@ -107,7 +113,6 @@ const getData = (data: any) => {
 
 const ContainerData: FC<ContainerDataProps> = ({query, params = {}, type}) => {
   const data = usePreview(null, query, params)
-
   const componentData = getData(data)
   const container = containerPerType?.[type]?.(componentData) ?? <Fragment />
 

@@ -129,14 +129,8 @@ export const CollectContainer: FC<CollectContainerProps> = ({data}) => {
 
           <h2 className="sr-only">Utopia Editions</h2>
           <DzSplit {...utopiaSplitData} />
-
-          <div className="-mx-5">
-            <DzInterstitial {...platformData} />
-          </div>
-
-          <div className="-mx-5">
-            <DzInterstitial {...interstitialData} />
-          </div>
+          <DzInterstitial {...platformData} />
+          <DzInterstitial {...interstitialData} />
         </FullWidthFlexCol>
       </DzColumn>
     </>

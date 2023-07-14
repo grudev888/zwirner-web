@@ -218,6 +218,7 @@ export const platformInterstitialMap = (data: any) => {
 
   return {
     data: {
+      fullWidth: true,
       split: false,
       title: title,
       description: subtitle,
@@ -243,6 +244,7 @@ export const interstitialMap = (data: any) => {
   const {text} = cta ?? {}
   return {
     data: {
+      fullWidth: true,
       split: false,
       title,
       primaryCta: {
