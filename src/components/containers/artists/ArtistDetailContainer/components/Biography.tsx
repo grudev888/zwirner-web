@@ -1,12 +1,10 @@
 import {
-  DzEditorial,
   DzLink,
   DzMedia,
   DzText,
   DzTitle,
   DzTitleMolecule,
   DzTitleMoleculeTypes,
-  EDITORIAL_TYPES,
   LINK_VARIANTS,
   MEDIA_ASPECT_RATIOS,
   TEXT_LINK_SIZES,
@@ -15,6 +13,8 @@ import {
   TITLE_TYPES,
   useBreakpoints,
 } from '@zwirner/design-system'
+
+import DzPortableText from '@/common/components/portableText'
 
 const ArtistFooter = ({artist}: {artist: any}) => {
   const renderUrl = (url: string, title: string) => (
@@ -94,11 +94,8 @@ const Biography = ({title, biography, artist, ...rest}: any) => {
           {!isSmall && <ArtistFooter artist={artist} />}
         </div>
 
-        <div className="mt-5 flex-1 md:mt-0">
-          <DzEditorial
-            type={EDITORIAL_TYPES.COMPLEX}
-            data={{reverse: biography.reverse, paragraphs: biography.paragraphs}}
-          />
+        <div className="mt-5 flex-1 md:!mt-0">
+          <DzPortableText portableProps={{value: biography.description}} />
         </div>
 
         {isSmall && <ArtistFooter artist={artist} />}

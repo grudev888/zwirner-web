@@ -1,5 +1,5 @@
-import ArtistsPageLayout from '@/components/containers/layout/pages/artistsPageLayout'
 import {AvailableArtworksContainer} from '@/components/containers/availableArtworks'
+import ArtistsPageLayout from '@/components/containers/layout/pages/artistsPageLayout'
 
 interface PageContainerProps {
   data: any

@@ -4,8 +4,9 @@ import {SEOComponent} from '@/common/components/seo/seo'
 import ArtistAvailableWorksPageContainer from '@/components/containers/pages/artists/available-works/index'
 import {PREVIEW_PAGE_TYPE, PreviewPage} from '@/components/containers/previews/pagePreview'
 import {availableArtworksDataByArtistSlug} from '@/sanity/queries/availableArtworks.queries'
-import {getAllArtistAvailableArtworkPageSlugs} from '@/sanity/services/artist.service'
+import {getAllArtistPageSlugs} from '@/sanity/services/artist.service'
 import {getAvailableArtworksDataByArtistSlug} from '@/sanity/services/availableArtworks.service'
+import {removePrefixSlug} from '@/utils/slug'
 
 interface PageProps {
   data: any
@@ -40,8 +41,13 @@ export default function AvailableWorksPage({data, preview, querySlug}: PageProps
 }
 
 export const getStaticPaths = async () => {
-  const paths = await getAllArtistAvailableArtworkPageSlugs()
-  return {paths, fallback: true}
+  const paths = await getAllArtistPageSlugs()
+  return {
+    paths: paths.map((item: any) => ({
+      params: {slug: removePrefixSlug(item.params.slug, '/artists/')},
+    })),
+    fallback: true,
+  }
 }
 
 export const getStaticProps: GetStaticProps<PageProps, Query> = async (ctx) => {

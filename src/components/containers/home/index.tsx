@@ -48,7 +48,7 @@ export const HomeContainer: FC<HomeContainerProps> = ({data}) => {
         {data?.map((card: any) => (
           <DzCard
             key={card.id}
-            data={{...card, size: [CardSizes['10col'], carouselSizeToCardSize[size]]}}
+            data={{...card, size: [CardSizes['10col'], carouselSizeToCardSize?.[size]]}}
             type={CARD_TYPES.CONTENT}
           />
         ))}

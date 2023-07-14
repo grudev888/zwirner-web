@@ -1,10 +1,4 @@
-import {
-  ButtonModes,
-  CARD_TYPES,
-  EDITORIAL_TEXT_TYPES,
-  MEDIA_ASPECT_RATIOS,
-  MEDIA_TYPES,
-} from '@zwirner/design-system'
+import {ButtonModes, CARD_TYPES, MEDIA_ASPECT_RATIOS, MEDIA_TYPES} from '@zwirner/design-system'
 import Image from 'next/image'
 import Link from 'next/link'
 
@@ -165,8 +159,7 @@ export const mapBiography = (data: any) => {
       type: MEDIA_TYPES.IMAGE,
       imgProps: {src: imgSrc, alt: data.picture?.alt},
     },
-    reverse: false,
-    paragraphs: [{type: EDITORIAL_TEXT_TYPES.PARAGRAPH, text: data.description}],
+    description: data.description,
   }
 }
 
