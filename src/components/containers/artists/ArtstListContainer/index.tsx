@@ -7,11 +7,11 @@ import {ContainerTitle} from '@/components/containers/title/ContainerTitle'
 
 import {interstitialMap, mapListItems} from './mapper'
 
-interface ArtistsContainerProps {
+interface ArtistsListContainerProps {
   data: any
 }
 
-export const ArtistsContainer: FC<ArtistsContainerProps> = ({data}) => {
+export const ArtistsListContainer: FC<ArtistsListContainerProps> = ({data}) => {
   const {pageInfo, artistPages} = data ?? {}
   const [pagesInfoData] = pageInfo ?? []
   const listItems = mapListItems(artistPages)

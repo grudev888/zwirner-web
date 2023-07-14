@@ -16,11 +16,8 @@ export const utopiaMainMediaMap = (data: any) => {
   const imgSrc = asset ? builder.image(asset).url() : ''
 
   const imageProps = {
-    imgProps: {
-      url: '/',
-      src: imgSrc,
-      alt: alt,
-    },
+    ImgElement: Image,
+    imgProps: {src: imgSrc, alt, fill: true},
   }
 
   const videoProps = {
@@ -117,7 +114,8 @@ export const mapCardsGrid = (data: any[]) => {
         media: {
           url: '/',
           type: MEDIA_TYPES.IMAGE,
-          imgProps: {src: imgSrc, alt},
+          ImgElement: Image,
+          imgProps: {src: imgSrc, alt, fill: true},
         },
         artistName: fullName,
         artworkTitle: title,

@@ -1,11 +1,11 @@
 import {DzColumn} from '@zwirner/design-system'
 import {GetStaticProps} from 'next'
-import {PreviewSuspense} from 'next-sanity/preview'
+import {useRouter} from 'next/router'
 import {ErrorBoundary} from 'react-error-boundary'
 
 import {SEOComponent} from '@/common/components/seo/seo'
-import {PageBuilder} from '@/components/pageBuilder'
-import {PreviewPageBuilder} from '@/components/pageBuilder/previewPageBuilder'
+import {ArtistDetailContainer} from '@/components/containers/artists/ArtistDetailContainer'
+import PreviewPage, {PREVIEW_PAGE_TYPE} from '@/components/containers/previews/pagePreview'
 import {artistPageBySlug} from '@/sanity/queries/artistPage.queries'
 import {getAllArtistPageSlugs, getArtistPageBySlug} from '@/sanity/services/artist.service'
 
@@ -25,28 +25,25 @@ interface PreviewData {
 }
 
 export default function ArtistPage({data = {}, preview}: PageProps) {
+  const router = useRouter()
+
   const {pageData} = data ?? {}
-  const {components, seo} = pageData ?? {}
+  const {seo} = pageData ?? {}
+
+  if (!pageData) return
 
   if (preview) {
-    const {queryParams} = data
+    const queryParams = {slug: `/artists/${router.query.slug ?? ``}`}
     return (
-      <>
-        <SEOComponent data={seo} />
-        <PreviewSuspense fallback="Loading...">
-          <ErrorBoundary
-            fallback={
-              <DzColumn className="mb-12 h-screen" span={12}>
-                <div className="flex justify-center p-5">Something went wrong</div>
-              </DzColumn>
-            }
-          >
-            <PreviewPageBuilder query={artistPageBySlug} params={queryParams} />
-          </ErrorBoundary>
-        </PreviewSuspense>
-      </>
+      <PreviewPage
+        query={artistPageBySlug}
+        params={queryParams}
+        seo={seo}
+        type={PREVIEW_PAGE_TYPE.ARTIST_DETAIL}
+      />
     )
   }
+
   return (
     <>
       <ErrorBoundary
@@ -57,7 +54,7 @@ export default function ArtistPage({data = {}, preview}: PageProps) {
         }
       >
         <SEOComponent data={seo} />
-        <PageBuilder components={components} />
+        {pageData.artist ? <ArtistDetailContainer data={pageData} /> : null}
       </ErrorBoundary>
     </>
   )
@@ -65,13 +62,18 @@ export default function ArtistPage({data = {}, preview}: PageProps) {
 
 export const getStaticPaths = async () => {
   const paths = await getAllArtistPageSlugs()
-  return {paths, fallback: true}
+  return {
+    paths: paths.map(({params}) => ({
+      params: {slug: params.slug.replace('/artists/', '').replace(/^\//g, '')},
+    })),
+    fallback: true,
+  }
 }
 
 export const getStaticProps: GetStaticProps<PageProps, Query, PreviewData> = async (ctx) => {
   const {params = {}, preview = false, previewData = {}} = ctx
 
-  const queryParams = {slug: params?.slug ?? ``}
+  const queryParams = {slug: `/artists/${params?.slug ?? ``}`}
 
   if (preview && previewData.token) {
     return {
@@ -86,6 +88,7 @@ export const getStaticProps: GetStaticProps<PageProps, Query, PreviewData> = asy
 
   try {
     const data: any = await getArtistPageBySlug(queryParams)
+
     return {
       props: {
         data: {queryParams, pageData: data},
