@@ -3,8 +3,9 @@ import {GetStaticProps} from 'next'
 import ArtistExhibitionsPageContainer from '@/components/containers/pages/artists/exhibitions'
 import {PREVIEW_PAGE_TYPE, PreviewPage} from '@/components/containers/previews/pagePreview'
 import {artistExhibitionsPageData} from '@/sanity/queries/artistExhibitionsPage.queries'
-import {getAllArtistSubPageSlugs} from '@/sanity/services/artist.service'
+import {getAllArtistPageSlugs} from '@/sanity/services/artist.service'
 import {getArtistExhibitionsPageData} from '@/sanity/services/artistPages.service'
+import {removePrefixSlug} from '@/utils/slug'
 
 interface PageProps {
   data: any
@@ -32,8 +33,13 @@ export default function ExhibitionsPage({data, preview, queryArtistSlug}: PagePr
 }
 
 export const getStaticPaths = async () => {
-  const paths = await getAllArtistSubPageSlugs('exhibitions')
-  return {paths, fallback: true}
+  const paths = await getAllArtistPageSlugs()
+  return {
+    paths: paths.map((item: any) => ({
+      params: {slug: removePrefixSlug(item.params.slug, '/artists/')},
+    })),
+    fallback: true,
+  }
 }
 
 export const getStaticProps: GetStaticProps<PageProps, Query> = async (ctx) => {
