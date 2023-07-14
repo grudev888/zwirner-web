@@ -1,7 +1,7 @@
 import {GetStaticProps} from 'next'
 
 import {SEOComponent} from '@/common/components/seo/seo'
-import {ArtistsContainer} from '@/components/containers/artists'
+import {ArtistsListContainer} from '@/components/containers/artists/ArtstListContainer'
 import {PREVIEW_PAGE_TYPE} from '@/components/containers/previews/pagePreview'
 import {PreviewPage} from '@/components/containers/previews/pagePreview'
 import {getAllArtistsPages} from '@/sanity/queries/artistPage.queries'
@@ -29,13 +29,15 @@ export default function Artists({data, preview}: PageProps) {
   const {seo} = pagesInfoData ?? {}
 
   if (preview) {
-    return <PreviewPage query={getAllArtistsPages} seo={seo} type={PREVIEW_PAGE_TYPE.ARTISTS} />
+    return (
+      <PreviewPage query={getAllArtistsPages} seo={seo} type={PREVIEW_PAGE_TYPE.ARTISTS_LIST} />
+    )
   }
 
   return (
     <>
       <SEOComponent data={seo} />
-      <ArtistsContainer data={data} />
+      <ArtistsListContainer data={data} />
     </>
   )
 }
