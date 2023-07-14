@@ -69,7 +69,7 @@ const containerPerType = {
     return <ArticleContainer data={data} />
   },
   [PREVIEW_PAGE_TYPE.ARTIST_DETAIL]: (data: any) => {
-    return data.artist ? <ArtistDetailContainer data={data} /> : null
+    return data?.artist ? <ArtistDetailContainer data={data} /> : null
   },
   [PREVIEW_PAGE_TYPE.ARTISTS_LIST]: (data: any) => {
     return <ArtistsListContainer data={data} />
@@ -101,7 +101,6 @@ const getData = (data: any) => {
 
 const ContainerData: FC<ContainerDataProps> = ({query, params = {}, type}) => {
   const data = usePreview(null, query, params)
-
   const componentData = getData(data)
   const container = containerPerType?.[type]?.(componentData) ?? <Fragment />
 

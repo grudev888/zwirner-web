@@ -1,6 +1,5 @@
 import {DzColumn} from '@zwirner/design-system'
 import {GetStaticProps} from 'next'
-import {useRouter} from 'next/router'
 import {ErrorBoundary} from 'react-error-boundary'
 
 import {SEOComponent} from '@/common/components/seo/seo'
@@ -15,6 +14,7 @@ interface PageProps {
   preview: boolean
   slug: string | null
   token: string | null
+  queryParams: {slug: string}
 }
 
 interface Query {
@@ -25,16 +25,11 @@ interface PreviewData {
   token?: string
 }
 
-export default function ArtistPage({data = {}, preview}: PageProps) {
-  const router = useRouter()
-
+export default function ArtistPage({data = {}, preview, queryParams}: PageProps) {
   const {pageData} = data ?? {}
   const {seo} = pageData ?? {}
 
-  if (!pageData) return
-
   if (preview) {
-    const queryParams = {slug: `/artists/${router.query.slug ?? ``}`}
     return (
       <PreviewPage
         query={artistPageBySlug}
@@ -44,6 +39,8 @@ export default function ArtistPage({data = {}, preview}: PageProps) {
       />
     )
   }
+
+  if (!pageData) return
 
   return (
     <>
@@ -79,10 +76,11 @@ export const getStaticProps: GetStaticProps<PageProps, Query, PreviewData> = asy
   if (preview && previewData.token) {
     return {
       props: {
-        data: {queryParams},
+        data: {},
         preview,
         slug: params?.slug || null,
         token: previewData.token,
+        queryParams,
       },
     }
   }
@@ -92,10 +90,11 @@ export const getStaticProps: GetStaticProps<PageProps, Query, PreviewData> = asy
 
     return {
       props: {
-        data: {queryParams, pageData: data},
+        data: {pageData: data},
         preview,
         slug: params?.slug || null,
         token: null,
+        queryParams,
       },
     }
   } catch (e: any) {
@@ -105,10 +104,11 @@ export const getStaticProps: GetStaticProps<PageProps, Query, PreviewData> = asy
     )
     return {
       props: {
-        data: {queryParams},
+        data: {},
         preview,
         slug: params?.slug || null,
         token: null,
+        queryParams,
       },
     }
   }
