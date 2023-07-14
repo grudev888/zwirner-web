@@ -26,7 +26,7 @@ const ArtistHeader = ({artist, intro}: ArtistHeaderProps) => {
         type={DzTitleMoleculeTypes.PAGE}
         data={{
           title: artist.fullName,
-          customClass: 'flex-1 mb-5 md:mb-10',
+          customClass: 'flex-1',
           titleProps: {
             titleType: TITLE_TYPES.H1,
             titleSize: isSmall ? TITLE_SIZES.XL : TITLE_SIZES.XXL,
