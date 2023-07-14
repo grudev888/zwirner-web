@@ -69,7 +69,7 @@ const containerPerType = {
     return <ArticleContainer data={data} />
   },
   [PREVIEW_PAGE_TYPE.ARTIST_DETAIL]: (data: any) => {
-    return <ArtistDetailContainer data={data} />
+    return data.artist ? <ArtistDetailContainer data={data} /> : null
   },
   [PREVIEW_PAGE_TYPE.ARTISTS_LIST]: (data: any) => {
     return <ArtistsListContainer data={data} />
