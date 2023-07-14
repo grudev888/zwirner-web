@@ -141,6 +141,11 @@ export const mapCarouselArticles = (data: any, isSmall: boolean) => {
         category: item.category,
         secondaryTitle: item.description,
         secondarySubtitle: date,
+        linkCTA: {
+          text: 'Learn more',
+          url: item.slug.current,
+          linkElement: Link,
+        },
       }
     }),
   }
@@ -251,12 +256,7 @@ export const mapHero = (data: any) => {
 export const mapArticlesCard = (item: any) => {
   const imgSrc = item.image?.image?.asset ? builder.image(item.image.image.asset).url() : ''
 
-  const dateFormatter = new Intl.DateTimeFormat('en-US', {
-    timeZone: 'America/New_York',
-    year: 'numeric',
-  })
-
-  const year = item.date ? dateFormatter.format(new Date(item.date)) : null
+  const year = item.displayDate || item.dateSelection?.year || item.dateSelection?.approximate
 
   return {
     id: item._id,
@@ -274,7 +274,7 @@ export const mapArticlesCard = (item: any) => {
     subtitle: item.subtitle,
     secondaryTitle: item.description,
     secondarySubtitle: year,
-    linkCTA: {text: 'Learn More', linkElement: Link, url: '#'},
+    linkCTA: {text: 'Learn More', linkElement: Link, url: item.slug.current},
   }
 }
 
