@@ -49,7 +49,7 @@ export const PREVIEW_PAGE_TYPE_NAMES = [
 export type PreviewPageType = (typeof PREVIEW_PAGE_TYPE_NAMES)[number]
 
 interface PreviewPageProps {
-  seo: any
+  seo?: any
   query: string
   params?: any
   type: PreviewPageType
@@ -98,6 +98,7 @@ interface ContainerDataProps {
   query: string
   params?: any
   type: PreviewPageType
+  seo?: any
 }
 
 const getData = (data: any) => {
@@ -111,20 +112,24 @@ const getData = (data: any) => {
   return null
 }
 
-const ContainerData: FC<ContainerDataProps> = ({query, params = {}, type}) => {
+const ContainerData: FC<ContainerDataProps> = ({seo, query, params = {}, type}) => {
   const data = usePreview(null, query, params)
   const componentData = getData(data)
   const container = containerPerType?.[type]?.(componentData) ?? <Fragment />
+  const componentSEO = seo || componentData.seo
 
-  return <>{container}</>
+  return (
+    <>
+      {componentSEO && <SEOComponent data={componentSEO} />} {container}
+    </>
+  )
 }
 
 export const PreviewPage: FC<PreviewPageProps> = ({seo, query, params = {}, type}) => {
   return (
     <>
-      <SEOComponent data={seo} />
       <PreviewSuspense fallback="Loading...">
-        <ContainerData query={query} params={params} type={type} />
+        <ContainerData seo={seo} query={query} params={params} type={type} />
       </PreviewSuspense>
     </>
   )

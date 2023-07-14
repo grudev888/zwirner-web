@@ -10,7 +10,7 @@ import {getAllArtistPageSlugs, getArtistPageBySlug} from '@/sanity/services/arti
 import {removePrefixSlug} from '@/utils/slug'
 
 interface PageProps {
-  data: any
+  data?: any
   preview: boolean
   slug: string | null
   token: string | null
@@ -26,21 +26,15 @@ interface PreviewData {
 }
 
 export default function ArtistPage({data = {}, preview, queryParams}: PageProps) {
-  const {pageData} = data ?? {}
-  const {seo} = pageData ?? {}
-
   if (preview) {
     return (
       <PreviewPage
         query={artistPageBySlug}
         params={queryParams}
-        seo={seo}
         type={PREVIEW_PAGE_TYPE.ARTIST_DETAIL}
       />
     )
   }
-
-  if (!pageData) return
 
   return (
     <>
@@ -51,8 +45,8 @@ export default function ArtistPage({data = {}, preview, queryParams}: PageProps)
           </DzColumn>
         }
       >
-        <SEOComponent data={seo} />
-        {pageData.artist ? <ArtistDetailContainer data={pageData} /> : null}
+        <SEOComponent data={data.seo} />
+        {data.artist ? <ArtistDetailContainer data={data} /> : null}
       </ErrorBoundary>
     </>
   )
@@ -76,7 +70,6 @@ export const getStaticProps: GetStaticProps<PageProps, Query, PreviewData> = asy
   if (preview && previewData.token) {
     return {
       props: {
-        data: {},
         preview,
         slug: params?.slug || null,
         token: previewData.token,
@@ -88,9 +81,11 @@ export const getStaticProps: GetStaticProps<PageProps, Query, PreviewData> = asy
   try {
     const data: any = await getArtistPageBySlug(queryParams)
 
+    if (!data) return {notFound: true}
+
     return {
       props: {
-        data: {pageData: data},
+        data,
         preview,
         slug: params?.slug || null,
         token: null,
@@ -102,14 +97,6 @@ export const getStaticProps: GetStaticProps<PageProps, Query, PreviewData> = asy
       `ERROR FETCHING ARTISTS DATA - Slug: ${params?.slug}: `,
       e?.response?.statusMessage
     )
-    return {
-      props: {
-        data: {},
-        preview,
-        slug: params?.slug || null,
-        token: null,
-        queryParams,
-      },
-    }
+    return {notFound: true}
   }
 }

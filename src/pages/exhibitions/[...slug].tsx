@@ -11,6 +11,7 @@ import {
   getAllExhibitionPagesSlugs,
   getExhibitionPageBySlug,
 } from '@/sanity/services/exhibition.service'
+import {removePrefixSlug} from '@/utils/slug'
 
 interface PageProps {
   data: any
@@ -69,7 +70,12 @@ export default function ExhibitionsPage({data = {}, preview}: PageProps) {
 
 export const getStaticPaths = async () => {
   const paths = await getAllExhibitionPagesSlugs()
-  return {paths, fallback: true}
+  return {
+    paths: paths.map((item: any) => ({
+      params: {slug: removePrefixSlug(item.params.slug, '/exhibitions/').split('/')},
+    })),
+    fallback: true,
+  }
 }
 
 export const getStaticProps: GetStaticProps<PageProps, Query, PreviewData> = async (ctx) => {
@@ -90,6 +96,7 @@ export const getStaticProps: GetStaticProps<PageProps, Query, PreviewData> = asy
 
   try {
     const data: any = await getExhibitionPageBySlug(queryParams)
+
     return {
       props: {
         data: {queryParams, pageData: data},
