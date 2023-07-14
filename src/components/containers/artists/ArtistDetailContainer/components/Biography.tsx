@@ -94,7 +94,7 @@ const Biography = ({title, biography, artist, ...rest}: any) => {
           {!isSmall && <ArtistFooter artist={artist} />}
         </div>
 
-        <div className="flex-1">
+        <div className="mt-5 flex-1 md:mt-0">
           <DzEditorial
             type={EDITORIAL_TYPES.COMPLEX}
             data={{reverse: biography.reverse, paragraphs: biography.paragraphs}}

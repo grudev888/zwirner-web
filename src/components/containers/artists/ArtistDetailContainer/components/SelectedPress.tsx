@@ -26,6 +26,7 @@ const SelectedPress = ({selectedPress, ...rest}: any) => {
         type={DzTitleMoleculeTypes.SECTION}
         data={{
           title: selectedPress.title,
+          customClass: 'mb-5 md:mb-0',
           linkCTA: {
             text: 'Explore Selected Press',
             linkElement: Link,
