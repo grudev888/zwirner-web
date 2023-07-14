@@ -19,7 +19,7 @@ export default function ArtistsPageLayout({
   return (
     <>
       <DzColumn span={12} className={styles.backNavContainer}>
-        <BackArrowIcon style={{display: 'inline-block', marginRight: '1rem'}} />
+        <BackArrowIcon style={{display: 'inline-block', marginRight: '0.625rem'}} />
         <DzLink href={parentPath} textLinkSize={TEXT_LINK_SIZES.SM}>
           Back to {parentPageName}
         </DzLink>
