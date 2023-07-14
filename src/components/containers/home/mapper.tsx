@@ -92,6 +92,7 @@ export const mapInterstitialComponents = (data: any) => {
   const {asset, alt} = imageOverride ?? {}
   const imgSrc = asset ? builder.image(asset).url() : ''
   return {
+    fullWidth: true,
     split: false,
     title: titleOverride,
     description: subtitleOverride,

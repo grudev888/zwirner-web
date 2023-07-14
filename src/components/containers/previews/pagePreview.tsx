@@ -5,6 +5,7 @@ import {SEOComponent} from '@/common/components/seo/seo'
 import {ArticleContainer} from '@/components/containers/articles/article'
 import {ArtistDetailContainer} from '@/components/containers/artists/ArtistDetailContainer'
 import {ArtistsListContainer} from '@/components/containers/artists/ArtstListContainer'
+import {ArtistGuideContainer} from '@/components/containers/artists/guide'
 import {AvailableArtworksContainer} from '@/components/containers/availableArtworks'
 import {CollectContainer} from '@/components/containers/collect'
 import {ConsignmentsContainer} from '@/components/containers/consignments'
@@ -21,6 +22,7 @@ export const PREVIEW_PAGE_TYPE = {
   UTOPIA: 'utopia-editions',
   COLLECT: 'collect',
   SINGLE_ARTICLE: 'single-article',
+  SINGLE_ARTISTS_GUIDE_PAGE: 'single-artist-guide',
   ARTIST_DETAIL: 'artist-detail',
   ARTISTS_LIST: 'artists-list',
   ARTIST_DETAIL_AVAILABLE_WORKS: 'artist-detail-available-works',
@@ -34,6 +36,7 @@ export const PREVIEW_PAGE_TYPE_NAMES = [
   PREVIEW_PAGE_TYPE.UTOPIA,
   PREVIEW_PAGE_TYPE.COLLECT,
   PREVIEW_PAGE_TYPE.SINGLE_ARTICLE,
+  PREVIEW_PAGE_TYPE.SINGLE_ARTISTS_GUIDE_PAGE,
   PREVIEW_PAGE_TYPE.ARTIST_DETAIL,
   PREVIEW_PAGE_TYPE.ARTISTS_LIST,
   PREVIEW_PAGE_TYPE.ARTIST_DETAIL_AVAILABLE_WORKS,
@@ -67,6 +70,9 @@ const containerPerType = {
   },
   [PREVIEW_PAGE_TYPE.SINGLE_ARTICLE]: (data: any) => {
     return <ArticleContainer data={data} />
+  },
+  [PREVIEW_PAGE_TYPE.SINGLE_ARTISTS_GUIDE_PAGE]: (data: any) => {
+    return <ArtistGuideContainer data={data} />
   },
   [PREVIEW_PAGE_TYPE.ARTIST_DETAIL]: (data: any) => {
     return data?.artist ? <ArtistDetailContainer data={data} /> : null
