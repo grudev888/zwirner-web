@@ -4,8 +4,9 @@ import {SEOComponent} from '@/common/components/seo/seo'
 import ArtistSurveyPageContainer from '@/components/containers/pages/artists/survey/index'
 import {PREVIEW_PAGE_TYPE, PreviewPage} from '@/components/containers/previews/pagePreview'
 import {artworksDataByArtistSlug} from '@/sanity/queries/artworkByArtist.queries'
-import {getAllArtistSubPageSlugs} from '@/sanity/services/artist.service'
+import {getAllArtistPageSlugs} from '@/sanity/services/artist.service'
 import {getArtworkByArtist} from '@/sanity/services/artwork.service'
+import {removePrefixSlug} from '@/utils/slug'
 
 interface PageProps {
   data: any
@@ -41,8 +42,13 @@ export default function SurveyPage({data, preview, querySlug}: PageProps) {
 }
 
 export const getStaticPaths = async () => {
-  const paths = await getAllArtistSubPageSlugs('survey')
-  return {paths, fallback: true}
+  const paths = await getAllArtistPageSlugs()
+  return {
+    paths: paths.map((item: any) => ({
+      params: {slug: removePrefixSlug(item.params.slug, '/artists/')},
+    })),
+    fallback: true,
+  }
 }
 
 export const getStaticProps: GetStaticProps<PageProps, Query> = async (ctx) => {

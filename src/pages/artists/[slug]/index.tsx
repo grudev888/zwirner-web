@@ -8,6 +8,7 @@ import {ArtistDetailContainer} from '@/components/containers/artists/ArtistDetai
 import PreviewPage, {PREVIEW_PAGE_TYPE} from '@/components/containers/previews/pagePreview'
 import {artistPageBySlug} from '@/sanity/queries/artistPage.queries'
 import {getAllArtistPageSlugs, getArtistPageBySlug} from '@/sanity/services/artist.service'
+import {removePrefixSlug} from '@/utils/slug'
 
 interface PageProps {
   data: any
@@ -64,7 +65,7 @@ export const getStaticPaths = async () => {
   const paths = await getAllArtistPageSlugs()
   return {
     paths: paths.map(({params}) => ({
-      params: {slug: params.slug.replace('/artists/', '').replace(/^\//g, '')},
+      params: {slug: removePrefixSlug(params.slug, '/artists/')},
     })),
     fallback: true,
   }
