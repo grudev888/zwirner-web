@@ -54,7 +54,7 @@ export default function ArtistPage({data = {}, preview}: PageProps) {
         }
       >
         <SEOComponent data={seo} />
-        <ArtistDetailContainer data={pageData} />
+        {pageData.artist ? <ArtistDetailContainer data={pageData} /> : null}
       </ErrorBoundary>
     </>
   )
@@ -63,7 +63,9 @@ export default function ArtistPage({data = {}, preview}: PageProps) {
 export const getStaticPaths = async () => {
   const paths = await getAllArtistPageSlugs()
   return {
-    paths: paths.map(({params}) => ({params: {slug: params.slug.replace('/artists/', '')}})),
+    paths: paths.map(({params}) => ({
+      params: {slug: params.slug.replace('/artists/', '').replace(/^\//g, '')},
+    })),
     fallback: true,
   }
 }
