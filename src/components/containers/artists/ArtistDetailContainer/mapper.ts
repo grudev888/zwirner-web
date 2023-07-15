@@ -18,7 +18,6 @@ export const mapInterstitial = (data: any, onCTAClick?: () => void) => {
     },
     ...(data.image?.asset && {
       media: {
-        url: '/',
         type: MEDIA_TYPES.IMAGE,
         imgProps: {
           src: builder.image(data.image.asset).url(),
@@ -55,7 +54,6 @@ export const mapCarouselArtworks = (data: any) => {
       return {
         id: _id,
         media: {
-          url: '/',
           type: MEDIA_TYPES.IMAGE,
           ImgElement: Image,
           imgProps: {
@@ -87,7 +85,6 @@ export const mapCarouselBooks = (data: any) => {
       return {
         id: item._id,
         media: {
-          url: '/',
           type: MEDIA_TYPES.IMAGE,
           ImgElement: Image,
           imgProps: {
@@ -127,7 +124,6 @@ export const mapCarouselArticles = (data: any, isSmall: boolean) => {
         ...(imgSrc && {
           media: {
             aspectRatio: isSmall ? MEDIA_ASPECT_RATIOS['4:3'] : MEDIA_ASPECT_RATIOS['16:9'],
-            url: '/',
             type: MEDIA_TYPES.IMAGE,
             ImgElement: Image,
             imgProps: {
@@ -245,17 +241,19 @@ export const mapHero = (data: any) => {
         media: {
           ImgElement: Image,
           type: MEDIA_TYPES.IMAGE,
-          imgProps: {fill: true, url: '/', src: imgSrc, alt: photos?.[0]?.alt},
+          imgProps: {fill: true, src: imgSrc, alt: photos?.[0]?.alt},
         },
         title,
         subtitle,
-        linkCTA: {text: 'Learn More', linkElement: Link, url: '#'},
+        ...(item.slug?.current && {
+          linkCTA: {text: 'Learn More', linkElement: Link, url: item.slug.current},
+        }),
       }
     }) ?? []
   )
 }
 
-export const mapArticlesCard = (item: any) => {
+export const mapArticlesCard = (item: any, noMedia = false) => {
   const imgSrc = item.image?.image?.asset ? builder.image(item.image.image.asset).url() : ''
 
   const year = item.displayDate || item.dateSelection?.year || item.dateSelection?.approximate
@@ -263,15 +261,16 @@ export const mapArticlesCard = (item: any) => {
   return {
     id: item._id,
     cardType: CARD_TYPES.CONTENT,
-    ...(imgSrc && {
-      media: {
-        type: 'image',
-        imgProps: {
-          src: imgSrc,
-          alt: item.image?.image?.alt,
+    ...(noMedia === false &&
+      imgSrc && {
+        media: {
+          type: 'image',
+          imgProps: {
+            src: imgSrc,
+            alt: item.image?.image?.alt,
+          },
         },
-      },
-    }),
+      }),
     title: item.title,
     subtitle: item.subtitle,
     secondaryTitle: item.description,
@@ -302,17 +301,19 @@ export const mapExhibitionCard = (item: any) => {
     secondaryTitle: 'New York',
     secondarySubtitle: formatExhibitionDate(item),
     description: item.description,
-    linkCTA: {text: 'Learn More', linkElement: Link, url: '#'},
+    ...(item.slug?.current && {
+      linkCTA: {text: 'Learn More', linkElement: Link, url: item.slug.current},
+    }),
   }
 }
 
-export const mapGrid = (data: any, type: 'exhibition' | 'article') => {
+export const mapGrid = (data: any, type: 'exhibition' | 'article', noMedia = false) => {
   if (!data?.title) return null
   const {title, itemsPerRow, items} = data ?? {}
 
   return {
     cards: items?.map((item: any) =>
-      type === 'exhibition' ? mapExhibitionCard(item) : mapArticlesCard(item)
+      type === 'exhibition' ? mapExhibitionCard(item) : mapArticlesCard(item, noMedia)
     ),
     maxItemsPerRow: itemsPerRow,
     title: title,

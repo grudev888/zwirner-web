@@ -59,7 +59,7 @@ export const ArtistDetailContainer: FC<ArtistsContainerProps> = ({data}) => {
   )
   const guide = mapCarouselArticles(data.guide, isSmall)
   const biography = mapBiography(data.artist)
-  const selectedPress = mapGrid(data.selectedPress, 'article')
+  const selectedPress = mapGrid(data.selectedPress, 'article', true)
   const books = mapCarouselBooks(data.books)
   const interstitial = mapInterstitial(data.interstitial)
 
