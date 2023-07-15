@@ -97,7 +97,7 @@ export const mapCarouselBooks = (data: any) => {
           },
         },
         price: item.price,
-        title: item.title,
+        artworkTitle: item.title,
       }
     }),
   }
@@ -141,11 +141,13 @@ export const mapCarouselArticles = (data: any, isSmall: boolean) => {
         category: item.category,
         secondaryTitle: item.description,
         secondarySubtitle: date,
-        linkCTA: {
-          text: 'Learn more',
-          url: item.slug.current,
-          linkElement: Link,
-        },
+        ...(item.slug?.current && {
+          linkCTA: {
+            text: 'Learn more',
+            url: item.slug.current,
+            linkElement: Link,
+          },
+        }),
       }
     }),
   }
@@ -274,7 +276,9 @@ export const mapArticlesCard = (item: any) => {
     subtitle: item.subtitle,
     secondaryTitle: item.description,
     secondarySubtitle: year,
-    linkCTA: {text: 'Learn More', linkElement: Link, url: item.slug.current},
+    ...(item.slug?.current && {
+      linkCTA: {text: 'Learn More', linkElement: Link, url: item.slug.current},
+    }),
   }
 }
 

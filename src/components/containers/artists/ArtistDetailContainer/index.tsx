@@ -30,6 +30,7 @@ import {
   mapBiography,
   mapCarouselArticles,
   mapCarouselArtworks,
+  mapCarouselBooks,
   mapExhibitions,
   mapGrid,
   mapInterstitial,
@@ -59,7 +60,7 @@ export const ArtistDetailContainer: FC<ArtistsContainerProps> = ({data}) => {
   const guide = mapCarouselArticles(data.guide, isSmall)
   const biography = mapBiography(data.artist)
   const selectedPress = mapGrid(data.selectedPress, 'article')
-  const books = mapCarouselArtworks(data.books)
+  const books = mapCarouselBooks(data.books)
   const interstitial = mapInterstitial(data.interstitial)
 
   const renderCarousel = useCallback(
