@@ -133,16 +133,14 @@ export const mapCarouselArticles = (data: any, isSmall: boolean) => {
             },
           },
         }),
+        enableZoom: true,
         title: item.title,
         category: item.category,
         secondaryTitle: item.description,
         secondarySubtitle: date,
         ...(item.slug?.current && {
-          linkCTA: {
-            text: 'Learn more',
-            url: item.slug.current,
-            linkElement: Link,
-          },
+          linkCTA: {text: 'Learn more', url: item.slug.current, linkElement: Link},
+          cardLink: {href: item.slug.current, openNewTab: true, LinkElement: Link},
         }),
       }
     }),
@@ -247,6 +245,7 @@ export const mapHero = (data: any) => {
         subtitle,
         ...(item.slug?.current && {
           linkCTA: {text: 'Learn More', linkElement: Link, url: item.slug.current},
+          cardLink: {href: item.slug.current, openNewTab: true, LinkElement: Link},
         }),
       }
     }) ?? []
@@ -277,6 +276,7 @@ export const mapArticlesCard = (item: any, noMedia = false) => {
     secondarySubtitle: year,
     ...(item.slug?.current && {
       linkCTA: {text: 'Learn More', linkElement: Link, url: item.slug.current},
+      cardLink: {href: item.slug.current, openNewTab: true, LinkElement: Link},
     }),
   }
 }
@@ -298,11 +298,12 @@ export const mapExhibitionCard = (item: any) => {
     }),
     title: item.title,
     subtitle: item.subtitle,
-    secondaryTitle: 'New York',
+    secondaryTitle: item.location?.name,
     secondarySubtitle: formatExhibitionDate(item),
     description: item.description,
     ...(item.slug?.current && {
       linkCTA: {text: 'Learn More', linkElement: Link, url: item.slug.current},
+      cardLink: {href: item.slug.current, openNewTab: true, LinkElement: Link},
     }),
   }
 }

@@ -101,7 +101,7 @@ export const ArtistDetailContainer: FC<ArtistsContainerProps> = ({data}) => {
         ? renderCarousel(
             guide,
             CARD_TYPES.CONTENT,
-            {title: 'Explore Guide', url: `/artists/${router.query.slug}/guide`},
+            {title: 'View Guide', url: `/artists/${router.query.slug}/guide`},
             'artist-guide'
           )
         : null,
@@ -161,13 +161,15 @@ export const ArtistDetailContainer: FC<ArtistsContainerProps> = ({data}) => {
           artist={data.artist}
         />
 
-        {selectedPress && <SelectedPress id="artist-press" selectedPress={selectedPress} />}
+        {selectedPress && (
+          <SelectedPress id="artist-selected-press" selectedPress={selectedPress} />
+        )}
 
         {books &&
           renderCarousel(
             books,
             CARD_TYPES.ARTWORK,
-            {title: 'Explore More', url: `/artists/${router.query.slug}/books`},
+            {title: 'Explore Books', url: `/artists/${router.query.slug}/books`},
             'artist-books'
           )}
 

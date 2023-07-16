@@ -21,7 +21,7 @@ const HEADER_OFFSET = 120
 const ArtistHeader = ({artist, intro}: ArtistHeaderProps) => {
   const {isSmall} = useBreakpoints()
   return (
-    <section className="space-between mt-[3.75rem] flex flex-col gap-5 md:flex-row">
+    <section className="space-between mt-10 flex flex-col gap-5 md:mt-[3.75rem] md:flex-row">
       <DzTitleMolecule
         type={DzTitleMoleculeTypes.PAGE}
         data={{
@@ -34,14 +34,15 @@ const ArtistHeader = ({artist, intro}: ArtistHeaderProps) => {
         }}
       />
       <div className="flex flex-1 flex-col gap-5 whitespace-pre-wrap">
-        <DzText textSize={TEXT_SIZES.SMALL} text={intro} />
+        <DzText textSize={TEXT_SIZES.MEDIUM} text={intro} />
         <DzLink
           variant={LINK_VARIANTS.TEXT}
-          href={'#artist-biography'}
+          href="#artist-biography"
           onClick={(e) => {
             e.preventDefault()
             scrollToElementId('artist-biography', HEADER_OFFSET)
           }}
+          textLinkSize={isSmall ? TITLE_SIZES.XS : TITLE_SIZES.SM}
         >
           Learn More
         </DzLink>

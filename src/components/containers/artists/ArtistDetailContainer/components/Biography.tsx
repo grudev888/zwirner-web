@@ -17,21 +17,27 @@ import {
 import DzPortableText from '@/common/components/portableText'
 
 const ArtistFooter = ({artist}: {artist: any}) => {
-  const renderUrl = (url: string, title: string) => (
+  const {isSmall} = useBreakpoints()
+  const renderUrl = (url: string, title: string, isSmall: boolean) => (
     <p>
-      <DzLink variant={LINK_VARIANTS.TEXT} textLinkSize={TEXT_LINK_SIZES.MD} href={url} openNewTab>
+      <DzLink
+        variant={LINK_VARIANTS.TEXT}
+        textLinkSize={isSmall ? TEXT_LINK_SIZES.SM : TEXT_LINK_SIZES.MD}
+        href={url}
+        openNewTab
+      >
         {title}
       </DzLink>
     </p>
   )
 
   return (
-    <div className="flex flex-col gap-10">
+    <div className="mt-10 flex flex-col gap-10 md:mt-0">
       {artist.cvUrl && (
         <p>
           <DzLink
             variant={LINK_VARIANTS.TEXT}
-            textLinkSize={TEXT_LINK_SIZES.MD}
+            textLinkSize={isSmall ? TEXT_LINK_SIZES.SM : TEXT_LINK_SIZES.MD}
             href={artist.cvUrl}
             openNewTab
           >
@@ -39,12 +45,12 @@ const ArtistFooter = ({artist}: {artist: any}) => {
           </DzLink>
         </p>
       )}
-      <div className="flex flex-col gap-2.5">
-        {artist.url && renderUrl(artist.url, 'View Artist Website')}
-        {artist.social?.facebook && renderUrl(artist.social?.facebook, 'Facebook')}
-        {artist.social?.instagram && renderUrl(artist.social?.instagram, 'Instagram')}
-        {artist.social?.twitter && renderUrl(artist.social?.twitter, 'Twitter')}
-        {artist.social?.weChat && renderUrl(artist.social?.weChat, 'WeChat')}
+      <div className="flex flex-col gap-5 md:gap-2.5">
+        {artist.url && renderUrl(artist.url, 'View Artist Website', isSmall)}
+        {artist.social?.facebook && renderUrl(artist.social?.facebook, 'Facebook', isSmall)}
+        {artist.social?.instagram && renderUrl(artist.social?.instagram, 'Instagram', isSmall)}
+        {artist.social?.twitter && renderUrl(artist.social?.twitter, 'Twitter', isSmall)}
+        {artist.social?.weChat && renderUrl(artist.social?.weChat, 'WeChat', isSmall)}
       </div>
     </div>
   )
@@ -72,7 +78,7 @@ const Biography = ({title, biography, artist, ...rest}: any) => {
       />
 
       <div className="flex flex-col gap-5 md:flex-row">
-        <div className="flex flex-1 flex-col gap-10">
+        <div className="flex h-fit flex-1 flex-col gap-10 md:sticky md:top-16">
           <div className="max-w-[20.938rem]">
             <DzMedia
               {...biography.media}
