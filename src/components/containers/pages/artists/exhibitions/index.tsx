@@ -7,7 +7,7 @@ import ArtistsPageLayout from '@/components/containers/layout/pages/artistsPageL
 import {ContainerTitle} from '@/components/containers/title/ContainerTitle'
 
 import {interstitialMap, mapCardsGrid} from './mapper'
-
+import styles from './styles.module.css'
 interface PageContainerProps {
   data: any
 }
@@ -37,7 +37,9 @@ const ArtistExhibitionsPageContainer = ({data}: PageContainerProps) => {
             ]}
           />
         </FullWidthFlexCol>
-        <DzInterstitial {...interstitialData} />
+        <div className={styles.interstitialWrapper}>
+          <DzInterstitial {...interstitialData} />
+        </div>
       </DzColumn>
     </ArtistsPageLayout>
   )
