@@ -16,7 +16,7 @@ const ArtistExhibitionsPageContainer = ({data}: PageContainerProps) => {
   const parentPath = data?.slug
   const parentPageTitle = data?.artistFullName
   const complexGridCards = mapCardsGrid(data?.exhibitions)
-  const title = `${EXHIBITIONS.toUpperCase()}: ${parentPageTitle}`
+  const title = `${EXHIBITIONS}: ${parentPageTitle}`
   const interstitialData = interstitialMap(data?.interstitial)
 
   return (
