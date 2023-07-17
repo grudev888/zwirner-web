@@ -18,6 +18,7 @@ export const heroMapper = (data: any) => {
   const imgSrc = asset ? builder.image(asset).url() : ''
 
   return {
+    hideMedia: !imgSrc,
     media: {
       type: MEDIA_TYPES.IMAGE,
       ImgElement: Image,
