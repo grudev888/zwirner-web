@@ -2,6 +2,7 @@ import {
   ButtonModes,
   CARD_TYPES,
   INTERSTITIAL_TEXT_COLORS,
+  MEDIA_ASPECT_RATIOS,
   MEDIA_TYPES,
 } from '@zwirner/design-system'
 import {format, isAfter, isValid, isWithinInterval, parse} from 'date-fns'
@@ -44,6 +45,7 @@ export const mapCardsGrid = (data: any[]) => {
       media: {
         type: MEDIA_TYPES.IMAGE,
         ImgElement: Image,
+        aspectRatio: MEDIA_ASPECT_RATIOS['16:9'],
         imgProps: {
           src: imgSrc,
           alt,
