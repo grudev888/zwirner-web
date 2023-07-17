@@ -1,11 +1,7 @@
 import {
-  DzLink,
-  DzText,
   DzTitleMolecule,
   DzTitleMoleculeTypes,
-  LINK_VARIANTS,
   scrollToElementId,
-  TEXT_SIZES,
   TITLE_SIZES,
   TITLE_TYPES,
   useBreakpoints,
@@ -21,7 +17,7 @@ const HEADER_OFFSET = 120
 const ArtistHeader = ({artist, intro}: ArtistHeaderProps) => {
   const {isSmall} = useBreakpoints()
   return (
-    <section className="space-between mt-10 flex flex-col gap-5 md:mt-[3.75rem] md:flex-row">
+    <section className="space-between mt-10 flex flex-col md:mt-[3.75rem] md:flex-row">
       <DzTitleMolecule
         type={DzTitleMoleculeTypes.PAGE}
         data={{
@@ -31,22 +27,17 @@ const ArtistHeader = ({artist, intro}: ArtistHeaderProps) => {
             titleType: TITLE_TYPES.H1,
             titleSize: isSmall ? TITLE_SIZES.XL : TITLE_SIZES.XXL,
           },
+          description: <>{intro}</>,
+          linkCTA: {
+            href: '#artist-biography',
+            onClick: (e: any) => {
+              e.preventDefault()
+              scrollToElementId('artist-biography', HEADER_OFFSET)
+            },
+            children: <>Learn More</>,
+          },
         }}
       />
-      <div className="flex flex-1 flex-col gap-5 whitespace-pre-wrap">
-        <DzText textSize={TEXT_SIZES.MEDIUM} text={intro} />
-        <DzLink
-          variant={LINK_VARIANTS.TEXT}
-          href="#artist-biography"
-          onClick={(e) => {
-            e.preventDefault()
-            scrollToElementId('artist-biography', HEADER_OFFSET)
-          }}
-          textLinkSize={isSmall ? TITLE_SIZES.XS : TITLE_SIZES.SM}
-        >
-          Learn More
-        </DzLink>
-      </div>
     </section>
   )
 }
