@@ -41,8 +41,8 @@ export const articleBySlug = groq`
 export const pressPagesSlugs = groq`
 *[_type == "article" && defined(slug.current)  && defined(body) && type == "pressRelease"][]{
   "params": {
-    "press": string::split(slug.current, "/")[4],
-    "slug": string::split(slug.current, "/")[2]
+    "slug": string::split(slug.current, "/")[2],
+    "press": string::split(slug.current, "/")[4]
    }
 }`
 

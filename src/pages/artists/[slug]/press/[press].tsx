@@ -57,6 +57,7 @@ export default function Article({data, preview}: PageProps) {
 
 export const getStaticPaths = async () => {
   const paths = await getAllPressPages()
+  console.log('paths', paths)
   return {paths, fallback: true}
 }
 
