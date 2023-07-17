@@ -1,4 +1,6 @@
 import {
+  DzColumn,
+  DzGridColumns,
   DzLink,
   DzMedia,
   DzText,
@@ -32,7 +34,7 @@ const ArtistFooter = ({artist}: {artist: any}) => {
   )
 
   return (
-    <div className="mt-10 flex flex-col gap-10 md:mt-0">
+    <div className="mt-5 flex flex-col gap-10 md:!mt-0">
       {artist.cvUrl && (
         <p>
           <DzLink
@@ -78,33 +80,39 @@ const Biography = ({title, biography, artist, ...rest}: any) => {
       />
 
       <div className="flex flex-col gap-5 md:flex-row">
-        <div className="flex h-fit flex-1 flex-col gap-10 md:sticky md:top-16">
-          <div className="max-w-[20.938rem]">
-            <DzMedia
-              {...biography.media}
-              className="mb-2.5"
-              aspectRatio={MEDIA_ASPECT_RATIOS.AUTO}
-            />
-            <DzTitle
-              subtitle={artist.summary}
-              subtitleType={TITLE_TYPES.P}
-              subtitleSize={TITLE_SIZES.XS}
-            />
-          </div>
+        <DzGridColumns>
+          <DzColumn
+            span={3}
+            display={['flex']}
+            className="h-fit flex-1 flex-col gap-10 md:sticky md:top-16"
+          >
+            <div>
+              <DzMedia
+                {...biography.media}
+                className="mb-2.5"
+                aspectRatio={MEDIA_ASPECT_RATIOS.AUTO}
+              />
+              <DzTitle
+                subtitle={artist.summary}
+                subtitleType={TITLE_TYPES.P}
+                subtitleSize={TITLE_SIZES.XS}
+              />
+            </div>
 
-          {birthYear && (
-            <DzText
-              textSize={TEXT_SIZES.SMALL}
-              text={`${deathYear ? '' : 'b.'}${birthYear}${deathYear ? ' — ' + deathYear : ''}`}
-            />
-          )}
+            {birthYear && (
+              <DzText
+                textSize={TEXT_SIZES.SMALL}
+                text={`${deathYear ? '' : 'b.'}${birthYear}${deathYear ? ' — ' + deathYear : ''}`}
+              />
+            )}
 
-          {!isSmall && <ArtistFooter artist={artist} />}
-        </div>
+            {!isSmall && <ArtistFooter artist={artist} />}
+          </DzColumn>
 
-        <div className="mt-5 flex-1 md:!mt-0">
-          <DzPortableText portableProps={{value: biography.description}} />
-        </div>
+          <DzColumn span={6} start={7} className="pt-5 md:pt-0">
+            <DzPortableText portableProps={{value: biography.description}} />
+          </DzColumn>
+        </DzGridColumns>
 
         {isSmall && <ArtistFooter artist={artist} />}
       </div>
