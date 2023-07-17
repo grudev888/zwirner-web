@@ -18,11 +18,13 @@ export default function ArtistsPageLayout({
 }: ArtistsPageLayoutProps) {
   return (
     <>
-      <DzColumn span={12} className={styles.backNavContainer}>
-        <BackArrowIcon style={{display: 'inline-block', marginRight: '0.625rem'}} />
-        <DzLink href={parentPath} textLinkSize={TEXT_LINK_SIZES.SM}>
-          Back to {parentPageName}
-        </DzLink>
+      <DzColumn span={12}>
+        <div className={styles.backNavContainer}>
+          <BackArrowIcon className={styles.backArrowIcon} />
+          <DzLink className={styles.backLink} href={parentPath} textLinkSize={TEXT_LINK_SIZES.SM}>
+            Back to {parentPageName}
+          </DzLink>
+        </div>
       </DzColumn>
       {children}
     </>

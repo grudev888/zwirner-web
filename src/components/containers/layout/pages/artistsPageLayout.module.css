@@ -1,5 +1,16 @@
 .backNavContainer {
-  height: 1.875rem;
-  line-height: 1.875rem;
-  @apply md:mt-[0.675rem];
+  align-items: center;
+  display: flex;
+  height: 3.125rem;
+  /*TODO remove negative margin when breadcrumb component is implemented*/
+  margin-bottom: -1.25rem;
+}
+
+.backArrowIcon {
+  display: inline-block;
+  margin-right: 0.625rem;
+}
+
+.backLink {
+  display: inline-block;
 }
