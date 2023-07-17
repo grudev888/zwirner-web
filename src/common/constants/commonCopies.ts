@@ -4,6 +4,7 @@ export const ARTISTS_URL = '/artists'
 export const UPCOMING_FAIRS_URL = '/fairs'
 export const NEWS_URL = '/news'
 export const ONLINE_EXHIBITIONS_URL = '/exhibitions'
+export const ARTISTS_PRESS_URL = '/press'
 
 export const ONLINE_EXHIBITIONS_TITLE = 'Online Exhibitions'
 export const UPCOMING_FAIRS_TITLE = 'Upcoming Fairs'
