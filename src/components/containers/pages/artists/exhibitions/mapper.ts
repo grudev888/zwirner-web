@@ -2,6 +2,7 @@ import {
   ButtonModes,
   CARD_TYPES,
   INTERSTITIAL_TEXT_COLORS,
+  MEDIA_ASPECT_RATIOS,
   MEDIA_TYPES,
 } from '@zwirner/design-system'
 import {format, isAfter, isValid, isWithinInterval, parse} from 'date-fns'
@@ -26,16 +27,16 @@ export const mapCardsGrid = (data: any[]) => {
       const exStartDate = parse(startDate, 'yyyy-MM-dd', new Date())
       const exEndDate = parse(endDate, 'yyyy-MM-dd', new Date())
       const dateNow = new Date()
-      let datePrefix = 'Upcoming'
+      let datePrefix = 'Upcoming: '
 
       if (isWithinInterval(dateNow, {start: exStartDate, end: exEndDate})) {
-        datePrefix = 'Now Open'
+        datePrefix = 'Now Open: '
       } else if (isAfter(dateNow, exEndDate)) {
-        datePrefix = 'Past'
+        datePrefix = ''
       }
       const formattedFromDate = format(exStartDate, 'MMMMMM d')
       const formattedToDate = format(exEndDate, 'MMMMMM d, yyyy')
-      exhibitionDateTitle = `${datePrefix}: ${formattedFromDate}-${formattedToDate}`
+      exhibitionDateTitle = `${datePrefix}${formattedFromDate}-${formattedToDate}`
     }
 
     return {
@@ -44,6 +45,7 @@ export const mapCardsGrid = (data: any[]) => {
       media: {
         type: MEDIA_TYPES.IMAGE,
         ImgElement: Image,
+        aspectRatio: MEDIA_ASPECT_RATIOS['16:9'],
         imgProps: {
           src: imgSrc,
           alt,

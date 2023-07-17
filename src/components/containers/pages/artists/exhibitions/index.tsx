@@ -7,7 +7,7 @@ import ArtistsPageLayout from '@/components/containers/layout/pages/artistsPageL
 import {ContainerTitle} from '@/components/containers/title/ContainerTitle'
 
 import {interstitialMap, mapCardsGrid} from './mapper'
-
+import styles from './styles.module.css'
 interface PageContainerProps {
   data: any
 }
@@ -16,7 +16,7 @@ const ArtistExhibitionsPageContainer = ({data}: PageContainerProps) => {
   const parentPath = data?.slug
   const parentPageTitle = data?.artistFullName
   const complexGridCards = mapCardsGrid(data?.exhibitions)
-  const title = `${EXHIBITIONS.toUpperCase()}: ${parentPageTitle}`
+  const title = `${EXHIBITIONS}: ${parentPageTitle}`
   const interstitialData = interstitialMap(data?.interstitial)
 
   return (
@@ -37,7 +37,9 @@ const ArtistExhibitionsPageContainer = ({data}: PageContainerProps) => {
             ]}
           />
         </FullWidthFlexCol>
-        <DzInterstitial {...interstitialData} />
+        <div className={styles.interstitialWrapper}>
+          <DzInterstitial {...interstitialData} />
+        </div>
       </DzColumn>
     </ArtistsPageLayout>
   )
