@@ -26,16 +26,16 @@ export const mapCardsGrid = (data: any[]) => {
       const exStartDate = parse(startDate, 'yyyy-MM-dd', new Date())
       const exEndDate = parse(endDate, 'yyyy-MM-dd', new Date())
       const dateNow = new Date()
-      let datePrefix = 'Upcoming'
+      let datePrefix = 'Upcoming: '
 
       if (isWithinInterval(dateNow, {start: exStartDate, end: exEndDate})) {
-        datePrefix = 'Now Open'
+        datePrefix = 'Now Open: '
       } else if (isAfter(dateNow, exEndDate)) {
-        datePrefix = 'Past'
+        datePrefix = ''
       }
       const formattedFromDate = format(exStartDate, 'MMMMMM d')
       const formattedToDate = format(exEndDate, 'MMMMMM d, yyyy')
-      exhibitionDateTitle = `${datePrefix}: ${formattedFromDate}-${formattedToDate}`
+      exhibitionDateTitle = `${datePrefix}${formattedFromDate}-${formattedToDate}`
     }
 
     return {
