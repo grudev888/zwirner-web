@@ -63,6 +63,9 @@ export const mapCardsGrid = (data: any[]) => {
 export const interstitialMap = (data: any) => {
   const {title, cta} = data ?? {}
   const {text} = cta ?? {}
+
+  if (!title && !text) return null
+
   return {
     data: {
       split: false,
