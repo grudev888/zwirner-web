@@ -13,11 +13,11 @@ interface PageContainerProps {
 }
 
 const ArtistExhibitionsPageContainer = ({data}: PageContainerProps) => {
-  const parentPath = data?.slug
-  const parentPageTitle = data?.artistFullName
-  const complexGridCards = mapCardsGrid(data?.exhibitions)
+  const parentPath = data?.slug.current
+  const parentPageTitle = data?.artist?.fullName
+  const complexGridCards = mapCardsGrid(data?.artist?.exhibitions)
   const title = `${EXHIBITIONS}: ${parentPageTitle}`
-  const interstitialData = interstitialMap(data?.interstitial)
+  const interstitialData = interstitialMap(data?.exhibitionsInterstitialSubpage)
 
   return (
     <ArtistsPageLayout parentPageName={parentPageTitle} parentPath={parentPath}>

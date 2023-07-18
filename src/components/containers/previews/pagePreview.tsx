@@ -3,6 +3,7 @@ import {FC, Fragment} from 'react'
 
 import {SEOComponent} from '@/common/components/seo/seo'
 import {ArticleContainer} from '@/components/containers/articles/article'
+import ArtistArticlePressContainer from '@/components/containers/articles/press'
 import {ArtistDetailContainer} from '@/components/containers/artists/ArtistDetailContainer'
 import {PressContainer} from '@/components/containers/artists/artistsPress'
 import {ArtistsListContainer} from '@/components/containers/artists/ArtstListContainer'
@@ -15,7 +16,6 @@ import ArtistAvailableWorksPageContainer from '@/components/containers/pages/art
 import ArtistExhibitionsPageContainer from '@/components/containers/pages/artists/exhibitions'
 import ArtistSurveyPageContainer from '@/components/containers/pages/artists/survey/index'
 import {UtopiaEditionsContainer} from '@/components/containers/utopiaEditions'
-import ArtistArticlePressContainer from '@/components/containers/articles/press'
 import {usePreview} from '@/sanity/preview'
 
 export const PREVIEW_PAGE_TYPE = {

@@ -23,7 +23,6 @@ export default function ExhibitionsPage({data, preview, queryArtistSlug}: PagePr
       <PreviewPage
         query={artistExhibitionsPageData}
         params={queryArtistSlug}
-        seo={null}
         type={PREVIEW_PAGE_TYPE.ARTIST_DETAIL_EXHIBITIONS}
       />
     )
