@@ -233,7 +233,7 @@ export const mapHero = (data: any) => {
       const imgSrc = photos?.[0]?.asset ? builder.image(photos[0].asset).url() : ''
 
       return {
-        secondaryTitle: 'New York',
+        secondaryTitle: item.location?.name,
         secondarySubtitle: formatExhibitionDate(item),
         description: item.summary,
         media: {
