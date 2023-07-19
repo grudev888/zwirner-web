@@ -20,8 +20,7 @@ export const exhibitionComplexFields = groq`
   photos[],
   "artists": artists[]->,
   "artworks": artworks[]->,
-  "collections": collections[]->,
-  "events": events[]->,
+  "collections": collections[]->
 `
 
 export const allExhibitions = groq`
