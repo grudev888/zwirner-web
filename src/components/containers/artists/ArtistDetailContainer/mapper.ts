@@ -192,7 +192,7 @@ export const mapExhibitions = (data: any) => {
     return {
       _type: 'grid',
       title: data.title,
-      data: mapGrid({...data, itemsPerRow: 2}, 'exhibition'),
+      data: mapGrid({...data, itemsPerRow: 2}, 'exhibitionPage'),
     }
   return {_type: 'hero', title: data.title, data: mapHero(data)}
 }
@@ -308,13 +308,13 @@ export const mapExhibitionCard = (item: any) => {
   }
 }
 
-export const mapGrid = (data: any, type: 'exhibition' | 'article', noMedia = false) => {
+export const mapGrid = (data: any, type: 'exhibitionPage' | 'article', noMedia = false) => {
   if (!data?.title) return null
   const {title, itemsPerRow, items} = data ?? {}
 
   return {
     cards: items?.map((item: any) =>
-      type === 'exhibition' ? mapExhibitionCard(item) : mapArticlesCard(item, noMedia)
+      type === 'exhibitionPage' ? mapExhibitionCard(item) : mapArticlesCard(item, noMedia)
     ),
     maxItemsPerRow: itemsPerRow,
     title: title,

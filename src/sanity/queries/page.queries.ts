@@ -22,7 +22,7 @@ const pageSimpleFields = groq`
 `
 
 const pageComplexFields = groq`
-   exhibition-> {
+   exhibitionPage-> {
      ${exhibitionSimpleFields}
      ${exhibitionComplexFields}
    },
@@ -30,7 +30,7 @@ const pageComplexFields = groq`
 const componentTypesData = groq`
   content[]-> {
     _type,
-    _type =='exhibition' => {
+    _type =='exhibitionPage' => {
       ${exhibitionSimpleFields}
       ${exhibitionComplexFields}
     },
