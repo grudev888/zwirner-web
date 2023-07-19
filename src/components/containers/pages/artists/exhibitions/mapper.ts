@@ -1,10 +1,4 @@
-import {
-  ButtonModes,
-  CARD_TYPES,
-  INTERSTITIAL_TEXT_COLORS,
-  MEDIA_ASPECT_RATIOS,
-  MEDIA_TYPES,
-} from '@zwirner/design-system'
+import {CARD_TYPES, MEDIA_ASPECT_RATIOS, MEDIA_TYPES} from '@zwirner/design-system'
 import {format, isAfter, isValid, isWithinInterval, parse} from 'date-fns'
 import Image from 'next/image'
 
@@ -69,14 +63,18 @@ export const interstitialMap = (data: any) => {
   return {
     data: {
       split: false,
+      mode: data.mode,
       title,
-      primaryCta: {
-        text,
-        ctaProps: {
-          mode: ButtonModes.DARK,
+      primaryCta: {text},
+      ...(data.image?.asset && {
+        media: {
+          type: MEDIA_TYPES.IMAGE,
+          imgProps: {
+            src: builder.image(data.image.asset).url(),
+            alt: data.image?.alt,
+          },
         },
-      },
-      textColor: INTERSTITIAL_TEXT_COLORS.BLACK,
+      }),
     },
   }
 }
