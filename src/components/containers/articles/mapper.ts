@@ -139,7 +139,11 @@ export const articleDatesMapper = (data: any) => {
 
   return {
     title: dateTitle,
-    subtitle: dateSelection.year ?? dateSelection.approximate ?? datesText(dateRange?.from, dateRange?.to) ?? '',
+    subtitle:
+      dateSelection.year ??
+      dateSelection.approximate ??
+      datesText(dateRange?.from, dateRange?.to) ??
+      '',
     titleType: TITLE_TYPES.P,
   }
 }

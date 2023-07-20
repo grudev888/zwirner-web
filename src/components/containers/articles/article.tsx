@@ -32,14 +32,27 @@ interface ArticleContainerProps {
 }
 
 export const ArticleContainer: FC<ArticleContainerProps> = ({data}) => {
-  const {title, body, image, interstitial, articles, pdfURL, location, dateSelection, displayDate, description} = data ?? {}
+  const {
+    title,
+    body,
+    image,
+    interstitial,
+    articles,
+    pdfURL,
+    location,
+    dateSelection,
+    displayDate,
+    description,
+  } = data ?? {}
   const locationProps = locationTitleMapper(location)
   const descriptionProps = descriptionTitleMapper(description)
-  const articleDates = !displayDate ? articleDatesMapper(dateSelection) : { 
-    title: 'Dates',
-    subtitle: displayDate,
-    titleType: TITLE_TYPES.P,
-  }
+  const articleDates = !displayDate
+    ? articleDatesMapper(dateSelection)
+    : {
+        title: 'Dates',
+        subtitle: displayDate,
+        titleType: TITLE_TYPES.P,
+      }
   const interstitialData = interstitialMap(interstitial)
   const articlesGrid = articlesGridMap(articles)
   const heroData = heroMapper({...image, title})
