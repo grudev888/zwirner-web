@@ -49,7 +49,7 @@ export const ArticleContainer: FC<ArticleContainerProps> = ({data}) => {
   const articleDates = !displayDate
     ? articleDatesMapper(dateSelection)
     : {
-        title: 'Dates',
+        title: 'Date',
         subtitle: displayDate,
         titleType: TITLE_TYPES.P,
       }
