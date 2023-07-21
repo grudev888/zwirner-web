@@ -4,6 +4,7 @@ export const exhibitionSimpleFields = groq`
   _id,
   _type,
   title,
+  slug,
   subtitle,
   description,
   summary,

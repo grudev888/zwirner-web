@@ -16,15 +16,14 @@ import {builder} from '@/sanity/imageBuilder'
 import {formSectionMap} from '../consignments/mapper'
 
 export const heroMapper = (data: any) => {
+  console.log('heroMapper', data)
   const [hero] = data ?? []
-  const {exhibition, title, slug} = hero ?? {}
-  const {photos, title: titleExhibition, _type} = exhibition ?? {}
+  const {title, slug, photos, title: titleExhibition, _type} = hero ?? {}
   const [image] = photos ?? []
-
   const {asset, alt} = image ?? {}
   const imgSrc = asset ? builder.image(asset).url() : ''
-  const category = _type === 'exhibition' ? 'Exhibition' : 'Viewing room'
-  const exhibitionURL = `/exhibitions/${slug?.current ?? ''}`
+  const category = _type === 'exhibitionPage' ? 'Exhibition' : 'Viewing room'
+  const exhibitionURL = `${slug?.current ?? ''}`
   return {
     media: {
       url: exhibitionURL,
@@ -53,14 +52,14 @@ export const heroMapper = (data: any) => {
 
 export const exhibitionCarouselMapper = (data: any[]) => {
   return data
-    ?.filter((exhibition) => {
-      const {photos = []} = exhibition ?? {}
+    ?.filter((exhibitionPage) => {
+      const {photos = []} = exhibitionPage ?? {}
       const [mainImage] = photos ?? []
       const {asset} = mainImage ?? {}
       return !!asset
     })
-    ?.map((exhibition) => {
-      const {_id, title, subtitle, photos = [], summary} = exhibition ?? {}
+    ?.map((exhibitionPage) => {
+      const {_id, title, subtitle, photos = [], summary} = exhibitionPage ?? {}
       const [mainImage] = photos ?? []
       const {asset, alt} = mainImage ?? {}
       const imgSrc = asset ? builder.image(asset).url() : ''
