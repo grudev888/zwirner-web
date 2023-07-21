@@ -136,7 +136,7 @@ export const mapTabsLocations = (data: any) => {
           aspectRatio: MEDIA_ASPECT_RATIOS['16:9'],
           imgProps: {
             src: imgSrc,
-            alt,
+            alt: alt || addressLine,
             url: '/',
             fill: true,
             itemProp: 'image',
