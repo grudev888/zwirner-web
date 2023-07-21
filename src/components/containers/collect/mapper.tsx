@@ -16,7 +16,6 @@ import {builder} from '@/sanity/imageBuilder'
 import {formSectionMap} from '../consignments/mapper'
 
 export const heroMapper = (data: any) => {
-  console.log('heroMapper', data)
   const [hero] = data ?? []
   const {title, slug, photos, title: titleExhibition, _type} = hero ?? {}
   const [image] = photos ?? []

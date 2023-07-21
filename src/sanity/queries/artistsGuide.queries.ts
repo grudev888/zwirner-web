@@ -19,7 +19,7 @@ export const artistGuidePageBySlug = groq`
         slug,
         title,
         _type,
-        "exhibition": exhibition-> {
+        "exhibition":  {
           ${exhibitionSimpleFields}
           ${exhibitionComplexFields}
         },
@@ -27,7 +27,7 @@ export const artistGuidePageBySlug = groq`
       _type == "exhibitionPage"=> {
         title,
         _type,
-        "exhibition": exhibition-> {
+        "exhibition":  {
           ${exhibitionSimpleFields}
           ${exhibitionComplexFields}
         },
