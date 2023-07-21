@@ -18,12 +18,6 @@ const handler: NextApiHandler = async function preview(req, res) {
   const {query} = req
 
   const secret = isString(query.secret) ? query.secret : undefined
-  const slug = isString(query.slug) ? query.slug : undefined
-  const section = isString(query.section) ? query.section : undefined
-
-  // if (!secret) {
-  //   return res.status(401).send('Invalid secret')
-  // }
 
   if (secret) {
     const authClient = client.withConfig({useCdn: false, token: readToken})
@@ -49,26 +43,6 @@ const handler: NextApiHandler = async function preview(req, res) {
     res.writeHead(307, {Location: `/${query.path.replace(/,/g, '/')}`})
     res.end()
     return
-  }
-
-  if (section && slug) {
-    res.setPreviewData(previewData)
-    res.writeHead(307, {Location: `/${section}/${slug}`})
-    res.end()
-    return
-  }
-
-  if (section) {
-    res.setPreviewData(previewData)
-    res.writeHead(307, {Location: `/${section}/`})
-    res.end()
-    return
-  }
-
-  if (!slug) {
-    res.setPreviewData(previewData)
-    res.writeHead(307, {Location: '/'})
-    res.end()
   }
 
   res.status(404)
