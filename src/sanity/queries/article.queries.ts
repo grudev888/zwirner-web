@@ -33,8 +33,7 @@ export const articleBySlug = groq`
   },
   type == "pressRelease" => {
     'pdfURL': pressReleasePDF.asset->url,
-    location->,
-    event->
+    location->
   }
 }`
 
@@ -75,7 +74,6 @@ export const pressBySlug = groq`
   },
   type == "pressRelease" => {
     'pdfURL': pressReleasePDF.asset->url,
-    location->,
-    event->
+    location->
   }
 }`

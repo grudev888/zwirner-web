@@ -20,22 +20,21 @@ export const exhibitionComplexFields = groq`
   photos[],
   "artists": artists[]->,
   "artworks": artworks[]->,
-  "collections": collections[]->,
-  "events": events[]->,
+  "collections": collections[]->
 `
 
 export const allExhibitions = groq`
-*[_type == "exhibition"] | order(date desc, _updatedAt desc) {
+*[_type == "exhibitionPage"] | order(date desc, _updatedAt desc) {
   ${exhibitionSimpleFields}
   ${exhibitionComplexFields}
 }`
 
 export const getExhibitionByDate = groq`
-*[_type == "exhibition"] {
+*[_type == "exhibitionPage"] {
   ${exhibitionDateFields}
 }`
 
 export const exhibitionById = groq`
-*[_type == "exhibition" && _id == $exhibitionId ] {
+*[_type == "exhibitionPage" && _id == $exhibitionId ] {
   ...
 }`
