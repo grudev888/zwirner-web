@@ -17,7 +17,7 @@ export const articleBySlug = groq`
       slug,
       title,
       _type,
-      "exhibition": exhibition-> {
+      "exhibition":  {
         ${exhibitionSimpleFields}
         ${exhibitionComplexFields}
       },
@@ -25,7 +25,7 @@ export const articleBySlug = groq`
     _type == "exhibitionPage"=> {
       title,
       _type,
-      "exhibition": exhibition-> {
+      "exhibition":  {
         ${exhibitionSimpleFields}
         ${exhibitionComplexFields}
       },
@@ -58,7 +58,7 @@ export const pressBySlug = groq`
       slug,
       title,
       _type,
-      "exhibition": exhibition-> {
+      "exhibition":  {
         ${exhibitionSimpleFields}
         ${exhibitionComplexFields}
       },
@@ -66,7 +66,7 @@ export const pressBySlug = groq`
     _type == "exhibitionPage"=> {
       title,
       _type,
-      "exhibition": exhibition-> {
+      "exhibition":  {
         ${exhibitionSimpleFields}
         ${exhibitionComplexFields}
       },

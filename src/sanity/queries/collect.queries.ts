@@ -16,7 +16,7 @@ export const collectPageData = groq`
     _type == "exhibitionPage"=> {
       title,
       _type,
-      "exhibition": exhibition-> {
+      "exhibition":  {
         ${exhibitionSimpleFields}
         ${exhibitionComplexFields}
       },
@@ -30,7 +30,7 @@ export const collectPageData = groq`
     _type == "exhibitionPage"=> {
       title,
       _type,
-      "exhibition": exhibition-> {
+      "exhibition":  {
         ${exhibitionSimpleFields}
         ${exhibitionComplexFields}
       },
@@ -39,19 +39,14 @@ export const collectPageData = groq`
  },
  hero[]-> {
   _type == "exhibitionPage"=> {
-      slug,
-      title,
-      _type,
-      "exhibition": exhibition-> {
         ${exhibitionSimpleFields}
         ${exhibitionComplexFields}
-      },
     },
     _type == "fairPage"=> {
       slug,
       title,
       _type,
-      "exhibition": exhibition-> {
+      "exhibition":  {
         ${exhibitionSimpleFields}
         ${exhibitionComplexFields}
       },
