@@ -11,6 +11,9 @@ export const articlePagesSlugs = groq`
 export const articleBySlug = groq`
 *[_type == "article" && slug.current == $slug][0]{
   ...,
+  location-> {
+    name
+  },
   articles[]-> {
     ...,
     _type == "fairPage"=> {
@@ -48,6 +51,9 @@ export const pressPagesSlugs = groq`
 export const pressBySlug = groq`
 *[_type == "article" && type == "pressRelease" && slug.current == $slug][0]{
   ...,
+  location-> {
+    name
+  },
   "artistPageData": *[_type == "artistPage" && references(^._id)][0]{
       title,
       'parentUrl': slug.current

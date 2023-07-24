@@ -20,10 +20,11 @@ import {FullWidthFlexCol} from '@/components/containers/layout/FullWidthFlexCol'
 import styles from './article.module.css'
 import {
   articlesGridMap,
-  eventDatesMapper,
+  articleDatesMapper,
   heroMapper,
   interstitialMap,
   locationTitleMapper,
+  descriptionTitleMapper,
 } from './mapper'
 
 interface ArticleContainerProps {
@@ -31,9 +32,27 @@ interface ArticleContainerProps {
 }
 
 export const ArticleContainer: FC<ArticleContainerProps> = ({data}) => {
-  const {title, body, image, interstitial, articles, pdfURL, location, event} = data ?? {}
+  const {
+    title,
+    body,
+    image,
+    interstitial,
+    articles,
+    pdfURL,
+    location,
+    dateSelection,
+    displayDate,
+    description,
+  } = data ?? {}
   const locationProps = locationTitleMapper(location)
-  const eventDates = eventDatesMapper(event)
+  const descriptionProps = descriptionTitleMapper(description)
+  const articleDates = !displayDate
+    ? articleDatesMapper(dateSelection)
+    : {
+        title: 'Date',
+        subtitle: displayDate,
+        titleType: TITLE_TYPES.P,
+      }
   const interstitialData = interstitialMap(interstitial)
   const articlesGrid = articlesGridMap(articles)
   const heroData = heroMapper({...image, title})
@@ -47,6 +66,14 @@ export const ArticleContainer: FC<ArticleContainerProps> = ({data}) => {
         />
 
         <article>
+          {description ? (
+            <DzTitle
+              {...descriptionProps}
+              className={cn(styles.infoTitleContainer, styles.articleXSpacing)}
+              classNameTitle={styles.infoTitle}
+              classNameSubtitle={styles.infoTitle}
+            />
+          ) : null}
           {location ? (
             <DzTitle
               {...locationProps}
@@ -55,9 +82,9 @@ export const ArticleContainer: FC<ArticleContainerProps> = ({data}) => {
               classNameSubtitle={styles.infoTitle}
             />
           ) : null}
-          {event ? (
+          {articleDates ? (
             <DzTitle
-              {...eventDates}
+              {...articleDates}
               className={cn(styles.infoTitleContainer, styles.articleXSpacing)}
               classNameTitle={styles.infoTitle}
               classNameSubtitle={styles.infoTitle}

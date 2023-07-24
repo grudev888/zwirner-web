@@ -110,6 +110,14 @@ export const locationTitleMapper = (data: any) => {
   }
 }
 
+export const descriptionTitleMapper = (data: any) => {
+  const description = data ?? {}
+  return {
+    subtitle: description,
+    titleType: TITLE_TYPES.P,
+  }
+}
+
 const datesText = (from: string, to: string) => {
   const fromDate = new Date(from)
   const toDate = new Date(to)
@@ -121,17 +129,21 @@ const datesText = (from: string, to: string) => {
     ...(shareMonth ? {} : {month: 'long'}),
     day: 'numeric',
   })
-
   return `${fromText}—${toText}, ${eventYear}`
 }
 
-export const eventDatesMapper = (data: any) => {
-  const {dateSelection} = data ?? {}
+export const articleDatesMapper = (data: any) => {
+  const dateSelection = data ?? {}
   const {dateRange} = dateSelection ?? {}
+  const dateTitle = dateRange?.from ? 'Dates' : 'Date'
 
   return {
-    title: 'Dates',
-    subtitle: datesText(dateRange?.from, dateRange?.to) ?? '',
+    title: dateTitle,
+    subtitle:
+      dateSelection.year ??
+      dateSelection.approximate ??
+      datesText(dateRange?.from, dateRange?.to) ??
+      '',
     titleType: TITLE_TYPES.P,
   }
 }
