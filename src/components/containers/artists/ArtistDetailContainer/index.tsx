@@ -5,7 +5,6 @@ import {
   CardTypes,
   carouselSizeToCardSize,
   DzCard,
-  DzCarousel,
   DzCarouselCardSize,
   DzColumn,
   DzInterstitial,
@@ -16,6 +15,7 @@ import {
   SPLIT_TYPES,
   useBreakpoints,
 } from '@zwirner/design-system'
+import dynamic from 'next/dynamic'
 import Link from 'next/link'
 import {useRouter} from 'next/router'
 import {FC, useCallback, useMemo} from 'react'
@@ -23,7 +23,6 @@ import {FC, useCallback, useMemo} from 'react'
 import {FullWidthFlexCol} from '@/components/containers/layout/FullWidthFlexCol'
 
 import ArtistHeader from './components/ArtistHeader'
-import Biography from './components/Biography'
 import Exhibitions from './components/Exhibitions'
 import SelectedPress from './components/SelectedPress'
 import {
@@ -36,6 +35,14 @@ import {
   mapInterstitial,
   mapSplit,
 } from './mapper'
+
+const DzCarousel = dynamic(() => import('@zwirner/design-system').then((mod) => mod.DzCarousel), {
+  ssr: false,
+})
+
+const Biography = dynamic(() => import('./components/Biography').then((mod) => mod.default), {
+  ssr: false,
+})
 
 interface ArtistsContainerProps {
   data: any

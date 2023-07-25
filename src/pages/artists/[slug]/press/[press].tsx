@@ -57,9 +57,7 @@ export default function Article({data, preview}: PageProps) {
 
 export const getStaticPaths = async () => {
   const paths = await getAllPressPages()
-  const filteredPaths = paths.filter((item: any) => {
-    return item
-  })
+  const filteredPaths = paths.filter((item: any) => item?.slug)
   return {
     paths: filteredPaths,
     fallback: true,

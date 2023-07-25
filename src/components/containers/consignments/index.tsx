@@ -3,7 +3,6 @@ import {
   CardSizes,
   carouselSizeToCardSize,
   DzCard,
-  DzCarousel,
   DzCarouselCardSize,
   DzColumn,
   DzEditorial,
@@ -13,6 +12,7 @@ import {
   DzMedia,
   DzMediaProps,
 } from '@zwirner/design-system'
+import dynamic from 'next/dynamic'
 import {FC, Fragment} from 'react'
 
 import {FullWidthFlexCol} from '@/components/containers/layout/FullWidthFlexCol'
@@ -29,6 +29,10 @@ import {
   mapCarouselCards,
   mapFooterInterstitial,
 } from './mapper'
+
+const DzCarousel = dynamic(() => import('@zwirner/design-system').then((mod) => mod.DzCarousel), {
+  ssr: false,
+})
 
 interface ConsignmentsContainerProps {
   data: any

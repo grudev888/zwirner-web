@@ -3,14 +3,19 @@ import {
   BUTTON_VARIANTS,
   ButtonModes,
   DzButton,
-  DzComplexGrid,
   DzTitleMolecule,
   DzTitleMoleculeTypes,
   useBreakpoints,
 } from '@zwirner/design-system'
+import dynamic from 'next/dynamic'
 import Link from 'next/link'
 import {useRouter} from 'next/router'
 import {useState} from 'react'
+
+const DzComplexGrid = dynamic(
+  () => import('@zwirner/design-system').then((mod) => mod.DzComplexGrid),
+  {ssr: false}
+)
 
 const MOBILE_CARDS_LIMIT = 2
 const LOAD_MORE_FEATURE_ENABLED = false

@@ -2,10 +2,8 @@ import {
   CARD_TYPES,
   CardSizes,
   DzCard,
-  DzCarousel,
   DzCarouselCardSize,
   DzColumn,
-  DzComplexGrid,
   DzHero,
   DzInterstitial,
   DzMedia,
@@ -13,6 +11,7 @@ import {
   DzTitleMoleculeTypes,
   TITLE_TYPES,
 } from '@zwirner/design-system'
+import dynamic from 'next/dynamic'
 import {FC} from 'react'
 
 import {FullWidthFlexCol} from '@/components/containers/layout/FullWidthFlexCol'
@@ -27,6 +26,15 @@ import {
   utopiaMainMediaMap,
 } from './mapper'
 import styles from './utopia.module.css'
+
+const DzComplexGrid = dynamic(
+  () => import('@zwirner/design-system').then((mod) => mod.DzComplexGrid),
+  {ssr: false}
+)
+
+const DzCarousel = dynamic(() => import('@zwirner/design-system').then((mod) => mod.DzCarousel), {
+  ssr: false,
+})
 
 interface UtopiaEditionsProps {
   data: any

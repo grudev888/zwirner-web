@@ -2,9 +2,7 @@ import {
   DzTitleMolecule,
   DzTitleMoleculeTypes,
   scrollToElementId,
-  TITLE_SIZES,
   TITLE_TYPES,
-  useBreakpoints,
 } from '@zwirner/design-system'
 
 interface ArtistHeaderProps {
@@ -15,7 +13,6 @@ interface ArtistHeaderProps {
 const HEADER_OFFSET = 120
 
 const ArtistHeader = ({artist, intro}: ArtistHeaderProps) => {
-  const {isSmall} = useBreakpoints()
   return (
     <section className="space-between mt-10 flex flex-col md:mt-[3.75rem] md:flex-row">
       <DzTitleMolecule
@@ -25,7 +22,6 @@ const ArtistHeader = ({artist, intro}: ArtistHeaderProps) => {
           customClass: 'flex-1',
           titleProps: {
             titleType: TITLE_TYPES.H1,
-            titleSize: isSmall ? TITLE_SIZES.XL : TITLE_SIZES.XXL,
           },
           description: <>{intro}</>,
           linkCTA: {

@@ -1,4 +1,5 @@
-import {DzColumn, DzComplexGrid, DzInterstitial} from '@zwirner/design-system'
+import {DzColumn, DzInterstitial} from '@zwirner/design-system'
+import dynamic from 'next/dynamic'
 import {FC} from 'react'
 
 import {GUIDE} from '@/common/constants/commonCopies'
@@ -7,6 +8,11 @@ import ArtistsPageLayout from '@/components/containers/layout/pages/artistsPageL
 import {ContainerTitle} from '@/components/containers/title/ContainerTitle'
 
 import {guideGrid, interstitialMap} from './mapper'
+
+const DzComplexGrid = dynamic(
+  () => import('@zwirner/design-system').then((mod) => mod.DzComplexGrid),
+  {ssr: false}
+)
 
 interface ArtistGuideContainerProps {
   data: any

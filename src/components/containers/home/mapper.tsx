@@ -170,9 +170,9 @@ export const mapTabsLocations = (data: any) => {
         secondarySubtitle: availability ? 'Open' : 'Closed',
         property: 'address',
         typeof: 'PostalAddress',
-        itemprop: 'address',
-        itemscope: '',
-        itemtype: 'https://schema.org/PostalAddress',
+        itemProp: 'address',
+        itemScope: '',
+        itemType: 'https://schema.org/PostalAddress',
       }
 
       if (prev[city] && prev[city].cards && Array.isArray(prev[city].cards)) {

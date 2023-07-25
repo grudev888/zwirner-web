@@ -54,6 +54,7 @@ export const heroMap = (data: any) => {
   const title = exhibitions?.[0]?.exhibition?.artists?.[0]?.fullName
 
   const {title: artworkTitle, dateSelection} = exhibitions?.[0]?.exhibition?.artworks?.[0] || {}
+
   const year = dateSelection?.year
 
   const mainExhibitionPhoto = exhibitions?.[0]?.exhibition?.photos?.[0]
