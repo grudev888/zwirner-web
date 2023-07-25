@@ -73,4 +73,4 @@ jobs:
       - name: Run tests
         run: yarn test:e2e
         env:
-          PLAYWRIGHT_TEST_BASE_URL: ${{ steps.waitFor200 }}
+          PLAYWRIGHT_TEST_BASE_URL: ${{ steps.waitFor200.outputs.url }}
