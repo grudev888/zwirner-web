@@ -6,7 +6,7 @@ import {DzImageZoomModal} from '@zwirner/design-system'
 
 import {FullWidthFlexCol} from '@/components/containers/layout/FullWidthFlexCol'
 */
-import DzArtworkDetail from '../../../../design-system/src/molecules/DzArtworkDetail/DzArtworkDetail'
+import {DzArtworkDetail} from '@zwirner/design-system'
 
 const AvailableArtworkPage = () => {
   /*
