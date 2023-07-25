@@ -4,7 +4,7 @@ import {SEOComponent} from '@/common/components/seo/seo'
 import {ARTISTS_URL, ARTWORK_URL} from '@/common/constants/commonCopies'
 import {ArtworkContainer} from '@/components/containers/artworks/artwork'
 import {PREVIEW_PAGE_TYPE, PreviewPage} from '@/components/containers/previews/pagePreview'
-import {getAllArtworks, getArtworkByArtist, getArtworkData} from '@/sanity/services/artwork.service'
+import {getAllArtworks, getArtworkData} from '@/sanity/services/artwork.service'
 
 interface QuerySlug {
   slug: string
@@ -66,7 +66,9 @@ export const getStaticPaths = async () => {
 export const getStaticProps: GetStaticProps<PageProps, Query, PreviewData> = async (ctx) => {
   const {params = {}, preview = false, previewData = {}} = ctx
   const queryParams = {
-    slug: `${ARTISTS_URL}/${params?.slug}/${params?.artworkSlug}` ?? `${ARTWORK_URL}/${params?.artworkSlug}`,
+    slug:
+      `${ARTISTS_URL}/${params?.slug}/${params?.artworkSlug}` ??
+      `${ARTWORK_URL}/${params?.artworkSlug}`,
   }
   if (preview && previewData.token) {
     return {
