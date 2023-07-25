@@ -102,23 +102,6 @@ This is a classic personal access token with read:packages scope in order to pul
 in the [`design-system`][design-system-repo] dependency. Currently, it matches
 the secret used by the Dependabot.
 
-#### PREVIEW_ENV_PASSWORD
-
-Set on: Actions secrets
-
-This is used by the [patrickedqvist/wait-for-vercel-preview](https://github.com/patrickedqvist/wait-for-vercel-preview) step in order to ensure the preview env is up and running before running the playwright tests.
-The value can be found by slacking @web-dev and someone will tell you the code.
-In the future we'll store this in a shared password vault.
-
-#### VERCEL_PROTECTION_BYPASS_TOKEN
-
-Set on: Actions secrets
-
-This is used in the `yarn test:e2e` action step by playwright. It is used as the value for the `x-vercel-protection-bypass` header for requests made by playwright in order for them to bypass the password protection.
-You can find the value at https://vercel.com/david-zwirner/web/settings/deployment-protection
-
-We potentially can remove this if we use the [vercel_jwt](https://github.com/patrickedqvist/wait-for-vercel-preview#vercel_jwt) from the wait-for-vercel-preview action step.
-
 ## Features
 
 - Live previews using `next-sanity`.
