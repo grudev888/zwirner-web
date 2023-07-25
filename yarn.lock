@@ -6889,6 +6889,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-zoom-pan-pinch@npm:^3.1.0":
+  version: 3.1.0
+  resolution: "react-zoom-pan-pinch@npm:3.1.0"
+  peerDependencies:
+    react: "*"
+    react-dom: "*"
+  checksum: 3289cd01edd207697c97303c217e91fe137e3469c39ff54ab51cb17ff8bf8a045b95fb2cc4692b826da2ae69b045589e093e9e561225b696bbc18da95e852242
+  languageName: node
+  linkType: hard
+
 "react@npm:^18.2.0":
   version: 18.2.0
   resolution: "react@npm:18.2.0"
@@ -8516,6 +8526,7 @@ __metadata:
     react-dom: ^18.2.0
     react-error-boundary: ^4.0.4
     react-hook-form: ^7.43.9
+    react-zoom-pan-pinch: ^3.1.0
     styled-components: ^5.3.10
     swr: ^2.1.1
     tailwind-scrollbar: ^2.1.0
