@@ -1,10 +1,11 @@
 import {GetStaticProps} from 'next'
 
 import {SEOComponent} from '@/common/components/seo/seo'
-import {ARTISTS_URL, ARTWORK_URL} from '@/common/constants/commonCopies'
+import {ARTWORK_URL} from '@/common/constants/commonCopies'
 import {ArtworkContainer} from '@/components/containers/artworks/artwork'
 import {PREVIEW_PAGE_TYPE, PreviewPage} from '@/components/containers/previews/pagePreview'
-import {getAllArtworks, getArtworkData} from '@/sanity/services/artwork.service'
+import {getAllArtworkSlugs, getArtworkData} from '@/sanity/services/artwork.service'
+import {allArtworkSlugs} from '@/sanity/queries/artwork.queries'
 
 interface QuerySlug {
   slug: string
@@ -38,7 +39,7 @@ export default function Artwork({data, preview}: PageProps) {
       <>
         <SEOComponent data={seo} />
         <PreviewPage
-          query={getArtworkData}
+          query={allArtworkSlugs}
           params={queryParams}
           seo={seo}
           type={PREVIEW_PAGE_TYPE.ARTWORK_DETAIL}
@@ -55,8 +56,9 @@ export default function Artwork({data, preview}: PageProps) {
 }
 
 export const getStaticPaths = async () => {
-  const paths = await getAllArtworks()
-  const filteredPaths = paths.filter((item: any) => !item.includes(','))
+  const paths = await getAllArtworkSlugs()
+  const filteredPaths = paths.filter((item: any) => item.includes('/artworks/'))
+  console.log('filtered', filteredPaths)
   return {
     paths: filteredPaths,
     fallback: true,
@@ -66,10 +68,9 @@ export const getStaticPaths = async () => {
 export const getStaticProps: GetStaticProps<PageProps, Query, PreviewData> = async (ctx) => {
   const {params = {}, preview = false, previewData = {}} = ctx
   const queryParams = {
-    slug:
-      `${ARTISTS_URL}/${params?.slug}/${params?.artworkSlug}` ??
-      `${ARTWORK_URL}/${params?.artworkSlug}`,
+    slug: `${ARTWORK_URL}/${params?.slug}`,
   }
+  console.log('query params', queryParams)
   if (preview && previewData.token) {
     return {
       props: {

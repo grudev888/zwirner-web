@@ -1,9 +1,9 @@
 import {client} from '@/sanity/client'
 import {
-  artworksDataByArtistSlug,
-  allArtworks,
+  allArtworkSlugs,
   artworksData,
-} from '@/sanity/queries/artworkByArtist.queries'
+  artworksDataByArtistSlug,
+} from '@/sanity/queries/artwork.queries'
 
 export async function getArtworkByArtist(artwork: any): Promise<any[]> {
   if (client) {
@@ -12,9 +12,9 @@ export async function getArtworkByArtist(artwork: any): Promise<any[]> {
   return []
 }
 
-export async function getAllArtworks(): Promise<any[]> {
+export async function getAllArtworkSlugs(): Promise<any[]> {
   if (client) {
-    return (await client.fetch(allArtworks)) || []
+    return (await client.fetch(allArtworkSlugs)) || []
   }
   return []
 }

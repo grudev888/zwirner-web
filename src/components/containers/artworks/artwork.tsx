@@ -1,10 +1,6 @@
-import {DzColumn, DzTitle} from '@zwirner/design-system'
-import cn from 'classnames'
+import {DzColumn, TITLE_SIZES} from '@zwirner/design-system'
+import {ContainerTitle} from '@/components/containers/title/ContainerTitle'
 import {FC} from 'react'
-
-import {FullWidthFlexCol} from '@/components/containers/layout/FullWidthFlexCol'
-
-import styles from './artwork.module.css'
 import {} from './mapper'
 
 interface ArtworkContainerProps {
@@ -12,19 +8,34 @@ interface ArtworkContainerProps {
 }
 
 export const ArtworkContainer: FC<ArtworkContainerProps> = ({data}) => {
-  const {title} = data ?? {}
-  console.log('props data', data)
+  console.log('data', data)
+  const {
+    title,
+    // displayCustomTitle,
+    // displayTitle,
+    // displayDate,
+    // dateSelection,
+    // edition,
+    // editionInformation,
+    // salesInformation,
+    // productInformation,
+    // copyrightInformation,
+    // artworkCTA,
+    // currency,
+    // medium,
+    // framed,
+    // dimensions,
+    // framedDimensions,
+    // availability,
+    // artists,
+    // photos,
+    // description,
+    // artworkType,
+  } = data ?? ''
 
   return (
     <DzColumn span={12}>
-      <FullWidthFlexCol>
-        <DzTitle
-          {...title}
-          className={cn(styles.infoTitleContainer)}
-          classNameTitle={styles.infoTitle}
-          classNameSubtitle={styles.infoTitle}
-        />
-      </FullWidthFlexCol>
+      <ContainerTitle title={title} titleSize={TITLE_SIZES.XL} />
     </DzColumn>
   )
 }
