@@ -58,7 +58,6 @@ export default function Artwork({data, preview}: PageProps) {
 export const getStaticPaths = async () => {
   const paths = await getAllArtworkSlugs()
   const filteredPaths = paths.filter((item: any) => item.includes('/artworks/'))
-  console.log('filtered', filteredPaths)
   return {
     paths: filteredPaths,
     fallback: true,
@@ -70,7 +69,6 @@ export const getStaticProps: GetStaticProps<PageProps, Query, PreviewData> = asy
   const queryParams = {
     slug: `${ARTWORK_URL}/${params?.slug}`,
   }
-  console.log('query params', queryParams)
   if (preview && previewData.token) {
     return {
       props: {

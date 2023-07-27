@@ -8,7 +8,6 @@ interface ArtworkContainerProps {
 }
 
 export const ArtworkContainer: FC<ArtworkContainerProps> = ({data}) => {
-  console.log('data', data)
   const {
     title,
     // displayCustomTitle,
