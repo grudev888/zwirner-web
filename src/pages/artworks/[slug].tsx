@@ -5,7 +5,7 @@ import {ARTWORK_URL} from '@/common/constants/commonCopies'
 import {ArtworkContainer} from '@/components/containers/artworks/artwork'
 import {PREVIEW_PAGE_TYPE, PreviewPage} from '@/components/containers/previews/pagePreview'
 import {getAllArtworkSlugs, getArtworkData} from '@/sanity/services/artwork.service'
-import {allArtworkSlugs} from '@/sanity/queries/artwork.queries'
+import {artworksData} from '@/sanity/queries/artwork.queries'
 
 interface QuerySlug {
   slug: string
@@ -39,7 +39,7 @@ export default function Artwork({data, preview}: PageProps) {
       <>
         <SEOComponent data={seo} />
         <PreviewPage
-          query={allArtworkSlugs}
+          query={artworksData}
           params={queryParams}
           seo={seo}
           type={PREVIEW_PAGE_TYPE.ARTWORK_DETAIL}
