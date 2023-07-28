@@ -4,30 +4,26 @@ import {
   INTERSTITIAL_TEXT_COLORS,
   MEDIA_ASPECT_RATIOS,
   MEDIA_OBJECT_FIT,
-  MEDIA_TYPES,
   TITLE_TYPES,
 } from '@zwirner/design-system'
 import Image from 'next/image'
 
-import {EXHIBITIONS, FAIRS, ONLINE_EXHIBITIONS_URL} from '@/common/constants/commonCopies'
-import {builder} from '@/sanity/imageBuilder'
+import {
+  EXHIBITIONS,
+  FAIRS,
+  LOCATION,
+  ONLINE_EXHIBITIONS_URL,
+  READ_MORE,
+} from '@/common/constants/commonCopies'
+import {dzMediaMapper} from '@/common/utilsMappers/image.mapper'
 
 export const heroMapper = (data: any) => {
-  const {image, title} = data ?? {}
-  const {alt, asset} = image ?? {}
-  const imgSrc = asset ? builder.image(asset).url() : ''
+  const {title} = data ?? {}
 
+  const {media, hideMedia} = dzMediaMapper({data, ImgElement: Image})
   return {
-    hideMedia: !imgSrc,
-    media: {
-      type: MEDIA_TYPES.IMAGE,
-      ImgElement: Image,
-      imgProps: {
-        src: imgSrc,
-        alt,
-        fill: true,
-      },
-    },
+    hideMedia,
+    media,
     title: title,
   }
 }
@@ -59,18 +55,32 @@ export enum ArticleTypes {
 
 export const articlesGridMap = (data: any[]) => {
   return data?.map((relatedArticles) => {
-    const {_id, description, image, title, type, slug, _type, exhibition, externalURL, category} =
+    const {_id, description, title, type, slug, _type, exhibition, externalURL, category} =
       relatedArticles ?? {}
     const {current} = slug ?? {}
-    const {photos, summary} = exhibition ?? {}
-    const [mainPhotoExhibition] = photos ?? []
-    const {image: internalImage} = image ?? {}
-    const {alt, asset} = internalImage ?? mainPhotoExhibition ?? {}
-    const imgSrc = asset ? builder.image(asset).url() : ''
+    const {summary} = exhibition ?? {}
+    const isArticle = _type === 'article'
+
+    const sharedImageOptions = {
+      objectFit: MEDIA_OBJECT_FIT.COVER,
+      aspectRatio: MEDIA_ASPECT_RATIOS['16:9'],
+    }
+
+    const {media: relatedArticleMedia} = dzMediaMapper({
+      data: relatedArticles,
+      ImgElement: Image,
+      options: sharedImageOptions,
+    })
+    const {media: exhibitionMedia} = dzMediaMapper({
+      data: exhibition,
+      ImgElement: Image,
+      options: sharedImageOptions,
+    })
+
     const exhibitionURL =
       _type === 'exhibitionPage' && current ? `${ONLINE_EXHIBITIONS_URL}/${current}` : null
     const urlToRedirect = type === ArticleTypes.EXTERNAL ? externalURL : '/'
-    const articleURL = _type === 'article' ? urlToRedirect : null
+    const articleURL = isArticle ? urlToRedirect : null
 
     const categoryCard =
       _type === 'exhibitionPage' ? EXHIBITIONS : _type === 'fairPage' ? FAIRS : category
@@ -78,22 +88,12 @@ export const articlesGridMap = (data: any[]) => {
     return {
       cardType: CARD_TYPES.CONTENT,
       id: _id,
-      media: {
-        type: MEDIA_TYPES.IMAGE,
-        imgProps: {
-          src: imgSrc,
-          alt: alt,
-          fill: true,
-        },
-        ImgElement: Image,
-        objectFit: MEDIA_OBJECT_FIT.COVER,
-        aspectRatio: MEDIA_ASPECT_RATIOS['16:9'],
-      },
+      media: isArticle ? relatedArticleMedia : exhibitionMedia,
       category: categoryCard,
       title,
       description: description ?? summary,
       linkCTA: {
-        text: 'Read More',
+        text: READ_MORE,
         linkElement: 'a',
         url: exhibitionURL ?? articleURL,
       },
@@ -104,7 +104,7 @@ export const articlesGridMap = (data: any[]) => {
 export const locationTitleMapper = (data: any) => {
   const {name} = data ?? {}
   return {
-    title: 'Location',
+    title: LOCATION,
     subtitle: name,
     titleType: TITLE_TYPES.P,
   }

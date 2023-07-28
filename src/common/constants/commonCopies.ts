@@ -7,6 +7,8 @@ export const ONLINE_EXHIBITIONS_URL = '/exhibitions'
 export const ARTISTS_PRESS_URL = '/press'
 export const ARTWORK_URL = '/artworks'
 
+export const LOCATION = 'Location'
+export const READ_MORE = 'Read More'
 export const ONLINE_EXHIBITIONS_TITLE = 'Online Exhibitions'
 export const UPCOMING_FAIRS_TITLE = 'Upcoming Fairs'
 export const FEATURE_AVAILABLE_WORKS_TITLE = 'Featured Available Works'

@@ -1,15 +1,10 @@
-import {
-  CARD_TYPES,
-  MEDIA_ASPECT_RATIOS,
-  MEDIA_OBJECT_FIT,
-  MEDIA_TYPES,
-} from '@zwirner/design-system'
+import {CARD_TYPES, MEDIA_ASPECT_RATIOS, MEDIA_OBJECT_FIT} from '@zwirner/design-system'
 import Image from 'next/image'
 import {Fragment} from 'react'
 
 import {ONLINE_EXHIBITIONS_URL} from '@/common/constants/commonCopies'
+import {dzMediaMapper} from '@/common/utilsMappers/image.mapper'
 import {ArticleTypes} from '@/components/containers/articles/mapper'
-import {builder} from '@/sanity/imageBuilder'
 
 const formatDate = (date: string) => {
   const dateParsed = new Date(date)
@@ -19,56 +14,41 @@ const formatDate = (date: string) => {
 }
 export const articlesGridMap = (data: any[]) => {
   return data?.map((relatedArticles) => {
-    const {
-      _id,
-      date,
-      displayDate,
-      description,
-      image,
-      title,
-      type,
-      slug,
-      _type,
-      exhibition,
-      externalURL,
-    } = relatedArticles ?? {}
+    const {_id, date, displayDate, description, title, type, slug, _type, exhibition, externalURL} =
+      relatedArticles ?? {}
     const {current} = slug ?? {}
-    const {photos, summary, endDate, startDate} = exhibition ?? {}
-    const [mainPhotoExhibition] = photos ?? []
-    const {image: internalImage} = image ?? {}
-    const {alt, asset} = internalImage ?? mainPhotoExhibition ?? {}
-    const imgSrc = asset ? builder.image(asset).url() : ''
-    const hideImage = !asset || !imgSrc
+    const {summary, endDate, startDate} = exhibition ?? {}
+
+    const isArticle = _type === 'article'
+
+    const SharedMediaOptions = {
+      objectFit: MEDIA_OBJECT_FIT.COVER,
+      aspectRatio: MEDIA_ASPECT_RATIOS['16:9'],
+    }
+    const articleMedia = dzMediaMapper({
+      data: relatedArticles,
+      ImgElement: Image,
+      options: SharedMediaOptions,
+    })
+    const exhibitionMedia = dzMediaMapper({
+      data: exhibition,
+      ImgElement: Image,
+      options: SharedMediaOptions,
+    })
 
     const exhibitionURL =
       _type === 'exhibitionPage' && current ? `${ONLINE_EXHIBITIONS_URL}/${current}` : null
     const urlToRedirect = type === ArticleTypes.EXTERNAL ? externalURL : current
-    const articleURL = _type === 'article' ? urlToRedirect : null
+    const articleURL = isArticle ? urlToRedirect : null
 
-    const articleDate = displayDate
-      ? displayDate
-      : _type === 'article' && date
-      ? formatDate(date)
-      : null
+    const articleDate = displayDate ? displayDate : isArticle && date ? formatDate(date) : null
 
     const cardDate = articleDate ?? new Date(startDate ?? endDate).getFullYear()
     const urlToContent = exhibitionURL ?? articleURL
     return {
       cardType: CARD_TYPES.CONTENT,
       id: _id,
-      hideImage,
-      media: {
-        url: urlToContent,
-        type: MEDIA_TYPES.IMAGE,
-        imgProps: {
-          src: imgSrc,
-          alt: alt,
-          fill: true,
-        },
-        ImgElement: Image,
-        objectFit: MEDIA_OBJECT_FIT.COVER,
-        aspectRatio: MEDIA_ASPECT_RATIOS['16:9'],
-      },
+      ...(isArticle ? articleMedia : exhibitionMedia ?? {}),
       title,
       enableZoom: true,
       cardLink: {
@@ -99,10 +79,14 @@ export const guideGrid = (data: any) => {
 }
 
 export const interstitialMap = (data: any) => {
-  const {title, subtitle, cta, image} = data ?? {}
+  const {title, subtitle, cta} = data ?? {}
   const {text} = cta ?? {}
-  const {asset, alt} = image ?? {}
-  const imgSrc = asset ? builder.image(asset).url() : ''
+
+  const {media} = dzMediaMapper({
+    data,
+    ImgElement: Image,
+    options: {objectFit: MEDIA_OBJECT_FIT.COVER},
+  })
 
   return {
     data: {
@@ -113,16 +97,7 @@ export const interstitialMap = (data: any) => {
       primaryCta: {
         text,
       },
-      media: {
-        ImgElement: Image,
-        type: MEDIA_TYPES.IMAGE,
-        imgProps: {
-          src: imgSrc,
-          alt,
-          fill: true,
-        },
-        objectFit: MEDIA_OBJECT_FIT.COVER,
-      },
+      media,
     },
   }
 }

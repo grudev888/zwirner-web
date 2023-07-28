@@ -19,12 +19,12 @@ import {FullWidthFlexCol} from '@/components/containers/layout/FullWidthFlexCol'
 
 import styles from './article.module.css'
 import {
-  articlesGridMap,
   articleDatesMapper,
+  articlesGridMap,
+  descriptionTitleMapper,
   heroMapper,
   interstitialMap,
   locationTitleMapper,
-  descriptionTitleMapper,
 } from './mapper'
 
 interface ArticleContainerProps {

@@ -1,6 +1,7 @@
 import {groq} from 'next-sanity'
 
 export const artworkFields = groq`
+  ...,
   _id,
   _type,
   price,

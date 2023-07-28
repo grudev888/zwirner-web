@@ -3,8 +3,8 @@ import Image from 'next/image'
 import {Fragment} from 'react'
 
 import {ARTICLES, LEARN_MORE, ONLINE_EXHIBITIONS_URL} from '@/common/constants/commonCopies'
+import {dzMediaMapper} from '@/common/utilsMappers/image.mapper'
 import {ArticleTypes} from '@/components/containers/articles/mapper'
-import {builder} from '@/sanity/imageBuilder'
 
 export const articlesGridMap = (data: any[]) => {
   return data?.map((relatedArticles) => {
@@ -69,10 +69,13 @@ export const guideGrid = (data: any) => {
 }
 
 export const interstitialMap = (data: any) => {
-  const {title, subtitle, cta, image} = data ?? {}
+  const {title, subtitle, cta} = data ?? {}
   const {text} = cta ?? {}
-  const {asset, alt} = image ?? {}
-  const imgSrc = asset ? builder.image(asset).url() : ''
+  const {media} = dzMediaMapper({
+    data,
+    ImgElement: Image,
+    options: {objectFit: MEDIA_OBJECT_FIT.COVER},
+  })
 
   return {
     data: {
@@ -82,16 +85,7 @@ export const interstitialMap = (data: any) => {
       primaryCta: {
         text,
       },
-      media: {
-        ImgElement: Image,
-        type: MEDIA_TYPES.IMAGE,
-        imgProps: {
-          src: imgSrc,
-          alt,
-          fill: true,
-        },
-        objectFit: MEDIA_OBJECT_FIT.COVER,
-      },
+      media,
     },
   }
 }
