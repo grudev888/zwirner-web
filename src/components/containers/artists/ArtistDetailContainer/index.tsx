@@ -31,6 +31,7 @@ import {
   mapCarouselArtworks,
   mapCarouselBooks,
   mapExhibitions,
+  mapFeatured,
   mapGrid,
   mapInterstitial,
   mapSplit,
@@ -52,7 +53,7 @@ export const ArtistDetailContainer: FC<ArtistsContainerProps> = ({data}) => {
   const {isSmall} = useBreakpoints()
   const router = useRouter()
 
-  const hero = data.showHero ? mapSplit(data.hero) : null
+  const featured = mapFeatured(data.featured)
   const survey = mapCarouselArtworks(data.survey)
   const availableWorksBooks = mapSplit(data.availableWorksBooks, () =>
     router.push(`/artists/${router.query.slug}/available-works`)
@@ -131,7 +132,7 @@ export const ArtistDetailContainer: FC<ArtistsContainerProps> = ({data}) => {
       <FullWidthFlexCol>
         <ArtistHeader artist={data.artist} intro={data.artistIntro} />
 
-        {hero && <DzSplit data={hero} type={SPLIT_TYPES.SHORT} />}
+        {featured && <DzSplit data={featured} type={SPLIT_TYPES.SHORT} />}
 
         {survey &&
           renderCarousel(

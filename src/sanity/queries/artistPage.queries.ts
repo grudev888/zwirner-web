@@ -28,6 +28,15 @@ export const artistPageBySlug = groq`
   guide { ..., items[]->, },
   selectedPress { ..., items[]->, },
   books { ..., items[]->, },
+  featured->{ 
+    ...,
+    _type == "exhibitionPage"=> {
+      ...,
+      location->{
+        name
+      },
+    }
+  },
   seo {
     ${pageSEOFields}
   },

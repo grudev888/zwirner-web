@@ -185,6 +185,101 @@ export const mapSplit = (data: any, onCTAClick?: () => void) => {
   }
 }
 
+export const mapFeatured = (data: any) => {
+  if (!data?._type) return data
+
+  if (data._type === 'artwork') {
+    const imgSrc = data.photos?.[0]?.asset ? builder.image(data.photos[0].asset).url() : ''
+    const date =
+      data.dateSelection?.year ||
+      data.dateSelection?.approximate ||
+      (data.dateSelection?.dateRange.to &&
+        new Date(data.dateSelection?.dateRange.to).getFullYear().toString())
+
+    return {
+      ...(imgSrc && {
+        media: {
+          type: 'image',
+          imgProps: {
+            src: imgSrc,
+            alt: data.photos?.[0]?.alt,
+          },
+        },
+      }),
+      category: data.artworkType?.toUpperCase(),
+      title: data.title,
+      secondarySubtitle: date,
+      description: data.dimensions || data.description,
+      ...(data.slug?.current && {
+        linkCTA: {
+          text: 'Learn More',
+          linkElement: Link,
+          url: data.slug.current,
+        },
+      }),
+    }
+  } else if (data._type === 'article') {
+    const imgSrc = data.image?.image?.asset ? builder.image(data.image.image.asset).url() : ''
+    const date =
+      data.displayDate ||
+      data.dateSelection?.year ||
+      data.dateSelection?.approximate ||
+      (data.dateSelection?.dateRange.to &&
+        new Date(data.dateSelection?.dateRange.to).getFullYear().toString())
+
+    return {
+      ...(imgSrc && {
+        media: {
+          type: 'image',
+          imgProps: {
+            src: imgSrc,
+            alt: data.image?.image?.alt,
+          },
+        },
+      }),
+      category: data.category?.toUpperCase(),
+      title: data.title,
+      // subtitle: 'Lorem ipsum dolor sit amet, consectetuer adipiscin',
+      secondaryTitle: data.subtitle,
+      secondarySubtitle: date,
+      description: data.description,
+      ...(data.slug?.current && {
+        linkCTA: {
+          text: 'Learn More',
+          linkElement: Link,
+          url: data.slug.current,
+        },
+      }),
+    }
+  } else if (data._type === 'exhibitionPage') {
+    const imgSrc = data.photos?.[0]?.asset ? builder.image(data.photos[0].asset).url() : ''
+
+    return {
+      ...(imgSrc && {
+        media: {
+          type: 'image',
+          imgProps: {
+            src: imgSrc,
+            alt: data.photos?.[0]?.alt,
+          },
+        },
+      }),
+      title: data.title,
+      subtitle: data.location?.name,
+      secondaryTitle: data.summary,
+      secondarySubtitle: formatExhibitionDate(data),
+      description: data.description,
+      ...(data.slug?.current && {
+        linkCTA: {
+          text: 'Learn More',
+          linkElement: Link,
+          url: data.slug.current,
+        },
+      }),
+    }
+  }
+}
+
 export const mapExhibitions = (data: any) => {
   if (!data) return null
 
