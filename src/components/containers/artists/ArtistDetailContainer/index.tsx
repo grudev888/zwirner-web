@@ -65,8 +65,8 @@ export const ArtistDetailContainer: FC<ArtistsContainerProps> = ({data}) => {
   const exhibitionsInterstitial = mapInterstitial(data.exhibitionsInterstitial, () =>
     router.push(`/artists/${router.query.slug}/exhibitions`)
   )
-  const guide = mapCarouselArticles(data.guide, isSmall)
   const biography = mapBiography(data.artist)
+  const guide = mapCarouselArticles(data.guide, isSmall)
   const selectedPress = mapGrid(data.selectedPress, 'article', true)
   const books = mapCarouselBooks(data.books)
   const interstitial = mapInterstitial(data.interstitial)
