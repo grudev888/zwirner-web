@@ -1,0 +1,68 @@
+.container {
+  @apply relative
+  flex
+  w-full
+  flex-col
+  scroll-smooth
+  whitespace-pre-wrap
+  md:flex-row;
+}
+
+.leftPane {
+  @apply relative
+  h-fit
+  basis-1/3
+  overflow-y-scroll
+  pt-10
+  md:sticky;
+}
+
+.rightPane {
+  @apply flex
+  basis-2/3
+  flex-col;
+}
+
+.ctaContainer {
+  @apply fixed
+  bottom-0
+  left-0
+  z-[300]
+  w-full
+  px-[1.25rem]
+  text-center
+  md:sticky
+  md:px-0;
+}
+
+.ctaContainerTop {
+  @apply h-[1rem]
+  bg-gradient-to-t
+  from-white-100
+  opacity-75;
+}
+
+.ctaBody {
+  @apply bg-white-100
+  py-[0.625rem]
+  md:py-[1.25rem];
+}
+
+.ctaButton {
+  @apply m-auto
+  md:block;
+}
+
+.subtitle {
+  @apply italic
+  !text-black-100;
+}
+
+.learnMore {
+  @apply mt-[1.25rem];
+}
+
+.artworkDetailText {
+  @apply mb-[0.675rem]
+  text-black-60;
+}
