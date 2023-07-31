@@ -1,10 +1,16 @@
-import {DzColumn, DzComplexGrid, TITLE_SIZES} from '@zwirner/design-system'
+import {DzColumn, TITLE_SIZES} from '@zwirner/design-system'
+import dynamic from 'next/dynamic'
 import {FC} from 'react'
 
 import {FullWidthFlexCol} from '@/components/containers/layout/FullWidthFlexCol'
 import {ContainerTitle} from '@/components/containers/title/ContainerTitle'
 
 import {mapCardsGrid} from './mapper'
+
+const DzComplexGrid = dynamic(
+  () => import('@zwirner/design-system').then((mod) => mod.DzComplexGrid),
+  {ssr: false}
+)
 
 interface AvailableArtworksProps {
   data: any

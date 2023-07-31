@@ -2,11 +2,14 @@ import {ButtonModes, CARD_TYPES, MEDIA_ASPECT_RATIOS, MEDIA_TYPES} from '@zwirne
 import Image from 'next/image'
 import Link from 'next/link'
 
+import {dzMediaMapper} from '@/common/utilsMappers/image.mapper'
+import {safeText} from '@/common/utilsMappers/safe'
 import {builder} from '@/sanity/imageBuilder'
 
 export const mapInterstitial = (data: any, onCTAClick?: () => void) => {
   if (!data?.title) return null
 
+  const {media} = dzMediaMapper({data, ImgElement: Image})
   return {
     split: false,
     title: data.title,
@@ -17,13 +20,7 @@ export const mapInterstitial = (data: any, onCTAClick?: () => void) => {
       ctaProps: {onClick: onCTAClick},
     },
     ...(data.image?.asset && {
-      media: {
-        type: MEDIA_TYPES.IMAGE,
-        imgProps: {
-          src: builder.image(data.image.asset).url(),
-          alt: data.image?.alt,
-        },
-      },
+      media,
     }),
     customClass: '-mx-5',
   }
@@ -36,14 +33,11 @@ export const mapCarouselArtworks = (data: any) => {
     title: data.title,
     size: data.size,
     items: data.items?.map((item: any) => {
-      const {photos, artists, dimensions, title, dateSelection, medium, edition, _id, price} =
-        item ?? {}
+      const {artists, dimensions, title, dateSelection, medium, edition, _id, price} = item ?? {}
       const {year} = dateSelection ?? {}
       const [mainArtist] = artists ?? []
       const {fullName} = mainArtist ?? {}
-      const [mainPicture] = photos ?? []
-      const {asset, alt} = mainPicture ?? {}
-      const imgSrc = asset ? builder.image(asset).url() : ''
+
       const framed =
         typeof item.framed === 'boolean'
           ? item.framed === true
@@ -51,22 +45,17 @@ export const mapCarouselArtworks = (data: any) => {
             : 'Unframed'
           : undefined
 
+      const {media} = dzMediaMapper({data: item, ImgElement: Image})
+      const dimensionText = safeText({key: 'dimensions', text: dimensions})
+
       return {
         id: _id,
-        media: {
-          type: MEDIA_TYPES.IMAGE,
-          ImgElement: Image,
-          imgProps: {
-            src: imgSrc,
-            alt,
-            fill: true,
-          },
-        },
+        media,
         artistName: fullName,
         artworkTitle: title,
         artworkYear: year,
         medium: medium,
-        dimensions: dimensions,
+        ...(dimensionText ?? {}),
         edition: edition,
         price: price,
         framed,
@@ -81,18 +70,11 @@ export const mapCarouselBooks = (data: any) => {
     title: data.title,
     size: data.size,
     items: data.items?.map((item: any) => {
-      const imgSrc = item.photos?.[0]?.asset ? builder.image(item.photos[0].asset).url() : ''
+      const {media} = dzMediaMapper({data: item, ImgElement: Image})
+
       return {
         id: item._id,
-        media: {
-          type: MEDIA_TYPES.IMAGE,
-          ImgElement: Image,
-          imgProps: {
-            src: imgSrc,
-            alt: item.photos?.[0]?.alt,
-            fill: true,
-          },
-        },
+        media,
         price: item.price,
         artworkTitle: item.title,
       }
@@ -106,7 +88,13 @@ export const mapCarouselArticles = (data: any, isSmall: boolean) => {
     title: data.title,
     size: data.size,
     items: data.items?.map((item: any) => {
-      const imgSrc = item.image?.image?.asset ? builder.image(item.image.image.asset).url() : ''
+      const {media, hideImage} = dzMediaMapper({
+        data: item,
+        ImgElement: Image,
+        options: {
+          aspectRatio: isSmall ? MEDIA_ASPECT_RATIOS['4:3'] : MEDIA_ASPECT_RATIOS['16:9'],
+        },
+      })
 
       const dateFormatter = new Intl.DateTimeFormat('en-US', {
         timeZone: 'America/New_York',
@@ -121,18 +109,10 @@ export const mapCarouselArticles = (data: any, isSmall: boolean) => {
 
       return {
         id: item._id,
-        ...(imgSrc && {
-          media: {
-            aspectRatio: isSmall ? MEDIA_ASPECT_RATIOS['4:3'] : MEDIA_ASPECT_RATIOS['16:9'],
-            type: MEDIA_TYPES.IMAGE,
-            ImgElement: Image,
-            imgProps: {
-              src: imgSrc,
-              alt: item.image?.image?.alt,
-              fill: true,
-            },
-          },
+        ...(media && {
+          media,
         }),
+        hideImage,
         enableZoom: true,
         title: item.title,
         category: item.category,
@@ -157,7 +137,8 @@ export const mapBiography = (data: any) => {
   return {
     media: {
       type: MEDIA_TYPES.IMAGE,
-      imgProps: {src: imgSrc, alt: data.picture?.alt},
+      ImgElement: Image,
+      imgProps: {src: imgSrc, alt: data.picture?.alt, fill: true},
     },
     description: data.description,
   }
@@ -166,13 +147,9 @@ export const mapBiography = (data: any) => {
 export const mapSplit = (data: any, onCTAClick?: () => void) => {
   if (!data?.title) return null
 
-  const imgSrc = data.image?.asset ? builder.image(data.image.asset).url() : ''
+  const {media} = dzMediaMapper({data, ImgElement: Image})
   return {
-    media: {
-      type: MEDIA_TYPES.IMAGE,
-      ImgElement: Image,
-      imgProps: {src: imgSrc, alt: data.image?.alt, fill: true},
-    },
+    media,
     title: data.title,
     description: data.text,
     buttonCTA: {
@@ -182,6 +159,101 @@ export const mapSplit = (data: any, onCTAClick?: () => void) => {
         onClick: onCTAClick,
       },
     },
+  }
+}
+
+export const mapFeatured = (data: any) => {
+  if (!data?._type) return data
+
+  if (data._type === 'artwork') {
+    const imgSrc = data.photos?.[0]?.asset ? builder.image(data.photos[0].asset).url() : ''
+    const date =
+      data.dateSelection?.year ||
+      data.dateSelection?.approximate ||
+      (data.dateSelection?.dateRange.to &&
+        new Date(data.dateSelection?.dateRange.to).getFullYear().toString())
+
+    return {
+      ...(imgSrc && {
+        media: {
+          type: 'image',
+          imgProps: {
+            src: imgSrc,
+            alt: data.photos?.[0]?.alt,
+          },
+        },
+      }),
+      category: data.artworkType?.toUpperCase(),
+      title: data.title,
+      secondarySubtitle: date,
+      description: data.dimensions || data.description,
+      ...(data.slug?.current && {
+        linkCTA: {
+          text: 'Learn More',
+          linkElement: Link,
+          url: data.slug.current,
+        },
+      }),
+    }
+  } else if (data._type === 'article') {
+    const imgSrc = data.image?.image?.asset ? builder.image(data.image.image.asset).url() : ''
+    const date =
+      data.displayDate ||
+      data.dateSelection?.year ||
+      data.dateSelection?.approximate ||
+      (data.dateSelection?.dateRange.to &&
+        new Date(data.dateSelection?.dateRange.to).getFullYear().toString())
+
+    return {
+      ...(imgSrc && {
+        media: {
+          type: 'image',
+          imgProps: {
+            src: imgSrc,
+            alt: data.image?.image?.alt,
+          },
+        },
+      }),
+      category: data.category?.toUpperCase(),
+      title: data.title,
+      // subtitle: 'Lorem ipsum dolor sit amet, consectetuer adipiscin',
+      secondaryTitle: data.subtitle,
+      secondarySubtitle: date,
+      description: data.description,
+      ...(data.slug?.current && {
+        linkCTA: {
+          text: 'Learn More',
+          linkElement: Link,
+          url: data.slug.current,
+        },
+      }),
+    }
+  } else if (data._type === 'exhibitionPage') {
+    const imgSrc = data.photos?.[0]?.asset ? builder.image(data.photos[0].asset).url() : ''
+
+    return {
+      ...(imgSrc && {
+        media: {
+          type: 'image',
+          imgProps: {
+            src: imgSrc,
+            alt: data.photos?.[0]?.alt,
+          },
+        },
+      }),
+      title: data.title,
+      subtitle: data.location?.name,
+      secondaryTitle: data.summary,
+      secondarySubtitle: formatExhibitionDate(data),
+      description: data.description,
+      ...(data.slug?.current && {
+        linkCTA: {
+          text: 'Learn More',
+          linkElement: Link,
+          url: data.slug.current,
+        },
+      }),
+    }
   }
 }
 
@@ -229,18 +301,14 @@ export const mapHero = (data: any) => {
   if (!data) return null
   return (
     data.items?.map((item: any) => {
-      const {title, subtitle, photos = []} = item ?? {}
-      const imgSrc = photos?.[0]?.asset ? builder.image(photos[0].asset).url() : ''
+      const {title, subtitle} = item ?? {}
+      const {media} = dzMediaMapper({data: item, ImgElement: Image})
 
       return {
-        secondaryTitle: item.location?.name,
+        secondaryTitle: item?.location?.name,
         secondarySubtitle: formatExhibitionDate(item),
-        description: item.summary,
-        media: {
-          ImgElement: Image,
-          type: MEDIA_TYPES.IMAGE,
-          imgProps: {fill: true, src: imgSrc, alt: photos?.[0]?.alt},
-        },
+        description: item?.summary,
+        media,
         title,
         subtitle,
         ...(item.slug?.current && {
@@ -253,7 +321,7 @@ export const mapHero = (data: any) => {
 }
 
 export const mapArticlesCard = (item: any, noMedia = false) => {
-  const imgSrc = item.image?.image?.asset ? builder.image(item.image.image.asset).url() : ''
+  const {media} = dzMediaMapper({data: item, ImgElement: Image})
 
   const year = item.displayDate || item.dateSelection?.year || item.dateSelection?.approximate
 
@@ -261,14 +329,8 @@ export const mapArticlesCard = (item: any, noMedia = false) => {
     id: item._id,
     cardType: CARD_TYPES.CONTENT,
     ...(noMedia === false &&
-      imgSrc && {
-        media: {
-          type: 'image',
-          imgProps: {
-            src: imgSrc,
-            alt: item.image?.image?.alt,
-          },
-        },
+      media && {
+        media,
       }),
     title: item.title,
     subtitle: item.subtitle,
@@ -282,25 +344,19 @@ export const mapArticlesCard = (item: any, noMedia = false) => {
 }
 
 export const mapExhibitionCard = (item: any) => {
-  const imgSrc = item.photos?.[0]?.asset ? builder.image(item.photos[0].asset).url() : ''
+  const {media} = dzMediaMapper({data: item, ImgElement: Image})
 
   return {
     id: item._id,
     cardType: CARD_TYPES.CONTENT,
-    ...(imgSrc && {
-      media: {
-        type: 'image',
-        imgProps: {
-          src: imgSrc,
-          alt: item.photos?.[0]?.alt,
-        },
-      },
+    ...(media && {
+      media,
     }),
-    title: item.title,
-    subtitle: item.subtitle,
-    secondaryTitle: item.location?.name,
+    title: item?.title,
+    subtitle: item?.subtitle,
+    secondaryTitle: item?.location?.name,
     secondarySubtitle: formatExhibitionDate(item),
-    description: item.description,
+    description: item?.description,
     ...(item.slug?.current && {
       linkCTA: {text: 'Learn More', linkElement: Link, url: item.slug.current},
       cardLink: {href: item.slug.current, openNewTab: true, LinkElement: Link},

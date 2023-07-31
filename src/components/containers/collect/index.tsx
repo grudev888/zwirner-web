@@ -3,10 +3,8 @@ import {
   CardSizes,
   carouselSizeToCardSize,
   DzCard,
-  DzCarousel,
   DzCarouselCardSize,
   DzColumn,
-  DzComplexGrid,
   DzEditorial,
   DzForm,
   DzHero,
@@ -16,6 +14,7 @@ import {
   DzTitleMoleculeTypes,
   TITLE_TYPES,
 } from '@zwirner/design-system'
+import dynamic from 'next/dynamic'
 import {FC} from 'react'
 
 import {
@@ -39,6 +38,15 @@ import {
   platformInterstitialMap,
   utopiaFeatureMap,
 } from './mapper'
+
+const DzComplexGrid = dynamic(
+  () => import('@zwirner/design-system').then((mod) => mod.DzComplexGrid),
+  {ssr: false}
+)
+
+const DzCarousel = dynamic(() => import('@zwirner/design-system').then((mod) => mod.DzCarousel), {
+  ssr: false,
+})
 
 interface CollectContainerProps {
   data: any

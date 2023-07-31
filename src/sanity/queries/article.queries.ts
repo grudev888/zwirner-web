@@ -11,13 +11,16 @@ export const articlePagesSlugs = groq`
 export const articleBySlug = groq`
 *[_type == "article" && slug.current == $slug][0]{
   ...,
+  location-> {
+    name
+  },
   articles[]-> {
     ...,
     _type == "fairPage"=> {
       slug,
       title,
       _type,
-      "exhibition": exhibition-> {
+      "exhibition":  {
         ${exhibitionSimpleFields}
         ${exhibitionComplexFields}
       },
@@ -25,7 +28,7 @@ export const articleBySlug = groq`
     _type == "exhibitionPage"=> {
       title,
       _type,
-      "exhibition": exhibition-> {
+      "exhibition":  {
         ${exhibitionSimpleFields}
         ${exhibitionComplexFields}
       },
@@ -48,6 +51,9 @@ export const pressPagesSlugs = groq`
 export const pressBySlug = groq`
 *[_type == "article" && type == "pressRelease" && slug.current == $slug][0]{
   ...,
+  location-> {
+    name
+  },
   "artistPageData": *[_type == "artistPage" && references(^._id)][0]{
       title,
       'parentUrl': slug.current
@@ -58,7 +64,7 @@ export const pressBySlug = groq`
       slug,
       title,
       _type,
-      "exhibition": exhibition-> {
+      "exhibition":  {
         ${exhibitionSimpleFields}
         ${exhibitionComplexFields}
       },
@@ -66,7 +72,7 @@ export const pressBySlug = groq`
     _type == "exhibitionPage"=> {
       title,
       _type,
-      "exhibition": exhibition-> {
+      "exhibition":  {
         ${exhibitionSimpleFields}
         ${exhibitionComplexFields}
       },

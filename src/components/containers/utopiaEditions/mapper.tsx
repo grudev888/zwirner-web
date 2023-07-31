@@ -7,8 +7,9 @@ import {
 import Image from 'next/image'
 import {Fragment} from 'react'
 
+import {dzMediaMapper, validateImage} from '@/common/utilsMappers/image.mapper'
+import {safeText} from '@/common/utilsMappers/safe'
 import {builder} from '@/sanity/imageBuilder'
-
 export const utopiaMainMediaMap = (data: any) => {
   const {image, type, url} = data ?? {}
   const isVideo = type === 'video'
@@ -54,6 +55,7 @@ export const heroMap = (data: any) => {
   const title = exhibitions?.[0]?.exhibition?.artists?.[0]?.fullName
 
   const {title: artworkTitle, dateSelection} = exhibitions?.[0]?.exhibition?.artworks?.[0] || {}
+
   const year = dateSelection?.year
 
   const mainExhibitionPhoto = exhibitions?.[0]?.exhibition?.photos?.[0]
@@ -87,15 +89,9 @@ export const heroMap = (data: any) => {
 
 export const mapCardsGrid = (data: any[]) => {
   return data
-    ?.filter((artwork) => {
-      const {photos} = artwork ?? {}
-      const [mainPicture] = photos ?? []
-      const {asset} = mainPicture ?? {}
-      return !!asset
-    })
+    ?.filter((artwork) => validateImage(artwork))
     ?.map((artwork) => {
-      const {photos, artists, dimensions, title, dateSelection, medium, edition, _id, price} =
-        artwork ?? {}
+      const {artists, dimensions, title, dateSelection, medium, edition, _id, price} = artwork ?? {}
       const framed =
         typeof artwork.framed === 'boolean'
           ? artwork.framed === true
@@ -105,23 +101,18 @@ export const mapCardsGrid = (data: any[]) => {
       const {year} = dateSelection ?? {}
       const [mainArtist] = artists ?? []
       const {fullName} = mainArtist ?? {}
-      const [mainPicture] = photos ?? []
-      const {asset, alt} = mainPicture ?? {}
-      const imgSrc = asset ? builder.image(asset).url() : ''
+
+      const {media} = dzMediaMapper({data: artwork, ImgElement: Image})
+      const dimensionText = safeText({key: 'dimensions', text: dimensions})
 
       return {
         id: _id,
-        media: {
-          url: '/',
-          type: MEDIA_TYPES.IMAGE,
-          ImgElement: Image,
-          imgProps: {src: imgSrc, alt, fill: true},
-        },
+        media,
         artistName: fullName,
         artworkTitle: title,
         artworkYear: year,
         medium,
-        dimensions,
+        ...(dimensionText ?? {}),
         edition,
         price,
         framed,

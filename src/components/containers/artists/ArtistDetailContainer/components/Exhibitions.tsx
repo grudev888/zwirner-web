@@ -1,4 +1,10 @@
-import {DzComplexGrid, DzHero, DzTitleMolecule, DzTitleMoleculeTypes} from '@zwirner/design-system'
+import {DzHero, DzTitleMolecule, DzTitleMoleculeTypes} from '@zwirner/design-system'
+import dynamic from 'next/dynamic'
+
+const DzComplexGrid = dynamic(
+  () => import('@zwirner/design-system').then((mod) => mod.DzComplexGrid),
+  {ssr: false}
+)
 
 const Exhibitions = ({exhibitions, ...rest}: any) => {
   return (

@@ -1,8 +1,9 @@
-import {MEDIA_ASPECT_RATIOS, MEDIA_TYPES, TITLE_TYPES} from '@zwirner/design-system'
+import {MEDIA_ASPECT_RATIOS, TITLE_TYPES} from '@zwirner/design-system'
 import Image from 'next/image'
 
 import {LEARN_MORE} from '@/common/constants/commonCopies'
-import {builder} from '@/sanity/imageBuilder'
+import {dzMediaMapper, validateImage} from '@/common/utilsMappers/image.mapper'
+import {safeText} from '@/common/utilsMappers/safe'
 
 import {parseAvailability} from './utils'
 
@@ -11,25 +12,17 @@ export const mapHeaderCarousel = (data = []) => {
     data
       ?.filter((item) => {
         const {exhibition} = item ?? {}
-        const {photos = []} = exhibition ?? {}
-        const [mainImage] = photos ?? []
-        const {asset} = mainImage ?? {}
-        return !!asset
+        return validateImage(exhibition)
       })
       ?.map((item) => {
         const {exhibition} = item ?? {}
-        const {title, subtitle, photos = []} = exhibition ?? {}
-        const [mainImage] = photos ?? []
-        const {asset, alt} = mainImage ?? {}
-        const imgSrc = asset ? builder.image(asset).url() : ''
+        const {title, subtitle} = exhibition ?? {}
+
+        const {media} = dzMediaMapper({data: exhibition, ImgElement: Image})
 
         return {
           category: subtitle,
-          media: {
-            ImgElement: Image,
-            type: MEDIA_TYPES.IMAGE,
-            imgProps: {fill: true, url: '/', src: imgSrc, alt: alt},
-          },
+          media,
           title,
           linkCTA: {
             text: LEARN_MORE,
@@ -43,18 +36,12 @@ export const mapHeaderCarousel = (data = []) => {
 
 export const mapFeaturedContentSplit = (data: any) => {
   const {exhibition} = data ?? {}
-  const {title, subtitle, photos = [], description} = exhibition ?? {}
-  const [mainImage] = photos ?? []
-  const {asset, alt} = mainImage ?? {}
-  const imgSrc = asset ? builder.image(asset).url() : ''
+  const {title, subtitle, description} = exhibition ?? {}
+
+  const {media} = dzMediaMapper({data: exhibition, ImgElement: Image})
 
   return {
-    media: {
-      url: '/',
-      type: MEDIA_TYPES.IMAGE,
-      ImgElement: Image,
-      imgProps: {src: imgSrc, alt, fill: true},
-    },
+    media,
     category: subtitle,
     title,
     description,
@@ -70,27 +57,24 @@ export const mapArticlesGrid = (data = []) =>
   data
     ?.filter((item: any) => !!item.image.image.asset)
     ?.map((item: any) => {
-      const imgSrc = !!item.image?.image?.asset ? builder.image(item.image.image.asset).url() : ''
+      const {media} = dzMediaMapper({
+        data: item,
+        ImgElement: Image,
+        options: {aspectRatio: MEDIA_ASPECT_RATIOS['16:9']},
+      })
 
       return {
-        media: {
-          type: MEDIA_TYPES.IMAGE,
-          ImgElement: Image,
-          imgProps: {url: '/', src: imgSrc, alt: item.image?.image?.alt, fill: true},
-          aspectRatio: MEDIA_ASPECT_RATIOS['16:9'],
-        },
+        media,
         category: item.category,
         title: item.title,
         description: item.description,
         linkCTA: {text: 'View More', linkElement: 'a', url: '/'},
       }
     })
-
 export const mapInterstitialComponents = (data: any) => {
   const {ctaOverride, imageOverride, titleOverride, subtitleOverride} = data ?? {}
 
-  const {asset, alt} = imageOverride ?? {}
-  const imgSrc = asset ? builder.image(asset).url() : ''
+  const {media} = dzMediaMapper({data: {image: imageOverride}, ImgElement: Image})
   return {
     fullWidth: true,
     split: false,
@@ -99,28 +83,28 @@ export const mapInterstitialComponents = (data: any) => {
     primaryCta: {
       text: ctaOverride,
     },
-    media: {
-      url: '/',
-      type: MEDIA_TYPES.IMAGE,
-      ImgElement: Image,
-      imgProps: {
-        src: imgSrc,
-        alt,
-        fill: true,
-      },
-    },
+    media,
   }
 }
 
 export const mapTabsLocations = (data: any) => {
   const mappedLocationsByCity =
     data?.reduce((prev: any, loc: any) => {
-      const {address, name, photos, hours} = loc ?? {}
+      const {address, name, hours} = loc ?? {}
 
       const {city, state, zipCode, addressLine} = address ?? {}
-      const [mainPhoto] = photos ?? []
-      const {asset, alt} = mainPhoto ?? {}
-      const imgSrc = asset ? builder.image(asset).url() : ''
+
+      const {media} = dzMediaMapper({
+        data: loc,
+        ImgElement: Image,
+        options: {
+          aspectRatio: MEDIA_ASPECT_RATIOS['16:9'],
+        },
+        extraImgProps: {
+          itemProp: 'image',
+          property: 'image',
+        },
+      })
 
       const currentTime = new Date()
 
@@ -130,19 +114,7 @@ export const mapTabsLocations = (data: any) => {
       )
 
       const cardLocation = {
-        media: {
-          type: MEDIA_TYPES.IMAGE,
-          ImgElement: Image,
-          aspectRatio: MEDIA_ASPECT_RATIOS['16:9'],
-          imgProps: {
-            src: imgSrc,
-            alt: alt || addressLine,
-            url: '/',
-            fill: true,
-            itemProp: 'image',
-            property: 'image',
-          },
-        },
+        media,
         title: (
           <span property="name" itemProp="name">
             {name}
@@ -170,9 +142,9 @@ export const mapTabsLocations = (data: any) => {
         secondarySubtitle: availability ? 'Open' : 'Closed',
         property: 'address',
         typeof: 'PostalAddress',
-        itemprop: 'address',
-        itemscope: '',
-        itemtype: 'https://schema.org/PostalAddress',
+        itemProp: 'address',
+        itemScope: '',
+        itemType: 'https://schema.org/PostalAddress',
       }
 
       if (prev[city] && prev[city].cards && Array.isArray(prev[city].cards)) {
@@ -206,31 +178,30 @@ export const mapCarouselCards = (data: any) => {
         exhibition,
         title: titleArticle,
         category,
-        image,
         _type,
         externalURL,
         description,
         slug,
       } = item ?? {}
       const isArticle = _type === 'article'
-      const {title, subtitle, photos = [], summary} = exhibition ?? {}
-      const [mainImage] = photos ?? []
-      const {asset, alt} = mainImage ?? (isArticle ? image?.image : null) ?? {}
-      const imgSrc = asset ? builder.image(asset).url() : ''
+      const {title, subtitle, summary} = exhibition ?? {}
+
+      const sharedMediaOptions = {aspectRatio: MEDIA_ASPECT_RATIOS['16:9']}
+      const {media: exhibitionMedia} = dzMediaMapper({
+        data: exhibition,
+        ImgElement: Image,
+        options: sharedMediaOptions,
+      })
+      const {media: articleMedia} = dzMediaMapper({
+        data: item,
+        ImgElement: Image,
+        options: sharedMediaOptions,
+      })
 
       const url = _type == 'article' ? externalURL ?? slug?.current : '/'
       return {
         id: item._id,
-        media: {
-          type: 'image',
-          aspectRatio: MEDIA_ASPECT_RATIOS['16:9'],
-          ImgElement: Image,
-          imgProps: {
-            src: imgSrc,
-            alt,
-            fill: true,
-          },
-        },
+        media: isArticle ? articleMedia : exhibitionMedia,
         category: isArticle ? category : subtitle,
         title: isArticle ? titleArticle : title,
         titleType: TITLE_TYPES.H3,
@@ -246,21 +217,13 @@ export const mapCarouselCards = (data: any) => {
 
 export const mapCardsGrid = (data: any[]) => {
   return data
-    ?.filter((artwork) => {
-      const {photos} = artwork ?? {}
-      const [mainPicture] = photos ?? []
-      const {asset} = mainPicture ?? {}
-      return !!asset
-    })
+    ?.filter((artwork) => validateImage(artwork))
     ?.map((artwork) => {
-      const {photos, artists, dimensions, title, dateSelection, medium, edition, _id, price} =
-        artwork ?? {}
+      const {artists, dimensions, title, dateSelection, medium, edition, _id, price} = artwork ?? {}
       const {year} = dateSelection ?? {}
       const [mainArtist] = artists ?? []
       const {fullName} = mainArtist ?? {}
-      const [mainPicture] = photos ?? []
-      const {asset, alt} = mainPicture ?? {}
-      const imgSrc = asset ? builder.image(asset).url() : ''
+
       const framed =
         typeof artwork.framed === 'boolean'
           ? artwork.framed === true
@@ -268,23 +231,16 @@ export const mapCardsGrid = (data: any[]) => {
             : 'Unframed'
           : undefined
 
+      const {media} = dzMediaMapper({data: artists, ImgElement: Image})
+      const dimensionText = safeText({key: 'dimensions', text: dimensions})
       return {
         id: _id,
-        media: {
-          url: '/',
-          type: MEDIA_TYPES.IMAGE,
-          ImgElement: Image,
-          imgProps: {
-            src: imgSrc,
-            alt,
-            fill: true,
-          },
-        },
+        media,
         artistName: fullName,
         artworkTitle: title,
         artworkYear: year,
         medium: medium,
-        dimensions: dimensions,
+        ...(dimensionText ?? {}),
         edition: edition,
         price: price,
         framed,

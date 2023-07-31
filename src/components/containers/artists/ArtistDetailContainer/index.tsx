@@ -5,7 +5,6 @@ import {
   CardTypes,
   carouselSizeToCardSize,
   DzCard,
-  DzCarousel,
   DzCarouselCardSize,
   DzColumn,
   DzInterstitial,
@@ -16,6 +15,7 @@ import {
   SPLIT_TYPES,
   useBreakpoints,
 } from '@zwirner/design-system'
+import dynamic from 'next/dynamic'
 import Link from 'next/link'
 import {useRouter} from 'next/router'
 import {FC, useCallback, useMemo} from 'react'
@@ -23,7 +23,6 @@ import {FC, useCallback, useMemo} from 'react'
 import {FullWidthFlexCol} from '@/components/containers/layout/FullWidthFlexCol'
 
 import ArtistHeader from './components/ArtistHeader'
-import Biography from './components/Biography'
 import Exhibitions from './components/Exhibitions'
 import SelectedPress from './components/SelectedPress'
 import {
@@ -32,10 +31,19 @@ import {
   mapCarouselArtworks,
   mapCarouselBooks,
   mapExhibitions,
+  mapFeatured,
   mapGrid,
   mapInterstitial,
   mapSplit,
 } from './mapper'
+
+const DzCarousel = dynamic(() => import('@zwirner/design-system').then((mod) => mod.DzCarousel), {
+  ssr: false,
+})
+
+const Biography = dynamic(() => import('./components/Biography').then((mod) => mod.default), {
+  ssr: false,
+})
 
 interface ArtistsContainerProps {
   data: any
@@ -45,7 +53,7 @@ export const ArtistDetailContainer: FC<ArtistsContainerProps> = ({data}) => {
   const {isSmall} = useBreakpoints()
   const router = useRouter()
 
-  const hero = data.showHero ? mapSplit(data.hero) : null
+  const featured = mapFeatured(data.featured)
   const survey = mapCarouselArtworks(data.survey)
   const availableWorksBooks = mapSplit(data.availableWorksBooks, () =>
     router.push(`/artists/${router.query.slug}/available-works`)
@@ -124,7 +132,7 @@ export const ArtistDetailContainer: FC<ArtistsContainerProps> = ({data}) => {
       <FullWidthFlexCol>
         <ArtistHeader artist={data.artist} intro={data.artistIntro} />
 
-        {hero && <DzSplit data={hero} type={SPLIT_TYPES.SHORT} />}
+        {featured && <DzSplit data={featured} type={SPLIT_TYPES.SHORT} />}
 
         {survey &&
           renderCarousel(

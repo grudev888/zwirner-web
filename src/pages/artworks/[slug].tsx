@@ -1,23 +1,23 @@
 import {GetStaticProps} from 'next'
 
 import {SEOComponent} from '@/common/components/seo/seo'
-import {ARTISTS_PRESS_URL, ARTISTS_URL} from '@/common/constants/commonCopies'
-import ArtistArticlePressContainer from '@/components/containers/articles/press'
+import {ARTWORK_URL} from '@/common/constants/commonCopies'
+import {ArtworkContainer} from '@/components/containers/artworks/artwork'
 import {PREVIEW_PAGE_TYPE, PreviewPage} from '@/components/containers/previews/pagePreview'
-import {pressBySlug} from '@/sanity/queries/article.queries'
-import {getAllPressPages, getPressPageBySlug} from '@/sanity/services/article.service'
+import {getAllArtworkSlugs, getArtworkData} from '@/sanity/services/artwork.service'
+import {artworksData} from '@/sanity/queries/artwork.queries'
 
 interface QuerySlug {
   slug: string
 }
 
-interface ArticleCMSData {
-  articleData: any
+interface ArtworkCMSData {
+  artworkData: any
   queryParams: QuerySlug
 }
 
 interface PageProps {
-  data: ArticleCMSData
+  data: ArtworkCMSData
   preview: boolean
   slug: string | null
   token: string | null
@@ -31,18 +31,18 @@ interface PreviewData {
   token?: string
 }
 
-export default function Article({data, preview}: PageProps) {
-  const {articleData = {}, queryParams} = data ?? {}
-  const {seo} = articleData ?? {}
+export default function Artwork({data, preview}: PageProps) {
+  const {artworkData = {}, queryParams} = data ?? {}
+  const {seo} = artworkData ?? {}
   if (preview) {
     return (
       <>
         <SEOComponent data={seo} />
         <PreviewPage
-          query={pressBySlug}
+          query={artworksData}
           params={queryParams}
           seo={seo}
-          type={PREVIEW_PAGE_TYPE.ARTIST_DETAIL_PRESS}
+          type={PREVIEW_PAGE_TYPE.ARTWORK_DETAIL}
         />
       </>
     )
@@ -50,14 +50,14 @@ export default function Article({data, preview}: PageProps) {
   return (
     <>
       <SEOComponent data={seo} />
-      <ArtistArticlePressContainer data={articleData} />
+      <ArtworkContainer data={artworkData} />
     </>
   )
 }
 
 export const getStaticPaths = async () => {
-  const paths = await getAllPressPages()
-  const filteredPaths = paths.filter((item: any) => item?.slug)
+  const paths = await getAllArtworkSlugs()
+  const filteredPaths = paths.filter((item: any) => item.includes('/artworks/'))
   return {
     paths: filteredPaths,
     fallback: true,
@@ -67,12 +67,12 @@ export const getStaticPaths = async () => {
 export const getStaticProps: GetStaticProps<PageProps, Query, PreviewData> = async (ctx) => {
   const {params = {}, preview = false, previewData = {}} = ctx
   const queryParams = {
-    slug: `${ARTISTS_URL}/${params?.slug}${ARTISTS_PRESS_URL}/${params?.press}` ?? ``,
+    slug: `${ARTWORK_URL}/${params?.slug}`,
   }
   if (preview && previewData.token) {
     return {
       props: {
-        data: {queryParams, articleData: null},
+        data: {queryParams, artworkData: null},
         preview,
         slug: params?.slug || null,
         token: previewData.token,
@@ -80,7 +80,7 @@ export const getStaticProps: GetStaticProps<PageProps, Query, PreviewData> = asy
     }
   }
 
-  const data: any = await getPressPageBySlug(queryParams)
+  const data: any = await getArtworkData(queryParams)
   if (!data) {
     return {
       notFound: true,
@@ -89,7 +89,7 @@ export const getStaticProps: GetStaticProps<PageProps, Query, PreviewData> = asy
 
   return {
     props: {
-      data: {queryParams, articleData: data},
+      data: {queryParams, artworkData: data},
       preview,
       slug: params?.slug || null,
       token: null,

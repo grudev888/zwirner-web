@@ -20,7 +20,7 @@ export const utopiaEditionsData = groq`
       _type == "exhibitionPage"=> {
         title,
         _type,
-        "exhibition": exhibition-> {
+        "exhibition": {
           ${exhibitionSimpleFields}
           ${exhibitionComplexFields}
         },
@@ -33,7 +33,7 @@ export const utopiaEditionsData = groq`
       _type == "exhibitionPage"=> {
         title,
         _type,
-        "exhibition": exhibition-> {
+        "exhibition": {
           ${exhibitionSimpleFields}
           ${exhibitionComplexFields}
         },

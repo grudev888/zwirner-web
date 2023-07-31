@@ -3,17 +3,16 @@ import {
   CardSizes,
   carouselSizeToCardSize,
   DzCard,
-  DzCarousel,
   DzCarouselCardSize,
   DzColumn,
   DzGridColumns,
-  DzHero,
   DzInterstitial,
   DzSplit,
   DzTabsCards,
   SPLIT_TYPES,
 } from '@zwirner/design-system'
 import cn from 'classnames'
+import dynamic from 'next/dynamic'
 import {FC} from 'react'
 
 import {FullWidthFlexCol} from '@/components/containers/layout/FullWidthFlexCol'
@@ -27,9 +26,18 @@ import {
   mapInterstitialComponents,
   mapTabsLocations,
 } from './mapper'
+
 interface HomeContainerProps {
   data: any
 }
+
+const DzHero = dynamic(() => import('@zwirner/design-system').then((mod) => mod.DzHero), {
+  ssr: false,
+})
+
+const DzCarousel = dynamic(() => import('@zwirner/design-system').then((mod) => mod.DzCarousel), {
+  ssr: false,
+})
 
 export const HomeContainer: FC<HomeContainerProps> = ({data}) => {
   const {header, featured, articles, interstitial, locations, firstCarousel, secondCarousel} = data
@@ -58,6 +66,7 @@ export const HomeContainer: FC<HomeContainerProps> = ({data}) => {
 
   return (
     <DzColumn span={12}>
+      <h1 className="sr-only">David Zwirner Gallery</h1>
       <FullWidthFlexCol>
         <section>
           <h2 className="sr-only">Highlights</h2>

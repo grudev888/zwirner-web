@@ -1,25 +1,17 @@
-import {MEDIA_TYPES} from '@zwirner/design-system'
 import Image from 'next/image'
 
-import {builder} from '@/sanity/imageBuilder'
+import {dzMediaMapper, validateImage} from '@/common/utilsMappers/image.mapper'
+import {safeText} from '@/common/utilsMappers/safe'
 
 export const mapCardsGrid = (data: any[]) => {
   return data
-    ?.filter((artwork) => {
-      const {photos} = artwork ?? {}
-      const [mainPicture] = photos ?? []
-      const {asset} = mainPicture ?? {}
-      return !!asset
-    })
+    ?.filter((artwork) => validateImage(artwork))
     ?.map((artwork) => {
-      const {photos, artists, dimensions, title, dateSelection, medium, edition, _id, price} =
-        artwork ?? {}
+      const {artists, dimensions, title, dateSelection, medium, edition, _id, price} = artwork ?? {}
       const {year} = dateSelection ?? {}
       const [mainArtist] = artists ?? []
       const {fullName} = mainArtist ?? {}
-      const [mainPicture] = photos ?? []
-      const {asset, alt} = mainPicture ?? {}
-      const imgSrc = asset ? builder.image(asset).url() : ''
+
       const framed =
         typeof artwork.framed === 'boolean'
           ? artwork.framed === true
@@ -27,23 +19,17 @@ export const mapCardsGrid = (data: any[]) => {
             : 'Unframed'
           : undefined
 
+      const {media} = dzMediaMapper({data: artwork, ImgElement: Image})
+      const dimensionText = safeText({key: 'dimensions', text: dimensions})
+
       return {
         id: _id,
-        media: {
-          url: '/',
-          type: MEDIA_TYPES.IMAGE,
-          ImgElement: Image,
-          imgProps: {
-            src: imgSrc,
-            alt,
-            fill: true,
-          },
-        },
+        media,
         artistName: fullName,
         artworkTitle: title,
         artworkYear: year,
         medium: medium,
-        dimensions: dimensions,
+        ...(dimensionText ?? {}),
         edition: edition,
         price: price,
         framed,

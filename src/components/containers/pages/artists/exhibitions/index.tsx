@@ -1,4 +1,5 @@
-import {DzColumn, DzComplexGrid, DzInterstitial, TITLE_SIZES} from '@zwirner/design-system'
+import {DzColumn, DzInterstitial, TITLE_SIZES} from '@zwirner/design-system'
+import dynamic from 'next/dynamic'
 import {Fragment} from 'react'
 
 import {EXHIBITIONS} from '@/common/constants/commonCopies'
@@ -8,6 +9,12 @@ import {ContainerTitle} from '@/components/containers/title/ContainerTitle'
 
 import {interstitialMap, mapCardsGrid} from './mapper'
 import styles from './styles.module.css'
+
+const DzComplexGrid = dynamic(
+  () => import('@zwirner/design-system').then((mod) => mod.DzComplexGrid),
+  {ssr: false}
+)
+
 interface PageContainerProps {
   data: any
 }

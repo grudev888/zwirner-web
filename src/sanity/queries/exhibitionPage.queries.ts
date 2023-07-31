@@ -6,7 +6,7 @@ import {pageSEOFields} from '@/sanity/queries/seo.queries'
 const exhibitionDateFields = groq`
   _id,
   title,
-  "date":exhibition->.endDate
+  "date": endDate
 `
 
 export const getEndDateExhibitionsDate = groq`
@@ -22,7 +22,7 @@ export const exhibitionPageSlugs = groq`
 export const exhibitionPageBySlug = groq`
 *[_type == "exhibitionPage" && slug.current == $slug][0] {
   ...,
-  "exhibition": exhibition->,
+  "exhibition": ,
   seo {
     ${pageSEOFields}
   },

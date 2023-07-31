@@ -24,10 +24,19 @@ export const artistPageBySlug = groq`
   title,
   "artist": artist-> { ..., "cvUrl": cv.asset->url },
   survey { ..., items[]-> { ..., artists[]->, } },
-  latestExhibitions { ..., items[]-> { ..., exhibition->, location->{ _id, name, timezone }, } },
+  latestExhibitions { ..., items[]-> { ..., location->{ _id, name, timezone }, } },
   guide { ..., items[]->, },
   selectedPress { ..., items[]->, },
   books { ..., items[]->, },
+  featured->{ 
+    ...,
+    _type == "exhibitionPage"=> {
+      ...,
+      location->{
+        name
+      },
+    }
+  },
   seo {
     ${pageSEOFields}
   },
