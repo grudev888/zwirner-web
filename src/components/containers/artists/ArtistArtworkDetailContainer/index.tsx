@@ -8,19 +8,19 @@ import {
   DzText,
   DzTitle,
   LINK_VARIANTS,
+  TEXT_SIZES,
   TITLE_SIZES,
   TITLE_TYPES,
-  TEXT_SIZES,
 } from '@zwirner/design-system'
 import cn from 'classnames'
 import {FC, useRef, useState} from 'react'
 
+import DzPortableText from '@/common/components/portableText'
 import {FullWidthFlexCol} from '@/components/containers/layout/FullWidthFlexCol'
 
 import styles from './artistArtworkDetailContainer.module.css'
-import {mapArtistName, mapArtworkDimensions, mapArtworkMedium, mapArtworkTitle} from './mapper'
+import {mapArtworkData} from './mapper'
 import {cardsData} from './mocks'
-import DzPortableText from '@/common/components/portableText'
 
 interface ArtistArtworkDetailContainerProps {
   data: any
@@ -57,11 +57,8 @@ export const ArtistArtworkDetailContainer: FC<ArtistArtworkDetailContainerProps>
       onClick: () => onClickImage(cardsData[0]),
     },
   }
-  const artistName = mapArtistName(data)
-  const artworkTitle = mapArtworkTitle(data)
-  const artworkMedium = mapArtworkMedium(data)
-  const dimensions = mapArtworkDimensions(data)
-  const description = 'TODO'
+  const {artistName, title, edition, medium, dimensions, description, year} = mapArtworkData(data)
+  const artworkTitleAndYear = `${title}${year ? `, ${year}` : ''}`
 
   return (
     <DzColumn span={12}>
@@ -83,18 +80,22 @@ export const ArtistArtworkDetailContainer: FC<ArtistArtworkDetailContainerProps>
             <DzTitle
               titleType={TITLE_TYPES.H1}
               title={artistName}
-              subtitle={artworkTitle}
+              subtitle={artworkTitleAndYear}
               titleSize={TITLE_SIZES.MD}
               subtitleSize={TITLE_SIZES.MD}
               classNameSubtitle={styles.subtitle}
             />
-            <DzTitle titleType={TITLE_TYPES.H1} title={'TODO YEAR'} titleSize={TITLE_SIZES.MD} />
             <DzText
-              text={artworkMedium}
+              text={medium}
               textSize={TEXT_SIZES.SMALL}
               className={styles.artworkDetailText}
             />
             {dimensions && <DzPortableText portableProps={{value: dimensions}} />}
+            <DzText
+              text={edition}
+              textSize={TEXT_SIZES.SMALL}
+              className={styles.artworkDetailText}
+            />
             {description && (
               <DzLink
                 href="#"
@@ -123,7 +124,11 @@ export const ArtistArtworkDetailContainer: FC<ArtistArtworkDetailContainerProps>
                 onClickImage={onClickImage}
                 imageStyles={gridImageStyles.cursorZoom}
               />
-              {description && <div ref={descriptionRef}>{description}</div>}
+              {description && (
+                <div ref={descriptionRef}>
+                  <DzPortableText portableProps={{value: description}} />
+                </div>
+              )}
             </div>
           ) : null}
         </div>

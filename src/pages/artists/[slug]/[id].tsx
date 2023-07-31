@@ -1,8 +1,8 @@
 import {GetStaticProps} from 'next'
 
 import {SEOComponent} from '@/common/components/seo/seo'
-import {getArtistArtworkBySlug} from '@/sanity/services/artist.service'
 import {ArtistArtworkDetailContainer} from '@/components/containers/artists/ArtistArtworkDetailContainer'
+import {getArtistArtworkBySlug} from '@/sanity/services/artist.service'
 
 interface PageProps {
   data: any
@@ -15,8 +15,6 @@ interface Query {
 }
 
 const ArtistArtworkDetailPage = ({data, preview /*, querySlug*/}: PageProps) => {
-  console.info('data: ', data)
-
   // TODO
   const seo = {}
   // TODO

@@ -1,15 +1,13 @@
-export const mapArtistName = (data: Record<string, any>) => {
-  return data?.artists?.[0].fullName
-}
+type RecordData = Record<string, any>
 
-export const mapArtworkTitle = (data: Record<string, any>) => {
-  return data?.title
-}
-
-export const mapArtworkMedium = (data: Record<string, any>) => {
-  return data?.medium
-}
-
-export const mapArtworkDimensions = (data: Record<string, any>) => {
-  return data?.dimensions
+export const mapArtworkData = (data: RecordData) => {
+  return {
+    artistName: data?.artists?.[0].fullName,
+    edition: data?.edition,
+    title: data?.title,
+    medium: data?.medium,
+    dimensions: data?.dimensions,
+    year: data?.dateSelection?.year,
+    description: data?.description,
+  }
 }
