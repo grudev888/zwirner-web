@@ -11,5 +11,11 @@ export const mapArtworkData = (data: RecordData) => {
     description: data?.description,
     price: data?.price,
     currency: data?.currency,
+    primaryCta: data?.artworkCTA?.CTAText && {
+      text: data?.artworkCTA.CTAText,
+    },
+    secondaryCta: data?.artworkCTA?.SecondaryCTAText && {
+      text: data?.artworkCTA.SecondaryCTAText,
+    },
   }
 }

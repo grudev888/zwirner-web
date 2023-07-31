@@ -48,9 +48,8 @@
   md:py-[1.25rem];
 }
 
-.ctaButton {
-  @apply m-auto
-  md:block;
+.btnCTA {
+  @apply w-full;
 }
 
 .subtitle {

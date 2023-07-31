@@ -11,6 +11,7 @@ import {
   TEXT_SIZES,
   TITLE_SIZES,
   TITLE_TYPES,
+  BUTTON_SIZES,
 } from '@zwirner/design-system'
 import cn from 'classnames'
 import {FC, useRef, useState} from 'react'
@@ -57,8 +58,19 @@ export const ArtistArtworkDetailContainer: FC<ArtistArtworkDetailContainerProps>
       onClick: () => onClickImage(cardsData[0]),
     },
   }
-  const {artistName, title, edition, medium, dimensions, price, currency, description, year} =
-    mapArtworkData(data)
+  const {
+    artistName,
+    title,
+    edition,
+    medium,
+    dimensions,
+    price,
+    currency,
+    primaryCta,
+    secondaryCta,
+    description,
+    year,
+  } = mapArtworkData(data)
   const artworkTitleAndYear = `${title}${year ? `, ${year}` : ''}`
   const priceAndCurrency = `${currency ? `${currency} ` : ''}${price ? price : ''}`
 
@@ -113,8 +125,16 @@ export const ArtistArtworkDetailContainer: FC<ArtistArtworkDetailContainerProps>
               <div className={styles.ctaContainerTop} />
               <div className={styles.ctaBody}>
                 <DzText text={priceAndCurrency} />
-                <DzButton className={styles.ctaButton}>Primary CTA</DzButton>
-                <DzButton className={styles.ctaButton}>Tertiary CTA</DzButton>
+                {primaryCta ? (
+                  <DzButton className={cn(styles.btnCTA)} size={BUTTON_SIZES.LARGE}>
+                    {primaryCta.text}
+                  </DzButton>
+                ) : null}
+                {secondaryCta ? (
+                  <DzButton className={cn(styles.btnCTA)} size={BUTTON_SIZES.LARGE}>
+                    {secondaryCta.text}
+                  </DzButton>
+                ) : null}
               </div>
             </div>
           </div>
