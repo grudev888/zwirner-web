@@ -57,8 +57,10 @@ export const ArtistArtworkDetailContainer: FC<ArtistArtworkDetailContainerProps>
       onClick: () => onClickImage(cardsData[0]),
     },
   }
-  const {artistName, title, edition, medium, dimensions, description, year} = mapArtworkData(data)
+  const {artistName, title, edition, medium, dimensions, price, currency, description, year} =
+    mapArtworkData(data)
   const artworkTitleAndYear = `${title}${year ? `, ${year}` : ''}`
+  const priceAndCurrency = `${currency ? `${currency} ` : ''}${price ? price : ''}`
 
   return (
     <DzColumn span={12}>
@@ -110,7 +112,7 @@ export const ArtistArtworkDetailContainer: FC<ArtistArtworkDetailContainerProps>
             <div className={styles.ctaContainer}>
               <div className={styles.ctaContainerTop} />
               <div className={styles.ctaBody}>
-                <div>This is CTA Text</div>
+                <DzText text={priceAndCurrency} />
                 <DzButton className={styles.ctaButton}>Primary CTA</DzButton>
                 <DzButton className={styles.ctaButton}>Tertiary CTA</DzButton>
               </div>

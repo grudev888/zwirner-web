@@ -9,5 +9,7 @@ export const mapArtworkData = (data: RecordData) => {
     dimensions: data?.dimensions,
     year: data?.dateSelection?.year,
     description: data?.description,
+    price: data?.price,
+    currency: data?.currency,
   }
 }
