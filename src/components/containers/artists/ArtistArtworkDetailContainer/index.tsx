@@ -101,13 +101,25 @@ export const ArtistArtworkDetailContainer: FC<ArtistArtworkDetailContainerProps>
           />
           <DzText text={medium} textSize={TEXT_SIZES.SMALL} className={styles.artworkDetailText} />
           {dimensions && (
-            <div className={styles.dimensionsContainer}>
+            <div className={styles.textSectionContainer}>
               <DzPortableText portableProps={{value: dimensions}} />
             </div>
           )}
-          {editionInformation && <DzPortableText portableProps={{value: editionInformation}} />}
-          {productInformation && <DzPortableText portableProps={{value: productInformation}} />}
-          {additionalCaption && <DzPortableText portableProps={{value: additionalCaption}} />}
+          {editionInformation && (
+            <div className={styles.textSectionContainer}>
+              <DzPortableText portableProps={{value: editionInformation}} />
+            </div>
+          )}
+          {productInformation && (
+            <div className={styles.textSectionContainer}>
+              <DzPortableText portableProps={{value: productInformation}} />
+            </div>
+          )}
+          {additionalCaption && (
+            <div className={styles.textSectionContainer}>
+              <DzPortableText portableProps={{value: additionalCaption}} />
+            </div>
+          )}
           {description && (
             <DzLink
               href="#"
