@@ -12,19 +12,17 @@ export const artworkMapper = (data: any) => {
 }
 
 export const photosGrid = (data: any) => {
-  const {photos} = data ?? {}
+  const {photos = []} = data ?? {}
   return photos.map((photo: any) => {
     const {_key} = photo ?? {}
     const {media, extras} = dzMediaMapper({data, ImgElement: Image})
     const {caption} = extras ?? {}
     return {
       type: CARD_TYPES.MEDIA,
-      data: {
-        id: _key,
-        size: CardSizes['12col'],
-        media,
-        description: caption ?? '',
-      },
+      id: _key,
+      size: CardSizes['12col'],
+      media,
+      description: caption ?? '',
     }
   })
 }
