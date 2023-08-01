@@ -68,3 +68,8 @@
 .dimensionsContainer {
   @apply mb-[0.675rem];
 }
+
+.priceAndCurrency {
+  @apply mb-[1.25rem]
+  text-black-100;
+}

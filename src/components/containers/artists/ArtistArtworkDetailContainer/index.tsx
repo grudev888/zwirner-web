@@ -68,7 +68,7 @@ export const ArtistArtworkDetailContainer: FC<ArtistArtworkDetailContainerProps>
     year,
   } = mapArtworkData(data)
   const artworkTitleAndYear = `${title}${year ? `, ${year}` : ''}`
-  const priceAndCurrency = `${currency ? `${currency} ` : ''}${price ? price : ''}`
+  const priceAndCurrency = price && currency ? `${currency} ${price}` : null
 
   return (
     <>
@@ -103,22 +103,26 @@ export const ArtistArtworkDetailContainer: FC<ArtistArtworkDetailContainerProps>
             </DzLink>
           )}
         </div>
-        <div className={styles.ctaContainer}>
-          <div className={styles.ctaContainerTop} />
-          <div className={styles.ctaBody}>
-            <DzText text={priceAndCurrency} />
-            {primaryCta ? (
-              <DzButton className={cn(styles.btnCTA)} size={BUTTON_SIZES.LARGE}>
-                {primaryCta.text}
-              </DzButton>
-            ) : null}
-            {secondaryCta ? (
-              <DzButton className={cn(styles.btnCTA)} size={BUTTON_SIZES.LARGE}>
-                {secondaryCta.text}
-              </DzButton>
-            ) : null}
+        {primaryCta && (
+          <div className={styles.ctaContainer}>
+            <div className={styles.ctaContainerTop} />
+            <div className={styles.ctaBody}>
+              {priceAndCurrency && (
+                <DzText text={priceAndCurrency} className={styles.priceAndCurrency} />
+              )}
+              {primaryCta ? (
+                <DzButton className={cn(styles.btnCTA)} size={BUTTON_SIZES.LARGE}>
+                  {primaryCta.text}
+                </DzButton>
+              ) : null}
+              {secondaryCta ? (
+                <DzButton className={cn(styles.btnCTA)} size={BUTTON_SIZES.LARGE}>
+                  {secondaryCta.text}
+                </DzButton>
+              ) : null}
+            </div>
           </div>
-        </div>
+        )}
       </DzColumn>
       <DzColumn span={8} className={cn(styles.rightPane)}>
         <DzComplexGrid
