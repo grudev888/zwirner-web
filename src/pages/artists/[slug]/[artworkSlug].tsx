@@ -31,9 +31,8 @@ const ArtistArtworkDetailPage = ({data, preview /*, querySlug*/}: PageProps) => 
 
 export const getStaticProps: GetStaticProps<PageProps, Query> = async (ctx) => {
   const {params = {}, preview = false} = ctx
-  console.info('params: ', params)
   const querySlug = {
-    slug: `/artworks/pumpkin-2015-2b271`,
+    slug: `/artists/${params.slug}/${params.artworkSlug}`,
   }
 
   if (preview) {
@@ -46,7 +45,7 @@ export const getStaticProps: GetStaticProps<PageProps, Query> = async (ctx) => {
     }
   }
 
-  const data = await getArtistArtworkBySlug({slug: '/artwork/pumpkin-2015-2b271'})
+  const data = await getArtistArtworkBySlug(querySlug)
 
   return {
     props: {
