@@ -30,7 +30,8 @@ const ArtistArtworkDetailPage = ({data, preview /*, querySlug*/}: PageProps) => 
 }
 
 export const getStaticProps: GetStaticProps<PageProps, Query> = async (ctx) => {
-  const {/*params = {},*/ preview = false} = ctx
+  const {params = {}, preview = false} = ctx
+  console.info('params: ', params)
   const querySlug = {
     slug: `/artworks/pumpkin-2015-2b271`,
   }
