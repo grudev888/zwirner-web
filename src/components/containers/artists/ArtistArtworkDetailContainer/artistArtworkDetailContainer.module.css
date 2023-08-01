@@ -48,6 +48,9 @@
   @apply w-full;
 }
 
+.header {
+  @apply mb-[1.25rem];
+}
 .subtitle {
   @apply italic
   !text-black-100;
@@ -60,4 +63,8 @@
 .artworkDetailText {
   @apply mb-[0.675rem]
   text-black-60;
+}
+
+.dimensionsContainer {
+  @apply mb-[0.675rem];
 }

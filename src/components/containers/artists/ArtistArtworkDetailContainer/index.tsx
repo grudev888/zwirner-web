@@ -1,5 +1,6 @@
 import {DzColumn, useBreakpoints} from '@zwirner/design-system'
 import {
+  BUTTON_SIZES,
   DzButton,
   DzComplexGrid,
   DzImageZoomModal,
@@ -11,7 +12,6 @@ import {
   TEXT_SIZES,
   TITLE_SIZES,
   TITLE_TYPES,
-  BUTTON_SIZES,
 } from '@zwirner/design-system'
 import cn from 'classnames'
 import {FC, useRef, useState} from 'react'
@@ -82,9 +82,14 @@ export const ArtistArtworkDetailContainer: FC<ArtistArtworkDetailContainerProps>
             titleSize={TITLE_SIZES.MD}
             subtitleSize={TITLE_SIZES.MD}
             classNameSubtitle={styles.subtitle}
+            className={styles.header}
           />
           <DzText text={medium} textSize={TEXT_SIZES.SMALL} className={styles.artworkDetailText} />
-          {dimensions && <DzPortableText portableProps={{value: dimensions}} />}
+          {dimensions && (
+            <div className={styles.dimensionsContainer}>
+              <DzPortableText portableProps={{value: dimensions}} />
+            </div>
+          )}
           <DzText text={edition} textSize={TEXT_SIZES.SMALL} className={styles.artworkDetailText} />
           {description && (
             <DzLink
