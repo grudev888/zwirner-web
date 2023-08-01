@@ -27,9 +27,6 @@ interface ArtistArtworkDetailContainerProps {
   data: any
 }
 
-// TODO externalize this to layouts/header.tsx
-const HEADER_HEIGHT = '60px'
-
 // TODO relocate
 const gridImageStyles: any = {
   cursorZoom: 'cursor-zoom-in',
@@ -76,51 +73,42 @@ export const ArtistArtworkDetailContainer: FC<ArtistArtworkDetailContainerProps>
 
   return (
     <DzColumn span={12}>
-      <FullWidthFlexCol>
+      <FullWidthFlexCol className={styles.colContainer}>
         <div className={styles.container}>
-          <div
-            className={cn(styles.leftPane)}
-            style={
-              isSmall
-                ? {}
-                : {
-                    // TODO locate styles in styles.leftPane, currently not working there
-                    height: `calc(100vh - ${HEADER_HEIGHT})`,
-                    top: HEADER_HEIGHT,
-                  }
-            }
-          >
-            {isSmall && cardsData?.length ? <DzMedia {...firstItemMediaProps} /> : undefined}
-            <DzTitle
-              titleType={TITLE_TYPES.H1}
-              title={artistName}
-              subtitle={artworkTitleAndYear}
-              titleSize={TITLE_SIZES.MD}
-              subtitleSize={TITLE_SIZES.MD}
-              classNameSubtitle={styles.subtitle}
-            />
-            <DzText
-              text={medium}
-              textSize={TEXT_SIZES.SMALL}
-              className={styles.artworkDetailText}
-            />
-            {dimensions && <DzPortableText portableProps={{value: dimensions}} />}
-            <DzText
-              text={edition}
-              textSize={TEXT_SIZES.SMALL}
-              className={styles.artworkDetailText}
-            />
-            {description && (
-              <DzLink
-                href="#"
-                id="description"
-                onClick={onClickLearnMore}
-                variant={LINK_VARIANTS.TEXT}
-                className={styles.learnMore}
-              >
-                Learn More
-              </DzLink>
-            )}
+          <div className={cn(styles.leftPane)}>
+            <div className={styles.leftPaneContent}>
+              {isSmall && cardsData?.length ? <DzMedia {...firstItemMediaProps} /> : undefined}
+              <DzTitle
+                titleType={TITLE_TYPES.H1}
+                title={artistName}
+                subtitle={artworkTitleAndYear}
+                titleSize={TITLE_SIZES.MD}
+                subtitleSize={TITLE_SIZES.MD}
+                classNameSubtitle={styles.subtitle}
+              />
+              <DzText
+                text={medium}
+                textSize={TEXT_SIZES.SMALL}
+                className={styles.artworkDetailText}
+              />
+              {dimensions && <DzPortableText portableProps={{value: dimensions}} />}
+              <DzText
+                text={edition}
+                textSize={TEXT_SIZES.SMALL}
+                className={styles.artworkDetailText}
+              />
+              {description && (
+                <DzLink
+                  href="#"
+                  id="description"
+                  onClick={onClickLearnMore}
+                  variant={LINK_VARIANTS.TEXT}
+                  className={styles.learnMore}
+                >
+                  Learn More
+                </DzLink>
+              )}
+            </div>
             <div className={styles.ctaContainer}>
               <div className={styles.ctaContainerTop} />
               <div className={styles.ctaBody}>
