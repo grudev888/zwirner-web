@@ -15,7 +15,7 @@ export const photosGrid = (data: any) => {
   const {photos = []} = data ?? {}
   return photos.map((photo: any) => {
     const {_key} = photo ?? {}
-    const {media, extras} = dzMediaMapper({data, ImgElement: Image})
+    const {media, extras} = dzMediaMapper({data: photo, ImgElement: Image})
     const {caption} = extras ?? {}
     return {
       type: CARD_TYPES.MEDIA,
