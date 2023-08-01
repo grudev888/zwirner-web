@@ -17,11 +17,10 @@ import cn from 'classnames'
 import {FC, useEffect, useRef, useState} from 'react'
 
 import DzPortableText from '@/common/components/portableText'
+import {photosGrid} from '@/components/containers/artworks/mapper'
 
-//import {photosGrid} from '@/components/containers/artworks/mapper'
 import styles from './artistArtworkDetailContainer.module.css'
 import {mapArtworkData} from './mapper'
-import {cardsData} from './mocks'
 
 interface ArtistArtworkDetailContainerProps {
   data: any
@@ -36,7 +35,7 @@ export const ArtistArtworkDetailContainer: FC<ArtistArtworkDetailContainerProps>
   const [isClient, setIsClient] = useState(false)
   const {isSmall} = useBreakpoints()
   const [currentZoomedUrl, setCurrentZoomedUrl] = useState<string | undefined>(undefined)
-  //const photoGridItems = photosGrid(data) || []
+  const photoGridItems = photosGrid(data) || []
   const descriptionRef = useRef<HTMLDivElement>(null)
   const onClickImage = (data: any) => {
     const src = data?.media?.imgProps?.src
@@ -49,13 +48,16 @@ export const ArtistArtworkDetailContainer: FC<ArtistArtworkDetailContainerProps>
       setTimeout(() => window.scrollTo(0, descriptionRef?.current?.offsetTop || 0), 10)
     }
   }
-  const firstItemMediaProps = {
-    ...cardsData[0].media,
-    imgProps: {
-      ...cardsData[0].media.imgProps,
-      onClick: () => onClickImage(cardsData[0]),
-    },
-  }
+  const firstItemMediaProps = photoGridItems?.[0]
+    ? {
+        ...photoGridItems[0].media,
+        imgProps: {
+          ...photoGridItems[0].media.imgProps,
+          onClick: () => onClickImage(photoGridItems[0]),
+        },
+      }
+    : null
+
   const {
     artistName,
     title,
@@ -83,7 +85,7 @@ export const ArtistArtworkDetailContainer: FC<ArtistArtworkDetailContainerProps>
     <>
       <DzColumn span={4} className={cn(styles.leftPane)}>
         <div className={styles.leftPaneContent}>
-          {isClient && isSmall && cardsData?.length ? (
+          {isClient && isSmall && firstItemMediaProps ? (
             <DzMedia
               {...firstItemMediaProps}
               className={styles.singleMediaItem}
@@ -159,7 +161,7 @@ export const ArtistArtworkDetailContainer: FC<ArtistArtworkDetailContainerProps>
       </DzColumn>
       <DzColumn span={8} className={cn(styles.rightPane)}>
         <DzComplexGrid
-          cards={cardsData}
+          cards={photoGridItems}
           maxItemsPerRow={1}
           onClickImage={onClickImage}
           imageStyles={gridImageStyles.cursorZoom}

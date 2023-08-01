@@ -45,7 +45,7 @@ export const getStaticProps: GetStaticProps<PageProps, Query> = async (ctx) => {
     }
   }
 
-  const data = await getArtistArtworkBySlug({slug: '/artworks/pumpkin-2015-2b271'})
+  const data = await getArtistArtworkBySlug({slug: '/artwork/pumpkin-2015-2b271'})
 
   return {
     props: {
