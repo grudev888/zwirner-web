@@ -3,12 +3,12 @@
   relative
   !flex
   h-fit
-  h-[calc(100vh-60px)]
   flex-col
   overflow-y-scroll
   pt-10
   md:sticky
-  md:top-[60px];
+  md:top-[60px]
+  md:h-[calc(100vh-60px)];
 }
 
 .leftPaneContent {
@@ -48,6 +48,11 @@
   @apply w-full;
 }
 
+.btnCTASecondary {
+  @apply mt-[1.25rem]
+  border-none;
+}
+
 .header {
   @apply mb-[1.25rem];
 }
@@ -72,4 +77,8 @@
 .priceAndCurrency {
   @apply mb-[1.25rem]
   text-black-100;
+}
+
+.singleMediaItem {
+  @apply mb-[1.25rem];
 }

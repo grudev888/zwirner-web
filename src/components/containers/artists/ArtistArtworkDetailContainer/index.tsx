@@ -18,6 +18,7 @@ import {FC, useRef, useState} from 'react'
 
 import DzPortableText from '@/common/components/portableText'
 
+//import {photosGrid} from '@/components/containers/artworks/mapper'
 import styles from './artistArtworkDetailContainer.module.css'
 import {mapArtworkData} from './mapper'
 import {cardsData} from './mocks'
@@ -34,7 +35,7 @@ const gridImageStyles: any = {
 export const ArtistArtworkDetailContainer: FC<ArtistArtworkDetailContainerProps> = ({data}) => {
   const {isSmall} = useBreakpoints()
   const [currentZoomedUrl, setCurrentZoomedUrl] = useState<string | undefined>(undefined)
-  const gridItems = isSmall ? cardsData.slice(1) : cardsData
+  //const photoGridItems = photosGrid(data) || []
   const descriptionRef = useRef<HTMLDivElement>(null)
   const onClickImage = (data: any) => {
     const src = data?.media?.imgProps?.src
@@ -57,7 +58,6 @@ export const ArtistArtworkDetailContainer: FC<ArtistArtworkDetailContainerProps>
   const {
     artistName,
     title,
-    edition,
     medium,
     dimensions,
     price,
@@ -65,6 +65,10 @@ export const ArtistArtworkDetailContainer: FC<ArtistArtworkDetailContainerProps>
     primaryCta,
     secondaryCta,
     description,
+    productInformation,
+    editionInformation,
+    additionalCaption,
+    salesInformation,
     year,
   } = mapArtworkData(data)
   const artworkTitleAndYear = `${title}${year ? `, ${year}` : ''}`
@@ -74,7 +78,9 @@ export const ArtistArtworkDetailContainer: FC<ArtistArtworkDetailContainerProps>
     <>
       <DzColumn span={4} className={cn(styles.leftPane)}>
         <div className={styles.leftPaneContent}>
-          {isSmall && cardsData?.length ? <DzMedia {...firstItemMediaProps} /> : undefined}
+          {isSmall && cardsData?.length ? (
+            <DzMedia {...firstItemMediaProps} className={styles.singleMediaItem} />
+          ) : undefined}
           <DzTitle
             titleType={TITLE_TYPES.H1}
             title={artistName}
@@ -90,7 +96,27 @@ export const ArtistArtworkDetailContainer: FC<ArtistArtworkDetailContainerProps>
               <DzPortableText portableProps={{value: dimensions}} />
             </div>
           )}
-          <DzText text={edition} textSize={TEXT_SIZES.SMALL} className={styles.artworkDetailText} />
+          {editionInformation && (
+            <DzText
+              text={editionInformation}
+              textSize={TEXT_SIZES.SMALL}
+              className={styles.artworkDetailText}
+            />
+          )}
+          {productInformation && (
+            <DzText
+              text={productInformation}
+              textSize={TEXT_SIZES.SMALL}
+              className={styles.artworkDetailText}
+            />
+          )}
+          {additionalCaption && (
+            <DzText
+              text={additionalCaption}
+              textSize={TEXT_SIZES.SMALL}
+              className={styles.artworkDetailText}
+            />
+          )}
           {description && (
             <DzLink
               href="#"
@@ -107,6 +133,13 @@ export const ArtistArtworkDetailContainer: FC<ArtistArtworkDetailContainerProps>
           <div className={styles.ctaContainer}>
             <div className={styles.ctaContainerTop} />
             <div className={styles.ctaBody}>
+              {salesInformation && (
+                <DzText
+                  text={salesInformation}
+                  textSize={TEXT_SIZES.SMALL}
+                  className={styles.artworkDetailText}
+                />
+              )}
               {priceAndCurrency && (
                 <DzText text={priceAndCurrency} className={styles.priceAndCurrency} />
               )}
@@ -116,7 +149,10 @@ export const ArtistArtworkDetailContainer: FC<ArtistArtworkDetailContainerProps>
                 </DzButton>
               ) : null}
               {secondaryCta ? (
-                <DzButton className={cn(styles.btnCTA)} size={BUTTON_SIZES.LARGE}>
+                <DzButton
+                  className={cn(styles.btnCTA, styles.btnCTASecondary)}
+                  size={BUTTON_SIZES.LARGE}
+                >
                   {secondaryCta.text}
                 </DzButton>
               ) : null}
@@ -126,10 +162,11 @@ export const ArtistArtworkDetailContainer: FC<ArtistArtworkDetailContainerProps>
       </DzColumn>
       <DzColumn span={8} className={cn(styles.rightPane)}>
         <DzComplexGrid
-          cards={gridItems || []}
+          cards={cardsData}
           maxItemsPerRow={1}
           onClickImage={onClickImage}
           imageStyles={gridImageStyles.cursorZoom}
+          gridColumnsStyles="!gap-y-[1rem]"
         />
         {description && (
           <div ref={descriptionRef}>
