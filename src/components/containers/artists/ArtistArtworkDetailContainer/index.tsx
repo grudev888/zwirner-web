@@ -96,27 +96,9 @@ export const ArtistArtworkDetailContainer: FC<ArtistArtworkDetailContainerProps>
               <DzPortableText portableProps={{value: dimensions}} />
             </div>
           )}
-          {editionInformation && (
-            <DzText
-              text={editionInformation}
-              textSize={TEXT_SIZES.SMALL}
-              className={styles.artworkDetailText}
-            />
-          )}
-          {productInformation && (
-            <DzText
-              text={productInformation}
-              textSize={TEXT_SIZES.SMALL}
-              className={styles.artworkDetailText}
-            />
-          )}
-          {additionalCaption && (
-            <DzText
-              text={additionalCaption}
-              textSize={TEXT_SIZES.SMALL}
-              className={styles.artworkDetailText}
-            />
-          )}
+          {editionInformation && <DzPortableText portableProps={{value: editionInformation}} />}
+          {productInformation && <DzPortableText portableProps={{value: productInformation}} />}
+          {additionalCaption && <DzPortableText portableProps={{value: additionalCaption}} />}
           {description && (
             <DzLink
               href="#"
@@ -133,13 +115,7 @@ export const ArtistArtworkDetailContainer: FC<ArtistArtworkDetailContainerProps>
           <div className={styles.ctaContainer}>
             <div className={styles.ctaContainerTop} />
             <div className={styles.ctaBody}>
-              {salesInformation && (
-                <DzText
-                  text={salesInformation}
-                  textSize={TEXT_SIZES.SMALL}
-                  className={styles.artworkDetailText}
-                />
-              )}
+              {salesInformation && <DzPortableText portableProps={{value: salesInformation}} />}
               {priceAndCurrency && (
                 <DzText text={priceAndCurrency} className={styles.priceAndCurrency} />
               )}
