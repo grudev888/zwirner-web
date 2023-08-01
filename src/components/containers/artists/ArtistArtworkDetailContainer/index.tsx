@@ -14,7 +14,7 @@ import {
   TITLE_TYPES,
 } from '@zwirner/design-system'
 import cn from 'classnames'
-import {FC, useRef, useState} from 'react'
+import {FC, useEffect, useRef, useState} from 'react'
 
 import DzPortableText from '@/common/components/portableText'
 
@@ -33,6 +33,7 @@ const gridImageStyles: any = {
 }
 
 export const ArtistArtworkDetailContainer: FC<ArtistArtworkDetailContainerProps> = ({data}) => {
+  const [isClient, setIsClient] = useState(false)
   const {isSmall} = useBreakpoints()
   const [currentZoomedUrl, setCurrentZoomedUrl] = useState<string | undefined>(undefined)
   //const photoGridItems = photosGrid(data) || []
@@ -74,13 +75,21 @@ export const ArtistArtworkDetailContainer: FC<ArtistArtworkDetailContainerProps>
   const artworkTitleAndYear = `${title}${year ? `, ${year}` : ''}`
   const priceAndCurrency = price && currency ? `${currency} ${price}` : null
 
+  useEffect(() => {
+    setIsClient(true)
+  }, [])
+
   return (
     <>
       <DzColumn span={4} className={cn(styles.leftPane)}>
         <div className={styles.leftPaneContent}>
-          {isSmall && cardsData?.length ? (
-            <DzMedia {...firstItemMediaProps} className={styles.singleMediaItem} />
-          ) : undefined}
+          {isClient && isSmall && cardsData?.length ? (
+            <DzMedia
+              {...firstItemMediaProps}
+              className={styles.singleMediaItem}
+              suppressHydrationWarning
+            />
+          ) : null}
           <DzTitle
             titleType={TITLE_TYPES.H1}
             title={artistName}
