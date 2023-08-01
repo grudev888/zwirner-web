@@ -1766,9 +1766,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@zwirner/design-system@npm:0.0.73":
-  version: 0.0.73
-  resolution: "@zwirner/design-system@npm:0.0.73::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40zwirner%2Fdesign-system%2F0.0.73%2F4f05473171c8716f45b5bf9654b87ebb3e014cb0"
+"@zwirner/design-system@npm:0.0.74--canary.113.ec0566e.0":
+  version: 0.0.74--canary.113.ec0566e.0
+  resolution: "@zwirner/design-system@npm:0.0.74--canary.113.ec0566e.0::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40zwirner%2Fdesign-system%2F0.0.74--canary.113.ec0566e.0%2F14470e4779859803b2274fde66f7c7a8411cbaf1"
   dependencies:
     "@headlessui/react": ^1.7.10
     "@heroicons/react": ^2.0.15
@@ -1776,12 +1776,13 @@ __metadata:
     classnames: ^2.3.2
     plyr-react: ^5.1.2
     react-drag-drop-files: ^2.3.10
+    react-zoom-pan-pinch: ^3.1.0
     swiper: ^9.3.1
     uuid: ^9.0.0
   peerDependencies:
     react: ">=16"
     react-dom: ^17.0.1
-  checksum: 20cc36058a3c501d690f1899bdd019cd692b0087f5ef4ba73e05fe0d4b2baf634642b68f3657c6b538fe2e24eb9e8f74f0763d50d9eb9671b3d4040f52f7ae7a
+  checksum: 7cbabb7b832a92523f12ca1ce9e0c438963c252e7519f2af688658aca1a5846f005b482d83504620c6d989073346f15c501716953d8a8c518052ac13a7df6cc5
   languageName: node
   linkType: hard
 
@@ -8502,7 +8503,7 @@ __metadata:
     "@types/react-dom": ^18.2.4
     "@types/styled-components": ^5.1.26
     "@typescript-eslint/eslint-plugin": ^5.59.7
-    "@zwirner/design-system": 0.0.73
+    "@zwirner/design-system": 0.0.74--canary.113.ec0566e.0
     autoprefixer: ^10.4.13
     axios: ^1.3.5
     cross-env: ^7.0.3
@@ -8526,7 +8527,6 @@ __metadata:
     react-dom: ^18.2.0
     react-error-boundary: ^4.0.4
     react-hook-form: ^7.43.9
-    react-zoom-pan-pinch: ^3.1.0
     styled-components: ^5.3.10
     swr: ^2.1.1
     tailwind-scrollbar: ^2.1.0
