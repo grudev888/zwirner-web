@@ -1,6 +1,8 @@
 import {DzColumn, TITLE_SIZES} from '@zwirner/design-system'
-import {ContainerTitle} from '@/components/containers/title/ContainerTitle'
 import {FC} from 'react'
+
+import {ContainerTitle} from '@/components/wrappers/title/ContainerTitle'
+
 import {} from './mapper'
 
 interface ArtworkContainerProps {

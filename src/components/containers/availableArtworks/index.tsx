@@ -3,7 +3,7 @@ import dynamic from 'next/dynamic'
 import {FC} from 'react'
 
 import {FullWidthFlexCol} from '@/components/containers/layout/FullWidthFlexCol'
-import {ContainerTitle} from '@/components/containers/title/ContainerTitle'
+import {ContainerTitle} from '@/components/wrappers/title/ContainerTitle'
 
 import {mapCardsGrid} from './mapper'
 

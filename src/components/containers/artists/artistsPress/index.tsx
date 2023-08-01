@@ -5,7 +5,7 @@ import {FC} from 'react'
 import {SELECTED_PRESS} from '@/common/constants/commonCopies'
 import {FullWidthFlexCol} from '@/components/containers/layout/FullWidthFlexCol'
 import ArtistsPageLayout from '@/components/containers/layout/pages/artistsPageLayout'
-import {ContainerTitle} from '@/components/containers/title/ContainerTitle'
+import {ContainerTitle} from '@/components/wrappers/title/ContainerTitle'
 
 const DzComplexGrid = dynamic(
   () => import('@zwirner/design-system').then((mod) => mod.DzComplexGrid),

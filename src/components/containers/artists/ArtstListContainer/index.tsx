@@ -3,7 +3,7 @@ import {FC} from 'react'
 
 import {ARTISTS} from '@/common/constants/commonCopies'
 import {FullWidthFlexCol} from '@/components/containers/layout/FullWidthFlexCol'
-import {ContainerTitle} from '@/components/containers/title/ContainerTitle'
+import {ContainerTitle} from '@/components/wrappers/title/ContainerTitle'
 
 import {interstitialMap, mapListItems} from './mapper'
 
