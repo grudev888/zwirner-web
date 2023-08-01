@@ -1,7 +1,9 @@
 import {DzColumn, TITLE_SIZES} from '@zwirner/design-system'
-import {ContainerTitle} from '@/components/containers/title/ContainerTitle'
 import {FC} from 'react'
-import {} from './mapper'
+
+import {ContainerTitle} from '@/components/containers/title/ContainerTitle'
+
+import {photosGrid} from './mapper'
 
 interface ArtworkContainerProps {
   data: any
@@ -31,6 +33,9 @@ export const ArtworkContainer: FC<ArtworkContainerProps> = ({data}) => {
     // description,
     // artworkType,
   } = data ?? ''
+
+  const artworksPhotos = photosGrid(data)
+  // Use artworksPhotos to map a grid of DzCards like src/common/components/portableText/index.tsx LINE:58
 
   return (
     <DzColumn span={12}>

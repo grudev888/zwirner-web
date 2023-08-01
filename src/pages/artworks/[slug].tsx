@@ -4,8 +4,8 @@ import {SEOComponent} from '@/common/components/seo/seo'
 import {ARTWORK_URL} from '@/common/constants/commonCopies'
 import {ArtworkContainer} from '@/components/containers/artworks/artwork'
 import {PREVIEW_PAGE_TYPE, PreviewPage} from '@/components/containers/previews/pagePreview'
-import {getAllArtworkSlugs, getArtworkData} from '@/sanity/services/artwork.service'
 import {artworksData} from '@/sanity/queries/artwork.queries'
+import {getAllArtworkSlugs, getArtworkData} from '@/sanity/services/artwork.service'
 
 interface QuerySlug {
   slug: string
