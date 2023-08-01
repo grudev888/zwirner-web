@@ -17,7 +17,6 @@ import cn from 'classnames'
 import {FC, useRef, useState} from 'react'
 
 import DzPortableText from '@/common/components/portableText'
-import {FullWidthFlexCol} from '@/components/containers/layout/FullWidthFlexCol'
 
 import styles from './artistArtworkDetailContainer.module.css'
 import {mapArtworkData} from './mapper'
@@ -72,82 +71,68 @@ export const ArtistArtworkDetailContainer: FC<ArtistArtworkDetailContainerProps>
   const priceAndCurrency = `${currency ? `${currency} ` : ''}${price ? price : ''}`
 
   return (
-    <DzColumn span={12}>
-      <FullWidthFlexCol className={styles.colContainer}>
-        <div className={styles.container}>
-          <div className={cn(styles.leftPane)}>
-            <div className={styles.leftPaneContent}>
-              {isSmall && cardsData?.length ? <DzMedia {...firstItemMediaProps} /> : undefined}
-              <DzTitle
-                titleType={TITLE_TYPES.H1}
-                title={artistName}
-                subtitle={artworkTitleAndYear}
-                titleSize={TITLE_SIZES.MD}
-                subtitleSize={TITLE_SIZES.MD}
-                classNameSubtitle={styles.subtitle}
-              />
-              <DzText
-                text={medium}
-                textSize={TEXT_SIZES.SMALL}
-                className={styles.artworkDetailText}
-              />
-              {dimensions && <DzPortableText portableProps={{value: dimensions}} />}
-              <DzText
-                text={edition}
-                textSize={TEXT_SIZES.SMALL}
-                className={styles.artworkDetailText}
-              />
-              {description && (
-                <DzLink
-                  href="#"
-                  id="description"
-                  onClick={onClickLearnMore}
-                  variant={LINK_VARIANTS.TEXT}
-                  className={styles.learnMore}
-                >
-                  Learn More
-                </DzLink>
-              )}
-            </div>
-            <div className={styles.ctaContainer}>
-              <div className={styles.ctaContainerTop} />
-              <div className={styles.ctaBody}>
-                <DzText text={priceAndCurrency} />
-                {primaryCta ? (
-                  <DzButton className={cn(styles.btnCTA)} size={BUTTON_SIZES.LARGE}>
-                    {primaryCta.text}
-                  </DzButton>
-                ) : null}
-                {secondaryCta ? (
-                  <DzButton className={cn(styles.btnCTA)} size={BUTTON_SIZES.LARGE}>
-                    {secondaryCta.text}
-                  </DzButton>
-                ) : null}
-              </div>
-            </div>
-          </div>
-          {gridItems ? (
-            <div className={cn(styles.rightPane)}>
-              <DzComplexGrid
-                cards={gridItems}
-                maxItemsPerRow={1}
-                onClickImage={onClickImage}
-                imageStyles={gridImageStyles.cursorZoom}
-              />
-              {description && (
-                <div ref={descriptionRef}>
-                  <DzPortableText portableProps={{value: description}} />
-                </div>
-              )}
-            </div>
-          ) : null}
+    <>
+      <DzColumn span={4} className={cn(styles.leftPane)}>
+        <div className={styles.leftPaneContent}>
+          {isSmall && cardsData?.length ? <DzMedia {...firstItemMediaProps} /> : undefined}
+          <DzTitle
+            titleType={TITLE_TYPES.H1}
+            title={artistName}
+            subtitle={artworkTitleAndYear}
+            titleSize={TITLE_SIZES.MD}
+            subtitleSize={TITLE_SIZES.MD}
+            classNameSubtitle={styles.subtitle}
+          />
+          <DzText text={medium} textSize={TEXT_SIZES.SMALL} className={styles.artworkDetailText} />
+          {dimensions && <DzPortableText portableProps={{value: dimensions}} />}
+          <DzText text={edition} textSize={TEXT_SIZES.SMALL} className={styles.artworkDetailText} />
+          {description && (
+            <DzLink
+              href="#"
+              id="description"
+              onClick={onClickLearnMore}
+              variant={LINK_VARIANTS.TEXT}
+              className={styles.learnMore}
+            >
+              Learn More
+            </DzLink>
+          )}
         </div>
-        <DzImageZoomModal
-          imgUrl={currentZoomedUrl}
-          onClose={() => setCurrentZoomedUrl(undefined)}
-          isOpen={!!currentZoomedUrl}
+        <div className={styles.ctaContainer}>
+          <div className={styles.ctaContainerTop} />
+          <div className={styles.ctaBody}>
+            <DzText text={priceAndCurrency} />
+            {primaryCta ? (
+              <DzButton className={cn(styles.btnCTA)} size={BUTTON_SIZES.LARGE}>
+                {primaryCta.text}
+              </DzButton>
+            ) : null}
+            {secondaryCta ? (
+              <DzButton className={cn(styles.btnCTA)} size={BUTTON_SIZES.LARGE}>
+                {secondaryCta.text}
+              </DzButton>
+            ) : null}
+          </div>
+        </div>
+      </DzColumn>
+      <DzColumn span={8} className={cn(styles.rightPane)}>
+        <DzComplexGrid
+          cards={gridItems || []}
+          maxItemsPerRow={1}
+          onClickImage={onClickImage}
+          imageStyles={gridImageStyles.cursorZoom}
         />
-      </FullWidthFlexCol>
-    </DzColumn>
+        {description && (
+          <div ref={descriptionRef}>
+            <DzPortableText portableProps={{value: description}} />
+          </div>
+        )}
+      </DzColumn>
+      <DzImageZoomModal
+        imgUrl={currentZoomedUrl}
+        onClose={() => setCurrentZoomedUrl(undefined)}
+        isOpen={!!currentZoomedUrl}
+      />
+    </>
   )
 }
