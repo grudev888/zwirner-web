@@ -97,10 +97,13 @@ export const ArtistArtworkDetailContainer: FC<ArtistArtworkDetailContainerProps>
             titleType={TITLE_TYPES.H1}
             title={artistName}
             subtitle={
-              <>
-                <span className={styles.subtitle}>{title}, </span>
-                <span className={styles.subtitleYear}>{year}</span>
-              </>
+              title &&
+              year && (
+                <>
+                  <span className={styles.subtitle}>{title}, </span>
+                  <span className={styles.subtitleYear}>{year}</span>
+                </>
+              )
             }
             titleSize={TITLE_SIZES.MD}
             subtitleSize={TITLE_SIZES.MD}
