@@ -2,6 +2,8 @@ import {GetStaticProps} from 'next'
 
 import {SEOComponent} from '@/common/components/seo/seo'
 import {ArtistArtworkDetailContainer} from '@/components/containers/artists/ArtistArtworkDetailContainer'
+import {PREVIEW_PAGE_TYPE, PreviewPage} from '@/components/containers/previews/pagePreview'
+import {artistArtworkBySlug} from '@/sanity/queries/artist.queries'
 import {getArtistArtworkBySlug} from '@/sanity/services/artist.service'
 
 interface PageProps {
@@ -14,11 +16,18 @@ interface Query {
   [key: string]: string
 }
 
-const ArtistArtworkDetailPage = ({data, preview /*, querySlug*/}: PageProps) => {
-  // TODO
-  const seo = {}
-  // TODO
+const ArtistArtworkDetailPage = ({data, preview, querySlug}: PageProps) => {
+  const {seo} = data ?? {}
+
   if (preview) {
+    return (
+      <PreviewPage
+        query={artistArtworkBySlug}
+        params={querySlug}
+        seo={seo}
+        type={PREVIEW_PAGE_TYPE.ARTIST_ARTWORK_DETAIL}
+      />
+    )
   }
 
   return (

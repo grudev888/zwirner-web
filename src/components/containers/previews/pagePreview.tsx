@@ -35,6 +35,7 @@ export const PREVIEW_PAGE_TYPE = {
   ARTIST_DETAIL_SURVEY: 'artist-detail-survey',
   ARTIST_DETAIL_PRESS: 'artist-detail-press',
   ARTWORK_DETAIL: 'artwork-detail',
+  ARTIST_ARTWORK_DETAIL: 'artist-artwork-detail',
 }
 
 export const PREVIEW_PAGE_TYPE_NAMES = [
@@ -53,6 +54,7 @@ export const PREVIEW_PAGE_TYPE_NAMES = [
   PREVIEW_PAGE_TYPE.ARTIST_DETAIL_SURVEY,
   PREVIEW_PAGE_TYPE.ARTIST_DETAIL_PRESS,
   PREVIEW_PAGE_TYPE.ARTWORK_DETAIL,
+  PREVIEW_PAGE_TYPE.ARTIST_ARTWORK_DETAIL,
 ] as const
 
 export type PreviewPageType = (typeof PREVIEW_PAGE_TYPE_NAMES)[number]
