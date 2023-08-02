@@ -8,15 +8,11 @@ export const articlePagesSlugs = groq`
   "params": { "slug": [slug.current] }
 }`
 
-export const articleBySlug = groq`
-*[_type == "article" && slug.current == $slug][0]{
-  ...,
-  location-> {
-    name
-  },
+export const articlesReferences = groq`
   articles[]-> {
     ...,
     _type == "fairPage"=> {
+      ...,
       slug,
       title,
       _type,
@@ -26,6 +22,7 @@ export const articleBySlug = groq`
       },
     },
     _type == "exhibitionPage"=> {
+      ...,
       title,
       _type,
       "exhibition":  {
@@ -33,12 +30,8 @@ export const articleBySlug = groq`
         ${exhibitionComplexFields}
       },
     }
-  },
-  type == "pressRelease" => {
-    'pdfURL': pressReleasePDF.asset->url,
-    location->
   }
-}`
+`
 
 export const pressPagesSlugs = groq`
 *[_type == "article" && defined(slug.current)  && defined(body) && type == "pressRelease"][]{
@@ -77,7 +70,16 @@ export const pressBySlug = groq`
         ${exhibitionComplexFields}
       },
     }
+  }
+`
+
+export const articleBySlug = groq`
+*[_type == "article" && slug.current == $slug][0]{
+  ...,
+  location-> {
+    name
   },
+  ${articlesReferences},
   type == "pressRelease" => {
     'pdfURL': pressReleasePDF.asset->url,
     location->

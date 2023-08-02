@@ -5,7 +5,7 @@ import {FC} from 'react'
 import {GUIDE} from '@/common/constants/commonCopies'
 import {FullWidthFlexCol} from '@/components/containers/layout/FullWidthFlexCol'
 import ArtistsPageLayout from '@/components/containers/layout/pages/artistsPageLayout'
-import {ContainerTitle} from '@/components/containers/title/ContainerTitle'
+import {ContainerTitle} from '@/components/wrappers/title/ContainerTitle'
 
 import {guideGrid, interstitialMap} from './mapper'
 

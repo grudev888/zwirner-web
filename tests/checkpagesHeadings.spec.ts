@@ -12,6 +12,7 @@ const PAGES = [
   '/artists/ruth-asawa/guide',
   '/artists/ruth-asawa/press',
   '/artists/ruth-asawa/survey',
+  '/stories',
 ]
 
 test.describe('Check headings', () => {

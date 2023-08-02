@@ -1,0 +1,7 @@
+.pageTitleContainer {
+  @apply my-[3.75rem];
+}
+
+.moleculeTitleContainer {
+  @apply mb-5 md:mb-10;
+}
