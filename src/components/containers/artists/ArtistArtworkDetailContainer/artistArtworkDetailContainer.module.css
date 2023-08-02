@@ -61,6 +61,10 @@
   !text-black-100;
 }
 
+.subtitleYear {
+  @apply !text-black-100;
+}
+
 .learnMore {
   @apply mt-[1.25rem];
 }

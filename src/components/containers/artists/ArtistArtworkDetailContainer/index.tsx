@@ -74,7 +74,6 @@ export const ArtistArtworkDetailContainer: FC<ArtistArtworkDetailContainerProps>
     salesInformation,
     year,
   } = mapArtworkData(data)
-  const artworkTitleAndYear = `${title}${year ? `, ${year}` : ''}`
   const priceAndCurrency = price && currency ? `${currency} ${price}` : null
 
   useEffect(() => {
@@ -95,10 +94,14 @@ export const ArtistArtworkDetailContainer: FC<ArtistArtworkDetailContainerProps>
           <DzTitle
             titleType={TITLE_TYPES.H1}
             title={artistName}
-            subtitle={artworkTitleAndYear}
+            subtitle={
+              <>
+                <span className={styles.subtitle}>{title}, </span>
+                <span className={styles.subtitleYear}>{year}</span>
+              </>
+            }
             titleSize={TITLE_SIZES.MD}
             subtitleSize={TITLE_SIZES.MD}
-            classNameSubtitle={styles.subtitle}
             className={styles.header}
           />
           <DzText text={medium} textSize={TEXT_SIZES.SMALL} className={styles.artworkDetailText} />
