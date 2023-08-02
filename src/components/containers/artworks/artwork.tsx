@@ -1,7 +1,7 @@
 import {DzColumn, TITLE_SIZES} from '@zwirner/design-system'
 import {FC} from 'react'
 
-import {ContainerTitle} from '@/components/containers/title/ContainerTitle'
+import {ContainerTitle} from '@/components/wrappers/title/ContainerTitle'
 
 //import {photosGrid} from './mapper'
 
