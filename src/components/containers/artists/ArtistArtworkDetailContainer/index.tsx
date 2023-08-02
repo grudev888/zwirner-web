@@ -37,6 +37,8 @@ export const ArtistArtworkDetailContainer: FC<ArtistArtworkDetailContainerProps>
   const [currentZoomedUrl, setCurrentZoomedUrl] = useState<string | undefined>(undefined)
   const photoGridItems = photosGrid(data) || []
   const descriptionRef = useRef<HTMLDivElement>(null)
+  const detailTextStyles = {normal: 'text-black-60 !text-sm'}
+
   const onClickImage = (data: any) => {
     const src = data?.media?.imgProps?.src
     if (src) {
@@ -107,22 +109,31 @@ export const ArtistArtworkDetailContainer: FC<ArtistArtworkDetailContainerProps>
           <DzText text={medium} textSize={TEXT_SIZES.SMALL} className={styles.artworkDetailText} />
           {dimensions && (
             <div className={styles.textSectionContainer}>
-              <DzPortableText portableProps={{value: dimensions}} />
+              <DzPortableText portableProps={{value: dimensions}} customStyles={detailTextStyles} />
             </div>
           )}
           {editionInformation && (
             <div className={styles.textSectionContainer}>
-              <DzPortableText portableProps={{value: editionInformation}} />
+              <DzPortableText
+                portableProps={{value: editionInformation}}
+                customStyles={detailTextStyles}
+              />
             </div>
           )}
           {productInformation && (
             <div className={styles.textSectionContainer}>
-              <DzPortableText portableProps={{value: productInformation}} />
+              <DzPortableText
+                portableProps={{value: productInformation}}
+                customStyles={detailTextStyles}
+              />
             </div>
           )}
           {additionalCaption && (
             <div className={styles.textSectionContainer}>
-              <DzPortableText portableProps={{value: additionalCaption}} />
+              <DzPortableText
+                portableProps={{value: additionalCaption}}
+                customStyles={detailTextStyles}
+              />
             </div>
           )}
           {description && (
@@ -141,7 +152,14 @@ export const ArtistArtworkDetailContainer: FC<ArtistArtworkDetailContainerProps>
           <div className={styles.ctaContainer}>
             <div className={styles.ctaContainerTop} />
             <div className={styles.ctaBody}>
-              {salesInformation && <DzPortableText portableProps={{value: salesInformation}} />}
+              {salesInformation && (
+                <div className={styles.textSectionContainer}>
+                  <DzPortableText
+                    portableProps={{value: salesInformation}}
+                    customStyles={{normal: '!text-sm'}}
+                  />
+                </div>
+              )}
               {priceAndCurrency && (
                 <DzText text={priceAndCurrency} className={styles.priceAndCurrency} />
               )}
