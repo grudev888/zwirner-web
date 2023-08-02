@@ -4,10 +4,12 @@ import {FC, Fragment} from 'react'
 import {SEOComponent} from '@/common/components/seo/seo'
 import {ArticleContainer} from '@/components/containers/articles/article'
 import ArtistArticlePressContainer from '@/components/containers/articles/press'
+import {ArtistArtworkDetailContainer} from '@/components/containers/artists/ArtistArtworkDetailContainer'
 import {ArtistDetailContainer} from '@/components/containers/artists/ArtistDetailContainer'
 import {PressContainer} from '@/components/containers/artists/artistsPress'
 import {ArtistsListContainer} from '@/components/containers/artists/ArtstListContainer'
 import {ArtistGuideContainer} from '@/components/containers/artists/guide'
+import {ArtworkContainer} from '@/components/containers/artworks/artwork'
 import {AvailableArtworksContainer} from '@/components/containers/availableArtworks'
 import {CollectContainer} from '@/components/containers/collect'
 import {ConsignmentsContainer} from '@/components/containers/consignments'
@@ -17,7 +19,6 @@ import ArtistExhibitionsPageContainer from '@/components/containers/pages/artist
 import ArtistSurveyPageContainer from '@/components/containers/pages/artists/survey/index'
 import {StoriesContainer} from '@/components/containers/storiesPage'
 import {UtopiaEditionsContainer} from '@/components/containers/utopiaEditions'
-import {ArtworkContainer} from '@/components/containers/artworks/artwork'
 import {usePreview} from '@/sanity/preview'
 
 export const PREVIEW_PAGE_TYPE = {
@@ -117,6 +118,9 @@ const containerPerType = {
   },
   [PREVIEW_PAGE_TYPE.ARTWORK_DETAIL]: (data: any) => {
     return <ArtworkContainer data={data} />
+  },
+  [PREVIEW_PAGE_TYPE.ARTIST_ARTWORK_DETAIL]: (data: any) => {
+    return <ArtistArtworkDetailContainer data={data} />
   },
 }
 
