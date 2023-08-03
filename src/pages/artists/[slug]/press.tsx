@@ -3,7 +3,7 @@ import {GetStaticProps} from 'next'
 import {SEOComponent} from '@/common/components/seo/seo'
 import {ARTISTS_URL} from '@/common/constants/commonCopies'
 import {PressContainer} from '@/components/containers/artists/artistsPress'
-import {PREVIEW_PAGE_TYPE, PreviewPage} from '@/components/containers/previews/pagePreview'
+import {PreviewPage} from '@/components/containers/previews/pagePreview'
 import {artistPressPageBySlug} from '@/sanity/queries/artistsPress.queries'
 import {getAllPressPages, getPressDataBySlug} from '@/sanity/services/artistsPress.service'
 import {removePrefixSlug} from '@/utils/slug'
@@ -33,7 +33,7 @@ export default function PressPage({data, preview, queryParams}: PageProps) {
         query={artistPressPageBySlug}
         params={queryParams}
         seo={seo}
-        type={PREVIEW_PAGE_TYPE.ARTISTS_PRESS_SINGLE}
+        Container={PressContainer}
       />
     )
   }

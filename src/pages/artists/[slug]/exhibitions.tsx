@@ -1,7 +1,7 @@
 import {GetStaticProps} from 'next'
 
 import ArtistExhibitionsPageContainer from '@/components/containers/pages/artists/exhibitions'
-import {PREVIEW_PAGE_TYPE, PreviewPage} from '@/components/containers/previews/pagePreview'
+import {PreviewPage} from '@/components/containers/previews/pagePreview'
 import {artistExhibitionsPageData} from '@/sanity/queries/artistExhibitionsPage.queries'
 import {getAllArtistPageSlugs} from '@/sanity/services/artist.service'
 import {getArtistExhibitionsPageData} from '@/sanity/services/artistPages.service'
@@ -23,7 +23,7 @@ export default function ExhibitionsPage({data, preview, queryArtistSlug}: PagePr
       <PreviewPage
         query={artistExhibitionsPageData}
         params={queryArtistSlug}
-        type={PREVIEW_PAGE_TYPE.ARTIST_DETAIL_EXHIBITIONS}
+        Container={ArtistExhibitionsPageContainer}
       />
     )
   }

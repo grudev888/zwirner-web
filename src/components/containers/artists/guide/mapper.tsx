@@ -2,7 +2,7 @@ import {CARD_TYPES, MEDIA_ASPECT_RATIOS, MEDIA_OBJECT_FIT} from '@zwirner/design
 import Image from 'next/image'
 import {Fragment} from 'react'
 
-import {ONLINE_EXHIBITIONS_URL} from '@/common/constants/commonCopies'
+import {EXHIBITIONS_URL} from '@/common/constants/commonCopies'
 import {dzMediaMapper} from '@/common/utilsMappers/image.mapper'
 import {ArticleTypes} from '@/components/containers/articles/mapper'
 
@@ -25,19 +25,19 @@ export const articlesGridMap = (data: any[]) => {
       objectFit: MEDIA_OBJECT_FIT.COVER,
       aspectRatio: MEDIA_ASPECT_RATIOS['16:9'],
     }
-    const articleMedia = dzMediaMapper({
+    const {media: articleMedia, hideMedia: hideImgArticle} = dzMediaMapper({
       data: relatedArticles,
       ImgElement: Image,
       options: SharedMediaOptions,
     })
-    const exhibitionMedia = dzMediaMapper({
+    const {media: exhibitionMedia, hideMedia: hideImgExhibition} = dzMediaMapper({
       data: exhibition,
       ImgElement: Image,
       options: SharedMediaOptions,
     })
 
     const exhibitionURL =
-      _type === 'exhibitionPage' && current ? `${ONLINE_EXHIBITIONS_URL}/${current}` : null
+      _type === 'exhibitionPage' && current ? `${EXHIBITIONS_URL}/${current}` : null
     const urlToRedirect = type === ArticleTypes.EXTERNAL ? externalURL : current
     const articleURL = isArticle ? urlToRedirect : null
 
@@ -48,8 +48,9 @@ export const articlesGridMap = (data: any[]) => {
     return {
       cardType: CARD_TYPES.CONTENT,
       id: _id,
-      ...(isArticle ? articleMedia : exhibitionMedia ?? {}),
+      media: isArticle ? articleMedia : exhibitionMedia ?? {},
       title,
+      hideImage: isArticle ? hideImgArticle : hideImgExhibition,
       enableZoom: true,
       cardLink: {
         href: urlToContent,

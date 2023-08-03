@@ -2,7 +2,7 @@ import {GetStaticProps} from 'next'
 
 import {SEOComponent} from '@/common/components/seo/seo'
 import {AvailableArtworksContainer} from '@/components/containers/availableArtworks'
-import {PREVIEW_PAGE_TYPE, PreviewPage} from '@/components/containers/previews/pagePreview'
+import {PreviewPage} from '@/components/containers/previews/pagePreview'
 import {availableArtworksData} from '@/sanity/queries/availableArtworks.queries'
 import {getAvailableArtworksData} from '@/sanity/services/availableArtworks.service'
 
@@ -32,11 +32,7 @@ export default function AvailableArtworks({data, preview}: PageProps) {
 
   if (preview) {
     return (
-      <PreviewPage
-        query={availableArtworksData}
-        seo={seo}
-        type={PREVIEW_PAGE_TYPE.AVAILABLE_WORKS}
-      />
+      <PreviewPage query={availableArtworksData} seo={seo} Container={AvailableArtworksContainer} />
     )
   }
 

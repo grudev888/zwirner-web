@@ -2,7 +2,6 @@ import {GetStaticProps} from 'next'
 
 import {SEOComponent} from '@/common/components/seo/seo'
 import {HomeContainer} from '@/components/containers/home'
-import {PREVIEW_PAGE_TYPE} from '@/components/containers/previews/pagePreview'
 import {PreviewPage} from '@/components/containers/previews/pagePreview'
 import {homeData as homeDataQuery} from '@/sanity/queries/home.queries'
 import {getHomeData} from '@/sanity/services/home.service'
@@ -31,7 +30,7 @@ export default function Home({data, preview}: PageProps) {
   const {seo} = homeData ?? {}
 
   if (preview) {
-    return <PreviewPage query={homeDataQuery} seo={seo} type={PREVIEW_PAGE_TYPE.HOME} />
+    return <PreviewPage query={homeDataQuery} seo={seo} Container={HomeContainer} />
   }
 
   return (

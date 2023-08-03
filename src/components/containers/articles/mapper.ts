@@ -1,6 +1,5 @@
 import {
   ButtonModes,
-  CARD_TYPES,
   INTERSTITIAL_TEXT_COLORS,
   MEDIA_ASPECT_RATIOS,
   MEDIA_OBJECT_FIT,
@@ -10,9 +9,9 @@ import Image from 'next/image'
 
 import {
   EXHIBITIONS,
+  EXHIBITIONS_URL,
   FAIRS,
   LOCATION,
-  ONLINE_EXHIBITIONS_URL,
   READ_MORE,
 } from '@/common/constants/commonCopies'
 import {dzMediaMapper} from '@/common/utilsMappers/image.mapper'
@@ -66,19 +65,19 @@ export const articlesGridMap = (data: any[]) => {
       aspectRatio: MEDIA_ASPECT_RATIOS['16:9'],
     }
 
-    const {media: relatedArticleMedia} = dzMediaMapper({
+    const {media: relatedArticleMedia, hideImage: hideImgArticle} = dzMediaMapper({
       data: relatedArticles,
       ImgElement: Image,
       options: sharedImageOptions,
     })
-    const {media: exhibitionMedia} = dzMediaMapper({
+    const {media: exhibitionMedia, hideImage: hideImgExhibition} = dzMediaMapper({
       data: exhibition,
       ImgElement: Image,
       options: sharedImageOptions,
     })
 
     const exhibitionURL =
-      _type === 'exhibitionPage' && current ? `${ONLINE_EXHIBITIONS_URL}/${current}` : null
+      _type === 'exhibitionPage' && current ? `${EXHIBITIONS_URL}/${current}` : null
     const urlToRedirect = type === ArticleTypes.EXTERNAL ? externalURL : '/'
     const articleURL = isArticle ? urlToRedirect : null
 
@@ -86,9 +85,9 @@ export const articlesGridMap = (data: any[]) => {
       _type === 'exhibitionPage' ? EXHIBITIONS : _type === 'fairPage' ? FAIRS : category
 
     return {
-      cardType: CARD_TYPES.CONTENT,
       id: _id,
       media: isArticle ? relatedArticleMedia : exhibitionMedia,
+      hideImage: isArticle ? hideImgArticle : hideImgExhibition,
       category: categoryCard,
       title,
       description: description ?? summary,

@@ -1,7 +1,7 @@
 export const ARTISTS_URL = '/artists'
 export const UPCOMING_FAIRS_URL = '/fairs'
 export const NEWS_URL = '/news'
-export const ONLINE_EXHIBITIONS_URL = '/exhibitions'
+export const EXHIBITIONS_URL = '/exhibitions'
 export const VIDEOS_URL = '/videos'
 export const PODCAST_URL = '/podcast'
 export const BOOKS_URL = 'https://www.davidzwirnerbooks.com/'

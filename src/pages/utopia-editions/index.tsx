@@ -1,7 +1,7 @@
 import {GetStaticProps} from 'next'
 
 import {SEOComponent} from '@/common/components/seo/seo'
-import {PREVIEW_PAGE_TYPE, PreviewPage} from '@/components/containers/previews/pagePreview'
+import {PreviewPage} from '@/components/containers/previews/pagePreview'
 import {UtopiaEditionsContainer} from '@/components/containers/utopiaEditions'
 import {utopiaEditionsData} from '@/sanity/queries/utopiaEditions.queries'
 import {getUtopiaEditions} from '@/sanity/services/utopiaEditions.service'
@@ -31,7 +31,7 @@ export default function UtopiaEditions({data, preview}: PageProps) {
   const {seo} = utopia ?? {}
 
   if (preview) {
-    return <PreviewPage query={utopiaEditionsData} seo={seo} type={PREVIEW_PAGE_TYPE.UTOPIA} />
+    return <PreviewPage query={utopiaEditionsData} seo={seo} Container={UtopiaEditionsContainer} />
   }
 
   return (

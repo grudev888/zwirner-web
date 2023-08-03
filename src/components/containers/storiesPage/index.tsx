@@ -86,7 +86,7 @@ export const StoriesContainer: FC<StoriesContainerProps> = ({data}) => {
           <DzCarousel size={data.size}>
             {data.items?.map((card: any) => (
               <DzCard
-                key={card.id}
+                key={card?._id}
                 data={{
                   ...mapBookForCarousel(card),
                   size: [
@@ -117,7 +117,7 @@ export const StoriesContainer: FC<StoriesContainerProps> = ({data}) => {
       <DzColumn span={12}>
         <ContainerTitle title={title} />
         <FullWidthFlexCol>
-          {hero ? <DzHero items={[heroData]} /> : null}
+          {hero && hero?.media?.imgProps?.src ? <DzHero items={[heroData]} /> : null}
           {featuredVideos ? (
             <section>
               <ContainerTitle
@@ -130,7 +130,7 @@ export const StoriesContainer: FC<StoriesContainerProps> = ({data}) => {
                   url: VIDEOS_URL,
                 }}
               />
-              <DzSplit {...featuredVideosData} />
+              {featuredVideosData?.data?.media ? <DzSplit {...featuredVideosData} /> : null}
             </section>
           ) : null}
 

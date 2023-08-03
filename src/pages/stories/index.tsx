@@ -1,7 +1,7 @@
 import {GetStaticProps} from 'next'
 
 import {SEOComponent} from '@/common/components/seo/seo'
-import {PREVIEW_PAGE_TYPE, PreviewPage} from '@/components/containers/previews/pagePreview'
+import {PreviewPage} from '@/components/containers/previews/pagePreview'
 import {StoriesContainer} from '@/components/containers/storiesPage'
 import {storiesData} from '@/sanity/queries/stories.queries'
 import {getStoriesData} from '@/sanity/services/stories.service'
@@ -29,7 +29,7 @@ export default function StoriesEditions({data, preview}: PageProps) {
   const {seo} = storiesDataCMS ?? {}
 
   if (preview) {
-    return <PreviewPage query={storiesData} seo={seo} type={PREVIEW_PAGE_TYPE.STORIES} />
+    return <PreviewPage query={storiesData} seo={seo} Container={StoriesContainer} />
   }
 
   return (

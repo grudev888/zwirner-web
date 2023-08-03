@@ -23,7 +23,6 @@ export const ArtistGuideContainer: FC<ArtistGuideContainerProps> = ({data}) => {
   const {title} = guideSubpage ?? {}
   const gridData = guideGrid(guideSubpage)
   const interstitialData = interstitialMap(guideInterstitialSubpage)
-
   return (
     <>
       <ArtistsPageLayout parentPageName={parentPageName} parentPath={slug?.current}>

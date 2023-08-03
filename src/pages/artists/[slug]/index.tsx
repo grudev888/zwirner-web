@@ -4,7 +4,7 @@ import {ErrorBoundary} from 'react-error-boundary'
 
 import {SEOComponent} from '@/common/components/seo/seo'
 import {ArtistDetailContainer} from '@/components/containers/artists/ArtistDetailContainer'
-import PreviewPage, {PREVIEW_PAGE_TYPE} from '@/components/containers/previews/pagePreview'
+import PreviewPage from '@/components/containers/previews/pagePreview'
 import {artistPageBySlug} from '@/sanity/queries/artistPage.queries'
 import {getAllArtistPageSlugs, getArtistPageBySlug} from '@/sanity/services/artist.service'
 import {removePrefixSlug} from '@/utils/slug'
@@ -31,7 +31,7 @@ export default function ArtistPage({data = {}, preview, queryParams}: PageProps)
       <PreviewPage
         query={artistPageBySlug}
         params={queryParams}
-        type={PREVIEW_PAGE_TYPE.ARTIST_DETAIL}
+        Container={ArtistDetailContainer}
       />
     )
   }
