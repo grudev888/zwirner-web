@@ -10,6 +10,7 @@ export const mapArtworkData = (data: RecordData) => {
     title: data?.title,
     medium: data?.medium,
     dimensions: data?.dimensions,
+    displayDate: data?.displayDate,
     year: data?.dateSelection?.year,
     description: data?.description,
     price: data?.price,

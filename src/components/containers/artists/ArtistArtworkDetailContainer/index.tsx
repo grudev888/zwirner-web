@@ -56,6 +56,7 @@ export const ArtistArtworkDetailContainer: FC<ArtistArtworkDetailContainerProps>
     artistName,
     artistSlug,
     title,
+    displayDate,
     medium,
     price,
     currency,
@@ -95,10 +96,10 @@ export const ArtistArtworkDetailContainer: FC<ArtistArtworkDetailContainerProps>
                 ) : (
                   artistName
                 )}
-                {title && year && (
+                {title && (year || displayDate) && (
                   <span className="block">
                     <span className={styles.subtitle}>{title}, </span>
-                    <span className={styles.subtitleYear}>{year}</span>
+                    <span className={styles.subtitleYear}>{displayDate || year}</span>
                   </span>
                 )}
               </>
