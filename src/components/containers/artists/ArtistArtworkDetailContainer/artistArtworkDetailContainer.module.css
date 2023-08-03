@@ -91,7 +91,3 @@
 .framed {
   @apply text-black-60;
 }
-
-.singleMediaItem {
-  @apply mb-[1.25rem];
-}

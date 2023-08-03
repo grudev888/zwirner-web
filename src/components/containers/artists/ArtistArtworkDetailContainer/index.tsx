@@ -1,11 +1,11 @@
-import {DzColumn, useBreakpoints} from '@zwirner/design-system'
+import {CARD_TYPES, DzColumn, useBreakpoints} from '@zwirner/design-system'
 import {
   BUTTON_SIZES,
   DzButton,
+  DzCard,
   DzComplexGrid,
   DzImageZoomModal,
   DzLink,
-  DzMedia,
   DzText,
   DzTitle,
   LINK_VARIANTS,
@@ -36,6 +36,7 @@ export const ArtistArtworkDetailContainer: FC<ArtistArtworkDetailContainerProps>
   const {isSmall} = useBreakpoints()
   const [currentZoomedUrl, setCurrentZoomedUrl] = useState<string | undefined>(undefined)
   const photoGridItems = photosGrid(data) || []
+  const firstItemMediaProps = photoGridItems?.[0]
   const descriptionRef = useRef<HTMLDivElement>(null)
   const detailTextStyles = {normal: 'text-black-60 !text-sm'}
 
@@ -50,15 +51,6 @@ export const ArtistArtworkDetailContainer: FC<ArtistArtworkDetailContainerProps>
       setTimeout(() => window.scrollTo(0, descriptionRef?.current?.offsetTop || 0), 10)
     }
   }
-  const firstItemMediaProps = photoGridItems?.[0]
-    ? {
-        ...photoGridItems[0].media,
-        imgProps: {
-          ...photoGridItems[0].media.imgProps,
-          onClick: () => onClickImage(photoGridItems[0]),
-        },
-      }
-    : null
 
   const {
     artistName,
@@ -89,11 +81,7 @@ export const ArtistArtworkDetailContainer: FC<ArtistArtworkDetailContainerProps>
       <DzColumn span={4} className={cn(styles.leftPane)}>
         <div className={styles.leftPaneContent}>
           {isClient && isSmall && firstItemMediaProps ? (
-            <DzMedia
-              {...firstItemMediaProps}
-              className={styles.singleMediaItem}
-              suppressHydrationWarning
-            />
+            <DzCard type={CARD_TYPES.ARTWORK} data={firstItemMediaProps} />
           ) : null}
           <DzTitle
             titleType={TITLE_TYPES.H1}
