@@ -29,3 +29,13 @@ export const exhibitionPageBySlug = groq`
   },
   ${componentsByDataScheme}
 }`
+
+export const installationViewsBySlug = groq`
+*[_type == "exhibitionPage" && slug.current == $slug][0] {
+  title,
+  installationViewsInterstitial,
+  installationViews,
+  installationViewsSeo {
+    ${pageSEOFields}
+  }
+}`

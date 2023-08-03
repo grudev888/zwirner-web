@@ -1,4 +1,4 @@
-import {MEDIA_TYPES} from '@zwirner/design-system'
+import {DzMediaProps, MEDIA_TYPES} from '@zwirner/design-system'
 
 import {builder} from '@/sanity/imageBuilder'
 
@@ -6,7 +6,7 @@ interface DzMediaMapperProps {
   data: any
   url?: string
   ImgElement: any
-  options?: any
+  options?: Partial<DzMediaProps>
   extraImgProps?: any
 }
 
