@@ -59,6 +59,7 @@ export const ArtistArtworkDetailContainer: FC<ArtistArtworkDetailContainerProps>
     medium,
     price,
     currency,
+    dimensions,
     primaryCta,
     secondaryCta,
     framed,
@@ -106,6 +107,11 @@ export const ArtistArtworkDetailContainer: FC<ArtistArtworkDetailContainerProps>
             className={styles.header}
           />
           <DzText text={medium} textSize={TEXT_SIZES.SMALL} className={styles.artworkDetailText} />
+          {dimensions && (
+            <div className={styles.textSectionContainer}>
+              <DzPortableText portableProps={{value: dimensions}} customStyles={detailTextStyles} />
+            </div>
+          )}
           {framedDimensions && (
             <div className={styles.textSectionContainer}>
               <DzPortableText
