@@ -19,11 +19,15 @@ export const mapArtworkData = (data: RecordData) => {
     additionalCaption: data?.additionalCaption,
     framedDimensions: data?.framedDimensions,
     framed: data?.framed,
-    primaryCta: data?.artworkCTA?.CTAText && {
-      text: data?.artworkCTA.CTAText,
-    },
-    secondaryCta: data?.artworkCTA?.SecondaryCTAText && {
-      text: data?.artworkCTA.SecondaryCTAText,
-    },
+    primaryCta: data?.artworkCTA?.CTA &&
+      data?.artworkCTA?.CTA !== 'none' &&
+      data?.artworkCTA?.CTAText && {
+        text: data?.artworkCTA.CTAText,
+      },
+    secondaryCta: data?.artworkCTA?.secondaryCTA &&
+      data?.artworkCTA?.secondaryCTA !== 'none' &&
+      data?.artworkCTA?.SecondaryCTAText && {
+        text: data?.artworkCTA.SecondaryCTAText,
+      },
   }
 }

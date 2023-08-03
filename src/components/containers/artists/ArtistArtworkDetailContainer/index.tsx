@@ -164,38 +164,36 @@ export const ArtistArtworkDetailContainer: FC<ArtistArtworkDetailContainerProps>
             </DzLink>
           )}
         </div>
-        {primaryCta && (
-          <div className={styles.ctaContainer}>
-            <div className={styles.ctaContainerTop} />
-            <div className={styles.ctaBody}>
-              {salesInformation && (
-                <div className={styles.textSectionContainer}>
-                  <DzPortableText
-                    portableProps={{value: salesInformation}}
-                    customStyles={{normal: '!text-sm'}}
-                  />
-                </div>
-              )}
-              {priceAndCurrency && (
-                <DzText text={priceAndCurrency} className={styles.priceAndCurrency} />
-              )}
-              {framed && <DzText text={framed} className={styles.framed} />}
-              {primaryCta ? (
-                <DzButton className={cn(styles.btnCTA)} size={BUTTON_SIZES.LARGE}>
-                  {primaryCta.text}
-                </DzButton>
-              ) : null}
-              {secondaryCta ? (
-                <DzButton
-                  className={cn(styles.btnCTA, styles.btnCTASecondary)}
-                  size={BUTTON_SIZES.LARGE}
-                >
-                  {secondaryCta.text}
-                </DzButton>
-              ) : null}
-            </div>
+        <div className={styles.ctaContainer}>
+          <div className={styles.ctaContainerTop} />
+          <div className={styles.ctaBody}>
+            {salesInformation && (
+              <div className={styles.textSectionContainer}>
+                <DzPortableText
+                  portableProps={{value: salesInformation}}
+                  customStyles={{normal: '!text-sm'}}
+                />
+              </div>
+            )}
+            {priceAndCurrency && (
+              <DzText text={priceAndCurrency} className={styles.priceAndCurrency} />
+            )}
+            {framed && <DzText text={framed} className={styles.framed} />}
+            {primaryCta ? (
+              <DzButton className={cn(styles.btnCTA)} size={BUTTON_SIZES.LARGE}>
+                {primaryCta.text}
+              </DzButton>
+            ) : null}
+            {secondaryCta ? (
+              <DzButton
+                className={cn(styles.btnCTA, styles.btnCTASecondary)}
+                size={BUTTON_SIZES.LARGE}
+              >
+                {secondaryCta.text}
+              </DzButton>
+            ) : null}
           </div>
-        )}
+        </div>
       </DzColumn>
       <DzColumn span={8} className={cn(styles.rightPane)}>
         <DzComplexGrid
