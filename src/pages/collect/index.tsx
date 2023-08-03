@@ -2,7 +2,7 @@ import {GetStaticProps} from 'next'
 
 import {SEOComponent} from '@/common/components/seo/seo'
 import {CollectContainer} from '@/components/containers/collect'
-import {PREVIEW_PAGE_TYPE, PreviewPage} from '@/components/containers/previews/pagePreview'
+import {PreviewPage} from '@/components/containers/previews/pagePreview'
 import {collectPageData} from '@/sanity/queries/collect.queries'
 import {getCollectData} from '@/sanity/services/collect.service'
 
@@ -31,7 +31,7 @@ export default function Collect({data, preview}: PageProps) {
   const {seo} = collect ?? {}
 
   if (preview) {
-    return <PreviewPage query={collectPageData} seo={seo} type={PREVIEW_PAGE_TYPE.COLLECT} />
+    return <PreviewPage query={collectPageData} seo={seo} Container={CollectContainer} />
   }
 
   return (

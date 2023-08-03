@@ -3,7 +3,7 @@ import {GetStaticProps} from 'next'
 import {SEOComponent} from '@/common/components/seo/seo'
 import {ARTISTS_URL} from '@/common/constants/commonCopies'
 import {ArtistGuideContainer} from '@/components/containers/artists/guide'
-import {PREVIEW_PAGE_TYPE, PreviewPage} from '@/components/containers/previews/pagePreview'
+import {PreviewPage} from '@/components/containers/previews/pagePreview'
 import {artistGuidePageBySlug} from '@/sanity/queries/artistsGuide.queries'
 import {getAllGuidePages, getGuideDataBySlug} from '@/sanity/services/artistsGuide.service'
 import {removePrefixSlug} from '@/utils/slug'
@@ -33,7 +33,7 @@ export default function GuidePage({data, preview, queryParams}: PageProps) {
         query={artistGuidePageBySlug}
         params={queryParams}
         seo={seo}
-        type={PREVIEW_PAGE_TYPE.SINGLE_ARTISTS_GUIDE_PAGE}
+        Container={ArtistGuideContainer}
       />
     )
   }

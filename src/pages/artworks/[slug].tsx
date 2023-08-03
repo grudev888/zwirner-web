@@ -3,9 +3,9 @@ import {GetStaticProps} from 'next'
 import {SEOComponent} from '@/common/components/seo/seo'
 import {ARTWORK_URL} from '@/common/constants/commonCopies'
 import {ArtworkContainer} from '@/components/containers/artworks/artwork'
-import {PREVIEW_PAGE_TYPE, PreviewPage} from '@/components/containers/previews/pagePreview'
-import {getAllArtworkSlugs, getArtworkData} from '@/sanity/services/artwork.service'
+import {PreviewPage} from '@/components/containers/previews/pagePreview'
 import {artworksData} from '@/sanity/queries/artwork.queries'
+import {getAllArtworkSlugs, getArtworkData} from '@/sanity/services/artwork.service'
 
 interface QuerySlug {
   slug: string
@@ -42,7 +42,7 @@ export default function Artwork({data, preview}: PageProps) {
           query={artworksData}
           params={queryParams}
           seo={seo}
-          type={PREVIEW_PAGE_TYPE.ARTWORK_DETAIL}
+          Container={ArtworkContainer}
         />
       </>
     )

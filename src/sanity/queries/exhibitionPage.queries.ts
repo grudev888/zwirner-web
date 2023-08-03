@@ -22,7 +22,8 @@ export const exhibitionPageSlugs = groq`
 export const exhibitionPageBySlug = groq`
 *[_type == "exhibitionPage" && slug.current == $slug][0] {
   ...,
-  "exhibition": ,
+  artists[]->,
+  location->,
   seo {
     ${pageSEOFields}
   },

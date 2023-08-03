@@ -2,7 +2,7 @@ import {GetStaticProps} from 'next'
 
 import {SEOComponent} from '@/common/components/seo/seo'
 import ArtistAvailableWorksPageContainer from '@/components/containers/pages/artists/available-works/index'
-import {PREVIEW_PAGE_TYPE, PreviewPage} from '@/components/containers/previews/pagePreview'
+import {PreviewPage} from '@/components/containers/previews/pagePreview'
 import {availableArtworksDataByArtistSlug} from '@/sanity/queries/availableArtworks.queries'
 import {getAllArtistPageSlugs} from '@/sanity/services/artist.service'
 import {getAvailableArtworksDataByArtistSlug} from '@/sanity/services/availableArtworks.service'
@@ -28,7 +28,7 @@ export default function AvailableWorksPage({data, preview, querySlug}: PageProps
         query={availableArtworksDataByArtistSlug}
         params={querySlug}
         seo={seo}
-        type={PREVIEW_PAGE_TYPE.ARTIST_DETAIL_AVAILABLE_WORKS}
+        Container={ArtistAvailableWorksPageContainer}
       />
     )
   }

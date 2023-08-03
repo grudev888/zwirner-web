@@ -20,6 +20,7 @@ import Link from 'next/link'
 import {useRouter} from 'next/router'
 import {FC, useCallback, useMemo} from 'react'
 
+import {EXHIBITIONS_URL} from '@/common/constants/commonCopies'
 import {FullWidthFlexCol} from '@/components/containers/layout/FullWidthFlexCol'
 
 import ArtistHeader from './components/ArtistHeader'
@@ -63,7 +64,7 @@ export const ArtistDetailContainer: FC<ArtistsContainerProps> = ({data}) => {
   )
   const latestExhibitions = mapExhibitions(data.latestExhibitions)
   const exhibitionsInterstitial = mapInterstitial(data.exhibitionsInterstitial, () =>
-    router.push(`/artists/${router.query.slug}/exhibitions`)
+    router.push(`/artists/${router.query.slug}${EXHIBITIONS_URL}`)
   )
   const guide = mapCarouselArticles(data.guide, isSmall)
   const biography = mapBiography(data.artist)

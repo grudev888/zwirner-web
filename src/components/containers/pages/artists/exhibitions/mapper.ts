@@ -1,19 +1,21 @@
-import {CARD_TYPES, MEDIA_ASPECT_RATIOS, MEDIA_TYPES} from '@zwirner/design-system'
+import {CARD_TYPES, MEDIA_ASPECT_RATIOS} from '@zwirner/design-system'
 import {format, isAfter, isValid, isWithinInterval, parse} from 'date-fns'
 import Image from 'next/image'
 
-import {builder} from '@/sanity/imageBuilder'
+import {dzMediaMapper} from '@/common/utilsMappers/image.mapper'
 
 export const mapCardsGrid = (data: any[]) => {
   if (!data) {
     return []
   }
   return data.map((exhibitionPageData) => {
-    const {_id, photos, title, subtitle, startDate, endDate, locations, displayDate} =
-      exhibitionPageData
-    const [mainPicture] = photos ?? []
-    const {asset, alt} = mainPicture ?? {}
-    const imgSrc = asset ? builder.image(asset).url() : ''
+    const {_id, title, subtitle, startDate, endDate, locations, displayDate} = exhibitionPageData
+    const {media, hideImage} = dzMediaMapper({
+      data: exhibitionPageData,
+      ImgElement: Image,
+      options: {aspectRatio: MEDIA_ASPECT_RATIOS['16:9']},
+    })
+
     const locationsTitle = locations?.map(({name}: {name: string}) => name).join(',')
     let exhibitionDateTitle = displayDate
 
@@ -36,16 +38,8 @@ export const mapCardsGrid = (data: any[]) => {
     return {
       cardType: CARD_TYPES.CONTENT,
       id: _id,
-      media: {
-        type: MEDIA_TYPES.IMAGE,
-        ImgElement: Image,
-        aspectRatio: MEDIA_ASPECT_RATIOS['16:9'],
-        imgProps: {
-          src: imgSrc,
-          alt,
-          fill: true,
-        },
-      },
+      media,
+      hideImage,
       title,
       subtitle,
       secondaryTitle: locationsTitle,
@@ -60,6 +54,8 @@ export const interstitialMap = (data: any) => {
 
   if (!title && !text) return null
 
+  const {media} = dzMediaMapper({data, ImgElement: Image})
+
   return {
     data: {
       split: false,
@@ -67,13 +63,7 @@ export const interstitialMap = (data: any) => {
       title,
       primaryCta: {text},
       ...(data.image?.asset && {
-        media: {
-          type: MEDIA_TYPES.IMAGE,
-          imgProps: {
-            src: builder.image(data.image.asset).url(),
-            alt: data.image?.alt,
-          },
-        },
+        media,
       }),
     },
   }

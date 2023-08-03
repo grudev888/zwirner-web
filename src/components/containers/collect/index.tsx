@@ -18,9 +18,9 @@ import dynamic from 'next/dynamic'
 import {FC} from 'react'
 
 import {
+  EXHIBITIONS_URL,
   FEATURE_AVAILABLE_WORKS_TITLE,
   ONLINE_EXHIBITIONS_TITLE,
-  ONLINE_EXHIBITIONS_URL,
   UPCOMING_FAIRS_TITLE,
   UPCOMING_FAIRS_URL,
   VIEW_ALL_TITLE,
@@ -104,7 +104,7 @@ export const CollectContainer: FC<CollectContainerProps> = ({data}) => {
                 linkCTA: {
                   text: VIEW_ALL_TITLE,
                   linkElement: 'a',
-                  url: ONLINE_EXHIBITIONS_URL,
+                  url: EXHIBITIONS_URL,
                 },
               }}
             />

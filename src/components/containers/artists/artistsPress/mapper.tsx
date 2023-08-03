@@ -2,7 +2,7 @@ import {CARD_TYPES, MEDIA_OBJECT_FIT, MEDIA_TYPES} from '@zwirner/design-system'
 import Image from 'next/image'
 import {Fragment} from 'react'
 
-import {ARTICLES, LEARN_MORE, ONLINE_EXHIBITIONS_URL} from '@/common/constants/commonCopies'
+import {ARTICLES, EXHIBITIONS_URL, LEARN_MORE} from '@/common/constants/commonCopies'
 import {dzMediaMapper} from '@/common/utilsMappers/image.mapper'
 import {ArticleTypes} from '@/components/containers/articles/mapper'
 
@@ -14,7 +14,7 @@ export const articlesGridMap = (data: any[]) => {
     const {summary, endDate, startDate} = exhibition ?? {}
 
     const exhibitionURL =
-      _type === 'exhibitionPage' && current ? `${ONLINE_EXHIBITIONS_URL}/${current}` : null
+      _type === 'exhibitionPage' && current ? `${EXHIBITIONS_URL}/${current}` : null
 
     const urlToRedirect = type === ArticleTypes.EXTERNAL ? externalURL : current
 

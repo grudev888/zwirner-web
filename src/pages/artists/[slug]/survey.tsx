@@ -2,7 +2,7 @@ import {GetStaticProps} from 'next'
 
 import {SEOComponent} from '@/common/components/seo/seo'
 import ArtistSurveyPageContainer from '@/components/containers/pages/artists/survey/index'
-import {PREVIEW_PAGE_TYPE, PreviewPage} from '@/components/containers/previews/pagePreview'
+import {PreviewPage} from '@/components/containers/previews/pagePreview'
 import {artworksDataByArtistSlug} from '@/sanity/queries/artwork.queries'
 import {getAllArtistPageSlugs} from '@/sanity/services/artist.service'
 import {getArtworkByArtist} from '@/sanity/services/artwork.service'
@@ -28,7 +28,7 @@ export default function SurveyPage({data, preview, querySlug}: PageProps) {
         query={artworksDataByArtistSlug}
         params={querySlug}
         seo={seo}
-        type={PREVIEW_PAGE_TYPE.ARTIST_DETAIL_SURVEY}
+        Container={ArtistSurveyPageContainer}
       />
     )
   }

@@ -1,10 +1,10 @@
 import {GetStaticProps} from 'next'
 
 import {SEOComponent} from '@/common/components/seo/seo'
-import {ArtistsListContainer} from '@/components/containers/artists/ArtstListContainer'
+import {ExhibitionLandingContainer} from '@/components/containers/exhibitions/exhibitionsLandingContainer'
 import {PreviewPage} from '@/components/containers/previews/pagePreview'
-import {getAllArtistsPages} from '@/sanity/queries/artistPage.queries'
-import {getArtistPageData} from '@/sanity/services/artist.service'
+import {exhibitionPageBySlug} from '@/sanity/queries/exhibitionPage.queries'
+import {getAllExhibitions} from '@/sanity/services/exhibition.service'
 
 interface PageProps {
   data: any
@@ -21,28 +21,26 @@ interface PreviewData {
   token?: string
 }
 
-export default function Artists({data, preview}: PageProps) {
-  const {pageInfo} = data
-  const [pagesInfoData] = pageInfo
-
-  const {seo} = pagesInfoData ?? {}
+export default function ExhibitionsLanding({data = {}, preview}: PageProps) {
+  const {pageData = {}} = data ?? {}
+  const {seo} = pageData ?? {}
 
   if (preview) {
-    return <PreviewPage query={getAllArtistsPages} seo={seo} Container={ArtistsListContainer} />
+    return (
+      <PreviewPage query={exhibitionPageBySlug} seo={seo} Container={ExhibitionLandingContainer} />
+    )
   }
 
   return (
     <>
       <SEOComponent data={seo} />
-      <ArtistsListContainer data={data} />
+      <ExhibitionLandingContainer data={pageData} />
     </>
   )
 }
 
 export const getStaticProps: GetStaticProps<PageProps, Query, PreviewData> = async (ctx) => {
-  const {preview = false, previewData = {}} = ctx
-
-  const params = {slug: 'artists'}
+  const {params = {}, preview = false, previewData = {}} = ctx
 
   if (preview && previewData.token) {
     return {
@@ -55,10 +53,12 @@ export const getStaticProps: GetStaticProps<PageProps, Query, PreviewData> = asy
     }
   }
 
-  const artistPage = await getArtistPageData()
+  // TODO DEFINE ONLY NECESSARY DATA FOR THIS SUB_PAGE
+  const data: any = await getAllExhibitions()
+
   return {
     props: {
-      data: artistPage,
+      data: {pageData: data},
       preview,
       slug: params?.slug || null,
       token: null,

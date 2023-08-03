@@ -12,37 +12,27 @@ import Image from 'next/image'
 import {DzPortableText} from '@/common/components/portableText'
 import {
   DAVID_ZWIRNER_BOOKS,
+  EXHIBITIONS_URL,
   EXPLORE_NOW,
-  ONLINE_EXHIBITIONS_URL,
   PRE_ORDER_NOW,
 } from '@/common/constants/commonCopies'
+import {dzMediaMapper} from '@/common/utilsMappers/image.mapper'
 import {builder} from '@/sanity/imageBuilder'
 
 export const heroMapper = (data: any) => {
   const {heroReference, heroCta} = data ?? {}
   const {action, fileURL, text} = heroCta ?? {}
   const [hero] = heroReference ?? []
-  const {photos, title, slug} = hero ?? {}
-  const [image] = photos ?? []
+  const {title, slug} = hero ?? {}
 
-  const {asset, alt} = image ?? {}
-  const imgSrc = asset ? builder.image(asset).url() : ''
-  const exhibitionURL = `${ONLINE_EXHIBITIONS_URL}/${slug?.current ?? ''}`
+  const exhibitionURL = `${EXHIBITIONS_URL}/${slug?.current ?? ''}`
+  const {media} = dzMediaMapper({data: hero, url: exhibitionURL, ImgElement: Image})
 
   const isDownload = action === 'Download PDF'
   const CTA_URL = isDownload ? fileURL : exhibitionURL
 
   return {
-    media: {
-      url: exhibitionURL,
-      type: MEDIA_TYPES.IMAGE,
-      ImgElement: Image,
-      imgProps: {
-        src: imgSrc,
-        alt,
-        fill: true,
-      },
-    },
+    media,
     linkCTA: {
       text: text ?? EXPLORE_NOW,
       linkElement: 'a',
@@ -58,24 +48,14 @@ export const heroMapper = (data: any) => {
 }
 
 export const utopiaFeatureMap = (data: any) => {
-  const {image, text, title, url} = data ?? {}
-  const {asset, alt} = image ?? {}
-  const imgSrc = asset ? builder.image(asset).url() : ''
+  const {text, title, url} = data ?? {}
+  const {media} = dzMediaMapper({data, url, ImgElement: Image})
 
   return {
     type: SPLIT_TYPES.SHORT,
     reverse: true,
     data: {
-      media: {
-        url,
-        ImgElement: Image,
-        type: MEDIA_TYPES.IMAGE,
-        imgProps: {
-          src: imgSrc,
-          alt,
-          fill: true,
-        },
-      },
+      media,
       title,
       description: text,
       linkCTA: {
@@ -276,23 +256,13 @@ export const mapFeaturedBooks = (data: any = {}) => {
 }
 
 export const mapBookForSplit = (data: any) => {
-  const {photos, title, description, booksUrl} = data ?? {}
-  const [mainPhoto] = photos ?? []
-  const {asset, alt} = mainPhoto ?? {}
-  const imgSrc = asset ? builder.image(asset).url() : ''
+  const {title, description, booksUrl} = data ?? {}
+  const {media} = dzMediaMapper({data, ImgElement: Image})
 
   return {
     type: SPLIT_TYPES.SHORT,
     data: {
-      media: {
-        ImgElement: Image,
-        type: MEDIA_TYPES.IMAGE,
-        imgProps: {
-          src: imgSrc,
-          alt,
-          fill: true,
-        },
-      },
+      media,
       category: DAVID_ZWIRNER_BOOKS,
       title,
       portableTextDescription: <DzPortableText portableProps={{value: description}} />,

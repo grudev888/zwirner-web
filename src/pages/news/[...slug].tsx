@@ -3,7 +3,7 @@ import {GetStaticProps} from 'next'
 import {SEOComponent} from '@/common/components/seo/seo'
 import {NEWS_URL} from '@/common/constants/commonCopies'
 import {ArticleContainer} from '@/components/containers/articles/article'
-import {PREVIEW_PAGE_TYPE, PreviewPage} from '@/components/containers/previews/pagePreview'
+import {PreviewPage} from '@/components/containers/previews/pagePreview'
 import {articleBySlug} from '@/sanity/queries/article.queries'
 import {getAllArticlePages, getArticlePageBySlug} from '@/sanity/services/article.service'
 import {removePrefixSlug} from '@/utils/slug'
@@ -42,7 +42,7 @@ export default function Article({data, preview}: PageProps) {
           query={articleBySlug}
           params={queryParams}
           seo={seo}
-          type={PREVIEW_PAGE_TYPE.SINGLE_ARTICLE}
+          Container={ArticleContainer}
         />
       </>
     )
