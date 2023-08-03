@@ -46,7 +46,8 @@
 }
 
 .btnCTA {
-  @apply w-full;
+  @apply mt-[1.25rem]
+  w-full;
 }
 
 .btnCTASecondary {
@@ -80,8 +81,11 @@
 }
 
 .priceAndCurrency {
-  @apply mb-[1.25rem]
-  text-black-100;
+  @apply text-black-100;
+}
+
+.framed {
+  @apply text-black-60;
 }
 
 .singleMediaItem {

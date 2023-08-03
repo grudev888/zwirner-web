@@ -18,6 +18,7 @@ export const mapArtworkData = (data: RecordData) => {
     editionInformation: data?.editionInformation,
     additionalCaption: data?.additionalCaption,
     framedDimensions: data?.framedDimensions,
+    framed: data?.framed,
     primaryCta: data?.artworkCTA?.CTAText && {
       text: data?.artworkCTA.CTAText,
     },

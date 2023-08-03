@@ -69,6 +69,7 @@ export const ArtistArtworkDetailContainer: FC<ArtistArtworkDetailContainerProps>
     currency,
     primaryCta,
     secondaryCta,
+    framed,
     description,
     productInformation,
     editionInformation,
@@ -178,6 +179,7 @@ export const ArtistArtworkDetailContainer: FC<ArtistArtworkDetailContainerProps>
               {priceAndCurrency && (
                 <DzText text={priceAndCurrency} className={styles.priceAndCurrency} />
               )}
+              {framed && <DzText text={framed} className={styles.framed} />}
               {primaryCta ? (
                 <DzButton className={cn(styles.btnCTA)} size={BUTTON_SIZES.LARGE}>
                   {primaryCta.text}
