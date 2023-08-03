@@ -3,6 +3,7 @@ type RecordData = Record<string, any>
 export const mapArtworkData = (data: RecordData) => {
   return {
     artistName: data?.artists?.[0].fullName,
+    artistSlug: data?.artists?.[0].artistPage?.slug?.current,
     edition: data?.edition,
     title: data?.title,
     medium: data?.medium,

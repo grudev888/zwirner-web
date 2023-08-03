@@ -8,5 +8,5 @@ export const artistById = groq`
 export const artistArtworkBySlug = groq`
 *[_type == "artwork" && defined(slug.current) && slug.current == $slug][0]{
   ...,
-  artists[]-> {fullName}
+  artists[]-> {fullName, artistPage->{slug}}
 }`

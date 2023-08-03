@@ -62,6 +62,7 @@ export const ArtistArtworkDetailContainer: FC<ArtistArtworkDetailContainerProps>
 
   const {
     artistName,
+    artistSlug,
     title,
     medium,
     dimensions,
@@ -95,7 +96,15 @@ export const ArtistArtworkDetailContainer: FC<ArtistArtworkDetailContainerProps>
           ) : null}
           <DzTitle
             titleType={TITLE_TYPES.H1}
-            title={artistName}
+            title={
+              artistSlug ? (
+                <DzLink href={artistSlug} textLinkSize={TEXT_SIZES.MEDIUM}>
+                  {artistName}
+                </DzLink>
+              ) : (
+                artistName
+              )
+            }
             subtitle={
               title &&
               year && (
