@@ -1,13 +1,15 @@
 .leftPane {
-  @apply relative
-  !flex
-  h-fit
-  flex-col
-  overflow-y-scroll
-  pt-10
-  scrollbar-none
-  md:sticky
-  md:top-[60px]
+  @apply /*TODO
+  bottom
+  margin
+  above
+  footer
+  should
+  be
+  defined
+  in
+  footer
+  or global layout*/ relative !flex h-fit flex-col overflow-y-scroll pt-10 scrollbar-none md:sticky md:top-[60px] md:mb-[7.5rem]
   md:h-[calc(100vh-60px)];
 }
 
@@ -16,8 +18,10 @@
 }
 
 .rightPane {
-  @apply flex
-  flex-col;
+  @apply /*TODO
+  bottom
+  margin above footer should be defined in footer or global layout*/ flex flex-col
+  md:mb-[7.5rem];
 }
 
 .ctaContainer {
