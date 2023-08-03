@@ -1,3 +1,5 @@
+import {capitalizeFirstLetter} from '@/utils/string/capitalizeFirstLetter'
+
 type RecordData = Record<string, any>
 
 export const mapArtworkData = (data: RecordData) => {
@@ -20,14 +22,14 @@ export const mapArtworkData = (data: RecordData) => {
     framedDimensions: data?.framedDimensions,
     framed: data?.framed,
     primaryCta: data?.artworkCTA?.CTA &&
-      data?.artworkCTA?.CTA !== 'none' &&
-      data?.artworkCTA?.CTAText && {
-        text: data?.artworkCTA.CTAText,
+      data?.artworkCTA?.CTA !== 'none' && {
+        text: data?.artworkCTA.CTAText || capitalizeFirstLetter(data?.artworkCTA?.CTA),
       },
     secondaryCta: data?.artworkCTA?.secondaryCTA &&
-      data?.artworkCTA?.secondaryCTA !== 'none' &&
-      data?.artworkCTA?.SecondaryCTAText && {
-        text: data?.artworkCTA.SecondaryCTAText,
+      data?.artworkCTA?.secondaryCTA !== 'none' && {
+        text:
+          data?.artworkCTA.SecondaryCTAText ||
+          capitalizeFirstLetter(data?.artworkCTA?.secondaryCTA),
       },
   }
 }
