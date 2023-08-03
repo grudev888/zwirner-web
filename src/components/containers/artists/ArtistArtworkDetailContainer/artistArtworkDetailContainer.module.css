@@ -4,12 +4,12 @@
   h-fit
   flex-col
   overflow-y-scroll
-  pt-10
   scrollbar-none
   md:sticky
   md:top-[60px]
   md:mb-[7.5rem]
-  md:h-[calc(100vh-60px)];
+  md:h-[calc(100vh-60px)]
+  md:pt-10;
 }
 /*TODO bottom margin above footer should be defined in footer or global layout*/
 
