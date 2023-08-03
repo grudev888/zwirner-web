@@ -17,6 +17,7 @@ export const mapArtworkData = (data: RecordData) => {
     copyrightInformation: data?.copyrightInformation,
     editionInformation: data?.editionInformation,
     additionalCaption: data?.additionalCaption,
+    framedDimensions: data?.framedDimensions,
     primaryCta: data?.artworkCTA?.CTAText && {
       text: data?.artworkCTA.CTAText,
     },
