@@ -161,23 +161,27 @@ export const ArtistArtworkDetailContainer: FC<ArtistArtworkDetailContainerProps>
                 />
               </div>
             )}
-            {priceAndCurrency && (
-              <DzText text={priceAndCurrency} className={styles.priceAndCurrency} />
-            )}
-            {framed && <DzText text={framed} className={styles.framed} />}
-            {primaryCta ? (
-              <DzButton className={cn(styles.btnCTA)} size={BUTTON_SIZES.LARGE}>
-                {primaryCta.text}
-              </DzButton>
-            ) : null}
-            {secondaryCta ? (
-              <DzButton
-                className={cn(styles.btnCTA, styles.btnCTASecondary)}
-                size={BUTTON_SIZES.LARGE}
-              >
-                {secondaryCta.text}
-              </DzButton>
-            ) : null}
+            <div className={styles.priceAndFramingContainer}>
+              {priceAndCurrency && (
+                <DzText text={priceAndCurrency} className={styles.priceAndCurrency} />
+              )}
+              {framed && <DzText text={framed} className={styles.framed} />}
+            </div>
+            <div className={styles.ctaButtonsContainer}>
+              {primaryCta ? (
+                <DzButton className={cn(styles.btnCTA)} size={BUTTON_SIZES.LARGE}>
+                  {primaryCta.text}
+                </DzButton>
+              ) : null}
+              {secondaryCta ? (
+                <DzButton
+                  className={cn(styles.btnCTA, styles.btnCTASecondary)}
+                  size={BUTTON_SIZES.LARGE}
+                >
+                  {secondaryCta.text}
+                </DzButton>
+              ) : null}
+            </div>
           </div>
         </div>
       </DzColumn>

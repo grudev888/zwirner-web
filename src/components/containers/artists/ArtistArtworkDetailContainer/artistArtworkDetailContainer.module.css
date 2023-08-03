@@ -30,9 +30,9 @@
   left-0
   z-[300]
   w-full
-  max-w-[580px]
   px-[1.25rem]
   md:sticky
+  md:max-w-[580px]
   md:px-0;
 }
 
@@ -47,6 +47,11 @@
   @apply bg-white-100
   py-[0.625rem]
   md:py-[1.25rem];
+}
+
+.ctaButtonsContainer {
+  @apply flex
+  md:block;
 }
 
 .btnCTA {
@@ -89,5 +94,12 @@
 }
 
 .framed {
-  @apply text-black-60;
+  @apply ml-[1.5rem]
+  text-black-60
+  md:ml-0;
+}
+
+.priceAndFramingContainer {
+  @apply flex
+  md:block;
 }
