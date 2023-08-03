@@ -194,7 +194,7 @@ export const ArtistArtworkDetailContainer: FC<ArtistArtworkDetailContainerProps>
           gridColumnsStyles="!gap-y-[1rem]"
         />
         {description && (
-          <div ref={descriptionRef}>
+          <div ref={descriptionRef} className={styles.descriptionContainer}>
             <DzPortableText portableProps={{value: description}} />
           </div>
         )}

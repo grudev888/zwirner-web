@@ -103,3 +103,7 @@
   @apply flex
   md:block;
 }
+
+.descriptionContainer {
+  @apply mb-[7.5rem];
+}
