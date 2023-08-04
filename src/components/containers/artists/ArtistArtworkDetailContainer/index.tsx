@@ -35,8 +35,9 @@ export const ArtistArtworkDetailContainer: FC<ArtistArtworkDetailContainerProps>
   const [isClient, setIsClient] = useState(false)
   const {isSmall} = useBreakpoints()
   const [currentZoomedUrl, setCurrentZoomedUrl] = useState<string | undefined>(undefined)
-  const photoGridItems = photosGrid(data) || []
-  const firstItemMediaProps = photoGridItems?.[0]
+  const allPhotoGridItems = photosGrid(data) || []
+  const firstItemMediaProps = allPhotoGridItems[0]
+  const photoGridItems = isSmall ? allPhotoGridItems.slice(1) : allPhotoGridItems
   const descriptionRef = useRef<HTMLDivElement>(null)
   const detailTextStyles = {normal: 'text-black-60 !text-sm'}
 
