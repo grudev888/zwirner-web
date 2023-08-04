@@ -27,14 +27,14 @@ interface PreviewData {
 
 export default function SubPageInstallationView({data = {}, preview}: PageProps) {
   const {pageData = {}, queryParams} = data ?? {}
-  const {installationViewsSeo} = pageData ?? {}
+  const {seo} = pageData ?? {}
 
   if (preview) {
     return (
       <PreviewPage
         query={installationViewsBySlug}
         params={queryParams}
-        seo={installationViewsSeo}
+        seo={seo}
         Container={InstallationViewsContainer}
       />
     )
@@ -42,7 +42,7 @@ export default function SubPageInstallationView({data = {}, preview}: PageProps)
 
   return (
     <>
-      <SEOComponent data={installationViewsSeo} />
+      <SEOComponent data={seo} />
       <InstallationViewsContainer data={pageData} />
     </>
   )

@@ -38,7 +38,7 @@ export const installationViewsBySlug = groq`
   slug,
   installationViewsInterstitial,
   installationViews,
-  installationViewsSeo {
+  'seo':installationViewsSeo {
     ${pageSEOFields}
   }
 }`

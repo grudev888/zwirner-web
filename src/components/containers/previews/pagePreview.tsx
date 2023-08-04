@@ -31,7 +31,7 @@ const ContainerData: FC<PreviewPageProps> = ({seo, query, params = {}, Container
   const data = usePreview(null, query, params)
   const componentData = getData(data)
   const container = getContainer({Container, data: componentData})
-  const componentSEO = seo || componentData.seo
+  const componentSEO = seo || componentData?.seo
 
   return (
     <>
