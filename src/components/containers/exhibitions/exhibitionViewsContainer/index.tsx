@@ -5,6 +5,7 @@ import {
   DzInterstitial,
   DzSectionMenu,
 } from '@zwirner/design-system'
+import {useRouter} from 'next/router'
 import {FC} from 'react'
 
 import {
@@ -27,7 +28,9 @@ interface InstallationViewsContainerProps {
 }
 
 export const InstallationViewsContainer: FC<InstallationViewsContainerProps> = ({data}) => {
-  const {title, installationViewsInterstitial, installationViews, slug} = data ?? {}
+  const router = useRouter()
+  const {title, subtitle, showChecklist, installationViewsInterstitial, installationViews, slug} =
+    data ?? {}
   const interstitialData = dzInterstitialMapper({data: installationViewsInterstitial})
   const complexGridData = dzComplexGridMapper({
     data: {displayNumberOfResults: false, itemsPerRow: 2, items: installationViews},
@@ -43,13 +46,25 @@ export const InstallationViewsContainer: FC<InstallationViewsContainerProps> = (
         <DzSectionMenu
           sections={[
             {text: EXPLORE, id: 'explore', url: `${currentSlug}#explore`},
-            {text: CHECKLIST, id: 'checklist', url: `${currentSlug}${EXHIBITION_CHECKLIST_URL}`},
+            ...(showChecklist
+              ? [
+                  {
+                    text: CHECKLIST,
+                    id: 'checklist',
+                    url: `${currentSlug}${EXHIBITION_CHECKLIST_URL}`,
+                  },
+                ]
+              : []),
             {
               text: INSTALLATION_VIEWS,
               id: 'installation-views',
               url: `${currentSlug}${EXHIBITION_INSTALLATION_URL}`,
             },
           ]}
+          linksProps={{
+            router,
+            useRoute: true,
+          }}
           sticky
           useLinks
         />
@@ -59,7 +74,7 @@ export const InstallationViewsContainer: FC<InstallationViewsContainerProps> = (
             title: INQUIRE,
             description: INTERESTED_IN_THIS_EXHIBITION,
           }}
-          title={`${title}— Installation Views`}
+          title={`${title} ${subtitle}`}
           customCTAContainerProps={{
             span: 6,
             start: 7,

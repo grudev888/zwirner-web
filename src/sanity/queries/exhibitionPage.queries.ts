@@ -33,6 +33,8 @@ export const exhibitionPageBySlug = groq`
 export const installationViewsBySlug = groq`
 *[_type == "exhibitionPage" && slug.current == $slug][0] {
   title,
+  subtitle,
+  'showChecklist': count(checklist) > 0,
   slug,
   installationViewsInterstitial,
   installationViews,
