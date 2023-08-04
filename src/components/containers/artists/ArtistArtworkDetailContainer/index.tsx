@@ -83,7 +83,12 @@ export const ArtistArtworkDetailContainer: FC<ArtistArtworkDetailContainerProps>
       <DzColumn span={4} className={cn(styles.leftPane)}>
         <div className={styles.leftPaneContent}>
           {isClient && isSmall && firstItemMediaProps ? (
-            <DzCard type={CARD_TYPES.ARTWORK} data={firstItemMediaProps} />
+            <DzCard
+              type={CARD_TYPES.ARTWORK}
+              data={firstItemMediaProps}
+              onClickImage={onClickImage}
+              imageStyles={gridImageStyles.cursorZoom}
+            />
           ) : null}
           <DzTitle
             titleType={TITLE_TYPES.H1}
