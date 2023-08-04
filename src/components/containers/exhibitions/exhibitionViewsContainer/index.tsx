@@ -82,7 +82,7 @@ export const InstallationViewsContainer: FC<InstallationViewsContainerProps> = (
           fullLeftContainer
         />
         <FullWidthFlexCol>
-          {complexGridData ? <DzComplexGrid {...complexGridData} /> : null}
+          {complexGridData && installationViews ? <DzComplexGrid {...complexGridData} /> : null}
           {interstitialData && <DzInterstitial {...interstitialData} />}
         </FullWidthFlexCol>
       </DzColumn>
