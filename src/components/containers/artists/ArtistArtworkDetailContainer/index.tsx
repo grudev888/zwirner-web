@@ -34,7 +34,9 @@ const gridImageStyles: any = {
 export const ArtistArtworkDetailContainer: FC<ArtistArtworkDetailContainerProps> = ({data}) => {
   const [isClient, setIsClient] = useState(false)
   const {isSmall} = useBreakpoints()
-  const [currentZoomedUrl, setCurrentZoomedUrl] = useState<string | undefined>(undefined)
+  const [currentZoomedImgProps, setCurrentZoomedImgProps] = useState<
+    Record<string, any> | undefined
+  >(undefined)
   const allPhotoGridItems = photosGrid(data) || []
   const firstItemMediaProps = allPhotoGridItems[0]
   const photoGridItems = isSmall ? allPhotoGridItems.slice(1) : allPhotoGridItems
@@ -42,9 +44,9 @@ export const ArtistArtworkDetailContainer: FC<ArtistArtworkDetailContainerProps>
   const detailTextStyles = {normal: 'text-black-60 !text-sm'}
 
   const onClickImage = (data: any) => {
-    const src = data?.media?.imgProps?.src
-    if (src) {
-      setCurrentZoomedUrl(src)
+    const imgProps: Record<string, any> = data?.media?.imgProps
+    if (imgProps) {
+      setCurrentZoomedImgProps(imgProps)
     }
   }
   const onClickLearnMore = () => {
@@ -213,9 +215,10 @@ export const ArtistArtworkDetailContainer: FC<ArtistArtworkDetailContainerProps>
         )}
       </DzColumn>
       <DzImageZoomModal
-        imgUrl={currentZoomedUrl}
-        onClose={() => setCurrentZoomedUrl(undefined)}
-        isOpen={!!currentZoomedUrl}
+        alt={currentZoomedImgProps?.alt || 'Zoomed artwork image'}
+        imgUrl={currentZoomedImgProps?.src}
+        onClose={() => setCurrentZoomedImgProps(undefined)}
+        isOpen={!!currentZoomedImgProps?.src}
       />
     </>
   )
