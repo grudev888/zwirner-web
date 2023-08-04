@@ -33,6 +33,7 @@ export const exhibitionPageBySlug = groq`
 export const installationViewsBySlug = groq`
 *[_type == "exhibitionPage" && slug.current == $slug][0] {
   title,
+  slug,
   installationViewsInterstitial,
   installationViews,
   installationViewsSeo {

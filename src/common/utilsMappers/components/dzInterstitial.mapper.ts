@@ -22,8 +22,6 @@ export const dzInterstitialMapper = ({
     options: {objectFit: MEDIA_OBJECT_FIT.COVER, ...imageOptions},
   })
 
-  console.log('hideMedia', hideMedia)
-
   return {
     data: {
       fullWidth: true,

@@ -1,4 +1,5 @@
 import {CARD_TYPES, CardTypes, DzComplexGridProps, DzMediaProps} from '@zwirner/design-system'
+import Image from 'next/image'
 
 import {dzMediaMapper} from '@/common/utilsMappers/image.mapper'
 
@@ -8,6 +9,7 @@ export interface ComplexGridMapperProps {
   data: any
   cardType: CardTypes
   options?: Partial<DzComplexGridProps>
+  imageOptions?: Partial<DzMediaProps>
 }
 
 export interface ImageMapperForDzCard {
@@ -51,10 +53,12 @@ export const dzComplexGridMapper = ({
   data,
   cardType = CARD_TYPES.CONTENT,
   options = {},
+  imageOptions = {},
 }: ComplexGridMapperProps) => {
   const {displayNumberOfResults, items, itemsPerRow} = data ?? {}
   const cardMapper = cardMapperPerDataType[DzCardSources.Image]
-  const cards = cardMapper({data: items, cardType})
+  const cards = cardMapper({data: items, cardType, imageOptions})
+
   return {
     cards,
     displayNumberOfResults,

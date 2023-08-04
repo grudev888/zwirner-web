@@ -3,7 +3,7 @@ import {useMemo} from 'react'
 
 import {apiVersion, dataset, projectId} from './env'
 
-const config = {
+export const config = {
   apiVersion,
   dataset,
   projectId,

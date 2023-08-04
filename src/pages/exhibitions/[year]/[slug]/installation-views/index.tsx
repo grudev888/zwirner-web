@@ -85,7 +85,6 @@ export const getStaticProps: GetStaticProps<PageProps, Query, PreviewData> = asy
     }
   }
 
-  // TODO DEFINE ONLY NECESSARY DATA FOR THIS SUB_PAGE
   const data: any = await getExhibitionInstallationViews(queryParams)
 
   return {
