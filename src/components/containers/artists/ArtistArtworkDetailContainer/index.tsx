@@ -21,6 +21,7 @@ import {photosGrid} from '@/components/containers/artworks/mapper'
 
 import styles from './artistArtworkDetailContainer.module.css'
 import {mapArtworkData} from './mapper'
+import NoSSR from '@/components/wrappers/NoSSR'
 
 interface ArtistArtworkDetailContainerProps {
   data: any
@@ -85,135 +86,137 @@ export const ArtistArtworkDetailContainer: FC<ArtistArtworkDetailContainerProps>
   return (
     <>
       <DzColumn span={4}>
-        <div
-          className={cn(styles.leftPane)}
-          style={
-            isSmall || !leftPaneContainerHeight ? {} : {height: `${leftPaneContainerHeight}px`}
-          }
-        >
-          <div className={styles.leftPaneContent}>
-            {isClient && isSmall && firstItemMediaProps ? (
-              <DzCard
-                type={CARD_TYPES.ARTWORK}
-                data={firstItemMediaProps}
-                onClickImage={onClickImage}
-                imageStyles={gridImageStyles.cursorZoom}
+        <NoSSR>
+          <div
+            className={cn(styles.leftPane)}
+            style={
+              isSmall || !leftPaneContainerHeight ? {} : {height: `${leftPaneContainerHeight}px`}
+            }
+          >
+            <div className={styles.leftPaneContent}>
+              {isClient && isSmall && firstItemMediaProps ? (
+                <DzCard
+                  type={CARD_TYPES.ARTWORK}
+                  data={firstItemMediaProps}
+                  onClickImage={onClickImage}
+                  imageStyles={gridImageStyles.cursorZoom}
+                />
+              ) : null}
+              <DzTitle
+                titleType={TITLE_TYPES.H1}
+                title={
+                  <>
+                    {artistSlug ? (
+                      <DzLink href={artistSlug} textLinkSize={TEXT_SIZES.MEDIUM}>
+                        {artistName}
+                      </DzLink>
+                    ) : (
+                      artistName
+                    )}
+                    {title && (year || displayDate) && (
+                      <span className="block">
+                        <span className={styles.subtitle}>{title}, </span>
+                        <span className={styles.subtitleYear}>{displayDate || year}</span>
+                      </span>
+                    )}
+                  </>
+                }
+                titleSize={TITLE_SIZES.MD}
+                className={styles.header}
               />
-            ) : null}
-            <DzTitle
-              titleType={TITLE_TYPES.H1}
-              title={
-                <>
-                  {artistSlug ? (
-                    <DzLink href={artistSlug} textLinkSize={TEXT_SIZES.MEDIUM}>
-                      {artistName}
-                    </DzLink>
-                  ) : (
-                    artistName
-                  )}
-                  {title && (year || displayDate) && (
-                    <span className="block">
-                      <span className={styles.subtitle}>{title}, </span>
-                      <span className={styles.subtitleYear}>{displayDate || year}</span>
-                    </span>
-                  )}
-                </>
-              }
-              titleSize={TITLE_SIZES.MD}
-              className={styles.header}
-            />
-            <DzText
-              text={medium}
-              textSize={TEXT_SIZES.SMALL}
-              className={styles.artworkDetailText}
-            />
-            {dimensions && (
-              <div className={styles.textSectionContainer}>
-                <DzPortableText
-                  portableProps={{value: dimensions}}
-                  customStyles={detailTextStyles}
-                />
-              </div>
-            )}
-            {framedDimensions && (
-              <div className={styles.textSectionContainer}>
-                <DzPortableText
-                  portableProps={{value: framedDimensions}}
-                  customStyles={detailTextStyles}
-                />
-              </div>
-            )}
-            {editionInformation && (
-              <div className={styles.textSectionContainer}>
-                <DzPortableText
-                  portableProps={{value: editionInformation}}
-                  customStyles={detailTextStyles}
-                />
-              </div>
-            )}
-            {productInformation && (
-              <div className={styles.textSectionContainer}>
-                <DzPortableText
-                  portableProps={{value: productInformation}}
-                  customStyles={detailTextStyles}
-                />
-              </div>
-            )}
-            {additionalCaption && (
-              <div className={styles.textSectionContainer}>
-                <DzPortableText
-                  portableProps={{value: additionalCaption}}
-                  customStyles={detailTextStyles}
-                />
-              </div>
-            )}
-            {description && (
-              <DzLink
-                href="#"
-                id="description"
-                onClick={onClickLearnMore}
-                variant={LINK_VARIANTS.TEXT}
-                className={styles.learnMore}
-              >
-                Learn More
-              </DzLink>
-            )}
-          </div>
-          <div className={styles.ctaContainer}>
-            <div className={styles.ctaContainerTop} />
-            <div className={styles.ctaBody}>
-              {salesInformation && (
+              <DzText
+                text={medium}
+                textSize={TEXT_SIZES.SMALL}
+                className={styles.artworkDetailText}
+              />
+              {dimensions && (
                 <div className={styles.textSectionContainer}>
                   <DzPortableText
-                    portableProps={{value: salesInformation}}
-                    customStyles={{normal: '!text-sm'}}
+                    portableProps={{value: dimensions}}
+                    customStyles={detailTextStyles}
                   />
                 </div>
               )}
-              <div className={styles.priceAndFramingContainer}>
-                {priceAndCurrency && (
-                  <DzText text={priceAndCurrency} className={styles.priceAndCurrency} />
+              {framedDimensions && (
+                <div className={styles.textSectionContainer}>
+                  <DzPortableText
+                    portableProps={{value: framedDimensions}}
+                    customStyles={detailTextStyles}
+                  />
+                </div>
+              )}
+              {editionInformation && (
+                <div className={styles.textSectionContainer}>
+                  <DzPortableText
+                    portableProps={{value: editionInformation}}
+                    customStyles={detailTextStyles}
+                  />
+                </div>
+              )}
+              {productInformation && (
+                <div className={styles.textSectionContainer}>
+                  <DzPortableText
+                    portableProps={{value: productInformation}}
+                    customStyles={detailTextStyles}
+                  />
+                </div>
+              )}
+              {additionalCaption && (
+                <div className={styles.textSectionContainer}>
+                  <DzPortableText
+                    portableProps={{value: additionalCaption}}
+                    customStyles={detailTextStyles}
+                  />
+                </div>
+              )}
+              {description && (
+                <DzLink
+                  href="#"
+                  id="description"
+                  onClick={onClickLearnMore}
+                  variant={LINK_VARIANTS.TEXT}
+                  className={styles.learnMore}
+                >
+                  Learn More
+                </DzLink>
+              )}
+            </div>
+            <div className={styles.ctaContainer}>
+              <div className={styles.ctaContainerTop} />
+              <div className={styles.ctaBody}>
+                {salesInformation && (
+                  <div className={styles.textSectionContainer}>
+                    <DzPortableText
+                      portableProps={{value: salesInformation}}
+                      customStyles={{normal: '!text-sm'}}
+                    />
+                  </div>
                 )}
-                {framed && <DzText text={framed} className={styles.framed} />}
-              </div>
-              <div className={styles.ctaButtonsContainer}>
-                {primaryCta ? (
-                  <DzButton className={cn(styles.btnCTA)} size={BUTTON_SIZES.LARGE}>
-                    {primaryCta.text}
-                  </DzButton>
-                ) : null}
-                {secondaryCta ? (
-                  <DzButton
-                    className={cn(styles.btnCTA, styles.btnCTASecondary)}
-                    size={BUTTON_SIZES.LARGE}
-                  >
-                    {secondaryCta.text}
-                  </DzButton>
-                ) : null}
+                <div className={styles.priceAndFramingContainer}>
+                  {priceAndCurrency && (
+                    <DzText text={priceAndCurrency} className={styles.priceAndCurrency} />
+                  )}
+                  {framed && <DzText text={framed} className={styles.framed} />}
+                </div>
+                <div className={styles.ctaButtonsContainer}>
+                  {primaryCta ? (
+                    <DzButton className={cn(styles.btnCTA)} size={BUTTON_SIZES.LARGE}>
+                      {primaryCta.text}
+                    </DzButton>
+                  ) : null}
+                  {secondaryCta ? (
+                    <DzButton
+                      className={cn(styles.btnCTA, styles.btnCTASecondary)}
+                      size={BUTTON_SIZES.LARGE}
+                    >
+                      {secondaryCta.text}
+                    </DzButton>
+                  ) : null}
+                </div>
               </div>
             </div>
           </div>
-        </div>
+        </NoSSR>
       </DzColumn>
       <DzColumn span={8} className={cn(styles.rightPane)}>
         <DzComplexGrid
