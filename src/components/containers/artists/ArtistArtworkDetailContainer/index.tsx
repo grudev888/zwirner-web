@@ -18,10 +18,10 @@ import {FC, useEffect, useRef, useState} from 'react'
 
 import DzPortableText from '@/common/components/portableText'
 import {photosGrid} from '@/components/containers/artworks/mapper'
+import NoSSR from '@/components/wrappers/NoSSR'
 
 import styles from './artistArtworkDetailContainer.module.css'
 import {mapArtworkData} from './mapper'
-import NoSSR from '@/components/wrappers/NoSSR'
 
 interface ArtistArtworkDetailContainerProps {
   data: any
