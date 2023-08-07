@@ -1,0 +1,107 @@
+.leftPane {
+  @apply relative
+  !flex
+  h-fit
+  flex-col
+  overflow-y-scroll
+  scrollbar-none
+  md:sticky
+  md:top-[60px]
+  md:mb-[7.5rem]
+  md:pt-10;
+}
+/*TODO bottom margin above footer should be defined in footer or global layout*/
+
+.leftPaneContent {
+  @apply flex-1;
+}
+
+.rightPane {
+  @apply flex
+  flex-col
+  md:mb-[7.5rem];
+}
+/*TODO bottom margin above footer should be defined in footer or global layout*/
+
+.ctaContainer {
+  @apply fixed
+  bottom-0
+  left-0
+  z-[10]
+  w-full
+  px-[1.25rem]
+  md:sticky
+  md:max-w-[580px]
+  md:px-0;
+}
+
+.ctaContainerTop {
+  @apply h-[2rem]
+  bg-gradient-to-t
+  from-white-100
+  opacity-75;
+}
+
+.ctaBody {
+  @apply bg-white-100
+  py-[1.25rem];
+}
+
+.ctaButtonsContainer {
+  @apply flex
+  md:block;
+}
+
+.btnCTA {
+  @apply mt-[1.25rem]
+  w-full;
+}
+
+.btnCTASecondary {
+  @apply mt-[1.25rem]
+  border-none;
+}
+
+.header {
+  @apply mb-[1.25rem];
+}
+.subtitle {
+  @apply italic
+  !text-black-100;
+}
+
+.subtitleYear {
+  @apply !text-black-100;
+}
+
+.learnMore {
+  @apply mt-[1.25rem];
+}
+
+.artworkDetailText {
+  @apply mb-[0.675rem]
+  text-black-60;
+}
+
+.textSectionContainer {
+  @apply mb-[0.675rem];
+}
+
+.priceAndCurrency {
+  @apply text-black-100;
+}
+
+.framed {
+  @apply ml-[1.5rem]
+  text-black-60
+  md:ml-0;
+}
+
+.priceAndFramingContainer {
+  @apply flex
+  md:block;
+}
+
+.descriptionContainer {
+  @apply mb-[7.5rem];
+}
