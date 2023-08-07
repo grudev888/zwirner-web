@@ -17,17 +17,19 @@ git clone https://github.com/Zwirner/web.git
 cd ./web
 ```
 
-3. Create a Github access token:  
+3. Create a Github access token:
+
 - Go to https://github.com/settings/tokens
 - Click on the _Generate new token_ button
 - Choose _Generate new token (classic)_
-- Set a meaningful name (like "DZ Package") 
+- Set a meaningful name (like "DZ Package")
 - Tick the **_read:packages | Download packages from GitHub Package Registry_** checkbox.
 - Click _Generate token_ button and copy the token you just created.
 
 4. Duplicate the `.env.local.example` file and rename it as `.env`. Then:
+
 - Replace the value of the `GH_TOKEN` variable with the token you created in the previous step.
-- Ask engineering for the `SANITY_API_READ_TOKEN` value, and replace it in that file. 
+- Ask engineering for the `SANITY_API_READ_TOKEN` value, and replace it in that file.
 - Keep `NEXT_PUBLIC_SANITY_API_VERSION` and `NEXT_PUBLIC_RECAPTCHA_SITE_KEY` empty for now.
 
 5. Install Yarn v3 (berry) globally. [Here](https://yarnpkg.com/getting-started/install) the guide. Use Node v20.
@@ -37,11 +39,12 @@ cd ./web
 ```sh
 export GH_TOKEN={your_token}
 ```
-7. Run `yarn` or `yarn install` to install dependencies.  
 
-8. Run `yarn dev` to start the development server.  
+7. Run `yarn` or `yarn install` to install dependencies.
 
-9. Voilà! Open this URL http://localhost:3000/ and you should see the system working.  
+8. Run `yarn dev` to start the development server.
+
+9. Voilà! Open this URL http://localhost:3000/ and you should see the system working.
 
 ## Work flow:
 
