@@ -23,7 +23,7 @@ export const ExhibitionsContainer: FC<ExhibitionsContainerProps> = ({data}) => {
 
   return data ? (
     <>
-      <DzColumn span={12}>
+      <DzColumn span={12} className={styles.titleContainer}>
         <DzTitleExhibition {...data} />
       </DzColumn>
       <DzColumn span={12}>
