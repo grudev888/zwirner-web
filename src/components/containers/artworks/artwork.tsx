@@ -3,7 +3,7 @@ import {FC} from 'react'
 
 import {ContainerTitle} from '@/components/wrappers/title/ContainerTitle'
 
-import {} from './mapper'
+//import {photosGrid} from './mapper'
 
 interface ArtworkContainerProps {
   data: any
@@ -33,6 +33,9 @@ export const ArtworkContainer: FC<ArtworkContainerProps> = ({data}) => {
     // description,
     // artworkType,
   } = data ?? ''
+
+  //const artworksPhotos = photosGrid(data)
+  // Use artworksPhotos to map a grid of DzCards like src/common/components/portableText/index.tsx LINE:58
 
   return (
     <DzColumn span={12}>
