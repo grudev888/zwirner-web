@@ -1784,9 +1784,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@zwirner/design-system@npm:0.0.75--canary.115.468b273.0":
-  version: 0.0.75--canary.115.468b273.0
-  resolution: "@zwirner/design-system@npm:0.0.75--canary.115.468b273.0::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40zwirner%2Fdesign-system%2F0.0.75--canary.115.468b273.0%2Fc846c837fbc440e4d915940a43fc0a39d1e81ee1"
+"@zwirner/design-system@npm:v0.0.77":
+  version: 0.0.77
+  resolution: "@zwirner/design-system@npm:0.0.77::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40zwirner%2Fdesign-system%2F0.0.77%2F65e26787829857b2aec70cc48a72b2a3b74e5564"
   dependencies:
     "@headlessui/react": ^1.7.10
     "@heroicons/react": ^2.0.15
@@ -1800,7 +1800,7 @@ __metadata:
   peerDependencies:
     react: ">=16"
     react-dom: ^17.0.1
-  checksum: cfc11fc9a27fa5545a4ac5f23293d6ceffc7b0dc3dc12f77682f90e1e9292d143e62241cd38f4623d58d898ce2a670e6bdb7cb880ee68f0137eb0dbf54c29d4b
+  checksum: 7c7e9d7721db865e7f86669a4c546c363e8209a6e33854dc63cc5b493f25cc625767f3401e73c891deed453110ea2f8c686eb7522ab30e5fcfa3ac2af3cb0c03
   languageName: node
   linkType: hard
 
@@ -8522,7 +8522,7 @@ __metadata:
     "@types/react-dom": ^18.2.4
     "@types/styled-components": ^5.1.26
     "@typescript-eslint/eslint-plugin": ^5.59.7
-    "@zwirner/design-system": 0.0.75--canary.115.468b273.0
+    "@zwirner/design-system": v0.0.77
     autoprefixer: ^10.4.13
     axios: ^1.3.5
     cross-env: ^7.0.3
