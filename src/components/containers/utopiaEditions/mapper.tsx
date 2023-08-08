@@ -59,9 +59,10 @@ export const heroMap = (data: any) => {
   const year = dateSelection?.year
 
   const mainExhibitionPhoto = exhibitions?.[0]?.exhibition?.photos?.[0]
+  const exhibitionHeroMedia = exhibitions?.[0]?.exhibition?.heroMedia?.image
   const mainPicture = exhibitions?.[0]?.exhibition?.artworks?.[0]?.mainArtWork?.photos?.[0]
 
-  const asset = mainExhibitionPhoto?.asset || mainPicture?.asset
+  const asset = mainExhibitionPhoto?.asset || mainPicture?.asset || exhibitionHeroMedia?.asset
   const alt = mainExhibitionPhoto?.alt || mainPicture?.alt
 
   const imgSrc = asset ? builder.image(asset).url() : ''
