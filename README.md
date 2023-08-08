@@ -32,7 +32,7 @@ cd ./web
 - Ask engineering for the `SANITY_API_READ_TOKEN` value, and replace it in that file.
 - Keep `NEXT_PUBLIC_SANITY_API_VERSION` and `NEXT_PUBLIC_RECAPTCHA_SITE_KEY` empty for now.
 
-5. Install Yarn v3 (berry) globally. [Here](https://yarnpkg.com/getting-started/install) the guide. Use Node v20.
+5. Use [Yarn v3 (berry)](https://yarnpkg.com/getting-started/install) and Node v18.
 
 6. Add `GH_TOKEN` to your terminal config file. For example, if you use zsh, you should:
 
