@@ -33,19 +33,25 @@ export const validateImage = (data: any) => {
 }
 
 export const imageMapper = (data: any) => {
-  const {photos, image: sourceImage} = data ?? {}
+  const {
+    photos,
+    image: sourceImage,
+    asset: srcAsset,
+    alt: altAsset,
+    caption: captionAsset,
+  } = data ?? {}
   const [mainPicture] = photos ?? []
-  const {asset, alt, image} = mainPicture ?? sourceImage ?? {}
-  const {alt: imageBuilderAlt, asset: imageBuilderAsset} = image ?? {}
-  const imgSrc =
-    imageBuilderAsset || asset
-      ? builder.image(imageBuilderAsset ? imageBuilderAsset : asset).url()
-      : ''
-  const imgAlt = imageBuilderAlt ? imageBuilderAlt : alt
+  const {asset, alt, image, caption} = mainPicture ?? sourceImage ?? {}
+  const {alt: imageBuilderAlt, asset: imageBuilderAsset, caption: imageBuilderCaption} = image ?? {}
+  const pictureAsset = imageBuilderAsset ?? srcAsset ?? asset
+  const imgCaption = imageBuilderCaption ?? captionAsset ?? caption
+  const imgSrc = pictureAsset ? builder.image(pictureAsset).url() : ''
+  const imgAlt = imageBuilderAlt ?? altAsset ?? alt
 
   return {
     alt: imgAlt,
     src: imgSrc,
+    caption: imgCaption,
   }
 }
 
@@ -170,7 +176,7 @@ export const getImageMedia = ({
   options = {},
   extraImgProps = {},
 }: DzMediaImageMapper) => {
-  const {src, alt} = imageMapper(data)
+  const {src, alt, caption} = imageMapper(data)
   return {
     media: {
       url,
@@ -186,6 +192,9 @@ export const getImageMedia = ({
     },
     hideMedia: !src,
     hideImage: !src,
+    extras: {
+      caption,
+    },
   }
 }
 

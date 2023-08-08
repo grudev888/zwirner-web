@@ -1,5 +1,5 @@
 import {client} from '@/sanity/client'
-import {artistById} from '@/sanity/queries/artist.queries'
+import {artistArtworkBySlug, artistById} from '@/sanity/queries/artist.queries'
 import {
   artistPageBySlug,
   artistPageSlugs,
@@ -30,6 +30,13 @@ export async function getArtistPageData(): Promise<any[]> {
 export async function getArtistPageBySlug(params: any): Promise<any[]> {
   if (client) {
     return (await client.fetch(artistPageBySlug, params)) || []
+  }
+  return []
+}
+
+export async function getArtistArtworkBySlug(params: any): Promise<any[]> {
+  if (client) {
+    return (await client.fetch(artistArtworkBySlug, params)) || []
   }
   return []
 }
