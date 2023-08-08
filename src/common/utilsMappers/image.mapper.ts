@@ -166,6 +166,7 @@ export const getVideoMedia = ({data, options = {}, extraVideoProps = {}}: DzMedi
     },
     hideMedia: !src,
     hideImage: !src,
+    extras: null,
   }
 }
 
