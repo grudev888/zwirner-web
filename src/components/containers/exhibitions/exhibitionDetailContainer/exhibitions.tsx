@@ -5,7 +5,6 @@ import {
   DzInterstitial,
   DzTitleExhibition,
   INTERSTITIAL_TEXT_COLORS,
-  useBreakpoints,
 } from '@zwirner/design-system'
 import {FC} from 'react'
 
@@ -18,7 +17,6 @@ interface ExhibitionsContainerProps {
 }
 
 export const ExhibitionsContainer: FC<ExhibitionsContainerProps> = ({data}) => {
-  const {isSmall} = useBreakpoints()
   data.location = data?.locations?.[0]
 
   return data ? (
@@ -45,16 +43,11 @@ export const ExhibitionsContainer: FC<ExhibitionsContainerProps> = ({data}) => {
           />
         )}
       </DzColumn>
-      {data.pressRelease &&
-        (isSmall ? (
-          <DzColumn span={12} className={styles.pressReleaseContainer}>
-            <DzPortableText portableProps={{value: data.pressRelease}} />
-          </DzColumn>
-        ) : (
-          <DzColumn span={6} start={4} className={styles.pressReleaseContainer}>
-            <DzPortableText portableProps={{value: data.pressRelease}} />
-          </DzColumn>
-        ))}
+      {data.pressRelease && (
+        <DzColumn span={[12, 6]} start={[1, 4]} className={styles.pressReleaseContainer}>
+          <DzPortableText portableProps={{value: data.pressRelease}} />
+        </DzColumn>
+      )}
       {data.interstitial && (
         <DzColumn span={12}>
           <DzInterstitial
