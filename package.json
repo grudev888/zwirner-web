@@ -79,7 +79,7 @@
   },
   "packageManager": "yarn@3.5.1",
   "engines": {
-    "node": ">=v20.1.0"
+    "node": "18.x"
   },
   "publishConfig": {
     "@zwirner:registry": "https://npm.pkg.github.com"
