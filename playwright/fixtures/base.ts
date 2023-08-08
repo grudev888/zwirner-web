@@ -2,6 +2,10 @@ import {test as base} from '@playwright/test'
 
 const IGNORED_MESSAGES: (string | RegExp)[] = [
   'Image is missing required "alt" property. Please add Alternative Text to describe the image for screen readers and search engines.',
+  // Issue already reported but not addressed by the library maintainers https://github.com/videojs/videojs-youtube/issues/527
+  /Failed to execute 'postMessage' on 'DOMWindow': The target origin provided \('https:\/\/www.youtube.com'\) does not match the recipient window's origin \('(.*)'\)/,
+  // Related to the dev environment, not happening in production
+  'Content Security Policy: The page’s settings blocked the loading of a resource at eval (“script-src”).',
 ]
 
 export const test = base.extend<{checkLogs: void}>({
