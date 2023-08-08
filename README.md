@@ -34,7 +34,11 @@ cd ./web
 
 5. Install Yarn v3 (berry) globally. [Here](https://yarnpkg.com/getting-started/install) the guide. Use Node v20.
 
-6. Run command below to set `GH_TOKEN` to your local machine. Use token from Step 3.
+6. Add `GH_TOKEN` to your terminal config file. For example, if you use zsh, you should:
+
+- Open terminal config file with `open ~/.zshrc` command.
+- If file do not exist write `touch ~/.zshrc` and `open ~/.zshrc` again.
+- Insert code below at the end of the file and save it. Use the token you created in step 3.
 
 ```sh
 export GH_TOKEN={your_token}
@@ -45,18 +49,6 @@ export GH_TOKEN={your_token}
 8. Run `yarn dev` to start the development server.
 
 9. Voilà! Open this URL http://localhost:3000/ and you should see the system working.
-
-## Work flow:
-
-Commit example: _feat: {enter your commit message}, fixes NWEB-95_  
-Copied branch name example: _sergeyneprakhin/nweb-95-artwork-detail-page-mobile-fix-learn-more-anchor-link_
-
-1. _For each task, we make a separate branch from main._
-2. _Copy branch name from Linear ticket and use it._
-3. _Change ticket status in Linear to the "In Progress"._
-4. _Use "magic" word `fixes` with "ticket code" (example: `fixes NWEB-95`) from Linear link it._
-5. _At the end of the task, open PR (filled using template) into main branch, assign appropriate engineer to review._
-6. _After getting approval - merge PR. Change ticket status to 'Done'._
 
 ## Testing
 
