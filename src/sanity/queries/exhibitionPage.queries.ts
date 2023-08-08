@@ -23,7 +23,16 @@ export const exhibitionPageBySlug = groq`
 *[_type == "exhibitionPage" && slug.current == $slug][0] {
   ...,
   artists[]->,
-  location->,
+  locations[]->,
+  'checklistPDFURL': checklistPDF.asset->url,
+  'pressReleasePDFURL': pressReleasePDF.asset->url,
+  heroMedia {
+    type,
+    image {
+      ...
+      asset->
+    }
+  },
   seo {
     ${pageSEOFields}
   },

@@ -1,0 +1,9 @@
+.heroContainer {
+  @apply mb-[3.75rem]
+    md:mb-[7.5rem];
+}
+
+.pressReleaseContainer {
+  @apply mb-[3.75rem]
+    md:mb-[7.5rem];
+}
