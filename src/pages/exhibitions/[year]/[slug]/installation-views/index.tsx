@@ -4,10 +4,10 @@ import {SEOComponent} from '@/common/components/seo/seo'
 import {EXHIBITIONS_URL} from '@/common/constants/commonCopies'
 import {InstallationViewsContainer} from '@/components/containers/exhibitions/exhibitionViewsContainer'
 import {PreviewPage} from '@/components/containers/previews/pagePreview'
-import {exhibitionPageBySlug} from '@/sanity/queries/exhibitionPage.queries'
+import {installationViewsBySlug} from '@/sanity/queries/exhibitionPage.queries'
 import {
   getAllExhibitionPagesSlugs,
-  getExhibitionPageBySlug,
+  getExhibitionInstallationViews,
 } from '@/sanity/services/exhibition.service'
 
 interface PageProps {
@@ -32,7 +32,7 @@ export default function SubPageInstallationView({data = {}, preview}: PageProps)
   if (preview) {
     return (
       <PreviewPage
-        query={exhibitionPageBySlug}
+        query={installationViewsBySlug}
         params={queryParams}
         seo={seo}
         Container={InstallationViewsContainer}
@@ -85,8 +85,7 @@ export const getStaticProps: GetStaticProps<PageProps, Query, PreviewData> = asy
     }
   }
 
-  // TODO DEFINE ONLY NECESSARY DATA FOR THIS SUB_PAGE
-  const data: any = await getExhibitionPageBySlug(queryParams)
+  const data: any = await getExhibitionInstallationViews(queryParams)
 
   return {
     props: {
