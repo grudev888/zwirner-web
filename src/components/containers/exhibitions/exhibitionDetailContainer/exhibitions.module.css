@@ -12,3 +12,9 @@
   @apply mt-[2.5rem]
     md:mt-[3.75rem];
 }
+
+.containerBottomGap {
+  @apply mt-[3.75rem]
+    w-full
+    md:mt-[7.5rem];
+}

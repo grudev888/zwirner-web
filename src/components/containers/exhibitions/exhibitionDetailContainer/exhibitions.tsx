@@ -66,6 +66,8 @@ export const ExhibitionsContainer: FC<ExhibitionsContainerProps> = ({data}) => {
           />
         </DzColumn>
       )}
+      {/*TODO remove this when footer margin-top is applied globally */}
+      <div className={styles.containerBottomGap} />
     </>
   ) : null
 }
