@@ -74,7 +74,7 @@ export const InstallationViewsContainer: FC<InstallationViewsContainerProps> = (
             title: INQUIRE,
             description: INTERESTED_IN_THIS_EXHIBITION,
           }}
-          title={`${title} ${subtitle}`}
+          title={`${title} — ${subtitle}`}
           customCTAContainerProps={{
             span: 6,
             start: 7,
