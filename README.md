@@ -6,33 +6,49 @@ You will find the Sanity studio under the `[/studio](https://cms.zwirner.tech/)`
 
 ## Local development setup
 
-Follow these instructions to deploy a local environment of the webpage.
+Follow these instructions to set up a local environment of the webpage.
 
 1. Install Git. [Here](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git) the guide.
 
-2. Install Docker in your machine. [Here](https://docs.docker.com/get-docker/) the official guide for Windows, Mac and Linux users.
-
-3. **Windows and Linux only**: Install [Docker compose](https://docs.docker.com/compose/install/) in your machine. ([Docker for Mac already includes Compose](https://docs.docker.com.xy2401.com/v17.12/compose/install/#:~:text=Docker%20for%20Mac%20and%20Docker,need%20to%20install%20Compose%20separately.)).
-
-4. Clone this repository in your machine using Git.
+2. Clone this repository in your machine using Git and enter the root folder.
 
 ```sh
 git clone https://github.com/Zwirner/web.git
+cd ./web
 ```
 
-5. Create a Github access token: Go to https://github.com/settings/tokens, click on the _Generate new token_ button, choose _Generate new token (classic)_, set a meaningful name like "DZ Package", and make sure you **tick the _read:packages | Download packages from GitHub Package Registry_ option**. Click on Save and copy the token you just created.
+3. Create a Github access token:
 
-6. Duplicate the `.env.local.example` file and rename it as `.env`. Ask engineering for the `SANITY_API_READ_TOKEN` value, and replace it in that file. Also, replace the value of the `GH_TOKEN` variable with the token you created in the previous step.
+- Go to https://github.com/settings/tokens
+- Click on the _Generate new token_ button
+- Choose _Generate new token (classic)_
+- Set a meaningful name (like "DZ Package")
+- Tick the **_read:packages | Download packages from GitHub Package Registry_** checkbox.
+- Click _Generate token_ button and copy the token you just created.
 
-7. Open the project folder and let Docker Compose to install everything for you running the following command.
+4. Duplicate the `.env.local.example` file and rename it as `.env`. Then:
+
+- Replace the value of the `GH_TOKEN` variable with the token you created in the previous step.
+- Ask engineering for the `SANITY_API_READ_TOKEN` value, and replace it in that file.
+- Keep `NEXT_PUBLIC_SANITY_API_VERSION` and `NEXT_PUBLIC_RECAPTCHA_SITE_KEY` empty for now.
+
+5. Use [Yarn v3 (berry)](https://yarnpkg.com/getting-started/install) and Node v18.
+
+6. Add `GH_TOKEN` to your terminal config file. For example, if you use zsh, you should:
+
+- Open terminal config file with `open ~/.zshrc` command.
+- If file do not exist write `touch ~/.zshrc` and `open ~/.zshrc` again.
+- Insert code below at the end of the file and save it. Use the token you created in step 3.
 
 ```sh
-docker-compose up -d
+export GH_TOKEN={your_token}
 ```
 
-8. Voilà! Open this URL http://localhost:3000/ and you should see the system working.
+7. Run `yarn` or `yarn install` to install dependencies.
 
-> In case you want to manually install node and yarn to run this app outside the docker container, please make sure you use **Node 19**, and **Yarn 3 (berry)**.
+8. Run `yarn dev` to start the development server.
+
+9. Voilà! Open this URL http://localhost:3000/ and you should see the system working.
 
 ## Testing
 
