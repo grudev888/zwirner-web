@@ -36,7 +36,7 @@ export const InstallationViewsContainer: FC<InstallationViewsContainerProps> = (
     data: {displayNumberOfResults: false, itemsPerRow: 2, items: installationViews},
     cardType: CARD_TYPES.MEDIA,
     options: {gridColumnsStyles: '!gap-y-5'},
-    imageOptions: {className: 'h-full'},
+    imageOptions: {className: 'h-full', objectFit: 'fitContain'},
   })
   const currentSlug = slug?.current ?? ''
 
