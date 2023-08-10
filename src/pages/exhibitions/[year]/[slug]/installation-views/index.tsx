@@ -72,7 +72,7 @@ export const getStaticPaths = async () => {
 
 export const getStaticProps: GetStaticProps<PageProps, Query, PreviewData> = async (ctx) => {
   const {params = {}, preview = false, previewData = {}} = ctx
-  const queryParams = {slug: `${EXHIBITIONS_URL}/${params?.year}/${params?.slug}` ?? ``}
+  const queryParams = {slug: `${EXHIBITIONS_URL}/${params?.year}/${params?.slug}`}
 
   if (preview && previewData.token) {
     return {
