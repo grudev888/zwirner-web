@@ -7,10 +7,9 @@ export const mapCardsGrid = (data: any[]) => {
   return data
     ?.filter((artwork) => validateImage(artwork))
     ?.map((artwork) => {
-      const {artists, dimensions, title, dateSelection, medium, edition, _id, price} = artwork ?? {}
-      const {year} = dateSelection ?? {}
-      const [mainArtist] = artists ?? []
-      const {fullName} = mainArtist ?? {}
+      const {dimensions, title, medium, edition, _id, price} = artwork ?? {}
+      const fullName = artwork?.artists?.at(0)?.fullName
+      const year = artwork?.dateSelection?.year
 
       const framed =
         typeof artwork.framed === 'boolean'

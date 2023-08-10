@@ -18,10 +18,9 @@ export interface CardMapperForDzCard {
 
 export const cardMapperForDzCard = ({data, imageOptions = {}}: CardMapperForDzCard) => {
   return data?.map((card) => {
-    const {artists, dimensions, title, dateSelection, medium, edition, _id, price} = card ?? {}
-    const {year} = dateSelection ?? {}
-    const [mainArtist] = artists ?? []
-    const {fullName} = mainArtist ?? {}
+    const {dimensions, title, medium, edition, _id, price} = card ?? {}
+    const fullName = card?.artists?.at(0)?.fullName
+    const year = card?.dateSelection?.year
 
     const framed =
       typeof card.framed === 'boolean' ? (card.framed === true ? 'Framed' : 'Unframed') : undefined
