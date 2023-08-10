@@ -1,0 +1,20 @@
+.heroContainer {
+  @apply mb-[3.75rem]
+    md:mb-[7.5rem];
+}
+
+.pressReleaseContainer {
+  @apply mb-[3.75rem]
+    md:mb-[7.5rem];
+}
+
+.titleContainer {
+  @apply mt-[2.5rem]
+    md:mt-[3.75rem];
+}
+
+.containerBottomGap {
+  @apply mt-[3.75rem]
+    w-full
+    md:mt-[7.5rem];
+}
