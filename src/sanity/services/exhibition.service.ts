@@ -1,6 +1,7 @@
 import {client} from '@/sanity/client'
 import {allExhibitions, exhibitionById} from '@/sanity/queries/exhibition.queries'
 import {
+  checklistBySlug,
   exhibitionPageBySlug,
   exhibitionPageSlugs,
   installationViewsBySlug,
@@ -37,6 +38,13 @@ export async function getExhibitionPageBySlug(params: any): Promise<any[]> {
 export async function getExhibitionInstallationViews(params: any): Promise<any[]> {
   if (client) {
     return (await client.fetch(installationViewsBySlug, params)) || []
+  }
+  return []
+}
+
+export async function getExhibitionChecklist(params: any): Promise<any[]> {
+  if (client) {
+    return (await client.fetch(checklistBySlug, params)) || []
   }
   return []
 }

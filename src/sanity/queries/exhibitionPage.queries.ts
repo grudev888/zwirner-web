@@ -51,3 +51,16 @@ export const installationViewsBySlug = groq`
     ${pageSEOFields}
   }
 }`
+
+export const checklistBySlug = groq`
+*[_type == "exhibitionPage" && slug.current == $slug][0] {
+  title,
+  subtitle,
+  'showChecklist': count(checklist) > 0,
+  slug,
+  checklistInterstitial,
+  checklist[]->{..., artists[]->, 'image': image.asset->},
+  'seo':checklistSeo {
+    ${pageSEOFields}
+  }
+}`

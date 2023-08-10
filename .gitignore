@@ -45,7 +45,7 @@ yarn-error.log*
 studio/.env.development
 
 .cache
-
+Makefile
 
 # Yarn 2
 .pnp.*
