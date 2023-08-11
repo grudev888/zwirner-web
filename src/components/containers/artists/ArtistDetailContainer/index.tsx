@@ -13,6 +13,8 @@ import {
   DzTitleMolecule,
   DzTitleMoleculeTypes,
   SPLIT_TYPES,
+  TITLE_SIZES,
+  TITLE_TYPES,
   useBreakpoints,
 } from '@zwirner/design-system'
 import dynamic from 'next/dynamic'
@@ -80,6 +82,12 @@ export const ArtistDetailContainer: FC<ArtistsContainerProps> = ({data}) => {
           data={{
             customClass: 'mx-5 mb-5 md:mb-10',
             title: data.title,
+            titleProps: {
+              titleType: TITLE_TYPES.H2,
+              titleSize: TITLE_SIZES.LG,
+              subtitleSize: TITLE_SIZES.LG,
+              subtitleType: TITLE_TYPES.P,
+            },
             linkCTA: {
               text: link.title,
               url: link.url,

@@ -75,6 +75,12 @@ const Biography = ({title, biography, artist, ...rest}: any) => {
         type={DzTitleMoleculeTypes.SECTION}
         data={{
           title: title,
+          titleProps: {
+            titleType: TITLE_TYPES.H2,
+            titleSize: TITLE_SIZES.LG,
+            subtitleSize: TITLE_SIZES.LG,
+            subtitleType: TITLE_TYPES.P,
+          },
           customClass: 'mb-5 md:mb-10',
         }}
       />
