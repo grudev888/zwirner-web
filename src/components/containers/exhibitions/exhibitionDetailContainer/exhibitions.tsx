@@ -3,12 +3,21 @@ import {
   DzColumn,
   DzHero,
   DzInterstitial,
+  DzSectionMenu,
   DzTitleExhibition,
   INTERSTITIAL_TEXT_COLORS,
 } from '@zwirner/design-system'
+import {useRouter} from 'next/router'
 import {FC} from 'react'
 
 import DzPortableText from '@/common/components/portableText'
+import {
+  CHECKLIST,
+  EXHIBITION_CHECKLIST_URL,
+  EXHIBITION_INSTALLATION_URL,
+  EXPLORE,
+  INSTALLATION_VIEWS,
+} from '@/common/constants/commonCopies'
 
 import styles from './exhibitions.module.css'
 
@@ -17,11 +26,40 @@ interface ExhibitionsContainerProps {
 }
 
 export const ExhibitionsContainer: FC<ExhibitionsContainerProps> = ({data}) => {
+  const router = useRouter()
+  const {slug, showChecklist} = data ?? {}
   data.location = data?.locations?.[0]
+
+  const currentSlug = slug?.current ?? ''
 
   return data ? (
     <>
       <DzColumn span={12} className={styles.titleContainer}>
+        <DzSectionMenu
+          sections={[
+            {text: EXPLORE, id: 'explore', url: `${currentSlug}#explore`},
+            ...(showChecklist
+              ? [
+                  {
+                    text: CHECKLIST,
+                    id: 'checklist',
+                    url: `${currentSlug}${EXHIBITION_CHECKLIST_URL}`,
+                  },
+                ]
+              : []),
+            {
+              text: INSTALLATION_VIEWS,
+              id: 'installation-views',
+              url: `${currentSlug}${EXHIBITION_INSTALLATION_URL}`,
+            },
+          ]}
+          linksProps={{
+            router,
+            useRoute: true,
+          }}
+          sticky
+          useLinks
+        />
         <DzTitleExhibition {...data} />
       </DzColumn>
       <DzColumn span={12}>
