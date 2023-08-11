@@ -66,7 +66,7 @@ export const ExhibitionChecklistContainer: FC<ExhibitionChecklistContainerProps>
           useLinks
         />
         <ContainerTitle
-          title={`${title}: ${subtitle} - ${CHECKLIST}`}
+          title={`${title}: ${subtitle} — ${CHECKLIST}`}
           titleSize={TITLE_SIZES.XL}
           primaryCTA={{
             title: INQUIRE,

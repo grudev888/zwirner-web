@@ -8,9 +8,9 @@
     md:mb-[7.5rem];
 }
 
-.titleContainer {
-  @apply mt-[2.5rem]
-    md:mt-[3.75rem];
+.titleContainer > div {
+  @apply mb-[2.5rem]
+    md:mb-[3.75rem];
 }
 
 .containerBottomGap {
