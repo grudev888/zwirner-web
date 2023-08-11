@@ -65,7 +65,6 @@ export const ExhibitionChecklistContainer: FC<ExhibitionChecklistContainerProps>
           sticky
           useLinks
         />
-        {/* TODO: cut '- ${CHECKLIST}' on mobile */}
         <ContainerTitle
           title={`${title}: ${subtitle} - ${CHECKLIST}`}
           titleSize={TITLE_SIZES.XL}
