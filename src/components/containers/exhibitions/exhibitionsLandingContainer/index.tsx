@@ -19,7 +19,6 @@ export const ExhibitionLandingContainer: FC<ExhibitionLandingContainerProps> = (
       <DzColumn span={12}>
         <ContainerTitle title={title} />
         <FullWidthFlexCol>
-          <p>Exhibition landing page content ...</p>
           <DzInterstitial {...interstitialProps} />
         </FullWidthFlexCol>
       </DzColumn>
