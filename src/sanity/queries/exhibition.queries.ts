@@ -40,3 +40,12 @@ export const exhibitionById = groq`
 *[_type == "exhibitionPage" && _id == $exhibitionId ] {
   ...
 }`
+
+export const exhibitionsLanding = groq`
+*[_type == "exhibitionsLanding"][0] {
+  interstitial {
+    ...,
+    image{asset->},
+  }
+}
+`

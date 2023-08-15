@@ -4,7 +4,7 @@ import {SEOComponent} from '@/common/components/seo/seo'
 import {ExhibitionLandingContainer} from '@/components/containers/exhibitions/exhibitionsLandingContainer'
 import {PreviewPage} from '@/components/containers/previews/pagePreview'
 import {exhibitionPageBySlug} from '@/sanity/queries/exhibitionPage.queries'
-import {getAllExhibitions} from '@/sanity/services/exhibition.service'
+import {getExhibitionsLanding} from '@/sanity/services/exhibition.service'
 
 interface PageProps {
   data: any
@@ -54,7 +54,7 @@ export const getStaticProps: GetStaticProps<PageProps, Query, PreviewData> = asy
   }
 
   // TODO DEFINE ONLY NECESSARY DATA FOR THIS SUB_PAGE
-  const data: any = await getAllExhibitions()
+  const data: any = await getExhibitionsLanding()
 
   return {
     props: {

@@ -1,6 +1,7 @@
-import {DzColumn} from '@zwirner/design-system'
+import {DzColumn, DzInterstitial} from '@zwirner/design-system'
 import {FC} from 'react'
 
+import {dzInterstitialMapper} from '@/common/utilsMappers/components/dzInterstitial.mapper'
 import {FullWidthFlexCol} from '@/components/containers/layout/FullWidthFlexCol'
 import {ContainerTitle} from '@/components/wrappers/title/ContainerTitle'
 
@@ -9,7 +10,9 @@ interface ExhibitionLandingContainerProps {
 }
 
 export const ExhibitionLandingContainer: FC<ExhibitionLandingContainerProps> = ({data}) => {
+  const {interstitial} = data
   const {title} = data ?? {}
+  const interstitialProps = dzInterstitialMapper({data: interstitial})
 
   return (
     <>
@@ -17,6 +20,7 @@ export const ExhibitionLandingContainer: FC<ExhibitionLandingContainerProps> = (
         <ContainerTitle title={title} />
         <FullWidthFlexCol>
           <p>Exhibition landing page content ...</p>
+          <DzInterstitial {...interstitialProps} />
         </FullWidthFlexCol>
       </DzColumn>
     </>
