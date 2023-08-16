@@ -1,4 +1,10 @@
-import {DzHero, DzTitleMolecule, DzTitleMoleculeTypes} from '@zwirner/design-system'
+import {
+  DzHero,
+  DzTitleMolecule,
+  DzTitleMoleculeTypes,
+  TITLE_SIZES,
+  TITLE_TYPES,
+} from '@zwirner/design-system'
 import dynamic from 'next/dynamic'
 
 const DzComplexGrid = dynamic(
@@ -13,6 +19,12 @@ const Exhibitions = ({exhibitions, ...rest}: any) => {
         type={DzTitleMoleculeTypes.SECTION}
         data={{
           title: exhibitions.title,
+          titleProps: {
+            titleType: TITLE_TYPES.H2,
+            titleSize: TITLE_SIZES.LG,
+            subtitleSize: TITLE_SIZES.LG,
+            subtitleType: TITLE_TYPES.P,
+          },
           customClass: 'mb-5 md:mb-10',
         }}
       />
