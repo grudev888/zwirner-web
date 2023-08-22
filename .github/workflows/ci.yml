@@ -24,7 +24,6 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.READ_GH_PACKAGES_TOKEN }}
       - run: pnpm prettier --check .
-
   type-check:
     runs-on: ubuntu-latest
     steps:
