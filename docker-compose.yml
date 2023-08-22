@@ -1,0 +1,17 @@
+services:
+  web:
+    build:
+      context: ./
+      args:
+        - GH_TOKEN=${GH_TOKEN}
+    volumes:
+      - .:/app
+      - node_modules:/app/node_modules
+    ports:
+      - '3000:3000'
+    environment:
+      NODE_ENV: development
+      GH_TOKEN: ${GH_TOKEN}
+
+volumes:
+  node_modules:

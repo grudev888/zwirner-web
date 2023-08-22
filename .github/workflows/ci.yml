@@ -14,60 +14,56 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: pnpm/action-setup@v2
       - name: Setup Node
         uses: actions/setup-node@v3
         with:
-          node-version: 18
-          cache: "pnpm"
-      - run: pnpm install --frozen-lockfile
+          node-version: 19
+          cache: "yarn"
+      - run: yarn install --immutable
         env:
           GH_TOKEN: ${{ secrets.READ_GH_PACKAGES_TOKEN }}
-      - run: pnpm prettier --check .
+      - run: yarn prettier --check .
   type-check:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: pnpm/action-setup@v2
       - name: Setup Node
         uses: actions/setup-node@v3
         with:
-          node-version: 18
-          cache: "pnpm"
-      - run: pnpm install --frozen-lockfile
+          node-version: 19
+          cache: "yarn"
+      - run: yarn install --immutable
         env:
           GH_TOKEN: ${{ secrets.READ_GH_PACKAGES_TOKEN }}
-      - run: pnpm type-check
+      - run: yarn type-check
   lint:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: pnpm/action-setup@v2
       - name: Setup Node
         uses: actions/setup-node@v3
         with:
-          node-version: 18
-          cache: "pnpm"
-      - run: pnpm install --frozen-lockfile
+          node-version: 19
+          cache: "yarn"
+      - run: yarn install --immutable
         env:
           GH_TOKEN: ${{ secrets.READ_GH_PACKAGES_TOKEN }}
-      - run: pnpm lint
+      - run: yarn lint
   test_e2e:
     name: Playwright tests
     timeout-minutes: 60
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: pnpm/action-setup@v2
       - uses: actions/setup-node@v3
         with:
           # TODO get GH Actions to respect .tool-version
-          node-version: 18
-          cache: "pnpm"
-      - run: pnpm install --frozen-lockfile
+          node-version: 19
+          cache: "yarn"
+      - run: yarn install --immutable
         env:
           GH_TOKEN: ${{ secrets.READ_GH_PACKAGES_TOKEN }}
-      - run: pnpm playwright install --with-deps
+      - run: yarn playwright install --with-deps
       - name: Wait for Vercel preview deployment to be ready
         uses: patrickedqvist/wait-for-vercel-preview@v1.3.1
         id: waitFor200
@@ -75,6 +71,6 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           max_timeout: 600
       - name: Run tests
-        run: pnpm test:e2e
+        run: yarn test:e2e
         env:
           PLAYWRIGHT_TEST_BASE_URL: ${{ steps.waitFor200.outputs.url }}
