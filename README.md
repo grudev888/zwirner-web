@@ -32,7 +32,7 @@ cd ./web
 - Ask engineering for the `SANITY_API_READ_TOKEN` value, and replace it in that file.
 - Keep `NEXT_PUBLIC_SANITY_API_VERSION` and `NEXT_PUBLIC_RECAPTCHA_SITE_KEY` empty for now.
 
-5. Use pnpm and Node v18.
+5. Use [Yarn v3 (berry)](https://yarnpkg.com/getting-started/install) and Node v18.
 
 6. Add `GH_TOKEN` to your terminal config file. For example, if you use zsh, you should:
 
@@ -44,9 +44,9 @@ cd ./web
 export GH_TOKEN={your_token}
 ```
 
-7. Run `pnpm i` or `pnpm install` to install dependencies.
+7. Run `yarn` or `yarn install` to install dependencies.
 
-8. Run `pnpm dev` to start the development server.
+8. Run `yarn dev` to start the development server.
 
 9. Voilà! Open this URL http://localhost:3000/ and you should see the system working.
 
@@ -60,26 +60,26 @@ In CI these'll run automatically and upload the playwright-report as a artifact 
 To run tests locally:
 
 - Run the site locally `docker compose up -d`
-- Execute playwright `pnpm playwright test`
+- Execute playwright `yarn playwright test`
 
 Other commands to know:
 
-`pnpm playwright test`
+`yarn playwright test`
 Runs the end-to-end tests.
 
-`pnpm playwright test --ui`
+`yarn playwright test --ui`
 Starts the interactive UI mode.
 
-`pnpm playwright test --project=chromium`
+`yarn playwright test --project=chromium`
 Runs the tests only on Desktop Chrome.
 
-`pnpm playwright test example`
+`yarn playwright test example`
 Runs the tests in a specific file.
 
-`pnpm playwright test --debug`
+`yarn playwright test --debug`
 Runs the tests in debug mode.
 
-`pnpm playwright codegen`
+`yarn playwright codegen`
 Auto generate tests with Codegen.
 
 And check out the following files:

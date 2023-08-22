@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types'
 import {useEffect, useLayoutEffect, useState} from 'react'
 
 const useEnhancedEffect =
@@ -15,6 +16,17 @@ const NoSSR = ({children, defer, fallback}: any) => {
   }, [defer])
 
   return isMounted ? children : fallback
+}
+
+NoSSR.propTypes = {
+  children: PropTypes.node.isRequired,
+  defer: PropTypes.bool,
+  fallback: PropTypes.node,
+}
+
+NoSSR.defaultProps = {
+  defer: false,
+  fallback: null,
 }
 
 export default NoSSR
