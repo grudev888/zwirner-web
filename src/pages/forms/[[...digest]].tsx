@@ -121,7 +121,7 @@ const Forms = () => {
             required: 'Please enter your email address',
             pattern: {
               value: EMAIL_REGEX,
-              message: toPlainText(newsletterErrors['newsletter-error-email']),
+              message: toPlainText(newsletterErrors['newsletter-error-email'] ?? []),
             },
           })}
         />
@@ -133,7 +133,7 @@ const Forms = () => {
           errorMsg={errors?.firstName?.message}
           hasError={!!errors?.firstName?.message}
           {...register('firstName', {
-            required: toPlainText(newsletterErrors['newsletter-error-name']),
+            required: toPlainText(newsletterErrors['newsletter-error-name'] ?? []),
           })}
         />
 
@@ -144,7 +144,7 @@ const Forms = () => {
           errorMsg={errors?.lastName?.message}
           hasError={!!errors?.lastName?.message}
           {...register('lastName', {
-            required: toPlainText(newsletterErrors['newsletter-error-lastname']),
+            required: toPlainText(newsletterErrors['newsletter-error-lastname'] ?? []),
           })}
         />
 
@@ -158,7 +158,7 @@ const Forms = () => {
             title: opt.name,
             value: opt.id,
             ...register('interests', {
-              required: toPlainText(newsletterErrors['newsletter-error-interests']),
+              required: toPlainText(newsletterErrors['newsletter-error-interests'] ?? []),
             }),
           }))}
         />
@@ -170,7 +170,7 @@ const Forms = () => {
             value="true"
             hasError={!!errors.terms?.message}
             {...register('terms', {
-              required: toPlainText(newsletterErrors['newsletter-error-terms']),
+              required: toPlainText(newsletterErrors['newsletter-error-terms'] ?? []),
             })}
           />
         )}
