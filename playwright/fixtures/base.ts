@@ -12,7 +12,7 @@ export const test = base.extend<{checkLogs: void}>({
   checkLogs: [
     async ({page}, use, testInfo) => {
       const logs: string[] = []
-      page.on('console', (consoleMessage) => {
+      page.on('console', (consoleMessage: any) => {
         if (consoleMessage.type() === 'error') {
           const text = consoleMessage.text()
 
