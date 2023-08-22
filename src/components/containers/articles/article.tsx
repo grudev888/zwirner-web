@@ -94,7 +94,7 @@ export const ArticleContainer: FC<ArticleContainerProps> = ({data}) => {
             <DzPortableText
               portableProps={{value: body}}
               customStyles={{
-                normal: styles.articleXSpacing,
+                normal: styles.articleXSpacing ?? '',
               }}
             />
           ) : null}
