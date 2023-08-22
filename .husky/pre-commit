@@ -1,5 +1,5 @@
 #!/usr/bin/env sh
 . "$(dirname -- "$0")/_/husky.sh"
 
-yarn prettier --check src
-yarn lint
+pnpm prettier --check .
+pnpm lint
