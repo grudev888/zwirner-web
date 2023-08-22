@@ -15,7 +15,7 @@ import axios from 'axios'
 import {useReCaptcha} from 'next-recaptcha-v3'
 import {useCallback, useEffect, useState} from 'react'
 import {SubmitHandler, useForm} from 'react-hook-form'
-import {v4 as uuid} from 'uuid'
+import {uuid} from 'uuidv4'
 
 import {useForms as useFormsAPI} from '@/forms/api/useForms'
 import {useLocation} from '@/forms/api/useLocation'
