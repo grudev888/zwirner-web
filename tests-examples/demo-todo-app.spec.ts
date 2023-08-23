@@ -1,10 +1,14 @@
-import {test, expect, type Page} from '@playwright/test'
+import {type Page, expect, test} from '@playwright/test'
 
 test.beforeEach(async ({page}) => {
   await page.goto('https://demo.playwright.dev/todomvc')
 })
 
-const TODO_ITEMS = ['buy some cheese', 'feed the cat', 'book a doctors appointment']
+const TODO_ITEMS = ['buy some cheese', 'feed the cat', 'book a doctors appointment'] as [
+  string,
+  string,
+  string
+]
 
 test.describe('New Todo', () => {
   test('should allow me to add todo items', async ({page}) => {

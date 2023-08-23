@@ -17,6 +17,6 @@
     "incremental": true,
     "noUncheckedIndexedAccess": true
   },
-  "exclude": ["node_modules", "playwright.config.ts", "tests-examples"],
+  "exclude": ["node_modules"],
   "include": ["prettier.config.mjs"]
 }
