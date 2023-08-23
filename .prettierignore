@@ -2,3 +2,4 @@
 .next
 .yarn
 .github
+pnpm-lock.yaml
