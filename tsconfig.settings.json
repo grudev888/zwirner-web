@@ -17,6 +17,7 @@
     "incremental": true,
     "noUncheckedIndexedAccess": true
   },
-  "exclude": ["node_modules"],
+  // https://github.com/microsoft/playwright/issues/21058 <--- Typechecking issue
+  "exclude": ["node_modules", "playwright.config.ts", "tests", "tests-examples"],
   "include": ["prettier.config.mjs"]
 }
