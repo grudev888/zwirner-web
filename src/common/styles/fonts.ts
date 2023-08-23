@@ -1,4 +1,4 @@
-import {IBM_Plex_Mono, Inter, PT_Serif} from 'next/font/google'
+import {IBM_Plex_Mono, Inter, PT_Serif} from '@next/font/google'
 
 export const mono = IBM_Plex_Mono({
   variable: '--font-mono',
