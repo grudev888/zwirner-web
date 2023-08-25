@@ -19,10 +19,10 @@ import {useEffect, useRef, useState} from 'react'
 import DzPortableText from '@/common/components/portableText'
 import {photosGrid} from '@/components/containers/artworks/mapper'
 import NoSSR from '@/components/wrappers/NoSSR'
+import {ArtistArtworkBySlugType} from '@/sanity/services/artist.service'
 
 import styles from './artistArtworkDetailContainer.module.css'
 import {mapArtworkData} from './mapper'
-import { ArtistArtworkBySlugType } from '@/sanity/services/artist.service'
 
 type Props = {
   data: ArtistArtworkBySlugType
@@ -79,7 +79,8 @@ export const ArtistArtworkDetailContainer = ({data}: Props) => {
   } = mapArtworkData(data)
   const priceAndCurrency = price && currency ? `${currency} ${price}` : null
   const leftPaneContainerHeight = useAppBodyHeight()
-  const isFramedShown = framed && artworkType !== 'sculpture' && artworkType !== 'mixedMedia' && artworkType !== 'other';
+  const isFramedShown =
+    framed && artworkType !== 'sculpture' && artworkType !== 'mixedMedia' && artworkType !== 'other'
 
   useEffect(() => {
     setIsClient(true)

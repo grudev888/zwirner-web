@@ -1,3 +1,5 @@
+import {z} from 'zod'
+
 import {client} from '@/sanity/client'
 import {artistArtworkBySlug, artistById} from '@/sanity/queries/artist.queries'
 import {
@@ -5,15 +7,22 @@ import {
   artistPageSlugs,
   getAllArtistsPages,
 } from '@/sanity/queries/artistPage.queries'
-import { z } from "zod";
 
-const CurrencySchema = z.enum(["EUR", "USD", "GBP", "HKD"]);
-const FramedSchema = z.enum(["Framed", "Unframed", "NotApplicable"]);
-const ArtworkTypeSchema = z.enum(["drawing", "mixedMedia", "painting", "photography", "print", "sculpture","other"]);
+const CurrencySchema = z.enum(['EUR', 'USD', 'GBP', 'HKD'])
+const FramedSchema = z.enum(['Framed', 'Unframed', 'NotApplicable'])
+const ArtworkTypeSchema = z.enum([
+  'drawing',
+  'mixedMedia',
+  'painting',
+  'photography',
+  'print',
+  'sculpture',
+  'other',
+])
 
 const ArtistArtworkBySlugPropsSchema = z.object({
   slug: z.string(),
-});
+})
 
 // TODO: Describe prorerly z.any() types
 // TODO: move zod validation with service itself to separate file
@@ -26,7 +35,7 @@ const ArtistArtworkBySlugSchema = z.object({
   currency: CurrencySchema.nullish(),
   dateSelection: z.object({
     year: z.string(),
-    _type: z.literal("dateSelectionYear"),
+    _type: z.literal('dateSelectionYear'),
   }),
   description: z.any(),
   dimensions: z.any(),
@@ -43,9 +52,9 @@ const ArtistArtworkBySlugSchema = z.object({
   salesInformation: z.any(),
   seo: z.any(),
   title: z.string(),
-});
+})
 
-export type ArtistArtworkBySlugType = z.infer<typeof ArtistArtworkBySlugSchema>;
+export type ArtistArtworkBySlugType = z.infer<typeof ArtistArtworkBySlugSchema>
 
 export async function getArtistById(id: any): Promise<any[]> {
   if (client) {
@@ -75,11 +84,13 @@ export async function getArtistPageBySlug(params: any): Promise<any[]> {
   return []
 }
 
-export async function getArtistArtworkBySlug(params: z.infer<typeof ArtistArtworkBySlugPropsSchema>) {
-  const validatedParams = ArtistArtworkBySlugPropsSchema.parse(params);
-  if (!client) throw Error("No Sanity Client");
+export async function getArtistArtworkBySlug(
+  params: z.infer<typeof ArtistArtworkBySlugPropsSchema>
+) {
+  const validatedParams = ArtistArtworkBySlugPropsSchema.parse(params)
+  if (!client) throw Error('No Sanity Client')
 
-  const data = await client.fetch(artistArtworkBySlug, validatedParams);
-  const validatedData = ArtistArtworkBySlugSchema.parse(data);
+  const data = await client.fetch(artistArtworkBySlug, validatedParams)
+  const validatedData = ArtistArtworkBySlugSchema.parse(data)
   return validatedData
 }

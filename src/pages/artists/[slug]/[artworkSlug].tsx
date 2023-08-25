@@ -1,12 +1,16 @@
-import { GetStaticPropsContext, InferGetServerSidePropsType} from 'next'
+import {GetStaticPropsContext, InferGetServerSidePropsType} from 'next'
+
 import {SEOComponent} from '@/common/components/seo/seo'
 import {ArtistArtworkDetailContainer} from '@/components/containers/artists/ArtistArtworkDetailContainer'
 import {PreviewPage} from '@/components/containers/previews/pagePreview'
 import {artistArtworkBySlug} from '@/sanity/queries/artist.queries'
 import {getArtistArtworkBySlug} from '@/sanity/services/artist.service'
 
-const ArtistArtworkDetailPage = ({data, preview, querySlug}: InferGetServerSidePropsType<typeof getStaticProps>) => {
-
+const ArtistArtworkDetailPage = ({
+  data,
+  preview,
+  querySlug,
+}: InferGetServerSidePropsType<typeof getStaticProps>) => {
   if (preview) {
     return (
       <PreviewPage
