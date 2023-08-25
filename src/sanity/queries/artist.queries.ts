@@ -5,11 +5,11 @@ export const artistById = groq`
   ...
 }`
 
-export const artistArtworkBySlug2 = groq`
-*[_type == "artwork" && defined(slug.current) && slug.current == $slug][0]{
-  ...,
-  artists[]-> {fullName, artistPage->{slug}}
-}`
+// export const artistArtworkBySlug2 = groq`
+// *[_type == "artwork" && defined(slug.current) && slug.current == $slug][0]{
+//   ...,
+//   artists[]-> {fullName, artistPage->{slug}}
+// }`
 export const artistArtworkBySlug = groq`
 *[_type == "artwork" && defined(slug.current) && slug.current == $slug][0]{
   additionalCaption,
