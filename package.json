@@ -51,7 +51,8 @@
     "styled-components": "^5.3.10",
     "swr": "^2.1.1",
     "tailwind-scrollbar": "^2.1.0",
-    "uuidv4": "^6.2.13"
+    "uuidv4": "^6.2.13",
+    "zod": "^3.22.2"
   },
   "devDependencies": {
     "@next/bundle-analyzer": "^13.3.1",

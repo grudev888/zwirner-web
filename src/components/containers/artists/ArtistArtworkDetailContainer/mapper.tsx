@@ -2,10 +2,12 @@ import {capitalizeFirstLetter} from '@/utils/string/capitalizeFirstLetter'
 
 type RecordData = Record<string, any>
 
+// TODO: discuss why we need it
 export const mapArtworkData = (data: RecordData) => {
   return {
     artistName: data?.artists?.[0].fullName,
     artistSlug: data?.artists?.[0].artistPage?.slug?.current,
+    artworkType: data?.artworkType,
     edition: data?.edition,
     title: data?.title,
     medium: data?.medium,
@@ -18,7 +20,7 @@ export const mapArtworkData = (data: RecordData) => {
     productInformation: data?.productInformation,
     salesInformation: data?.salesInformation,
     copyrightInformation: data?.copyrightInformation,
-    editionInformation: data?.editionInformation,
+    displayCustomTitle: data?.displayCustomTitle,
     additionalCaption: data?.additionalCaption,
     framedDimensions: data?.framedDimensions,
     framed: data?.framed,

@@ -14,7 +14,7 @@ import {
   TITLE_TYPES,
 } from '@zwirner/design-system'
 import cn from 'classnames'
-import {FC, useEffect, useRef, useState} from 'react'
+import {useEffect, useRef, useState} from 'react'
 
 import DzPortableText from '@/common/components/portableText'
 import {photosGrid} from '@/components/containers/artworks/mapper'
@@ -22,9 +22,10 @@ import NoSSR from '@/components/wrappers/NoSSR'
 
 import styles from './artistArtworkDetailContainer.module.css'
 import {mapArtworkData} from './mapper'
+import { ArtistArtworkBySlugType } from '@/sanity/services/artist.service'
 
-interface ArtistArtworkDetailContainerProps {
-  data: any
+type Props = {
+  data: ArtistArtworkBySlugType
 }
 
 // TODO relocate
@@ -32,7 +33,7 @@ const gridImageStyles: any = {
   cursorZoom: 'cursor-zoom-in',
 }
 
-export const ArtistArtworkDetailContainer: FC<ArtistArtworkDetailContainerProps> = ({data}) => {
+export const ArtistArtworkDetailContainer = ({data}: Props) => {
   const [isClient, setIsClient] = useState(false)
   const {isSmall} = useBreakpoints()
   const [currentZoomedImgProps, setCurrentZoomedImgProps] = useState<
@@ -59,6 +60,7 @@ export const ArtistArtworkDetailContainer: FC<ArtistArtworkDetailContainerProps>
   const {
     artistName,
     artistSlug,
+    artworkType,
     title,
     displayDate,
     medium,
@@ -70,7 +72,6 @@ export const ArtistArtworkDetailContainer: FC<ArtistArtworkDetailContainerProps>
     framed,
     description,
     productInformation,
-    editionInformation,
     framedDimensions,
     additionalCaption,
     salesInformation,
@@ -78,6 +79,7 @@ export const ArtistArtworkDetailContainer: FC<ArtistArtworkDetailContainerProps>
   } = mapArtworkData(data)
   const priceAndCurrency = price && currency ? `${currency} ${price}` : null
   const leftPaneContainerHeight = useAppBodyHeight()
+  const isFramedShown = framed && artworkType !== 'sculpture' && artworkType !== 'mixedMedia' && artworkType !== 'other';
 
   useEffect(() => {
     setIsClient(true)
@@ -145,14 +147,6 @@ export const ArtistArtworkDetailContainer: FC<ArtistArtworkDetailContainerProps>
                   />
                 </div>
               )}
-              {editionInformation && (
-                <div className={styles.textSectionContainer}>
-                  <DzPortableText
-                    portableProps={{value: editionInformation}}
-                    customStyles={detailTextStyles}
-                  />
-                </div>
-              )}
               {productInformation && (
                 <div className={styles.textSectionContainer}>
                   <DzPortableText
@@ -196,7 +190,7 @@ export const ArtistArtworkDetailContainer: FC<ArtistArtworkDetailContainerProps>
                   {priceAndCurrency && (
                     <DzText text={priceAndCurrency} className={styles.priceAndCurrency} />
                   )}
-                  {framed && <DzText text={framed} className={styles.framed} />}
+                  {isFramedShown && <DzText text={framed} className={styles.framed} />}
                 </div>
                 <div className={styles.ctaButtonsContainer}>
                   {primaryCta ? (
