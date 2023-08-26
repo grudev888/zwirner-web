@@ -30,9 +30,14 @@ cd ./web
 
 - Replace the value of the `GH_TOKEN` variable with the token you created in the previous step.
 - Ask engineering for the `SANITY_API_READ_TOKEN` value, and replace it in that file.
-- Keep `NEXT_PUBLIC_SANITY_API_VERSION` and `NEXT_PUBLIC_RECAPTCHA_SITE_KEY` empty for now.
+- Temporary set `NEXT_PUBLIC_SANITY_API_VERSION=1` and `NEXT_PUBLIC_RECAPTCHA_SITE_KEY=unknown`.
 
 5. Use [Yarn v3 (berry)](https://yarnpkg.com/getting-started/install) and Node v18.
+
+```sh
+corepack enable
+yarn set version berry
+```
 
 6. Add `GH_TOKEN` to your terminal config file. For example, if you use zsh, you should:
 

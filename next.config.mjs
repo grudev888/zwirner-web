@@ -1,4 +1,5 @@
 import analyzer from '@next/bundle-analyzer'
+await import('./src/env.mjs')
 
 /** @type {import('next').NextConfig} */
 const config = {

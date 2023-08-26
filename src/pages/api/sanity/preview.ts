@@ -1,8 +1,9 @@
 import {NextApiHandler} from 'next'
 
+import {env} from '@/env.mjs'
+
 import {client} from '../../../sanity/client'
 import {previewSecretId} from '../../../sanity/constants'
-import {readToken} from '../../../sanity/env'
 import {getSecret} from '../../../sanity/secret'
 
 const isString = (text: any) => {
@@ -11,7 +12,7 @@ const isString = (text: any) => {
 
 const handler: NextApiHandler = async function preview(req, res) {
   const previewData: {token?: string} = {}
-  if (!readToken) {
+  if (!env.SANITY_API_READ_TOKEN) {
     return res.status(404).end()
   }
 
@@ -20,7 +21,7 @@ const handler: NextApiHandler = async function preview(req, res) {
   const secret = isString(query.secret) ? query.secret : undefined
 
   if (secret) {
-    const authClient = client.withConfig({useCdn: false, token: readToken})
+    const authClient = client.withConfig({useCdn: false, token: env.SANITY_API_READ_TOKEN})
 
     // The secret can't be stored in an env variable with a NEXT_PUBLIC_ prefix, as it would make you
     // vulnerable to leaking the token to anyone. If you don't have an custom API with authentication
@@ -35,7 +36,7 @@ const handler: NextApiHandler = async function preview(req, res) {
     if (secret !== storedSecret) {
       return res.status(401).send('Invalid secret')
     }
-    previewData.token = readToken
+    previewData.token = env.SANITY_API_READ_TOKEN
   }
 
   if (typeof query.path === 'string') {
