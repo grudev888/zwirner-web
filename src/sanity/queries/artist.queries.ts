@@ -5,11 +5,6 @@ export const artistById = groq`
   ...
 }`
 
-// export const artistArtworkBySlug2 = groq`
-// *[_type == "artwork" && defined(slug.current) && slug.current == $slug][0]{
-//   ...,
-//   artists[]-> {fullName, artistPage->{slug}}
-// }`
 export const artistArtworkBySlug = groq`
 *[_type == "artwork" && defined(slug.current) && slug.current == $slug][0]{
   additionalCaption,
@@ -19,12 +14,12 @@ export const artistArtworkBySlug = groq`
   copyrightInformation,
   currency,
   dateSelection,
-  description[],
-  dimensions[],
+  description,
+  dimensions,
   displayDate,
   displayCustomTitle,
   displayTitle,
-  edition,
+  editionInformation,
   framed,
   framedDimensions,
   medium,

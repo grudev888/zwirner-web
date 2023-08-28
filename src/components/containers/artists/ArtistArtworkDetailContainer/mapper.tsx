@@ -8,7 +8,7 @@ export const mapArtworkData = (data: RecordData) => {
     artistName: data?.artists?.[0].fullName,
     artistSlug: data?.artists?.[0].artistPage?.slug?.current,
     artworkType: data?.artworkType,
-    edition: data?.edition,
+    editionInformation: data?.editionInformation,
     title: data?.title,
     medium: data?.medium,
     dimensions: data?.dimensions,

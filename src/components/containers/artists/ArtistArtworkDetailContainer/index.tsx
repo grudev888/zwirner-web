@@ -61,6 +61,7 @@ export const ArtistArtworkDetailContainer = ({data}: Props) => {
     artistName,
     artistSlug,
     artworkType,
+    editionInformation,
     title,
     displayDate,
     medium,
@@ -144,6 +145,14 @@ export const ArtistArtworkDetailContainer = ({data}: Props) => {
                 <div className={styles.textSectionContainer}>
                   <DzPortableText
                     portableProps={{value: framedDimensions}}
+                    customStyles={detailTextStyles}
+                  />
+                </div>
+              )}
+              {editionInformation && (
+                <div className={styles.textSectionContainer}>
+                  <DzPortableText
+                    portableProps={{value: editionInformation}}
                     customStyles={detailTextStyles}
                   />
                 </div>

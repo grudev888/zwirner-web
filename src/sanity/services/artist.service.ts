@@ -24,7 +24,7 @@ const ArtistArtworkBySlugPropsSchema = z.object({
   slug: z.string(),
 })
 
-// TODO: Describe prorerly z.any() types
+// TODO: Describe properly z.any() types
 // TODO: move zod validation with service itself to separate file
 const ArtistArtworkBySlugSchema = z.object({
   additionalCaption: z.any(),
@@ -42,7 +42,7 @@ const ArtistArtworkBySlugSchema = z.object({
   displayCustomTitle: z.nullable(z.boolean()),
   displayDate: z.nullable(z.string()),
   displayTitle: z.nullable(z.any()),
-  edition: z.nullable(z.string()),
+  editionInformation: z.any(),
   framed: FramedSchema,
   framedDimensions: z.any(),
   medium: z.nullable(z.string()),
@@ -84,12 +84,11 @@ export async function getArtistPageBySlug(params: any): Promise<any[]> {
   return []
 }
 
+// TODO: add validation error handling
 export async function getArtistArtworkBySlug(
   params: z.infer<typeof ArtistArtworkBySlugPropsSchema>
 ) {
   const validatedParams = ArtistArtworkBySlugPropsSchema.parse(params)
-  if (!client) throw Error('No Sanity Client')
-
   const data = await client.fetch(artistArtworkBySlug, validatedParams)
   const validatedData = ArtistArtworkBySlugSchema.parse(data)
   return validatedData
