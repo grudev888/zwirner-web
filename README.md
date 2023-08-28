@@ -28,9 +28,8 @@ cd ./web
 
 4. Duplicate the `.env.local.example` file and rename it as `.env`. Then:
 
-- Replace the value of the `GH_TOKEN` variable with the token you created in the previous step.
 - Ask engineering for the `SANITY_API_READ_TOKEN` value, and replace it in that file.
-- Temporary set `NEXT_PUBLIC_SANITY_API_VERSION=1` and `NEXT_PUBLIC_RECAPTCHA_SITE_KEY=unknown`.
+- Keep `ISR_TOKEN` commented intill you need it.
 
 5. Use [Yarn v3 (berry)](https://yarnpkg.com/getting-started/install) and Node v18.
 

@@ -7,8 +7,15 @@ export const env = createEnv({
    * Will throw if you access these variables on the client.
    */
   server: {
-    GH_TOKEN: z.string().min(1),
     SANITY_API_READ_TOKEN: z.string().min(1),
+    ANALYZE: z
+      .string()
+      // only allow "true" or "false"
+      .refine((s) => s === 'true' || s === 'false')
+      // transform to boolean
+      .transform((s) => s === 'true'),
+    ISR_TOKEN: z.string().nullish(),
+    NODE_ENV: z.enum(['development', 'test', 'production']),
   },
   /*
    * Environment variables available on the client (and server).
@@ -20,9 +27,10 @@ export const env = createEnv({
     NEXT_PUBLIC_VERCEL_GIT_REPO_OWNER: z.literal('Zwirner'),
     NEXT_PUBLIC_VERCEL_GIT_REPO_SLUG: z.literal('web'),
     NEXT_PUBLIC_SANITY_PROJECT_ID: z.string().min(1),
-    NEXT_PUBLIC_SANITY_DATASET: z.enum(['production', 'test', 'dev']),
+    NEXT_PUBLIC_SANITY_DATASET: z.enum(['production', 'test', 'sandbox']),
     NEXT_PUBLIC_SANITY_API_VERSION: z.string().min(1),
     NEXT_PUBLIC_VERCEL_URL: z.string().min(1),
+    NEXT_PUBLIC_VERCEL_ENV: z.enum(['production', 'preview', 'development', 'local']),
     NEXT_PUBLIC_RECAPTCHA_SITE_KEY: z.string().min(1),
     NEXT_PUBLIC_FORMS_API: z.string().url(),
   },
@@ -40,9 +48,12 @@ export const env = createEnv({
     NEXT_PUBLIC_SANITY_DATASET: process.env.NEXT_PUBLIC_SANITY_DATASET,
     NEXT_PUBLIC_SANITY_API_VERSION: process.env.NEXT_PUBLIC_SANITY_API_VERSION,
     NEXT_PUBLIC_VERCEL_URL: process.env.NEXT_PUBLIC_VERCEL_URL,
+    NEXT_PUBLIC_VERCEL_ENV: process.env.NEXT_PUBLIC_VERCEL_ENV,
     NEXT_PUBLIC_RECAPTCHA_SITE_KEY: process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY,
     NEXT_PUBLIC_FORMS_API: process.env.NEXT_PUBLIC_FORMS_API,
-    GH_TOKEN: process.env.GH_TOKEN,
+    ANALYZE: process.env.ANALYZE,
+    ISR_TOKEN: process.env.ISR_TOKEN,
+    NODE_ENV: process.env.NODE_ENV,
     SANITY_API_READ_TOKEN: process.env.SANITY_API_READ_TOKEN,
   },
 })

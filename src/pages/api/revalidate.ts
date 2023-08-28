@@ -1,5 +1,6 @@
 import {NextApiRequest, NextApiResponse} from 'next'
 
+import {env} from '@/env.mjs'
 import TypesToPathsMap from '@/sanity/typesToPathsMap'
 import camelToDash from '@/utils/string/camelToDash'
 
@@ -7,7 +8,8 @@ import camelToDash from '@/utils/string/camelToDash'
  * ISR endpoint called by Sanity Webhook defined in Sanity Project -> API -> Webhooks
  */
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  if (req.query.secret !== process.env.ISR_TOKEN) {
+  // TODO: this should report to exception tracker
+  if (req.query.secret !== env.ISR_TOKEN) {
     return res.status(401).json({message: 'Invalid token'})
   }
   const slug = req.body?.slug?.current
