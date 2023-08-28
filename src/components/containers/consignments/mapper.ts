@@ -2,7 +2,7 @@ import {
   ButtonModes,
   countries,
   EDITORIAL_TEXT_TYPES,
-  EDITORIAL_TYPES,
+  EditorialType,
   FORM_FIELD_TYPES,
   hasStringValue,
   INTERSTITIAL_TEXT_COLORS,
@@ -42,7 +42,7 @@ export const editorialSectionMap = (data: any) => {
         },
       ],
     },
-    type: EDITORIAL_TYPES.COMPLEX,
+    type: EditorialType.COMPLEX,
   }
 }
 
@@ -352,7 +352,7 @@ export const bodyDataMap = (data: any) => {
               },
             ],
           },
-          type: EDITORIAL_TYPES.COMPLEX,
+          type: EditorialType.COMPLEX,
         },
       }
     })

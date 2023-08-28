@@ -1,7 +1,7 @@
 import {
   ButtonModes,
   EDITORIAL_TEXT_TYPES,
-  EDITORIAL_TYPES,
+  EditorialType,
   INTERSTITIAL_TEXT_COLORS,
   MEDIA_OBJECT_FIT,
   SPLIT_TYPES,
@@ -133,7 +133,7 @@ export const consignmentsMap = (data: any) => {
           },
         ],
       },
-      type: EDITORIAL_TYPES.COMPLEX,
+      type: EditorialType.COMPLEX,
     },
     form,
   }
