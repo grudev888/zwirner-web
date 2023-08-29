@@ -12,6 +12,7 @@ import {
   DzSplit,
   DzTitleMolecule,
   DzTitleMoleculeTypes,
+  EditorialType,
   TITLE_TYPES,
 } from '@zwirner/design-system'
 import dynamic from 'next/dynamic'
@@ -92,7 +93,7 @@ export const CollectContainer: FC<CollectContainerProps> = ({data}) => {
   return (
     <>
       <DzColumn span={12}>
-        <ContainerTitle title={title} />
+        <ContainerTitle title={title} isWide={true} />
         <FullWidthFlexCol>
           <DzHero items={[heroData]} />
           <div className={styles.sectionWithTitleMolecule}>
@@ -131,7 +132,7 @@ export const CollectContainer: FC<CollectContainerProps> = ({data}) => {
           />
           <div className={styles.consignmentsSection}>
             <h2 className="sr-only">Consignments</h2>
-            <DzEditorial {...formProps.editorial} />
+            <DzEditorial {...formProps.editorial} type={EditorialType.LEFT_BLOCK} />
             <DzForm {...formProps.form} onSubmit={() => null} />
           </div>
 

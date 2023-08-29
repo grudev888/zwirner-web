@@ -61,3 +61,5 @@ production.tar.gz
 /test-results/
 /playwright-report/
 /playwright/.cache/
+
+package-lock.json

@@ -1784,9 +1784,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@zwirner/design-system@npm:0.0.91":
-  version: 0.0.91
-  resolution: "@zwirner/design-system@npm:0.0.91::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40zwirner%2Fdesign-system%2F0.0.91%2F7e5ad7334c5b5ddf457ce93c38908af278f1477f"
+"@zwirner/design-system@portal:/D:/Works/Romulo/Zwirner/design-system::locator=zwirnerweb%40workspace%3A.":
+  version: 0.0.0-use.local
+  resolution: "@zwirner/design-system@portal:/D:/Works/Romulo/Zwirner/design-system::locator=zwirnerweb%40workspace%3A."
   dependencies:
     "@headlessui/react": ^1.7.10
     "@heroicons/react": ^2.0.15
@@ -1801,9 +1801,8 @@ __metadata:
   peerDependencies:
     react: ">=16"
     react-dom: ^17.0.1
-  checksum: a195df5404bde6de6ffe6170db13226f03649e775874d4c62592254151a5b1dfadc14ad7ed8880046cef483ec5a691d778648dad488a9861db209e1a4f53bf58
   languageName: node
-  linkType: hard
+  linkType: soft
 
 "abab@npm:^2.0.6":
   version: 2.0.6

@@ -33,7 +33,8 @@ export const mapCarouselArtworks = (data: any) => {
     title: data.title,
     size: data.size,
     items: data.items?.map((item: any) => {
-      const {artists, dimensions, title, dateSelection, medium, edition, _id, price} = item ?? {}
+      const {artists, dimensions, title, dateSelection, medium, edition, _id, price, slug} =
+        item ?? {}
       const {year} = dateSelection ?? {}
       const [mainArtist] = artists ?? []
       const {fullName} = mainArtist ?? {}
@@ -58,6 +59,7 @@ export const mapCarouselArtworks = (data: any) => {
         ...(dimensionText ?? {}),
         edition: edition,
         price: price,
+        slug: slug?.current,
         framed,
       }
     }),

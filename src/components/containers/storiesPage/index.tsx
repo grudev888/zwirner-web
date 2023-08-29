@@ -81,6 +81,7 @@ export const StoriesContainer: FC<StoriesContainerProps> = ({data}) => {
                 url: link.url,
                 linkElement: Link,
               },
+              isWide: true,
             }}
           />
           <DzCarousel size={data.size}>
@@ -115,7 +116,7 @@ export const StoriesContainer: FC<StoriesContainerProps> = ({data}) => {
   return (
     <>
       <DzColumn span={12}>
-        <ContainerTitle title={title} />
+        <ContainerTitle title={title} isWide={true} />
         <FullWidthFlexCol>
           {hero && hero?.media?.imgProps?.src ? <DzHero items={[heroData]} /> : null}
           {featuredVideos ? (
