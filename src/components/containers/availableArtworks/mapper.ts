@@ -10,6 +10,7 @@ export const mapCardsGrid = (data: any[]) => {
       const {dimensions, title, medium, edition, _id, price} = artwork ?? {}
       const fullName = artwork?.artists?.at(0)?.fullName
       const year = artwork?.dateSelection?.year
+      const slug = artwork?.slug?.current
 
       const framed =
         typeof artwork.framed === 'boolean'
@@ -32,6 +33,7 @@ export const mapCardsGrid = (data: any[]) => {
         edition: edition,
         price: price,
         framed,
+        slug,
         primaryCTA: {
           text: 'Inquire',
           ctaProps: {

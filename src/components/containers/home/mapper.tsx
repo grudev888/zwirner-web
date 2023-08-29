@@ -244,6 +244,7 @@ export const mapCardsGrid = (data: any[]) => {
         edition: edition,
         price: price,
         framed,
+        slug: artwork?.slug?.current,
         primaryCTA: {
           text: 'Inquire',
           ctaProps: {

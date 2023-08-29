@@ -11,6 +11,7 @@ import {
   DzInterstitial,
   DzMedia,
   DzMediaProps,
+  EditorialType,
 } from '@zwirner/design-system'
 import dynamic from 'next/dynamic'
 import {FC, Fragment} from 'react'
@@ -77,10 +78,10 @@ export const ConsignmentsContainer: FC<ConsignmentsContainerProps> = ({data}) =>
 
   return (
     <DzColumn span={12}>
-      <ContainerTitle title={title} />
+      <ContainerTitle title={title} isWide={true} />
       <FullWidthFlexCol>
         <DzMedia imgClass={styles.mediaImage} {...mediaProps} />
-        <DzEditorial {...editorialProps} />
+        <DzEditorial {...editorialProps} type={EditorialType.LEFT_BLOCK} />
         <DzForm {...formProps} onSubmit={() => null} />
         <DzMedia imgClass={styles.mediaImage} {...featuredMediaProps} />
         <DzInterstitial {...interstitialProps} />
@@ -94,7 +95,7 @@ export const ConsignmentsContainer: FC<ConsignmentsContainerProps> = ({data}) =>
             return (
               <Fragment key={id}>
                 <DzMedia imgClass={styles.mediaImage} {...mediaProps} />
-                <DzEditorial {...editorialProps} />
+                <DzEditorial {...editorialProps} type={EditorialType.LEFT_BLOCK} />
               </Fragment>
             )
           }

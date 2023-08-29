@@ -83,6 +83,7 @@ export const mapCardsGrid = (data: any[]) => {
         ...(dimensionText ?? {}),
         edition: edition,
         price: price,
+        slug: artwork?.slug?.current,
         primaryCTA: {
           text: 'Inquire',
           ctaProps: {

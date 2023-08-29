@@ -23,6 +23,7 @@ interface ContainerTitleProps {
   primaryCTA?: DzMoleculeTitleCTA
   fullLeftContainer?: boolean
   customCTAContainerProps?: ColumnProps
+  isWide?: boolean
 }
 
 const stylesPerType: any = {
@@ -41,6 +42,7 @@ export const ContainerTitle: FC<ContainerTitleProps> = ({
   linkCTA,
   primaryCTA,
   customCTAContainerProps,
+  isWide = false,
 }) => {
   return (
     <DzTitleMolecule
@@ -58,6 +60,7 @@ export const ContainerTitle: FC<ContainerTitleProps> = ({
         primaryCTA,
         fullLeftContainer,
         customCTAContainerProps,
+        isWide,
       }}
     />
   )
