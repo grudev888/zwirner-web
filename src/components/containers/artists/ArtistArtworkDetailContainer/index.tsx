@@ -58,30 +58,27 @@ export const ArtistArtworkDetailContainer = ({data}: Props) => {
   }
 
   const {
-    artistName,
-    artistSlug,
     artworkType,
     editionInformation,
     title,
-    displayDate,
     medium,
-    price,
-    currency,
     dimensions,
-    primaryCta,
-    secondaryCta,
-    framed,
+    displayDate,
+    price,
     description,
+    currency,
+    salesInformation,
     productInformation,
+    framed,
     framedDimensions,
     additionalCaption,
-    salesInformation,
-    year,
-  } = mapArtworkData(data)
+  } = data ?? {}
+  // Data can be undefined as getStaticPaths do not defined properly
+
+  const {artistName, artistSlug, primaryCta, secondaryCta, year} = mapArtworkData(data)
   const priceAndCurrency = price && currency ? `${currency} ${price}` : null
   const leftPaneContainerHeight = useAppBodyHeight()
-  const isFramedShown =
-    framed && artworkType !== 'sculpture' && artworkType !== 'mixedMedia' && artworkType !== 'other'
+  const isFramedShown = artworkType !== 'sculpture' && (framed == 'Framed' || framed == 'Unframed')
 
   useEffect(() => {
     setIsClient(true)
