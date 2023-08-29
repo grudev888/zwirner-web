@@ -1099,40 +1099,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@portabletext/react@npm:^3.0.4":
-  version: 3.0.7
-  resolution: "@portabletext/react@npm:3.0.7"
-  dependencies:
-    "@portabletext/toolkit": ^2.0.8
-    "@portabletext/types": ^2.0.6
-  peerDependencies:
-    react: ^17 || ^18
-  checksum: 8c3f6a932e37e569ea4be1e98508804739840fc039cb3bbbafcdd3c1fa24ccdc84a24a32a30b0179238fab436fc8ed1d278315fd16ce204e723baf47c9f678c8
-  languageName: node
-  linkType: hard
-
-"@portabletext/toolkit@npm:^2.0.1":
-  version: 2.0.1
-  resolution: "@portabletext/toolkit@npm:2.0.1"
-  dependencies:
-    "@portabletext/types": ^2.0.6
-  checksum: 91a0b4e4ed904bdb38ce17e19a412f2616600c4e6559f830c36e7e8a17c8ba54969026fedddf6f2e7a310f1875cfb77a6506d72538b3b994520941ea4cabfd86
-  languageName: node
-  linkType: hard
-
 "@portabletext/toolkit@npm:^2.0.8":
   version: 2.0.8
   resolution: "@portabletext/toolkit@npm:2.0.8"
   dependencies:
     "@portabletext/types": ^2.0.6
   checksum: 91a0b4e4ed904bdb38ce17e19a412f2616600c4e6559f830c36e7e8a17c8ba54969026fedddf6f2e7a310f1875cfb77a6506d72538b3b994520941ea4cabfd86
-  languageName: node
-  linkType: hard
-
-"@portabletext/types@npm:^2.0.0, @portabletext/types@npm:^2.0.2":
-  version: 2.0.2
-  resolution: "@portabletext/types@npm:2.0.2"
-  checksum: 76e95891bc4632b4188d13c0ec6e39ade40b2751a449cbbf4a09cc7b858804437851a1f290dc18bb937de4c6b6f3db2e868b62450ebb61b50b21325a2319cb55
   languageName: node
   linkType: hard
 
