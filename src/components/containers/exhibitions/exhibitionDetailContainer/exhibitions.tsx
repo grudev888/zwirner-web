@@ -3,6 +3,7 @@ import {
   DzColumn,
   DzHero,
   DzInterstitial,
+  DzPortableText,
   DzSectionMenu,
   DzTitleExhibition,
   INTERSTITIAL_TEXT_COLORS,
@@ -10,7 +11,6 @@ import {
 import {useRouter} from 'next/router'
 import {FC} from 'react'
 
-import DzPortableText from '@/common/components/portableText'
 import {
   CHECKLIST,
   EXHIBITION_CHECKLIST_URL,
@@ -20,6 +20,8 @@ import {
 } from '@/common/constants/commonCopies'
 
 import styles from './exhibitions.module.css'
+import {builder} from '@/sanity/imageBuilder'
+import Image from 'next/image'
 
 interface ExhibitionsContainerProps {
   data: any
@@ -83,7 +85,11 @@ export const ExhibitionsContainer: FC<ExhibitionsContainerProps> = ({data}) => {
       </DzColumn>
       {data.pressRelease && (
         <DzColumn span={[12, 6]} start={[1, 4]} className={styles.pressReleaseContainer}>
-          <DzPortableText portableProps={{value: data.pressRelease}} />
+          <DzPortableText
+            portableProps={{value: data.pressRelease}}
+            builder={builder}
+            nextImage={Image}
+          />
         </DzColumn>
       )}
       {data.interstitial && (

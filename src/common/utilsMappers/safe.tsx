@@ -1,4 +1,6 @@
-import DzPortableText from '@/common/components/portableText'
+import {builder} from '@/sanity/imageBuilder'
+import {DzPortableText} from '@zwirner/design-system'
+import Image from 'next/image'
 
 interface SafeTextProps {
   key: string
@@ -15,6 +17,8 @@ export const safeText = ({key, text, prefix = 'portableText'}: SafeTextProps) =>
   }
   const capitalizedKey = key?.charAt(0)?.toUpperCase() + key?.slice(1)
   return {
-    [`${prefix}${capitalizedKey}`]: <DzPortableText portableProps={{value: text}} />,
+    [`${prefix}${capitalizedKey}`]: (
+      <DzPortableText portableProps={{value: text}} builder={builder} nextImage={Image} />
+    ),
   }
 }
