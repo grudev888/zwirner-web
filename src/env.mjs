@@ -56,4 +56,5 @@ export const env = createEnv({
     NODE_ENV: process.env.NODE_ENV,
     SANITY_API_READ_TOKEN: process.env.SANITY_API_READ_TOKEN,
   },
+  skipValidation: !!process.env.SKIP_ENV_CHECK,
 })
