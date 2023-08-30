@@ -50,6 +50,8 @@ jobs:
           GH_TOKEN: ${{ secrets.READ_GH_PACKAGES_TOKEN }}
           SKIP_ENV_CHECK: true
       - run: yarn lint
+        env:
+          SKIP_ENV_CHECK: true
   test_e2e:
     name: Playwright tests
     timeout-minutes: 60
