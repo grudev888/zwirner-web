@@ -1,4 +1,4 @@
-import {GetStaticPropsContext, InferGetServerSidePropsType} from 'next'
+import {GetStaticPropsContext, InferGetStaticPropsType} from 'next'
 
 import {SEOComponent} from '@/common/components/seo/seo'
 import {ArtistArtworkDetailContainer} from '@/components/containers/artists/ArtistArtworkDetailContainer'
@@ -10,7 +10,7 @@ const ArtistArtworkDetailPage = ({
   data,
   preview,
   querySlug,
-}: InferGetServerSidePropsType<typeof getStaticProps>) => {
+}: InferGetStaticPropsType<typeof getStaticProps>) => {
   if (preview) {
     return (
       <PreviewPage

@@ -29,7 +29,7 @@ cd ./web
 4. Duplicate the `.env.local.example` file and rename it as `.env`. Then:
 
 - Ask engineering for the `SANITY_API_READ_TOKEN` value, and replace it in that file.
-- Keep `ISR_TOKEN` commented intill you need it.
+- Keep `ISR_TOKEN` commented untill you need it.
 
 5. Use [Yarn v3 (berry)](https://yarnpkg.com/getting-started/install) and Node v18.
 
