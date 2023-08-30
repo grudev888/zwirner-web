@@ -12,6 +12,7 @@ import {APIProvider} from '@/common/api'
 import DefaultLayout from '@/common/components/layout/Layout'
 import {SEOComponent} from '@/common/components/seo/seo'
 import {mono, sans, serif} from '@/common/styles/fonts'
+import {env} from '@/env.mjs'
 import {getFooterData, getHeaderData} from '@/sanity/services/layout.service'
 import {getGeneralSettings} from '@/sanity/services/settings.service'
 import {GlobalSEOScheme} from '@/sanity/types'
@@ -36,7 +37,7 @@ const Wrapper = ({Component, pageProps, globalSEO, layoutData}: WrapperProps) =>
   const getLayout =
     Component.getLayout || ((page) => <DefaultLayout layoutData={layoutData}>{page}</DefaultLayout>)
   return (
-    <ReCaptchaProvider reCaptchaKey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}>
+    <ReCaptchaProvider reCaptchaKey={env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}>
       <APIProvider>
         <SEOComponent isDefault data={globalSEO} />
         <ErrorBoundary

@@ -48,7 +48,21 @@ jobs:
       - run: yarn install --immutable
         env:
           GH_TOKEN: ${{ secrets.READ_GH_PACKAGES_TOKEN }}
+          SANITY_API_READ_TOKEN: ${{ env.SANITY_API_READ_TOKEN }}
+          ANALYZE: false
+          NEXT_PUBLIC_VERCEL_GIT_PROVIDER: github
+          NEXT_PUBLIC_VERCEL_GIT_REPO_OWNER: ${{ env.NEXT_PUBLIC_VERCEL_GIT_REPO_OWNER }}
+          NEXT_PUBLIC_VERCEL_GIT_REPO_SLUG: ${{ env.NEXT_PUBLIC_VERCEL_GIT_REPO_SLUG }}
+          NEXT_PUBLIC_SANITY_PROJECT_ID: ${{ env.NEXT_PUBLIC_SANITY_PROJECT_ID }}
+          NEXT_PUBLIC_SANITY_DATASET: ${{ env.NEXT_PUBLIC_SANITY_DATASET }}
+          NEXT_PUBLIC_SANITY_API_VERSION: ${{ env.NEXT_PUBLIC_SANITY_API_VERSION }}
+          NEXT_PUBLIC_VERCEL_URL: ${{ env.NEXT_PUBLIC_VERCEL_URL }}
+          NEXT_PUBLIC_VERCEL_ENV: ${{ env.NEXT_PUBLIC_VERCEL_ENV }}
+          NEXT_PUBLIC_RECAPTCHA_SITE_KEY: ${{ env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY }}
+          NEXT_PUBLIC_FORMS_API: ${{ env.NEXT_PUBLIC_FORMS_API }}
       - run: yarn lint
+        env:
+          SKIP_ENV_CHECK: true
   test_e2e:
     name: Playwright tests
     timeout-minutes: 60
