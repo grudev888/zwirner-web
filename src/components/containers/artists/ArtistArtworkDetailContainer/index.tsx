@@ -20,18 +20,19 @@ import {
   TITLE_TYPES,
 } from '@zwirner/design-system'
 import cn from 'classnames'
-import {FC, useEffect, useRef, useState} from 'react'
+import {useEffect, useRef, useState} from 'react'
 
 import {photosGrid} from '@/components/containers/artworks/mapper'
 import NoSSR from '@/components/wrappers/NoSSR'
+import {ArtistArtworkBySlugType} from '@/sanity/services/artist.service'
 
 import styles from './artistArtworkDetailContainer.module.css'
 import {mapArtworkData} from './mapper'
 import {builder} from '@/sanity/imageBuilder'
 import Image from 'next/image'
 
-interface ArtistArtworkDetailContainerProps {
-  data: any
+type Props = {
+  data: ArtistArtworkBySlugType
 }
 
 // TODO relocate
@@ -39,7 +40,7 @@ const gridImageStyles: any = {
   cursorZoom: 'cursor-zoom-in',
 }
 
-export const ArtistArtworkDetailContainer: FC<ArtistArtworkDetailContainerProps> = ({data}) => {
+export const ArtistArtworkDetailContainer = ({data}: Props) => {
   const [isClient, setIsClient] = useState(false)
   const {isSmall} = useBreakpoints()
   const [currentZoomedImgProps, setCurrentZoomedImgProps] = useState<
@@ -64,27 +65,27 @@ export const ArtistArtworkDetailContainer: FC<ArtistArtworkDetailContainerProps>
   }
 
   const {
-    artistName,
-    artistSlug,
-    title,
-    displayDate,
-    medium,
-    price,
-    currency,
-    dimensions,
-    primaryCta,
-    secondaryCta,
-    framed,
-    description,
-    productInformation,
+    artworkType,
     editionInformation,
+    title,
+    medium,
+    dimensions,
+    displayDate,
+    price,
+    description,
+    currency,
+    salesInformation,
+    productInformation,
+    framed,
     framedDimensions,
     additionalCaption,
-    salesInformation,
-    year,
-  } = mapArtworkData(data)
+  } = data ?? {}
+  // Data can be undefined as getStaticPaths do not defined properly
+
+  const {artistName, artistSlug, primaryCta, secondaryCta, year} = mapArtworkData(data)
   const priceAndCurrency = price && currency ? `${currency} ${price}` : null
   const leftPaneContainerHeight = useAppBodyHeight()
+  const isFramedShown = artworkType !== 'sculpture' && (framed == 'Framed' || framed == 'Unframed')
 
   useEffect(() => {
     setIsClient(true)
@@ -215,7 +216,7 @@ export const ArtistArtworkDetailContainer: FC<ArtistArtworkDetailContainerProps>
                   {priceAndCurrency && (
                     <DzText text={priceAndCurrency} className={styles.priceAndCurrency} />
                   )}
-                  {framed && <DzText text={framed} className={styles.framed} />}
+                  {isFramedShown && <DzText text={framed} className={styles.framed} />}
                 </div>
                 <div className={styles.ctaButtonsContainer}>
                   {primaryCta ? (

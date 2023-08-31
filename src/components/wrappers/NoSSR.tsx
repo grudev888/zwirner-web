@@ -1,7 +1,6 @@
 import {useEffect, useLayoutEffect, useState} from 'react'
 
-const useEnhancedEffect =
-  typeof window !== 'undefined' && process.env.NODE_ENV !== 'test' ? useLayoutEffect : useEffect
+const useEnhancedEffect = typeof window !== 'undefined' ? useLayoutEffect : useEffect
 
 const NoSSR = ({children, defer, fallback}: any) => {
   const [isMounted, setMountedState] = useState(false)

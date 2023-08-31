@@ -1,11 +1,12 @@
 import useSWR from 'swr'
 
 import {client} from '@/common/api'
+import {env} from '@/env.mjs'
 
 import {IFormInput, ILocation} from '../types'
 
 const BASE_URL = (path = '', queryParams: any = null) =>
-  `${process.env.NEXT_PUBLIC_FORMS_API}${path}${
+  `${env.NEXT_PUBLIC_FORMS_API}${path}${
     queryParams ? '?' + new URLSearchParams(queryParams).toString() : ''
   }`
 
