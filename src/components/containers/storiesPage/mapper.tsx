@@ -1,5 +1,6 @@
 import {
   ButtonModes,
+  DzPortableText,
   INTERSTITIAL_TEXT_COLORS,
   MEDIA_ASPECT_RATIOS,
   MEDIA_OBJECT_FIT,
@@ -9,7 +10,6 @@ import {
 } from '@zwirner/design-system'
 import Image from 'next/image'
 
-import {DzPortableText} from '@/common/components/portableText'
 import {
   DAVID_ZWIRNER_BOOKS,
   EXHIBITIONS_URL,
@@ -213,7 +213,9 @@ export const featuredVideosMap = (data: any) => {
       media,
       category,
       title,
-      portableTextDescription: <DzPortableText portableProps={{value: text}} />,
+      portableTextDescription: (
+        <DzPortableText portableProps={{value: text}} builder={builder} ImgElement={Image} />
+      ),
       linkCTA: {
         text: ctaText,
         linkElement: 'a',
@@ -242,6 +244,8 @@ export const featuredPodcastMap = (data: any) => {
           customStyles={{
             normal: '!mx-0',
           }}
+          builder={builder}
+          ImgElement={Image}
         />
       ),
     },
@@ -265,7 +269,9 @@ export const mapBookForSplit = (data: any) => {
       media,
       category: DAVID_ZWIRNER_BOOKS,
       title,
-      portableTextDescription: <DzPortableText portableProps={{value: description}} />,
+      portableTextDescription: (
+        <DzPortableText portableProps={{value: description}} builder={builder} ImgElement={Image} />
+      ),
       linkCTA: {
         text: PRE_ORDER_NOW,
         linkElement: 'a',
@@ -296,7 +302,9 @@ export const mapBookForCarousel = (data: any) => {
     },
     category: DAVID_ZWIRNER_BOOKS,
     title,
-    portableTextDescription: <DzPortableText portableProps={{value: tagline}} />,
+    portableTextDescription: (
+      <DzPortableText portableProps={{value: tagline}} builder={builder} ImgElement={Image} />
+    ),
     linkCTA: {
       text: PRE_ORDER_NOW,
       linkElement: 'a',

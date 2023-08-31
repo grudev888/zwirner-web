@@ -1,8 +1,10 @@
+import {builder} from '@/sanity/imageBuilder'
 import {
   DzColumn,
   DzGridColumns,
   DzLink,
   DzMedia,
+  DzPortableText,
   DzText,
   DzTitle,
   DzTitleMolecule,
@@ -15,8 +17,7 @@ import {
   TITLE_TYPES,
   useBreakpoints,
 } from '@zwirner/design-system'
-
-import DzPortableText from '@/common/components/portableText'
+import Image from 'next/image'
 
 const ArtistFooter = ({artist}: {artist: any}) => {
   const {isSmall} = useBreakpoints()
@@ -116,7 +117,11 @@ const Biography = ({title, biography, artist, ...rest}: any) => {
           </DzColumn>
 
           <DzColumn span={6} start={7} className="pt-5 md:pt-0">
-            <DzPortableText portableProps={{value: biography.description}} />
+            <DzPortableText
+              portableProps={{value: biography.description}}
+              builder={builder}
+              ImgElement={Image}
+            />
           </DzColumn>
         </DzGridColumns>
 

@@ -1,4 +1,10 @@
-import {CARD_TYPES, DzColumn, useAppBodyHeight, useBreakpoints} from '@zwirner/design-system'
+import {
+  CARD_TYPES,
+  DzColumn,
+  DzPortableText,
+  useAppBodyHeight,
+  useBreakpoints,
+} from '@zwirner/design-system'
 import {
   BUTTON_SIZES,
   DzButton,
@@ -16,13 +22,14 @@ import {
 import cn from 'classnames'
 import {useEffect, useRef, useState} from 'react'
 
-import DzPortableText from '@/common/components/portableText'
 import {photosGrid} from '@/components/containers/artworks/mapper'
 import NoSSR from '@/components/wrappers/NoSSR'
 import {ArtistArtworkBySlugType} from '@/sanity/services/artist.service'
 
 import styles from './artistArtworkDetailContainer.module.css'
 import {mapArtworkData} from './mapper'
+import {builder} from '@/sanity/imageBuilder'
+import Image from 'next/image'
 
 type Props = {
   data: ArtistArtworkBySlugType
@@ -135,6 +142,8 @@ export const ArtistArtworkDetailContainer = ({data}: Props) => {
                   <DzPortableText
                     portableProps={{value: dimensions}}
                     customStyles={detailTextStyles}
+                    builder={builder}
+                    ImgElement={Image}
                   />
                 </div>
               )}
@@ -143,6 +152,8 @@ export const ArtistArtworkDetailContainer = ({data}: Props) => {
                   <DzPortableText
                     portableProps={{value: framedDimensions}}
                     customStyles={detailTextStyles}
+                    builder={builder}
+                    ImgElement={Image}
                   />
                 </div>
               )}
@@ -151,6 +162,8 @@ export const ArtistArtworkDetailContainer = ({data}: Props) => {
                   <DzPortableText
                     portableProps={{value: editionInformation}}
                     customStyles={detailTextStyles}
+                    builder={builder}
+                    ImgElement={Image}
                   />
                 </div>
               )}
@@ -159,6 +172,8 @@ export const ArtistArtworkDetailContainer = ({data}: Props) => {
                   <DzPortableText
                     portableProps={{value: productInformation}}
                     customStyles={detailTextStyles}
+                    builder={builder}
+                    ImgElement={Image}
                   />
                 </div>
               )}
@@ -167,6 +182,8 @@ export const ArtistArtworkDetailContainer = ({data}: Props) => {
                   <DzPortableText
                     portableProps={{value: additionalCaption}}
                     customStyles={detailTextStyles}
+                    builder={builder}
+                    ImgElement={Image}
                   />
                 </div>
               )}
@@ -190,6 +207,8 @@ export const ArtistArtworkDetailContainer = ({data}: Props) => {
                     <DzPortableText
                       portableProps={{value: salesInformation}}
                       customStyles={{normal: '!text-sm'}}
+                      builder={builder}
+                      ImgElement={Image}
                     />
                   </div>
                 )}
@@ -229,7 +248,11 @@ export const ArtistArtworkDetailContainer = ({data}: Props) => {
         />
         {description && (
           <div ref={descriptionRef} className={styles.descriptionContainer}>
-            <DzPortableText portableProps={{value: description}} />
+            <DzPortableText
+              portableProps={{value: description}}
+              builder={builder}
+              ImgElement={Image}
+            />
           </div>
         )}
       </DzColumn>

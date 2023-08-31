@@ -37,7 +37,7 @@
     "@sanity/image-url": "^1.0.2",
     "@t3-oss/env-nextjs": "^0.6.1",
     "@tailwindcss/typography": "^0.5.9",
-    "@zwirner/design-system": "0.0.91",
+    "@zwirner/design-system": "^0.0.96",
     "axios": "^1.3.5",
     "classnames": "^2.3.2",
     "date-fns": "^2.30.0",

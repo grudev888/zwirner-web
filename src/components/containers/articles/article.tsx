@@ -7,6 +7,7 @@ import {
   DzHero,
   DzInterstitial,
   DzLink,
+  DzPortableText,
   DzTitle,
   LINK_VARIANTS,
   TITLE_TYPES,
@@ -14,7 +15,6 @@ import {
 import cn from 'classnames'
 import {FC} from 'react'
 
-import {DzPortableText} from '@/common/components/portableText'
 import {FullWidthFlexCol} from '@/components/containers/layout/FullWidthFlexCol'
 
 import styles from './article.module.css'
@@ -26,6 +26,8 @@ import {
   interstitialMap,
   locationTitleMapper,
 } from './mapper'
+import {builder} from '@/sanity/imageBuilder'
+import Image from 'next/image'
 
 interface ArticleContainerProps {
   data: any
@@ -96,6 +98,8 @@ export const ArticleContainer: FC<ArticleContainerProps> = ({data}) => {
               customStyles={{
                 normal: styles.articleXSpacing ?? '',
               }}
+              builder={builder}
+              ImgElement={Image}
             />
           ) : null}
           {pdfURL ? (
