@@ -88,7 +88,7 @@ export const ExhibitionsContainer: FC<ExhibitionsContainerProps> = ({data}) => {
           <DzPortableText
             portableProps={{value: data.pressRelease}}
             builder={builder}
-            nextImage={Image}
+            ImgElement={Image}
           />
         </DzColumn>
       )}

@@ -18,7 +18,7 @@ export const safeText = ({key, text, prefix = 'portableText'}: SafeTextProps) =>
   const capitalizedKey = key?.charAt(0)?.toUpperCase() + key?.slice(1)
   return {
     [`${prefix}${capitalizedKey}`]: (
-      <DzPortableText portableProps={{value: text}} builder={builder} nextImage={Image} />
+      <DzPortableText portableProps={{value: text}} builder={builder} ImgElement={Image} />
     ),
   }
 }

@@ -142,7 +142,7 @@ export const ArtistArtworkDetailContainer: FC<ArtistArtworkDetailContainerProps>
                     portableProps={{value: dimensions}}
                     customStyles={detailTextStyles}
                     builder={builder}
-                    nextImage={Image}
+                    ImgElement={Image}
                   />
                 </div>
               )}
@@ -152,7 +152,7 @@ export const ArtistArtworkDetailContainer: FC<ArtistArtworkDetailContainerProps>
                     portableProps={{value: framedDimensions}}
                     customStyles={detailTextStyles}
                     builder={builder}
-                    nextImage={Image}
+                    ImgElement={Image}
                   />
                 </div>
               )}
@@ -162,7 +162,7 @@ export const ArtistArtworkDetailContainer: FC<ArtistArtworkDetailContainerProps>
                     portableProps={{value: editionInformation}}
                     customStyles={detailTextStyles}
                     builder={builder}
-                    nextImage={Image}
+                    ImgElement={Image}
                   />
                 </div>
               )}
@@ -172,7 +172,7 @@ export const ArtistArtworkDetailContainer: FC<ArtistArtworkDetailContainerProps>
                     portableProps={{value: productInformation}}
                     customStyles={detailTextStyles}
                     builder={builder}
-                    nextImage={Image}
+                    ImgElement={Image}
                   />
                 </div>
               )}
@@ -182,7 +182,7 @@ export const ArtistArtworkDetailContainer: FC<ArtistArtworkDetailContainerProps>
                     portableProps={{value: additionalCaption}}
                     customStyles={detailTextStyles}
                     builder={builder}
-                    nextImage={Image}
+                    ImgElement={Image}
                   />
                 </div>
               )}
@@ -207,7 +207,7 @@ export const ArtistArtworkDetailContainer: FC<ArtistArtworkDetailContainerProps>
                       portableProps={{value: salesInformation}}
                       customStyles={{normal: '!text-sm'}}
                       builder={builder}
-                      nextImage={Image}
+                      ImgElement={Image}
                     />
                   </div>
                 )}
@@ -250,7 +250,7 @@ export const ArtistArtworkDetailContainer: FC<ArtistArtworkDetailContainerProps>
             <DzPortableText
               portableProps={{value: description}}
               builder={builder}
-              nextImage={Image}
+              ImgElement={Image}
             />
           </div>
         )}

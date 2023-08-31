@@ -99,7 +99,7 @@ export const ArticleContainer: FC<ArticleContainerProps> = ({data}) => {
                 normal: styles.articleXSpacing ?? '',
               }}
               builder={builder}
-              nextImage={Image}
+              ImgElement={Image}
             />
           ) : null}
           {pdfURL ? (

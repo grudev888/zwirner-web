@@ -120,7 +120,7 @@ const Biography = ({title, biography, artist, ...rest}: any) => {
             <DzPortableText
               portableProps={{value: biography.description}}
               builder={builder}
-              nextImage={Image}
+              ImgElement={Image}
             />
           </DzColumn>
         </DzGridColumns>

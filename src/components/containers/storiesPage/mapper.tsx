@@ -214,7 +214,7 @@ export const featuredVideosMap = (data: any) => {
       category,
       title,
       portableTextDescription: (
-        <DzPortableText portableProps={{value: text}} builder={builder} nextImage={Image} />
+        <DzPortableText portableProps={{value: text}} builder={builder} ImgElement={Image} />
       ),
       linkCTA: {
         text: ctaText,
@@ -245,7 +245,7 @@ export const featuredPodcastMap = (data: any) => {
             normal: '!mx-0',
           }}
           builder={builder}
-          nextImage={Image}
+          ImgElement={Image}
         />
       ),
     },
@@ -270,7 +270,7 @@ export const mapBookForSplit = (data: any) => {
       category: DAVID_ZWIRNER_BOOKS,
       title,
       portableTextDescription: (
-        <DzPortableText portableProps={{value: description}} builder={builder} nextImage={Image} />
+        <DzPortableText portableProps={{value: description}} builder={builder} ImgElement={Image} />
       ),
       linkCTA: {
         text: PRE_ORDER_NOW,
@@ -303,7 +303,7 @@ export const mapBookForCarousel = (data: any) => {
     category: DAVID_ZWIRNER_BOOKS,
     title,
     portableTextDescription: (
-      <DzPortableText portableProps={{value: tagline}} builder={builder} nextImage={Image} />
+      <DzPortableText portableProps={{value: tagline}} builder={builder} ImgElement={Image} />
     ),
     linkCTA: {
       text: PRE_ORDER_NOW,
