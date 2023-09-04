@@ -12,6 +12,18 @@
         "caughtErrorsIgnorePattern": "^_"
       }
     ],
+    "no-restricted-imports": [
+      "error",
+      {
+        "paths": [
+          {
+            "name": "@zwirner/design-system",
+            "importNames": ["DzPortableText"],
+            "message": "Import it from @/components/wrappers/DzPortableText instead."
+          }
+        ]
+      }
+    ],
     "react-hooks/rules-of-hooks": "error",
     "react/prop-types": 0
   }

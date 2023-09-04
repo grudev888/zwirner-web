@@ -7,15 +7,17 @@ import {
   DzHero,
   DzInterstitial,
   DzLink,
-  DzPortableText,
   DzTitle,
   LINK_VARIANTS,
   TITLE_TYPES,
 } from '@zwirner/design-system'
 import cn from 'classnames'
+import Image from 'next/image'
 import {FC} from 'react'
 
 import {FullWidthFlexCol} from '@/components/containers/layout/FullWidthFlexCol'
+import {DzPortableText} from '@/components/wrappers/DzPortableText'
+import {builder} from '@/sanity/imageBuilder'
 
 import styles from './article.module.css'
 import {
@@ -26,8 +28,6 @@ import {
   interstitialMap,
   locationTitleMapper,
 } from './mapper'
-import {builder} from '@/sanity/imageBuilder'
-import Image from 'next/image'
 
 interface ArticleContainerProps {
   data: any

@@ -1,6 +1,5 @@
 import {
   ButtonModes,
-  DzPortableText,
   INTERSTITIAL_TEXT_COLORS,
   MEDIA_ASPECT_RATIOS,
   MEDIA_OBJECT_FIT,
@@ -17,6 +16,7 @@ import {
   PRE_ORDER_NOW,
 } from '@/common/constants/commonCopies'
 import {dzMediaMapper} from '@/common/utilsMappers/image.mapper'
+import {DzPortableText} from '@/components/wrappers/DzPortableText'
 import {builder} from '@/sanity/imageBuilder'
 
 export const heroMapper = (data: any) => {

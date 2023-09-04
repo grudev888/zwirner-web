@@ -3,11 +3,11 @@ import {
   DzColumn,
   DzHero,
   DzInterstitial,
-  DzPortableText,
   DzSectionMenu,
   DzTitleExhibition,
   INTERSTITIAL_TEXT_COLORS,
 } from '@zwirner/design-system'
+import Image from 'next/image'
 import {useRouter} from 'next/router'
 import {FC} from 'react'
 
@@ -18,10 +18,10 @@ import {
   EXPLORE,
   INSTALLATION_VIEWS,
 } from '@/common/constants/commonCopies'
+import {DzPortableText} from '@/components/wrappers/DzPortableText'
+import {builder} from '@/sanity/imageBuilder'
 
 import styles from './exhibitions.module.css'
-import {builder} from '@/sanity/imageBuilder'
-import Image from 'next/image'
 
 interface ExhibitionsContainerProps {
   data: any
