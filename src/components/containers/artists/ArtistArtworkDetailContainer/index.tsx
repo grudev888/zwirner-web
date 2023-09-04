@@ -1,10 +1,4 @@
-import {
-  CARD_TYPES,
-  DzColumn,
-  DzPortableText,
-  useAppBodyHeight,
-  useBreakpoints,
-} from '@zwirner/design-system'
+import {CARD_TYPES, DzColumn, useAppBodyHeight, useBreakpoints} from '@zwirner/design-system'
 import {
   BUTTON_SIZES,
   DzButton,
@@ -20,16 +14,17 @@ import {
   TITLE_TYPES,
 } from '@zwirner/design-system'
 import cn from 'classnames'
+import Image from 'next/image'
 import {useEffect, useRef, useState} from 'react'
 
 import {photosGrid} from '@/components/containers/artworks/mapper'
+import {DzPortableText} from '@/components/wrappers/DzPortableText'
 import NoSSR from '@/components/wrappers/NoSSR'
+import {builder} from '@/sanity/imageBuilder'
 import {ArtistArtworkBySlugType} from '@/sanity/services/artist.service'
 
 import styles from './artistArtworkDetailContainer.module.css'
 import {mapArtworkData} from './mapper'
-import {builder} from '@/sanity/imageBuilder'
-import Image from 'next/image'
 
 type Props = {
   data: ArtistArtworkBySlugType

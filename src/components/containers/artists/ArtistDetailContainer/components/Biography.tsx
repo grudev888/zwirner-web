@@ -1,10 +1,8 @@
-import {builder} from '@/sanity/imageBuilder'
 import {
   DzColumn,
   DzGridColumns,
   DzLink,
   DzMedia,
-  DzPortableText,
   DzText,
   DzTitle,
   DzTitleMolecule,
@@ -18,6 +16,9 @@ import {
   useBreakpoints,
 } from '@zwirner/design-system'
 import Image from 'next/image'
+
+import {DzPortableText} from '@/components/wrappers/DzPortableText'
+import {builder} from '@/sanity/imageBuilder'
 
 const ArtistFooter = ({artist}: {artist: any}) => {
   const {isSmall} = useBreakpoints()
