@@ -16,7 +16,7 @@ export const ExhibitionMuseumHighlights: FC<ExhibitionMuseumHighlightsProps> = (
   )
 
   return (
-    <DzGridColumns className="!gap-10 md:gap-5">
+    <DzGridColumns className="!gap-y-10 md:gap-y-5">
       {museumHighlightsCardsData?.map((article: any, key: any) => {
         return (
           <DzColumn key={`article-${key}`} span={4}>
