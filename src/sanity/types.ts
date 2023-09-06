@@ -163,3 +163,9 @@ export interface DzTitleTypeProps {
   title: string
   enableOverrides: boolean
 }
+
+export enum ArticleTypes {
+  INTERNAL = 'internalNews',
+  PRESS = 'pressRelease',
+  EXTERNAL = 'externalNews',
+}

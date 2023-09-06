@@ -3,8 +3,8 @@ import {GetStaticProps} from 'next'
 import {SEOComponent} from '@/common/components/seo/seo'
 import {ExhibitionLandingContainer} from '@/components/containers/exhibitions/exhibitionsLandingContainer'
 import {PreviewPage} from '@/components/containers/previews/pagePreview'
-import {exhibitionPageBySlug} from '@/sanity/queries/exhibitionPage.queries'
-import {getExhibitionsLanding} from '@/sanity/services/exhibition.service'
+import {exhibitionsLandingData} from '@/sanity/queries/exhibition.queries'
+import {getExhibitionsLandingPageData} from '@/sanity/services/exhibition.service'
 
 interface PageProps {
   data: any
@@ -27,7 +27,11 @@ export default function ExhibitionsLanding({data = {}, preview}: PageProps) {
 
   if (preview) {
     return (
-      <PreviewPage query={exhibitionPageBySlug} seo={seo} Container={ExhibitionLandingContainer} />
+      <PreviewPage
+        query={exhibitionsLandingData}
+        seo={seo}
+        Container={ExhibitionLandingContainer}
+      />
     )
   }
 
@@ -53,12 +57,13 @@ export const getStaticProps: GetStaticProps<PageProps, Query, PreviewData> = asy
     }
   }
 
-  // TODO DEFINE ONLY NECESSARY DATA FOR THIS SUB_PAGE
-  const data: any = await getExhibitionsLanding()
+  const pageData = await getExhibitionsLandingPageData()
 
   return {
     props: {
-      data: {pageData: data},
+      data: {
+        pageData,
+      },
       preview,
       slug: params?.slug || null,
       token: null,

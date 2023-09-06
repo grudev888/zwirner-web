@@ -43,19 +43,21 @@ export const exhibitionCarouselMapper = (data: any[]) => {
   return data
     ?.filter((exhibitionPage) => validateImage(exhibitionPage))
     ?.map((exhibitionPage) => {
-      const {_id, title, subtitle, summary} = exhibitionPage ?? {}
-      const {media} = dzMediaMapper({data: exhibitionPage, ImgElement: Image})
+      const {_id, title, description, slug} = exhibitionPage ?? {}
+      const {media} = dzMediaMapper(
+        {data: exhibitionPage, ImgElement: Image},
+        {imagesKey: 'heroMedia'}
+      )
 
       return {
         id: _id,
         media,
-        category: subtitle,
         title,
-        description: summary,
+        description,
         linkCTA: {
           text: 'Explore Now',
           linkElement: 'a',
-          url: '/',
+          url: slug?.current,
         },
       }
     })

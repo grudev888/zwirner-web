@@ -2,7 +2,7 @@ import {client} from '@/sanity/client'
 import {
   allExhibitions,
   exhibitionById,
-  exhibitionsLanding,
+  exhibitionsLandingData,
 } from '@/sanity/queries/exhibition.queries'
 import {
   checklistBySlug,
@@ -18,11 +18,11 @@ export async function getAllExhibitions(): Promise<any[]> {
   return []
 }
 
-export async function getExhibitionsLanding(): Promise<any[]> {
+export async function getExhibitionsLandingPageData(): Promise<any> {
   if (client) {
-    return (await client.fetch(exhibitionsLanding)) || []
+    return (await client.fetch(exhibitionsLandingData)) || {}
   }
-  return []
+  return {}
 }
 
 export async function getExhibitionById(id: any): Promise<any[]> {

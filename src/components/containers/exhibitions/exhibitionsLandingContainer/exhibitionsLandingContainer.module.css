@@ -1,0 +1,15 @@
+.locationPillsContainer {
+  @apply my-[1.25rem]
+  block
+  w-full
+  overflow-x-auto
+  whitespace-nowrap
+  py-[0.1rem]
+  pl-[1px]
+  scrollbar-none;
+}
+
+.locationPill {
+  @apply mr-[1.5rem]
+  inline-block;
+}

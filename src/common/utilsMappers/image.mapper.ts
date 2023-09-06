@@ -23,24 +23,31 @@ interface DzMediaVideoMapper {
   extraVideoProps?: any
 }
 
+interface KeyOptions {
+  imagesKey: 'photos' | 'heroMedia'
+}
+
 type DzMediaMapper = DzMediaImageMapper | DzMediaVideoMapper
 
 export const validateImage = (data: any) => {
-  const {photos} = data ?? {}
-  const [mainPicture] = photos ?? []
-  const {asset, image} = mainPicture ?? {}
-  return image ? !!image.asset : !!asset
+  return data?.heroMedia?.image?.asset
 }
 
-export const imageMapper = (data: any) => {
+export const imageMapper = (data: any, keyOptions: KeyOptions) => {
   const {
     photos,
+    heroMedia,
     image: sourceImage,
     asset: srcAsset,
     alt: altAsset,
     caption: captionAsset,
   } = data ?? {}
-  const [mainPicture] = photos ?? []
+  let mainPicture: any = {}
+  if (keyOptions?.imagesKey === 'photos') {
+    mainPicture = (photos ?? [])[0]
+  } else if (keyOptions?.imagesKey === 'heroMedia') {
+    mainPicture = heroMedia
+  }
   const {asset, alt, image, caption} = mainPicture ?? sourceImage ?? {}
   const {alt: imageBuilderAlt, asset: imageBuilderAsset, caption: imageBuilderCaption} = image ?? {}
   const pictureAsset = imageBuilderAsset ?? srcAsset ?? asset
@@ -170,14 +177,11 @@ export const getVideoMedia = ({data, options = {}, extraVideoProps = {}}: DzMedi
   }
 }
 
-export const getImageMedia = ({
-  data,
-  url,
-  ImgElement,
-  options = {},
-  extraImgProps = {},
-}: DzMediaImageMapper) => {
-  const {src, alt, caption} = imageMapper(data)
+export const getImageMedia = (
+  {data, url, ImgElement, options = {}, extraImgProps = {}}: DzMediaImageMapper,
+  keyOptions: KeyOptions = {imagesKey: 'photos'}
+) => {
+  const {src, alt, caption} = imageMapper(data, keyOptions)
   return {
     media: {
       url,
@@ -199,9 +203,12 @@ export const getImageMedia = ({
   }
 }
 
-export const dzMediaMapper = (media: DzMediaMapper) => {
+export const dzMediaMapper = (
+  media: DzMediaMapper,
+  options: KeyOptions = {imagesKey: 'photos'}
+) => {
   const {type} = media?.data ?? {}
   return type === MEDIA_TYPES.VIDEO
     ? getVideoMedia(media as DzMediaVideoMapper)
-    : getImageMedia(media as DzMediaImageMapper)
+    : getImageMedia(media as DzMediaImageMapper, options)
 }
