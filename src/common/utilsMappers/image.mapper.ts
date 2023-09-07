@@ -30,7 +30,15 @@ interface KeyOptions {
 type DzMediaMapper = DzMediaImageMapper | DzMediaVideoMapper
 
 export const validateImage = (data: any) => {
-  return data?.heroMedia?.image?.asset
+  if (data?.heroMedia) {
+    return !!data.heroMedia?.image?.asset
+  }
+
+  const {photos} = data ?? {}
+  const [mainPicture] = photos ?? []
+  const {asset, image} = mainPicture ?? {}
+
+  return image ? !!image.asset : !!asset
 }
 
 export const imageMapper = (data: any, keyOptions: KeyOptions) => {
