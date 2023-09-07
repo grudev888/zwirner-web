@@ -69,7 +69,6 @@ export const exhibitionsLandingData = groq`
       startDate,
       endDate,
       locations[]->,
-
       photos[],
       "artists": artists[]->,
       "artworks": artworks[]->,

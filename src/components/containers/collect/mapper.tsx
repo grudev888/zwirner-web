@@ -21,7 +21,10 @@ export const heroMapper = (data: any) => {
 
   const category = _type === 'exhibitionPage' ? 'Exhibition' : 'Viewing room'
   const exhibitionURL = `${slug?.current ?? ''}`
-  const {media} = dzMediaMapper({data: hero, url: exhibitionURL, ImgElement: Image})
+  const {media} = dzMediaMapper(
+    {data: hero, url: exhibitionURL, ImgElement: Image},
+    {imagesKey: 'heroMedia'}
+  )
   return {
     media,
     linkCTA: {

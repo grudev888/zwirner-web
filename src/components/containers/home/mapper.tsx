@@ -18,7 +18,10 @@ export const mapHeaderCarousel = (data = []) => {
         const {exhibition} = item ?? {}
         const {title, subtitle} = exhibition ?? {}
 
-        const {media} = dzMediaMapper({data: exhibition, ImgElement: Image})
+        const {media} = dzMediaMapper(
+          {data: exhibition, ImgElement: Image},
+          {imagesKey: 'heroMedia'}
+        )
 
         return {
           category: subtitle,
@@ -36,19 +39,22 @@ export const mapHeaderCarousel = (data = []) => {
 
 export const mapFeaturedContentSplit = (data: any) => {
   const {exhibition} = data ?? {}
-  const {title, subtitle, description} = exhibition ?? {}
 
-  const {media} = dzMediaMapper({data: exhibition, ImgElement: Image})
+  const isArticle = data._type === 'article'
+
+  const {title, subtitle, description} = exhibition ?? data
+
+  const {media} = dzMediaMapper({data: exhibition || data, ImgElement: Image})
 
   return {
     media,
     category: subtitle,
     title,
-    description,
+    ...(isArticle ? safeText({key: 'description', text: description}) : {description}),
     linkCTA: {
       text: LEARN_MORE,
       linkElement: 'a',
-      url: '/',
+      url: data.slug?.current || '/',
     },
   }
 }
@@ -67,10 +73,11 @@ export const mapArticlesGrid = (data = []) =>
         media,
         category: item.category,
         title: item.title,
-        description: item.description,
+        ...safeText({key: 'description', text: item.description}),
         linkCTA: {text: 'View More', linkElement: 'a', url: '/'},
       }
     })
+
 export const mapInterstitialComponents = (data: any) => {
   const {ctaOverride, imageOverride, titleOverride, subtitleOverride} = data ?? {}
 
@@ -205,52 +212,11 @@ export const mapCarouselCards = (data: any) => {
         category: isArticle ? category : subtitle,
         title: isArticle ? titleArticle : title,
         titleType: TITLE_TYPES.H3,
-        description: isArticle ? description : summary,
+        ...(isArticle ? safeText({key: 'description', text: description}) : {description: summary}),
         linkCTA: {
           text: LEARN_MORE,
           linkElement: 'a',
           url,
-        },
-      }
-    })
-}
-
-export const mapCardsGrid = (data: any[]) => {
-  return data
-    ?.filter((artwork) => validateImage(artwork))
-    ?.map((artwork) => {
-      const {artists, dimensions, title, dateSelection, medium, edition, _id, price} = artwork ?? {}
-      const {year} = dateSelection ?? {}
-      const [mainArtist] = artists ?? []
-      const {fullName} = mainArtist ?? {}
-
-      const framed =
-        typeof artwork.framed === 'boolean'
-          ? artwork.framed === true
-            ? 'Framed'
-            : 'Unframed'
-          : undefined
-
-      const {media} = dzMediaMapper({data: artists, ImgElement: Image})
-      const dimensionText = safeText({key: 'dimensions', text: dimensions})
-      return {
-        id: _id,
-        media,
-        artistName: fullName,
-        artworkTitle: title,
-        artworkYear: year,
-        medium: medium,
-        ...(dimensionText ?? {}),
-        edition: edition,
-        price: price,
-        framed,
-        slug: artwork?.slug?.current,
-        primaryCTA: {
-          text: 'Inquire',
-          ctaProps: {
-            // Todo inquire with _id
-            onClick: () => null,
-          },
         },
       }
     })

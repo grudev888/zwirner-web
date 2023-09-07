@@ -27,7 +27,7 @@ export const exhibitionPageBySlug = groq`
   'showChecklist': count(checklist) > 0,
   slug,
   'checklistPDFURL': checklistPDF.asset->url,
-  'pressReleasePDFURL': pressReleasePDF.asset->url,
+  'pressReleasePDFURL': pdf.asset->url,
   heroMedia {
     type,
     image {

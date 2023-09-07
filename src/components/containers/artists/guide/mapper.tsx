@@ -5,6 +5,7 @@ import {Fragment} from 'react'
 import {EXHIBITIONS_URL} from '@/common/constants/commonCopies'
 import {dzMediaMapper} from '@/common/utilsMappers/image.mapper'
 import {ArticleTypes} from '@/components/containers/articles/mapper'
+import {safeText} from '@/common/utilsMappers/safe'
 
 const formatDate = (date: string) => {
   const dateParsed = new Date(date)
@@ -14,8 +15,19 @@ const formatDate = (date: string) => {
 }
 export const articlesGridMap = (data: any[]) => {
   return data?.map((relatedArticles) => {
-    const {_id, date, displayDate, description, title, type, slug, _type, exhibition, externalURL} =
-      relatedArticles ?? {}
+    const {
+      _id,
+      date,
+      displayDate,
+      description,
+      subtitle,
+      title,
+      type,
+      slug,
+      _type,
+      exhibition,
+      externalURL,
+    } = relatedArticles ?? {}
     const {current} = slug ?? {}
     const {summary, endDate, startDate} = exhibition ?? {}
 
@@ -55,7 +67,8 @@ export const articlesGridMap = (data: any[]) => {
       cardLink: {
         href: urlToContent,
       },
-      secondaryTitle: description ?? summary,
+      secondaryTitle: (isArticle ? subtitle : description) ?? summary,
+      ...(isArticle ? safeText({key: 'description', text: description}) : {}),
       secondarySubtitle: cardDate,
     }
   })

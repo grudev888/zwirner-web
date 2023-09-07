@@ -23,7 +23,6 @@ import styles from './article.module.css'
 import {
   articleDatesMapper,
   articlesGridMap,
-  descriptionTitleMapper,
   heroMapper,
   interstitialMap,
   locationTitleMapper,
@@ -34,30 +33,22 @@ interface ArticleContainerProps {
 }
 
 export const ArticleContainer: FC<ArticleContainerProps> = ({data}) => {
-  const {
-    title,
-    body,
-    image,
-    interstitial,
-    articles,
-    pdfURL,
-    location,
-    dateSelection,
-    displayDate,
-    description,
-  } = data ?? {}
+  const {title, body, image, interstitial, articles, pdfURL, location, publishDate, displayDate} =
+    data ?? {}
   const locationProps = locationTitleMapper(location)
-  const descriptionProps = descriptionTitleMapper(description)
-  const articleDates = !displayDate
-    ? articleDatesMapper(dateSelection)
-    : {
+
+  const articleDates = displayDate
+    ? {
         title: 'Date',
         subtitle: displayDate,
         titleType: TITLE_TYPES.P,
       }
+    : articleDatesMapper(publishDate)
+
   const interstitialData = interstitialMap(interstitial)
   const articlesGrid = articlesGridMap(articles)
   const heroData = heroMapper({...image, title})
+
   return (
     <DzColumn span={12}>
       <FullWidthFlexCol>
@@ -68,14 +59,6 @@ export const ArticleContainer: FC<ArticleContainerProps> = ({data}) => {
         />
 
         <article>
-          {description ? (
-            <DzTitle
-              {...descriptionProps}
-              className={cn(styles.infoTitleContainer, styles.articleXSpacing)}
-              classNameTitle={styles.infoTitle}
-              classNameSubtitle={styles.infoTitle}
-            />
-          ) : null}
           {location ? (
             <DzTitle
               {...locationProps}

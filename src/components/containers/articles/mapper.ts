@@ -15,6 +15,7 @@ import {
   READ_MORE,
 } from '@/common/constants/commonCopies'
 import {dzMediaMapper} from '@/common/utilsMappers/image.mapper'
+import {safeText} from '@/common/utilsMappers/safe'
 
 export const heroMapper = (data: any) => {
   const {title} = data ?? {}
@@ -84,13 +85,16 @@ export const articlesGridMap = (data: any[]) => {
     const categoryCard =
       _type === 'exhibitionPage' ? EXHIBITIONS : _type === 'fairPage' ? FAIRS : category
 
+    const safeDescription = safeText({text: description, key: 'description'})
+
     return {
       id: _id,
       media: isArticle ? relatedArticleMedia : exhibitionMedia,
       hideImage: isArticle ? hideImgArticle : hideImgExhibition,
       category: categoryCard,
       title,
-      description: description ?? summary,
+      ...safeDescription,
+      description: description ? undefined : summary,
       linkCTA: {
         text: READ_MORE,
         linkElement: 'a',
@@ -109,40 +113,20 @@ export const locationTitleMapper = (data: any) => {
   }
 }
 
-export const descriptionTitleMapper = (data: any) => {
-  const description = data ?? {}
-  return {
-    subtitle: description,
-    titleType: TITLE_TYPES.P,
-  }
-}
+export const articleDatesMapper = (date: string | null) => {
+  if (!date) return null
 
-const datesText = (from: string, to: string) => {
-  const fromDate = new Date(from)
-  const toDate = new Date(to)
-  const shareMonth = fromDate.getMonth() === toDate.getMonth()
-  const eventYear = new Date(from ?? to).getFullYear()
+  const parsedDate = new Date(`${date} EST`)
 
-  const fromText = fromDate.toLocaleString('default', {month: 'long', day: 'numeric'})
-  const toText = toDate.toLocaleString('default', {
-    ...(shareMonth ? {} : {month: 'long'}),
+  const dateFormatter = new Intl.DateTimeFormat('en-US', {
+    timeZone: 'America/New_York',
+    month: 'long',
     day: 'numeric',
+    year: 'numeric',
   })
-  return `${fromText}—${toText}, ${eventYear}`
-}
-
-export const articleDatesMapper = (data: any) => {
-  const dateSelection = data ?? {}
-  const {dateRange} = dateSelection ?? {}
-  const dateTitle = dateRange?.from ? 'Dates' : 'Date'
 
   return {
-    title: dateTitle,
-    subtitle:
-      dateSelection.year ??
-      dateSelection.approximate ??
-      datesText(dateRange?.from, dateRange?.to) ??
-      '',
+    title: dateFormatter.format(parsedDate),
     titleType: TITLE_TYPES.P,
   }
 }

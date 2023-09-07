@@ -5,6 +5,7 @@ import Link from 'next/link'
 import {dzMediaMapper} from '@/common/utilsMappers/image.mapper'
 import {safeText} from '@/common/utilsMappers/safe'
 import {builder} from '@/sanity/imageBuilder'
+import parseISO from 'date-fns/parseISO'
 
 export const mapInterstitial = (data: any, onCTAClick?: () => void) => {
   if (!data?.title) return null
@@ -105,9 +106,8 @@ export const mapCarouselArticles = (data: any, isSmall: boolean) => {
       })
 
       const date =
-        item.dateSelection?.approximate ||
-        item.dateSelection?.year ||
-        (item.date ? dateFormatter.format(new Date(item.date)) : null)
+        item.displayDate ||
+        (item.publishDate ? dateFormatter.format(parseISO(item.publishDate)) : null)
 
       return {
         id: item._id,
@@ -118,7 +118,7 @@ export const mapCarouselArticles = (data: any, isSmall: boolean) => {
         enableZoom: true,
         title: item.title,
         category: item.category,
-        secondaryTitle: item.description,
+        secondaryTitle: item.subtitle,
         secondarySubtitle: date,
         ...(item.slug?.current && {
           linkCTA: {text: 'Learn more', url: item.slug.current, linkElement: Link},
@@ -150,6 +150,7 @@ export const mapSplit = (data: any, onCTAClick?: () => void) => {
   if (!data?.title) return null
 
   const {media} = dzMediaMapper({data, ImgElement: Image})
+
   return {
     media,
     title: data.title,
@@ -199,12 +200,17 @@ export const mapFeatured = (data: any) => {
     }
   } else if (data._type === 'article') {
     const imgSrc = data.image?.image?.asset ? builder.image(data.image.image.asset).url() : ''
+
+    const dateFormatter = new Intl.DateTimeFormat('en-US', {
+      timeZone: 'America/New_York',
+      month: 'long',
+      day: 'numeric',
+      year: 'numeric',
+    })
+
     const date =
       data.displayDate ||
-      data.dateSelection?.year ||
-      data.dateSelection?.approximate ||
-      (data.dateSelection?.dateRange.to &&
-        new Date(data.dateSelection?.dateRange.to).getFullYear().toString())
+      (data.publishDate ? dateFormatter.format(parseISO(data.publishDate)) : null)
 
     return {
       ...(imgSrc && {
@@ -221,7 +227,7 @@ export const mapFeatured = (data: any) => {
       // subtitle: 'Lorem ipsum dolor sit amet, consectetuer adipiscin',
       secondaryTitle: data.subtitle,
       secondarySubtitle: date,
-      description: data.description,
+      ...safeText({text: data.description, key: 'description'}),
       ...(data.slug?.current && {
         linkCTA: {
           text: 'Learn More',
@@ -325,7 +331,13 @@ export const mapHero = (data: any) => {
 export const mapArticlesCard = (item: any, noMedia = false) => {
   const {media} = dzMediaMapper({data: item, ImgElement: Image})
 
-  const year = item.displayDate || item.dateSelection?.year || item.dateSelection?.approximate
+  const dateFormatter = new Intl.DateTimeFormat('en-US', {
+    timeZone: 'America/New_York',
+    year: 'numeric',
+  })
+
+  const year =
+    item.displayDate || (item.publishDate ? dateFormatter.format(parseISO(item.publishDate)) : null)
 
   return {
     id: item._id,
@@ -336,7 +348,8 @@ export const mapArticlesCard = (item: any, noMedia = false) => {
       }),
     title: item.title,
     subtitle: item.subtitle,
-    secondaryTitle: item.description,
+    secondaryTitle: item.subtitle,
+    ...safeText({key: 'description', text: item.description}),
     secondarySubtitle: year,
     ...(item.slug?.current && {
       linkCTA: {text: 'Learn More', linkElement: Link, url: item.slug.current},

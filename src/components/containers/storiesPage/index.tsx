@@ -1,10 +1,10 @@
+import dynamic from 'next/dynamic'
 import {
   CARD_TYPES,
   CardSizes,
   CardTypes,
   carouselSizeToCardSize,
   DzCard,
-  DzCarousel,
   DzCarouselCardSize,
   DzColumn,
   DzGridColumns,
@@ -43,6 +43,10 @@ import {
   mapBookForSplit,
   mapFeaturedBooks,
 } from './mapper'
+
+const DzCarousel = dynamic(() => import('@zwirner/design-system').then((mod) => mod.DzCarousel), {
+  ssr: false,
+})
 
 interface StoriesContainerProps {
   data: any

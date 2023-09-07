@@ -17,13 +17,39 @@ export const homeData = groq`
     }
   },
   featured->{
-    _type == "exhibitionPage"=> {
+    _type == "exhibitionPage" => {
       title,
       _type,
       "exhibition":  {
         ${exhibitionSimpleFields}
         ${exhibitionComplexFields}
       },
+    },
+    _type == "article" => {
+      _type,
+      title,
+      subtitle,
+      description,
+      image {
+        type,
+        image {
+          _type,
+          alt,
+          "url": asset->url,
+          asset->{
+            assetId,
+            _id,
+            altText,
+            title,
+            description
+          },
+        }
+      },
+      publishDate,
+      slug,
+      category,
+      primarySubtitle,
+      type,
     }
   },
   firstCarousel{

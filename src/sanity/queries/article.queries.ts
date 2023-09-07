@@ -48,12 +48,12 @@ export const pressBySlug = groq`
     name
   },
   "artistPageData": *[_type == "artistPage" && references(^._id)][0]{
-      title,
-      'parentUrl': slug.current
+    title,
+    'parentUrl': slug.current
   },
   articles[]-> {
     ...,
-    _type == "fairPage"=> {
+    _type == "fairPage" => {
       slug,
       title,
       _type,
@@ -62,7 +62,7 @@ export const pressBySlug = groq`
         ${exhibitionComplexFields}
       },
     },
-    _type == "exhibitionPage"=> {
+    _type == "exhibitionPage" => {
       title,
       _type,
       "exhibition":  {
@@ -71,6 +71,7 @@ export const pressBySlug = groq`
       },
     }
   }
+}
 `
 
 export const articleBySlug = groq`
@@ -81,7 +82,7 @@ export const articleBySlug = groq`
   },
   ${articlesReferences},
   type == "pressRelease" => {
-    'pdfURL': pressReleasePDF.asset->url,
+    'pdfURL': pdf.asset->url,
     location->
   }
 }`
