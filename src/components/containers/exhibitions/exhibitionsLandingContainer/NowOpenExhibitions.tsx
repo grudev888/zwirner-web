@@ -1,8 +1,7 @@
-import {DzComplexGrid, DzPill, PILL_VARIANTS} from '@zwirner/design-system'
+import {DzComplexGrid} from '@zwirner/design-system'
 import {FC, useEffect, useState} from 'react'
 
 import {ALL_LOCATIONS} from '@/common/constants/commonCopies'
-import styles from '@/components/containers/exhibitions/exhibitionsLandingContainer/exhibitionsLandingContainer.module.css'
 import {
   findExhibitionsByCity,
   isExhibitionOpen,
@@ -18,9 +17,9 @@ const PREFERRED_CITY_ORDERING = ['New York', 'Los Angeles', 'London', 'Paris', '
 export const NowOpenExhibitions: FC<NowOpenExhibitionsProps> = ({data}) => {
   const {cities = [], exhibitions = []} = data ?? {}
   const [openExhibitions, setOpenExhibitions] = useState<Array<any>>([])
-  const [selectedCities, setSelectedCities] = useState<Array<string>>([ALL_LOCATIONS])
-  const [orderedCities, setOrderedCities] = useState<Array<string>>([])
-  const [disabledCities, setDisabledCities] = useState<Array<string>>([])
+  const [selectedCities] = useState<Array<string>>([ALL_LOCATIONS])
+  const [, setOrderedCities] = useState<Array<string>>([])
+  const [, setDisabledCities] = useState<Array<string>>([])
   const [filteredExhibitions, setFilteredExhibitions] =
     useState<Array<Record<string, any>>>(openExhibitions)
   const [openExhibitionsGridData, setOpenExhibitionsGridData] = useState<{cards: Array<any>}>({
@@ -74,6 +73,7 @@ export const NowOpenExhibitions: FC<NowOpenExhibitionsProps> = ({data}) => {
     setDisabledCities(disabledCities)
   }, [cities, openExhibitions, setDisabledCities])
 
+  /*
   const onClickCityPill = (city: string) => {
     if (disabledCities.includes(city)) {
       return
@@ -93,9 +93,11 @@ export const NowOpenExhibitions: FC<NowOpenExhibitionsProps> = ({data}) => {
       setSelectedCities([...newSelectedCities, city])
     }
   }
+  */
 
   return (
     <>
+      {/* City pills are currently hidden pending design decisions
       <div className={styles.locationPillsContainer}>
         {orderedCities.map((city: string) => (
           <DzPill
@@ -109,6 +111,7 @@ export const NowOpenExhibitions: FC<NowOpenExhibitionsProps> = ({data}) => {
           />
         ))}
       </div>
+      */}
       <DzComplexGrid {...openExhibitionsGridData} hideControls />
     </>
   )
