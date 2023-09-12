@@ -1,4 +1,3 @@
-import dynamic from 'next/dynamic'
 import {
   CARD_TYPES,
   CardSizes,
@@ -15,6 +14,7 @@ import {
   DzTitleMoleculeTypes,
   TITLE_TYPES,
 } from '@zwirner/design-system'
+import dynamic from 'next/dynamic'
 import Link from 'next/link'
 import {FC, useCallback} from 'react'
 

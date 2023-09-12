@@ -9,6 +9,7 @@
   md:top-[60px]
   md:mb-[7.5rem]
   md:pt-10;
+  min-height: calc(100vh - 60px);
 }
 /*TODO bottom margin above footer should be defined in footer or global layout*/
 
@@ -22,6 +23,12 @@
   md:mb-[7.5rem];
 }
 /*TODO bottom margin above footer should be defined in footer or global layout*/
+
+/*hide first item in mobile*/
+.rightPane > div > div > div:first-child {
+  @apply hidden
+  md:block;
+}
 
 .ctaContainer {
   @apply fixed

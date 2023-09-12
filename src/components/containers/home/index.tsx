@@ -73,19 +73,21 @@ export const HomeContainer: FC<HomeContainerProps> = ({data}) => {
           <DzHero items={itemsHeroCarousel} />
         </section>
 
-        <section>
-          <h2 className="sr-only">Featured</h2>
-          <DzSplit type={SPLIT_TYPES.SHORT} data={featuredContent} />
-        </section>
+        {!!featuredContent && (
+          <section>
+            <h2 className="sr-only">Featured</h2>
+            <DzSplit type={SPLIT_TYPES.SHORT} data={featuredContent} />
+          </section>
+        )}
 
-        {firstCarouselCards && (
+        {!!firstCarouselCards.length && (
           <section>
             <h2 className="sr-only">Now Open</h2>
             {renderCarousel(firstCarouselCards, firstCarousel?.size)}
           </section>
         )}
 
-        {secondCarouselCards && (
+        {!!firstCarouselCards.length && (
           <section>
             <h2 className="sr-only">Selected Press</h2>
             {renderCarousel(secondCarouselCards, secondCarousel?.size)}

@@ -38,13 +38,17 @@ export const mapHeaderCarousel = (data = []) => {
 }
 
 export const mapFeaturedContentSplit = (data: any) => {
+  if (!Object.keys(data).length) return null
   const {exhibition} = data ?? {}
 
   const isArticle = data._type === 'article'
 
   const {title, subtitle, description} = exhibition ?? data
 
-  const {media} = dzMediaMapper({data: exhibition || data, ImgElement: Image})
+  const {media} = dzMediaMapper(
+    {data: exhibition || data, ImgElement: Image},
+    {imagesKey: 'heroMedia'}
+  )
 
   return {
     media,

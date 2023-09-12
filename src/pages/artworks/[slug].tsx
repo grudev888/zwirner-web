@@ -1,98 +1,78 @@
-import {GetStaticProps} from 'next'
+import {GetStaticPropsContext, InferGetStaticPropsType} from 'next'
+import {useRouter} from 'next/router'
 
 import {SEOComponent} from '@/common/components/seo/seo'
-import {ARTWORK_URL} from '@/common/constants/commonCopies'
 import {ArtworkContainer} from '@/components/containers/artworks/artwork'
 import {PreviewPage} from '@/components/containers/previews/pagePreview'
-import {artworksData} from '@/sanity/queries/artwork.queries'
-import {getAllArtworkSlugs, getArtworkData} from '@/sanity/services/artwork.service'
+import {artworkData} from '@/sanity/queries/artworks/artworkData'
+import {getAllArtworkSlugs} from '@/sanity/services/artworks/getAllArtworkSlugs'
+import {getArtworkData} from '@/sanity/services/artworks/getArtworkData'
 
-interface QuerySlug {
-  slug: string
-}
+const SLUG_PREFIX = '/artworks/'
 
-interface ArtworkCMSData {
-  artworkData: any
-  queryParams: QuerySlug
-}
+const ArtworkPage = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
+  const {data, preview, querySlug} = props
+  const router = useRouter()
 
-interface PageProps {
-  data: ArtworkCMSData
-  preview: boolean
-  slug: string | null
-  token: string | null
-}
+  if (router.isFallback) {
+    return <div>Loading...</div>
+  }
 
-interface Query {
-  [key: string]: string
-}
-
-interface PreviewData {
-  token?: string
-}
-
-export default function Artwork({data, preview}: PageProps) {
-  const {artworkData = {}, queryParams} = data ?? {}
-  const {seo} = artworkData ?? {}
   if (preview) {
     return (
-      <>
-        <SEOComponent data={seo} />
-        <PreviewPage
-          query={artworksData}
-          params={queryParams}
-          seo={seo}
-          Container={ArtworkContainer}
-        />
-      </>
+      <PreviewPage
+        query={artworkData}
+        params={querySlug}
+        seo={undefined}
+        Container={ArtworkContainer}
+      />
     )
   }
+
   return (
     <>
-      <SEOComponent data={seo} />
-      <ArtworkContainer data={artworkData} />
+      <SEOComponent data={data.seo} />
+      <ArtworkContainer data={data} />
     </>
   )
 }
 
+export const getStaticProps = async (ctx: GetStaticPropsContext) => {
+  const {params, preview = false} = ctx
+
+  if (!params?.slug) return {notFound: true}
+
+  const querySlug = {slug: `${SLUG_PREFIX}${params.slug}`}
+
+  if (preview) {
+    return {
+      props: {
+        data: null,
+        preview,
+        querySlug,
+      },
+    }
+  }
+
+  const data = await getArtworkData(querySlug)
+  if (!data) return {notFound: true}
+
+  return {
+    props: {
+      data,
+      preview: false,
+      querySlug: false,
+    },
+  }
+}
+
 export const getStaticPaths = async () => {
   const paths = await getAllArtworkSlugs()
-  const filteredPaths = paths.filter((item: any) => item.includes('/artworks/'))
+  const filteredPaths = paths.filter((item: any) => item.includes(SLUG_PREFIX))
   return {
     paths: filteredPaths,
     fallback: true,
   }
 }
 
-export const getStaticProps: GetStaticProps<PageProps, Query, PreviewData> = async (ctx) => {
-  const {params = {}, preview = false, previewData = {}} = ctx
-  const queryParams = {
-    slug: `${ARTWORK_URL}/${params?.slug}`,
-  }
-  if (preview && previewData.token) {
-    return {
-      props: {
-        data: {queryParams, artworkData: null},
-        preview,
-        slug: params?.slug || null,
-        token: previewData.token,
-      },
-    }
-  }
-
-  const data: any = await getArtworkData(queryParams)
-  if (!data) {
-    return {
-      notFound: true,
-    }
-  }
-
-  return {
-    props: {
-      data: {queryParams, artworkData: data},
-      preview,
-      slug: params?.slug || null,
-      token: null,
-    },
-  }
-}
+export default ArtworkPage

@@ -3,9 +3,9 @@ import {GetStaticProps} from 'next'
 import {SEOComponent} from '@/common/components/seo/seo'
 import ArtistSurveyPageContainer from '@/components/containers/pages/artists/survey/index'
 import {PreviewPage} from '@/components/containers/previews/pagePreview'
-import {artworksDataByArtistSlug} from '@/sanity/queries/artwork.queries'
+import {artworksDataByArtistSlug} from '@/sanity/queries/artworks/artworksDataByArtistSlug'
 import {getAllArtistPageSlugs} from '@/sanity/services/artist.service'
-import {getArtworkByArtist} from '@/sanity/services/artwork.service'
+import {getArtworkByArtist} from '@/sanity/services/artworks/getArtworkByArtist'
 import {removePrefixSlug} from '@/utils/slug'
 
 interface PageProps {

@@ -4,8 +4,8 @@ import {Fragment} from 'react'
 
 import {ARTICLES, EXHIBITIONS_URL, LEARN_MORE} from '@/common/constants/commonCopies'
 import {dzMediaMapper} from '@/common/utilsMappers/image.mapper'
-import {ArticleTypes} from '@/components/containers/articles/mapper'
 import {safeText} from '@/common/utilsMappers/safe'
+import {ArticleTypes} from '@/components/containers/articles/mapper'
 
 export const articlesGridMap = (data: any[]) => {
   return data?.map((relatedArticles) => {

@@ -1,11 +1,11 @@
 import {ButtonModes, CARD_TYPES, MEDIA_ASPECT_RATIOS, MEDIA_TYPES} from '@zwirner/design-system'
+import parseISO from 'date-fns/parseISO'
 import Image from 'next/image'
 import Link from 'next/link'
 
 import {dzMediaMapper} from '@/common/utilsMappers/image.mapper'
 import {safeText} from '@/common/utilsMappers/safe'
 import {builder} from '@/sanity/imageBuilder'
-import parseISO from 'date-fns/parseISO'
 
 export const mapInterstitial = (data: any, onCTAClick?: () => void) => {
   if (!data?.title) return null
