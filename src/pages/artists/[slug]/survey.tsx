@@ -27,7 +27,6 @@ export default function SurveyPage({data, preview, querySlug}: PageProps) {
       <PreviewPage
         query={artworksDataByArtistSlug}
         params={querySlug}
-        seo={seo}
         Container={ArtistSurveyPageContainer}
       />
     )

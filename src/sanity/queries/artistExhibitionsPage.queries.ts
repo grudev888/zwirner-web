@@ -1,4 +1,5 @@
 import {groq} from 'next-sanity'
+import {pageSEOFields} from '@/sanity/queries/seo.queries'
 
 export const artistExhibitionsPageData = groq`
 *[_type == "artistPage" && slug.current == $slug][0] {
@@ -11,5 +12,8 @@ export const artistExhibitionsPageData = groq`
     _id,
     fullName,
   },
-  exhibitionsInterstitialSubpage
+  exhibitionsInterstitialSubpage,
+  "seo": exhibitionsInterstitialSeo {
+    ${pageSEOFields}
+  },
 }`

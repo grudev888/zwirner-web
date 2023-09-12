@@ -6,6 +6,7 @@ import {artistExhibitionsPageData} from '@/sanity/queries/artistExhibitionsPage.
 import {getAllArtistPageSlugs} from '@/sanity/services/artist.service'
 import {getArtistExhibitionsPageData} from '@/sanity/services/artistPages.service'
 import {removePrefixSlug} from '@/utils/slug'
+import {SEOComponent} from '@/common/components/seo/seo'
 
 interface PageProps {
   data: any
@@ -18,6 +19,7 @@ interface Query {
 }
 
 export default function ExhibitionsPage({data, preview, queryArtistSlug}: PageProps) {
+  const {seo} = data ?? {}
   if (preview) {
     return (
       <PreviewPage
@@ -28,7 +30,12 @@ export default function ExhibitionsPage({data, preview, queryArtistSlug}: PagePr
     )
   }
 
-  return <ArtistExhibitionsPageContainer data={data} />
+  return (
+    <>
+      <SEOComponent data={seo} />
+      <ArtistExhibitionsPageContainer data={data} />
+    </>
+  )
 }
 
 export const getStaticPaths = async () => {

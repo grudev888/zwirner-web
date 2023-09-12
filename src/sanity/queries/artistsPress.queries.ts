@@ -14,7 +14,7 @@ export const artistPressPageBySlug = groq`
     itemsPerRow,
     items[]->
   },
-  seo {
+  "seo": pressSeo {
     ${pageSEOFields}
   },
 }`

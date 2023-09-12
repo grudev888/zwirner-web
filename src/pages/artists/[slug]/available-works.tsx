@@ -20,14 +20,13 @@ interface Query {
 
 export default function AvailableWorksPage({data, preview, querySlug}: PageProps) {
   const [artworksData] = data ?? []
-  const {seo} = data ?? {}
+  const {seo} = artworksData ?? {}
 
   if (preview) {
     return (
       <PreviewPage
         query={availableArtworksDataByArtistSlug}
         params={querySlug}
-        seo={seo}
         Container={ArtistAvailableWorksPageContainer}
       />
     )

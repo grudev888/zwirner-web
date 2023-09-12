@@ -29,12 +29,7 @@ export default function PressPage({data, preview, queryParams}: PageProps) {
 
   if (preview) {
     return (
-      <PreviewPage
-        query={artistPressPageBySlug}
-        params={queryParams}
-        seo={seo}
-        Container={PressContainer}
-      />
+      <PreviewPage query={artistPressPageBySlug} params={queryParams} Container={PressContainer} />
     )
   }
 

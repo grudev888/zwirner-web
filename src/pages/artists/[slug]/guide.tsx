@@ -32,7 +32,6 @@ export default function GuidePage({data, preview, queryParams}: PageProps) {
       <PreviewPage
         query={artistGuidePageBySlug}
         params={queryParams}
-        seo={seo}
         Container={ArtistGuideContainer}
       />
     )

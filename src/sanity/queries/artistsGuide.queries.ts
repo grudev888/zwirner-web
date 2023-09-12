@@ -34,7 +34,7 @@ export const artistGuidePageBySlug = groq`
       }
     }
   },
-  seo {
+  "seo": guideSeo {
     ${pageSEOFields}
   },
 }`
