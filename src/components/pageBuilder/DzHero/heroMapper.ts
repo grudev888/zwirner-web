@@ -1,7 +1,11 @@
-import {MEDIA_TYPES} from '@zwirner/design-system'
-
-import {builder} from '@/sanity/imageBuilder'
+import Image from 'next/image'
 import {DzHeroSchemaProps} from '@/sanity/types'
+import {dzMediaMapper} from '@/common/utilsMappers/image.mapper'
+import {mapExhibitionStatus} from '@/common/utilsMappers/date.mapper'
+
+import {EXHIBITION, LEARN_MORE, EXHIBITIONS_URL} from '@/common/constants/commonCopies'
+import {safeText} from '@/common/utilsMappers/safe'
+import Link from 'next/link'
 
 export const heroMapper = (data: any) => {
   return data
@@ -16,27 +20,19 @@ export const dzHeroOverrides = (props: DzHeroSchemaProps) => {
     enableOverrides,
   } = props
   if (!enableOverrides) return {}
-  const {asset, alt, url} = imageOverride ?? {}
-  const imgSrc = asset ? builder.image(asset).url() : ''
+
+  const {media, hideMedia} = dzMediaMapper({
+    data: {image: imageOverride},
+    ImgElement: Image,
+  })
 
   const title = headingOverride ? {title: headingOverride} : {}
   const subtitle = subHeadingOverride ? {subtitle: subHeadingOverride} : {}
   const secondaryTitle = secondaryTitleOverride ? {secondaryTitle: secondaryTitleOverride} : {}
   const description = descriptionOverride ? {description: descriptionOverride} : {}
-  const media = imgSrc
-    ? {
-        media: {
-          url,
-          type: MEDIA_TYPES.IMAGE,
-          imgProps: {
-            src: imgSrc,
-            alt,
-          },
-        },
-      }
-    : {}
+  const mediaProps = !hideMedia ? media : {}
   return {
-    ...media,
+    ...mediaProps,
     ...title,
     ...subtitle,
     ...secondaryTitle,
@@ -46,17 +42,12 @@ export const dzHeroOverrides = (props: DzHeroSchemaProps) => {
 export const contentTypesMapper: any = {
   artist: (data: any) => {
     const {birthdate, fullName, deathDate, picture, summary, description} = data
-    const {asset, alt} = picture ?? {}
-    const imgSrc = asset ? builder.image(asset).url() : ''
+    const {media} = dzMediaMapper({
+      data: {image: picture},
+      ImgElement: Image,
+    })
     return {
-      media: {
-        url: '/',
-        type: MEDIA_TYPES.IMAGE,
-        imgProps: {
-          src: imgSrc,
-          alt,
-        },
-      },
+      media,
       title: fullName,
       subtitle: `${birthdate} ${deathDate ? ` // ${deathDate}` : ''}`,
       secondaryTitle: summary,
@@ -64,47 +55,45 @@ export const contentTypesMapper: any = {
     }
   },
   artwork: (data: any) => {
-    const {photos, availability, dimensions, edition, medium, title} = data
-    const [mainPicture] = photos
-    const {asset, alt} = mainPicture ?? {}
-    const imgSrc = asset ? builder.image(asset).url() : ''
+    const {availability, dimensions, edition, medium, title} = data
+    const {media} = dzMediaMapper({
+      data,
+      ImgElement: Image,
+    })
+
     return {
-      media: {
-        url: '/',
-        type: MEDIA_TYPES.IMAGE,
-        imgProps: {
-          src: imgSrc,
-          alt,
-        },
-      },
+      media,
       category: availability,
       title,
       description: `${dimensions} ${edition} ${medium}`,
     }
   },
-  exhibition: (data: any) => {
-    const {events, subtitle, title, summary, description, artworks} = data
-    const [mainArtWork] = artworks ?? []
-
-    const [event] = events ?? []
-    const {photos} = event ?? mainArtWork ?? {}
-    const [mainPicture] = photos ?? []
-    const {asset, alt} = mainPicture ?? {}
-    const imgSrc = asset ? builder.image(asset).url() : ''
-
+  exhibitionPage: (data: any) => {
+    const {title, subtitle, artists, locations, summary, heroMedia, slug} = data ?? {}
+    const [primaryArtist] = artists ?? []
+    const {fullName} = primaryArtist ?? {}
+    const [primaryLocation] = locations ?? []
+    const {name} = primaryLocation ?? {}
+    const {current} = slug ?? {}
+    const {status} = mapExhibitionStatus(data)
+    const {media} = dzMediaMapper({
+      data: heroMedia ?? data,
+      ImgElement: Image,
+    })
+    const descriptionText = safeText({key: 'description', text: summary})
     return {
-      media: {
-        url: '/',
-        type: MEDIA_TYPES.IMAGE,
-        imgProps: {
-          src: imgSrc,
-          alt,
-        },
-      },
-      title,
+      media,
+      category: EXHIBITION,
+      title: title ?? fullName,
       subtitle,
-      secondaryTitle: summary,
-      description,
+      secondaryTitle: name,
+      secondarySubtitle: status,
+      ...(descriptionText ?? {}),
+      linkCTA: {
+        text: LEARN_MORE,
+        linkElement: Link,
+        url: current ?? EXHIBITIONS_URL,
+      },
     }
   },
 }

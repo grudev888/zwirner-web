@@ -78,7 +78,7 @@ export const ArtistDetailContainer: FC<ArtistsContainerProps> = ({data}) => {
     (data: any, type: CardTypes, link: {title: string; url: string}, id: string) => (
       <section className="-mx-5" id={id}>
         <DzTitleMolecule
-          type={DzTitleMoleculeTypes.SECTION}
+          type={DzTitleMoleculeTypes.MOLECULE}
           data={{
             customClass: 'mx-5 mb-5 md:mb-10',
             title: data.title,

@@ -21,10 +21,7 @@ export const heroMapper = (data: any) => {
 
   const category = _type === 'exhibitionPage' ? 'Exhibition' : 'Viewing room'
   const exhibitionURL = `${slug?.current ?? ''}`
-  const {media} = dzMediaMapper(
-    {data: hero, url: exhibitionURL, ImgElement: Image},
-    {imagesKey: 'heroMedia'}
-  )
+  const {media} = dzMediaMapper({data: hero, url: exhibitionURL, ImgElement: Image})
   return {
     media,
     linkCTA: {
@@ -46,17 +43,15 @@ export const exhibitionCarouselMapper = (data: any[]) => {
   return data
     ?.filter((exhibitionPage) => validateImage(exhibitionPage))
     ?.map((exhibitionPage) => {
-      const {_id, title, description, slug} = exhibitionPage ?? {}
-      const {media} = dzMediaMapper(
-        {data: exhibitionPage, ImgElement: Image},
-        {imagesKey: 'heroMedia'}
-      )
+      const {_id, title, slug, summary, heroMedia} = exhibitionPage ?? {}
+      const {media} = dzMediaMapper({data: heroMedia ?? exhibitionPage, ImgElement: Image})
+      const descriptionText = safeText({key: 'description', text: summary})
 
       return {
         id: _id,
         media,
         title,
-        description,
+        ...(descriptionText ?? {}),
         linkCTA: {
           text: 'Explore Now',
           linkElement: 'a',
@@ -154,7 +149,13 @@ export const utopiaFeatureMap = (data: any) => {
     type: SPLIT_TYPES.SHORT,
     reverse: true,
     data: {
-      media,
+      media: {
+        ...media,
+        imgProps: {
+          ...media.imgProps,
+          alt: title,
+        },
+      },
       title,
       description: text,
       linkCTA: {

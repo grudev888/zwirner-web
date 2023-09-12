@@ -1,19 +1,23 @@
-import {DzCard as DzCardMolecule} from '@zwirner/design-system'
+import {DzCard as DzCardMolecule, CardSizes} from '@zwirner/design-system'
 import {FC} from 'react'
 
-import {DzCardSchemaProps} from '@/sanity/types'
-
+import {DzCardExtendedProps} from '@/sanity/types'
 import {contentTypesMapper, dzCardOverrides} from './cardMapper'
 
 interface DzCardProps {
   data: any
-  componentProps: DzCardSchemaProps
+  componentProps: DzCardExtendedProps
 }
 
 export const DzCard: FC<DzCardProps> = ({data, componentProps}) => {
   const {_type} = data ?? {}
-  const mappedData = (contentTypesMapper[_type] ?? ((a: any) => a))(data, componentProps) ?? {}
-  const overrideData = dzCardOverrides(componentProps) ?? {}
+  const mappedData =
+    (contentTypesMapper[_type] ?? ((a: any) => a))(data, {
+      ...(componentProps ?? {}),
+      cardSize: CardSizes['12col'],
+    }) ?? {}
+  const overrideData =
+    dzCardOverrides({...(componentProps ?? {}), cardSize: CardSizes['12col']}) ?? {}
 
   return <DzCardMolecule {...{...mappedData, ...overrideData}} />
 }

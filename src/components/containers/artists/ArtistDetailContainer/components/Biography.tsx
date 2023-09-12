@@ -74,7 +74,7 @@ const Biography = ({title, biography, artist, ...rest}: any) => {
   return (
     <section {...rest}>
       <DzTitleMolecule
-        type={DzTitleMoleculeTypes.SECTION}
+        type={DzTitleMoleculeTypes.MOLECULE}
         data={{
           title: title,
           titleProps: {

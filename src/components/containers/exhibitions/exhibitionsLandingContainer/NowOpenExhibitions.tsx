@@ -15,7 +15,6 @@ interface NowOpenExhibitionsProps {
 const PREFERRED_CITY_ORDERING = ['New York', 'Los Angeles', 'London', 'Paris', 'Hong Kong']
 
 export const NowOpenExhibitions: FC<NowOpenExhibitionsProps> = ({data}) => {
-  const {cities = [], exhibitions = []} = data ?? {}
   const [openExhibitions, setOpenExhibitions] = useState<Array<any>>([])
   const [selectedCities] = useState<Array<string>>([ALL_LOCATIONS])
   const [, setOrderedCities] = useState<Array<string>>([])
@@ -27,22 +26,22 @@ export const NowOpenExhibitions: FC<NowOpenExhibitionsProps> = ({data}) => {
   })
 
   useEffect(() => {
-    setOpenExhibitions(exhibitions.filter(isExhibitionOpen))
-  }, [exhibitions])
+    setOpenExhibitions((data?.exhibitions ?? []).filter(isExhibitionOpen))
+  }, [data?.exhibitions])
 
   // Order the city pills based on custom rules
   useEffect(() => {
-    let remainingCities: Array<string> = [...cities]
+    let remainingCities: Array<string> = [...(data?.cities ?? [])]
     const orderedCities: Array<string> = []
 
     PREFERRED_CITY_ORDERING.forEach((city: string) => {
-      if (cities.includes(city)) {
+      if ((data?.cities ?? []).includes(city)) {
         orderedCities.push(city)
         remainingCities = remainingCities.filter((c) => c !== city)
       }
     })
     setOrderedCities([ALL_LOCATIONS, ...orderedCities, ...remainingCities])
-  }, [cities, setOrderedCities])
+  }, [data?.cities, setOrderedCities])
 
   // Enable/Disable the exhibitions based on which city pills are selected
   useEffect(() => {
@@ -57,21 +56,20 @@ export const NowOpenExhibitions: FC<NowOpenExhibitionsProps> = ({data}) => {
       useDatePrefix: false,
       disabledIds: disabledExhibitions.map(({_id}) => _id),
     }
-    setFilteredExhibitions(exhibitions)
+    setFilteredExhibitions(data?.exhibitions ?? [])
     setOpenExhibitionsGridData({cards: mapCardsGrid(openExhibitions, mapCardsGridOptions)})
-  }, [selectedCities, setFilteredExhibitions, openExhibitions, exhibitions])
+  }, [selectedCities, setFilteredExhibitions, openExhibitions, data.exhibitions])
 
   // Disable any city pill that does not have an exhibition location in that city
   useEffect(() => {
     const disabledCities: Array<string> = []
-
-    cities.forEach((city: string) => {
+    ;(data?.cities ?? []).forEach((city: string) => {
       if (!(findExhibitionsByCity(openExhibitions, city).length > 0)) {
         disabledCities.push(city)
       }
     })
     setDisabledCities(disabledCities)
-  }, [cities, openExhibitions, setDisabledCities])
+  }, [data?.cities, openExhibitions, setDisabledCities])
 
   /*
   const onClickCityPill = (city: string) => {

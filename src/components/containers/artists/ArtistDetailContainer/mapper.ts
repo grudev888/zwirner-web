@@ -224,7 +224,6 @@ export const mapFeatured = (data: any) => {
       }),
       category: data.category?.toUpperCase(),
       title: data.title,
-      // subtitle: 'Lorem ipsum dolor sit amet, consectetuer adipiscin',
       secondaryTitle: data.subtitle,
       secondarySubtitle: date,
       ...safeText({text: data.description, key: 'description'}),
@@ -239,6 +238,8 @@ export const mapFeatured = (data: any) => {
   } else if (data._type === 'exhibitionPage') {
     const imgSrc = data.photos?.[0]?.asset ? builder.image(data.photos[0].asset).url() : ''
 
+    const secondaryTitleText = safeText({key: 'secondaryTitle', text: data.summary})
+
     return {
       ...(imgSrc && {
         media: {
@@ -251,7 +252,7 @@ export const mapFeatured = (data: any) => {
       }),
       title: data.title,
       subtitle: data.location?.name,
-      secondaryTitle: data.summary,
+      ...(secondaryTitleText ?? {}),
       secondarySubtitle: formatExhibitionDate(data),
       description: data.description,
       ...(data.slug?.current && {
@@ -311,11 +312,12 @@ export const mapHero = (data: any) => {
     data.items?.map((item: any) => {
       const {title, subtitle} = item ?? {}
       const {media} = dzMediaMapper({data: item, ImgElement: Image})
+      const descriptionText = safeText({key: 'description', text: item?.summary})
 
       return {
         secondaryTitle: item?.location?.name,
         secondarySubtitle: formatExhibitionDate(item),
-        description: item?.summary,
+        ...(descriptionText ?? {}),
         media,
         title,
         subtitle,

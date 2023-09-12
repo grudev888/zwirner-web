@@ -5,7 +5,7 @@ import {Fragment} from 'react'
 import {ARTICLES, EXHIBITIONS_URL, LEARN_MORE} from '@/common/constants/commonCopies'
 import {dzMediaMapper} from '@/common/utilsMappers/image.mapper'
 import {safeText} from '@/common/utilsMappers/safe'
-import {ArticleTypes} from '@/components/containers/articles/mapper'
+import {ArticleTypes} from '@/sanity/types'
 
 export const articlesGridMap = (data: any[]) => {
   return data?.map((relatedArticles) => {
@@ -25,6 +25,7 @@ export const articlesGridMap = (data: any[]) => {
     const {current} = slug ?? {}
     const {summary, endDate, startDate} = exhibition ?? {}
 
+    const secondaryTitleText = safeText({key: 'secondaryTitle', text: subtitle ?? summary})
     const exhibitionURL =
       _type === 'exhibitionPage' && current ? `${EXHIBITIONS_URL}/${current}` : null
 
@@ -46,7 +47,7 @@ export const articlesGridMap = (data: any[]) => {
       media: {
         type: MEDIA_TYPES.IMAGE,
       },
-      secondaryTitle: subtitle ?? summary,
+      ...(secondaryTitleText ?? {}),
       secondarySubtitle: cardDate,
       ...safeText({key: 'description', text: description}),
       enableZoom: true,

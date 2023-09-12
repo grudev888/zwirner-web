@@ -18,10 +18,7 @@ export const mapHeaderCarousel = (data = []) => {
         const {exhibition} = item ?? {}
         const {title, subtitle} = exhibition ?? {}
 
-        const {media} = dzMediaMapper(
-          {data: exhibition, ImgElement: Image},
-          {imagesKey: 'heroMedia'}
-        )
+        const {media} = dzMediaMapper({data: exhibition, ImgElement: Image})
 
         return {
           category: subtitle,
@@ -45,10 +42,7 @@ export const mapFeaturedContentSplit = (data: any) => {
 
   const {title, subtitle, description} = exhibition ?? data
 
-  const {media} = dzMediaMapper(
-    {data: exhibition || data, ImgElement: Image},
-    {imagesKey: 'heroMedia'}
-  )
+  const {media} = dzMediaMapper({data: exhibition || data, ImgElement: Image})
 
   return {
     media,
@@ -197,6 +191,11 @@ export const mapCarouselCards = (data: any) => {
       const isArticle = _type === 'article'
       const {title, subtitle, summary} = exhibition ?? {}
 
+      const descriptionText = safeText({
+        key: 'description',
+        text: isArticle ? description : summary,
+      })
+
       const sharedMediaOptions = {aspectRatio: MEDIA_ASPECT_RATIOS['16:9']}
       const {media: exhibitionMedia} = dzMediaMapper({
         data: exhibition,
@@ -216,7 +215,7 @@ export const mapCarouselCards = (data: any) => {
         category: isArticle ? category : subtitle,
         title: isArticle ? titleArticle : title,
         titleType: TITLE_TYPES.H3,
-        ...(isArticle ? safeText({key: 'description', text: description}) : {description: summary}),
+        ...(descriptionText ?? {}),
         linkCTA: {
           text: LEARN_MORE,
           linkElement: 'a',

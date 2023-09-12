@@ -23,25 +23,18 @@ interface DzMediaVideoMapper {
   extraVideoProps?: any
 }
 
-interface KeyOptions {
-  imagesKey: 'photos' | 'heroMedia'
-}
-
 type DzMediaMapper = DzMediaImageMapper | DzMediaVideoMapper
 
 export const validateImage = (data: any) => {
-  if (data?.heroMedia) {
-    return !!data.heroMedia?.image?.asset
-  }
-
-  const {photos} = data ?? {}
+  const {photos, heroMedia} = data ?? {}
+  const {image: heroImage} = heroMedia ?? {}
   const [mainPicture] = photos ?? []
-  const {asset, image} = mainPicture ?? {}
+  const {asset, image} = mainPicture ?? heroImage ?? {}
 
   return image ? !!image.asset : !!asset
 }
 
-export const imageMapper = (data: any, keyOptions: KeyOptions) => {
+export const imageMapper = (data: any) => {
   const {
     photos,
     heroMedia,
@@ -50,13 +43,9 @@ export const imageMapper = (data: any, keyOptions: KeyOptions) => {
     alt: altAsset,
     caption: captionAsset,
   } = data ?? {}
-  let mainPicture: any = {}
-  if (keyOptions?.imagesKey === 'photos') {
-    mainPicture = (photos ?? [])[0]
-  } else if (keyOptions?.imagesKey === 'heroMedia') {
-    mainPicture = heroMedia
-  }
-  const {asset, alt, image, caption} = mainPicture ?? sourceImage ?? {}
+
+  const [mainPicture] = photos ?? []
+  const {asset, alt, image, caption} = mainPicture ?? heroMedia ?? sourceImage ?? {}
   const {alt: imageBuilderAlt, asset: imageBuilderAsset, caption: imageBuilderCaption} = image ?? {}
   const pictureAsset = imageBuilderAsset ?? srcAsset ?? asset
   const imgCaption = imageBuilderCaption ?? captionAsset ?? caption
@@ -185,11 +174,14 @@ export const getVideoMedia = ({data, options = {}, extraVideoProps = {}}: DzMedi
   }
 }
 
-export const getImageMedia = (
-  {data, url, ImgElement, options = {}, extraImgProps = {}}: DzMediaImageMapper,
-  keyOptions: KeyOptions = {imagesKey: 'photos'}
-) => {
-  const {src, alt, caption} = imageMapper(data, keyOptions)
+export const getImageMedia = ({
+  data,
+  url,
+  ImgElement,
+  options = {},
+  extraImgProps = {},
+}: DzMediaImageMapper) => {
+  const {src, alt, caption} = imageMapper(data)
   return {
     media: {
       url,
@@ -211,12 +203,9 @@ export const getImageMedia = (
   }
 }
 
-export const dzMediaMapper = (
-  media: DzMediaMapper,
-  options: KeyOptions = {imagesKey: 'photos'}
-) => {
+export const dzMediaMapper = (media: DzMediaMapper) => {
   const {type} = media?.data ?? {}
   return type === MEDIA_TYPES.VIDEO
     ? getVideoMedia(media as DzMediaVideoMapper)
-    : getImageMedia(media as DzMediaImageMapper, options)
+    : getImageMedia(media as DzMediaImageMapper)
 }

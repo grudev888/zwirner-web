@@ -8,6 +8,9 @@ import {DzInterstitial} from './DzInterstitial/DzInterstitial'
 import {DzSplit} from './DzSplit/DzSplit'
 import {DzTitle} from './DzTitle/DzTitle'
 import {GridMolecule} from './GridMolecule'
+import {DzMedia} from './DzMedia/DzMedia'
+import {FullWidthFlexCol} from '@/components/containers/layout/FullWidthFlexCol'
+import {CarouselMolecule} from './DzCarousel/DzCarousel'
 
 export const componentsIndex: any = {
   dzHero: DzHero,
@@ -16,6 +19,8 @@ export const componentsIndex: any = {
   dzSplit: DzSplit,
   dzTitle: DzTitle,
   dzInterstitial: DzInterstitial,
+  dzMedia: DzMedia,
+  dzCarousel: CarouselMolecule,
   grid: GridMolecule,
 }
 
@@ -31,27 +36,37 @@ interface PageBuilderProps {
 
 export const PageBuilder: FC<PageBuilderProps> = ({components = []}) => {
   return (
-    <DzColumn className="mb-12 h-full" span={12}>
-      {components?.map((component, key) => {
-        const {_type, props, content = []} = component
-        const ComponentModule = componentsIndex[_type]
-        const multipleContent = ComponentModule?.multipleContentTypes ?? false
-        const componentContent = multipleContent ? content : content?.[0]
+    <DzColumn span={12}>
+      <FullWidthFlexCol>
+        {components?.map((component, key) => {
+          // content is the reference to the content type (artist, exhibition, article...)
+          // props is the extra information required to render the component (CTA's, Overrides)
+          const {_type, props, content = []} = component
+          const ComponentModule = componentsIndex[_type]
+          const multipleContent = ComponentModule?.multipleContentTypes ?? false
+          const notContentDependant = ComponentModule?.notContentDependant ?? false
+          const componentContent = multipleContent ? content : content?.[0]
 
-        if (!ComponentModule) {
-          return <div key={`${_type}-${key}`}>Not supported component: {_type}</div>
-        }
-        if (!componentContent) {
+          if (!ComponentModule) {
+            console.warn('PAGE BUILDER::: Not supported component:', _type)
+            return null
+          }
+          if (!componentContent && !notContentDependant) {
+            console.warn(
+              'PAGE BUILDER::: Please add content types to this component:',
+              props?.title ?? _type
+            )
+            return null
+          }
           return (
-            <div key={`${_type}-${key}`}>
-              Please add content types to this component: {props?.title ?? _type}
-            </div>
+            <ComponentModule
+              key={`${_type}-${key}`}
+              data={componentContent}
+              componentProps={props}
+            />
           )
-        }
-        return (
-          <ComponentModule key={`${_type}-${key}`} data={componentContent} componentProps={props} />
-        )
-      })}
+        })}
+      </FullWidthFlexCol>
     </DzColumn>
   )
 }

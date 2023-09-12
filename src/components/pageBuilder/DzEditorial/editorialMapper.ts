@@ -1,7 +1,10 @@
 import {MEDIA_TYPES} from '@zwirner/design-system'
+import Image from 'next/image'
+import {safeText} from '@/common/utilsMappers/safe'
 
 import {builder} from '@/sanity/imageBuilder'
-import {DzEditorialSchemaProps} from '@/sanity/types'
+import {DzEditorialSchemaProps, EditorialTextTypes} from '@/sanity/types'
+import {dzMediaMapper} from '@/common/utilsMappers/image.mapper'
 
 export const editorialMapper = (data: any) => {
   return data
@@ -26,26 +29,42 @@ const getTextFromOverride = (override: any) => {
 }
 
 export const dzEditorialOverrides = (props: DzEditorialSchemaProps) => {
-  const {imageOverride, enableOverrides} = props
-  if (!enableOverrides) return {}
-  const {asset, alt, url} = imageOverride ?? {}
-  const imgSrc = asset ? builder.image(asset).url() : ''
-
-  const media = imgSrc
-    ? {
-        media: {
-          url,
-          type: MEDIA_TYPES.IMAGE,
-          imgProps: {
-            src: imgSrc,
-            alt,
-          },
-        },
-      }
-    : {}
+  const {
+    editorialType,
+    editorialTextOverrides = [],
+    quoteTitle,
+    quoteFootNote,
+    reverse = false,
+    imageOverride,
+  } = props ?? {}
+  const {media} = dzMediaMapper({
+    data: imageOverride,
+    ImgElement: Image,
+  })
+  const paragraphs = editorialTextOverrides?.map(({textType, text}) => ({
+    type:
+      textType === EditorialTextTypes.QUOTE
+        ? EDITORIAL_TEXT_TYPES.QUOTE
+        : EDITORIAL_TEXT_TYPES.PARAGRAPH,
+    ...safeText({
+      key: 'text',
+      text,
+      customStyles: {
+        normal:
+          textType === EditorialTextTypes.QUOTE
+            ? 'text-lg md:text-xl mb-5 md:mb-10'
+            : 'text-sm md:text-md mb-5 md:mb-10',
+      },
+    }),
+  }))
   return {
+    type: editorialType,
     data: {
-      ...media,
+      paragraphs,
+      quote: quoteTitle,
+      quoteDetail: quoteFootNote,
+      reverse,
+      media,
     },
   }
 }

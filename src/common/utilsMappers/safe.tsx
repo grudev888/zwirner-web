@@ -7,9 +7,15 @@ interface SafeTextProps {
   key: string
   text: any
   prefix?: string
+  customStyles?: any
 }
 
-export const safeText = ({key, text, prefix = 'portableText'}: SafeTextProps) => {
+export const safeText = ({
+  key,
+  text,
+  prefix = 'portableText',
+  customStyles = {normal: '!mx-0'},
+}: SafeTextProps) => {
   if (!text) return {}
   if (typeof text === 'string') {
     return {
@@ -19,7 +25,12 @@ export const safeText = ({key, text, prefix = 'portableText'}: SafeTextProps) =>
   const capitalizedKey = key?.charAt(0)?.toUpperCase() + key?.slice(1)
   return {
     [`${prefix}${capitalizedKey}`]: (
-      <DzPortableText portableProps={{value: text}} builder={builder} ImgElement={Image} />
+      <DzPortableText
+        portableProps={{value: text}}
+        builder={builder}
+        ImgElement={Image}
+        customStyles={customStyles}
+      />
     ),
   }
 }

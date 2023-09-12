@@ -10,6 +10,7 @@ import {UpcomingExhibitions} from '@/components/containers/exhibitions/exhibitio
 import {FullWidthFlexCol} from '@/components/containers/layout/FullWidthFlexCol'
 import PageSection from '@/components/wrappers/pageSection/PageSection'
 import {ContainerTitle} from '@/components/wrappers/title/ContainerTitle'
+import {PageBuilder} from '@/components/pageBuilder'
 
 interface ExhibitionLandingContainerProps {
   data: any
@@ -22,9 +23,8 @@ const SECTION_IDS = {
 }
 
 export const ExhibitionLandingContainer: FC<ExhibitionLandingContainerProps> = ({data}) => {
-  const {title, interstitial, museumHighlights} = data ?? {}
+  const {title, interstitial, museumHighlights, pageBuilder} = data ?? {}
   const interstitialProps = dzInterstitialMapper({data: interstitial})
-
   return (
     <DzColumn span={12}>
       <DzSectionMenu
@@ -49,6 +49,7 @@ export const ExhibitionLandingContainer: FC<ExhibitionLandingContainerProps> = (
       />
       <ContainerTitle title={title || EXHIBITIONS} />
       <FullWidthFlexCol>
+        <PageBuilder components={pageBuilder?.introContent ?? []} />
         <PageSection title={NOW_OPEN} elementId={SECTION_IDS.CURRENT}>
           <NowOpenExhibitions data={data} />
         </PageSection>

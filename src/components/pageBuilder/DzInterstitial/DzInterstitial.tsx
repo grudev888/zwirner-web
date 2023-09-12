@@ -10,12 +10,17 @@ interface DzInterstitialProps {
   componentProps?: DzInterstitialTypeProps
 }
 
-export const DzInterstitial: FC<DzInterstitialProps> = ({data, componentProps}) => {
+export const DzInterstitial: FC<DzInterstitialProps> & {notContentDependant: boolean} = ({
+  data,
+  componentProps,
+}) => {
   const {_type} = data ?? {}
   const mappedData = (interstitialMap?.[_type] ?? ((a: any) => ({data: a})))(data, componentProps)
   const overrideData = componentProps ? dzInterstitialOverrides(componentProps) : {}
 
   return <DzInterstitialMolecule {...{...mappedData, ...overrideData}} />
 }
+
+DzInterstitial.notContentDependant = true
 
 export default DzInterstitial

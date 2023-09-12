@@ -1,33 +1,31 @@
-import {MEDIA_TYPES} from '@zwirner/design-system'
+import {MEDIA_TYPES, ButtonModes} from '@zwirner/design-system'
 
 import {builder} from '@/sanity/imageBuilder'
 import {DzInterstitialTypeProps} from '@/sanity/types'
+import {ctaMapperInterstitial} from '@/common/utilsMappers/cta.mapper'
+import {dzMediaMapper} from '@/common/utilsMappers/image.mapper'
+import Image from 'next/image'
+import {safeText} from '@/common/utilsMappers/safe'
 
 export const interstitialMapper = (data: any) => {
   return data
 }
 
 export const dzInterstitialOverrides = (props: DzInterstitialTypeProps) => {
-  const {imageOverride, enableOverrides} = props
-  if (!enableOverrides) return {}
-  const {asset, alt, url} = imageOverride ?? {}
-  const imgSrc = asset ? builder.image(asset).url() : ''
-
-  const media = imgSrc
-    ? {
-        media: {
-          url,
-          type: MEDIA_TYPES.IMAGE,
-          imgProps: {
-            src: imgSrc,
-            alt,
-          },
-        },
-      }
-    : {}
+  const {title, subtitle, eyebrow, mode, cta} = props ?? {}
+  const {media, hideMedia} = dzMediaMapper({data: props, ImgElement: Image})
+  const ctasOverrides = ctaMapperInterstitial({data: cta, props: {url: ''}})
+  const categoryText = safeText({key: 'category', text: eyebrow})
   return {
     data: {
-      ...media,
+      split: false,
+      title,
+      description: subtitle,
+      ...(categoryText ?? {}),
+      mode: mode || ButtonModes.DARK,
+      ...(hideMedia ? {} : {media}),
+      ...(ctasOverrides ?? {}),
+      customClass: '-mx-5',
     },
   }
 }

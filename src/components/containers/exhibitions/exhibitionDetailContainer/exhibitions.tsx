@@ -4,13 +4,15 @@ import {
   DzHero,
   DzInterstitial,
   DzSectionMenu,
+  DzTitleMolecule,
+  DzTitleMoleculeTypes,
   DzTitleExhibition,
   INTERSTITIAL_TEXT_COLORS,
 } from '@zwirner/design-system'
 import Image from 'next/image'
 import {useRouter} from 'next/router'
 import {FC} from 'react'
-
+import {PageBuilder} from '@/components/pageBuilder'
 import {
   CHECKLIST,
   EXHIBITION_CHECKLIST_URL,
@@ -83,8 +85,9 @@ export const ExhibitionsContainer: FC<ExhibitionsContainerProps> = ({data}) => {
           />
         )}
       </DzColumn>
+
       {data.pressRelease && (
-        <DzColumn span={[12, 6]} start={[1, 4]} className={styles.pressReleaseContainer}>
+        <DzColumn wrap span={[12, 6]} start={[1, 4]} className={styles.pressReleaseContainer}>
           <DzPortableText
             portableProps={{value: data.pressRelease}}
             builder={builder}
@@ -92,6 +95,18 @@ export const ExhibitionsContainer: FC<ExhibitionsContainerProps> = ({data}) => {
           />
         </DzColumn>
       )}
+
+      <section id="explore">
+        <DzTitleMolecule
+          type={DzTitleMoleculeTypes.SECTION}
+          data={{
+            title: 'Explore',
+            customClass: 'mb-5 md:mb-10',
+          }}
+        />
+      </section>
+      <PageBuilder components={data.exploreContent} />
+
       {data.interstitial && (
         <DzColumn span={12}>
           <DzInterstitial

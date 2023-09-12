@@ -9,7 +9,9 @@ import {
   dzInterstitialProps,
   dzSplitProps,
   dzTitleProps,
+  dzMediaProps,
   gridMoleculeProps,
+  componentTypesData,
 } from '@/sanity/queries/components.queries'
 import {exhibitionComplexFields, exhibitionSimpleFields} from '@/sanity/queries/exhibition.queries'
 import {pageSEOFields} from '@/sanity/queries/seo.queries'
@@ -27,30 +29,6 @@ const pageComplexFields = groq`
      ${exhibitionComplexFields}
    },
 `
-const componentTypesData = groq`
-  content[]-> {
-    _type,
-    _type =='exhibitionPage' => {
-      ${exhibitionSimpleFields}
-      ${exhibitionComplexFields}
-    },
-    _type =='artist' => {
-      ...
-    },
-    _type =='artwork' => {
-      ...,
-      "artists": artists[]->
-    },
-    _type == 'book' => {
-      "authors": authors[]->,
-      "artists": artists[]->,
-    },
-    _type == 'press' => {
-      ...,
-      "authors": authors[]->
-    }
-  }
-`
 
 export const moleculesProps = groq`
   ${gridMoleculeProps}
@@ -62,14 +40,18 @@ export const moleculesProps = groq`
   ${dzInterstitialProps}
   ${dzSplitProps}
   ${dzTitleProps}
+  ${dzMediaProps}
 `
 
+export const pageBuilderComponentsData = groq`
+  _type,
+  title,
+  ${moleculesProps}
+  ${componentTypesData}
+`
 export const componentsByDataScheme = groq`
   components[] {
-    _type,
-    title,
-    ${moleculesProps}
-    ${componentTypesData}
+    ${pageBuilderComponentsData}
   },
 `
 

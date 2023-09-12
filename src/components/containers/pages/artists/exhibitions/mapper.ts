@@ -29,16 +29,13 @@ export const mapCardsGrid = (
     .map((exhibitionPageData) => {
       const {_id, title, subtitle, startDate, slug, endDate, locations, displayDate, description} =
         exhibitionPageData
-      const {media, hideImage} = dzMediaMapper(
-        {
-          data: exhibitionPageData,
-          ImgElement: Image,
-          options: {
-            aspectRatio: MEDIA_ASPECT_RATIOS['16:9'],
-          },
+      const {media, hideImage} = dzMediaMapper({
+        data: exhibitionPageData,
+        ImgElement: Image,
+        options: {
+          aspectRatio: MEDIA_ASPECT_RATIOS['16:9'],
         },
-        {imagesKey: 'heroMedia'}
-      )
+      })
       const isDisabled = disabledIds.includes(_id)
       const locationsTitle = locations?.map(({name}: {name: string}) => name).join(',')
       const exStartDate = parse(startDate, 'yyyy-MM-dd', new Date())

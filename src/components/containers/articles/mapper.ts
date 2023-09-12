@@ -6,6 +6,7 @@ import {
   TITLE_TYPES,
 } from '@zwirner/design-system'
 import Image from 'next/image'
+import {safeText} from '@/common/utilsMappers/safe'
 
 import {
   EXHIBITIONS,
@@ -15,7 +16,7 @@ import {
   READ_MORE,
 } from '@/common/constants/commonCopies'
 import {dzMediaMapper} from '@/common/utilsMappers/image.mapper'
-import {safeText} from '@/common/utilsMappers/safe'
+import {ArticleTypes} from '@/sanity/types'
 
 export const heroMapper = (data: any) => {
   const {title} = data ?? {}
@@ -47,18 +48,13 @@ export const interstitialMap = (data: any) => {
   }
 }
 
-export enum ArticleTypes {
-  INTERNAL = 'internalNews',
-  PRESS = 'pressRelease',
-  EXTERNAL = 'externalNews',
-}
-
 export const articlesGridMap = (data: any[]) => {
   return data?.map((relatedArticles) => {
     const {_id, description, title, type, slug, _type, exhibition, externalURL, category} =
       relatedArticles ?? {}
     const {current} = slug ?? {}
     const {summary} = exhibition ?? {}
+
     const isArticle = _type === 'article'
 
     const sharedImageOptions = {

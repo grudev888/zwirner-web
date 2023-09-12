@@ -1,4 +1,4 @@
-import {ButtonVariant, EditorialType, SplitTypes} from '@zwirner/design-system'
+import {ButtonVariant, EditorialType, SplitTypes, ButtonModes} from '@zwirner/design-system'
 
 export interface GlobalSEOScheme {
   _id: string
@@ -51,8 +51,49 @@ export interface BreadcrumbItemSchema {
   item: string
 }
 
+export enum EditorialTextTypes {
+  PARAGRAPH = 'paragraph',
+  QUOTE = 'quote',
+}
+
+export enum CtaActions {
+  INQUIRE = 'inquire',
+  ECOMM = 'ecomm',
+  CUSTOM = 'custom',
+  NONE = 'none',
+  NEWSLETTER = 'Newsletter',
+  LINK = 'Link',
+  DOWNLOAD_PDF = 'Download PDF',
+  LINK_CONTENT = 'Link Content',
+}
+
+export enum ArticleCategories {
+  PRESS = 'Press',
+  NEWS = 'News',
+  EVENT = 'Event',
+  EXHIBITION = 'Exhibition',
+  MUSEUM_HIGHLIGHTS = 'Museum Highlights',
+}
+
+export enum ArticleTypes {
+  INTERNAL = 'internalNews',
+  PRESS = 'pressRelease',
+  EXTERNAL = 'externalNews',
+}
+
+export enum PressVariation {
+  SELECTED_PRESS = 'selectedPress',
+  PRESS_ARTICLE = 'pressArticle',
+}
+
+export enum BookVariation {
+  PRODUCT = 'productCard',
+  CONTENT = 'contentCard',
+}
+
 export interface CTASchemaType {
   type: 'button' | 'link'
+  action: CtaActions
   text: string
   link?: linkSchemaType
   variant?: ButtonVariant
@@ -102,15 +143,34 @@ export interface linkSchemaType {
   internalLink?: string
 }
 
+export enum ExhibitionPageStatus {
+  COMING_SOON = 'comingSoon',
+  OPEN = 'open',
+  CLOSE = 'close',
+}
+
 // MOLECULES
 
 export interface DzCardSchemaProps {
   title: string
-  image?: any
   primaryCTA?: CTASchemaType
   secondaryCTA?: CTASchemaType
+  primarySubtitle?: string
+  secondarySubtitle?: string
+  secondaryTitle?: string
+  pressVariation?: PressVariation
+  bookVariation?: BookVariation
   enableOverrides: boolean
   imageOverride?: any
+  additionalInformation?: any
+}
+
+export type DzCardExtendedProps = DzCardSchemaProps & {isOnGrid: boolean; cardSize: any}
+
+export interface DzMediaSchemaProps {
+  media: any
+  title: string
+  caption: string
 }
 
 export interface DzCarouselSchemaProps {
@@ -123,7 +183,15 @@ export interface DzEditorialSchemaProps {
   editorialType: EditorialType
   editorialTextOverrides?: TextComplexSchemaType[]
   imageOverride?: any
-  enableOverrides: boolean
+  quoteTitle?: string
+  quoteFootNote?: string
+  reverse?: boolean
+}
+
+export interface GridMoleculeTypeProps {
+  title: string
+  wrap: boolean
+  itemsPerRow: number
 }
 
 export interface DzHeroSchemaProps {
@@ -145,9 +213,11 @@ export interface DzHeroCarouselSchemaProps {
 
 export interface DzInterstitialTypeProps {
   title: string
-  split: boolean
-  imageOverride?: any
-  enableOverrides: boolean
+  mode: ButtonModes
+  cta: any
+  image: any
+  subtitle: string
+  eyebrow: string
 }
 
 export interface DzSplitTypeProps {
@@ -157,15 +227,10 @@ export interface DzSplitTypeProps {
   animate: boolean
   imageOverride?: any
   enableOverrides: boolean
+  primaryCTA?: CTASchemaType
 }
 
 export interface DzTitleTypeProps {
   title: string
   enableOverrides: boolean
-}
-
-export enum ArticleTypes {
-  INTERNAL = 'internalNews',
-  PRESS = 'pressRelease',
-  EXTERNAL = 'externalNews',
 }

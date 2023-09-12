@@ -20,7 +20,10 @@ interface DzEditorialProps {
   componentProps: DzEditorialSchemaProps
 }
 
-export const DzEditorial: FC<DzEditorialProps> = ({data, componentProps}) => {
+export const DzEditorial: FC<DzEditorialProps> & {notContentDependant: boolean} = ({
+  data,
+  componentProps,
+}) => {
   const {_type} = data ?? {}
   const mappedData = (contentTypesMapper[_type] ?? ((a: any) => a))(data, componentProps)
   const overrideData = dzEditorialOverrides(componentProps) ?? {}
@@ -28,4 +31,5 @@ export const DzEditorial: FC<DzEditorialProps> = ({data, componentProps}) => {
   return <DzEditorialMolecule {...{...mappedData, ...overrideData}} />
 }
 
+DzEditorial.notContentDependant = true
 export default DzEditorial

@@ -1,18 +1,49 @@
 import {groq} from 'next-sanity'
+import {exhibitionComplexFields, exhibitionSimpleFields} from '@/sanity/queries/exhibition.queries'
 
-// Must follow GridMoleculeTypeProps
-export const gridMoleculeProps = groq`
-  _type == 'grid' => {
-    'props': {
+export const componentTypesData = groq`
+  content[]-> {
+    _type,
+    _type =='exhibitionPage' => {
+      ${exhibitionSimpleFields}
+      ${exhibitionComplexFields}
+    },
+    _type =='artist' => {
+      ...
+    },
+    _type =='article' => {
+      ...,
+      location->
+    },
+    _type =='artwork' => {
+      ...,
+      "artists": artists[]->
+    },
+    _type == 'book' => {
       title,
-      masonryGrid,
-      wrap,
-      itemsPerRow,
-      sortField,
-      sortOrder,
-      enableOverrides,
-    }
-  },
+      tagline,
+      publisher,
+      booksUrl,
+      photos,
+      subtitle,
+      isbn,
+      dateSelection,
+      description,
+      price,
+      "authors": authors[]->,
+      "artists": artists[]->,
+    },
+    _type == 'press' => {
+      ...,
+      "authors": authors[]->
+    },
+    _type =='location' => {
+      ...
+    },
+    _type =='podcast' => {
+      ...
+    },
+  }
 `
 
 // Must follow DzCardSchemaProps
@@ -24,16 +55,12 @@ export const dzCardProps = groq`
       secondaryCTA,
       imageOverride,
       enableOverrides,
-    }
-  },
-`
-
-// Must follow DzCarouselSchemaProps
-export const dzCarouselProps = groq`
-  _type == 'dzCarousel' => {
-    'props': {
-      title,
-      enableOverrides,
+      secondaryTitle,
+      pressVariation,
+      bookVariation,
+      primarySubtitle,
+      secondarySubtitle,
+      additionalInformation,
     }
   },
 `
@@ -43,10 +70,11 @@ export const dzEditorialProps = groq`
   _type == 'dzEditorial' => {
     'props': {
       title,
+      quoteTitle,
+      quoteFootNote,
       editorialType,
       editorialTextOverrides,
       imageOverride,
-      enableOverrides,
     }
   },
 `
@@ -83,9 +111,11 @@ export const dzInterstitialProps = groq`
   _type == 'dzInterstitial' => {
     'props': {
       title,
-      split,
-      imageOverride,
-      enableOverrides,
+      mode,
+      cta,
+      image,
+      subtitle,
+      eyebrow
     }
   },
 `
@@ -100,6 +130,7 @@ export const dzSplitProps = groq`
       animate,
       imageOverride,
       enableOverrides,
+      primaryCTA
     }
   },
 `
@@ -110,6 +141,49 @@ export const dzTitleProps = groq`
     'props': {
       title,
       enableOverrides,
+    }
+  },
+`
+// Must follow DzMediaSchemaProps
+export const dzMediaProps = groq`
+  _type == 'dzMedia' => {
+    'props': {
+      title,
+      media,
+      caption
+    }
+  },
+`
+
+// Must follow DzCarouselSchemaProps
+export const dzCarouselProps = groq`
+  _type == 'dzCarousel' => {
+    'props': {
+      title,
+      size,
+      dzCarousel[]{
+        ${componentTypesData},
+        ${dzMediaProps}
+        ${dzCardProps}
+        _type,
+      }
+    }
+  },
+`
+
+// Must follow GridMoleculeTypeProps
+export const gridMoleculeProps = groq`
+  _type == 'grid' => {
+    'props': {
+      title,
+      wrap,
+      itemsPerRow,
+      grid[]{
+        ${componentTypesData},
+        ${dzMediaProps}
+        ${dzCardProps}
+        _type,
+      }
     }
   },
 `

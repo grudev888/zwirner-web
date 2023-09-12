@@ -1,9 +1,6 @@
 import {client} from '@/sanity/client'
-import {
-  allExhibitions,
-  exhibitionById,
-  exhibitionsLandingData,
-} from '@/sanity/queries/exhibition.queries'
+import {allExhibitions, exhibitionById} from '@/sanity/queries/exhibition.queries'
+import {exhibitionsLandingData} from '@/sanity/queries/exhibitionPage.queries'
 import {
   checklistBySlug,
   exhibitionPageBySlug,

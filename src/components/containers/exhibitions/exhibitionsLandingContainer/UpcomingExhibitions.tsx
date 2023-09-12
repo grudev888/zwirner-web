@@ -16,7 +16,6 @@ interface UpcomingExhibitionsProps {
 }
 
 export const UpcomingExhibitions: FC<UpcomingExhibitionsProps> = ({data}) => {
-  const {exhibitions = []} = data ?? {}
   const upcomingExhibitionsComponent: keyof typeof UPCOMING_EXHIBITIONS_DISPLAY_OPTIONS =
     data?.upcomingExhibitionsComponent
   const [upcomingExhibitions, setUpcomingExhibitions] = useState<Array<any>>([])
@@ -33,11 +32,11 @@ export const UpcomingExhibitions: FC<UpcomingExhibitionsProps> = ({data}) => {
   useEffect(
     () =>
       setUpcomingExhibitions(
-        exhibitions
+        (data?.exhibitions ?? [])
           .filter(isExhibitionUpcoming)
           .map((data: Record<string, any>) => ({...data, description: data.summary}))
       ),
-    [exhibitions]
+    [data?.exhibitions]
   )
 
   return upcomingExhibitionCards?.length > 0 ? (

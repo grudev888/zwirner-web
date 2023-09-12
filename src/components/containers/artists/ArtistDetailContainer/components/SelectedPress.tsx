@@ -30,7 +30,7 @@ const SelectedPress = ({selectedPress, ...rest}: any) => {
   return (
     <section {...rest}>
       <DzTitleMolecule
-        type={DzTitleMoleculeTypes.SECTION}
+        type={DzTitleMoleculeTypes.MOLECULE}
         data={{
           title: selectedPress.title,
           titleProps: {

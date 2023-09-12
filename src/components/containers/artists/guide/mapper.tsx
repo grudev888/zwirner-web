@@ -4,8 +4,8 @@ import {Fragment} from 'react'
 
 import {EXHIBITIONS_URL} from '@/common/constants/commonCopies'
 import {dzMediaMapper} from '@/common/utilsMappers/image.mapper'
+import {ArticleTypes} from '@/sanity/types'
 import {safeText} from '@/common/utilsMappers/safe'
-import {ArticleTypes} from '@/components/containers/articles/mapper'
 
 const formatDate = (date: string) => {
   const dateParsed = new Date(date)
@@ -57,6 +57,10 @@ export const articlesGridMap = (data: any[]) => {
 
     const cardDate = articleDate ?? new Date(startDate ?? endDate).getFullYear()
     const urlToContent = exhibitionURL ?? articleURL
+    const secondaryTitleText = safeText({
+      key: 'secondaryTitle',
+      text: (isArticle ? subtitle : description) ?? summary,
+    })
     return {
       cardType: CARD_TYPES.CONTENT,
       id: _id,
@@ -67,7 +71,7 @@ export const articlesGridMap = (data: any[]) => {
       cardLink: {
         href: urlToContent,
       },
-      secondaryTitle: (isArticle ? subtitle : description) ?? summary,
+      ...secondaryTitleText,
       ...(isArticle ? safeText({key: 'description', text: description}) : {}),
       secondarySubtitle: cardDate,
     }

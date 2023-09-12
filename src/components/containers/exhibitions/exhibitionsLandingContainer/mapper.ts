@@ -27,10 +27,8 @@ export const exhibitionCarouselMapper = (exhibitions: any[]) => {
       const {_id, title, summary, locations, startDate, endDate, slug} = exhibitionPage ?? {}
       const secondaryTitle = locations?.[0]?.name
       const secondarySubtitle = formatExhibitionDate(startDate, endDate)
-      const {media} = dzMediaMapper(
-        {data: exhibitionPage, ImgElement: Image},
-        {imagesKey: 'heroMedia'}
-      )
+      const {media} = dzMediaMapper({data: exhibitionPage, ImgElement: Image})
+      const summaryText = safeText({key: 'description', text: summary})
 
       return {
         id: _id,
@@ -39,7 +37,7 @@ export const exhibitionCarouselMapper = (exhibitions: any[]) => {
         title,
         secondaryTitle,
         secondarySubtitle,
-        description: summary,
+        ...summaryText,
         linkCTA: {
           text: LEARN_MORE_AMP_SUBSCRIBE,
           linkElement: 'a',
@@ -68,7 +66,7 @@ export const mapHighlightCards = (cardsData: Array<any>) => {
     }
 
     return {
-      ...(descriptionText || {}),
+      ...descriptionText,
       title,
       category: null,
       subtitle: null,
