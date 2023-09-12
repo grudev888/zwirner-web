@@ -5,6 +5,7 @@ import {EXHIBITION, LEARN_MORE_AMP_SUBSCRIBE} from '@/common/constants/commonCop
 import {dzMediaMapper} from '@/common/utilsMappers/image.mapper'
 import {formatDateRange} from '@/components/containers/exhibitions/exhibitionsLandingContainer/utils'
 import {ArticleTypes} from '@/sanity/types'
+import {safeText} from '@/common/utilsMappers/safe'
 
 const formatExhibitionDate = (startDate: string, endDate: string) => {
   const exStartDate = parse(startDate, 'yyyy-MM-dd', new Date())
@@ -54,6 +55,7 @@ export const mapHighlightCards = (cardsData: Array<any>) => {
       data ?? {}
     const {dateRange, year} = dateSelection ?? {}
     const articleLink = type === ArticleTypes.EXTERNAL ? externalURL : slug?.current
+    const descriptionText = safeText({key: 'description', text: description})
     let dateText = ''
 
     if (displayDate) {
@@ -66,7 +68,7 @@ export const mapHighlightCards = (cardsData: Array<any>) => {
     }
 
     return {
-      description,
+      ...(descriptionText || {}),
       title,
       category: null,
       subtitle: null,
