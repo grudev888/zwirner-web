@@ -4,6 +4,7 @@ import Image from 'next/image'
 
 import {LEARN_MORE} from '@/common/constants/commonCopies'
 import {dzMediaMapper, validateImage} from '@/common/utilsMappers/image.mapper'
+import {safeText} from '@/common/utilsMappers/safe'
 
 export const mapCardsGrid = (
   data: any[],
@@ -36,6 +37,7 @@ export const mapCardsGrid = (
           aspectRatio: MEDIA_ASPECT_RATIOS['16:9'],
         },
       })
+      const descriptionSafeText = safeText({key: 'description', text: description})
       const isDisabled = disabledIds.includes(_id)
       const locationsTitle = locations?.map(({name}: {name: string}) => name).join(',')
       const exStartDate = parse(startDate, 'yyyy-MM-dd', new Date())
@@ -68,7 +70,7 @@ export const mapCardsGrid = (
         enableZoom,
         id: _id,
         media,
-        description,
+        ...descriptionSafeText,
         hideImage,
         title,
         subtitle,

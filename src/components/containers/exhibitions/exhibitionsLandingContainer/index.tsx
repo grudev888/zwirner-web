@@ -8,9 +8,9 @@ import {ExhibitionMuseumHighlights} from '@/components/containers/exhibitions/ex
 import {NowOpenExhibitions} from '@/components/containers/exhibitions/exhibitionsLandingContainer/NowOpenExhibitions'
 import {UpcomingExhibitions} from '@/components/containers/exhibitions/exhibitionsLandingContainer/UpcomingExhibitions'
 import {FullWidthFlexCol} from '@/components/containers/layout/FullWidthFlexCol'
+import {PageBuilder} from '@/components/pageBuilder'
 import PageSection from '@/components/wrappers/pageSection/PageSection'
 import {ContainerTitle} from '@/components/wrappers/title/ContainerTitle'
-import {PageBuilder} from '@/components/pageBuilder'
 
 interface ExhibitionLandingContainerProps {
   data: any
