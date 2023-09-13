@@ -119,7 +119,7 @@ export const ArtistDetailContainer: FC<ArtistsContainerProps> = ({data}) => {
             guide,
             CARD_TYPES.CONTENT,
             {title: 'View Guide', url: `/artists/${router.query.slug}/guide`},
-            'artist-guide'
+            'guide'
           )
         : null,
     [guide, renderCarousel, router.query.slug]
@@ -128,13 +128,22 @@ export const ArtistDetailContainer: FC<ArtistsContainerProps> = ({data}) => {
   return (
     <DzColumn span={12}>
       <DzSectionMenu
+        sections={[
+          {text: 'Survey', id: 'survey'},
+          {text: 'Available Works', id: 'available-works'},
+          {text: 'Exhibitions', id: 'exhibitions'},
+          {text: 'Guide', id: 'guide'},
+          {text: 'Biography', id: 'biography'},
+          {text: 'Selected Press', id: 'selected-press'},
+          {text: 'Books', id: 'books'},
+        ]}
         cta={{
           text: 'Inquire',
           ctaProps: {
             variant: BUTTON_VARIANTS.TERTIARY,
           },
         }}
-        prefix="artist-"
+        prefix=""
         sticky
         usePrefix
       />
@@ -148,46 +157,33 @@ export const ArtistDetailContainer: FC<ArtistsContainerProps> = ({data}) => {
             survey,
             CARD_TYPES.ARTWORK,
             {title: 'Explore all Artworks', url: `/artists/${router.query.slug}/survey`},
-            'artist-survey'
+            'survey'
           )}
 
         {availableWorksBooks && (
-          <DzSplit
-            id="artist-available-works"
-            data={availableWorksBooks}
-            type={SPLIT_TYPES.SHORT}
-          />
+          <DzSplit id="available-works" data={availableWorksBooks} type={SPLIT_TYPES.SHORT} />
         )}
 
         {availableWorksInterstitial && <DzInterstitial data={availableWorksInterstitial} />}
 
         {data.moveGuideUp === true && guide ? Guide : null}
 
-        {latestExhibitions && (
-          <Exhibitions id="artist-exhibitions" exhibitions={latestExhibitions} />
-        )}
+        {latestExhibitions && <Exhibitions id="exhibitions" exhibitions={latestExhibitions} />}
 
         {exhibitionsInterstitial && <DzInterstitial data={exhibitionsInterstitial} />}
 
         {!data.moveGuideUp && guide ? Guide : null}
 
-        <Biography
-          id="artist-biography"
-          biography={biography}
-          title="Biography"
-          artist={data.artist}
-        />
+        <Biography id="biography" biography={biography} title="Biography" artist={data.artist} />
 
-        {selectedPress && (
-          <SelectedPress id="artist-selected-press" selectedPress={selectedPress} />
-        )}
+        {selectedPress && <SelectedPress id="selected-press" selectedPress={selectedPress} />}
 
         {books &&
           renderCarousel(
             books,
             CARD_TYPES.ARTWORK,
             {title: 'Explore Books', url: `/artists/${router.query.slug}/books`},
-            'artist-books'
+            'books'
           )}
 
         {interstitial && <DzInterstitial data={interstitial} />}
