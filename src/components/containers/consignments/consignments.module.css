@@ -1,7 +1,7 @@
 .mediaImage {
-  @apply min-h-[27.9169rem]
-  w-full
-  md:h-auto;
+  @apply w-full
+  md:h-auto
+  md:min-h-[27.9169rem];
 }
 
 .fullSection {
