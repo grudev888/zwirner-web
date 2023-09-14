@@ -4,15 +4,15 @@ import {
   DzHero,
   DzInterstitial,
   DzSectionMenu,
+  DzTitleExhibition,
   DzTitleMolecule,
   DzTitleMoleculeTypes,
-  DzTitleExhibition,
   INTERSTITIAL_TEXT_COLORS,
 } from '@zwirner/design-system'
 import Image from 'next/image'
 import {useRouter} from 'next/router'
 import {FC} from 'react'
-import {PageBuilder} from '@/components/pageBuilder'
+
 import {
   CHECKLIST,
   EXHIBITION_CHECKLIST_URL,
@@ -20,6 +20,11 @@ import {
   EXPLORE,
   INSTALLATION_VIEWS,
 } from '@/common/constants/commonCopies'
+import {
+  formatDateRange,
+  getExhibitionState,
+} from '@/components/containers/exhibitions/exhibitionsLandingContainer/utils'
+import {PageBuilder} from '@/components/pageBuilder'
 import {DzPortableText} from '@/components/wrappers/DzPortableText'
 import {builder} from '@/sanity/imageBuilder'
 
@@ -31,10 +36,12 @@ interface ExhibitionsContainerProps {
 
 export const ExhibitionsContainer: FC<ExhibitionsContainerProps> = ({data}) => {
   const router = useRouter()
-  const {slug, showChecklist} = data ?? {}
-  data.location = data?.locations?.[0]
-
+  const {slug, showChecklist, startDate, endDate} = data ?? {}
   const currentSlug = slug?.current ?? ''
+
+  data.location = data?.locations?.[0]
+  data.exhibitionState = getExhibitionState(data)
+  data.exhibitionDateRangeText = formatDateRange(startDate, endDate)
 
   return data ? (
     <>
@@ -64,7 +71,7 @@ export const ExhibitionsContainer: FC<ExhibitionsContainerProps> = ({data}) => {
           sticky
           useLinks
         />
-        <DzTitleExhibition {...data} />
+        <DzTitleExhibition {...data} showCoordinates />
       </DzColumn>
       <DzColumn span={12}>
         {data.heroMedia?.image && (

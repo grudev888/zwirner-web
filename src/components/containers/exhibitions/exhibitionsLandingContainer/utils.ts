@@ -1,3 +1,4 @@
+import {EXHIBITION_STATES} from '@zwirner/design-system'
 import {format, isAfter, isValid, isWithinInterval, parseISO} from 'date-fns'
 
 const isExhibitionInCity = (exhibition: any, city: string) => {
@@ -24,6 +25,27 @@ export const isExhibitionUpcoming = (exhibition: any) => {
   const startDateObj = parseISO(startDate)
 
   return isValid(startDateObj) && isAfter(startDateObj, new Date())
+}
+
+export const isExhibitionPast = (exhibition: any) => {
+  const {endDate} = exhibition
+  const endDateObj = parseISO(endDate)
+
+  return isValid(endDateObj) && isAfter(endDateObj, new Date())
+}
+
+export const getExhibitionState = (exhibition: any) => {
+  if (!exhibition) {
+    return
+  }
+  if (isExhibitionOpen(exhibition)) {
+    return EXHIBITION_STATES.OPEN
+  } else if (isExhibitionUpcoming(exhibition)) {
+    return EXHIBITION_STATES.PRELAUNCH
+  } else if (isExhibitionPast(exhibition)) {
+    return EXHIBITION_STATES.POSTLAUNCH
+  }
+  return
 }
 
 export const formatDateRange = (startDateISO: string, endDateISO: string) => {
