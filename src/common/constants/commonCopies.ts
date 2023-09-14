@@ -10,6 +10,7 @@ export const EXHIBITION_INSTALLATION_URL = '/installation-views'
 export const BOOKS_URL = 'https://www.davidzwirnerbooks.com/'
 export const ARTISTS_PRESS_URL = '/press'
 export const ARTWORK_URL = '/artworks'
+export const PREVIEW_EXIT_URL = '/api/sanity/exit-preview'
 
 // ============ COPIES ===========
 export const DAVID_ZWIRNER_BOOKS = 'David Zwirner Books'
@@ -54,3 +55,4 @@ export const MUSEUM_HIGHLIGHTS = 'Museum Highlights'
 export const NOW_OPEN = 'Now Open'
 export const SUBSCRIBE = 'Subscribe'
 export const ALL_LOCATIONS = 'All Locations'
+export const EXIT_PREVIEW = 'Exit preview'

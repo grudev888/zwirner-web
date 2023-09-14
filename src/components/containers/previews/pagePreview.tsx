@@ -3,6 +3,9 @@ import {FC, Fragment} from 'react'
 
 import {SEOComponent} from '@/common/components/seo/seo'
 import {usePreview} from '@/sanity/preview'
+import {DzLink} from '@zwirner/design-system'
+import styles from './index.module.css'
+import {EXIT_PREVIEW, PREVIEW_EXIT_URL} from '@/common/constants/commonCopies'
 
 interface PreviewPageProps {
   seo?: any
@@ -45,6 +48,9 @@ export const PreviewPage: FC<PreviewPageProps> = ({seo, query, params = {}, Cont
     <>
       <PreviewSuspense fallback="Loading...">
         <ContainerData seo={seo} query={query} params={params} Container={Container} />
+        <DzLink className={styles.exitPreview} href={PREVIEW_EXIT_URL}>
+          {EXIT_PREVIEW}
+        </DzLink>
       </PreviewSuspense>
     </>
   )

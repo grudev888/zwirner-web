@@ -1,0 +1,25 @@
+.exitPreview {
+  @apply fixed
+  right-[0.3125rem]
+  bottom-5
+  z-10
+  mx-auto
+  mt-10
+  w-[9rem]
+  border
+  border-black-60
+  bg-white-100
+  py-[0.8125rem]
+  px-[1.5625rem]
+  text-md
+  text-black-100
+  underline-offset-[0.375rem]
+  outline-transparent
+  focus:bg-black-60
+  focus:text-white-100
+  hover:bg-black-60
+  hover:text-white-100
+  hover:underline
+  active:bg-black-80
+  active:text-white-100;
+}
