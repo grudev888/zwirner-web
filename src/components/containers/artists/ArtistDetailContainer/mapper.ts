@@ -1,4 +1,10 @@
-import {ButtonModes, CARD_TYPES, MEDIA_ASPECT_RATIOS, MEDIA_TYPES} from '@zwirner/design-system'
+import {
+  ButtonModes,
+  CARD_TYPES,
+  DzCarouselCardSize,
+  MEDIA_ASPECT_RATIOS,
+  MEDIA_TYPES,
+} from '@zwirner/design-system'
 import parseISO from 'date-fns/parseISO'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -6,6 +12,8 @@ import Link from 'next/link'
 import {dzMediaMapper} from '@/common/utilsMappers/image.mapper'
 import {safeText} from '@/common/utilsMappers/safe'
 import {builder} from '@/sanity/imageBuilder'
+import {ctaMapper} from '@/common/utilsMappers/cta.mapper'
+import {CtaActions} from '@/sanity/types'
 
 export const mapInterstitial = (data: any, onCTAClick?: () => void) => {
   if (!data?.title) return null
@@ -27,15 +35,25 @@ export const mapInterstitial = (data: any, onCTAClick?: () => void) => {
   }
 }
 
-export const mapCarouselArtworks = (data: any) => {
+export const mapCarouselArtworks = (data: any, isSmall: boolean) => {
   if (!data?.title) return null
 
   return {
     title: data.title,
     size: data.size,
     items: data.items?.map((item: any) => {
-      const {artists, dimensions, title, dateSelection, medium, edition, _id, price, slug} =
-        item ?? {}
+      const {
+        artists,
+        dimensions,
+        title,
+        dateSelection,
+        medium,
+        edition,
+        _id,
+        price,
+        slug,
+        artworkCTA,
+      } = item ?? {}
       const {year} = dateSelection ?? {}
       const [mainArtist] = artists ?? []
       const {fullName} = mainArtist ?? {}
@@ -49,6 +67,29 @@ export const mapCarouselArtworks = (data: any) => {
 
       const {media} = dzMediaMapper({data: item, ImgElement: Image})
       const dimensionText = safeText({key: 'dimensions', text: dimensions})
+      const ctasOverrides = ctaMapper({
+        data: {
+          title: 'CTA',
+          enableOverrides: true,
+          primaryCTA:
+            artworkCTA.CTA && artworkCTA.CTA !== CtaActions.NONE
+              ? {
+                  type: 'button',
+                  action: artworkCTA?.CTA,
+                  text: artworkCTA?.CTAText,
+                  link: artworkCTA?.CTALink,
+                }
+              : undefined,
+          secondaryCTA: artworkCTA
+            ? {
+                type: 'button',
+                action: artworkCTA?.secondaryCTA,
+                text: artworkCTA?.SecondaryCTAText,
+                link: artworkCTA?.SecondaryCTALink,
+              }
+            : undefined,
+        },
+      })
 
       return {
         id: _id,
@@ -61,6 +102,9 @@ export const mapCarouselArtworks = (data: any) => {
         edition: edition,
         price: price,
         slug: slug?.current,
+        ...(!isSmall && (data.size === DzCarouselCardSize.L || data.size === DzCarouselCardSize.XL)
+          ? ctasOverrides ?? {}
+          : {}),
         framed,
       }
     }),

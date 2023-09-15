@@ -57,7 +57,7 @@ export const ArtistDetailContainer: FC<ArtistsContainerProps> = ({data}) => {
   const router = useRouter()
 
   const featured = mapFeatured(data.featured)
-  const survey = mapCarouselArtworks(data.survey)
+  const survey = mapCarouselArtworks(data.survey, isSmall)
   const availableWorksBooks = mapSplit(data.availableWorksBooks, () =>
     router.push(`/artists/${router.query.slug}/available-works`)
   )

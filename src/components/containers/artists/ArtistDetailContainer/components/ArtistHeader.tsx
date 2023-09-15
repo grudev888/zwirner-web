@@ -25,10 +25,10 @@ const ArtistHeader = ({artist, intro}: ArtistHeaderProps) => {
           },
           description: <>{intro}</>,
           linkCTA: {
-            href: '#artist-biography',
+            href: '#biography',
             onClick: (e: any) => {
               e.preventDefault()
-              scrollToElementId('artist-biography', HEADER_OFFSET)
+              scrollToElementId('biography', HEADER_OFFSET)
             },
             children: <>Learn More</>,
           },
