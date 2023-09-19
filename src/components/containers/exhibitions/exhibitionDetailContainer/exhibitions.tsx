@@ -119,16 +119,20 @@ export const ExhibitionsContainer: FC<ExhibitionsContainerProps> = ({data}) => {
         </DzColumn>
       )}
 
-      <section id="explore">
-        <DzTitleMolecule
-          type={DzTitleMoleculeTypes.SECTION}
-          data={{
-            title: 'Explore',
-            customClass: 'mb-5 md:mb-10',
-          }}
-        />
-      </section>
-      <PageBuilder components={data.exploreContent} />
+      {data.exploreContent ? (
+        <>
+          <section id="explore">
+            <DzTitleMolecule
+              type={DzTitleMoleculeTypes.SECTION}
+              data={{
+                title: 'Explore',
+                customClass: 'mb-5 md:mb-10',
+              }}
+            />
+          </section>
+          <PageBuilder components={data.exploreContent} />
+        </>
+      ) : null}
 
       {data.interstitial && (
         <DzColumn span={12}>

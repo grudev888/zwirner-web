@@ -7,7 +7,11 @@ import {safeText} from '@/common/utilsMappers/safe'
 export const dzMediaOverrides = (props: DzMediaSchemaProps) => {
   const {media: mediaProps, caption} = props ?? {}
   const {media} = dzMediaMapper({data: mediaProps, ImgElement: Image})
-  const descriptionText = safeText({key: 'description', text: caption ?? ''})
+  const descriptionText = safeText({
+    key: 'description',
+    text: caption ?? '',
+    customStyles: {normal: 'text-black-60 mt-2.5'},
+  })
 
   return {
     data: {

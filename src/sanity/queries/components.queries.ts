@@ -74,7 +74,9 @@ export const dzEditorialProps = groq`
       quoteFootNote,
       editorialType,
       editorialTextOverrides,
+      editorialTextOverridesSimple,
       imageOverride,
+      reverse
     }
   },
 `

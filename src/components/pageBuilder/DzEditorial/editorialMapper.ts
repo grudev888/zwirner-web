@@ -1,10 +1,11 @@
-import {MEDIA_TYPES} from '@zwirner/design-system'
+import {MEDIA_TYPES, EditorialType} from '@zwirner/design-system'
 import Image from 'next/image'
 import {safeText} from '@/common/utilsMappers/safe'
 
 import {builder} from '@/sanity/imageBuilder'
 import {DzEditorialSchemaProps, EditorialTextTypes} from '@/sanity/types'
 import {dzMediaMapper} from '@/common/utilsMappers/image.mapper'
+import {ReactNode} from 'react'
 
 export const editorialMapper = (data: any) => {
   return data
@@ -28,20 +29,51 @@ const getTextFromOverride = (override: any) => {
   })
 }
 
+type EditorialData = {
+  textType: EditorialTextTypes
+  text: ReactNode
+}
+
 export const dzEditorialOverrides = (props: DzEditorialSchemaProps) => {
   const {
     editorialType,
     editorialTextOverrides = [],
+    editorialTextOverridesSimple = [],
     quoteTitle,
     quoteFootNote,
     reverse = false,
     imageOverride,
   } = props ?? {}
+
   const {media} = dzMediaMapper({
     data: imageOverride,
     ImgElement: Image,
   })
-  const paragraphs = editorialTextOverrides?.map(({textType, text}) => ({
+
+  const quoteTitleText = safeText({
+    text: quoteTitle,
+    key: 'quote',
+    customStyles: {
+      normal: 'text-xl md:!text-xxl',
+    },
+  })
+
+  const quoteDetailText = safeText({
+    text: quoteFootNote,
+    key: 'quoteDetail',
+    customStyles: {
+      normal: 'text-sm md:!text-lg',
+    },
+  })
+
+  let editorialData: EditorialData[] = []
+  if (editorialType === EditorialType.SIMPLE) {
+    editorialData = [{textType: EditorialTextTypes.PARAGRAPH, text: editorialTextOverridesSimple}]
+  } else if (editorialType === EditorialType.COMPLEX) {
+    editorialData = editorialTextOverrides
+  }
+
+  const paragraphs = editorialData?.map(({textType, text}) => ({
     type:
       textType === EditorialTextTypes.QUOTE
         ? EDITORIAL_TEXT_TYPES.QUOTE
@@ -52,17 +84,18 @@ export const dzEditorialOverrides = (props: DzEditorialSchemaProps) => {
       customStyles: {
         normal:
           textType === EditorialTextTypes.QUOTE
-            ? 'text-lg md:text-xl mb-5 md:mb-10'
-            : 'text-sm md:text-md mb-5 md:mb-10',
+            ? '!text-lg md:!text-xl !mb-5 md:!mb-10'
+            : '!text-sm md:!text-md !mb-5 md:!mb-10',
       },
     }),
   }))
+
   return {
     type: editorialType,
     data: {
       paragraphs,
-      quote: quoteTitle,
-      quoteDetail: quoteFootNote,
+      ...quoteTitleText,
+      ...quoteDetailText,
       reverse,
       media,
     },

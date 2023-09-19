@@ -68,8 +68,12 @@ const Biography = ({title, biography, artist, ...rest}: any) => {
     year: 'numeric',
   })
 
-  const birthYear = artist.birthdate ? dateFormatter.format(new Date(artist.birthdate)) : ''
-  const deathYear = artist.deathDate ? dateFormatter.format(new Date(artist.deathDate)) : ''
+  const birthYear = artist.birthdate
+    ? dateFormatter.format(new Date(artist.birthdate.replace(/-/g, '/')))
+    : ''
+  const deathYear = artist.deathDate
+    ? dateFormatter.format(new Date(artist.deathDate.replace(/-/g, '/')))
+    : ''
 
   return (
     <section {...rest}>

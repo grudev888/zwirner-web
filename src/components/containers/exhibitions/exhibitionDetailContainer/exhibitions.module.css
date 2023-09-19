@@ -1,11 +1,12 @@
+/* Take into consideration the gap from the grid */
 .heroContainer {
   @apply mb-[2.5rem]
     md:mb-[6.25rem];
 }
 
 .pressReleaseContainer {
-  @apply mb-[3.75rem]
-    md:mb-[7.5rem];
+  @apply mb-[2.5rem]
+    md:mb-[6.25rem];
 }
 
 .titleContainer > div {

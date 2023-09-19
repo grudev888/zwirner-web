@@ -73,6 +73,8 @@ export enum ArticleCategories {
   EVENT = 'Event',
   EXHIBITION = 'Exhibition',
   MUSEUM_HIGHLIGHTS = 'Museum Highlights',
+  MUSEUM_EXHIBITION_PRESS = 'Museum Exhibition Press',
+  MUSEUM_EXHIBITION_RECORD = 'Museum Exhibition Record',
 }
 
 export enum ArticleTypes {
@@ -182,6 +184,7 @@ export interface DzEditorialSchemaProps {
   title: string
   editorialType: EditorialType
   editorialTextOverrides?: TextComplexSchemaType[]
+  editorialTextOverridesSimple?: any
   imageOverride?: any
   quoteTitle?: string
   quoteFootNote?: string

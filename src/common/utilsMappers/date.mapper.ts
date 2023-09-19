@@ -54,7 +54,7 @@ export const mapSingleDateFormat = (dateSelection: any) => {
     day: 'numeric',
     year: 'numeric',
   })
-  return dateFormatter.format(new Date(dateSelection))
+  return dateFormatter.format(new Date(dateSelection.replace(/-/g, '/')))
 }
 
 export const mapExhibitionStatus = (exhibition: any) => {

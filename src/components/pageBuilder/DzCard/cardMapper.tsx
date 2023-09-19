@@ -1,30 +1,33 @@
-import {CARD_TYPES, MEDIA_TYPES, CardViewport} from '@zwirner/design-system'
-import {dzMediaMapper} from '@/common/utilsMappers/image.mapper'
+import {CARD_TYPES, CardViewport, MEDIA_TYPES} from '@zwirner/design-system'
+import Image from 'next/image'
+import Link from 'next/link'
+
+import {
+  EXHIBITION,
+  EXHIBITIONS_URL,
+  LEARN_MORE,
+  LISTEN_NOW,
+  ORDER_NOW,
+  READ_MORE,
+  VIEW_MORE,
+} from '@/common/constants/commonCopies'
+import {ctaMapper} from '@/common/utilsMappers/cta.mapper'
 import {
   dateSelectionArtworkMapper,
   mapExhibitionStatus,
   mapSingleDateFormat,
 } from '@/common/utilsMappers/date.mapper'
-import {
-  DzCardExtendedProps,
-  ArticleCategories,
-  PressVariation,
-  ArticleTypes,
-  BookVariation,
-} from '@/sanity/types'
-import Image from 'next/image'
+import {dzMediaMapper} from '@/common/utilsMappers/image.mapper'
 import {safeText} from '@/common/utilsMappers/safe'
-import {ctaMapper} from '@/common/utilsMappers/cta.mapper'
-import {
-  EXHIBITION,
-  ORDER_NOW,
-  LISTEN_NOW,
-  EXHIBITIONS_URL,
-  READ_MORE,
-} from '@/common/constants/commonCopies'
 // TODO: extract utils to a general mapper for availability
 import {parseAvailability} from '@/components/containers/home/utils'
-import Link from 'next/link'
+import {
+  ArticleCategories,
+  ArticleTypes,
+  BookVariation,
+  DzCardExtendedProps,
+  PressVariation,
+} from '@/sanity/types'
 
 export const dzCardOverrides = (props: DzCardExtendedProps) => {
   const {imageOverride, enableOverrides} = props ?? {}
@@ -56,6 +59,7 @@ export const contentTypesMapper: any = {
       externalURL,
       type,
       publishDate,
+      displayDate,
       primarySubtitle,
     } = data ?? {}
     const {current} = slug ?? {}
@@ -76,13 +80,14 @@ export const contentTypesMapper: any = {
       text: additionalInformation,
     })
     const descriptionText = safeText({key: 'description', text: description})
-    const URL = type === ArticleTypes.EXTERNAL ? externalURL : current ?? '/'
+    const articleUrl = type === ArticleTypes.EXTERNAL ? externalURL : current ?? '/'
     const ctasOverrides = ctaMapper({
       data: props,
-      props: {url: URL, hideSecondary: true, defaultLinkText: READ_MORE},
+      props: {url: articleUrl, hideSecondary: true, defaultLinkText: READ_MORE},
     })
     const date = mapSingleDateFormat(publishDate)
     let cardProps = {}
+
     switch (category) {
       case ArticleCategories.NEWS:
         {
@@ -94,6 +99,7 @@ export const contentTypesMapper: any = {
             subtitle: primarySubtitle,
             secondaryTitle: subtitle,
             secondarySubtitle,
+            cardLink: {href: articleUrl, openNewTab: true, LinkElement: Link},
             ...(ctasOverrides ?? {}),
             ...(descriptionText ?? {}),
             ...(additionalInformationText ?? {}),
@@ -103,7 +109,7 @@ export const contentTypesMapper: any = {
       case ArticleCategories.PRESS:
         {
           const isSelectedPress = pressVariation === PressVariation.SELECTED_PRESS
-          const secondaryTitle = isSelectedPress ? secondaryTitleOverride : ''
+          const secondaryTitle = isSelectedPress ? subtitle ?? secondaryTitleOverride : ''
           const subtitlePrimary = !isSelectedPress ? primarySubtitle ?? primarySubtitleOverride : ''
 
           cardProps = {
@@ -114,6 +120,7 @@ export const contentTypesMapper: any = {
             secondaryTitle,
             subtitle: subtitlePrimary,
             secondarySubtitle: date,
+            cardLink: {href: articleUrl, openNewTab: true, LinkElement: Link},
             ...(ctasOverrides ?? {}),
             ...(!isSelectedPress ? descriptionText ?? {} : {}),
           }
@@ -130,8 +137,53 @@ export const contentTypesMapper: any = {
             secondarySubtitle: date,
             secondaryTitle: name,
             title,
+            cardLink: {href: articleUrl, openNewTab: true, LinkElement: Link},
             ...(descriptionText ?? {}),
             ...(ctasOverrides ?? {}),
+          }
+        }
+        break
+      case ArticleCategories.MUSEUM_EXHIBITION_PRESS:
+      case ArticleCategories.MUSEUM_HIGHLIGHTS:
+        {
+          cardProps = {
+            title,
+            media,
+            hideImage,
+            category,
+            subtitle: primarySubtitle ?? primarySubtitleOverride,
+            ...(descriptionText ?? {}),
+            cardLink: {href: articleUrl, openNewTab: true, LinkElement: Link},
+            linkCTA: {
+              text: VIEW_MORE,
+              url: articleUrl,
+              linkElement: Link,
+              linkProps: {openNewTab: true},
+            },
+          }
+        }
+        break
+      case ArticleCategories.MUSEUM_EXHIBITION_RECORD:
+        {
+          const linkText = externalURL
+            ? `${LEARN_MORE} at ${new URL(externalURL)?.host?.replace('www.', '')}`
+            : VIEW_MORE
+          cardProps = {
+            title,
+            media,
+            hideImage,
+            category,
+            secondaryTitle: subtitle ?? secondaryTitleOverride,
+            subtitle: primarySubtitle ?? primarySubtitleOverride,
+            secondarySubtitle: displayDate ?? date,
+            cardLink: {href: externalURL ?? current, openNewTab: true, LinkElement: Link},
+            ...(descriptionText ?? {}),
+            linkCTA: {
+              text: linkText,
+              url: externalURL ?? current,
+              linkElement: Link,
+              linkProps: {openNewTab: true},
+            },
           }
         }
         break
@@ -233,13 +285,17 @@ export const contentTypesMapper: any = {
       edition,
       price,
       framed,
+      slug,
       framedDimensions,
     } = data ?? {}
     const {cardSize, additionalInformation} = props ?? {}
     const [mainArtist] = artists ?? []
-    const ctasOverrides = ctaMapper({data: props})
+    const {current} = slug ?? {}
+    const ctasOverrides = ctaMapper({data: props, props: {url: current, hideSecondary: true}})
+
     const {media} = dzMediaMapper({
       data,
+      url: current,
       ImgElement: Image,
     })
     const additionalInformationText = safeText({
@@ -266,7 +322,7 @@ export const contentTypesMapper: any = {
         ...(editionText ?? {}),
         ...(framedDimensionsText ?? {}),
         ...(additionalInformationText ?? {}),
-        ...({...ctasOverrides} ?? {}),
+        ...(ctasOverrides ?? {}),
       },
     }
   },
@@ -304,6 +360,9 @@ export const contentTypesMapper: any = {
         secondaryTitle: name,
         secondarySubtitle: status,
         enableZoom: true,
+        cardLink: {
+          href: current ?? EXHIBITIONS_URL,
+        },
         ...cardLinkOnGrid,
         ...(summaryText ?? {}),
         ...(ctasOverrides ?? {}),

@@ -53,7 +53,7 @@ export const ctaMapper = ({data, props}: CtaMapperProps) => {
           text: text ?? defaultLinkText ?? LEARN_MORE,
           linkElement: Link,
           url: action === CtaActions.LINK_CONTENT ? url : href,
-          openNewTab: blank,
+          openNewTab: blank ?? false,
         },
       }
     : {}
