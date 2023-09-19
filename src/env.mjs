@@ -27,12 +27,13 @@ export const env = createEnv({
     NEXT_PUBLIC_VERCEL_GIT_REPO_OWNER: z.literal('Zwirner'),
     NEXT_PUBLIC_VERCEL_GIT_REPO_SLUG: z.literal('web'),
     NEXT_PUBLIC_SANITY_PROJECT_ID: z.string().min(1),
-    NEXT_PUBLIC_SANITY_DATASET: z.enum(['production', 'test', 'sandbox', 'production-v1']),
+    NEXT_PUBLIC_SANITY_DATASET: z.enum(['production', 'test', 'sandbox', 'production-v1', 'dev']),
     NEXT_PUBLIC_SANITY_API_VERSION: z.string().min(1),
     NEXT_PUBLIC_VERCEL_URL: z.string().min(1),
     NEXT_PUBLIC_VERCEL_ENV: z.enum(['production', 'preview', 'development', 'local']),
     NEXT_PUBLIC_RECAPTCHA_SITE_KEY: z.string().min(1),
     NEXT_PUBLIC_FORMS_API: z.string().url(),
+    NEXT_PUBLIC_INQUIRY_ENDPOINT: z.string().url(),
   },
   /*
    * Due to how Next.js bundles environment variables on Edge and Client,
@@ -55,6 +56,7 @@ export const env = createEnv({
     ISR_TOKEN: process.env.ISR_TOKEN,
     NODE_ENV: process.env.NODE_ENV,
     SANITY_API_READ_TOKEN: process.env.SANITY_API_READ_TOKEN,
+    NEXT_PUBLIC_INQUIRY_ENDPOINT: process.env.NEXT_PUBLIC_INQUIRY_ENDPOINT,
   },
   skipValidation: !!process.env.SKIP_ENV_CHECK,
 })
