@@ -12,6 +12,7 @@ import {
   DzSplit,
   DzTitleMolecule,
   DzTitleMoleculeTypes,
+  DzInquireFormModal,
   SPLIT_TYPES,
   TITLE_SIZES,
   TITLE_TYPES,
@@ -22,7 +23,13 @@ import Link from 'next/link'
 import {useRouter} from 'next/router'
 import {FC, useCallback, useMemo} from 'react'
 
-import {EXHIBITIONS_URL} from '@/common/constants/commonCopies'
+import {
+  EXHIBITIONS_URL,
+  INQUIRE,
+  PLEASE_PROVIDE_YOUR_CONTACT_SHORT,
+  TO_LEARN_MORE_ABOUT,
+} from '@/common/constants/commonCopies'
+import {useHashRoutedInquiryModal} from '@/components/hooks/useHashRoutedInquiryModal'
 import {FullWidthFlexCol} from '@/components/containers/layout/FullWidthFlexCol'
 
 import ArtistHeader from './components/ArtistHeader'
@@ -55,7 +62,7 @@ interface ArtistsContainerProps {
 export const ArtistDetailContainer: FC<ArtistsContainerProps> = ({data}) => {
   const {isSmall} = useBreakpoints()
   const router = useRouter()
-
+  const inquireModalProps = useHashRoutedInquiryModal()
   const featured = mapFeatured(data.featured)
   const survey = mapCarouselArtworks(data.survey, isSmall)
   const availableWorksBooks = mapSplit(data.availableWorksBooks, () =>
@@ -73,6 +80,7 @@ export const ArtistDetailContainer: FC<ArtistsContainerProps> = ({data}) => {
   const selectedPress = mapGrid(data.selectedPress, 'article', true)
   const books = mapCarouselBooks(data.books)
   const interstitial = mapInterstitial(data.interstitial)
+  const inquireModalSubtitle = `${TO_LEARN_MORE_ABOUT} ${data.artist?.fullName}, ${PLEASE_PROVIDE_YOUR_CONTACT_SHORT}`
 
   const renderCarousel = useCallback(
     (data: any, type: CardTypes, link: {title: string; url: string}, id: string) => (
@@ -126,68 +134,72 @@ export const ArtistDetailContainer: FC<ArtistsContainerProps> = ({data}) => {
   )
 
   return (
-    <DzColumn span={12}>
-      <DzSectionMenu
-        sections={[
-          {text: 'Survey', id: 'survey'},
-          {text: 'Available Works', id: 'available-works'},
-          {text: 'Exhibitions', id: 'exhibitions'},
-          {text: 'Guide', id: 'guide'},
-          {text: 'Biography', id: 'biography'},
-          {text: 'Selected Press', id: 'selected-press'},
-          {text: 'Books', id: 'books'},
-        ]}
-        cta={{
-          text: 'Inquire',
-          ctaProps: {
-            variant: BUTTON_VARIANTS.TERTIARY,
-          },
-        }}
-        prefix=""
-        sticky
-        usePrefix
-      />
-      <FullWidthFlexCol>
-        <ArtistHeader artist={data.artist} intro={data.artistIntro} />
+    <>
+      <DzInquireFormModal {...inquireModalProps} title={INQUIRE} subtitle={inquireModalSubtitle} />
+      <DzColumn span={12}>
+        <DzSectionMenu
+          sections={[
+            {text: 'Survey', id: 'survey'},
+            {text: 'Available Works', id: 'available-works'},
+            {text: 'Exhibitions', id: 'exhibitions'},
+            {text: 'Guide', id: 'guide'},
+            {text: 'Biography', id: 'biography'},
+            {text: 'Selected Press', id: 'selected-press'},
+            {text: 'Books', id: 'books'},
+          ]}
+          cta={{
+            text: 'Inquire',
+            ctaProps: {
+              variant: BUTTON_VARIANTS.TERTIARY,
+              onClick: () => inquireModalProps.openClickHandler({title: data.artist.fullName}),
+            },
+          }}
+          prefix="artist-"
+          sticky
+          usePrefix
+        />
+        <FullWidthFlexCol>
+          <ArtistHeader artist={data.artist} intro={data.artistIntro} />
 
-        {featured && <DzSplit data={featured} type={SPLIT_TYPES.SHORT} />}
+          {featured && <DzSplit data={featured} type={SPLIT_TYPES.SHORT} />}
 
-        {survey &&
-          renderCarousel(
-            survey,
-            CARD_TYPES.ARTWORK,
-            {title: 'Explore all Artworks', url: `/artists/${router.query.slug}/survey`},
-            'survey'
+          {survey &&
+            renderCarousel(
+              survey,
+              CARD_TYPES.ARTWORK,
+              {title: 'Explore all Artworks', url: `/artists/${router.query.slug}/survey`},
+              'survey'
+            )}
+
+          {availableWorksBooks && (
+            <DzSplit id="available-works" data={availableWorksBooks} type={SPLIT_TYPES.SHORT} />
           )}
 
-        {availableWorksBooks && (
-          <DzSplit id="available-works" data={availableWorksBooks} type={SPLIT_TYPES.SHORT} />
-        )}
+          {availableWorksInterstitial && <DzInterstitial data={availableWorksInterstitial} />}
 
-        {availableWorksInterstitial && <DzInterstitial data={availableWorksInterstitial} />}
+          {data.moveGuideUp === true && guide ? Guide : null}
 
-        {data.moveGuideUp === true && guide ? Guide : null}
+          {latestExhibitions && <Exhibitions id="exhibitions" exhibitions={latestExhibitions} />}
 
-        {latestExhibitions && <Exhibitions id="exhibitions" exhibitions={latestExhibitions} />}
+          {exhibitionsInterstitial && <DzInterstitial data={exhibitionsInterstitial} />}
 
-        {exhibitionsInterstitial && <DzInterstitial data={exhibitionsInterstitial} />}
+          {!data.moveGuideUp && guide ? Guide : null}
 
-        {!data.moveGuideUp && guide ? Guide : null}
+          <Biography id="biography" biography={biography} title="Biography" artist={data.artist} />
 
-        <Biography id="biography" biography={biography} title="Biography" artist={data.artist} />
+          {selectedPress && <SelectedPress id="selected-press" selectedPress={selectedPress} />}
 
-        {selectedPress && <SelectedPress id="selected-press" selectedPress={selectedPress} />}
+          {books &&
+            renderCarousel(
+              books,
+              CARD_TYPES.ARTWORK,
+              {title: 'Explore Books', url: `/artists/${router.query.slug}/books`},
+              'books'
+            )}
 
-        {books &&
-          renderCarousel(
-            books,
-            CARD_TYPES.ARTWORK,
-            {title: 'Explore Books', url: `/artists/${router.query.slug}/books`},
-            'books'
-          )}
-
-        {interstitial && <DzInterstitial data={interstitial} />}
-      </FullWidthFlexCol>
-    </DzColumn>
+          {interstitial && <DzInterstitial data={interstitial} />}
+        </FullWidthFlexCol>
+      </DzColumn>
+    </>
   )
 }

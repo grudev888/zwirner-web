@@ -25,7 +25,7 @@ export const availableArtworksDataByArtistSlug = groq`
     displayNumberOfResults,
     title,
     slug,
-    items[]->{...}
+    items[]->{${artworkFields}}
   },
   "seo": availableWorksSeo {
     ${pageSEOFields}

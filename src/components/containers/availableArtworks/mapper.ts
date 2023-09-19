@@ -1,9 +1,13 @@
+import {InquireFormContextData} from '@zwirner/design-system'
 import Image from 'next/image'
 
 import {dzMediaMapper, validateImage} from '@/common/utilsMappers/image.mapper'
 import {safeText} from '@/common/utilsMappers/safe'
 
-export const mapCardsGrid = (data: any[]) => {
+export const mapCardsGrid = (
+  data: any[],
+  ctaClickHandler: (contextData: InquireFormContextData) => void
+) => {
   return data
     ?.filter((artwork) => validateImage(artwork))
     ?.map((artwork) => {
@@ -11,7 +15,9 @@ export const mapCardsGrid = (data: any[]) => {
       const fullName = artwork?.artists?.at(0)?.fullName
       const year = artwork?.dateSelection?.year
       const slug = artwork?.slug?.current
-
+      const onClickCTA = () => {
+        ctaClickHandler({id: _id, title: artwork?.artists?.[0]?.fullName, artwork})
+      }
       const framed =
         typeof artwork.framed === 'boolean'
           ? artwork.framed === true
@@ -37,8 +43,7 @@ export const mapCardsGrid = (data: any[]) => {
         primaryCTA: {
           text: 'Inquire',
           ctaProps: {
-            // Todo inquire with _id
-            onClick: () => null,
+            onClick: onClickCTA,
           },
         },
       }

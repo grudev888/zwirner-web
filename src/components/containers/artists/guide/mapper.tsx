@@ -4,8 +4,8 @@ import {Fragment} from 'react'
 
 import {EXHIBITIONS_URL} from '@/common/constants/commonCopies'
 import {dzMediaMapper} from '@/common/utilsMappers/image.mapper'
-import {ArticleTypes} from '@/sanity/types'
 import {safeText} from '@/common/utilsMappers/safe'
+import {ArticleTypes} from '@/sanity/types'
 
 const formatDate = (date: string) => {
   const dateParsed = new Date(date)

@@ -2,6 +2,7 @@ import {
   ButtonModes,
   DzColumn,
   DzHero,
+  DzInquireFormModal,
   DzInterstitial,
   DzSectionMenu,
   DzTitleExhibition,
@@ -19,11 +20,15 @@ import {
   EXHIBITION_INSTALLATION_URL,
   EXPLORE,
   INSTALLATION_VIEWS,
+  PLEASE_PROVIDE_YOUR_CONTACT,
+  TO_LEARN_MORE_ABOUT,
+  WANT_TO_KNOW_MORE,
 } from '@/common/constants/commonCopies'
 import {
   formatDateRange,
   getExhibitionState,
 } from '@/components/containers/exhibitions/exhibitionsLandingContainer/utils'
+import {useHashRoutedInquiryModal} from '@/components/hooks/useHashRoutedInquiryModal'
 import {PageBuilder} from '@/components/pageBuilder'
 import {DzPortableText} from '@/components/wrappers/DzPortableText'
 import {builder} from '@/sanity/imageBuilder'
@@ -36,7 +41,9 @@ interface ExhibitionsContainerProps {
 
 export const ExhibitionsContainer: FC<ExhibitionsContainerProps> = ({data}) => {
   const router = useRouter()
-  const {slug, showChecklist, startDate, endDate} = data ?? {}
+  const inquireFormModalProps = useHashRoutedInquiryModal()
+  const {slug, showChecklist, startDate, endDate, title, subtitle} = data ?? {}
+  const exhibitionTitle = `${title}${subtitle ? `: ${subtitle}` : ''}`
   const currentSlug = slug?.current ?? ''
 
   data.location = data?.locations?.[0]
@@ -45,6 +52,11 @@ export const ExhibitionsContainer: FC<ExhibitionsContainerProps> = ({data}) => {
 
   return data ? (
     <>
+      <DzInquireFormModal
+        {...inquireFormModalProps}
+        title={WANT_TO_KNOW_MORE}
+        subtitle={`${TO_LEARN_MORE_ABOUT} ${exhibitionTitle}, ${PLEASE_PROVIDE_YOUR_CONTACT}`}
+      />
       <DzColumn span={12} className={styles.titleContainer}>
         <DzSectionMenu
           sections={[
@@ -71,7 +83,11 @@ export const ExhibitionsContainer: FC<ExhibitionsContainerProps> = ({data}) => {
           sticky
           useLinks
         />
-        <DzTitleExhibition {...data} showCoordinates />
+        <DzTitleExhibition
+          {...data}
+          showCoordinates
+          onClickCTA={inquireFormModalProps.openClickHandler}
+        />
       </DzColumn>
       <DzColumn span={12}>
         {data.heroMedia?.image && (

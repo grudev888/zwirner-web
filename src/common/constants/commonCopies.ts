@@ -55,4 +55,15 @@ export const MUSEUM_HIGHLIGHTS = 'Museum Highlights'
 export const NOW_OPEN = 'Now Open'
 export const SUBSCRIBE = 'Subscribe'
 export const ALL_LOCATIONS = 'All Locations'
+export const INTERESTED_IN = 'Interested in'
+export const THIS_ARTWORK = 'this artwork'
+export const TO_LEARN_MORE_ABOUT_AVAILABLE_WORKS =
+  'To learn more about available works, please provide your contact information'
+export const WANT_TO_KNOW_MORE = 'Want to know more?'
+export const TO_LEARN_MORE_ABOUT = 'To learn more about'
+export const PLEASE_PROVIDE_YOUR_CONTACT_SHORT = 'please provide your contact information.'
+export const PLEASE_PROVIDE_YOUR_CONTACT =
+  'please provide your contact information and a member of the gallery will be in touch shortly.'
+export const TO_LEARN_MORE_ABOUT_THIS_ARTWORK =
+  'To learn more about this artwork, please provide your contact information.'
 export const EXIT_PREVIEW = 'Exit preview'
