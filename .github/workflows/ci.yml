@@ -63,9 +63,16 @@ jobs:
       - run: yarn lint
         env:
           SKIP_ENV_CHECK: true
+  conflict_check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: mschilde/auto-label-merge-conflicts@master
+        with:
+          CONFLICT_LABEL_NAME: "has conflicts"
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   test_e2e:
     name: Playwright tests
-    timeout-minutes: 60
+    timeout-minutes: 15
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -84,6 +91,7 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           max_timeout: 600
+          check_interval: 4
       - name: Run tests
         run: yarn test:e2e
         env:
