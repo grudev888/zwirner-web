@@ -11,6 +11,7 @@ concurrency:
 
 jobs:
   prettier:
+    name: Prettier
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -23,7 +24,8 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.READ_GH_PACKAGES_TOKEN }}
       - run: yarn prettier --check .
-  type-check:
+  type_check:
+    name: Type check
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -37,6 +39,7 @@ jobs:
           GH_TOKEN: ${{ secrets.READ_GH_PACKAGES_TOKEN }}
       - run: yarn type-check
   lint:
+    name: Lint
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -64,6 +67,7 @@ jobs:
         env:
           SKIP_ENV_CHECK: true
   conflict_check:
+    name: Conflict check
     runs-on: ubuntu-latest
     steps:
       - uses: mschilde/auto-label-merge-conflicts@master
@@ -90,7 +94,7 @@ jobs:
         id: waitFor200
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          max_timeout: 600
+          max_timeout: 1200
           check_interval: 4
       - name: Run tests
         run: yarn test:e2e
