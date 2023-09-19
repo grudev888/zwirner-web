@@ -4,14 +4,19 @@ import '@zwirner/design-system/dist/tailwind.css'
 import {DzColumn} from '@zwirner/design-system'
 import {NextPage} from 'next'
 import App, {AppContext, AppInitialProps, AppProps} from 'next/app'
+import Script from 'next/script'
 import {ReCaptchaProvider} from 'next-recaptcha-v3'
 import {ReactElement, ReactNode} from 'react'
+import {useEffect} from 'react'
 import {ErrorBoundary} from 'react-error-boundary'
 
 import {APIProvider} from '@/common/api'
 import DefaultLayout from '@/common/components/layout/Layout'
 import {SEOComponent} from '@/common/components/seo/seo'
+import {GTMScript} from '@/common/constants/gtmConstants'
 import {mono, sans, serif} from '@/common/styles/fonts'
+import {gtmEvent} from '@/common/utils/gtm/gtmEvent'
+import {gtmPageLoadGetArtists} from '@/common/utils/gtm/gtmPageLoadGetArtists'
 import {env} from '@/env.mjs'
 import {getFooterData, getHeaderData} from '@/sanity/services/layout.service'
 import {getGeneralSettings} from '@/sanity/services/settings.service'
@@ -55,6 +60,24 @@ const Wrapper = ({Component, pageProps, globalSEO, layoutData}: WrapperProps) =>
 }
 
 function DzApp({Component, pageProps, globalSEO, layoutData}: AppProps & WrapperProps) {
+  useEffect(() => {
+    const gtmData = pageProps.dataLayerProps
+    const pageLoadStarted = () => {
+      if (gtmData) {
+        gtmData.page_data.artist = gtmPageLoadGetArtists(pageProps)
+        gtmData.location = document.location.href
+        gtmData.page_data.page_hostname = document.location.hostname
+        gtmData.page_data.page_path = document.location.pathname
+        gtmData.page_data.page_query_string = document.location.search
+        gtmData.page_data.page_query_hash = document.location.hash
+        gtmData.page_data.language = document.documentElement.lang
+        gtmData.page_data.page_title = document.title
+        return gtmEvent('page_load_started', gtmData)
+      }
+    }
+    pageLoadStarted()
+  }, [pageProps])
+
   return (
     <>
       <style jsx global>
@@ -66,7 +89,9 @@ function DzApp({Component, pageProps, globalSEO, layoutData}: AppProps & Wrapper
           }
         `}
       </style>
-
+      <Script id="google-tag-manager" strategy="afterInteractive">
+        {GTMScript}
+      </Script>
       <Wrapper
         Component={Component}
         pageProps={pageProps}

@@ -1,5 +1,7 @@
 import {Head, Html, Main, NextScript} from 'next/document'
 
+import {GTMNoScript} from '@/common/constants/gtmConstants'
+
 export default function Document() {
   return (
     <Html lang="en">
@@ -18,6 +20,11 @@ export default function Document() {
         <meta name="msapplication-TileImage" content="mstile-144x144.png" />
       </Head>
       <body className="bg-white text-black dark:bg-black dark:text-white h-fit">
+        <noscript
+          dangerouslySetInnerHTML={{
+            __html: GTMNoScript,
+          }}
+        />
         <Main />
         <NextScript />
       </body>

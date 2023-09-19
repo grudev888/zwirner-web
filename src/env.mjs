@@ -33,6 +33,7 @@ export const env = createEnv({
     NEXT_PUBLIC_VERCEL_ENV: z.enum(['production', 'preview', 'development', 'local']),
     NEXT_PUBLIC_RECAPTCHA_SITE_KEY: z.string().min(1),
     NEXT_PUBLIC_FORMS_API: z.string().url(),
+    NEXT_PUBLIC_GTM_ID: z.string().min(1),
     NEXT_PUBLIC_INQUIRY_ENDPOINT: z.string().url(),
   },
   /*
@@ -52,6 +53,7 @@ export const env = createEnv({
     NEXT_PUBLIC_VERCEL_ENV: process.env.NEXT_PUBLIC_VERCEL_ENV,
     NEXT_PUBLIC_RECAPTCHA_SITE_KEY: process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY,
     NEXT_PUBLIC_FORMS_API: process.env.NEXT_PUBLIC_FORMS_API,
+    NEXT_PUBLIC_GTM_ID: process.env.NEXT_PUBLIC_GTM_ID,
     ANALYZE: process.env.ANALYZE,
     ISR_TOKEN: process.env.ISR_TOKEN,
     NODE_ENV: process.env.NODE_ENV,

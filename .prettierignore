@@ -3,3 +3,5 @@
 .yarn
 .github
 pnpm-lock.yaml
+.vercel/project.json
+vercel.json
