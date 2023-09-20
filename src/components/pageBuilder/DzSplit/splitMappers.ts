@@ -1,13 +1,14 @@
 import {MEDIA_TYPES} from '@zwirner/design-system'
 import Image from 'next/image'
+import Link from 'next/link'
+
+import {EXHIBITION, EXHIBITIONS_URL, LEARN_MORE} from '@/common/constants/commonCopies'
+import {ctaMapper} from '@/common/utilsMappers/cta.mapper'
+import {mapExhibitionStatus} from '@/common/utilsMappers/date.mapper'
+import {dzMediaMapper} from '@/common/utilsMappers/image.mapper'
+import {safeText} from '@/common/utilsMappers/safe'
 import {builder} from '@/sanity/imageBuilder'
 import {DzSplitTypeProps} from '@/sanity/types'
-import {dzMediaMapper} from '@/common/utilsMappers/image.mapper'
-import {EXHIBITION, LEARN_MORE, EXHIBITIONS_URL} from '@/common/constants/commonCopies'
-import {mapExhibitionStatus} from '@/common/utilsMappers/date.mapper'
-import {ctaMapper} from '@/common/utilsMappers/cta.mapper'
-import Link from 'next/link'
-import {safeText} from '@/common/utilsMappers/safe'
 
 export const dzSplitOverrides = (props: DzSplitTypeProps) => {
   const {imageOverride, enableOverrides} = props

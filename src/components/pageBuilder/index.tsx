@@ -1,16 +1,17 @@
 import {DzColumn} from '@zwirner/design-system'
 import {FC} from 'react'
 
+import {FullWidthFlexCol} from '@/components/containers/layout/FullWidthFlexCol'
+
 import {DzCard} from './DzCard/DzCard'
+import {CarouselMolecule} from './DzCarousel/DzCarousel'
 import {DzEditorial} from './DzEditorial/DzEditorial'
 import {DzHero} from './DzHero/DzHero'
 import {DzInterstitial} from './DzInterstitial/DzInterstitial'
+import {DzMedia} from './DzMedia/DzMedia'
 import {DzSplit} from './DzSplit/DzSplit'
 import {DzTitle} from './DzTitle/DzTitle'
 import {GridMolecule} from './GridMolecule'
-import {DzMedia} from './DzMedia/DzMedia'
-import {FullWidthFlexCol} from '@/components/containers/layout/FullWidthFlexCol'
-import {CarouselMolecule} from './DzCarousel/DzCarousel'
 
 export const componentsIndex: any = {
   dzHero: DzHero,

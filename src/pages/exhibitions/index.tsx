@@ -4,7 +4,6 @@ import {SEOComponent} from '@/common/components/seo/seo'
 import {ExhibitionLandingContainer} from '@/components/containers/exhibitions/exhibitionsLandingContainer'
 import {PreviewPage} from '@/components/containers/previews/pagePreview'
 import {exhibitionsLandingData} from '@/sanity/queries/exhibitionPage.queries'
-
 import {getExhibitionsLandingPageData} from '@/sanity/services/exhibition.service'
 
 interface PageProps {

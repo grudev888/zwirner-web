@@ -6,7 +6,6 @@ import {
   TITLE_TYPES,
 } from '@zwirner/design-system'
 import Image from 'next/image'
-import {safeText} from '@/common/utilsMappers/safe'
 
 import {
   EXHIBITIONS,
@@ -16,6 +15,7 @@ import {
   READ_MORE,
 } from '@/common/constants/commonCopies'
 import {dzMediaMapper} from '@/common/utilsMappers/image.mapper'
+import {safeText} from '@/common/utilsMappers/safe'
 import {ArticleTypes} from '@/sanity/types'
 
 export const heroMapper = (data: any) => {

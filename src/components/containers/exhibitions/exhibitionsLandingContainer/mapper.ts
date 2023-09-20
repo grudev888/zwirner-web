@@ -3,9 +3,9 @@ import Image from 'next/image'
 
 import {EXHIBITION, LEARN_MORE_AMP_SUBSCRIBE} from '@/common/constants/commonCopies'
 import {dzMediaMapper} from '@/common/utilsMappers/image.mapper'
+import {safeText} from '@/common/utilsMappers/safe'
 import {formatDateRange} from '@/components/containers/exhibitions/exhibitionsLandingContainer/utils'
 import {ArticleTypes} from '@/sanity/types'
-import {safeText} from '@/common/utilsMappers/safe'
 
 const formatExhibitionDate = (startDate: string, endDate: string) => {
   const exStartDate = parse(startDate, 'yyyy-MM-dd', new Date())

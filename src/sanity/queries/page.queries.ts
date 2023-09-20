@@ -1,17 +1,17 @@
 import {groq} from 'next-sanity'
 
 import {
+  componentTypesData,
   dzCardProps,
   dzCarouselProps,
   dzEditorialProps,
   dzHeroCarouselProps,
   dzHeroProps,
   dzInterstitialProps,
+  dzMediaProps,
   dzSplitProps,
   dzTitleProps,
-  dzMediaProps,
   gridMoleculeProps,
-  componentTypesData,
 } from '@/sanity/queries/components.queries'
 import {exhibitionComplexFields, exhibitionSimpleFields} from '@/sanity/queries/exhibition.queries'
 import {pageSEOFields} from '@/sanity/queries/seo.queries'

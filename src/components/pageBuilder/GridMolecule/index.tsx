@@ -2,6 +2,7 @@ import {ColumnSpan, DzColumn, DzGridColumns} from '@zwirner/design-system'
 import {FC} from 'react'
 
 import {DzCard} from '@/components/pageBuilder/DzCard/DzCard'
+
 import {DzMedia} from '../DzMedia/DzMedia'
 
 interface GridMoleculeProps {

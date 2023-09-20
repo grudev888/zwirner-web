@@ -1,8 +1,8 @@
 import {groq} from 'next-sanity'
 
 import {componentsByDataScheme} from '@/sanity/queries/page.queries'
-import {pageSEOFields} from '@/sanity/queries/seo.queries'
 import {pageBuilderComponentsData} from '@/sanity/queries/page.queries'
+import {pageSEOFields} from '@/sanity/queries/seo.queries'
 
 const exhibitionDateFields = groq`
   _id,

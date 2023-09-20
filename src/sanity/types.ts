@@ -1,4 +1,4 @@
-import {ButtonVariant, EditorialType, SplitTypes, ButtonModes} from '@zwirner/design-system'
+import {ButtonModes, ButtonVariant, EditorialType, SplitTypes} from '@zwirner/design-system'
 
 export interface GlobalSEOScheme {
   _id: string

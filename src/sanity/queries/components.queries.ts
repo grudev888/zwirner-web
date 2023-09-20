@@ -1,4 +1,5 @@
 import {groq} from 'next-sanity'
+
 import {exhibitionComplexFields, exhibitionSimpleFields} from '@/sanity/queries/exhibition.queries'
 
 export const componentTypesData = groq`

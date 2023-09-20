@@ -1,6 +1,7 @@
 import {isValid, isWithinInterval, parseISO} from 'date-fns'
+
+import {COMING_SOON, NOW_CLOSED, NOW_OPEN} from '@/common/constants/commonCopies'
 import {ExhibitionPageStatus} from '@/sanity/types'
-import {NOW_OPEN, COMING_SOON, NOW_CLOSED} from '@/common/constants/commonCopies'
 
 interface DateRange {
   from: string

@@ -1,11 +1,11 @@
 import Image from 'next/image'
-import {DzHeroSchemaProps} from '@/sanity/types'
-import {dzMediaMapper} from '@/common/utilsMappers/image.mapper'
-import {mapExhibitionStatus} from '@/common/utilsMappers/date.mapper'
-
-import {EXHIBITION, LEARN_MORE, EXHIBITIONS_URL} from '@/common/constants/commonCopies'
-import {safeText} from '@/common/utilsMappers/safe'
 import Link from 'next/link'
+
+import {EXHIBITION, EXHIBITIONS_URL, LEARN_MORE} from '@/common/constants/commonCopies'
+import {mapExhibitionStatus} from '@/common/utilsMappers/date.mapper'
+import {dzMediaMapper} from '@/common/utilsMappers/image.mapper'
+import {safeText} from '@/common/utilsMappers/safe'
+import {DzHeroSchemaProps} from '@/sanity/types'
 
 export const heroMapper = (data: any) => {
   return data

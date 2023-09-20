@@ -1,11 +1,11 @@
-import {MEDIA_TYPES, EditorialType} from '@zwirner/design-system'
+import {EditorialType, MEDIA_TYPES} from '@zwirner/design-system'
 import Image from 'next/image'
-import {safeText} from '@/common/utilsMappers/safe'
+import {ReactNode} from 'react'
 
+import {dzMediaMapper} from '@/common/utilsMappers/image.mapper'
+import {safeText} from '@/common/utilsMappers/safe'
 import {builder} from '@/sanity/imageBuilder'
 import {DzEditorialSchemaProps, EditorialTextTypes} from '@/sanity/types'
-import {dzMediaMapper} from '@/common/utilsMappers/image.mapper'
-import {ReactNode} from 'react'
 
 export const editorialMapper = (data: any) => {
   return data

@@ -1,13 +1,14 @@
 import {
-  DzColumn,
   CardSizes,
   carouselSizeToCardSize,
   DzCarouselCardSize,
+  DzColumn,
 } from '@zwirner/design-system'
-import {FC} from 'react'
 import dynamic from 'next/dynamic'
+import {FC} from 'react'
 
 import {DzCard} from '@/components/pageBuilder/DzCard/DzCard'
+
 import {DzMedia} from '../DzMedia/DzMedia'
 
 const DzCarousel = dynamic(() => import('@zwirner/design-system').then((mod) => mod.DzCarousel), {

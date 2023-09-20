@@ -1,12 +1,12 @@
 import {GetStaticProps} from 'next'
 
+import {SEOComponent} from '@/common/components/seo/seo'
 import ArtistExhibitionsPageContainer from '@/components/containers/pages/artists/exhibitions'
 import {PreviewPage} from '@/components/containers/previews/pagePreview'
 import {artistExhibitionsPageData} from '@/sanity/queries/artistExhibitionsPage.queries'
 import {getAllArtistPageSlugs} from '@/sanity/services/artist.service'
 import {getArtistExhibitionsPageData} from '@/sanity/services/artistPages.service'
 import {removePrefixSlug} from '@/utils/slug'
-import {SEOComponent} from '@/common/components/seo/seo'
 
 interface PageProps {
   data: any

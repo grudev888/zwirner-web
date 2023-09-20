@@ -1,11 +1,12 @@
+import {DzLink} from '@zwirner/design-system'
 import {PreviewSuspense} from 'next-sanity/preview'
 import {FC, Fragment} from 'react'
 
 import {SEOComponent} from '@/common/components/seo/seo'
-import {usePreview} from '@/sanity/preview'
-import {DzLink} from '@zwirner/design-system'
-import styles from './index.module.css'
 import {EXIT_PREVIEW, PREVIEW_EXIT_URL} from '@/common/constants/commonCopies'
+import {usePreview} from '@/sanity/preview'
+
+import styles from './index.module.css'
 
 interface PreviewPageProps {
   seo?: any

@@ -1,10 +1,10 @@
 import {CardSizes} from '@zwirner/design-system'
+import dynamic from 'next/dynamic'
 import {FC} from 'react'
 
 import {DzCardExtendedProps} from '@/sanity/types'
-import {contentTypesMapper, dzCardOverrides} from './cardMapper'
 
-import dynamic from 'next/dynamic'
+import {contentTypesMapper, dzCardOverrides} from './cardMapper'
 
 const DzCardMolecule = dynamic(() => import('@zwirner/design-system').then((mod) => mod.DzCard), {
   ssr: false,

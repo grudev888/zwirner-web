@@ -9,10 +9,10 @@ import parseISO from 'date-fns/parseISO'
 import Image from 'next/image'
 import Link from 'next/link'
 
+import {ctaMapper} from '@/common/utilsMappers/cta.mapper'
 import {dzMediaMapper} from '@/common/utilsMappers/image.mapper'
 import {safeText} from '@/common/utilsMappers/safe'
 import {builder} from '@/sanity/imageBuilder'
-import {ctaMapper} from '@/common/utilsMappers/cta.mapper'
 import {CtaActions} from '@/sanity/types'
 
 export const mapInterstitial = (data: any, onCTAClick?: () => void) => {

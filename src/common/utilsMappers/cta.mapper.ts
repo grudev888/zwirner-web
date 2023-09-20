@@ -1,8 +1,8 @@
 import {BUTTON_VARIANTS, ButtonModes} from '@zwirner/design-system'
-import {BUY_NOW, LEARN_MORE} from '@/common/constants/commonCopies'
-
-import {DzCardSchemaProps, CtaActions, CTASchemaType} from '@/sanity/types'
 import Link from 'next/link'
+
+import {BUY_NOW, LEARN_MORE} from '@/common/constants/commonCopies'
+import {CtaActions, CTASchemaType, DzCardSchemaProps} from '@/sanity/types'
 
 enum ARTWORK_AVAILABILITY {
   UNABLE = 'unavailable',

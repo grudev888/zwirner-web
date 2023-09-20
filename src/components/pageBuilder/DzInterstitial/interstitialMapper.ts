@@ -1,11 +1,11 @@
-import {MEDIA_TYPES, ButtonModes} from '@zwirner/design-system'
+import {ButtonModes, MEDIA_TYPES} from '@zwirner/design-system'
+import Image from 'next/image'
 
-import {builder} from '@/sanity/imageBuilder'
-import {DzInterstitialTypeProps} from '@/sanity/types'
 import {ctaMapperInterstitial} from '@/common/utilsMappers/cta.mapper'
 import {dzMediaMapper} from '@/common/utilsMappers/image.mapper'
-import Image from 'next/image'
 import {safeText} from '@/common/utilsMappers/safe'
+import {builder} from '@/sanity/imageBuilder'
+import {DzInterstitialTypeProps} from '@/sanity/types'
 
 export const interstitialMapper = (data: any) => {
   return data

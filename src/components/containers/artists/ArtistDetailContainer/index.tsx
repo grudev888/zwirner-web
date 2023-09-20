@@ -7,12 +7,12 @@ import {
   DzCard,
   DzCarouselCardSize,
   DzColumn,
+  DzInquireFormModal,
   DzInterstitial,
   DzSectionMenu,
   DzSplit,
   DzTitleMolecule,
   DzTitleMoleculeTypes,
-  DzInquireFormModal,
   SPLIT_TYPES,
   TITLE_SIZES,
   TITLE_TYPES,
@@ -29,8 +29,8 @@ import {
   PLEASE_PROVIDE_YOUR_CONTACT_SHORT,
   TO_LEARN_MORE_ABOUT,
 } from '@/common/constants/commonCopies'
-import {useHashRoutedInquiryModal} from '@/components/hooks/useHashRoutedInquiryModal'
 import {FullWidthFlexCol} from '@/components/containers/layout/FullWidthFlexCol'
+import {useHashRoutedInquiryModal} from '@/components/hooks/useHashRoutedInquiryModal'
 
 import ArtistHeader from './components/ArtistHeader'
 import Exhibitions from './components/Exhibitions'

@@ -1,8 +1,9 @@
 import {CARD_TYPES, CardSizes} from '@zwirner/design-system'
-import {dzMediaMapper} from '@/common/utilsMappers/image.mapper'
-import {DzMediaSchemaProps} from '@/sanity/types'
 import Image from 'next/image'
+
+import {dzMediaMapper} from '@/common/utilsMappers/image.mapper'
 import {safeText} from '@/common/utilsMappers/safe'
+import {DzMediaSchemaProps} from '@/sanity/types'
 
 export const dzMediaOverrides = (props: DzMediaSchemaProps) => {
   const {media: mediaProps, caption} = props ?? {}
