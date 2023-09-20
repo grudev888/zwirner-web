@@ -5,7 +5,6 @@ import {DzColumn} from '@zwirner/design-system'
 import {NextPage} from 'next'
 import App, {AppContext, AppInitialProps, AppProps} from 'next/app'
 import Script from 'next/script'
-import {ReCaptchaProvider} from 'next-recaptcha-v3'
 import {ReactElement, ReactNode} from 'react'
 import {useEffect} from 'react'
 import {ErrorBoundary} from 'react-error-boundary'
@@ -17,7 +16,6 @@ import {GTMScript} from '@/common/constants/gtmConstants'
 import {mono, sans, serif} from '@/common/styles/fonts'
 import {gtmEvent} from '@/common/utils/gtm/gtmEvent'
 import {gtmPageLoadGetArtists} from '@/common/utils/gtm/gtmPageLoadGetArtists'
-import {env} from '@/env.mjs'
 import {getFooterData, getHeaderData} from '@/sanity/services/layout.service'
 import {getGeneralSettings} from '@/sanity/services/settings.service'
 import {GlobalSEOScheme} from '@/sanity/types'
@@ -42,20 +40,18 @@ const Wrapper = ({Component, pageProps, globalSEO, layoutData}: WrapperProps) =>
   const getLayout =
     Component.getLayout || ((page) => <DefaultLayout layoutData={layoutData}>{page}</DefaultLayout>)
   return (
-    <ReCaptchaProvider reCaptchaKey={env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}>
-      <APIProvider>
-        <SEOComponent isDefault data={globalSEO} />
-        <ErrorBoundary
-          fallback={
-            <DzColumn className="mb-12 h-full" span={12}>
-              <div className="flex justify-center p-5">Something went wrong</div>
-            </DzColumn>
-          }
-        >
-          {getLayout(<Component {...pageProps} />)}
-        </ErrorBoundary>
-      </APIProvider>
-    </ReCaptchaProvider>
+    <APIProvider>
+      <SEOComponent isDefault data={globalSEO} />
+      <ErrorBoundary
+        fallback={
+          <DzColumn className="mb-12 h-full" span={12}>
+            <div className="flex justify-center p-5">Something went wrong</div>
+          </DzColumn>
+        }
+      >
+        {getLayout(<Component {...pageProps} />)}
+      </ErrorBoundary>
+    </APIProvider>
   )
 }
 

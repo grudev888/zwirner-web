@@ -13,11 +13,10 @@ const BASE_URL = (path = '', queryParams: any = null) =>
 export const useForms = () => {
   const {data, error, isLoading} = useSWR(BASE_URL('forms'))
 
-  const addOrUpdate = async (form: IFormInput & {location: ILocation}, token: string) =>
+  const addOrUpdate = async (form: IFormInput & {location: ILocation}) =>
     await client.post(BASE_URL('forms/submissions'), {
       ...form,
       timestamp: new Date().toISOString(),
-      token,
     })
 
   return {data, error, isLoading, addOrUpdate}

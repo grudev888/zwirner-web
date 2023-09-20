@@ -12,7 +12,6 @@ import {
   TITLE_TYPES,
 } from '@zwirner/design-system'
 import axios from 'axios'
-import {useReCaptcha} from 'next-recaptcha-v3'
 import {useCallback, useEffect, useState} from 'react'
 import {SubmitHandler, useForm} from 'react-hook-form'
 import {uuid} from 'uuidv4'
@@ -34,8 +33,6 @@ const Forms = () => {
     formState: {errors},
     setValue,
   } = useForm<IFormInput>()
-
-  const {executeRecaptcha} = useReCaptcha()
 
   const [formId, _] = useState(uuid())
   const [newsletterErrors, setNewsletterErrors] = useState<{
@@ -59,22 +56,17 @@ const Forms = () => {
   const onSubmit: SubmitHandler<IFormInput> = useCallback(
     async (formData) => {
       try {
-        const token = await executeRecaptcha('form_submit')
-
-        await addOrUpdate(
-          {
-            ...formData,
-            interests: {
-              ...data?.interests?.reduce(
-                (prev: {}, {id}: {id: string}) => ({...prev, [id]: false}),
-                {}
-              ),
-              ...formData.interests.reduce((prev, i) => ({...prev, [i]: true}), {}),
-            },
-            location: location as ILocation,
+        await addOrUpdate({
+          ...formData,
+          interests: {
+            ...data?.interests?.reduce(
+              (prev: {}, {id}: {id: string}) => ({...prev, [id]: false}),
+              {}
+            ),
+            ...formData.interests.reduce((prev, i) => ({...prev, [i]: true}), {}),
           },
-          token
-        )
+          location: location as ILocation,
+        })
 
         alert('Thanks for your subscription')
       } catch (error: Error | any) {
@@ -87,7 +79,7 @@ const Forms = () => {
         alert(msg)
       }
     },
-    [addOrUpdate, data?.interests, executeRecaptcha, location]
+    [addOrUpdate, data?.interests, location]
   )
 
   if (isLoading || error) return null

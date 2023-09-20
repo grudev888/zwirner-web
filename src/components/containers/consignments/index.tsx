@@ -14,7 +14,7 @@ import {
   EditorialType,
 } from '@zwirner/design-system'
 import dynamic from 'next/dynamic'
-import {FC, Fragment} from 'react'
+import {FC, Fragment, useRef} from 'react'
 
 import {FullWidthFlexCol} from '@/components/containers/layout/FullWidthFlexCol'
 import {ContainerTitle} from '@/components/wrappers/title/ContainerTitle'
@@ -30,6 +30,7 @@ import {
   mapCarouselCards,
   mapFooterInterstitial,
 } from './mapper'
+import RecaptchaNode from '@/forms/recaptcha/recaptchaNode'
 
 const DzCarousel = dynamic(() => import('@zwirner/design-system').then((mod) => mod.DzCarousel), {
   ssr: false,
@@ -51,7 +52,7 @@ export const ConsignmentsContainer: FC<ConsignmentsContainerProps> = ({data}) =>
     bodyCarousel,
     footerInterstitial,
   } = data
-
+  const recaptchaRef = useRef<HTMLFormElement>()
   const mediaProps = headerImageMap(headerMedia)
   const editorialProps = editorialSectionMap(aboutText)
   const formProps = formSectionMap(consignmentForm)
@@ -60,7 +61,10 @@ export const ConsignmentsContainer: FC<ConsignmentsContainerProps> = ({data}) =>
   const bodyData = bodyDataMap(body)
   const carouselCards = mapCarouselCards(bodyCarousel?.items)
   const footerInterstitialData = mapFooterInterstitial(footerInterstitial)
-
+  const onSubmitForm = async () => {
+    //const token = await recaptchaRef.current?.executeAsync()
+    //TODO submit form to API endpoint
+  }
   const renderCarousel = (data: any, size: DzCarouselCardSize = DzCarouselCardSize.L) => (
     <DzColumn span={12} className={styles.fullSection}>
       <DzCarousel size={size}>
@@ -82,7 +86,11 @@ export const ConsignmentsContainer: FC<ConsignmentsContainerProps> = ({data}) =>
       <FullWidthFlexCol>
         <DzMedia imgClass={styles.mediaImage} {...mediaProps} />
         <DzEditorial {...editorialProps} type={EditorialType.LEFT_BLOCK} />
-        <DzForm {...formProps} onSubmit={() => null} />
+        <DzForm
+          {...formProps}
+          onSubmit={onSubmitForm}
+          recaptchaNode={<RecaptchaNode recaptchaRef={recaptchaRef} />}
+        />
         <DzMedia imgClass={styles.mediaImage} {...featuredMediaProps} />
         <DzInterstitial {...interstitialProps} />
         {bodyData?.map(
