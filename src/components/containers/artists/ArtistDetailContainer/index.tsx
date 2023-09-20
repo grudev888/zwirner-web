@@ -154,7 +154,7 @@ export const ArtistDetailContainer: FC<ArtistsContainerProps> = ({data}) => {
               onClick: () => inquireModalProps.openClickHandler({title: data.artist.fullName}),
             },
           }}
-          prefix="artist-"
+          prefix=""
           sticky
           usePrefix
         />
