@@ -42,7 +42,7 @@ export const ExhibitionChecklistContainer: FC<ExhibitionChecklistContainerProps>
       <DzColumn span={12}>
         <DzSectionMenu
           sections={[
-            {text: EXPLORE, id: 'explore', url: `${currentSlug}#explore`},
+            {text: EXPLORE, id: 'explore', url: `${currentSlug}`},
             ...(showChecklist
               ? [
                   {

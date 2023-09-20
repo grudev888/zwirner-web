@@ -60,7 +60,7 @@ export const ExhibitionsContainer: FC<ExhibitionsContainerProps> = ({data}) => {
       <DzColumn span={12} className={styles.titleContainer}>
         <DzSectionMenu
           sections={[
-            {text: EXPLORE, id: 'explore', url: `${currentSlug}#explore`},
+            {text: EXPLORE, id: 'explore', url: `${currentSlug}`},
             ...(showChecklist
               ? [
                   {
