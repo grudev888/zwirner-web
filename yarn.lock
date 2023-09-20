@@ -905,13 +905,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@next/font@npm:^13.4.3":
-  version: 13.4.3
-  resolution: "@next/font@npm:13.4.3"
-  checksum: 9feca5b6181505b85d9c198535ddd1dd26bc0e435dbfb53af06c14debe8eb021c78842100ef7f37e21d75701156ee4ae060db1de3d4bcb6ce6e82eb54b441634
-  languageName: node
-  linkType: hard
-
 "@next/swc-android-arm-eabi@npm:13.2.3":
   version: 13.2.3
   resolution: "@next/swc-android-arm-eabi@npm:13.2.3"
@@ -8571,7 +8564,6 @@ __metadata:
   dependencies:
     "@headlessui/tailwindcss": ^0.1.2
     "@next/bundle-analyzer": ^13.3.1
-    "@next/font": ^13.4.3
     "@playwright/test": ^1.34.0
     "@portabletext/react": ^3.0.4
     "@sanity/asset-utils": ^1.3.0
