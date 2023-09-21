@@ -1,10 +1,4 @@
-import {
-  DzColumn,
-  DzComplexGrid,
-  DzInterstitial,
-  DzSectionMenu,
-  TITLE_SIZES,
-} from '@zwirner/design-system'
+import {DzColumn, DzSectionMenu, TITLE_SIZES} from '@zwirner/design-system'
 import {useRouter} from 'next/router'
 import {FC} from 'react'
 
@@ -19,10 +13,8 @@ import {
   INTERESTED_IN_THIS_EXHIBITION,
 } from '@/common/constants/commonCopies'
 import {FullWidthFlexCol} from '@/components/containers/layout/FullWidthFlexCol'
-import {dzInterstitialOverrides} from '@/components/pageBuilder/DzInterstitial/interstitialMapper'
+import {PageBuilder} from '@/components/pageBuilder'
 import {ContainerTitle} from '@/components/wrappers/title/ContainerTitle'
-
-import {mapCardsGrid} from './mapper'
 
 interface ExhibitionChecklistContainerProps {
   data: any
@@ -31,10 +23,6 @@ interface ExhibitionChecklistContainerProps {
 export const ExhibitionChecklistContainer: FC<ExhibitionChecklistContainerProps> = ({data}) => {
   const router = useRouter()
   const {title, slug, showChecklist, subtitle, checklistInterstitial, checklist} = data ?? {}
-  const interstitialData = dzInterstitialOverrides(checklistInterstitial)
-  const complexGridData = mapCardsGrid({
-    data: {displayNumberOfResults: false, itemsPerRow: 2, items: checklist},
-  })
   const currentSlug = slug?.current ?? ''
 
   return (
@@ -79,8 +67,8 @@ export const ExhibitionChecklistContainer: FC<ExhibitionChecklistContainerProps>
           category={EXHIBITION}
         />
         <FullWidthFlexCol>
-          {complexGridData && checklist ? <DzComplexGrid {...complexGridData} /> : null}
-          {interstitialData && <DzInterstitial {...interstitialData} />}
+          <PageBuilder components={[checklist]} />
+          <PageBuilder components={[checklistInterstitial]} />
         </FullWidthFlexCol>
       </DzColumn>
     </>

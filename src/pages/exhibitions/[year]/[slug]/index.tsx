@@ -1,4 +1,5 @@
 import {GetStaticProps} from 'next'
+import {useRouter} from 'next/router'
 
 import {SEOComponent} from '@/common/components/seo/seo'
 import {EXHIBITIONS_URL} from '@/common/constants/commonCopies'
@@ -28,6 +29,11 @@ interface PreviewData {
 export default function ExhibitionsPage({data = {}, preview}: PageProps) {
   const {pageData = {}, queryParams} = data ?? {}
   const {seo} = pageData ?? {}
+  const router = useRouter()
+
+  if (router.isFallback) {
+    return <div>Loading...</div>
+  }
 
   if (preview) {
     return (
@@ -86,6 +92,7 @@ export const getStaticProps: GetStaticProps<PageProps, Query, PreviewData> = asy
   }
 
   const data: any = await getExhibitionPageBySlug(queryParams)
+  if (!data) return {notFound: true}
 
   return {
     props: {

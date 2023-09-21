@@ -1,16 +1,12 @@
 import {
-  ButtonModes,
   DzColumn,
   DzHero,
-  DzInterstitial,
   DzSectionMenu,
   DzTitleExhibition,
   DzTitleMolecule,
   DzTitleMoleculeTypes,
   FORM_MODAL_TYPES,
-  INTERSTITIAL_TEXT_COLORS,
 } from '@zwirner/design-system'
-import Image from 'next/image'
 import {useRouter} from 'next/router'
 import {FC} from 'react'
 
@@ -31,8 +27,6 @@ import {
 import {RecaptchaInquireFormModal} from '@/components/forms/recaptchaInquireFormModal'
 import {useHashRoutedInquiryModal} from '@/components/hooks/useHashRoutedInquiryModal'
 import {PageBuilder} from '@/components/pageBuilder'
-import {DzPortableText} from '@/components/wrappers/DzPortableText'
-import {builder} from '@/sanity/imageBuilder'
 
 import styles from './exhibitions.module.css'
 import {heroMapper} from './mapper'
@@ -97,15 +91,7 @@ export const ExhibitionsContainer: FC<ExhibitionsContainerProps> = ({data}) => {
         {heroData && <DzHero className={styles.heroContainer} items={[heroData]} />}
       </DzColumn>
 
-      {data.pressRelease && (
-        <DzColumn wrap span={[12, 6]} start={[1, 4]} className={styles.pressReleaseContainer}>
-          <DzPortableText
-            portableProps={{value: data.pressRelease}}
-            builder={builder}
-            ImgElement={Image}
-          />
-        </DzColumn>
-      )}
+      {data.pressRelease && <PageBuilder components={[data.pressRelease]} />}
 
       {data.exploreContent ? (
         <>
@@ -122,24 +108,7 @@ export const ExhibitionsContainer: FC<ExhibitionsContainerProps> = ({data}) => {
         </>
       ) : null}
 
-      {data.interstitial && (
-        <DzColumn span={12}>
-          <DzInterstitial
-            data={{
-              textColor: INTERSTITIAL_TEXT_COLORS.BLACK,
-              title: data.interstitial.title,
-              description: data.interstitial.subtitle,
-              split: false,
-              primaryCta: {
-                ...(data.interstitial.cta || {}),
-                ctaProps: {
-                  mode: ButtonModes.DARK,
-                },
-              },
-            }}
-          />
-        </DzColumn>
-      )}
+      {data.interstitial && <PageBuilder components={[data.interstitial]} />}
       {/*TODO remove this when footer margin-top is applied globally */}
       <div className={styles.containerBottomGap} />
     </>

@@ -85,18 +85,23 @@ export const dzCardProps = groq`
 `
 
 // Must follow DzEditorialSchemaProps
+export const dzEditorialFields = groq`
+  "_type": "dzEditorial",
+  'props': {
+    title,
+    quoteTitle,
+    quoteFootNote,
+    editorialType,
+    editorialTextOverrides,
+    editorialTextOverridesSimple,
+    imageOverride,
+    reverse
+  }
+`
+
 export const dzEditorialProps = groq`
   _type == 'dzEditorial' => {
-    'props': {
-      title,
-      quoteTitle,
-      quoteFootNote,
-      editorialType,
-      editorialTextOverrides,
-      editorialTextOverridesSimple,
-      imageOverride,
-      reverse
-    }
+    ${dzEditorialFields}
   },
 `
 
@@ -128,18 +133,22 @@ export const dzHeroCarouselProps = groq`
 `
 
 // Must follow DzInterstitialTypeProps
+export const dzInterstitialFields = groq`
+  "_type": "dzInterstitial",
+  'props': {
+    title,
+    mode,
+    cta,
+    image {
+      ${mediaBuilder}
+    },
+    subtitle,
+    eyebrow
+  }
+`
 export const dzInterstitialProps = groq`
   _type == 'dzInterstitial' => {
-    'props': {
-      title,
-      mode,
-      cta,
-      image {
-        ${mediaBuilder}
-      },
-      subtitle,
-      eyebrow
-    }
+    ${dzInterstitialFields}
   },
 `
 
@@ -170,15 +179,20 @@ export const dzTitleProps = groq`
   },
 `
 // Must follow DzMediaSchemaProps
+export const dzMediaFields = groq`
+  "_type": "dzMedia",
+  'props': {
+    title,
+    media {
+      ${mediaBuilder}
+    },
+    caption
+  }
+`
+
 export const dzMediaProps = groq`
   _type == 'dzMedia' => {
-    'props': {
-      title,
-      media {
-        ${mediaBuilder}
-      },
-      caption
-    }
+    ${dzMediaFields}
   },
 `
 
@@ -199,18 +213,23 @@ export const dzCarouselProps = groq`
 `
 
 // Must follow GridMoleculeTypeProps
+
+export const dzGridFields = groq`
+  "_type": "grid",
+  'props': {
+    title,
+    wrap,
+    itemsPerRow,
+    grid[]{
+      ${componentTypesData}
+      ${dzMediaProps}
+      ${dzCardProps}
+      _type,
+    }
+  }
+`
 export const gridMoleculeProps = groq`
   _type == 'grid' => {
-    'props': {
-      title,
-      wrap,
-      itemsPerRow,
-      grid[]{
-        ${componentTypesData}
-        ${dzMediaProps}
-        ${dzCardProps}
-        _type,
-      }
-    }
+    ${dzGridFields}
   },
 `

@@ -1,5 +1,10 @@
 import {groq} from 'next-sanity'
 
+import {
+  dzEditorialFields,
+  dzGridFields,
+  dzInterstitialFields,
+} from '@/sanity/queries/components.queries'
 import {mediaBuilder} from '@/sanity/queries/object.queries'
 import {componentsByDataScheme} from '@/sanity/queries/page.queries'
 import {pageBuilderComponentsData} from '@/sanity/queries/page.queries'
@@ -33,6 +38,12 @@ export const exhibitionPageBySlug = groq`
   heroMedia {
     ${mediaBuilder}
   },
+  pressRelease {
+    ${dzEditorialFields}
+  },
+  interstitial {
+    ${dzInterstitialFields}
+  },
   seo {
     ${pageSEOFields}
   },
@@ -50,13 +61,10 @@ export const installationViewsBySlug = groq`
   'showChecklist': count(checklist) > 0,
   slug,
   installationViewsInterstitial{
-    ...,
-    image {
-      ${mediaBuilder}
-    }
+    ${dzInterstitialFields}
   },
-  installationViews[]{
-    ${mediaBuilder}
+  installationViews {
+    ${dzGridFields}
   },
   'seo':installationViewsSeo {
     ${pageSEOFields}
@@ -70,12 +78,11 @@ export const checklistBySlug = groq`
   'showChecklist': count(checklist) > 0,
   slug,
   checklistInterstitial {
-    ...,
-    image {
-      ${mediaBuilder}
-    }
+    ${dzInterstitialFields}
   },
-  checklist[]->{..., artists[]->, 'image': image.asset->},
+  checklist {
+    ${dzGridFields}
+  },
   'seo':checklistSeo {
     ${pageSEOFields}
   }
