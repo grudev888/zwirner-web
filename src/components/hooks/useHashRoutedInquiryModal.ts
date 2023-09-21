@@ -1,7 +1,9 @@
 import {InquireFormContextData} from '@zwirner/design-system'
 import {useRouter} from 'next/router'
-import {useEffect, useState} from 'react'
+import {useEffect, useRef, useState} from 'react'
 
+import {useLocation} from '@/forms/api/useLocation'
+import {builder} from '@/sanity/imageBuilder'
 import {createRandomUUID} from '@/sanity/uuid'
 import {sendInquiry} from '@/services/inquireService'
 import {portableTextToText} from '@/utils/sanity/portableTextToText'
@@ -15,26 +17,30 @@ const artworkToPayloadAdapter = (artwork: any) => {
   if (!artwork) {
     return
   }
-  const {_id, artworkType, artists, dimensions, title, dateSelection, price} = artwork
+  const {_id, artworkType, artists, dimensions, inventoryId, title, photos, dateSelection, price} =
+    artwork
+  const firstAsset = photos?.[0]?.asset
+  const image = firstAsset ? builder.image(firstAsset).url() : ''
 
   return {
+    artistFullName: artists?.[0]?.fullName || 'Artist name unavailable',
+    artworkType,
+    dimensions: portableTextToText(dimensions), // dimension
     id: _id,
+    image,
+    inventoryId,
+    price: price || 'Price unavailable',
     status: 'TODO status',
-    dimension: portableTextToText(dimensions),
-    type: artworkType,
-    dzdb_artwork_id: 'TODO dzdb_artwork_id',
-    artist_name: artists?.[0]?.fullName || 'No artist name available',
     title,
-    year: dateSelection?.year || 'No year available',
-    image: 'TODO image',
-    price: price || 'No price available',
-    inventory_number: 'TODO inventory',
+    year: dateSelection?.year || 'Year unavailable',
   }
 }
 
 export const useHashRoutedInquiryModal = (initialContextData?: InquireFormContextData) => {
   const [isOpen, setIsOpen] = useState(false)
   const {replace, pathname, query, asPath} = useRouter()
+  const recaptchaRef = useRef<HTMLFormElement>()
+  const {data: location} = useLocation()
   const onClose = () => replace({pathname, query, hash: ''})
   const [contextData, setContextData] = useState<InquireFormContextData | undefined>(
     initialContextData
@@ -44,12 +50,15 @@ export const useHashRoutedInquiryModal = (initialContextData?: InquireFormContex
       ? `${INQUIRE_HASH_KEY}?${ARTWORK_ID_KEY}=${contextData.id}`
       : 'inquire'
 
-    setContextData((currentData) => {
+    setContextData((currentData: any) => {
       return {...currentData, ...(contextData || {})}
     })
     replace({pathname, query, hash})
   }
   const onSubmit = async (formValues: Record<string, any>) => {
+    // TODO check result of recaptcha before submitting form
+    await recaptchaRef?.current?.executeAsync()
+
     const {artwork} = contextData ?? {}
     const inquiryPayload = {
       ...formValues,
@@ -59,9 +68,9 @@ export const useHashRoutedInquiryModal = (initialContextData?: InquireFormContex
       formId: FORM_ID_INQUIRY,
       artwork: artworkToPayloadAdapter(artwork),
       location: {
-        city: 'TODO city',
-        region: 'TODO region',
-        country: 'TODO country',
+        city: location?.city,
+        region: location?.region,
+        country: location?.country,
       },
     }
 
@@ -80,5 +89,6 @@ export const useHashRoutedInquiryModal = (initialContextData?: InquireFormContex
     onClose,
     isOpen,
     onSubmit,
+    recaptchaRef,
   }
 }

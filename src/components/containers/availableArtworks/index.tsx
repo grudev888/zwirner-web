@@ -1,4 +1,4 @@
-import {DzColumn, DzInquireFormModal, TITLE_SIZES} from '@zwirner/design-system'
+import {DzColumn, FORM_MODAL_TYPES, TITLE_SIZES} from '@zwirner/design-system'
 import dynamic from 'next/dynamic'
 import {useRouter} from 'next/router'
 import queryString from 'querystring'
@@ -10,6 +10,7 @@ import {
   TO_LEARN_MORE_ABOUT_THIS_ARTWORK,
 } from '@/common/constants/commonCopies'
 import {FullWidthFlexCol} from '@/components/containers/layout/FullWidthFlexCol'
+import {RecaptchaInquireFormModal} from '@/components/forms/recaptchaInquireFormModal'
 import {
   ARTWORK_ID_KEY,
   useHashRoutedInquiryModal,
@@ -55,7 +56,8 @@ export const AvailableArtworksContainer: FC<AvailableArtworksProps> = ({data}) =
           />
         </FullWidthFlexCol>
       </DzColumn>
-      <DzInquireFormModal
+      <RecaptchaInquireFormModal
+        type={FORM_MODAL_TYPES.INQUIRE}
         {...inquireFormModalProps}
         title={inquireFormTitle}
         subtitle={TO_LEARN_MORE_ABOUT_THIS_ARTWORK}

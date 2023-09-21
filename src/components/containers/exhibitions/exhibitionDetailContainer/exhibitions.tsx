@@ -2,12 +2,12 @@ import {
   ButtonModes,
   DzColumn,
   DzHero,
-  DzInquireFormModal,
   DzInterstitial,
   DzSectionMenu,
   DzTitleExhibition,
   DzTitleMolecule,
   DzTitleMoleculeTypes,
+  FORM_MODAL_TYPES,
   INTERSTITIAL_TEXT_COLORS,
 } from '@zwirner/design-system'
 import Image from 'next/image'
@@ -28,6 +28,7 @@ import {
   formatDateRange,
   getExhibitionState,
 } from '@/components/containers/exhibitions/exhibitionsLandingContainer/utils'
+import {RecaptchaInquireFormModal} from '@/components/forms/recaptchaInquireFormModal'
 import {useHashRoutedInquiryModal} from '@/components/hooks/useHashRoutedInquiryModal'
 import {PageBuilder} from '@/components/pageBuilder'
 import {DzPortableText} from '@/components/wrappers/DzPortableText'
@@ -54,7 +55,8 @@ export const ExhibitionsContainer: FC<ExhibitionsContainerProps> = ({data}) => {
 
   return data ? (
     <>
-      <DzInquireFormModal
+      <RecaptchaInquireFormModal
+        type={FORM_MODAL_TYPES.INQUIRE}
         {...inquireFormModalProps}
         title={WANT_TO_KNOW_MORE}
         subtitle={`${TO_LEARN_MORE_ABOUT} ${exhibitionTitle}, ${PLEASE_PROVIDE_YOUR_CONTACT}`}

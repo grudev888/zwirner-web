@@ -7,12 +7,12 @@ import {
   DzCard,
   DzCarouselCardSize,
   DzColumn,
-  DzInquireFormModal,
   DzInterstitial,
   DzSectionMenu,
   DzSplit,
   DzTitleMolecule,
   DzTitleMoleculeTypes,
+  FORM_MODAL_TYPES,
   SPLIT_TYPES,
   TITLE_SIZES,
   TITLE_TYPES,
@@ -30,6 +30,7 @@ import {
   TO_LEARN_MORE_ABOUT,
 } from '@/common/constants/commonCopies'
 import {FullWidthFlexCol} from '@/components/containers/layout/FullWidthFlexCol'
+import {RecaptchaInquireFormModal} from '@/components/forms/recaptchaInquireFormModal'
 import {useHashRoutedInquiryModal} from '@/components/hooks/useHashRoutedInquiryModal'
 
 import ArtistHeader from './components/ArtistHeader'
@@ -135,7 +136,12 @@ export const ArtistDetailContainer: FC<ArtistsContainerProps> = ({data}) => {
 
   return (
     <>
-      <DzInquireFormModal {...inquireModalProps} title={INQUIRE} subtitle={inquireModalSubtitle} />
+      <RecaptchaInquireFormModal
+        type={FORM_MODAL_TYPES.INQUIRE}
+        {...inquireModalProps}
+        title={INQUIRE}
+        subtitle={inquireModalSubtitle}
+      />
       <DzColumn span={12}>
         <DzSectionMenu
           sections={[

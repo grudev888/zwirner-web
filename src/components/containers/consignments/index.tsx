@@ -17,9 +17,9 @@ import dynamic from 'next/dynamic'
 import {FC, Fragment, useRef} from 'react'
 
 import {FullWidthFlexCol} from '@/components/containers/layout/FullWidthFlexCol'
+import RecaptchaNode from '@/components/forms/recaptchaNode'
 import {dzInterstitialOverrides} from '@/components/pageBuilder/DzInterstitial/interstitialMapper'
 import {ContainerTitle} from '@/components/wrappers/title/ContainerTitle'
-import RecaptchaNode from '@/forms/recaptcha/recaptchaNode'
 
 import styles from './consignments.module.css'
 import {

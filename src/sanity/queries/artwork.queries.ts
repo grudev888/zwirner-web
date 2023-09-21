@@ -15,6 +15,7 @@ export const artworkFields = groq`
   availability,
   dateSelection,
   artworkTypeToFill,
+  inventoryId,
   artworksEdition[]->
 `
 export const artworksDataByArtistSlug = groq`
