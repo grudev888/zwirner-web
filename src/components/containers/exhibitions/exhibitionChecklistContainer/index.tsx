@@ -18,8 +18,8 @@ import {
   INSTALLATION_VIEWS,
   INTERESTED_IN_THIS_EXHIBITION,
 } from '@/common/constants/commonCopies'
-import {dzInterstitialMapper} from '@/common/utilsMappers/components/dzInterstitial.mapper'
 import {FullWidthFlexCol} from '@/components/containers/layout/FullWidthFlexCol'
+import {dzInterstitialOverrides} from '@/components/pageBuilder/DzInterstitial/interstitialMapper'
 import {ContainerTitle} from '@/components/wrappers/title/ContainerTitle'
 
 import {mapCardsGrid} from './mapper'
@@ -31,7 +31,7 @@ interface ExhibitionChecklistContainerProps {
 export const ExhibitionChecklistContainer: FC<ExhibitionChecklistContainerProps> = ({data}) => {
   const router = useRouter()
   const {title, slug, showChecklist, subtitle, checklistInterstitial, checklist} = data ?? {}
-  const interstitialData = dzInterstitialMapper({data: checklistInterstitial})
+  const interstitialData = dzInterstitialOverrides(checklistInterstitial)
   const complexGridData = mapCardsGrid({
     data: {displayNumberOfResults: false, itemsPerRow: 2, items: checklist},
   })

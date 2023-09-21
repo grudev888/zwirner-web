@@ -1,50 +1,66 @@
 import {groq} from 'next-sanity'
 
 import {exhibitionComplexFields, exhibitionSimpleFields} from '@/sanity/queries/exhibition.queries'
+import {mediaBuilder} from '@/sanity/queries/object.queries'
 
+export const fieldsPerType = groq`
+  _type,
+  _type =='exhibitionPage' => {
+    ${exhibitionSimpleFields}
+    ${exhibitionComplexFields}
+  },
+  _type =='artist' => {
+    ...
+  },
+  _type =='article' => {
+    ...,
+    header[]{
+    ${mediaBuilder}
+    },
+    image {
+      image {
+        ...
+      }
+    },
+    location->
+  },
+  _type =='artwork' => {
+    ...,
+    photos[]{
+      ...,
+      ${mediaBuilder}
+    },
+    "artists": artists[]->
+  },
+  _type == 'book' => {
+    title,
+    tagline,
+    publisher,
+    booksUrl,
+    photos,
+    subtitle,
+    isbn,
+    dateSelection,
+    description,
+    price,
+    "authors": authors[]->,
+    "artists": artists[]->,
+  },
+  _type == 'press' => {
+    ...,
+    "authors": authors[]->
+  },
+  _type =='location' => {
+    ...
+  },
+  _type =='podcast' => {
+    ...
+  },
+`
 export const componentTypesData = groq`
   content[]-> {
-    _type,
-    _type =='exhibitionPage' => {
-      ${exhibitionSimpleFields}
-      ${exhibitionComplexFields}
-    },
-    _type =='artist' => {
-      ...
-    },
-    _type =='article' => {
-      ...,
-      location->
-    },
-    _type =='artwork' => {
-      ...,
-      "artists": artists[]->
-    },
-    _type == 'book' => {
-      title,
-      tagline,
-      publisher,
-      booksUrl,
-      photos,
-      subtitle,
-      isbn,
-      dateSelection,
-      description,
-      price,
-      "authors": authors[]->,
-      "artists": artists[]->,
-    },
-    _type == 'press' => {
-      ...,
-      "authors": authors[]->
-    },
-    _type =='location' => {
-      ...
-    },
-    _type =='podcast' => {
-      ...
-    },
-  }
+   ${fieldsPerType}
+  },
 `
 
 // Must follow DzCardSchemaProps
@@ -54,7 +70,9 @@ export const dzCardProps = groq`
       title,
       primaryCTA,
       secondaryCTA,
-      imageOverride,
+      mediaOverride {
+        ${mediaBuilder}
+      },
       enableOverrides,
       secondaryTitle,
       pressVariation,
@@ -116,7 +134,9 @@ export const dzInterstitialProps = groq`
       title,
       mode,
       cta,
-      image,
+      image {
+        ${mediaBuilder}
+      },
       subtitle,
       eyebrow
     }
@@ -131,7 +151,9 @@ export const dzSplitProps = groq`
       splitType,
       reverse,
       animate,
-      imageOverride,
+      media {
+        ${mediaBuilder}
+      },
       enableOverrides,
       primaryCTA
     }
@@ -152,7 +174,9 @@ export const dzMediaProps = groq`
   _type == 'dzMedia' => {
     'props': {
       title,
-      media,
+      media {
+        ${mediaBuilder}
+      },
       caption
     }
   },
@@ -165,7 +189,7 @@ export const dzCarouselProps = groq`
       title,
       size,
       dzCarousel[]{
-        ${componentTypesData},
+        ${componentTypesData}
         ${dzMediaProps}
         ${dzCardProps}
         _type,
@@ -182,7 +206,7 @@ export const gridMoleculeProps = groq`
       wrap,
       itemsPerRow,
       grid[]{
-        ${componentTypesData},
+        ${componentTypesData}
         ${dzMediaProps}
         ${dzCardProps}
         _type,

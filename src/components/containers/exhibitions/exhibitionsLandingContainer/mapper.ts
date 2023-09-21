@@ -21,30 +21,30 @@ const formatExhibitionDate = (startDate: string, endDate: string) => {
 }
 
 export const exhibitionCarouselMapper = (exhibitions: any[]) => {
-  return exhibitions
-    ?.filter(({heroMedia}) => heroMedia?.image?.asset?.url)
-    ?.map((exhibitionPage) => {
-      const {_id, title, summary, locations, startDate, endDate, slug} = exhibitionPage ?? {}
-      const secondaryTitle = locations?.[0]?.name
-      const secondarySubtitle = formatExhibitionDate(startDate, endDate)
-      const {media} = dzMediaMapper({data: exhibitionPage, ImgElement: Image})
-      const summaryText = safeText({key: 'description', text: summary})
+  return exhibitions?.map((exhibitionPage) => {
+    const {_id, title, summary, locations, startDate, endDate, heroMedia, slug} =
+      exhibitionPage ?? {}
+    const secondaryTitle = locations?.[0]?.name
+    const secondarySubtitle = formatExhibitionDate(startDate, endDate)
+    const heroMediaSource = Object.keys(heroMedia ?? {}).length > 0 ? heroMedia : null
+    const {media} = dzMediaMapper({data: heroMediaSource ?? exhibitionPage, ImgElement: Image})
+    const summaryText = safeText({key: 'description', text: summary})
 
-      return {
-        id: _id,
-        media,
-        category: EXHIBITION,
-        title,
-        secondaryTitle,
-        secondarySubtitle,
-        ...summaryText,
-        linkCTA: {
-          text: LEARN_MORE_AMP_SUBSCRIBE,
-          linkElement: 'a',
-          url: slug?.current,
-        },
-      }
-    })
+    return {
+      id: _id,
+      media,
+      category: EXHIBITION,
+      title,
+      secondaryTitle,
+      secondarySubtitle,
+      ...summaryText,
+      linkCTA: {
+        text: LEARN_MORE_AMP_SUBSCRIBE,
+        linkElement: 'a',
+        url: slug?.current,
+      },
+    }
+  })
 }
 
 export const mapHighlightCards = (cardsData: Array<any>) => {

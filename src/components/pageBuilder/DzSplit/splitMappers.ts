@@ -1,4 +1,3 @@
-import {MEDIA_TYPES} from '@zwirner/design-system'
 import Image from 'next/image'
 import Link from 'next/link'
 
@@ -7,27 +6,15 @@ import {ctaMapper} from '@/common/utilsMappers/cta.mapper'
 import {mapExhibitionStatus} from '@/common/utilsMappers/date.mapper'
 import {dzMediaMapper} from '@/common/utilsMappers/image.mapper'
 import {safeText} from '@/common/utilsMappers/safe'
-import {builder} from '@/sanity/imageBuilder'
 import {DzSplitTypeProps} from '@/sanity/types'
 
 export const dzSplitOverrides = (props: DzSplitTypeProps) => {
-  const {imageOverride, enableOverrides} = props
+  const {media: mediaOverride, enableOverrides} = props
   if (!enableOverrides) return {}
-  const {asset, alt, url} = imageOverride ?? {}
-  const imgSrc = asset ? builder.image(asset).url() : ''
-
-  const media = imgSrc
-    ? {
-        media: {
-          url,
-          type: MEDIA_TYPES.IMAGE,
-          imgProps: {
-            src: imgSrc,
-            alt,
-          },
-        },
-      }
-    : {}
+  const {media} = dzMediaMapper({
+    data: mediaOverride,
+    ImgElement: Image,
+  })
   return {
     data: {
       ...media,
@@ -38,27 +25,22 @@ export const dzSplitOverrides = (props: DzSplitTypeProps) => {
 export const splitMappers: any = {
   artist: (data: any) => {
     const {splitType, reverse, animate, birthdate, picture, fullName, description, summary} = data
-    const {asset, alt} = picture ?? {}
-    const imgSrc = asset ? builder.image(asset).url() : ''
+
+    const {media} = dzMediaMapper({
+      data: picture,
+      ImgElement: Image,
+    })
 
     return {
       type: splitType,
       reverse,
       animate,
       data: {
-        media: {
-          url: '/',
-          type: MEDIA_TYPES.IMAGE,
-          imgProps: {
-            src: imgSrc,
-            alt,
-          },
-        },
-        category: 'Category Slug',
+        media,
+        category: 'Artist',
         title: fullName,
         subtitle: birthdate,
         secondaryTitle: summary,
-        secondarySubtitle: 'Lorem ipsum dolor sit amet, consectetuer adipiscin',
         description,
       },
     }
@@ -68,7 +50,6 @@ export const splitMappers: any = {
       splitType,
       reverse,
       animate,
-      photos,
       artists,
       availability,
       dimensions,
@@ -78,26 +59,21 @@ export const splitMappers: any = {
       dateSelection,
     } = data
     const [mainArtist] = artists ?? []
-    const [mainPicture] = photos ?? []
-    const {asset, alt} = mainPicture ?? {}
-    const imgSrc = asset ? builder.image(asset).url() : ''
+
+    const {media} = dzMediaMapper({
+      data,
+      ImgElement: Image,
+    })
+
     return {
       type: splitType,
       reverse,
       animate,
       data: {
-        media: {
-          url: '/',
-          type: MEDIA_TYPES.IMAGE,
-          imgProps: {
-            src: imgSrc,
-            alt,
-          },
-        },
+        media,
         category: availability,
         title,
         subtitle: dateSelection?.year,
-        secondaryTitle: 'Lorem ipsum dolor sit amet, consectetuer adipiscin',
         secondarySubtitle: `${mainArtist?.fullName}`,
         description: `${dimensions} ${edition} ${medium}`,
       },
@@ -107,11 +83,14 @@ export const splitMappers: any = {
     const {artists, title, summary, locations, slug, heroMedia, subtitle} = data ?? {}
     const [primaryArtist] = artists ?? []
     const {fullName} = primaryArtist ?? {}
+    const {splitType, reverse, animate, media: mediaOverride} = props ?? {}
+    const mediaOverrideSource = Object.keys(mediaOverride ?? {}).length > 0 ? mediaOverride : null
+    const heroMediaSource = Object.keys(heroMedia ?? {}).length > 0 ? heroMedia : null
     const {media} = dzMediaMapper({
-      data: heroMedia ?? data,
+      data: mediaOverrideSource ?? heroMediaSource ?? data,
       ImgElement: Image,
     })
-    const {splitType, reverse, animate} = props ?? {}
+
     const {current} = slug ?? {}
     const ctas = ctaMapper({data: props, props: {url: current ?? EXHIBITIONS_URL}})
 

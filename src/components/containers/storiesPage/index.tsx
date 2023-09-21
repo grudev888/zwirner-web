@@ -32,13 +32,13 @@ import {
 } from '@/common/constants/commonCopies'
 import {articlesGridMap} from '@/components/containers/articles/mapper'
 import {FullWidthFlexCol} from '@/components/containers/layout/FullWidthFlexCol'
+import {dzInterstitialOverrides} from '@/components/pageBuilder/DzInterstitial/interstitialMapper'
 import {ContainerTitle} from '@/components/wrappers/title/ContainerTitle'
 
 import {
   featuredPodcastMap,
   featuredVideosMap,
   heroMapper,
-  interstitialMap,
   mapBookForCarousel,
   mapBookForSplit,
   mapFeaturedBooks,
@@ -64,7 +64,7 @@ export const StoriesContainer: FC<StoriesContainerProps> = ({data}) => {
   } = data ?? {}
 
   const heroData = heroMapper(hero)
-  const interstitialData = interstitialMap(mailingListInterstitial)
+  const interstitialData = dzInterstitialOverrides(mailingListInterstitial)
   const featuredVideosData = featuredVideosMap(featuredVideos)
   const featuredPodcastData = featuredPodcastMap(featuredPodcast)
   const articlesGrid = articlesGridMap(articles)
@@ -122,7 +122,7 @@ export const StoriesContainer: FC<StoriesContainerProps> = ({data}) => {
       <DzColumn span={12}>
         <ContainerTitle title={title} isWide={true} />
         <FullWidthFlexCol>
-          {hero && hero?.media?.imgProps?.src ? <DzHero items={[heroData]} /> : null}
+          {hero && heroData?.media?.imgProps?.src ? <DzHero items={[heroData]} /> : null}
           {featuredVideos ? (
             <section>
               <ContainerTitle

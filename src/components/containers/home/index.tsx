@@ -16,6 +16,7 @@ import dynamic from 'next/dynamic'
 import {FC} from 'react'
 
 import {FullWidthFlexCol} from '@/components/containers/layout/FullWidthFlexCol'
+import {dzInterstitialOverrides} from '@/components/pageBuilder/DzInterstitial/interstitialMapper'
 
 import styles from './home.module.css'
 import {
@@ -23,7 +24,6 @@ import {
   mapCarouselCards,
   mapFeaturedContentSplit,
   mapHeaderCarousel,
-  mapInterstitialComponents,
   mapTabsLocations,
 } from './mapper'
 
@@ -40,11 +40,12 @@ const DzCarousel = dynamic(() => import('@zwirner/design-system').then((mod) => 
 })
 
 export const HomeContainer: FC<HomeContainerProps> = ({data}) => {
-  const {header, featured, articles, interstitial, locations, firstCarousel, secondCarousel} = data
+  const {header, featured, articles, interstitial, locations, firstCarousel, secondCarousel} =
+    data ?? {}
   const itemsHeroCarousel = mapHeaderCarousel(header)
   const featuredContent = mapFeaturedContentSplit(featured)
   const gridData = mapArticlesGrid(articles)
-  const interstitialData = mapInterstitialComponents(interstitial)
+  const interstitialData = dzInterstitialOverrides(interstitial?.props)
   const tabsLocations = mapTabsLocations(locations)
 
   const firstCarouselCards = mapCarouselCards(firstCarousel?.items)
@@ -109,7 +110,7 @@ export const HomeContainer: FC<HomeContainerProps> = ({data}) => {
 
         <section>
           <h2 className="sr-only">Subscribe</h2>
-          <DzInterstitial data={interstitialData} />
+          <DzInterstitial {...interstitialData} />
         </section>
 
         <section>

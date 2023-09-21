@@ -10,6 +10,8 @@ import {Fragment} from 'react'
 import {dzMediaMapper, validateImage} from '@/common/utilsMappers/image.mapper'
 import {safeText} from '@/common/utilsMappers/safe'
 import {builder} from '@/sanity/imageBuilder'
+
+// TODO UNIFY MAIN MEDIA ON UTOPIA EDITIONS
 export const utopiaMainMediaMap = (data: any) => {
   const {image, type, url} = data ?? {}
   const isVideo = type === 'video'
@@ -51,30 +53,20 @@ export const interstitialNewReleasesMap = (data: any) => ({
 
 export const heroMap = (data: any) => {
   const exhibitions = data?.exhibitions
+  const [principalExhibition] = exhibitions ?? []
+  const {heroMedia} = principalExhibition ?? {}
+  const [principalArtwork] = principalExhibition?.artworks ?? []
 
-  const title = exhibitions?.[0]?.exhibition?.artists?.[0]?.fullName
-
-  const {title: artworkTitle, dateSelection} = exhibitions?.[0]?.exhibition?.artworks?.[0] || {}
-
+  const title = principalExhibition?.artists?.[0]?.fullName
+  const {title: artworkTitle, dateSelection} = principalArtwork || {}
   const year = dateSelection?.year
-
-  const mainExhibitionPhoto = exhibitions?.[0]?.exhibition?.photos?.[0]
-  const exhibitionHeroMedia = exhibitions?.[0]?.exhibition?.heroMedia?.image
-  const mainPicture = exhibitions?.[0]?.exhibition?.artworks?.[0]?.mainArtWork?.photos?.[0]
-
-  const asset = mainExhibitionPhoto?.asset || mainPicture?.asset || exhibitionHeroMedia?.asset
-  const alt = mainExhibitionPhoto?.alt || mainPicture?.alt
-
-  const imgSrc = asset ? builder.image(asset).url() : ''
+  const heroMediaSource = Object.keys(heroMedia ?? {}).length > 0 ? heroMedia : null
+  const {media} = dzMediaMapper({data: heroMediaSource ?? principalExhibition, ImgElement: Image})
 
   return {
     items: [
       {
-        media: {
-          type: MEDIA_TYPES.IMAGE,
-          imgProps: {src: imgSrc, alt, fill: true},
-          ImgElement: Image,
-        },
+        media,
         title,
         description: (
           <>

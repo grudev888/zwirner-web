@@ -12,8 +12,8 @@ export const interstitialMapper = (data: any) => {
 }
 
 export const dzInterstitialOverrides = (props: DzInterstitialTypeProps) => {
-  const {title, subtitle, eyebrow, mode, cta} = props ?? {}
-  const {media, hideMedia} = dzMediaMapper({data: props, ImgElement: Image})
+  const {title, subtitle, eyebrow, mode, cta, image} = props ?? {}
+  const {media, hideMedia} = dzMediaMapper({data: image, ImgElement: Image})
   const ctasOverrides = ctaMapperInterstitial({data: cta, props: {url: ''}})
   const categoryText = safeText({key: 'category', text: eyebrow})
   return {

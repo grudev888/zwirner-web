@@ -93,6 +93,12 @@ export enum BookVariation {
   CONTENT = 'contentCard',
 }
 
+export enum MediaTypes {
+  IMAGE = 'Image',
+  VIDEO = 'Custom Video',
+  VIDEO_RECORD = 'Video Record',
+}
+
 export interface CTASchemaType {
   type: 'button' | 'link'
   action: CtaActions
@@ -163,7 +169,7 @@ export interface DzCardSchemaProps {
   pressVariation?: PressVariation
   bookVariation?: BookVariation
   enableOverrides: boolean
-  imageOverride?: any
+  mediaOverride?: any
   additionalInformation?: any
 }
 
@@ -228,7 +234,7 @@ export interface DzSplitTypeProps {
   splitType: SplitTypes
   reverse: boolean
   animate: boolean
-  imageOverride?: any
+  media?: any
   enableOverrides: boolean
   primaryCTA?: CTASchemaType
 }

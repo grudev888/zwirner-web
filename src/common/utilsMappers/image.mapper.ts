@@ -2,7 +2,7 @@ import {DzMediaProps, MEDIA_TYPES, MEDIA_VIDEO_SOURCE_TYPES} from '@zwirner/desi
 
 import {SourceElement} from '@/common/utilsMappers/components/elements'
 import {builder} from '@/sanity/imageBuilder'
-import {videoBuilder} from '@/sanity/videoBuilder'
+import {MediaTypes} from '@/sanity/types'
 
 interface DzMediaImageMapper {
   data: any
@@ -29,9 +29,22 @@ export const validateImage = (data: any) => {
   const {photos, heroMedia} = data ?? {}
   const {image: heroImage} = heroMedia ?? {}
   const [mainPicture] = photos ?? []
-  const {asset, image} = mainPicture ?? heroImage ?? {}
+  const {asset, image, url} = mainPicture ?? heroImage ?? {}
 
-  return image ? !!image.asset : !!asset
+  return image && image?.asset ? !!image.asset : !!asset ?? !!url
+}
+
+// MOVE TOWARDS THIS KIND OF MAPPING ON UPCOMING PRS
+// WE NEED TO DEPRECATE imageBuilder, and alt
+// WE NEED TO STRUCTURE ALL QUERIES
+export const newImageMapper = (data: any) => {
+  const {alt, caption, image} = data ?? {}
+  const {url} = image ?? {}
+  return {
+    alt,
+    src: url,
+    caption,
+  }
 }
 
 export const imageMapper = (data: any) => {
@@ -45,7 +58,7 @@ export const imageMapper = (data: any) => {
   } = data ?? {}
 
   const [mainPicture] = photos ?? []
-  const {asset, alt, image, caption} = mainPicture ?? heroMedia ?? sourceImage ?? {}
+  const {asset, alt, image, caption, url} = mainPicture ?? heroMedia ?? sourceImage ?? {}
   const {alt: imageBuilderAlt, asset: imageBuilderAsset, caption: imageBuilderCaption} = image ?? {}
   const pictureAsset = imageBuilderAsset ?? srcAsset ?? asset
   const imgCaption = imageBuilderCaption ?? captionAsset ?? caption
@@ -54,7 +67,7 @@ export const imageMapper = (data: any) => {
 
   return {
     alt: imgAlt,
-    src: imgSrc,
+    src: pictureAsset ? imgSrc : url,
     caption: imgCaption,
   }
 }
@@ -155,12 +168,26 @@ const linksFromSource: any = {
   },
 }
 
+const vimeoRegex =
+  /(?:https)?:?\/?\/?(?:www\.)?(?:player\.)?vimeo\.com\/(?:channels\/(?:\w+\/)?|groups\/(?:[^\/]*)\/videos\/|video\/|)(\d+)(?:|\/\?)/
+const youtubeRegex =
+  /^(?:https?:)?(?:\/\/)?(?:youtu\.be\/|(?:www\.|m\.)?youtube\.com\/(?:watch|v|embed)(?:\.php)?(?:\?.*v=|\/))([a-zA-Z0-9\_-]{7,15})(?:[\?&][a-zA-Z0-9\_-]+=[a-zA-Z0-9\_-]+)*(?:[&\/\#].*)?$/
+
 export const getVideoMedia = ({data, options = {}, extraVideoProps = {}}: DzMediaVideoMapper) => {
-  const {externalVideo, provider, video} = data ?? {}
-  const {asset} = video ?? {}
-  const videoSrc = asset ? videoBuilder(asset) : ''
-  const src = externalVideo ?? videoSrc
-  const videoProps = linksFromSource[provider]?.({src, extraVideoProps})
+  const {video, type} = data ?? {}
+  const {url, desktopProviderURL} = video ?? {}
+  const isVideoRecord = type === MediaTypes.VIDEO_RECORD
+  const vimeoChecker = new RegExp(vimeoRegex)
+  const youtubeChecker = new RegExp(youtubeRegex)
+  const youtubeKey = youtubeChecker.test(desktopProviderURL) ? 'youtube' : null
+  const vimeoKey = vimeoChecker.test(desktopProviderURL) ? 'vimeo' : null
+  const customKey = type === MediaTypes.VIDEO ? 'custom' : ''
+  const videoSource = isVideoRecord ? desktopProviderURL : url
+
+  const videoProps = linksFromSource[youtubeKey ?? vimeoKey ?? customKey]?.({
+    src: videoSource,
+    extraVideoProps,
+  })
 
   return {
     media: {
@@ -168,8 +195,8 @@ export const getVideoMedia = ({data, options = {}, extraVideoProps = {}}: DzMedi
       ...videoProps,
       ...options,
     },
-    hideMedia: !src,
-    hideImage: !src,
+    hideMedia: !videoSource,
+    hideImage: !videoSource,
     extras: null,
   }
 }
@@ -205,7 +232,7 @@ export const getImageMedia = ({
 
 export const dzMediaMapper = (media: DzMediaMapper) => {
   const {type} = media?.data ?? {}
-  return type === MEDIA_TYPES.VIDEO
+  return type === MediaTypes.VIDEO || type === MediaTypes.VIDEO_RECORD
     ? getVideoMedia(media as DzMediaVideoMapper)
     : getImageMedia(media as DzMediaImageMapper)
 }

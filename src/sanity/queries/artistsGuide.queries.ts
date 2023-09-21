@@ -1,6 +1,7 @@
 import {groq} from 'next-sanity'
 
 import {exhibitionComplexFields, exhibitionSimpleFields} from '@/sanity/queries/exhibition.queries'
+import {mediaBuilder} from '@/sanity/queries/object.queries'
 import {pageSEOFields} from '@/sanity/queries/seo.queries'
 
 export const artistGuidePageBySlug = groq`
@@ -8,21 +9,20 @@ export const artistGuidePageBySlug = groq`
   title,
   slug,
   artist->,
-  guideInterstitialSubpage,
+  guideInterstitialSubpage {
+    ...,
+    image {
+      ${mediaBuilder}
+    }
+  },
   guideSubpage {
     title,
     itemsPerRow,
     displayNumberOfResults,
     items[]-> {
       ...,
-      _type == "fairPage"=> {
-        slug,
-        title,
-        _type,
-        "exhibition":  {
-          ${exhibitionSimpleFields}
-          ${exhibitionComplexFields}
-        },
+      header[]{
+        ${mediaBuilder}
       },
       _type == "exhibitionPage"=> {
         title,

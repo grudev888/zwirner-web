@@ -17,11 +17,15 @@ import {formSectionMap} from '../consignments/mapper'
 
 export const heroMapper = (data: any) => {
   const [hero] = data ?? []
-  const {title, slug, title: titleExhibition, _type} = hero ?? {}
-
+  const {title, slug, title: titleExhibition, _type, heroMedia} = hero ?? {}
   const category = _type === 'exhibitionPage' ? 'Exhibition' : 'Viewing room'
   const exhibitionURL = `${slug?.current ?? ''}`
-  const {media} = dzMediaMapper({data: hero, url: exhibitionURL, ImgElement: Image})
+  const heroMediaSource = Object.keys(heroMedia ?? {}).length > 0 ? heroMedia : null
+  const {media} = dzMediaMapper({
+    data: heroMediaSource ?? hero,
+    url: exhibitionURL,
+    ImgElement: Image,
+  })
   return {
     media,
     linkCTA: {

@@ -27,6 +27,8 @@ export const articlesGridMap = (data: any[]) => {
       _type,
       exhibition,
       externalURL,
+      header,
+      image,
     } = relatedArticles ?? {}
     const {current} = slug ?? {}
     const {summary, endDate, startDate} = exhibition ?? {}
@@ -38,7 +40,7 @@ export const articlesGridMap = (data: any[]) => {
       aspectRatio: MEDIA_ASPECT_RATIOS['16:9'],
     }
     const {media: articleMedia, hideMedia: hideImgArticle} = dzMediaMapper({
-      data: relatedArticles,
+      data: type === ArticleTypes.INTERNAL ? header?.[0] : image ?? relatedArticles,
       ImgElement: Image,
       options: SharedMediaOptions,
     })
@@ -93,29 +95,5 @@ export const guideGrid = (data: any) => {
         icon: <Fragment />,
       },
     ],
-  }
-}
-
-export const interstitialMap = (data: any) => {
-  const {title, subtitle, cta} = data ?? {}
-  const {text} = cta ?? {}
-
-  const {media} = dzMediaMapper({
-    data,
-    ImgElement: Image,
-    options: {objectFit: MEDIA_OBJECT_FIT.COVER},
-  })
-
-  return {
-    data: {
-      fullWidth: true,
-      split: false,
-      title: title,
-      description: subtitle,
-      primaryCta: {
-        text,
-      },
-      media,
-    },
   }
 }

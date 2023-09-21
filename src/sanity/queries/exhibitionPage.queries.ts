@@ -1,5 +1,6 @@
 import {groq} from 'next-sanity'
 
+import {mediaBuilder} from '@/sanity/queries/object.queries'
 import {componentsByDataScheme} from '@/sanity/queries/page.queries'
 import {pageBuilderComponentsData} from '@/sanity/queries/page.queries'
 import {pageSEOFields} from '@/sanity/queries/seo.queries'
@@ -30,11 +31,7 @@ export const exhibitionPageBySlug = groq`
   'checklistPDFURL': checklistPDF.asset->url,
   'pressReleasePDFURL': pdf.asset->url,
   heroMedia {
-    type,
-    image {
-      ...
-      asset->
-    }
+    ${mediaBuilder}
   },
   seo {
     ${pageSEOFields}
@@ -52,8 +49,15 @@ export const installationViewsBySlug = groq`
   subtitle,
   'showChecklist': count(checklist) > 0,
   slug,
-  installationViewsInterstitial,
-  installationViews,
+  installationViewsInterstitial{
+    ...,
+    image {
+      ${mediaBuilder}
+    }
+  },
+  installationViews[]{
+    ${mediaBuilder}
+  },
   'seo':installationViewsSeo {
     ${pageSEOFields}
   }
@@ -65,7 +69,12 @@ export const checklistBySlug = groq`
   subtitle,
   'showChecklist': count(checklist) > 0,
   slug,
-  checklistInterstitial,
+  checklistInterstitial {
+    ...,
+    image {
+      ${mediaBuilder}
+    }
+  },
   checklist[]->{..., artists[]->, 'image': image.asset->},
   'seo':checklistSeo {
     ${pageSEOFields}
@@ -99,7 +108,7 @@ export const exhibitionsLandingData = groq`
     'interstitial': *[_type == "exhibitionsLanding"][0] {
       ...interstitial {
         ...,
-        image{asset->},
+        image{${mediaBuilder}},
       }
     },
     'museumHighlights': *[_type == "exhibitionsLanding"][0] { museumHighlights[]-> }.museumHighlights,
@@ -137,11 +146,7 @@ export const exhibitionsLandingData = groq`
       "artworks": artworks[]->,
       "collections": collections[]->,
       heroMedia {
-        type,
-        image {
-          ...,
-          asset->
-        }
+        ${mediaBuilder}
       }
     } | order(startDate asc, secondaryRank asc)
   }

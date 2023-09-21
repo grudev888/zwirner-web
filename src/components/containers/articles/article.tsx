@@ -16,24 +16,19 @@ import Image from 'next/image'
 import {FC} from 'react'
 
 import {FullWidthFlexCol} from '@/components/containers/layout/FullWidthFlexCol'
+import {dzInterstitialOverrides} from '@/components/pageBuilder/DzInterstitial/interstitialMapper'
 import {DzPortableText} from '@/components/wrappers/DzPortableText'
 import {builder} from '@/sanity/imageBuilder'
 
 import styles from './article.module.css'
-import {
-  articleDatesMapper,
-  articlesGridMap,
-  heroMapper,
-  interstitialMap,
-  locationTitleMapper,
-} from './mapper'
+import {articleDatesMapper, articlesGridMap, heroMapper, locationTitleMapper} from './mapper'
 
 interface ArticleContainerProps {
   data: any
 }
 
 export const ArticleContainer: FC<ArticleContainerProps> = ({data}) => {
-  const {title, body, image, interstitial, articles, pdfURL, location, publishDate, displayDate} =
+  const {title, body, interstitial, articles, pdfURL, location, publishDate, displayDate} =
     data ?? {}
   const locationProps = locationTitleMapper(location)
 
@@ -45,9 +40,9 @@ export const ArticleContainer: FC<ArticleContainerProps> = ({data}) => {
       }
     : articleDatesMapper(publishDate)
 
-  const interstitialData = interstitialMap(interstitial)
+  const interstitialData = dzInterstitialOverrides(interstitial)
   const articlesGrid = articlesGridMap(articles)
-  const heroData = heroMapper({...image, title})
+  const heroData = heroMapper({...data, title})
 
   return (
     <DzColumn span={12}>

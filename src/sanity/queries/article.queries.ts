@@ -1,6 +1,7 @@
 import {groq} from 'next-sanity'
 
 import {exhibitionComplexFields, exhibitionSimpleFields} from '@/sanity/queries/exhibition.queries'
+import {mediaBuilder} from '@/sanity/queries/object.queries'
 
 // Fetch all pages with body content available and slug. retrieve the url
 export const articlePagesSlugs = groq`
@@ -11,15 +12,8 @@ export const articlePagesSlugs = groq`
 export const articlesReferences = groq`
   articles[]-> {
     ...,
-    _type == "fairPage"=> {
-      ...,
-      slug,
-      title,
-      _type,
-      "exhibition":  {
-        ${exhibitionSimpleFields}
-        ${exhibitionComplexFields}
-      },
+    header[]{
+      ${mediaBuilder}
     },
     _type == "exhibitionPage"=> {
       ...,
@@ -51,32 +45,27 @@ export const pressBySlug = groq`
     title,
     'parentUrl': slug.current
   },
-  articles[]-> {
-    ...,
-    _type == "fairPage" => {
-      slug,
-      title,
-      _type,
-      "exhibition":  {
-        ${exhibitionSimpleFields}
-        ${exhibitionComplexFields}
-      },
-    },
-    _type == "exhibitionPage" => {
-      title,
-      _type,
-      "exhibition":  {
-        ${exhibitionSimpleFields}
-        ${exhibitionComplexFields}
-      },
-    }
-  }
+  ${articlesReferences}
 }
 `
 
 export const articleBySlug = groq`
 *[_type == "article" && slug.current == $slug][0]{
   ...,
+  interstitial {
+    ...,
+    image {
+      ${mediaBuilder}
+    }
+  },
+  header[]{
+    ${mediaBuilder}
+  },
+  image {
+    image {
+      ...
+    }
+  },
   location-> {
     name
   },

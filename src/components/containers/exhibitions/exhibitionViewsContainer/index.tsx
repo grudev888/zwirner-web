@@ -19,8 +19,8 @@ import {
   INTERESTED_IN_THIS_EXHIBITION,
 } from '@/common/constants/commonCopies'
 import {dzComplexGridMapper} from '@/common/utilsMappers/components/dzComplexGrid.mapper'
-import {dzInterstitialMapper} from '@/common/utilsMappers/components/dzInterstitial.mapper'
 import {FullWidthFlexCol} from '@/components/containers/layout/FullWidthFlexCol'
+import {dzInterstitialOverrides} from '@/components/pageBuilder/DzInterstitial/interstitialMapper'
 import {ContainerTitle} from '@/components/wrappers/title/ContainerTitle'
 
 interface InstallationViewsContainerProps {
@@ -31,7 +31,7 @@ export const InstallationViewsContainer: FC<InstallationViewsContainerProps> = (
   const router = useRouter()
   const {title, subtitle, showChecklist, installationViewsInterstitial, installationViews, slug} =
     data ?? {}
-  const interstitialData = dzInterstitialMapper({data: installationViewsInterstitial})
+  const interstitialData = dzInterstitialOverrides(installationViewsInterstitial)
   const complexGridData = dzComplexGridMapper({
     data: {displayNumberOfResults: false, itemsPerRow: 2, items: installationViews},
     cardType: CARD_TYPES.MEDIA,
@@ -74,7 +74,7 @@ export const InstallationViewsContainer: FC<InstallationViewsContainerProps> = (
             title: INQUIRE,
             description: INTERESTED_IN_THIS_EXHIBITION,
           }}
-          title={`${title}: ${subtitle} — ${INSTALLATION_VIEWS}`}
+          title={`${title}: ${subtitle ? `${subtitle} — ` : ''}${INSTALLATION_VIEWS}`}
           customCTAContainerProps={{
             span: 6,
             start: 7,

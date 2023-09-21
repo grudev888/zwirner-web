@@ -17,7 +17,9 @@ import dynamic from 'next/dynamic'
 import {FC, Fragment, useRef} from 'react'
 
 import {FullWidthFlexCol} from '@/components/containers/layout/FullWidthFlexCol'
+import {dzInterstitialOverrides} from '@/components/pageBuilder/DzInterstitial/interstitialMapper'
 import {ContainerTitle} from '@/components/wrappers/title/ContainerTitle'
+import RecaptchaNode from '@/forms/recaptcha/recaptchaNode'
 
 import styles from './consignments.module.css'
 import {
@@ -26,11 +28,8 @@ import {
   featuredMediaMap,
   formSectionMap,
   headerImageMap,
-  interstitialMap,
   mapCarouselCards,
-  mapFooterInterstitial,
 } from './mapper'
-import RecaptchaNode from '@/forms/recaptcha/recaptchaNode'
 
 const DzCarousel = dynamic(() => import('@zwirner/design-system').then((mod) => mod.DzCarousel), {
   ssr: false,
@@ -57,10 +56,10 @@ export const ConsignmentsContainer: FC<ConsignmentsContainerProps> = ({data}) =>
   const editorialProps = editorialSectionMap(aboutText)
   const formProps = formSectionMap(consignmentForm)
   const featuredMediaProps = featuredMediaMap(featuredMedia)
-  const interstitialProps = interstitialMap(interstitial)
+  const interstitialProps = dzInterstitialOverrides(interstitial)
   const bodyData = bodyDataMap(body)
   const carouselCards = mapCarouselCards(bodyCarousel?.items)
-  const footerInterstitialData = mapFooterInterstitial(footerInterstitial)
+  const footerInterstitialData = dzInterstitialOverrides(footerInterstitial)
   const onSubmitForm = async () => {
     //const token = await recaptchaRef.current?.executeAsync()
     //TODO submit form to API endpoint

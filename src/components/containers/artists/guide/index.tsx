@@ -5,9 +5,10 @@ import {FC} from 'react'
 import {GUIDE} from '@/common/constants/commonCopies'
 import {FullWidthFlexCol} from '@/components/containers/layout/FullWidthFlexCol'
 import ArtistsPageLayout from '@/components/containers/layout/pages/artistsPageLayout'
+import {dzInterstitialOverrides} from '@/components/pageBuilder/DzInterstitial/interstitialMapper'
 import {ContainerTitle} from '@/components/wrappers/title/ContainerTitle'
 
-import {guideGrid, interstitialMap} from './mapper'
+import {guideGrid} from './mapper'
 
 const DzComplexGrid = dynamic(
   () => import('@zwirner/design-system').then((mod) => mod.DzComplexGrid),
@@ -22,7 +23,7 @@ export const ArtistGuideContainer: FC<ArtistGuideContainerProps> = ({data}) => {
   const {artist, title: parentPageName, guideSubpage, guideInterstitialSubpage, slug} = data ?? {}
   const {title} = guideSubpage ?? {}
   const gridData = guideGrid(guideSubpage)
-  const interstitialData = interstitialMap(guideInterstitialSubpage)
+  const interstitialData = dzInterstitialOverrides(guideInterstitialSubpage)
   return (
     <>
       <ArtistsPageLayout parentPageName={parentPageName} parentPath={slug?.current}>
@@ -34,8 +35,7 @@ export const ArtistGuideContainer: FC<ArtistGuideContainerProps> = ({data}) => {
           ) : null}
           <FullWidthFlexCol>
             <DzComplexGrid {...gridData} />
-
-            <DzInterstitial {...interstitialData} />
+            {interstitialData ? <DzInterstitial {...interstitialData} /> : null}
           </FullWidthFlexCol>
         </DzColumn>
       </ArtistsPageLayout>

@@ -15,12 +15,12 @@ import dynamic from 'next/dynamic'
 import {FC} from 'react'
 
 import {FullWidthFlexCol} from '@/components/containers/layout/FullWidthFlexCol'
+import {dzInterstitialOverrides} from '@/components/pageBuilder/DzInterstitial/interstitialMapper'
 import {ContainerTitle} from '@/components/wrappers/title/ContainerTitle'
 
 import {
   artworksGridMap,
   heroMap,
-  interstitialMap,
   interstitialNewReleasesMap,
   mapCarouselCards,
   utopiaMainMediaMap,
@@ -57,7 +57,7 @@ export const UtopiaEditionsContainer: FC<UtopiaEditionsProps> = ({data}) => {
   const nowAvailableData = heroMap(nowAvailable)
   const comingSoonData = heroMap(comingSoon)
   const artworksData = artworksGridMap(artworksGrid)
-  const interstitialData = interstitialMap(interstitial)
+  const interstitialData = dzInterstitialOverrides(interstitial)
   const carouselCards = mapCarouselCards(mediaCarousel)
 
   const renderCarousel = (data: any) => (

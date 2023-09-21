@@ -2,10 +2,17 @@ import {groq} from 'next-sanity'
 
 import {articlesReferences} from '@/sanity/queries/article.queries'
 import {exhibitionComplexFields, exhibitionSimpleFields} from '@/sanity/queries/exhibition.queries'
+import {mediaBuilder} from '@/sanity/queries/object.queries'
 
 export const storiesData = groq`
 *[_type == "stories" ] {
   ...,
+  mailingListInterstitial {
+    ...,
+    image {
+      ${mediaBuilder}
+    }
+  },
   ${articlesReferences},
   featuredBooks[0]._type == 'splitBook' => {
      featuredBooks [0]-> {
@@ -26,20 +33,7 @@ export const storiesData = groq`
   featuredVideos {
     ...,
     featuredMedia {
-      type,
-      provider == "custom" && type == 'video' => {
-        provider,
-        type,
-        "externalVideo": video.asset->url
-      },
-      (provider == "youtube" || provider == "vimeo") && type == 'video'=> {
-        provider,
-        type,
-        externalVideo
-      },
-      type == 'image' => {
-        image
-      }
+     ${mediaBuilder}
     }
   },
   hero {
@@ -58,16 +52,6 @@ export const storiesData = groq`
           ${exhibitionComplexFields}
         },
       },
-      _type == "fairPage"=> {
-        ...,
-        slug,
-        title,
-        _type,
-        "exhibition": exhibition-> {
-          ${exhibitionSimpleFields}
-          ${exhibitionComplexFields}
-        },
-      }
     }
   }
 

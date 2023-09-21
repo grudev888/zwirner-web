@@ -5,7 +5,7 @@ import {EXHIBITION, EXHIBITIONS_URL, LEARN_MORE} from '@/common/constants/common
 import {mapExhibitionStatus} from '@/common/utilsMappers/date.mapper'
 import {dzMediaMapper} from '@/common/utilsMappers/image.mapper'
 import {safeText} from '@/common/utilsMappers/safe'
-import {DzHeroSchemaProps} from '@/sanity/types'
+import {DzHeroSchemaProps, MediaTypes} from '@/sanity/types'
 
 export const heroMapper = (data: any) => {
   return data
@@ -69,7 +69,9 @@ export const contentTypesMapper: any = {
     }
   },
   exhibitionPage: (data: any) => {
-    const {title, subtitle, artists, locations, summary, heroMedia, slug} = data ?? {}
+    const {title, subtitle, artists, locations, summary, heroMedia, slug, videoOverride} =
+      data ?? {}
+    const {videoReference} = videoOverride ?? {}
     const [primaryArtist] = artists ?? []
     const {fullName} = primaryArtist ?? {}
     const [primaryLocation] = locations ?? []
@@ -77,7 +79,9 @@ export const contentTypesMapper: any = {
     const {current} = slug ?? {}
     const {status} = mapExhibitionStatus(data)
     const {media} = dzMediaMapper({
-      data: heroMedia ?? data,
+      data: videoReference
+        ? {video: videoReference, type: MediaTypes.VIDEO_RECORD}
+        : heroMedia ?? data,
       ImgElement: Image,
     })
     const descriptionText = safeText({key: 'description', text: summary})

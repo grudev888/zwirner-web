@@ -5,9 +5,10 @@ import {Fragment} from 'react'
 import {EXHIBITIONS} from '@/common/constants/commonCopies'
 import {FullWidthFlexCol} from '@/components/containers/layout/FullWidthFlexCol'
 import ArtistsPageLayout from '@/components/containers/layout/pages/artistsPageLayout'
+import {dzInterstitialOverrides} from '@/components/pageBuilder/DzInterstitial/interstitialMapper'
 import {ContainerTitle} from '@/components/wrappers/title/ContainerTitle'
 
-import {interstitialMap, mapCardsGrid} from './mapper'
+import {mapCardsGrid} from './mapper'
 import styles from './styles.module.css'
 
 const DzComplexGrid = dynamic(
@@ -24,7 +25,7 @@ const ArtistExhibitionsPageContainer = ({data}: PageContainerProps) => {
   const parentPageTitle = data?.artist?.fullName
   const complexGridCards = mapCardsGrid(data?.artist?.exhibitions)
   const title = `${EXHIBITIONS}: ${parentPageTitle}`
-  const interstitialData = interstitialMap(data?.exhibitionsInterstitialSubpage)
+  const interstitialData = dzInterstitialOverrides(data?.exhibitionsInterstitialSubpage)
 
   return (
     <ArtistsPageLayout parentPageName={parentPageTitle} parentPath={parentPath}>

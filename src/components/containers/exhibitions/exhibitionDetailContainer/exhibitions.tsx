@@ -34,6 +34,7 @@ import {DzPortableText} from '@/components/wrappers/DzPortableText'
 import {builder} from '@/sanity/imageBuilder'
 
 import styles from './exhibitions.module.css'
+import {heroMapper} from './mapper'
 
 interface ExhibitionsContainerProps {
   data: any
@@ -45,6 +46,7 @@ export const ExhibitionsContainer: FC<ExhibitionsContainerProps> = ({data}) => {
   const {slug, showChecklist, startDate, endDate, title, subtitle} = data ?? {}
   const exhibitionTitle = `${title}${subtitle ? `: ${subtitle}` : ''}`
   const currentSlug = slug?.current ?? ''
+  const heroData = heroMapper(data)
 
   data.location = data?.locations?.[0]
   data.exhibitionState = getExhibitionState(data)
@@ -90,23 +92,7 @@ export const ExhibitionsContainer: FC<ExhibitionsContainerProps> = ({data}) => {
         />
       </DzColumn>
       <DzColumn span={12}>
-        {data.heroMedia?.image && (
-          <DzHero
-            className={styles.heroContainer}
-            items={[
-              {
-                title: '',
-                media: {
-                  type: data.heroMedia?.type,
-                  imgProps: {
-                    src: data.heroMedia?.image?.url,
-                    alt: 'Hero Image',
-                  },
-                },
-              },
-            ]}
-          />
-        )}
+        {heroData && <DzHero className={styles.heroContainer} items={[heroData]} />}
       </DzColumn>
 
       {data.pressRelease && (

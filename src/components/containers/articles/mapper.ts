@@ -1,10 +1,4 @@
-import {
-  ButtonModes,
-  INTERSTITIAL_TEXT_COLORS,
-  MEDIA_ASPECT_RATIOS,
-  MEDIA_OBJECT_FIT,
-  TITLE_TYPES,
-} from '@zwirner/design-system'
+import {MEDIA_ASPECT_RATIOS, MEDIA_OBJECT_FIT, TITLE_TYPES} from '@zwirner/design-system'
 import Image from 'next/image'
 
 import {
@@ -19,9 +13,12 @@ import {safeText} from '@/common/utilsMappers/safe'
 import {ArticleTypes} from '@/sanity/types'
 
 export const heroMapper = (data: any) => {
-  const {title} = data ?? {}
+  const {title, type, header, image} = data ?? {}
 
-  const {media, hideMedia} = dzMediaMapper({data, ImgElement: Image})
+  const {media, hideMedia} = dzMediaMapper({
+    data: type === ArticleTypes.INTERNAL ? header?.[0] : image,
+    ImgElement: Image,
+  })
   return {
     hideMedia,
     media,
@@ -29,29 +26,21 @@ export const heroMapper = (data: any) => {
   }
 }
 
-export const interstitialMap = (data: any) => {
-  const {title, cta} = data ?? {}
-  const {text} = cta ?? {}
-  return {
-    data: {
-      fullWidth: true,
-      split: false,
-      title,
-      primaryCta: {
-        text,
-        ctaProps: {
-          mode: ButtonModes.DARK,
-        },
-      },
-      textColor: INTERSTITIAL_TEXT_COLORS.BLACK,
-    },
-  }
-}
-
 export const articlesGridMap = (data: any[]) => {
   return data?.map((relatedArticles) => {
-    const {_id, description, title, type, slug, _type, exhibition, externalURL, category} =
-      relatedArticles ?? {}
+    const {
+      _id,
+      description,
+      title,
+      type,
+      slug,
+      _type,
+      exhibition,
+      externalURL,
+      category,
+      header,
+      image,
+    } = relatedArticles ?? {}
     const {current} = slug ?? {}
     const {summary} = exhibition ?? {}
 
@@ -63,7 +52,7 @@ export const articlesGridMap = (data: any[]) => {
     }
 
     const {media: relatedArticleMedia, hideImage: hideImgArticle} = dzMediaMapper({
-      data: relatedArticles,
+      data: type === ArticleTypes.INTERNAL ? header?.[0] : image ?? relatedArticles,
       ImgElement: Image,
       options: sharedImageOptions,
     })

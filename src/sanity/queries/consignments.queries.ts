@@ -1,5 +1,6 @@
 import {groq} from 'next-sanity'
 
+import {mediaBuilder} from '@/sanity/queries/object.queries'
 import {pageSEOFields} from '@/sanity/queries/seo.queries'
 
 export const consignmentsData = groq`
@@ -8,10 +9,16 @@ export const consignmentsData = groq`
   title,
   aboutText,
   body,
-  footerInterstitial,
+  footerInterstitial {
+    ...,
+    image{${mediaBuilder}},
+  },
   featuredMedia,
   consignmentForm,
-  interstitial,
+  interstitial{
+    ...,
+    image{${mediaBuilder}},
+  },
   headerMedia,
   bodyCarousel{
     ...,

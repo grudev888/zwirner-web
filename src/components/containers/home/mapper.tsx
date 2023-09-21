@@ -2,7 +2,7 @@ import {MEDIA_ASPECT_RATIOS, TITLE_TYPES} from '@zwirner/design-system'
 import Image from 'next/image'
 
 import {LEARN_MORE} from '@/common/constants/commonCopies'
-import {dzMediaMapper, validateImage} from '@/common/utilsMappers/image.mapper'
+import {dzMediaMapper} from '@/common/utilsMappers/image.mapper'
 import {safeText} from '@/common/utilsMappers/safe'
 
 import {parseAvailability} from './utils'
@@ -10,15 +10,16 @@ import {parseAvailability} from './utils'
 export const mapHeaderCarousel = (data = []) => {
   return (
     data
-      ?.filter((item) => {
-        const {exhibition} = item ?? {}
-        return validateImage(exhibition)
-      })
+      // TODO Check filtering
+      // ?.filter((item) => {
+      //   const {exhibition} = item ?? {}
+      //   return validateImage(exhibition)
+      // })
       ?.map((item) => {
         const {exhibition} = item ?? {}
-        const {title, subtitle} = exhibition ?? {}
-
-        const {media} = dzMediaMapper({data: exhibition, ImgElement: Image})
+        const {title, subtitle, heroMedia} = exhibition ?? {}
+        const heroMediaSource = Object.keys(heroMedia ?? {}).length > 0 ? heroMedia : null
+        const {media} = dzMediaMapper({data: heroMediaSource ?? exhibition, ImgElement: Image})
 
         return {
           category: subtitle,
@@ -75,22 +76,6 @@ export const mapArticlesGrid = (data = []) =>
         linkCTA: {text: 'View More', linkElement: 'a', url: '/'},
       }
     })
-
-export const mapInterstitialComponents = (data: any) => {
-  const {ctaOverride, imageOverride, titleOverride, subtitleOverride} = data ?? {}
-
-  const {media} = dzMediaMapper({data: {image: imageOverride}, ImgElement: Image})
-  return {
-    fullWidth: true,
-    split: false,
-    title: titleOverride,
-    description: subtitleOverride,
-    primaryCta: {
-      text: ctaOverride,
-    },
-    media,
-  }
-}
 
 export const mapTabsLocations = (data: any) => {
   const mappedLocationsByCity =

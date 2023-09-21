@@ -1,5 +1,7 @@
 import {groq} from 'next-sanity'
 
+import {mediaBuilder} from '@/sanity/queries/object.queries'
+
 export const exhibitionSimpleFields = groq`
   _id,
   _type,
@@ -26,7 +28,9 @@ export const exhibitionComplexFields = groq`
   "artworks": artworks[]->,
   "collections": collections[]->,
   "locations": locations[]->,
-  heroMedia
+  heroMedia {
+    ${mediaBuilder}
+  }
 `
 
 export const allExhibitions = groq`

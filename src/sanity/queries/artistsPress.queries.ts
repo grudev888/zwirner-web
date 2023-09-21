@@ -1,5 +1,6 @@
 import {groq} from 'next-sanity'
 
+import {mediaBuilder} from '@/sanity/queries/object.queries'
 import {pageSEOFields} from '@/sanity/queries/seo.queries'
 
 export const artistPressPageBySlug = groq`
@@ -7,12 +8,22 @@ export const artistPressPageBySlug = groq`
   title,
   slug,
   artist->,
-  pressInterstitialSubpage,
+  pressInterstitialSubpage {
+    ...,
+    image {
+      ${mediaBuilder}
+    }
+  },
   pressSubpage {
     displayNumberOfResults,
     title,
     itemsPerRow,
-    items[]->
+    items[]-> {
+      ...,
+      header {
+        ${mediaBuilder}
+      },
+    }
   },
   "seo": pressSeo {
     ${pageSEOFields}

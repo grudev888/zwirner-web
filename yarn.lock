@@ -1106,13 +1106,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@sanity/asset-utils@npm:^1.3.0":
-  version: 1.3.0
-  resolution: "@sanity/asset-utils@npm:1.3.0"
-  checksum: 9f803ab086165e08af8f45d009f7558d121407a7d7d1b81737bae52fa7734cfd59eae3aec2938f527b218057f641c6c48ca5ffb530bd58bcdc82c17ca6925314
-  languageName: node
-  linkType: hard
-
 "@sanity/client@npm:^5":
   version: 5.4.2
   resolution: "@sanity/client@npm:5.4.2"
@@ -8518,7 +8511,6 @@ __metadata:
     "@next/bundle-analyzer": ^13.3.1
     "@playwright/test": ^1.34.0
     "@portabletext/react": ^3.0.4
-    "@sanity/asset-utils": ^1.3.0
     "@sanity/client": ^6.0.1
     "@sanity/image-url": ^1.0.2
     "@t3-oss/env-nextjs": ^0.6.1

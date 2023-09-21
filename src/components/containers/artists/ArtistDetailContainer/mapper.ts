@@ -9,6 +9,7 @@ import parseISO from 'date-fns/parseISO'
 import Image from 'next/image'
 import Link from 'next/link'
 
+import {LEARN_MORE} from '@/common/constants/commonCopies'
 import {ctaMapper} from '@/common/utilsMappers/cta.mapper'
 import {dzMediaMapper} from '@/common/utilsMappers/image.mapper'
 import {safeText} from '@/common/utilsMappers/safe'
@@ -135,8 +136,9 @@ export const mapCarouselArticles = (data: any, isSmall: boolean) => {
     title: data.title,
     size: data.size,
     items: data.items?.map((item: any) => {
+      const {header} = item ?? {}
       const {media, hideImage} = dzMediaMapper({
-        data: item,
+        data: header ?? item,
         ImgElement: Image,
         options: {
           aspectRatio: isSmall ? MEDIA_ASPECT_RATIOS['4:3'] : MEDIA_ASPECT_RATIOS['16:9'],
@@ -243,7 +245,7 @@ export const mapFeatured = (data: any) => {
       }),
     }
   } else if (data._type === 'article') {
-    const imgSrc = data.image?.image?.asset ? builder.image(data.image.image.asset).url() : ''
+    const {header} = data ?? {}
 
     const dateFormatter = new Intl.DateTimeFormat('en-US', {
       timeZone: 'America/New_York',
@@ -256,15 +258,14 @@ export const mapFeatured = (data: any) => {
       data.displayDate ||
       (data.publishDate ? dateFormatter.format(parseISO(data.publishDate)) : null)
 
+    const {media, hideMedia} = dzMediaMapper({
+      data: header ?? data,
+      ImgElement: Image,
+    })
+
     return {
-      ...(imgSrc && {
-        media: {
-          type: 'image',
-          imgProps: {
-            src: imgSrc,
-            alt: data.image?.image?.alt,
-          },
-        },
+      ...(!hideMedia && {
+        media,
       }),
       category: data.category?.toUpperCase(),
       title: data.title,
@@ -273,7 +274,7 @@ export const mapFeatured = (data: any) => {
       ...safeText({text: data.description, key: 'description'}),
       ...(data.slug?.current && {
         linkCTA: {
-          text: 'Learn More',
+          text: LEARN_MORE,
           linkElement: Link,
           url: data.slug.current,
         },

@@ -11,6 +11,7 @@ import {
   dzMediaProps,
   dzSplitProps,
   dzTitleProps,
+  fieldsPerType,
   gridMoleculeProps,
 } from '@/sanity/queries/components.queries'
 import {exhibitionComplexFields, exhibitionSimpleFields} from '@/sanity/queries/exhibition.queries'
@@ -28,6 +29,22 @@ const pageComplexFields = groq`
      ${exhibitionSimpleFields}
      ${exhibitionComplexFields}
    },
+`
+
+export const wrappedContentPerMolecule = groq`
+  _type == 'dzHero' => {
+    content[]{
+      title,
+      videoOverride {
+        type,
+        videoReference->,
+      },
+      ...content[0]->{
+        ${fieldsPerType}
+      }
+    }
+  }
+
 `
 
 export const moleculesProps = groq`
@@ -48,6 +65,7 @@ export const pageBuilderComponentsData = groq`
   title,
   ${moleculesProps}
   ${componentTypesData}
+  ${wrappedContentPerMolecule}
 `
 export const componentsByDataScheme = groq`
   components[] {

@@ -1,6 +1,7 @@
 import {groq} from 'next-sanity'
 
 import {exhibitionComplexFields, exhibitionSimpleFields} from '@/sanity/queries/exhibition.queries'
+import {mediaBuilder} from '@/sanity/queries/object.queries'
 import {pageSEOFields} from '@/sanity/queries/seo.queries'
 
 import {artworkFields} from './artwork.queries'
@@ -20,10 +21,8 @@ export const utopiaEditionsData = groq`
       _type == "exhibitionPage"=> {
         title,
         _type,
-        "exhibition": {
-          ${exhibitionSimpleFields}
-          ${exhibitionComplexFields}
-        },
+        ${exhibitionSimpleFields}
+        ${exhibitionComplexFields}
       }
     }
   },
@@ -33,10 +32,8 @@ export const utopiaEditionsData = groq`
       _type == "exhibitionPage"=> {
         title,
         _type,
-        "exhibition": {
-          ${exhibitionSimpleFields}
-          ${exhibitionComplexFields}
-        },
+        ${exhibitionSimpleFields}
+        ${exhibitionComplexFields}
       }
     }
   },
@@ -44,6 +41,12 @@ export const utopiaEditionsData = groq`
     Title,
     artworks[]->{${artworkFields}},
     itemsPerRow,
+  },
+  interstitial {
+    ...,
+    image{
+      ${mediaBuilder}
+    }
   },
   seo {
     ${pageSEOFields}

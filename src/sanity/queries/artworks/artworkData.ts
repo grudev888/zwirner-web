@@ -1,5 +1,7 @@
 import {groq} from 'next-sanity'
 
+import {mediaBuilder} from '@/sanity/queries/object.queries'
+
 export const artworkData = groq`
 *[_type == "artwork" && defined(slug.current) && slug.current == $slug][0]{
   additionalCaption,
@@ -18,7 +20,9 @@ export const artworkData = groq`
   framed,
   framedDimensions,
   medium,
-  photos,
+  photos[]{
+    ${mediaBuilder}
+  },
   price,
   productInformation,
   salesInformation,

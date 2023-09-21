@@ -1,18 +1,15 @@
 import {
-  ButtonModes,
   countries,
   EDITORIAL_TEXT_TYPES,
   EditorialType,
   FORM_FIELD_TYPES,
   hasStringValue,
-  INTERSTITIAL_TEXT_COLORS,
   isEmail,
   isPhoneNumber,
   MEDIA_TYPES,
 } from '@zwirner/design-system'
 import Image from 'next/image'
 
-import {GET_IN_TOUCH, TALK_TO_US} from '@/common/constants/commonCopies'
 import {builder} from '@/sanity/imageBuilder'
 
 export const headerImageMap = (data: any) => {
@@ -300,24 +297,6 @@ export const featuredMediaMap = (data: any) => {
   }
 }
 
-export const interstitialMap = (data: any) => {
-  const {title} = data ?? {}
-  return {
-    data: {
-      fullWidth: true,
-      split: false,
-      title,
-      primaryCta: {
-        text: TALK_TO_US,
-        ctaProps: {
-          mode: ButtonModes.DARK,
-        },
-      },
-      textColor: INTERSTITIAL_TEXT_COLORS.BLACK,
-    },
-  }
-}
-
 export const bodyDataMap = (data: any) => {
   return data
     ?.filter((subSection: any) => {
@@ -379,22 +358,4 @@ export const mapCarouselCards = (data: any) => {
         title: fullName,
       }
     })
-}
-
-export const mapFooterInterstitial = (data: any) => {
-  const {title} = data ?? {}
-  return {
-    data: {
-      fullWidth: true,
-      split: false,
-      title,
-      primaryCta: {
-        text: GET_IN_TOUCH,
-        ctaProps: {
-          mode: ButtonModes.DARK,
-        },
-      },
-      textColor: INTERSTITIAL_TEXT_COLORS.BLACK,
-    },
-  }
 }

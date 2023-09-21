@@ -1,9 +1,7 @@
-import {CARD_TYPES, MEDIA_OBJECT_FIT, MEDIA_TYPES} from '@zwirner/design-system'
-import Image from 'next/image'
+import {CARD_TYPES, MEDIA_TYPES} from '@zwirner/design-system'
 import {Fragment} from 'react'
 
 import {ARTICLES, EXHIBITIONS_URL, LEARN_MORE} from '@/common/constants/commonCopies'
-import {dzMediaMapper} from '@/common/utilsMappers/image.mapper'
 import {safeText} from '@/common/utilsMappers/safe'
 import {ArticleTypes} from '@/sanity/types'
 
@@ -44,6 +42,7 @@ export const articlesGridMap = (data: any[]) => {
       id: _id,
       hideImage: true,
       title,
+      // Press hide images
       media: {
         type: MEDIA_TYPES.IMAGE,
       },
@@ -79,27 +78,5 @@ export const guideGrid = (data: any) => {
         icon: <Fragment />,
       },
     ],
-  }
-}
-
-export const interstitialMap = (data: any) => {
-  const {title, subtitle, cta} = data ?? {}
-  const {text} = cta ?? {}
-  const {media} = dzMediaMapper({
-    data,
-    ImgElement: Image,
-    options: {objectFit: MEDIA_OBJECT_FIT.COVER},
-  })
-
-  return {
-    data: {
-      split: false,
-      title: title,
-      description: subtitle,
-      primaryCta: {
-        text,
-      },
-      media,
-    },
   }
 }

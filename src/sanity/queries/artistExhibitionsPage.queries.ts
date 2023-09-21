@@ -1,5 +1,6 @@
 import {groq} from 'next-sanity'
 
+import {mediaBuilder} from '@/sanity/queries/object.queries'
 import {pageSEOFields} from '@/sanity/queries/seo.queries'
 
 export const artistExhibitionsPageData = groq`
@@ -13,7 +14,12 @@ export const artistExhibitionsPageData = groq`
     _id,
     fullName,
   },
-  exhibitionsInterstitialSubpage,
+  exhibitionsInterstitialSubpage{
+    ...,
+    image {
+      ${mediaBuilder}
+    }
+  },
   "seo": exhibitionsInterstitialSeo {
     ${pageSEOFields}
   },

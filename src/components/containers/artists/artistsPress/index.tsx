@@ -5,6 +5,7 @@ import {FC} from 'react'
 import {SELECTED_PRESS} from '@/common/constants/commonCopies'
 import {FullWidthFlexCol} from '@/components/containers/layout/FullWidthFlexCol'
 import ArtistsPageLayout from '@/components/containers/layout/pages/artistsPageLayout'
+import {dzInterstitialOverrides} from '@/components/pageBuilder/DzInterstitial/interstitialMapper'
 import {ContainerTitle} from '@/components/wrappers/title/ContainerTitle'
 
 const DzComplexGrid = dynamic(
@@ -13,7 +14,7 @@ const DzComplexGrid = dynamic(
     ssr: false,
   }
 )
-import {guideGrid, interstitialMap} from './mapper'
+import {guideGrid} from './mapper'
 interface PressContainerProps {
   data: any
 }
@@ -22,7 +23,7 @@ export const PressContainer: FC<PressContainerProps> = ({data}) => {
   const {artist, title: parentPageName, pressSubpage, pressInterstitialSubpage, slug} = data ?? {}
   const {title} = pressSubpage ?? {}
   const gridData = guideGrid(pressSubpage)
-  const interstitialData = interstitialMap(pressInterstitialSubpage)
+  const interstitialData = dzInterstitialOverrides(pressInterstitialSubpage)
 
   return (
     <>

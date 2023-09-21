@@ -4,7 +4,6 @@ import {
   MEDIA_ASPECT_RATIOS,
   MEDIA_OBJECT_FIT,
   MEDIA_TYPES,
-  MEDIA_VIDEO_SOURCE_TYPES,
   SPLIT_TYPES,
 } from '@zwirner/design-system'
 import Image from 'next/image'
@@ -85,127 +84,15 @@ export const interstitialMap = (data: any) => {
   }
 }
 
-const linksFromSource: any = {
-  youtube: (externalVideo: string) => {
-    const urlObject = externalVideo ? new URL(externalVideo).searchParams : null
-    return {
-      videoSourceType: MEDIA_VIDEO_SOURCE_TYPES.YOUTUBE,
-      videoProps: {
-        source: {
-          type: 'video',
-          sources: [
-            {
-              src: urlObject ? urlObject.get('v') : '',
-              provider: 'youtube',
-            },
-          ],
-        },
-        options: {
-          enabled: true,
-          autoplay: true,
-          muted: true,
-          resetOnEnd: true,
-          clickToPlay: false,
-          toggleInvert: false,
-          loop: {active: true},
-          vimeo: {
-            loop: true,
-            autoplay: true,
-            muted: false,
-          },
-        },
-      },
-    }
-  },
-  vimeo: (externalVideo: string) => {
-    const urlObject = externalVideo ? new URL(externalVideo) : null
-    const isEmbedded = urlObject ? ['player.vimeo.com'].includes(urlObject?.host) : false
-    const isPublic = urlObject ? ['vimeo.com'].includes(urlObject?.host) : false
-    const publicId = isPublic ? urlObject?.pathname?.replace(/\//, '') : ''
-
-    return {
-      videoSourceType: MEDIA_VIDEO_SOURCE_TYPES.VIMEO,
-      videoProps: {
-        source: {
-          type: 'video',
-          sources: [
-            {
-              src: isEmbedded ? externalVideo : publicId,
-              provider: 'vimeo',
-            },
-          ],
-        },
-        options: {
-          enabled: true,
-          autoplay: true,
-          muted: true,
-          resetOnEnd: true,
-          clickToPlay: false,
-          toggleInvert: false,
-          loop: {active: true},
-          vimeo: {
-            loop: true,
-            autoplay: true,
-            muted: false,
-            gesture: 'media',
-            playsinline: true,
-            byline: false,
-            portrait: false,
-            title: false,
-            speed: true,
-            transparent: false,
-            controls: false,
-            background: true,
-          },
-        },
-      },
-    }
-  },
-  custom: (externalVideo: string) => {
-    return {
-      videoSourceType: MEDIA_VIDEO_SOURCE_TYPES.URL,
-      videoProps: {
-        width: '100%',
-        height: '100%',
-        autoPlay: 'autoplay',
-        muted: true,
-        loop: true,
-        controls: false,
-      },
-      sourceSet: <source src={externalVideo} type="video/mp4" />,
-    }
-  },
-}
-
 export const featuredVideosMap = (data: any) => {
   const {featuredMedia, text, title, category, primaryCTA} = data ?? {}
   const {text: ctaText, link} = primaryCTA ?? {}
   const {href, blank} = link ?? {}
-  const {externalVideo, provider, type, image} = featuredMedia ?? {}
 
-  let media
-  if (type === 'image') {
-    const {asset, alt, url} = image ?? {}
-    const imgSrc = asset ? builder.image(asset).url() : ''
-    media = {
-      url,
-      ImgElement: Image,
-      type: MEDIA_TYPES.IMAGE,
-      imgProps: {
-        src: imgSrc,
-        alt,
-        fill: true,
-      },
-    }
-  }
-
-  if (type === 'video') {
-    const videoProps = linksFromSource[provider]?.(externalVideo)
-    media = {
-      type: MEDIA_TYPES.VIDEO,
-      ...videoProps,
-    }
-  }
+  const {media} = dzMediaMapper({
+    data: featuredMedia,
+    ImgElement: Image,
+  })
 
   return {
     type: SPLIT_TYPES.SHORT,
