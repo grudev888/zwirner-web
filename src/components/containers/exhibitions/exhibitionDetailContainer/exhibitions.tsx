@@ -91,7 +91,7 @@ export const ExhibitionsContainer: FC<ExhibitionsContainerProps> = ({data}) => {
         {heroData && <DzHero className={styles.heroContainer} items={[heroData]} />}
       </DzColumn>
 
-      {data.pressRelease && <PageBuilder components={[data.pressRelease]} />}
+      {data.pressRelease ? <PageBuilder components={[data.pressRelease]} /> : null}
 
       {data.exploreContent ? (
         <>

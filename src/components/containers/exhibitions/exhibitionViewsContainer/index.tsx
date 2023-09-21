@@ -68,8 +68,10 @@ export const InstallationViewsContainer: FC<InstallationViewsContainerProps> = (
           fullLeftContainer
         />
         <FullWidthFlexCol>
-          <PageBuilder components={[installationViews]} />
-          <PageBuilder components={[installationViewsInterstitial]} />
+          {installationViews ? <PageBuilder components={[installationViews]} /> : null}
+          {installationViewsInterstitial ? (
+            <PageBuilder components={[installationViewsInterstitial]} />
+          ) : null}
         </FullWidthFlexCol>
       </DzColumn>
     </>

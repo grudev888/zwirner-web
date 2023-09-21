@@ -67,8 +67,8 @@ export const ExhibitionChecklistContainer: FC<ExhibitionChecklistContainerProps>
           category={EXHIBITION}
         />
         <FullWidthFlexCol>
-          <PageBuilder components={[checklist]} />
-          <PageBuilder components={[checklistInterstitial]} />
+          {checklist ? <PageBuilder components={[checklist]} /> : null}
+          {checklistInterstitial ? <PageBuilder components={[checklistInterstitial]} /> : null}
         </FullWidthFlexCol>
       </DzColumn>
     </>
