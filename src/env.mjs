@@ -27,7 +27,7 @@ export const env = createEnv({
     NEXT_PUBLIC_VERCEL_GIT_REPO_OWNER: z.literal('Zwirner'),
     NEXT_PUBLIC_VERCEL_GIT_REPO_SLUG: z.literal('web'),
     NEXT_PUBLIC_SANITY_PROJECT_ID: z.string().min(1),
-    NEXT_PUBLIC_SANITY_DATASET: z.enum(['production', 'test', 'sandbox', 'production-v1', 'dev']),
+    NEXT_PUBLIC_SANITY_DATASET: z.enum(['test', 'sandbox', 'production-v1', 'dev', 'migration']),
     NEXT_PUBLIC_SANITY_API_VERSION: z.string().min(1),
     NEXT_PUBLIC_VERCEL_URL: z.string().min(1),
     NEXT_PUBLIC_VERCEL_ENV: z.enum(['production', 'preview', 'development', 'local']),
