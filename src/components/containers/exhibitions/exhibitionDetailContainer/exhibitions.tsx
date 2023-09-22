@@ -55,38 +55,39 @@ export const ExhibitionsContainer: FC<ExhibitionsContainerProps> = ({data}) => {
         title={WANT_TO_KNOW_MORE}
         subtitle={`${TO_LEARN_MORE_ABOUT} ${exhibitionTitle}, ${PLEASE_PROVIDE_YOUR_CONTACT}`}
       />
-      <DzColumn span={12} className={styles.titleContainer}>
-        <DzSectionMenu
-          sections={[
-            {text: EXPLORE, id: 'explore', url: `${currentSlug}`},
-            ...(showChecklist
-              ? [
-                  {
-                    text: CHECKLIST,
-                    id: 'checklist',
-                    url: `${currentSlug}${EXHIBITION_CHECKLIST_URL}`,
-                  },
-                ]
-              : []),
-            {
-              text: INSTALLATION_VIEWS,
-              id: 'installation-views',
-              url: `${currentSlug}${EXHIBITION_INSTALLATION_URL}`,
-            },
-          ]}
-          linksProps={{
-            router,
-            useRoute: true,
-          }}
-          sticky
-          useLinks
-        />
-        <DzTitleExhibition
-          {...data}
-          showCoordinates
-          onClickCTA={inquireFormModalProps.openClickHandler}
-        />
-      </DzColumn>
+
+      <DzSectionMenu
+        sections={[
+          {text: EXPLORE, id: 'explore', url: `${currentSlug}`},
+          ...(showChecklist
+            ? [
+                {
+                  text: CHECKLIST,
+                  id: 'checklist',
+                  url: `${currentSlug}${EXHIBITION_CHECKLIST_URL}`,
+                },
+              ]
+            : []),
+          {
+            text: INSTALLATION_VIEWS,
+            id: 'installation-views',
+            url: `${currentSlug}${EXHIBITION_INSTALLATION_URL}`,
+          },
+        ]}
+        linksProps={{
+          router,
+          useRoute: true,
+        }}
+        sticky
+        useLinks
+        className="col-span-12"
+      />
+      <DzTitleExhibition
+        {...data}
+        showCoordinates
+        onClickCTA={inquireFormModalProps.openClickHandler}
+      />
+
       <DzColumn span={12}>
         {heroData && <DzHero className={styles.heroContainer} items={[heroData]} />}
       </DzColumn>
