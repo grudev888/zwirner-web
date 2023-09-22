@@ -82,11 +82,13 @@ export const ExhibitionsContainer: FC<ExhibitionsContainerProps> = ({data}) => {
         useLinks
         className="col-span-12"
       />
-      <DzTitleExhibition
-        {...data}
-        showCoordinates
-        onClickCTA={inquireFormModalProps.openClickHandler}
-      />
+      <DzColumn span={12}>
+        <DzTitleExhibition
+          {...data}
+          showCoordinates
+          onClickCTA={inquireFormModalProps.openClickHandler}
+        />
+      </DzColumn>
 
       <DzColumn span={12}>
         {heroData && <DzHero className={styles.heroContainer} items={[heroData]} />}
