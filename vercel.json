@@ -6,7 +6,7 @@
     },
     {
       "source": "/monitoring",
-      "destination": "https://62521382a919810072e07ca330c2a4ca@o4505863929004032.ingest.sentry.io/4505876671102976"
+      "destination": "https://o4505863929004032.ingest.sentry.io/api/4505876671102976/envelope/"
     },
     {
       "source": "/:path*",
