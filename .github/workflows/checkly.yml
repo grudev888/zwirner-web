@@ -10,7 +10,7 @@ env:
   CHECKLY_TEST_ENVIRONMENT: ${{ github.event.deployment_status.environment }}
 jobs:
   test-e2e-prod:
-    if: github.event.deployment_status.state == 'success' && (contains(github.event.deployment_status.environment_url, 'web-prod')) # Only run when the deployment was successful.
+    if: github.event.deployment_status.state == 'success' && contains(github.event.deployment_status.environment_url, 'web-prod') # Only run when the deployment was successful.
     name: Prod Test E2E on Checkly
     runs-on: ubuntu-latest
     timeout-minutes: 10
@@ -48,7 +48,7 @@ jobs:
         run: npx checkly deploy --force
   
   test-e2e-test:
-    if: github.event.deployment_status.state == 'success' && (contains(github.event.deployment_status.environment_url, 'web-test')) # Only run when the deployment was successful.
+    if: github.event.deployment_status.state == 'success' && contains(github.event.deployment_status.environment_url, 'web-test') # Only run when the deployment was successful.
     name: Test Test E2E on Checkly
     runs-on: ubuntu-latest
     timeout-minutes: 10
