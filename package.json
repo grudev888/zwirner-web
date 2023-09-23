@@ -11,7 +11,7 @@
   "scripts": {
     "analyze": "cross-env ANALYZE=true yarn build",
     "build": "next build",
-    "dev": "next",
+    "dev": "next dev",
     "format": "npx prettier --write .",
     "postinstall": "husky install",
     "lint": "next lint -- --ignore-path .gitignore",
