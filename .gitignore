@@ -63,5 +63,9 @@ production.tar.gz
 /playwright/.cache/
 
 package-lock.json
+
 # Sentry Auth Token
 .sentryclirc
+
+# Turbo
+.turbo
