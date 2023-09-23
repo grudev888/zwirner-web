@@ -1,5 +1,19 @@
 {
   "rewrites": [
-   
+    {
+      "source": "/api/mail/:path*",
+      "destination": "https://orea9w61u3.execute-api.us-east-1.amazonaws.com/:path*"
+    },
+    {
+      "source": "/monitoring",
+      "destination": "/monitoring"
+    {
+      "source": "/:path*",
+      "destination": "/:path*"
+    },
+    {
+      "source": "/:path*",
+      "destination": "https://www.davidzwirner.com/:path*"
+    }
   ]
 }
