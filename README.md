@@ -59,12 +59,12 @@ export GH_TOKEN={your_token}
 ### End to end testing
 
 We use [playwright](https://playwright.dev/) for end to end testing.
-In CI these'll run automatically and upload the playwright-report as a artifact after the test run. See [CI workflow](.github/workflows/ci.yml) for how that works.
+In CI these'll run automatically in [Checkly](https://www.checklyhq.com/) which records the test session for viewing later. See [checkly workflow](.github/workflows/checkly.yml) for how that works.
 
 To run tests locally:
 
-- Run the site locally `docker compose up -d`
-- Execute playwright `yarn playwright test`
+- Run the site locally `yarn dev`
+- Execute playwright `NODE_ENV=development yarn playwright test`
 
 Other commands to know:
 
@@ -86,13 +86,12 @@ Runs the tests in debug mode.
 `yarn playwright codegen`
 Auto generate tests with Codegen.
 
-And check out the following files:
+More reading:
 
-- ./tests/example.spec.ts - Example end-to-end test
-- ./tests-examples/demo-todo-app.spec.ts - Demo Todo App end-to-end tests
-- ./playwright.config.ts - Playwright Test configuration
-
-Visit https://playwright.dev/docs/intro for more information. ✨
+- https://www.checklyhq.com/docs/
+- https://www.checklyhq.com/learn/headless/
+- https://playwright.dev/docs/intro
+- Templates - https://app.checklyhq.com/checks/browser/create
 
 ## Automatic dependency bumps
 

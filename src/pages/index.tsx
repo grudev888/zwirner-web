@@ -29,6 +29,7 @@ interface PreviewData {
 export default function Home({data, preview}: PageProps) {
   const [homeData] = data?.home ?? []
   const {seo} = homeData ?? {}
+  console.error('This is a deliberate error for testing purposes')
 
   if (preview) {
     return <PreviewPage query={homeDataQuery} seo={seo} Container={HomeContainer} />

@@ -1,4 +1,5 @@
-import {expect, test} from '../playwright/fixtures/base'
+import {defaults} from './defaults'
+import {expect, test} from './fixtures/base'
 
 const PAGES = [
   '/',
@@ -22,7 +23,7 @@ test.describe('Check headings', () => {
 
   PAGES.forEach((pagePath) =>
     test(`on ${pagePath}`, async ({page}) => {
-      await page.goto(pagePath)
+      await page.goto(defaults.baseURL + pagePath)
     })
   )
 })
