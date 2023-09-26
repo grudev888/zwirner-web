@@ -31,7 +31,7 @@ export const exhibitionPageBySlug = groq`
   ...,
   artists[]->,
   locations[]->,
-  'showChecklist': count(checklist) > 0,
+  'showChecklist': count(checklist.grid) > 0,
   slug,
   'checklistPDFURL': checklistPDF.asset->url,
   'pressReleasePDFURL': pdf.asset->url,
@@ -50,7 +50,6 @@ export const exhibitionPageBySlug = groq`
   exploreContent[]{
     ${pageBuilderComponentsData}
   },
-
   ${componentsByDataScheme}
 }`
 
@@ -112,14 +111,29 @@ export const exhibitionsLandingData = groq`
         ${pageBuilderComponentsData}
       },
     },
-    'interstitial': *[_type == "exhibitionsLanding"][0] {
-      ...interstitial {
-        ...,
-        image{${mediaBuilder}},
+    'upcomingComponent': *[_type == "exhibitionsLanding"][0] {
+      upcomingComponent
+    }.upcomingComponent,
+    'pastExhibitionsInterstitial': *[_type == "exhibitionsLanding"][0] {
+      ...pastExhibitionsInterstitial {
+        ${dzInterstitialFields}
       }
     },
-    'museumHighlights': *[_type == "exhibitionsLanding"][0] { museumHighlights[]-> }.museumHighlights,
-    'upcomingExhibitionsComponent': *[_type == "exhibitionsLanding"][0] {upcomingExhibitionsComponent}.upcomingExhibitionsComponent,
+    'subscribeInterstitial': *[_type == "exhibitionsLanding"][0] {
+      ...subscribeInterstitial {
+        ${dzInterstitialFields}
+      }
+    },
+    'interstitial': *[_type == "exhibitionsLanding"][0] {
+      ...interstitial {
+        ${dzInterstitialFields}
+      }
+    },
+    'museumHighlights': *[_type == "exhibitionsLanding"][0] { 
+      ...museumHighlights {
+        ${dzGridFields}
+      } 
+    },
     'exhibitions': *[_type == 'exhibitionPage']{
       _id,
       'secondaryRank': select(

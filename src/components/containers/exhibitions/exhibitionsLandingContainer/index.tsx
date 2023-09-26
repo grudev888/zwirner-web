@@ -1,4 +1,4 @@
-import {BUTTON_VARIANTS, DzColumn, DzInterstitial, DzSectionMenu} from '@zwirner/design-system'
+import {BUTTON_VARIANTS, DzColumn, DzSectionMenu} from '@zwirner/design-system'
 import {FC} from 'react'
 
 import {
@@ -9,12 +9,10 @@ import {
   SUBSCRIBE,
   UPCOMING,
 } from '@/common/constants/commonCopies'
-import {ExhibitionMuseumHighlights} from '@/components/containers/exhibitions/exhibitionsLandingContainer/ExhibitionMuseumHighlights'
 import {NowOpenExhibitions} from '@/components/containers/exhibitions/exhibitionsLandingContainer/NowOpenExhibitions'
 import {UpcomingExhibitions} from '@/components/containers/exhibitions/exhibitionsLandingContainer/UpcomingExhibitions'
 import {FullWidthFlexCol} from '@/components/containers/layout/FullWidthFlexCol'
 import {PageBuilder} from '@/components/pageBuilder'
-import {dzInterstitialOverrides} from '@/components/pageBuilder/DzInterstitial/interstitialMapper'
 import PageSection from '@/components/wrappers/pageSection/PageSection'
 import {ContainerTitle} from '@/components/wrappers/title/ContainerTitle'
 
@@ -29,8 +27,7 @@ const SECTION_IDS = {
 }
 
 export const ExhibitionLandingContainer: FC<ExhibitionLandingContainerProps> = ({data}) => {
-  const {title, interstitial, museumHighlights, pageBuilder} = data ?? {}
-  const interstitialProps = dzInterstitialOverrides(interstitial)
+  const {title, pageBuilder, museumHighlights, interstitial} = data ?? {}
   return (
     <DzColumn span={12}>
       <DzSectionMenu
@@ -55,19 +52,22 @@ export const ExhibitionLandingContainer: FC<ExhibitionLandingContainerProps> = (
       />
       <ContainerTitle title={title || EXHIBITIONS} />
       <FullWidthFlexCol>
-        <PageBuilder components={pageBuilder?.introContent ?? []} />
+        {pageBuilder.introContent ? <PageBuilder components={pageBuilder?.introContent} /> : null}
         <PageSection title={NOW_OPEN} elementId={SECTION_IDS.CURRENT}>
           <NowOpenExhibitions data={data} />
         </PageSection>
         <PageSection title={UPCOMING} elementId={SECTION_IDS.UPCOMING}>
           <UpcomingExhibitions data={data} />
         </PageSection>
+        {data.subscribeInterstitial ? (
+          <PageBuilder components={[data.subscribeInterstitial]} />
+        ) : null}
         {museumHighlights ? (
           <PageSection title={MUSEUM_HIGHLIGHTS} elementId={SECTION_IDS.MUSEUM_HIGHLIGHTS}>
-            <ExhibitionMuseumHighlights data={data} />
+            {museumHighlights ? <PageBuilder components={[museumHighlights]} /> : null}
           </PageSection>
         ) : null}
-        <DzInterstitial {...interstitialProps} />
+        {interstitial ? <PageBuilder components={[interstitial]} /> : null}
       </FullWidthFlexCol>
     </DzColumn>
   )

@@ -25,7 +25,7 @@ export const componentsIndex: any = {
   grid: GridMolecule,
 }
 
-interface ComponentsShape {
+export interface ComponentsShape {
   content: any
   props: any
   _type: string

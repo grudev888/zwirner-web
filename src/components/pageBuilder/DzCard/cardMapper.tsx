@@ -335,7 +335,16 @@ export const contentTypesMapper: any = {
   },
   exhibitionPage: (data: any, props: DzCardExtendedProps) => {
     const {cardSize, isOnGrid, mediaOverride} = props ?? {}
-    const {subtitle, title, heroMedia, locations, summary, slug, eyebrow} = data ?? {}
+    const {
+      subtitle,
+      title,
+      heroMedia,
+      locations,
+      summary,
+      slug,
+      eyebrow,
+      isDisabled = false,
+    } = data ?? {}
     const [primaryLocation] = locations ?? []
     const {name} = primaryLocation ?? {}
     const {current} = slug ?? {}
@@ -362,6 +371,7 @@ export const contentTypesMapper: any = {
       type: CARD_TYPES.CONTENT,
       data: {
         media,
+        isDisabled,
         size: cardSize,
         category: eyebrow ?? EXHIBITION,
         title: title,

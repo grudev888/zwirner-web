@@ -1,4 +1,3 @@
-import {DzComplexGrid} from '@zwirner/design-system'
 import {FC, useEffect, useState} from 'react'
 
 import {ALL_LOCATIONS} from '@/common/constants/commonCopies'
@@ -6,7 +5,8 @@ import {
   findExhibitionsByCity,
   isExhibitionOpen,
 } from '@/components/containers/exhibitions/exhibitionsLandingContainer/utils'
-import {mapCardsGrid} from '@/components/containers/pages/artists/exhibitions/mapper'
+import PageBuilder from '@/components/pageBuilder'
+import {transformDataToGrid} from '@/components/pageBuilder/utils/transformers'
 
 interface NowOpenExhibitionsProps {
   data: any
@@ -21,9 +21,6 @@ export const NowOpenExhibitions: FC<NowOpenExhibitionsProps> = ({data}) => {
   const [, setDisabledCities] = useState<Array<string>>([])
   const [filteredExhibitions, setFilteredExhibitions] =
     useState<Array<Record<string, any>>>(openExhibitions)
-  const [openExhibitionsGridData, setOpenExhibitionsGridData] = useState<{cards: Array<any>}>({
-    cards: mapCardsGrid(filteredExhibitions, {enableZoom: true}),
-  })
 
   useEffect(() => {
     setOpenExhibitions((data?.exhibitions ?? []).filter(isExhibitionOpen))
@@ -49,15 +46,13 @@ export const NowOpenExhibitions: FC<NowOpenExhibitionsProps> = ({data}) => {
       selectedCities.length === 1 && selectedCities[0] === ALL_LOCATIONS
         ? openExhibitions
         : selectedCities.map((city) => findExhibitionsByCity(openExhibitions, city)).flat()
-    const disabledExhibitions = openExhibitions.filter(
-      (openEx) => !enabledExhibitions.find((ex: any) => ex._id === openEx._id)
-    )
-    const mapCardsGridOptions = {
-      useDatePrefix: false,
-      disabledIds: disabledExhibitions.map(({_id}) => _id),
-    }
-    setFilteredExhibitions(data?.exhibitions ?? [])
-    setOpenExhibitionsGridData({cards: mapCardsGrid(openExhibitions, mapCardsGridOptions)})
+
+    const filteredExhibitionList = openExhibitions.map((openEx) => ({
+      ...openEx,
+      isDisabled: !enabledExhibitions.find((ex: any) => ex._id === openEx._id),
+    }))
+
+    setFilteredExhibitions(filteredExhibitionList ?? [])
   }, [selectedCities, setFilteredExhibitions, openExhibitions, data.exhibitions])
 
   // Disable any city pill that does not have an exhibition location in that city
@@ -92,7 +87,15 @@ export const NowOpenExhibitions: FC<NowOpenExhibitionsProps> = ({data}) => {
     }
   }
   */
-
+  const dzGridPageBuilder = transformDataToGrid({
+    data: filteredExhibitions,
+    innerComponentType: 'dzCard',
+    gridProps: {
+      itemsPerRow: 2,
+      wrap: false,
+      title: '',
+    },
+  })
   return (
     <>
       {/* City pills are currently hidden pending design decisions
@@ -110,7 +113,9 @@ export const NowOpenExhibitions: FC<NowOpenExhibitionsProps> = ({data}) => {
         ))}
       </div>
       */}
-      <DzComplexGrid {...openExhibitionsGridData} hideControls />
+      {filteredExhibitions && dzGridPageBuilder ? (
+        <PageBuilder components={[dzGridPageBuilder]} />
+      ) : null}
     </>
   )
 }

@@ -1,14 +1,13 @@
-import {DzComplexGrid, DzHero} from '@zwirner/design-system'
 import {FC, useEffect, useState} from 'react'
 
-import {exhibitionCarouselMapper} from '@/components/containers/exhibitions/exhibitionsLandingContainer/mapper'
 import {isExhibitionUpcoming} from '@/components/containers/exhibitions/exhibitionsLandingContainer/utils'
-import {mapCardsGrid} from '@/components/containers/pages/artists/exhibitions/mapper'
+import PageBuilder from '@/components/pageBuilder'
+import {transformDataToGrid, transformDataToHero} from '@/components/pageBuilder/utils/transformers'
 
-const UPCOMING_EXHIBITIONS_DISPLAY_OPTIONS = {
-  twoUpGrid: 'twoUpGrid',
-  threeUpGrid: 'threeUpGrid',
-  hero: 'hero',
+export enum UpcomingMolecules {
+  'DZ Hero Carousel' = 'heroCarousel',
+  '2-Up Grid' = '2-up',
+  '3-Up Grid' = '3-up',
 }
 
 interface UpcomingExhibitionsProps {
@@ -16,18 +15,8 @@ interface UpcomingExhibitionsProps {
 }
 
 export const UpcomingExhibitions: FC<UpcomingExhibitionsProps> = ({data}) => {
-  const upcomingExhibitionsComponent: keyof typeof UPCOMING_EXHIBITIONS_DISPLAY_OPTIONS =
-    data?.upcomingExhibitionsComponent
   const [upcomingExhibitions, setUpcomingExhibitions] = useState<Array<any>>([])
-  const upcomingDisplayOption =
-    UPCOMING_EXHIBITIONS_DISPLAY_OPTIONS[
-      upcomingExhibitionsComponent || UPCOMING_EXHIBITIONS_DISPLAY_OPTIONS.threeUpGrid
-    ]
-  const upcomingExhibitionCards: any = exhibitionCarouselMapper(upcomingExhibitions)
-  const upcomingExhibitionsGridCards: any = mapCardsGrid(upcomingExhibitions, {
-    useDatePrefix: false,
-    showLinkCTA: true,
-  })
+  const upcomingAsHero = data?.upcomingComponent === UpcomingMolecules['DZ Hero Carousel']
 
   useEffect(
     () =>
@@ -39,22 +28,29 @@ export const UpcomingExhibitions: FC<UpcomingExhibitionsProps> = ({data}) => {
     [data?.exhibitions]
   )
 
-  return upcomingExhibitionCards?.length > 0 ? (
-    <>
-      {upcomingDisplayOption === UPCOMING_EXHIBITIONS_DISPLAY_OPTIONS.hero && (
-        <DzHero items={upcomingExhibitionCards} />
-      )}
+  const dzGridPageBuilder = transformDataToGrid({
+    data: upcomingExhibitions,
+    innerComponentType: 'dzCard',
+    gridProps: {
+      itemsPerRow: data?.upcomingComponent === UpcomingMolecules['2-Up Grid'] ? 2 : 3,
+      wrap: false,
+      title: '',
+    },
+  })
 
-      {(upcomingDisplayOption === UPCOMING_EXHIBITIONS_DISPLAY_OPTIONS.twoUpGrid ||
-        upcomingDisplayOption === UPCOMING_EXHIBITIONS_DISPLAY_OPTIONS.threeUpGrid) && (
-        <DzComplexGrid
-          hideControls
-          cards={upcomingExhibitionsGridCards}
-          maxItemsPerRow={
-            upcomingDisplayOption === UPCOMING_EXHIBITIONS_DISPLAY_OPTIONS.twoUpGrid ? 2 : 3
-          }
-        />
-      )}
+  const dzHeroPageBuilder = transformDataToHero({
+    data: upcomingExhibitions,
+    heroProps: {},
+  })
+
+  return upcomingExhibitions?.length > 0 ? (
+    <>
+      {upcomingAsHero && dzHeroPageBuilder ? (
+        <PageBuilder components={[dzHeroPageBuilder]} />
+      ) : null}
+      {!upcomingAsHero && !!data?.upcomingComponent && dzGridPageBuilder ? (
+        <PageBuilder components={[dzGridPageBuilder]} />
+      ) : null}
     </>
   ) : null
 }
