@@ -57,7 +57,7 @@ export const installationViewsBySlug = groq`
 *[_type == "exhibitionPage" && slug.current == $slug][0] {
   title,
   subtitle,
-  'showChecklist': count(checklist) > 0,
+  'showChecklist': count(checklist.grid) > 0,
   slug,
   installationViewsInterstitial{
     ${dzInterstitialFields}
@@ -74,7 +74,7 @@ export const checklistBySlug = groq`
 *[_type == "exhibitionPage" && slug.current == $slug][0] {
   title,
   subtitle,
-  'showChecklist': count(checklist) > 0,
+  'showChecklist': count(checklist.grid) > 0,
   slug,
   checklistInterstitial {
     ${dzInterstitialFields}
