@@ -66,7 +66,7 @@ export const mapCarouselArtworks = (data: any, isSmall: boolean) => {
             : 'Unframed'
           : undefined
 
-      const {media} = dzMediaMapper({data: item, ImgElement: Image})
+      const {media} = dzMediaMapper({data: item?.photos?.[0], ImgElement: Image})
       const dimensionText = safeText({key: 'dimensions', text: dimensions})
       const ctasOverrides = ctaMapper({
         data: {

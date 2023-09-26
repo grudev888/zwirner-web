@@ -24,7 +24,17 @@ export const artistPageBySlug = groq`
   _id,
   title,
   "artist": artist-> { ..., "cvUrl": cv.asset->url },
-  survey { ..., items[]-> { ..., artists[]->, } },
+  survey {
+  ..., 
+  items[]-> {  
+    ...,
+    photos[]{
+      ...,
+      ${mediaBuilder}
+    },
+    "artists": artists[]->
+    } 
+  },
   latestExhibitions { ..., items[]-> { ..., location->{ _id, name, timezone }, } },
   guide {
     ..., 
