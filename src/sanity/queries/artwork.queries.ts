@@ -1,5 +1,7 @@
 import {groq} from 'next-sanity'
 
+import {mediaBuilder} from '@/sanity/queries/object.queries'
+
 export const artworkFields = groq`
   ...,
   _id,
@@ -7,7 +9,7 @@ export const artworkFields = groq`
   price,
   title,
   medium,
-  photos,
+  photos[]{${mediaBuilder}},
   edition,
   dimensions,
   framed,

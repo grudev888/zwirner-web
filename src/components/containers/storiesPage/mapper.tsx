@@ -1,8 +1,6 @@
 import {
   ButtonModes,
   INTERSTITIAL_TEXT_COLORS,
-  MEDIA_ASPECT_RATIOS,
-  MEDIA_OBJECT_FIT,
   MEDIA_TYPES,
   SPLIT_TYPES,
 } from '@zwirner/design-system'
@@ -171,22 +169,11 @@ export const mapBookForSplit = (data: any) => {
 export const mapBookForCarousel = (data: any) => {
   const {title, tagline, photos, _id, booksUrl} = data ?? {}
   const [mainPicture] = photos ?? []
-  const {asset, alt} = mainPicture ?? {}
-  const imgSrc = asset ? builder.image(asset).url() : ''
 
+  const {media} = dzMediaMapper({data: mainPicture, ImgElement: Image})
   return {
     id: _id,
-    media: {
-      type: MEDIA_TYPES.IMAGE,
-      imgProps: {
-        src: imgSrc,
-        alt: alt,
-        fill: true,
-      },
-      ImgElement: Image,
-      objectFit: MEDIA_OBJECT_FIT.COVER,
-      aspectRatio: MEDIA_ASPECT_RATIOS['16:9'],
-    },
+    media,
     category: DAVID_ZWIRNER_BOOKS,
     title,
     portableTextDescription: (

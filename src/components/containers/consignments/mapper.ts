@@ -6,21 +6,14 @@ import {
   hasStringValue,
   isEmail,
   isPhoneNumber,
-  MEDIA_TYPES,
 } from '@zwirner/design-system'
 import Image from 'next/image'
 
-import {builder} from '@/sanity/imageBuilder'
+import {dzMediaMapper} from '@/common/utilsMappers/image.mapper'
 
 export const headerImageMap = (data: any) => {
-  const {image} = data ?? {}
-  const {asset, alt} = image ?? {}
-  const imgSrc = asset ? builder.image(asset).url() : ''
-  return {
-    type: MEDIA_TYPES.IMAGE,
-    ImgElement: Image,
-    imgProps: {src: imgSrc, alt, fill: true},
-  }
+  const {media} = dzMediaMapper({data, ImgElement: Image})
+  return media
 }
 
 export const editorialSectionMap = (data: any) => {
@@ -45,8 +38,8 @@ export const editorialSectionMap = (data: any) => {
 
 export const formSectionMap = (data: any) => {
   const {image} = data ?? {}
-  const {asset, alt} = image ?? {}
-  const imgSrc = asset ? builder.image(asset).url() : ''
+  const {media} = dzMediaMapper({data: image, ImgElement: Image})
+
   return {
     steps: [
       {
@@ -278,23 +271,13 @@ export const formSectionMap = (data: any) => {
         },
       },
     ],
-    mediaProps: {
-      type: MEDIA_TYPES.IMAGE,
-      ImgElement: Image,
-      imgProps: {src: imgSrc, alt, fill: true},
-    },
+    mediaProps: media,
   }
 }
 
 export const featuredMediaMap = (data: any) => {
-  const {image} = data ?? {}
-  const {asset, alt} = image ?? {}
-  const imgSrc = asset ? builder.image(asset).url() : ''
-  return {
-    type: MEDIA_TYPES.IMAGE,
-    ImgElement: Image,
-    imgProps: {src: imgSrc, alt, fill: true},
-  }
+  const {media} = dzMediaMapper({data, ImgElement: Image})
+  return media
 }
 
 export const bodyDataMap = (data: any) => {
@@ -307,16 +290,11 @@ export const bodyDataMap = (data: any) => {
     ?.map((subSection: any, key: number) => {
       const {image, text} = subSection ?? {}
       const {title, content} = text ?? {}
-      const {asset, alt} = image ?? {}
-      const imgSrc = asset ? builder.image(asset).url() : ''
+      const {media} = dzMediaMapper({data: image, ImgElement: Image})
 
       return {
         id: `${title}-${key}`,
-        mediaProps: {
-          type: MEDIA_TYPES.IMAGE,
-          ImgElement: Image,
-          imgProps: {src: imgSrc, alt, fill: true},
-        },
+        mediaProps: media,
         editorialProps: {
           data: {
             reverse: false,
@@ -346,15 +324,11 @@ export const mapCarouselCards = (data: any) => {
     })
     ?.map((artist: any) => {
       const {fullName, _id, picture} = artist ?? {}
-      const {asset, alt} = picture ?? {}
-      const imgSrc = asset ? builder.image(asset).url() : ''
+      const {media} = dzMediaMapper({data: picture, ImgElement: Image})
+
       return {
         id: _id,
-        media: {
-          type: 'image',
-          ImgElement: Image,
-          imgProps: {src: imgSrc, alt, fill: true},
-        },
+        media,
         title: fullName,
       }
     })

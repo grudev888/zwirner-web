@@ -99,7 +99,7 @@ export const exhibitionsLanding = groq`
   },
   interstitial {
     ...,
-    image{asset->},
+    image{${mediaBuilder}},
   }
 }
 `

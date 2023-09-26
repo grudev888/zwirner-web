@@ -3,7 +3,6 @@ import {
   CARD_TYPES,
   DzCarouselCardSize,
   MEDIA_ASPECT_RATIOS,
-  MEDIA_TYPES,
 } from '@zwirner/design-system'
 import parseISO from 'date-fns/parseISO'
 import Image from 'next/image'
@@ -13,7 +12,6 @@ import {LEARN_MORE} from '@/common/constants/commonCopies'
 import {ctaMapper} from '@/common/utilsMappers/cta.mapper'
 import {dzMediaMapper} from '@/common/utilsMappers/image.mapper'
 import {safeText} from '@/common/utilsMappers/safe'
-import {builder} from '@/sanity/imageBuilder'
 import {CtaActions} from '@/sanity/types'
 
 export const mapInterstitial = (data: any, onCTAClick?: () => void) => {
@@ -177,17 +175,10 @@ export const mapCarouselArticles = (data: any, isSmall: boolean) => {
 
 export const mapBiography = (data: any) => {
   if (!data) return null
-
-  const imgSrc = data.biographyPicture?.asset
-    ? builder.image(data.biographyPicture.asset).url()
-    : ''
+  const {media} = dzMediaMapper({data: data.biographyPicture, ImgElement: Image})
 
   return {
-    media: {
-      type: MEDIA_TYPES.IMAGE,
-      ImgElement: Image,
-      imgProps: {src: imgSrc, alt: data.picture?.alt, fill: true},
-    },
+    media,
     description: data.description,
   }
 }
@@ -215,7 +206,8 @@ export const mapFeatured = (data: any) => {
   if (!data?._type) return data
 
   if (data._type === 'artwork') {
-    const imgSrc = data.photos?.[0]?.asset ? builder.image(data.photos[0].asset).url() : ''
+    const {media, hideMedia} = dzMediaMapper({data: data.photos?.[0], ImgElement: Image})
+    const description = safeText({key: 'description', text: data.description})
     const date =
       data.dateSelection?.year ||
       data.dateSelection?.approximate ||
@@ -223,19 +215,13 @@ export const mapFeatured = (data: any) => {
         new Date(data.dateSelection?.dateRange.to).getFullYear().toString())
 
     return {
-      ...(imgSrc && {
-        media: {
-          type: 'image',
-          imgProps: {
-            src: imgSrc,
-            alt: data.photos?.[0]?.alt,
-          },
-        },
+      ...(!hideMedia && {
+        media,
       }),
       category: data.artworkType?.toUpperCase(),
       title: data.title,
       secondarySubtitle: date,
-      description: data.dimensions || data.description,
+      ...description,
       ...(data.slug?.current && {
         linkCTA: {
           text: 'Learn More',
@@ -281,20 +267,11 @@ export const mapFeatured = (data: any) => {
       }),
     }
   } else if (data._type === 'exhibitionPage') {
-    const imgSrc = data.photos?.[0]?.asset ? builder.image(data.photos[0].asset).url() : ''
-
+    const {media} = dzMediaMapper({data, ImgElement: Image})
     const secondaryTitleText = safeText({key: 'secondaryTitle', text: data.summary})
 
     return {
-      ...(imgSrc && {
-        media: {
-          type: 'image',
-          imgProps: {
-            src: imgSrc,
-            alt: data.photos?.[0]?.alt,
-          },
-        },
-      }),
+      media,
       title: data.title,
       subtitle: data.location?.name,
       ...(secondaryTitleText ?? {}),
