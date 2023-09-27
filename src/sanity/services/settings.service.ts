@@ -1,9 +1,9 @@
 import {client} from '@/sanity/client'
-import {generalSettings} from '@/sanity/queries/settings.queries'
+import {generalSettings, GeneralSettingsSchema} from '@/sanity/queries/settings.queries'
 
-export async function getGeneralSettings(): Promise<any> {
-  if (client) {
-    return (await client.fetch(generalSettings)) || []
-  }
-  return []
+// TODO: add validation error handling
+export async function getGeneralSettings() {
+  const data = await client.fetch(generalSettings)
+  const validatedData = GeneralSettingsSchema.parse(data)
+  return validatedData
 }

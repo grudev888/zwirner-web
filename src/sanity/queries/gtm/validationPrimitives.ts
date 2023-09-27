@@ -4,9 +4,9 @@
 
 import {z} from 'zod'
 
-export const gtmCommonDataSchema = z.object({
+export const GtmCommonDataSchema = z.object({
   event: z.string().min(1),
   detailed_event: z.string().min(1),
 })
 
-export type GtmCommonDataType = z.infer<typeof gtmCommonDataSchema>
+export type GtmCommonDataType = z.infer<typeof GtmCommonDataSchema>

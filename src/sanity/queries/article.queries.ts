@@ -1,7 +1,10 @@
 import {groq} from 'next-sanity'
 
-import {exhibitionComplexFields, exhibitionSimpleFields} from '@/sanity/queries/exhibition.queries'
-import {mediaBuilder} from '@/sanity/queries/object.queries'
+import {mediaBuilder} from './components/builders/mediaBuilder'
+import {
+  exhibitionComplexFields,
+  exhibitionSimpleFields,
+} from './components/content/exhibitionPageContent'
 
 // Fetch all pages with body content available and slug. retrieve the url
 export const articlePagesSlugs = groq`

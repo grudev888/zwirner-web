@@ -1,7 +1,11 @@
 import {groq} from 'next-sanity'
 
 import {artworkFields} from '@/sanity/queries/artwork.queries'
-import {exhibitionComplexFields, exhibitionSimpleFields} from '@/sanity/queries/exhibition.queries'
+
+import {
+  exhibitionComplexFields,
+  exhibitionSimpleFields,
+} from './components/content/exhibitionPageContent'
 
 export const collectPageData = groq`
 *[_type == "collect" ] {

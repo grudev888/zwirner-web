@@ -1,8 +1,11 @@
 import {groq} from 'next-sanity'
 
-import {exhibitionComplexFields, exhibitionSimpleFields} from '@/sanity/queries/exhibition.queries'
-import {mediaBuilder} from '@/sanity/queries/object.queries'
-import {pageSEOFields} from '@/sanity/queries/seo.queries'
+import {mediaBuilder} from './components/builders/mediaBuilder'
+import {
+  exhibitionComplexFields,
+  exhibitionSimpleFields,
+} from './components/content/exhibitionPageContent'
+import {pageSEOFields} from './components/seo/pageSEOFields'
 
 export const artistGuidePageBySlug = groq`
 *[_type == "artistPage" && defined(slug.current) && slug.current == $slug][]{

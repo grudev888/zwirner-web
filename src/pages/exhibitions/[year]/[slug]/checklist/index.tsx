@@ -6,10 +6,8 @@ import {EXHIBITIONS_URL} from '@/common/constants/commonCopies'
 import {ExhibitionChecklistContainer} from '@/components/containers/exhibitions/exhibitionChecklistContainer'
 import {PreviewPage} from '@/components/containers/previews/pagePreview'
 import {checklistBySlug} from '@/sanity/queries/exhibitionPage.queries'
-import {
-  getAllExhibitionPagesSlugs,
-  getExhibitionChecklist,
-} from '@/sanity/services/exhibition.service'
+import {getExhibitionChecklist} from '@/sanity/services/exhibition.service'
+import {getAllExhibitionPagesSlugs} from '@/sanity/services/exhibitions/getAllExhibitionPagesSlugs'
 
 interface PageProps {
   data: any

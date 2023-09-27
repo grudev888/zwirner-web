@@ -1,8 +1,11 @@
 import {groq} from 'next-sanity'
 
-import {dzInterstitialProps} from '@/sanity/queries/components.queries'
-import {exhibitionComplexFields, exhibitionSimpleFields} from '@/sanity/queries/exhibition.queries'
-import {pageSEOFields} from '@/sanity/queries/seo.queries'
+import {
+  exhibitionComplexFields,
+  exhibitionSimpleFields,
+} from './components/content/exhibitionPageContent'
+import {dzInterstitialProps} from './components/dzInterstitialProps'
+import {pageSEOFields} from './components/seo/pageSEOFields'
 
 export const homeData = groq`
 *[_type == 'home'] {

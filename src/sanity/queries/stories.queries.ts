@@ -1,8 +1,12 @@
 import {groq} from 'next-sanity'
 
 import {articlesReferences} from '@/sanity/queries/article.queries'
-import {exhibitionComplexFields, exhibitionSimpleFields} from '@/sanity/queries/exhibition.queries'
-import {mediaBuilder} from '@/sanity/queries/object.queries'
+
+import {mediaBuilder} from './components/builders/mediaBuilder'
+import {
+  exhibitionComplexFields,
+  exhibitionSimpleFields,
+} from './components/content/exhibitionPageContent'
 
 export const storiesData = groq`
 *[_type == "stories" ] {

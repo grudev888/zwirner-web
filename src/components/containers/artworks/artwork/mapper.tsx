@@ -2,7 +2,7 @@ import {CARD_TYPES, CardSizes} from '@zwirner/design-system'
 import Image from 'next/image'
 
 import {dzMediaMapper} from '@/common/utilsMappers/image.mapper'
-import {ArtworkDataType} from '@/sanity/services/artworks/getArtworkData'
+import {ArtworkDataType} from '@/sanity/queries/artworks/artworkData'
 import {capitalizeFirstLetter} from '@/utils/string/capitalizeFirstLetter'
 
 export const mapArtworkData = ({artists, artworkCTA}: ArtworkDataType) => {
@@ -20,9 +20,8 @@ export const mapArtworkData = ({artists, artworkCTA}: ArtworkDataType) => {
   }
 }
 
-export const photosGrid = (data: ArtworkDataType) => {
-  const {photos = []} = data ?? {}
-  return photos.map((photo: any) => {
+export const photosGrid = ({photos}: ArtworkDataType) => {
+  return photos?.map((photo) => {
     const {_key} = photo ?? {}
     const {media, extras} = dzMediaMapper({data: photo, ImgElement: Image})
     const {caption} = extras ?? {}

@@ -1,74 +1,10 @@
 import {groq} from 'next-sanity'
 
-import {
-  dzEditorialFields,
-  dzGridFields,
-  dzInterstitialFields,
-} from '@/sanity/queries/components.queries'
-import {mediaBuilder} from '@/sanity/queries/object.queries'
-import {componentsByDataScheme} from '@/sanity/queries/page.queries'
-import {pageBuilderComponentsData} from '@/sanity/queries/page.queries'
-import {pageSEOFields} from '@/sanity/queries/seo.queries'
-
-const exhibitionDateFields = groq`
-  _id,
-  title,
-  "date": endDate
-`
-
-export const getEndDateExhibitionsDate = groq`
-*[_type == "exhibitionPage"] {
-  ${exhibitionDateFields}
-}`
-
-export const exhibitionPageSlugs = groq`
-*[_type == "exhibitionPage" && defined(slug.current)][]{
-  "params": { "slug": slug.current }
-}`
-
-export const exhibitionPageBySlug = groq`
-*[_type == "exhibitionPage" && slug.current == $slug][0] {
-  ...,
-  artists[]->,
-  locations[]->,
-  'showChecklist': count(checklist.grid) > 0,
-  slug,
-  'checklistPDFURL': checklistPDF.asset->url,
-  'pressReleasePDFURL': pdf.asset->url,
-  heroMedia {
-    ${mediaBuilder}
-  },
-  pressRelease {
-    ${dzEditorialFields}
-  },
-  interstitial {
-    ${dzInterstitialFields}
-  },
-  seo {
-    ${pageSEOFields}
-  },
-  exploreContent[]{
-    ${pageBuilderComponentsData}
-  },
-  ${componentsByDataScheme}
-}`
-
-export const installationViewsBySlug = groq`
-*[_type == "exhibitionPage" && slug.current == $slug][0] {
-  title,
-  subtitle,
-  'showChecklist': count(checklist.grid) > 0,
-  slug,
-  installationViewsInterstitial{
-    ${dzInterstitialFields}
-  },
-  installationViews {
-    ${dzGridFields}
-  },
-  'seo':installationViewsSeo {
-    ${pageSEOFields}
-  }
-}`
+import {mediaBuilder} from './components/builders/mediaBuilder'
+import {dzInterstitialFields} from './components/dzInterstitialProps'
+import {dzGridFields} from './components/gridMoleculeProps'
+import {pageSEOFields} from './components/seo/pageSEOFields'
+import {pageBuilderComponentsData} from './page/pageCommonQueries/pageBuilderComponentsData'
 
 export const checklistBySlug = groq`
 *[_type == "exhibitionPage" && slug.current == $slug][0] {
@@ -86,22 +22,6 @@ export const checklistBySlug = groq`
     ${pageSEOFields}
   }
 }`
-
-export const exhibitionsLanding = groq`
-*[_type == "exhibitionsLanding"][0] {
-  title,
-  introContent[]{
-    ${pageBuilderComponentsData}
-  },
-  seo {
-    ${pageSEOFields}
-  },
-  interstitial {
-    ...,
-    image{${mediaBuilder}},
-  }
-}
-`
 
 export const exhibitionsLandingData = groq`
   {
@@ -129,10 +49,10 @@ export const exhibitionsLandingData = groq`
         ${dzInterstitialFields}
       }
     },
-    'museumHighlights': *[_type == "exhibitionsLanding"][0] { 
+    'museumHighlights': *[_type == "exhibitionsLanding"][0] {
       ...museumHighlights {
         ${dzGridFields}
-      } 
+      }
     },
     'exhibitions': *[_type == 'exhibitionPage']{
       _id,

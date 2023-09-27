@@ -1,9 +1,12 @@
 import {groq} from 'next-sanity'
 
-import {mediaBuilder} from '@/sanity/queries/object.queries'
-import {pageSEOFields} from '@/sanity/queries/seo.queries'
-import {exhibitionComplexFields, exhibitionSimpleFields} from '@/sanity/queries/exhibition.queries'
-import {artworkFields} from '@/sanity/queries/artwork.queries'
+import {artworkFields} from './artwork.queries'
+import {mediaBuilder} from './components/builders/mediaBuilder'
+import {
+  exhibitionComplexFields,
+  exhibitionSimpleFields,
+} from './components/content/exhibitionPageContent'
+import {pageSEOFields} from './components/seo/pageSEOFields'
 
 export const artistPageSlugs = groq`
 *[_type == "artistPage" && defined(slug.current)][]{
@@ -27,15 +30,15 @@ export const artistPageBySlug = groq`
   title,
   "artist": artist-> { ..., "cvUrl": cv.asset->url },
   survey {
-  ..., 
-  items[]-> {  
+  ...,
+  items[]-> {
     ...,
     photos[]{
       ...,
       ${mediaBuilder}
     },
     "artists": artists[]->
-    } 
+    }
   },
   latestExhibitions { ..., items[]-> { ..., location->{ _id, name, timezone }, } },
   guide {

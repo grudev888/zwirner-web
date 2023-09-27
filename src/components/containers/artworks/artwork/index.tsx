@@ -20,7 +20,7 @@ import {useRef, useState} from 'react'
 
 import {DzPortableText} from '@/components/wrappers/DzPortableText'
 import {builder} from '@/sanity/imageBuilder'
-import {ArtworkDataType} from '@/sanity/services/artworks/getArtworkData'
+import {ArtworkDataType} from '@/sanity/queries/artworks/artworkData'
 
 import styles from './index.module.css'
 import {mapArtworkData, photosGrid} from './mapper'

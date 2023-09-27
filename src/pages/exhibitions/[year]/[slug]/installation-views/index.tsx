@@ -5,11 +5,9 @@ import {SEOComponent} from '@/common/components/seo/seo'
 import {EXHIBITIONS_URL} from '@/common/constants/commonCopies'
 import {InstallationViewsContainer} from '@/components/containers/exhibitions/exhibitionViewsContainer'
 import {PreviewPage} from '@/components/containers/previews/pagePreview'
-import {installationViewsBySlug} from '@/sanity/queries/exhibitionPage.queries'
-import {
-  getAllExhibitionPagesSlugs,
-  getExhibitionInstallationViews,
-} from '@/sanity/services/exhibition.service'
+import {installationViewsBySlug} from '@/sanity/queries/exhibitions/installationViewsBySlug'
+import {getAllExhibitionPagesSlugs} from '@/sanity/services/exhibitions/getAllExhibitionPagesSlugs'
+import {getExhibitionInstallationViews} from '@/sanity/services/exhibitions/getExhibitionInstallationViews'
 
 interface PageProps {
   data: any
@@ -26,6 +24,7 @@ interface PreviewData {
   token?: string
 }
 
+// TODO: update component typings to infer correct types
 export default function SubPageInstallationView({data = {}, preview}: PageProps) {
   const {pageData = {}, queryParams} = data ?? {}
   const {seo} = pageData ?? {}
@@ -91,7 +90,7 @@ export const getStaticProps: GetStaticProps<PageProps, Query, PreviewData> = asy
     }
   }
 
-  const data: any = await getExhibitionInstallationViews(queryParams)
+  const data = await getExhibitionInstallationViews(queryParams)
   if (!data) return {notFound: true}
 
   return {

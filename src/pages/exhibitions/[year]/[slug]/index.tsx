@@ -5,11 +5,9 @@ import {SEOComponent} from '@/common/components/seo/seo'
 import {EXHIBITIONS_URL} from '@/common/constants/commonCopies'
 import {ExhibitionsContainer} from '@/components/containers/exhibitions/exhibitionDetailContainer/exhibitions'
 import {PreviewPage} from '@/components/containers/previews/pagePreview'
-import {exhibitionPageBySlug} from '@/sanity/queries/exhibitionPage.queries'
-import {
-  getAllExhibitionPagesSlugs,
-  getExhibitionPageBySlug,
-} from '@/sanity/services/exhibition.service'
+import {exhibitionPageBySlug} from '@/sanity/queries/exhibitions/exhibitionPageBySlug'
+import {getAllExhibitionPagesSlugs} from '@/sanity/services/exhibitions/getAllExhibitionPagesSlugs'
+import {getExhibitionPageBySlug} from '@/sanity/services/exhibitions/getExhibitionPageBySlug'
 
 interface PageProps {
   data: any
@@ -91,7 +89,7 @@ export const getStaticProps: GetStaticProps<PageProps, Query, PreviewData> = asy
     }
   }
 
-  const data: any = await getExhibitionPageBySlug(queryParams)
+  const data = await getExhibitionPageBySlug(queryParams)
   if (!data) return {notFound: true}
 
   return {

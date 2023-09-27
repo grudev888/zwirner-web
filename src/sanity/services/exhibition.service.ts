@@ -1,12 +1,7 @@
 import {client} from '@/sanity/client'
 import {allExhibitions, exhibitionById} from '@/sanity/queries/exhibition.queries'
 import {exhibitionsLandingData} from '@/sanity/queries/exhibitionPage.queries'
-import {
-  checklistBySlug,
-  exhibitionPageBySlug,
-  exhibitionPageSlugs,
-  installationViewsBySlug,
-} from '@/sanity/queries/exhibitionPage.queries'
+import {checklistBySlug} from '@/sanity/queries/exhibitionPage.queries'
 
 export async function getAllExhibitions(): Promise<any[]> {
   if (client) {
@@ -25,27 +20,6 @@ export async function getExhibitionsLandingPageData(): Promise<any> {
 export async function getExhibitionById(id: any): Promise<any[]> {
   if (client) {
     return (await client.fetch(exhibitionById, id)) || []
-  }
-  return []
-}
-
-export async function getAllExhibitionPagesSlugs(): Promise<any[]> {
-  if (client) {
-    return (await client.fetch(exhibitionPageSlugs)) || []
-  }
-  return []
-}
-
-export async function getExhibitionPageBySlug(params: any): Promise<any[]> {
-  if (client) {
-    return (await client.fetch(exhibitionPageBySlug, params)) || []
-  }
-  return []
-}
-
-export async function getExhibitionInstallationViews(params: any): Promise<any[]> {
-  if (client) {
-    return (await client.fetch(installationViewsBySlug, params)) || []
   }
   return []
 }

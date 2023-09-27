@@ -102,8 +102,7 @@ DzApp.getInitialProps = async (context: AppContext): Promise<AppGeneralProps & A
   const ctx = await App.getInitialProps(context)
 
   const generalSettings = await getGeneralSettings()
-  const {globalSEO} = generalSettings ?? {}
-  const [SEOSettings = {}] = globalSEO ?? []
+  const SEOSettings = generalSettings.globalSEO.at(0)
 
   const headerDataFetched = await getHeaderData()
   const [headerData] = headerDataFetched ?? []

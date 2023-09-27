@@ -2,8 +2,8 @@ import {ButtonModes, ButtonVariant, EditorialType, SplitTypes} from '@zwirner/de
 
 export interface GlobalSEOScheme {
   _id: string
-  globalSEOTitle: string
-  globalSEODescription: string
+  globalSEOTitle: string | null
+  globalSEODescription: string | null
   globalSEOImage: any
 }
 

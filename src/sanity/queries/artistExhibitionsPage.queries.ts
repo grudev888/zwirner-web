@@ -1,7 +1,7 @@
 import {groq} from 'next-sanity'
 
-import {mediaBuilder} from '@/sanity/queries/object.queries'
-import {pageSEOFields} from '@/sanity/queries/seo.queries'
+import {mediaBuilder} from './components/builders/mediaBuilder'
+import {pageSEOFields} from './components/seo/pageSEOFields'
 
 export const artistExhibitionsPageData = groq`
 *[_type == "artistPage" && slug.current == $slug][0] {

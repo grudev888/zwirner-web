@@ -1,6 +1,6 @@
 import {groq} from 'next-sanity'
 
-import {mediaBuilder} from '@/sanity/queries/object.queries'
+import {mediaBuilder} from './components/builders/mediaBuilder'
 
 export const artworkFields = groq`
   ...,

@@ -1,7 +1,8 @@
 import {groq} from 'next-sanity'
 
 import {artworkFields} from '@/sanity/queries/artwork.queries'
-import {pageSEOFields} from '@/sanity/queries/seo.queries'
+
+import {pageSEOFields} from './components/seo/pageSEOFields'
 
 export const availableArtworksData = groq`
 *[_type == 'availableArtworks'] {

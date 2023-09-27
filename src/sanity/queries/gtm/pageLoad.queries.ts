@@ -3,7 +3,7 @@ import {z} from 'zod'
 
 import {GTMPageLoadStartedText} from '@/common/constants/gtmConstants'
 
-import {gtmCommonDataSchema} from './validationPrimitives'
+import {GtmCommonDataSchema} from './validationPrimitives'
 
 export const gtmPageLoadData = groq`
 *[defined(slug.current) && slug.current == $slug][0]{
@@ -32,14 +32,14 @@ export const gtmPageLoadData = groq`
 }
 `
 
-export const gtmPageLoadDataPropsSchema = z.object({
+export const GtmPageLoadDataPropsSchema = z.object({
   slug: z.string().min(1),
 })
 
-export type GtmPageLoadDataPropsType = z.infer<typeof gtmPageLoadDataPropsSchema>
+export type GtmPageLoadDataPropsType = z.infer<typeof GtmPageLoadDataPropsSchema>
 
 // TODO: Describe properly z.any() types
-export const gtmPageLoadDataSchema = z
+export const GtmPageLoadDataSchema = z
   .object({
     page_data: z.object({
       artist: z.string(),
@@ -62,6 +62,6 @@ export const gtmPageLoadDataSchema = z
       visitor_id: z.string(),
     }),
   })
-  .merge(gtmCommonDataSchema)
+  .merge(GtmCommonDataSchema)
 
-export type GtmPageLoadDataType = z.infer<typeof gtmPageLoadDataSchema>
+export type GtmPageLoadDataType = z.infer<typeof GtmPageLoadDataSchema>
