@@ -8,7 +8,7 @@ export const artistContent = groq`
 `
 
 export const ArtistContentSchema = z.object({
-  firstName: z.nullable(z.string()),
+  firstName: z.string().nullish(),
   lastName: z.string(),
   fullName: z.string(),
   summary: z.nullable(z.string()),
