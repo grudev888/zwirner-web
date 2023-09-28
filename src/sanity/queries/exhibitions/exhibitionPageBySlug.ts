@@ -2,7 +2,11 @@ import {groq} from 'next-sanity'
 import {z} from 'zod'
 
 import {mediaBuilder} from '../components/builders/mediaBuilder'
-import {ExhibitionPageContentSchema} from '../components/content/exhibitionPageContent'
+import {
+  ExhibitionPageContentSchema,
+  exhibitionSimpleFields,
+  ExhibitionSimpleFieldsSchema,
+} from '../components/content/exhibitionPageContent'
 import {dzEditorialFields, DzEditorialPropsDataSchema} from '../components/dzEditorialProps'
 import {
   dzInterstitialFields,
@@ -18,15 +22,15 @@ import {
 export const exhibitionPageBySlug = groq`
 *[_type == "exhibitionPage" && slug.current == $slug][0] {
   ...,
+  ${exhibitionSimpleFields}
   artists[]->,
   locations[]->,
-  'showChecklist': count(checklist.grid) > 0,
-  slug,
-  'checklistPDFURL': checklistPDF.asset->url,
-  'pressReleasePDFURL': pdf.asset->url,
   heroMedia {
     ${mediaBuilder}
   },
+  'showChecklist': count(checklist.grid) > 0,
+  'checklistPDFURL': checklistPDF.asset->url,
+  'pressReleasePDFURL': pdf.asset->url,
   pressRelease {
     ${dzEditorialFields}
   },
@@ -48,35 +52,28 @@ export const ExhibitionPageBySlugPropsSchema = z.object({
 
 export type ExhibitionPageBySlugPropsType = z.infer<typeof ExhibitionPageBySlugPropsSchema>
 
-export const ExhibitionPageBySlugSchema = z.object({
-  _id: ExhibitionPageContentSchema.shape._id,
-  _createdAt: z.any(),
-  _updatedAt: z.any(),
-  _type: z.literal('exhibitionPage'),
-  title: ExhibitionPageContentSchema.shape.title,
-  subtitle: ExhibitionPageContentSchema.shape.subtitle,
-  artists: ExhibitionPageContentSchema.shape.artists,
-  locations: ExhibitionPageContentSchema.shape.locations,
-  showChecklist: z.nullable(z.boolean()),
-  slug: ExhibitionPageContentSchema.shape.slug,
-  endDate: ExhibitionPageContentSchema.shape.endDate,
-  startDate: ExhibitionPageContentSchema.shape.startDate,
-  checklistPDFURL: z.nullable(z.string().url()),
-  pressReleasePDFURL: z.nullable(z.string().url()),
-  heroMedia: ExhibitionPageContentSchema.shape.heroMedia,
-  pressRelease: z.nullable(
-    z.object({
-      _type: z.literal('dzEditorial'),
-      props: DzEditorialPropsDataSchema,
-    })
-  ),
-  interstitial: z.nullable(
-    z.object({
-      _type: z.literal('dzInterstitial'),
-      props: DzInterstitialPropsDataSchema,
-    })
-  ),
-  seo: z.nullable(PageSEOFieldsSchema),
-  exploreContent: z.nullable(z.array(PageBuilderComponentsDataSchema)),
-  components: z.nullable(ComponentsByDataScheme),
-})
+export const ExhibitionPageBySlugSchema = z
+  .object({
+    heroMedia: ExhibitionPageContentSchema.shape.heroMedia,
+    artists: ExhibitionPageContentSchema.shape.artists,
+    locations: ExhibitionPageContentSchema.shape.locations,
+    pressRelease: z.nullable(
+      z.object({
+        _type: z.literal('dzEditorial'),
+        props: DzEditorialPropsDataSchema,
+      })
+    ),
+    interstitial: z.nullable(
+      z.object({
+        _type: z.literal('dzInterstitial'),
+        props: DzInterstitialPropsDataSchema,
+      })
+    ),
+    seo: PageSEOFieldsSchema,
+    exploreContent: z.nullable(z.array(PageBuilderComponentsDataSchema)),
+    components: z.nullable(ComponentsByDataScheme),
+    showChecklist: z.nullable(z.boolean()),
+    checklistPDFURL: z.nullable(z.string().url()),
+    pressReleasePDFURL: z.nullable(z.string().url()),
+  })
+  .merge(ExhibitionSimpleFieldsSchema)

@@ -7,6 +7,8 @@ import {SanitySlugSchema} from '../validationPrimitives'
 export const artworkContent = groq`
   _type == 'artwork' => {
     ...,
+    medium,
+    editionInformation,
     photos[]{
       ...,
       ${mediaBuilder}
