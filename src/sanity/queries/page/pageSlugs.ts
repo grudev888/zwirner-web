@@ -2,7 +2,8 @@ import {groq} from 'next-sanity'
 import {z} from 'zod'
 
 // UNUSED
-export const pageSlugs = groq`*[_type == "page" && defined(slug.current)][]{
+export const pageSlugs = groq`
+*[_type == "page" && defined(slug.current)][]{
   "params": { "slug": slug.current }
 }`
 

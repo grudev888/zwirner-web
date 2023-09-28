@@ -44,7 +44,7 @@ export const wrappedContentPerMolecule = groq`
 `
 
 const DzHeroRelatedContentSchema = z.object({
-  title: z.string(),
+  title: z.nullable(z.string()),
   // TODO: refine type depending on dzHero _type
   videoOverride: z
     .object({

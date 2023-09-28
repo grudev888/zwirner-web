@@ -72,9 +72,9 @@ export const contentTypesMapper: any = {
       additionalInformation,
       mediaOverride,
     } = props ?? {}
-    const mediaOverrideSource = Object.keys(mediaOverride ?? {}).length > 0 ? mediaOverride : null
     const {media, hideImage} = dzMediaMapper({
-      data: mediaOverrideSource ?? (type === ArticleTypes.INTERNAL ? header?.[0] : image),
+      override: mediaOverride,
+      data: type === ArticleTypes.INTERNAL ? header?.[0] : image,
       ImgElement: Image,
     })
     const additionalInformationText = safeText({
@@ -211,9 +211,9 @@ export const contentTypesMapper: any = {
   artist: (data: any, props: DzCardExtendedProps) => {
     const {picture, fullName} = data ?? {}
     const {cardSize, mediaOverride} = props ?? {}
-    const mediaOverrideSource = Object.keys(mediaOverride ?? {}).length > 0 ? mediaOverride : null
     const {media, hideImage} = dzMediaMapper({
-      data: mediaOverrideSource ?? {image: picture},
+      override: mediaOverride,
+      data: {image: picture},
       ImgElement: Image,
     })
 
@@ -230,9 +230,9 @@ export const contentTypesMapper: any = {
   book: (data: any, props: DzCardExtendedProps) => {
     const {title, subtitle, price, tagline, dateSelection, publisher, booksUrl} = data ?? {}
     const {cardSize, bookVariation, mediaOverride} = props ?? {}
-    const mediaOverrideSource = Object.keys(mediaOverride ?? {}).length > 0 ? mediaOverride : null
     const {media, hideImage} = dzMediaMapper({
-      data: mediaOverrideSource ?? data,
+      override: mediaOverride,
+      data: data,
       ImgElement: Image,
     })
     const ctasOverrides = ctaMapper({data: props})
@@ -298,10 +298,9 @@ export const contentTypesMapper: any = {
     const {current} = slug ?? {}
     const ctasOverrides = ctaMapper({data: props, props: {url: current, hideSecondary: true}})
 
-    const mediaOverrideSource = Object.keys(mediaOverride ?? {}).length > 0 ? mediaOverride : null
-
     const {media} = dzMediaMapper({
-      data: mediaOverrideSource ?? data?.photos?.[0],
+      override: mediaOverride,
+      data: data?.photos?.[0],
       url: current,
       ImgElement: Image,
     })
@@ -348,10 +347,10 @@ export const contentTypesMapper: any = {
     const [primaryLocation] = locations ?? []
     const {name} = primaryLocation ?? {}
     const {current} = slug ?? {}
-    const mediaOverrideSource = Object.keys(mediaOverride ?? {}).length > 0 ? mediaOverride : null
     const heroMediaSource = Object.keys(heroMedia ?? {}).length > 0 ? heroMedia : null
     const {media} = dzMediaMapper({
-      data: mediaOverrideSource ?? heroMediaSource ?? data,
+      override: mediaOverride,
+      data: heroMediaSource ?? data,
       ImgElement: Image,
     })
     const {status} = mapExhibitionStatus(data)
@@ -392,9 +391,9 @@ export const contentTypesMapper: any = {
     const {name, address, hours} = data ?? {}
     const {cardSize, mediaOverride} = props ?? {}
     const {addressLine, state, city, zipCode} = address ?? {}
-    const mediaOverrideSource = Object.keys(mediaOverride ?? {}).length > 0 ? mediaOverride : null
     const {media, hideImage} = dzMediaMapper({
-      data: mediaOverrideSource ?? data,
+      override: mediaOverride,
+      data,
       ImgElement: Image,
     })
     const currentTime = new Date()
@@ -438,12 +437,12 @@ export const contentTypesMapper: any = {
     const date = mapSingleDateFormat(dateSelection)
     const descriptionText = safeText({key: 'description', text: description})
     const {cardSize, mediaOverride} = props ?? {}
-    const mediaOverrideSource = Object.keys(mediaOverride ?? {}).length > 0 ? mediaOverride : null
     const {media} = dzMediaMapper({
-      data: mediaOverrideSource,
+      override: mediaOverride,
+      data: {},
       ImgElement: Image,
     })
-    const mediaToRender = mediaOverrideSource
+    const mediaToRender = media?.imgProps?.src
       ? media
       : {
           type: MEDIA_TYPES.PODCAST,

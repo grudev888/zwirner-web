@@ -4,10 +4,29 @@ import {z} from 'zod'
 export const artistContent = groq`
   _type == 'artist' => {
     ...
+    _type,
+    firstName,
+    lastName,
+    fullName,
+    summary,
+    description,
+    cv,
+    picture,
+    birthdate,
+    deathDate,
+    url,
+    photos,
+    biographyPicture,
+    social,
+    affiliation,
+    artistPage,
+    title,
   },
 `
 
 export const ArtistContentSchema = z.object({
+  title: z.string(),
+  _type: z.literal('artist'),
   firstName: z.string().nullish(),
   lastName: z.string(),
   fullName: z.string(),

@@ -6,6 +6,7 @@ import {MediaTypes} from '@/sanity/types'
 
 interface DzMediaImageMapper {
   data: any
+  override?: any
   url?: string
   ImgElement: any
   options?: Partial<DzMediaProps>
@@ -19,6 +20,7 @@ interface VideoSrcLinkProps {
 
 interface DzMediaVideoMapper {
   data: any
+  override?: any
   options?: Partial<DzMediaProps>
   extraVideoProps?: any
 }
@@ -202,13 +204,18 @@ export const getVideoMedia = ({data, options = {}, extraVideoProps = {}}: DzMedi
 }
 
 export const getImageMedia = ({
+  override,
   data,
   url,
   ImgElement,
   options = {},
   extraImgProps = {},
 }: DzMediaImageMapper) => {
-  const {src, alt, caption} = imageMapper(data)
+  const mediaOverrideSource =
+    override && Object.keys(override).length > 0 && override?.type && override?.type !== 'Unset'
+      ? override
+      : null
+  const {src, alt, caption} = imageMapper(mediaOverrideSource ?? data)
   return {
     media: {
       url,

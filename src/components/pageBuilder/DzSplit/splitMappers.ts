@@ -87,6 +87,7 @@ export const splitMappers: any = {
     const mediaOverrideSource = Object.keys(mediaOverride ?? {}).length > 0 ? mediaOverride : null
     const heroMediaSource = Object.keys(heroMedia ?? {}).length > 0 ? heroMedia : null
     const {media} = dzMediaMapper({
+      override: mediaOverride ?? heroMedia,
       data: mediaOverrideSource ?? heroMediaSource ?? data,
       ImgElement: Image,
     })

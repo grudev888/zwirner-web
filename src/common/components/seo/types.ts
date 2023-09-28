@@ -1,7 +1,7 @@
 import {PageSEOFieldsType} from '@/sanity/queries/components/seo/pageSEOFields'
 import {GlobalSEOScheme} from '@/sanity/types'
 
-export type SEORawData = GlobalSEOScheme | PageSEOFieldsType | undefined
+export type SEORawData = GlobalSEOScheme | PageSEOFieldsType | undefined | null
 export interface SEOComponentProps {
   isDefault?: boolean
   data: SEORawData
