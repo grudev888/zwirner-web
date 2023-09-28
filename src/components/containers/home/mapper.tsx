@@ -1,81 +1,9 @@
-import {MEDIA_ASPECT_RATIOS, TITLE_TYPES} from '@zwirner/design-system'
+import {MEDIA_ASPECT_RATIOS} from '@zwirner/design-system'
 import Image from 'next/image'
 
-import {LEARN_MORE} from '@/common/constants/commonCopies'
 import {dzMediaMapper} from '@/common/utilsMappers/image.mapper'
-import {safeText} from '@/common/utilsMappers/safe'
 
 import {parseAvailability} from './utils'
-
-export const mapHeaderCarousel = (data = []) => {
-  return (
-    data
-      // TODO Check filtering
-      // ?.filter((item) => {
-      //   const {exhibition} = item ?? {}
-      //   return validateImage(exhibition)
-      // })
-      ?.map((item) => {
-        const {exhibition} = item ?? {}
-        const {title, subtitle, heroMedia} = exhibition ?? {}
-        const heroMediaSource = Object.keys(heroMedia ?? {}).length > 0 ? heroMedia : null
-        const {media} = dzMediaMapper({data: heroMediaSource ?? exhibition, ImgElement: Image})
-
-        return {
-          category: subtitle,
-          media,
-          title,
-          linkCTA: {
-            text: LEARN_MORE,
-            linkElement: 'a',
-            url: '/',
-          },
-        }
-      }) ?? []
-  )
-}
-
-export const mapFeaturedContentSplit = (data: any) => {
-  if (!Object.keys(data).length) return null
-  const {exhibition} = data ?? {}
-
-  const isArticle = data._type === 'article'
-
-  const {title, subtitle, description} = exhibition ?? data
-
-  const {media} = dzMediaMapper({data: exhibition || data, ImgElement: Image})
-
-  return {
-    media,
-    category: subtitle,
-    title,
-    ...(isArticle ? safeText({key: 'description', text: description}) : {description}),
-    linkCTA: {
-      text: LEARN_MORE,
-      linkElement: 'a',
-      url: data.slug?.current || '/',
-    },
-  }
-}
-
-export const mapArticlesGrid = (data = []) =>
-  data
-    ?.filter((item: any) => !!item.image.image.asset)
-    ?.map((item: any) => {
-      const {media} = dzMediaMapper({
-        data: item,
-        ImgElement: Image,
-        options: {aspectRatio: MEDIA_ASPECT_RATIOS['16:9']},
-      })
-
-      return {
-        media,
-        category: item.category,
-        title: item.title,
-        ...safeText({key: 'description', text: item.description}),
-        linkCTA: {text: 'View More', linkElement: 'a', url: '/'},
-      }
-    })
 
 export const mapTabsLocations = (data: any) => {
   const mappedLocationsByCity =
@@ -151,61 +79,4 @@ export const mapTabsLocations = (data: any) => {
     const [_, locationGroup] = entry
     return locationGroup
   })
-}
-
-export const mapCarouselCards = (data: any) => {
-  return data
-    ?.filter((item: any) => {
-      const {exhibition, image, _type} = item ?? {}
-      const isArticle = _type === 'article'
-      const {photos = []} = exhibition ?? {}
-      const [mainImage] = photos ?? []
-      const {asset} = mainImage ?? (isArticle ? image?.image : null) ?? {}
-      return !!asset
-    })
-    ?.map((item: any) => {
-      const {
-        exhibition,
-        title: titleArticle,
-        category,
-        _type,
-        externalURL,
-        description,
-        slug,
-      } = item ?? {}
-      const isArticle = _type === 'article'
-      const {title, subtitle, summary} = exhibition ?? {}
-
-      const descriptionText = safeText({
-        key: 'description',
-        text: isArticle ? description : summary,
-      })
-
-      const sharedMediaOptions = {aspectRatio: MEDIA_ASPECT_RATIOS['16:9']}
-      const {media: exhibitionMedia} = dzMediaMapper({
-        data: exhibition,
-        ImgElement: Image,
-        options: sharedMediaOptions,
-      })
-      const {media: articleMedia} = dzMediaMapper({
-        data: item,
-        ImgElement: Image,
-        options: sharedMediaOptions,
-      })
-
-      const url = _type == 'article' ? externalURL ?? slug?.current : '/'
-      return {
-        id: item._id,
-        media: isArticle ? articleMedia : exhibitionMedia,
-        category: isArticle ? category : subtitle,
-        title: isArticle ? titleArticle : title,
-        titleType: TITLE_TYPES.H3,
-        ...(descriptionText ?? {}),
-        linkCTA: {
-          text: LEARN_MORE,
-          linkElement: 'a',
-          url,
-        },
-      }
-    })
 }
