@@ -2,6 +2,7 @@ import {groq} from 'next-sanity'
 import {z} from 'zod'
 
 import {ArtworkContentSchema} from '@/sanity/queries/components/content/artworkContent'
+import {pageSEOFields} from '@/sanity/queries/components/seo/pageSEOFields'
 
 import {mediaBuilder} from '../components/builders/mediaBuilder'
 
@@ -24,12 +25,15 @@ export const artworkData = groq`
   framedDimensions,
   medium,
   photos[]{
+    ...,
     ${mediaBuilder}
   },
   price,
   productInformation,
   salesInformation,
-  seo,
+  seo {
+    ${pageSEOFields}
+  },
   title,
 }`
 
