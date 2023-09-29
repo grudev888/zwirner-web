@@ -1,4 +1,4 @@
-import {GetStaticProps} from 'next'
+import {GetStaticPropsContext, InferGetStaticPropsType} from 'next'
 import {useRouter} from 'next/router'
 
 import {SEOComponent} from '@/common/components/seo/seo'
@@ -9,24 +9,8 @@ import {exhibitionPageBySlug} from '@/sanity/queries/exhibitions/exhibitionPageB
 import {getAllExhibitionPagesSlugs} from '@/sanity/services/exhibitions/getAllExhibitionPagesSlugs'
 import {getExhibitionPageBySlug} from '@/sanity/services/exhibitions/getExhibitionPageBySlug'
 
-interface PageProps {
-  data: any
-  preview: boolean
-  slug: string | null
-  token: string | null
-}
-
-interface Query {
-  [key: string]: string
-}
-
-interface PreviewData {
-  token?: string
-}
-
-export default function ExhibitionsPage({data = {}, preview}: PageProps) {
-  const {pageData = {}, queryParams} = data ?? {}
-  const {seo} = pageData ?? {}
+export default function ExhibitionsPage(props: InferGetStaticPropsType<typeof getStaticProps>) {
+  const {data, queryParams, preview} = props
   const router = useRouter()
 
   if (router.isFallback) {
@@ -38,7 +22,6 @@ export default function ExhibitionsPage({data = {}, preview}: PageProps) {
       <PreviewPage
         query={exhibitionPageBySlug}
         params={queryParams}
-        seo={seo}
         Container={ExhibitionsContainer}
       />
     )
@@ -46,10 +29,45 @@ export default function ExhibitionsPage({data = {}, preview}: PageProps) {
 
   return (
     <>
-      <SEOComponent data={seo} />
-      <ExhibitionsContainer data={pageData} />
+      <SEOComponent data={data.seo} />
+      <ExhibitionsContainer data={data} />
     </>
   )
+}
+
+export const getStaticProps = async (
+  ctx: GetStaticPropsContext & {previewData?: {token?: string}}
+) => {
+  const {params = {}, preview = false, previewData} = ctx
+
+  if (!params?.slug || !params.year) return {notFound: true}
+
+  const queryParams = {slug: `${EXHIBITIONS_URL}${params?.year}/${params?.slug}`}
+
+  if (preview && previewData?.token) {
+    return {
+      props: {
+        data: null,
+        preview,
+        queryParams,
+        slug: params?.slug || null,
+        token: previewData.token,
+      },
+    }
+  }
+
+  const data = await getExhibitionPageBySlug(queryParams)
+  if (!data) return {notFound: true}
+
+  return {
+    props: {
+      data,
+      preview,
+      queryParams,
+      slug: params?.slug || null,
+      token: null,
+    },
+  }
 }
 
 export const getStaticPaths = async () => {
@@ -71,33 +89,5 @@ export const getStaticPaths = async () => {
         }
       }),
     fallback: true,
-  }
-}
-
-export const getStaticProps: GetStaticProps<PageProps, Query, PreviewData> = async (ctx) => {
-  const {params = {}, preview = false, previewData = {}} = ctx
-  const queryParams = {slug: `${EXHIBITIONS_URL}/${params?.year}/${params?.slug}` ?? ``}
-
-  if (preview && previewData.token) {
-    return {
-      props: {
-        data: {queryParams},
-        preview,
-        slug: params?.slug || null,
-        token: previewData.token,
-      },
-    }
-  }
-
-  const data = await getExhibitionPageBySlug(queryParams)
-  if (!data) return {notFound: true}
-
-  return {
-    props: {
-      data: {queryParams, pageData: data},
-      preview,
-      slug: params?.slug || null,
-      token: null,
-    },
   }
 }

@@ -6,7 +6,7 @@ import {pageSEOFields, PageSEOFieldsSchema} from '@/sanity/queries/components/se
 import {mediaBuilder} from '../builders/mediaBuilder'
 import {SanitySlugSchema} from '../validationPrimitives'
 export const artworkContent = groq`
-  _type == 'artwork' => {    
+  _type == 'artwork' => {
     seo {
       ${pageSEOFields}
     },

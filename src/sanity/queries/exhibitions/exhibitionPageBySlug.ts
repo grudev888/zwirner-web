@@ -7,11 +7,8 @@ import {
   exhibitionSimpleFields,
   ExhibitionSimpleFieldsSchema,
 } from '../components/content/exhibitionPageContent'
-import {dzEditorialFields, DzEditorialPropsDataSchema} from '../components/dzEditorialProps'
-import {
-  dzInterstitialFields,
-  DzInterstitialPropsDataSchema,
-} from '../components/dzInterstitialProps'
+import {dzEditorialFields} from '../components/dzEditorialProps'
+import {dzInterstitialFields} from '../components/dzInterstitialProps'
 import {pageSEOFields, PageSEOFieldsSchema} from '../components/seo/pageSEOFields'
 import {componentsByData, ComponentsByDataScheme} from '../page/pageCommonQueries/componentsByData'
 import {
@@ -57,18 +54,8 @@ export const ExhibitionPageBySlugSchema = z
     heroMedia: ExhibitionPageContentSchema.shape.heroMedia,
     artists: ExhibitionPageContentSchema.shape.artists,
     locations: ExhibitionPageContentSchema.shape.locations,
-    pressRelease: z.nullable(
-      z.object({
-        _type: z.literal('dzEditorial'),
-        props: DzEditorialPropsDataSchema,
-      })
-    ),
-    interstitial: z.nullable(
-      z.object({
-        _type: z.literal('dzInterstitial'),
-        props: DzInterstitialPropsDataSchema,
-      })
-    ),
+    pressRelease: PageBuilderComponentsDataSchema,
+    interstitial: PageBuilderComponentsDataSchema,
     seo: PageSEOFieldsSchema,
     exploreContent: z.nullable(z.array(PageBuilderComponentsDataSchema)),
     components: z.nullable(ComponentsByDataScheme),
@@ -77,3 +64,5 @@ export const ExhibitionPageBySlugSchema = z
     pressReleasePDFURL: z.nullable(z.string().url()),
   })
   .merge(ExhibitionSimpleFieldsSchema)
+
+export type ExhibitionPageBySlugType = z.infer<typeof ExhibitionPageBySlugSchema>

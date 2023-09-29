@@ -62,9 +62,9 @@ export const FieldsPerTypeSchema = z.discriminatedUnion('_type', [
   ArticleContentSchema.merge(DzHeroRelatedContentSchema).extend({_type: z.literal('article')}),
   ArtworkContentSchema.merge(DzHeroRelatedContentSchema).extend({_type: z.literal('artwork')}),
   BookContentSchema.merge(DzHeroRelatedContentSchema).extend({_type: z.literal('book')}),
-  LocationContentSchema.merge(DzHeroRelatedContentSchema).extend({_type: z.literal('press')}),
-  PodcastContentSchema.merge(DzHeroRelatedContentSchema).extend({_type: z.literal('location')}),
-  PressContentSchema.merge(DzHeroRelatedContentSchema).extend({_type: z.literal('podcast')}),
+  LocationContentSchema.merge(DzHeroRelatedContentSchema).extend({_type: z.literal('location')}),
+  PodcastContentSchema.merge(DzHeroRelatedContentSchema).extend({_type: z.literal('podcast')}),
+  PressContentSchema.merge(DzHeroRelatedContentSchema).extend({_type: z.literal('press')}),
 ])
 
 // content: ComponentTypesDataSchema

@@ -1,15 +1,13 @@
-import {componentsIndex} from '../GridMolecule'
-import {ComponentsShape} from '../index'
+import {
+  DzGridMoleculePropsData,
+  GridMoleculeItemType,
+} from '@/sanity/queries/components/gridMoleculeProps'
+import {PageBuilderComponentsDataSchemaType} from '@/sanity/queries/page/pageCommonQueries/pageBuilderComponentsData'
 
-type GridProps = {
-  itemsPerRow: number
-  wrap: boolean
-  title?: string
-}
 type TransformToGridProps = {
   data: any[]
-  gridProps: GridProps
-  innerComponentType: keyof typeof componentsIndex
+  gridProps: Omit<DzGridMoleculePropsData, 'grid'>
+  innerComponentType: GridMoleculeItemType
 }
 
 type TransformToHeroProps = {
@@ -21,24 +19,29 @@ export const transformDataToGrid = ({
   data,
   gridProps,
   innerComponentType,
-}: TransformToGridProps): ComponentsShape => {
+}: TransformToGridProps): PageBuilderComponentsDataSchemaType => {
   return {
     content: [],
+    title: null,
     _type: 'grid',
     props: {
       ...gridProps,
       grid: data.map((innerData) => ({
         content: [innerData],
-        props: {},
+        props: {} as any,
         _type: innerComponentType,
       })),
     },
   }
 }
 
-export const transformDataToHero = ({data, heroProps}: TransformToHeroProps): ComponentsShape => {
+export const transformDataToHero = ({
+  data,
+  heroProps,
+}: TransformToHeroProps): PageBuilderComponentsDataSchemaType => {
   return {
     content: data,
+    title: null,
     _type: 'dzHero',
     props: {
       ...heroProps,

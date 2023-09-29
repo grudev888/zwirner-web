@@ -26,6 +26,7 @@ export const gridMoleculeProps = groq`
 `
 
 const GridMoleculeItemTypeSchema = z.enum(['dzCard', 'dzMedia'])
+export type GridMoleculeItemType = z.infer<typeof GridMoleculeItemTypeSchema>
 
 export const DzGridMoleculePropsDataSchema = z.object({
   title: z.nullable(z.string()),
@@ -41,3 +42,5 @@ export const DzGridMoleculePropsDataSchema = z.object({
     )
   ),
 })
+
+export type DzGridMoleculePropsData = z.infer<typeof DzGridMoleculePropsDataSchema>

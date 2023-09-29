@@ -8,7 +8,6 @@ import {
   FORM_MODAL_TYPES,
 } from '@zwirner/design-system'
 import {useRouter} from 'next/router'
-import {FC} from 'react'
 
 import {
   CHECKLIST,
@@ -27,25 +26,29 @@ import {
 import {RecaptchaInquireFormModal} from '@/components/forms/recaptchaInquireFormModal'
 import {useHashRoutedInquiryModal} from '@/components/hooks/useHashRoutedInquiryModal'
 import {PageBuilder} from '@/components/pageBuilder'
+import {ExhibitionPageBySlugType} from '@/sanity/queries/exhibitions/exhibitionPageBySlug'
 
 import styles from './exhibitions.module.css'
 import {heroMapper} from './mapper'
 
-interface ExhibitionsContainerProps {
-  data: any
+type Props = {
+  data: ExhibitionPageBySlugType
 }
 
-export const ExhibitionsContainer: FC<ExhibitionsContainerProps> = ({data}) => {
+export const ExhibitionsContainer = ({data: initialData}: Props) => {
   const router = useRouter()
   const inquireFormModalProps = useHashRoutedInquiryModal()
-  const {slug, showChecklist, startDate, endDate, title, subtitle} = data ?? {}
+  const {slug, showChecklist, startDate, endDate, title, subtitle} = initialData
   const exhibitionTitle = `${title}${subtitle ? `: ${subtitle}` : ''}`
-  const currentSlug = slug?.current ?? ''
-  const heroData = heroMapper(data)
+  const currentSlug = slug.current
+  const heroData = heroMapper(initialData)
 
-  data.location = data?.locations?.[0]
-  data.exhibitionState = getExhibitionState(data)
-  data.exhibitionDateRangeText = formatDateRange(startDate, endDate)
+  const data = {
+    ...initialData,
+    location: initialData.locations?.[0],
+    exhibitionState: getExhibitionState(initialData),
+    exhibitionDateRangeText: formatDateRange(startDate, endDate),
+  }
 
   return data ? (
     <>
@@ -83,11 +86,22 @@ export const ExhibitionsContainer: FC<ExhibitionsContainerProps> = ({data}) => {
         className="col-span-12"
       />
       <DzColumn span={12}>
-        <DzTitleExhibition
-          {...data}
-          showCoordinates
-          onClickCTA={inquireFormModalProps.openClickHandler}
-        />
+        {/* TODO: update design system types to accept 'null' in subtitle, checklistPDFURL, displayDate and pressReleasePDFURL*/}
+        {data.artists && data.exhibitionState ? (
+          <DzTitleExhibition
+            artists={data.artists}
+            checklistPDFURL={data.checklistPDFURL ?? undefined}
+            displayDate={data.displayDate ?? undefined}
+            exhibitionState={data.exhibitionState}
+            exhibitionDateRangeText={data.exhibitionDateRangeText}
+            location={data.location}
+            pressReleasePDFURL={data.pressReleasePDFURL ?? undefined}
+            title={data.title}
+            subtitle={data.subtitle ?? undefined}
+            showCoordinates
+            onClickCTA={inquireFormModalProps.openClickHandler}
+          />
+        ) : null}
       </DzColumn>
 
       <DzColumn span={12}>

@@ -1,6 +1,8 @@
 import {groq} from 'next-sanity'
 import {z} from 'zod'
 
+import {ArtistContentSchema} from './artistContent'
+
 export const bookContent = groq`
   _type == 'book' => {
     title,
@@ -30,5 +32,5 @@ export const BookContentSchema = z.object({
   description: z.nullable(z.array(z.any())),
   price: z.nullable(z.number()),
   authors: z.nullable(z.array(z.any())),
-  artists: z.nullable(z.array(z.any())),
+  artists: z.nullable(z.array(ArtistContentSchema)),
 })

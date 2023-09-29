@@ -7,8 +7,8 @@ import {capitalizeFirstLetter} from '@/utils/string/capitalizeFirstLetter'
 
 export const mapArtworkData = ({artists, artworkCTA}: ArtworkDataType) => {
   return {
-    artistName: artists?.[0].fullName,
-    artistSlug: artists?.[0].artistPage?.slug?.current,
+    artistName: artists?.[0]?.fullName,
+    artistSlug: artists?.[0]?.artistPage?.slug?.current,
     primaryCta: artworkCTA?.CTA &&
       artworkCTA?.CTA !== 'none' && {
         text: artworkCTA.CTAText || capitalizeFirstLetter(artworkCTA?.CTA),

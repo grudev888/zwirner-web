@@ -3,6 +3,7 @@ import {z} from 'zod'
 
 import {mediaBuilder, MediaBuilderSchema} from '../builders/mediaBuilder'
 import {SanitySlugSchema} from '../validationPrimitives'
+import {ArtistContentSchema} from './artistContent'
 
 export const exhibitionSimpleFields = groq`
   _id,
@@ -46,7 +47,7 @@ export const exhibitionComplexFields = groq`
 
 export const ExhibitionComplexFieldsSchema = z.object({
   photos: z.nullable(z.array(z.any())),
-  artists: z.nullable(z.array(z.any())),
+  artists: z.nullable(z.array(ArtistContentSchema)),
   artworks: z.nullable(z.array(z.any())),
   collections: z.nullable(z.array(z.any())),
   locations: z.nullable(z.array(z.any())),

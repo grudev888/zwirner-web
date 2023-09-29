@@ -44,7 +44,7 @@ export const pageBuilderComponentsData = groq`
 `
 
 const PageBuilderBase = z.object({
-  title: z.string(),
+  title: z.nullable(z.string()),
   content: ComponentTypesDataSchema,
 })
 
@@ -80,3 +80,5 @@ export const PageBuilderComponentsDataSchema = z.discriminatedUnion('_type', [
     z.object({props: DzGridMoleculePropsDataSchema})
   ),
 ])
+
+export type PageBuilderComponentsDataSchemaType = z.infer<typeof PageBuilderComponentsDataSchema>

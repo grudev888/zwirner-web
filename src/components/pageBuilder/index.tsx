@@ -1,7 +1,7 @@
 import {DzColumn} from '@zwirner/design-system'
-import {FC} from 'react'
 
 import {FullWidthFlexCol} from '@/components/containers/layout/FullWidthFlexCol'
+import {PageBuilderComponentsDataSchemaType} from '@/sanity/queries/page/pageCommonQueries/pageBuilderComponentsData'
 
 import {DzCard} from './DzCard/DzCard'
 import {CarouselMolecule} from './DzCarousel/DzCarousel'
@@ -25,17 +25,11 @@ export const componentsIndex: any = {
   grid: GridMolecule,
 }
 
-export interface ComponentsShape {
-  content: any
-  props: any
-  _type: string
+type PageBuilderProps = {
+  components: PageBuilderComponentsDataSchemaType[]
 }
 
-interface PageBuilderProps {
-  components: ComponentsShape[]
-}
-
-export const PageBuilder: FC<PageBuilderProps> = ({components = []}) => {
+export const PageBuilder = ({components = []}: PageBuilderProps) => {
   return (
     <DzColumn span={12}>
       <FullWidthFlexCol>

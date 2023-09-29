@@ -3,7 +3,7 @@ import {z} from 'zod'
 
 export const artistContent = groq`
   _type == 'artist' => {
-    ...
+    ...,
     _type,
     firstName,
     lastName,
@@ -20,12 +20,10 @@ export const artistContent = groq`
     social,
     affiliation,
     artistPage,
-    title,
   },
 `
 
 export const ArtistContentSchema = z.object({
-  title: z.string(),
   _type: z.literal('artist'),
   firstName: z.string().nullish(),
   lastName: z.string(),

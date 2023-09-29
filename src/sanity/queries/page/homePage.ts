@@ -7,7 +7,6 @@ import {
   PageBuilderComponentsDataSchema,
 } from './pageCommonQueries/pageBuilderComponentsData'
 
-// UNUSED
 export const homePage = groq`
 *[_type == "home"][0] {
   _id,
