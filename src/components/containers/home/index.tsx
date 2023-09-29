@@ -12,14 +12,14 @@ interface HomeContainerProps {
 }
 
 export const HomeContainer: FC<HomeContainerProps> = ({data}) => {
-  const {locations, exceptionalWorkContent} = data ?? {}
+  const {locations, homeContent} = data ?? {}
   const tabsLocations = mapTabsLocations(locations)
 
   return (
     <DzColumn span={12}>
       <h1 className="sr-only">David Zwirner Gallery</h1>
       <FullWidthFlexCol>
-        {exceptionalWorkContent ? <PageBuilder components={exceptionalWorkContent} /> : null}
+        {homeContent ? <PageBuilder components={homeContent} /> : null}
         <section>
           <h2 className="sr-only">Locations</h2>
           <DzTabsCards
