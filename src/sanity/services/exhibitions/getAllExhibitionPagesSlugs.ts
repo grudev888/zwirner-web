@@ -1,11 +1,11 @@
 import {client} from '@/sanity/client'
 import {
-  ExhibitionPageBySlugsSchema,
   exhibitionPageSlugs,
+  ExhibitionPageSlugsSchema,
 } from '@/sanity/queries/exhibitions/exhibitionPageSlugs'
 
 export async function getAllExhibitionPagesSlugs() {
   const data = await client.fetch(exhibitionPageSlugs)
-  const validatedData = await ExhibitionPageBySlugsSchema.parse(data)
+  const validatedData = await ExhibitionPageSlugsSchema.parse(data)
   return validatedData
 }

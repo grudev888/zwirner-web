@@ -44,8 +44,12 @@ export const pageBuilderComponentsData = groq`
 `
 
 const PageBuilderBase = z.object({
-  title: z.nullable(z.string()),
+  title: z.string().nullish(),
   content: ComponentTypesDataSchema,
+})
+const PageBuilderNoContent = z.object({
+  title: z.string().nullish(),
+  content: z.undefined().nullable(),
 })
 
 export const PageBuilderComponentsDataSchema = z.discriminatedUnion('_type', [
@@ -55,7 +59,7 @@ export const PageBuilderComponentsDataSchema = z.discriminatedUnion('_type', [
   PageBuilderBase.extend({_type: z.literal('dzCarousel')}).merge(
     z.object({props: DzCarouselPropsDataSchema})
   ),
-  PageBuilderBase.extend({_type: z.literal('dzEditorial')}).merge(
+  PageBuilderNoContent.extend({_type: z.literal('dzEditorial')}).merge(
     z.object({props: DzEditorialPropsDataSchema})
   ),
   PageBuilderBase.extend({_type: z.literal('dzHero')}).merge(
@@ -64,7 +68,7 @@ export const PageBuilderComponentsDataSchema = z.discriminatedUnion('_type', [
   PageBuilderBase.extend({_type: z.literal('dzHeroCarousel')}).merge(
     z.object({props: DzHeroCarouselPropsDataSchema})
   ),
-  PageBuilderBase.extend({_type: z.literal('dzInterstitial')}).merge(
+  PageBuilderNoContent.extend({_type: z.literal('dzInterstitial')}).merge(
     z.object({props: DzInterstitialPropsDataSchema})
   ),
   PageBuilderBase.extend({_type: z.literal('dzSplit')}).merge(
