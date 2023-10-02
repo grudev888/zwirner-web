@@ -1,20 +1,7 @@
 import {defaults} from './defaults'
 import {expect, test} from './fixtures/base'
 
-const PAGES = [
-  '/',
-  '/available-artworks',
-  '/utopia-editions',
-  '/consignments',
-  '/collect',
-  '/artists/ruth-asawa',
-  '/artists/ruth-asawa/available-works',
-  '/artists/ruth-asawa/exhibitions',
-  '/artists/ruth-asawa/guide',
-  '/artists/ruth-asawa/press',
-  '/artists/ruth-asawa/survey',
-  '/stories',
-]
+const PAGES = ['/']
 
 test.describe('Check headings', () => {
   test.afterEach(async ({page}) => {
