@@ -26,7 +26,7 @@ import {
   ArticleTypes,
   BookVariation,
   DzCardExtendedProps,
-  PressVariation,
+  MediaTypes,
 } from '@/sanity/types'
 
 export const dzCardOverrides = (props: DzCardExtendedProps) => {
@@ -67,14 +67,18 @@ export const contentTypesMapper: any = {
       primarySubtitle: primarySubtitleOverride,
       secondarySubtitle,
       secondaryTitle: secondaryTitleOverride,
-      pressVariation,
       cardSize,
       additionalInformation,
       mediaOverride,
     } = props ?? {}
+
+    const {type: headerImageType} = header?.[0] ?? {}
+    const sourceImage = Object.values(MediaTypes).includes(headerImageType)
+      ? header?.[0]
+      : header?.[0]?.photos?.[0]
     const {media, hideImage} = dzMediaMapper({
       override: mediaOverride,
-      data: type === ArticleTypes.INTERNAL ? header?.[0] : image,
+      data: type === ArticleTypes.INTERNAL ? sourceImage : image,
       ImgElement: Image,
     })
     const additionalInformationText = safeText({
@@ -83,121 +87,138 @@ export const contentTypesMapper: any = {
     })
     const descriptionText = safeText({key: 'description', text: description})
     const articleUrl = type === ArticleTypes.EXTERNAL ? externalURL : current ?? '/'
-    const ctasOverrides = ctaMapper({
-      data: props,
-      props: {url: articleUrl, hideSecondary: true, defaultLinkText: READ_MORE},
-    })
+    // const ctasOverrides = ctaMapper({
+    //   data: props,
+    //   props: {url: articleUrl, hideSecondary: true, defaultLinkText: READ_MORE},
+    // })
     const date = mapSingleDateFormat(publishDate)
+    const linkText = externalURL
+      ? `${LEARN_MORE} at ${new URL(externalURL)?.host?.replace('www.', '')}`
+      : VIEW_MORE
+
     let cardProps = {}
 
-    switch (category) {
-      case ArticleCategories.NEWS:
-        {
-          cardProps = {
-            media,
-            hideImage,
-            category,
-            title,
-            subtitle: primarySubtitle,
-            secondaryTitle: subtitle,
-            secondarySubtitle,
-            cardLink: {href: articleUrl, openNewTab: true, LinkElement: Link},
-            ...(ctasOverrides ?? {}),
-            ...(descriptionText ?? {}),
-            ...(additionalInformationText ?? {}),
-          }
-        }
-        break
-      case ArticleCategories.PRESS:
-        {
-          const isSelectedPress = pressVariation === PressVariation.SELECTED_PRESS
-          const secondaryTitle = isSelectedPress ? subtitle ?? secondaryTitleOverride : ''
-          const subtitlePrimary = !isSelectedPress ? primarySubtitle ?? primarySubtitleOverride : ''
+    // RULES FOR ARTICLES
+    const isNewsArticle =
+      (type === ArticleTypes.INTERNAL || type === ArticleTypes.EXTERNAL) &&
+      category === ArticleCategories.NEWS
+    const isSelectedPressVariant = type === ArticleTypes.PRESS
+    const isPressArticle =
+      (type === ArticleTypes.INTERNAL || type === ArticleTypes.EXTERNAL) &&
+      category === ArticleCategories.PRESS
+    const isEventNews =
+      (type === ArticleTypes.INTERNAL || type === ArticleTypes.EXTERNAL) &&
+      category === ArticleCategories.EVENT
+    const isMuseumHighlight =
+      (type === ArticleTypes.INTERNAL || type === ArticleTypes.EXTERNAL) &&
+      category === ArticleCategories.MUSEUM_HIGHLIGHTS
+    const isMuseumExhibition =
+      (type === ArticleTypes.INTERNAL || type === ArticleTypes.EXTERNAL) &&
+      category === ArticleCategories.MUSEUM_EXHIBITION
 
-          cardProps = {
-            media,
-            hideImage: isSelectedPress || hideImage,
-            ...(!isSelectedPress ? {category} : {}),
-            title,
-            secondaryTitle,
-            subtitle: subtitlePrimary,
-            secondarySubtitle: date,
-            cardLink: {href: articleUrl, openNewTab: true, LinkElement: Link},
-            ...(ctasOverrides ?? {}),
-            ...(!isSelectedPress ? descriptionText ?? {} : {}),
-          }
-        }
-        break
-      case ArticleCategories.EVENT:
-        {
-          const {name} = location ?? {}
-          cardProps = {
-            media,
-            hideImage,
-            category,
-            subtitle: primarySubtitle,
-            secondarySubtitle: date,
-            secondaryTitle: name,
-            title,
-            cardLink: {href: articleUrl, openNewTab: true, LinkElement: Link},
-            ...(descriptionText ?? {}),
-            ...(ctasOverrides ?? {}),
-          }
-        }
-        break
-      case ArticleCategories.MUSEUM_EXHIBITION_PRESS:
-      case ArticleCategories.MUSEUM_HIGHLIGHTS:
-        {
-          cardProps = {
-            title,
-            media,
-            hideImage,
-            category,
-            subtitle: primarySubtitle ?? primarySubtitleOverride,
-            ...(descriptionText ?? {}),
-            cardLink: {href: articleUrl, openNewTab: true, LinkElement: Link},
-            linkCTA: {
-              text: VIEW_MORE,
-              url: articleUrl,
-              linkElement: Link,
-              linkProps: {openNewTab: true},
-            },
-          }
-        }
-        break
-      case ArticleCategories.MUSEUM_EXHIBITION_RECORD:
-        {
-          const linkText = externalURL
-            ? `${LEARN_MORE} at ${new URL(externalURL)?.host?.replace('www.', '')}`
-            : VIEW_MORE
-          cardProps = {
-            title,
-            media,
-            hideImage,
-            category,
-            secondaryTitle: subtitle ?? secondaryTitleOverride,
-            subtitle: primarySubtitle ?? primarySubtitleOverride,
-            secondarySubtitle: displayDate ?? date,
-            cardLink: {href: externalURL ?? current, openNewTab: true, LinkElement: Link},
-            ...(descriptionText ?? {}),
-            linkCTA: {
-              text: linkText,
-              url: externalURL ?? current,
-              linkElement: Link,
-              linkProps: {openNewTab: true},
-            },
-          }
-        }
-        break
-      default:
-        {
-          cardProps = {
-            media,
-            hideImage,
-            title,
-          }
-        }
-        break
+    if (isNewsArticle) {
+      cardProps = {
+        media,
+        hideImage,
+        category,
+        title,
+        subtitle: primarySubtitle,
+        secondaryTitle: subtitle,
+        secondarySubtitle,
+        cardLink: {href: articleUrl, openNewTab: true, LinkElement: Link},
+        linkCTA: {
+          text: READ_MORE,
+          linkElement: Link,
+          url: articleUrl,
+          openNewTab: false,
+        },
+        ...(descriptionText ?? {}),
+        ...(additionalInformationText ?? {}),
+      }
+    } else if (isSelectedPressVariant) {
+      cardProps = {
+        media,
+        hideImage: true,
+        title,
+        secondaryTitle: subtitle,
+        secondarySubtitle: date,
+        cardLink: {href: articleUrl, openNewTab: true, LinkElement: Link},
+        linkCTA: {
+          text: READ_MORE,
+          linkElement: Link,
+          url: articleUrl,
+          openNewTab: false,
+        },
+      }
+    } else if (isPressArticle) {
+      cardProps = {
+        media,
+        hideImage: hideImage,
+        category,
+        title,
+        secondaryTitle: secondaryTitleOverride,
+        subtitle: primarySubtitle ?? primarySubtitleOverride,
+        linkCTA: {
+          text: READ_MORE,
+          linkElement: Link,
+          url: articleUrl,
+          openNewTab: false,
+        },
+        cardLink: {href: articleUrl, openNewTab: true, LinkElement: Link},
+        ...(descriptionText ?? {}),
+      }
+    } else if (isEventNews) {
+      const {name} = location ?? {}
+      cardProps = {
+        media,
+        hideImage,
+        category,
+        subtitle: primarySubtitle,
+        secondarySubtitle: date,
+        secondaryTitle: name,
+        title,
+        cardLink: {href: articleUrl, openNewTab: true, LinkElement: Link},
+        linkCTA: {
+          text: READ_MORE,
+          linkElement: Link,
+          url: articleUrl,
+          openNewTab: false,
+        },
+        ...(descriptionText ?? {}),
+      }
+    } else if (isMuseumHighlight) {
+      cardProps = {
+        title,
+        media,
+        hideImage,
+        category,
+        subtitle: primarySubtitle ?? primarySubtitleOverride,
+        secondaryTitle: subtitle ?? secondaryTitleOverride,
+        secondarySubtitle: displayDate ?? date,
+        cardLink: {href: articleUrl, openNewTab: true, LinkElement: Link},
+        linkCTA: {
+          text: linkText,
+          url: articleUrl,
+          linkElement: Link,
+          linkProps: {openNewTab: true},
+        },
+      }
+    } else if (isMuseumExhibition) {
+      cardProps = {
+        title,
+        media,
+        hideImage,
+        category,
+        subtitle: primarySubtitle ?? primarySubtitleOverride,
+        cardLink: {href: articleUrl, openNewTab: true, LinkElement: Link},
+        ...(descriptionText ?? {}),
+        linkCTA: {
+          text: linkText,
+          url: articleUrl,
+          linkElement: Link,
+          linkProps: {openNewTab: true},
+        },
+      }
     }
 
     return {

@@ -1,9 +1,4 @@
-import {
-  ButtonModes,
-  INTERSTITIAL_TEXT_COLORS,
-  MEDIA_TYPES,
-  SPLIT_TYPES,
-} from '@zwirner/design-system'
+import {MEDIA_TYPES, SPLIT_TYPES} from '@zwirner/design-system'
 import Image from 'next/image'
 
 import {
@@ -60,24 +55,6 @@ export const utopiaFeatureMap = (data: any) => {
         linkElement: 'a',
         url,
       },
-    },
-  }
-}
-
-export const interstitialMap = (data: any) => {
-  const {title, cta} = data ?? {}
-  const {text} = cta ?? {}
-  return {
-    data: {
-      split: false,
-      title,
-      primaryCta: {
-        text,
-        ctaProps: {
-          mode: ButtonModes.DARK,
-        },
-      },
-      textColor: INTERSTITIAL_TEXT_COLORS.BLACK,
     },
   }
 }

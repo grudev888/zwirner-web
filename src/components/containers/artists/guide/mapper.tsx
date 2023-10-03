@@ -5,7 +5,7 @@ import {Fragment} from 'react'
 import {EXHIBITIONS_URL} from '@/common/constants/commonCopies'
 import {dzMediaMapper} from '@/common/utilsMappers/image.mapper'
 import {safeText} from '@/common/utilsMappers/safe'
-import {ArticleTypes} from '@/sanity/types'
+import {ArticleTypes, MediaTypes} from '@/sanity/types'
 
 const formatDate = (date: string) => {
   const dateParsed = new Date(date)
@@ -39,8 +39,14 @@ export const articlesGridMap = (data: any[]) => {
       objectFit: MEDIA_OBJECT_FIT.COVER,
       aspectRatio: MEDIA_ASPECT_RATIOS['16:9'],
     }
+
+    const {type: headerImageType} = header?.[0] ?? {}
+    const sourceImage = Object.values(MediaTypes).includes(headerImageType)
+      ? header?.[0]
+      : header?.[0]?.photos?.[0]
+
     const {media: articleMedia, hideMedia: hideImgArticle} = dzMediaMapper({
-      data: type === ArticleTypes.INTERNAL ? header?.[0] : image ?? relatedArticles,
+      data: type === ArticleTypes.INTERNAL ? sourceImage : image ?? relatedArticles,
       ImgElement: Image,
       options: SharedMediaOptions,
     })

@@ -10,13 +10,18 @@ import {
 } from '@/common/constants/commonCopies'
 import {dzMediaMapper} from '@/common/utilsMappers/image.mapper'
 import {safeText} from '@/common/utilsMappers/safe'
-import {ArticleTypes} from '@/sanity/types'
+import {ArticleTypes, MediaTypes} from '@/sanity/types'
 
 export const heroMapper = (data: any) => {
   const {title, type, header, image} = data ?? {}
 
+  const {type: headerImageType} = header?.[0] ?? {}
+  const sourceImage = Object.values(MediaTypes).includes(headerImageType)
+    ? header?.[0]
+    : header?.[0]?.photos?.[0]
+
   const {media, hideMedia} = dzMediaMapper({
-    data: type === ArticleTypes.INTERNAL ? header?.[0] : image,
+    data: type === ArticleTypes.INTERNAL ? sourceImage : image,
     ImgElement: Image,
   })
   return {
@@ -51,8 +56,13 @@ export const articlesGridMap = (data: any[]) => {
       aspectRatio: MEDIA_ASPECT_RATIOS['16:9'],
     }
 
+    const {type: headerImageType} = header?.[0] ?? {}
+    const sourceImage = Object.values(MediaTypes).includes(headerImageType)
+      ? header?.[0]
+      : header?.[0]?.photos?.[0]
+
     const {media: relatedArticleMedia, hideImage: hideImgArticle} = dzMediaMapper({
-      data: type === ArticleTypes.INTERNAL ? header?.[0] : image ?? relatedArticles,
+      data: type === ArticleTypes.INTERNAL ? sourceImage : image ?? relatedArticles,
       ImgElement: Image,
       options: sharedImageOptions,
     })

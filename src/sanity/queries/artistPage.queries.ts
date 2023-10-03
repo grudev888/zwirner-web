@@ -1,5 +1,7 @@
 import {groq} from 'next-sanity'
 
+import {articleContent} from '@/sanity/queries/components/content/articleContent'
+
 import {artworkFields} from './artwork.queries'
 import {mediaBuilder} from './components/builders/mediaBuilder'
 import {
@@ -28,6 +30,8 @@ export const artistPageBySlug = groq`
   ...,
   _id,
   title,
+  availableWorksInterstitial,
+  exhibitionsInterstitial,
   "artist": artist-> { ..., "cvUrl": cv.asset->url },
   survey {
   ...,
@@ -56,7 +60,7 @@ export const artistPageBySlug = groq`
   selectedPress { ..., items[]->, },
   books { ..., items[]->, },
   featured->{
-    _type == "article"=>{...},
+    ${articleContent}
     _type == "artwork"=>{
       ${artworkFields}
     },

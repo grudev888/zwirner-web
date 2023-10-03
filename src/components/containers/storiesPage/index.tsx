@@ -190,7 +190,7 @@ export const StoriesContainer: FC<StoriesContainerProps> = ({data}) => {
           ) : null}
           {mailingListInterstitial ? (
             <div className="-mx-5">
-              <DzInterstitial {...interstitialData} />
+              {interstitialData ? <DzInterstitial {...interstitialData} /> : null}
             </div>
           ) : null}
         </FullWidthFlexCol>

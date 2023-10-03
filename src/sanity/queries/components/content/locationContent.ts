@@ -3,7 +3,8 @@ import {z} from 'zod'
 
 export const locationContent = groq`
   _type == 'location' => {
-    ...
+    ...,
+    _type,
   },
 `
 const LocationTimezoneSchema = z.enum([

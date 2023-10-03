@@ -92,7 +92,7 @@ export const ArticleContainer: FC<ArticleContainerProps> = ({data}) => {
           ) : null}
         </article>
 
-        {interstitial ? <DzInterstitial {...interstitialData} /> : null}
+        {interstitialData ? <DzInterstitial {...interstitialData} /> : null}
 
         {articles ? (
           <section>

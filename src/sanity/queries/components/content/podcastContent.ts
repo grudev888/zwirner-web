@@ -3,7 +3,8 @@ import {z} from 'zod'
 
 export const podcastContent = groq`
   _type == 'podcast' => {
-    ...
+    ...,
+    _type,
   },
 `
 

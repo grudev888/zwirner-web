@@ -4,6 +4,7 @@ import {z} from 'zod'
 export const pressContent = groq`
   _type == 'press' => {
     ...,
+    _type,
     "authors": authors[]->
   },
 `

@@ -27,6 +27,7 @@ import {
   VIEW_ALL_TITLE,
 } from '@/common/constants/commonCopies'
 import {FullWidthFlexCol} from '@/components/containers/layout/FullWidthFlexCol'
+import {dzInterstitialOverrides} from '@/components/pageBuilder/DzInterstitial/interstitialMapper'
 import {ContainerTitle} from '@/components/wrappers/title/ContainerTitle'
 
 import styles from './collect.module.css'
@@ -35,8 +36,6 @@ import {
   consignmentsMap,
   exhibitionCarouselMapper,
   heroMapper,
-  interstitialMap,
-  platformInterstitialMap,
   utopiaFeatureMap,
 } from './mapper'
 
@@ -72,8 +71,8 @@ export const CollectContainer: FC<CollectContainerProps> = ({data}) => {
   const artworksData = artworksGridMap(featuredArtworks)
   const formProps = consignmentsMap(consignmentsFeature)
   const utopiaSplitData = utopiaFeatureMap(utopiaFeature)
-  const platformData = platformInterstitialMap(platformInterstitial)
-  const interstitialData = interstitialMap(interstitial)
+  const platformData = dzInterstitialOverrides(platformInterstitial)
+  const interstitialData = dzInterstitialOverrides(interstitial)
 
   const renderCarousel = (data: any, size: DzCarouselCardSize = DzCarouselCardSize.L) => (
     <DzColumn span={12} className={styles.fullSection}>
@@ -138,8 +137,8 @@ export const CollectContainer: FC<CollectContainerProps> = ({data}) => {
 
           <h2 className="sr-only">Utopia Editions</h2>
           <DzSplit {...utopiaSplitData} />
-          <DzInterstitial {...platformData} />
-          <DzInterstitial {...interstitialData} />
+          {platformData ? <DzInterstitial {...platformData} /> : null}
+          {interstitialData ? <DzInterstitial {...interstitialData} /> : null}
         </FullWidthFlexCol>
       </DzColumn>
     </>

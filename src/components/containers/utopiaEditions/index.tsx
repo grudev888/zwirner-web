@@ -18,13 +18,7 @@ import {FullWidthFlexCol} from '@/components/containers/layout/FullWidthFlexCol'
 import {dzInterstitialOverrides} from '@/components/pageBuilder/DzInterstitial/interstitialMapper'
 import {ContainerTitle} from '@/components/wrappers/title/ContainerTitle'
 
-import {
-  artworksGridMap,
-  heroMap,
-  interstitialNewReleasesMap,
-  mapCarouselCards,
-  utopiaMainMediaMap,
-} from './mapper'
+import {artworksGridMap, heroMap, mapCarouselCards, utopiaMainMediaMap} from './mapper'
 import styles from './utopia.module.css'
 
 const DzComplexGrid = dynamic(
@@ -53,7 +47,7 @@ export const UtopiaEditionsContainer: FC<UtopiaEditionsProps> = ({data}) => {
   } = data ?? {}
 
   const mediaProps = utopiaMainMediaMap(media)
-  const interstitialProps = interstitialNewReleasesMap(newReleasesInterstitial)
+  const interstitialProps = dzInterstitialOverrides(newReleasesInterstitial)
   const nowAvailableData = heroMap(nowAvailable)
   const comingSoonData = heroMap(comingSoon)
   const artworksData = artworksGridMap(artworksGrid)
@@ -79,17 +73,19 @@ export const UtopiaEditionsContainer: FC<UtopiaEditionsProps> = ({data}) => {
       <FullWidthFlexCol>
         <DzMedia imgClass={styles.mediaImage} {...mediaProps} />
 
-        <section>
-          <h2 className="sr-only">Get Alerts About New Releases</h2>
-          <DzInterstitial
-            data={{
-              ...interstitialProps,
-              customDescriptionClass: styles.interstitialTitle,
-              classNameContent: styles.interstitial,
-              customClass: styles.interstitialWrapper,
-            }}
-          />
-        </section>
+        {interstitialProps ? (
+          <section>
+            <h2 className="sr-only">Get Alerts About New Releases</h2>
+            <DzInterstitial
+              data={{
+                ...interstitialProps.data,
+                customDescriptionClass: styles.interstitialTitle,
+                classNameContent: styles.interstitial,
+                customClass: styles.interstitialWrapper,
+              }}
+            />
+          </section>
+        ) : null}
 
         <section className={styles.heroSection}>
           <DzTitleMolecule
@@ -117,10 +113,12 @@ export const UtopiaEditionsContainer: FC<UtopiaEditionsProps> = ({data}) => {
           {...artworksData}
         />
 
-        <section>
-          <h2 className="sr-only">Sign Up</h2>
-          <DzInterstitial {...interstitialData} />
-        </section>
+        {interstitialData ? (
+          <section>
+            <h2 className="sr-only">Sign Up</h2>
+            <DzInterstitial {...interstitialData} />
+          </section>
+        ) : null}
 
         {carouselCards ? (
           <section>

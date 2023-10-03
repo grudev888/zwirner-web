@@ -85,7 +85,7 @@ export const ctaMapperInterstitial = ({data, props}: CtaMapperInterstitial) => {
   // TODO unify CTA inside the studio
   const {blank, href} = (link as any) ?? {}
   const primaryActionIsLink = action === CtaActions.LINK_CONTENT || action === CtaActions.LINK
-  const {url = false} = props ?? {}
+  const {url = false, customAction} = props ?? {}
 
   const primaryCTAMap = text
     ? {
@@ -93,7 +93,11 @@ export const ctaMapperInterstitial = ({data, props}: CtaMapperInterstitial) => {
           text: text,
           ctaProps: {
             onClick: (ctaProps: any) => {
-              handleClick(action, ctaProps)
+              if (customAction && typeof customAction === 'function') {
+                customAction(action, ctaProps)
+              } else {
+                handleClick(action, ctaProps)
+              }
             },
           },
         },

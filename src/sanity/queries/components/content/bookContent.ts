@@ -5,6 +5,7 @@ import {ArtistContentSchema} from './artistContent'
 
 export const bookContent = groq`
   _type == 'book' => {
+    _type,
     title,
     subtitle,
     tagline,

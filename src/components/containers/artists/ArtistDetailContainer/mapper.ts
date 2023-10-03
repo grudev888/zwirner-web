@@ -12,27 +12,7 @@ import {LEARN_MORE} from '@/common/constants/commonCopies'
 import {ctaMapper} from '@/common/utilsMappers/cta.mapper'
 import {dzMediaMapper} from '@/common/utilsMappers/image.mapper'
 import {safeText} from '@/common/utilsMappers/safe'
-import {CtaActions} from '@/sanity/types'
-
-export const mapInterstitial = (data: any, onCTAClick?: () => void) => {
-  if (!data?.title) return null
-
-  const {media} = dzMediaMapper({data, ImgElement: Image})
-  return {
-    split: false,
-    title: data.title,
-    description: data.description || data.subtitle,
-    mode: data.mode || 'Dark',
-    primaryCta: {
-      text: data.cta?.text,
-      ctaProps: {onClick: onCTAClick},
-    },
-    ...(data.image?.asset && {
-      media,
-    }),
-    customClass: '-mx-5',
-  }
-}
+import {CtaActions, MediaTypes} from '@/sanity/types'
 
 export const mapCarouselArtworks = (data: any, isSmall: boolean) => {
   if (!data?.title) return null
@@ -233,6 +213,11 @@ export const mapFeatured = (data: any) => {
   } else if (data._type === 'article') {
     const {header} = data ?? {}
 
+    const {type: headerImageType} = header?.[0] ?? {}
+    const sourceImage = Object.values(MediaTypes).includes(headerImageType)
+      ? header?.[0]
+      : header?.[0]?.photos?.[0]
+
     const dateFormatter = new Intl.DateTimeFormat('en-US', {
       timeZone: 'America/New_York',
       month: 'long',
@@ -245,7 +230,7 @@ export const mapFeatured = (data: any) => {
       (data.publishDate ? dateFormatter.format(parseISO(data.publishDate)) : null)
 
     const {media, hideMedia} = dzMediaMapper({
-      data: header ?? data,
+      data: sourceImage ?? data,
       ImgElement: Image,
     })
 
@@ -353,7 +338,13 @@ export const mapHero = (data: any) => {
 }
 
 export const mapArticlesCard = (item: any, noMedia = false) => {
-  const {media} = dzMediaMapper({data: item, ImgElement: Image})
+  const {header} = item ?? {}
+  const {type: headerImageType} = header?.[0] ?? {}
+  const sourceImage = Object.values(MediaTypes).includes(headerImageType)
+    ? header?.[0]
+    : header?.[0]?.photos?.[0]
+
+  const {media} = dzMediaMapper({data: sourceImage, ImgElement: Image})
 
   const dateFormatter = new Intl.DateTimeFormat('en-US', {
     timeZone: 'America/New_York',

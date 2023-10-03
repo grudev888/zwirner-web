@@ -7,6 +7,7 @@ import {mediaBuilder} from '../builders/mediaBuilder'
 import {SanitySlugSchema} from '../validationPrimitives'
 export const artworkContent = groq`
   _type == 'artwork' => {
+    _type,
     seo {
       ${pageSEOFields}
     },

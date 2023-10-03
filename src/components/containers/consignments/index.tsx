@@ -91,7 +91,7 @@ export const ConsignmentsContainer: FC<ConsignmentsContainerProps> = ({data}) =>
           recaptchaNode={<RecaptchaNode recaptchaRef={recaptchaRef} />}
         />
         <DzMedia imgClass={styles.mediaImage} {...featuredMediaProps} />
-        <DzInterstitial {...interstitialProps} />
+        {interstitialProps ? <DzInterstitial {...interstitialProps} /> : null}
         {bodyData?.map(
           (subsection: {
             id: string
@@ -108,7 +108,7 @@ export const ConsignmentsContainer: FC<ConsignmentsContainerProps> = ({data}) =>
           }
         )}
         {carouselCards ? renderCarousel(carouselCards, bodyCarousel?.size) : null}
-        <DzInterstitial {...footerInterstitialData} />
+        {footerInterstitialData ? <DzInterstitial {...footerInterstitialData} /> : null}
       </FullWidthFlexCol>
     </DzColumn>
   )

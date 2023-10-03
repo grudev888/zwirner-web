@@ -32,6 +32,7 @@ import {
 import {FullWidthFlexCol} from '@/components/containers/layout/FullWidthFlexCol'
 import {RecaptchaInquireFormModal} from '@/components/forms/recaptchaInquireFormModal'
 import {useHashRoutedInquiryModal} from '@/components/hooks/useHashRoutedInquiryModal'
+import {dzInterstitialOverrides} from '@/components/pageBuilder/DzInterstitial/interstitialMapper'
 
 import ArtistHeader from './components/ArtistHeader'
 import Exhibitions from './components/Exhibitions'
@@ -44,7 +45,6 @@ import {
   mapExhibitions,
   mapFeatured,
   mapGrid,
-  mapInterstitial,
   mapSplit,
 } from './mapper'
 
@@ -69,18 +69,19 @@ export const ArtistDetailContainer: FC<ArtistsContainerProps> = ({data}) => {
   const availableWorksBooks = mapSplit(data.availableWorksBooks, () =>
     router.push(`/artists/${router.query.slug}/available-works`)
   )
-  const availableWorksInterstitial = mapInterstitial(data.availableWorksInterstitial, () =>
+  const availableWorksInterstitial = dzInterstitialOverrides(data.availableWorksInterstitial, () =>
     router.push(`/artists/${router.query.slug}/available-works`)
   )
   const latestExhibitions = mapExhibitions(data.latestExhibitions)
-  const exhibitionsInterstitial = mapInterstitial(data.exhibitionsInterstitial, () =>
+  const exhibitionsInterstitial = dzInterstitialOverrides(data.exhibitionsInterstitial, () =>
     router.push(`/artists/${router.query.slug}${EXHIBITIONS_URL}`)
   )
   const guide = mapCarouselArticles(data.guide, isSmall)
   const biography = mapBiography(data.artist)
   const selectedPress = mapGrid(data.selectedPress, 'article', true)
   const books = mapCarouselBooks(data.books)
-  const interstitial = mapInterstitial(data.interstitial)
+  const interstitial = dzInterstitialOverrides(data.interstitial)
+
   const inquireModalSubtitle = `${TO_LEARN_MORE_ABOUT} ${data.artist?.fullName}, ${PLEASE_PROVIDE_YOUR_CONTACT_SHORT}`
 
   const renderCarousel = useCallback(
@@ -181,13 +182,13 @@ export const ArtistDetailContainer: FC<ArtistsContainerProps> = ({data}) => {
             <DzSplit id="available-works" data={availableWorksBooks} type={SPLIT_TYPES.SHORT} />
           )}
 
-          {availableWorksInterstitial && <DzInterstitial data={availableWorksInterstitial} />}
+          {availableWorksInterstitial ? <DzInterstitial {...availableWorksInterstitial} /> : null}
 
           {data.moveGuideUp === true && guide ? Guide : null}
 
           {latestExhibitions && <Exhibitions id="exhibitions" exhibitions={latestExhibitions} />}
 
-          {exhibitionsInterstitial && <DzInterstitial data={exhibitionsInterstitial} />}
+          {exhibitionsInterstitial ? <DzInterstitial {...exhibitionsInterstitial} /> : null}
 
           {!data.moveGuideUp && guide ? Guide : null}
 
@@ -203,7 +204,7 @@ export const ArtistDetailContainer: FC<ArtistsContainerProps> = ({data}) => {
               'books'
             )}
 
-          {interstitial && <DzInterstitial data={interstitial} />}
+          {interstitial ? <DzInterstitial {...interstitial} /> : null}
         </FullWidthFlexCol>
       </DzColumn>
     </>

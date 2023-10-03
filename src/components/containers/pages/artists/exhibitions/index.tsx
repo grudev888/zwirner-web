@@ -47,7 +47,7 @@ const ArtistExhibitionsPageContainer = ({data}: PageContainerProps) => {
         </FullWidthFlexCol>
         {interstitialData && (
           <div className={styles.interstitialWrapper}>
-            <DzInterstitial {...interstitialData} />
+            {interstitialData ? <DzInterstitial {...interstitialData} /> : null}
           </div>
         )}
       </DzColumn>

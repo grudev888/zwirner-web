@@ -36,9 +36,7 @@ export const PressContainer: FC<PressContainerProps> = ({data}) => {
           ) : null}
           <FullWidthFlexCol>
             <DzComplexGrid {...gridData} />
-            <div className="-mx-5">
-              <DzInterstitial {...interstitialData} />
-            </div>
+            {interstitialData ? <DzInterstitial {...interstitialData} /> : null}
           </FullWidthFlexCol>
         </DzColumn>
       </ArtistsPageLayout>

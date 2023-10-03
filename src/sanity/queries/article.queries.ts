@@ -1,5 +1,8 @@
 import {groq} from 'next-sanity'
 
+import {articleContent} from '@/sanity/queries/components/content/articleContent'
+import {artworkContent} from '@/sanity/queries/components/content/artworkContent'
+
 import {mediaBuilder} from './components/builders/mediaBuilder'
 import {
   exhibitionComplexFields,
@@ -15,9 +18,7 @@ export const articlePagesSlugs = groq`
 export const articlesReferences = groq`
   articles[]-> {
     ...,
-    header[]{
-      ${mediaBuilder}
-    },
+    ${articleContent}
     _type == "exhibitionPage"=> {
       ...,
       title,
@@ -62,7 +63,12 @@ export const articleBySlug = groq`
     }
   },
   header[]{
-    ${mediaBuilder}
+    _type == 'headerImage' => media {
+      ${mediaBuilder}
+    },
+    _type == 'artwork' => @-> {
+      ${artworkContent}
+    },
   },
   image {
     image {

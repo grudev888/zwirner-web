@@ -1,9 +1,4 @@
-import {
-  ButtonModes,
-  INTERSTITIAL_TEXT_COLORS,
-  MEDIA_TYPES,
-  MEDIA_VIDEO_SOURCE_TYPES,
-} from '@zwirner/design-system'
+import {MEDIA_TYPES, MEDIA_VIDEO_SOURCE_TYPES} from '@zwirner/design-system'
 import Image from 'next/image'
 import {Fragment} from 'react'
 
@@ -43,13 +38,6 @@ export const utopiaMainMediaMap = (data: any) => {
     ...mediaProps,
   }
 }
-
-export const interstitialNewReleasesMap = (data: any) => ({
-  split: false,
-  description: data?.title,
-  primaryCta: {text: data?.cta?.text, ctaProps: {mode: ButtonModes.DARK, className: 'mt-0'}},
-  textColor: INTERSTITIAL_TEXT_COLORS.BLACK,
-})
 
 export const heroMap = (data: any) => {
   const exhibitions = data?.exhibitions
@@ -133,19 +121,6 @@ export const artworksGridMap = (data: any) => {
   }
 }
 
-export const interstitialMap = (data: any) => {
-  const {title, cta} = data ?? {}
-  const {text} = cta ?? {}
-  return {
-    data: {
-      fullWidth: true,
-      split: false,
-      title,
-      primaryCta: {text, ctaProps: {mode: ButtonModes.DARK}},
-      textColor: INTERSTITIAL_TEXT_COLORS.BLACK,
-    },
-  }
-}
 export const mapCarouselCards = (data: any[]) => {
   return data?.map((card: any) => {
     const {_key, caption, media} = card

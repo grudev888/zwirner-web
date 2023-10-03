@@ -71,21 +71,14 @@ export enum ArticleCategories {
   PRESS = 'Press',
   NEWS = 'News',
   EVENT = 'Event',
-  EXHIBITION = 'Exhibition',
+  MUSEUM_EXHIBITION = 'Museum Exhibition',
   MUSEUM_HIGHLIGHTS = 'Museum Highlights',
-  MUSEUM_EXHIBITION_PRESS = 'Museum Exhibition Press',
-  MUSEUM_EXHIBITION_RECORD = 'Museum Exhibition Record',
 }
 
 export enum ArticleTypes {
   INTERNAL = 'internalNews',
   PRESS = 'pressRelease',
   EXTERNAL = 'externalNews',
-}
-
-export enum PressVariation {
-  SELECTED_PRESS = 'selectedPress',
-  PRESS_ARTICLE = 'pressArticle',
 }
 
 export enum BookVariation {
@@ -166,7 +159,6 @@ export interface DzCardSchemaProps {
   primarySubtitle?: string
   secondarySubtitle?: string
   secondaryTitle?: string
-  pressVariation?: PressVariation
   bookVariation?: BookVariation
   enableOverrides: boolean
   mediaOverride?: any

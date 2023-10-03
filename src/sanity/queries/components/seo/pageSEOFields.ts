@@ -51,7 +51,7 @@ const JsonLDSchemaTypeSchema = z.enum(['article', 'breadcrumb', 'sitelinks', 'ma
 
 export const PageSEOFieldsSchema = z.object({
   pageTitle: z.string().min(5).max(70).nullish(),
-  metaDescription: z.string().min(5).max(160).nullish(),
+  metaDescription: z.string().max(160).nullish(),
   h1Header: z.any(),
   robotsNoIndex: z.boolean(),
   robotsNoFollow: z.boolean(),

@@ -1,11 +1,4 @@
-import {
-  ButtonModes,
-  EDITORIAL_TEXT_TYPES,
-  EditorialType,
-  INTERSTITIAL_TEXT_COLORS,
-  MEDIA_OBJECT_FIT,
-  SPLIT_TYPES,
-} from '@zwirner/design-system'
+import {EDITORIAL_TEXT_TYPES, EditorialType, SPLIT_TYPES} from '@zwirner/design-system'
 import Image from 'next/image'
 import {Fragment} from 'react'
 
@@ -167,49 +160,6 @@ export const utopiaFeatureMap = (data: any) => {
         linkElement: 'a',
         url,
       },
-    },
-  }
-}
-
-export const platformInterstitialMap = (data: any) => {
-  const {title, subtitle, cta} = data ?? {}
-  const {text} = cta ?? {}
-
-  const {media} = dzMediaMapper({
-    data,
-    ImgElement: Image,
-    options: {objectFit: MEDIA_OBJECT_FIT.COVER},
-  })
-
-  return {
-    data: {
-      fullWidth: true,
-      split: false,
-      title: title,
-      description: subtitle,
-      primaryCta: {
-        text,
-      },
-      media,
-    },
-  }
-}
-
-export const interstitialMap = (data: any) => {
-  const {title, cta} = data ?? {}
-  const {text} = cta ?? {}
-  return {
-    data: {
-      fullWidth: true,
-      split: false,
-      title,
-      primaryCta: {
-        text,
-        ctaProps: {
-          mode: ButtonModes.DARK,
-        },
-      },
-      textColor: INTERSTITIAL_TEXT_COLORS.BLACK,
     },
   }
 }

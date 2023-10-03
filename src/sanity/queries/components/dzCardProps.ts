@@ -14,7 +14,6 @@ export const dzCardFields = groq`
     },
     enableOverrides,
     secondaryTitle,
-    pressVariation,
     bookVariation,
     primarySubtitle,
     secondarySubtitle,
@@ -27,7 +26,6 @@ export const dzCardProps = groq`
     ${dzCardFields}
   },
 `
-const PressVariationSchema = z.nullable(z.enum(['selectedPress', 'pressArticle']))
 const BookVariationSchema = z.nullable(z.enum(['productCard', 'contentCard']))
 
 // TODO: define type instead any
@@ -39,7 +37,6 @@ export const DzCardPropsDataSchema = z.object({
   mediaOverride: z.nullable(z.any()),
   enableOverrides: z.boolean(),
   secondaryTitle: z.nullable(z.string()),
-  pressVariation: PressVariationSchema,
   bookVariation: BookVariationSchema,
   primarySubtitle: z.nullable(z.string()),
   secondarySubtitle: z.nullable(z.string()),

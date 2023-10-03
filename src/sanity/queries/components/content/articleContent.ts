@@ -1,21 +1,46 @@
 import {groq} from 'next-sanity'
 import {z} from 'zod'
 
-import {mediaBuilder, MediaBuilderSchema} from '../builders/mediaBuilder'
+import {artworkContent} from '@/sanity/queries/components/content/artworkContent'
+
+import {mediaBuilder} from '../builders/mediaBuilder'
+import {pageSEOFields, PageSEOFieldsSchema} from '../seo/pageSEOFields'
 import {SanitySlugSchema} from '../validationPrimitives'
 
 export const articleContent = groq`
   _type == 'article' => {
-    ...,
+    _type,
+    seo {
+      ${pageSEOFields}
+    },
+    type,
+    category,
+    title,
+    externalURL,
+    primarySubtitle,
+    subtitle,
+    description,
     header[]{
-      ${mediaBuilder}
+      _type == 'headerImage' => media {
+        ${mediaBuilder}
+      },
+      _type == 'artwork' => @-> {
+        ${artworkContent}
+      },
     },
     image {
       image {
         ...
       }
     },
-    location->
+    publishDate,
+    displayDate,
+    location->,
+    body,
+    articles[]->,
+    slug,
+    interstitial,
+    pdf,
   },
 `
 
@@ -23,15 +48,13 @@ const ArticleCategorySchema = z.enum([
   'Press',
   'News',
   'Event',
-  'Exhibition',
+  'Museum Exhibition',
   'Museum Highlights',
-  'Museum Exhibition Press',
-  'Museum Exhibition Record',
 ])
 const ArticleTypeSchema = z.enum(['internalNews', 'pressRelease', 'externalNews'])
 // TODO: define type instead any
 export const ArticleContentSchema = z.object({
-  seo: z.nullable(z.any()),
+  seo: z.nullable(PageSEOFieldsSchema),
   type: ArticleTypeSchema,
   category: z.nullable(ArticleCategorySchema),
   title: z.string(),
@@ -40,7 +63,7 @@ export const ArticleContentSchema = z.object({
   subtitle: z.nullable(z.string()),
   description: z.nullable(z.array(z.any())),
   image: z.nullable(z.any()),
-  header: z.nullable(MediaBuilderSchema),
+  header: z.nullable(z.array(z.any())),
   publishDate: z.nullable(z.any()),
   displayDate: z.nullable(z.string()),
   location: z.nullable(z.any()),
