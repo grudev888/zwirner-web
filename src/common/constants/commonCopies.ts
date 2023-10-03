@@ -60,7 +60,7 @@ export const INTERESTED_IN = 'Interested in'
 export const THIS_ARTWORK = 'this artwork'
 export const TO_LEARN_MORE_ABOUT_AVAILABLE_WORKS =
   'To learn more about available works, please provide your contact information'
-export const WANT_TO_KNOW_MORE = 'Want to know more?'
+export const WANT_TO_KNOW_MORE = 'Want to Know More?'
 export const TO_LEARN_MORE_ABOUT = 'To learn more about'
 export const PLEASE_PROVIDE_YOUR_CONTACT_SHORT = 'please provide your contact information.'
 export const PLEASE_PROVIDE_YOUR_CONTACT =
@@ -68,3 +68,9 @@ export const PLEASE_PROVIDE_YOUR_CONTACT =
 export const TO_LEARN_MORE_ABOUT_THIS_ARTWORK =
   'To learn more about this artwork, please provide your contact information.'
 export const EXIT_PREVIEW = 'Exit preview'
+export const JOIN_OUR_MAILING_LIST =
+  'Join our mailing list to be among the first to receive gallery news'
+export const JOIN_OUR_MAILING_LIST_ERROR = 'Failed to send your request'
+export const JOIN_OUR_MAILING_LIST_SUCCESS = 'Thank You for Joining Our Mailing List'
+export const EXPECT_THE_LATEST_INFORMATION =
+  'Expect the latest information from David Zwirner to arrive soon in your Inbox.'

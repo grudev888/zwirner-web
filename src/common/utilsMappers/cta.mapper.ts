@@ -2,6 +2,7 @@ import {BUTTON_VARIANTS, ButtonModes} from '@zwirner/design-system'
 import Link from 'next/link'
 
 import {BUY_NOW, LEARN_MORE} from '@/common/constants/commonCopies'
+import {CTAClickEvent} from '@/events/CTAClickEvent'
 import {CtaActions, CTASchemaType, DzCardSchemaProps} from '@/sanity/types'
 
 enum ARTWORK_AVAILABILITY {
@@ -17,9 +18,10 @@ interface CtaMapperInterstitial {
   props?: any
 }
 
-const handleClick = (action?: CtaActions, props?: any) => {
-  console.log('TODO WITH ACTION', action, props)
-  return null
+const handleCTAClick = (action?: CtaActions) => {
+  if (action) {
+    window.document.dispatchEvent(CTAClickEvent(action))
+  }
 }
 
 export const ctaMapper = ({data, props}: CtaMapperProps) => {
@@ -38,8 +40,8 @@ export const ctaMapper = ({data, props}: CtaMapperProps) => {
           primaryCTA: {
             text: text,
             ctaProps: {
-              onClick: (ctaProps: any) => {
-                handleClick(action, ctaProps)
+              onClick: () => {
+                handleCTAClick(action)
               },
               mode: ButtonModes.DARK,
             },
@@ -65,8 +67,8 @@ export const ctaMapper = ({data, props}: CtaMapperProps) => {
             text: secondaryText,
             ctaProps: {
               variant: BUTTON_VARIANTS.TERTIARY,
-              onClick: (ctaProps: any) => {
-                handleClick(secondaryAction, ctaProps)
+              onClick: () => {
+                handleCTAClick(secondaryAction)
               },
             },
           },
@@ -96,7 +98,7 @@ export const ctaMapperInterstitial = ({data, props}: CtaMapperInterstitial) => {
               if (customAction && typeof customAction === 'function') {
                 customAction(action, ctaProps)
               } else {
-                handleClick(action, ctaProps)
+                handleCTAClick(action)
               }
             },
           },
@@ -133,8 +135,8 @@ export const artworkCTAMapper = (ctaData: any, availability: ARTWORK_AVAILABILIT
           primaryCTA: {
             text: primaryCTAText,
             ctaProps: {
-              onClick: (props: any) => {
-                handleClick(CTA, props)
+              onClick: () => {
+                handleCTAClick(CTA)
               },
             },
           },
@@ -147,8 +149,8 @@ export const artworkCTAMapper = (ctaData: any, availability: ARTWORK_AVAILABILIT
             text: SecondaryCTAText,
             ctaProps: {
               variant: BUTTON_VARIANTS.TERTIARY,
-              onClick: (props: any) => {
-                handleClick(secondaryCTA, props)
+              onClick: () => {
+                handleCTAClick(secondaryCTA)
               },
             },
           },

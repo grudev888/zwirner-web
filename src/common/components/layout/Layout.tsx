@@ -2,6 +2,10 @@ import {DzFooter, DzGridColumns, DzHeader} from '@zwirner/design-system'
 import {useRouter} from 'next/router'
 import {ReactNode} from 'react'
 
+import CtaModalListener from '@/components/containers/ctaModalListener/ctaModalListener'
+import {CTAClickEvent} from '@/events/CTAClickEvent'
+import {CtaActions} from '@/sanity/types'
+
 import styles from './layout.module.css'
 import {getFooterProps, getHeaderProps} from './mappers'
 
@@ -32,11 +36,13 @@ const Layout = ({children, layoutData}: LayoutProps) => {
       <main className={styles.mainLayout} aria-label="Main" role="main">
         <DzGridColumns className="h-full min-h-screen w-full">{children}</DzGridColumns>
       </main>
+      <CtaModalListener />
       <DzFooter
         footerClass={styles.footer}
         data={data}
-        // TODO handle newsletter
-        newsletterAction={() => null}
+        newsletterAction={() => {
+          window.document.dispatchEvent(CTAClickEvent(CtaActions.NEWSLETTER))
+        }}
       />
     </>
   )
