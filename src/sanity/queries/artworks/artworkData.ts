@@ -35,6 +35,7 @@ export const artworkData = groq`
     ${pageSEOFields}
   },
   title,
+  "product": shopify->store{ id, variants[]->{ store { id, price, inventory { isAvailable } } } },
 }`
 
 export const ArtworkDataPropsSchema = z.object({
@@ -66,6 +67,7 @@ export const ArtworkDataSchema = z.object({
   salesInformation: ArtworkContentSchema.shape.salesInformation,
   seo: ArtworkContentSchema.shape.seo,
   title: ArtworkContentSchema.shape.title,
+  product: ArtworkContentSchema.shape.product,
 })
 
 export type ArtworkDataType = z.infer<typeof ArtworkDataSchema>

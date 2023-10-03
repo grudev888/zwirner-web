@@ -72,11 +72,15 @@ export const ArtworkContainer = ({data}: Props) => {
     framedDimensions,
     additionalCaption,
     dateSelection: {year},
+    product,
   } = data
 
   const {artistName, artistSlug, primaryCta, secondaryCta} = mapArtworkData(data)
   const priceAndCurrency = price && currency ? `${currency} ${price}` : null
   const isFramedShown = artworkType !== 'sculpture' && (framed == 'Framed' || framed == 'Unframed')
+
+  console.log('product', product)
+  // TODO: add product information for cart
 
   return (
     <>
