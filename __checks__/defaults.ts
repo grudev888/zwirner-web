@@ -1,5 +1,4 @@
 // This config sets up some shared constants and Playwright config to share in your Browser checks.
-// changes checkly
 /*
 Notice we use two sets of URLs:
 
