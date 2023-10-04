@@ -31,7 +31,9 @@ export const isExhibitionPast = (exhibition: any) => {
   const {endDate} = exhibition
   const endDateObj = parseISO(endDate)
 
-  return isValid(endDateObj) && isAfter(endDateObj, new Date())
+  // https://date-fns.org/v2.30.0/docs/isAfter
+  // If current date is after end date for the exhibition
+  return isValid(endDateObj) && isAfter(new Date(), endDateObj)
 }
 
 export const getExhibitionState = (exhibition: any) => {
