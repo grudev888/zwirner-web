@@ -1,5 +1,5 @@
 import {AvailableArtworksContainer} from '@/components/containers/availableArtworks'
-import ArtistsPageLayout from '@/components/containers/layout/pages/artistsPageLayout'
+import BackNavPageLayout from '@/components/containers/layout/pages/backNavPageLayout'
 
 interface PageContainerProps {
   data: any
@@ -16,9 +16,9 @@ const ArtistSurveyPageContainer = ({data}: PageContainerProps) => {
   const parentPageTitle = data?.title
 
   return (
-    <ArtistsPageLayout parentPageName={parentPageTitle} parentPath={parentPath}>
+    <BackNavPageLayout parentPageName={parentPageTitle} parentPath={parentPath}>
       <AvailableArtworksContainer data={pageData} />
-    </ArtistsPageLayout>
+    </BackNavPageLayout>
   )
 }
 

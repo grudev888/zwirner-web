@@ -56,6 +56,7 @@ export const MUSEUM_HIGHLIGHTS = 'Museum Highlights'
 export const NOW_OPEN = 'Now Open'
 export const SUBSCRIBE = 'Subscribe'
 export const ALL_LOCATIONS = 'All Locations'
+export const ALL_EXHIBITIONS = 'All Exhibitions'
 export const INTERESTED_IN = 'Interested in'
 export const THIS_ARTWORK = 'this artwork'
 export const TO_LEARN_MORE_ABOUT_AVAILABLE_WORKS =

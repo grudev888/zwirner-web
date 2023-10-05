@@ -64,7 +64,7 @@ export const PageSEOFieldsSchema = z.object({
       schemaType: z.nullable(JsonLDSchemaTypeSchema),
       article: z.nullable(z.any()),
       breadcrumbs: z.nullable(z.array(z.any())),
-      searchPotentialActions: z.nullable(z.array(z.any())),
+      searchPotentialActions: z.array(z.any()).nullish(),
       manualSchema: z.nullable(z.any()),
     })
   ),

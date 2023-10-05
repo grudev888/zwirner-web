@@ -26,7 +26,7 @@ export const transformDataToGrid = ({
     _type: 'grid',
     props: {
       ...gridProps,
-      grid: data.map((innerData) => ({
+      grid: data?.map((innerData) => ({
         content: [innerData],
         props: {} as any,
         _type: innerComponentType,

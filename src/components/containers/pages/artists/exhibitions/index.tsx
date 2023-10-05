@@ -4,7 +4,7 @@ import {Fragment} from 'react'
 
 import {EXHIBITIONS} from '@/common/constants/commonCopies'
 import {FullWidthFlexCol} from '@/components/containers/layout/FullWidthFlexCol'
-import ArtistsPageLayout from '@/components/containers/layout/pages/artistsPageLayout'
+import BackNavPageLayout from '@/components/containers/layout/pages/backNavPageLayout'
 import {dzInterstitialOverrides} from '@/components/pageBuilder/DzInterstitial/interstitialMapper'
 import {ContainerTitle} from '@/components/wrappers/title/ContainerTitle'
 
@@ -28,7 +28,7 @@ const ArtistExhibitionsPageContainer = ({data}: PageContainerProps) => {
   const interstitialData = dzInterstitialOverrides(data?.exhibitionsInterstitialSubpage)
 
   return (
-    <ArtistsPageLayout parentPageName={parentPageTitle} parentPath={parentPath}>
+    <BackNavPageLayout parentPageName={parentPageTitle} parentPath={parentPath}>
       <DzColumn span={12}>
         {parentPageTitle && <ContainerTitle title={title} titleSize={TITLE_SIZES.XL} />}
         <FullWidthFlexCol>
@@ -51,7 +51,7 @@ const ArtistExhibitionsPageContainer = ({data}: PageContainerProps) => {
           </div>
         )}
       </DzColumn>
-    </ArtistsPageLayout>
+    </BackNavPageLayout>
   )
 }
 

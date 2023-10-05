@@ -1,6 +1,6 @@
 import {ARTISTS_PRESS_URL} from '@/common/constants/commonCopies'
 import {ArticleContainer} from '@/components/containers/articles/article'
-import ArtistsPageLayout from '@/components/containers/layout/pages/artistsPageLayout'
+import BackNavPageLayout from '@/components/containers/layout/pages/backNavPageLayout'
 
 interface PageContainerProps {
   data: any
@@ -11,9 +11,9 @@ const ArtistArticlePressContainer = ({data}: PageContainerProps) => {
   const {title, parentUrl} = artistPageData ?? {}
 
   return (
-    <ArtistsPageLayout parentPageName={title} parentPath={`${parentUrl}${ARTISTS_PRESS_URL}`}>
+    <BackNavPageLayout parentPageName={title} parentPath={`${parentUrl}${ARTISTS_PRESS_URL}`}>
       <ArticleContainer data={data} />
-    </ArtistsPageLayout>
+    </BackNavPageLayout>
   )
 }
 

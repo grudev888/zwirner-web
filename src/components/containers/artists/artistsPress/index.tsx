@@ -4,7 +4,7 @@ import {FC} from 'react'
 
 import {SELECTED_PRESS} from '@/common/constants/commonCopies'
 import {FullWidthFlexCol} from '@/components/containers/layout/FullWidthFlexCol'
-import ArtistsPageLayout from '@/components/containers/layout/pages/artistsPageLayout'
+import BackNavPageLayout from '@/components/containers/layout/pages/backNavPageLayout'
 import {dzInterstitialOverrides} from '@/components/pageBuilder/DzInterstitial/interstitialMapper'
 import {ContainerTitle} from '@/components/wrappers/title/ContainerTitle'
 
@@ -27,7 +27,7 @@ export const PressContainer: FC<PressContainerProps> = ({data}) => {
 
   return (
     <>
-      <ArtistsPageLayout parentPageName={parentPageName} parentPath={slug?.current}>
+      <BackNavPageLayout parentPageName={parentPageName} parentPath={slug?.current}>
         <DzColumn span={12}>
           {title ? (
             <ContainerTitle
@@ -39,7 +39,7 @@ export const PressContainer: FC<PressContainerProps> = ({data}) => {
             {interstitialData ? <DzInterstitial {...interstitialData} /> : null}
           </FullWidthFlexCol>
         </DzColumn>
-      </ArtistsPageLayout>
+      </BackNavPageLayout>
     </>
   )
 }

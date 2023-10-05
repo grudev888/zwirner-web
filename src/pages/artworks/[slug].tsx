@@ -19,14 +19,7 @@ const ArtworkPage = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
   }
 
   if (preview) {
-    return (
-      <PreviewPage
-        query={artworkData}
-        params={querySlug}
-        seo={undefined}
-        Container={ArtworkContainer}
-      />
-    )
+    return <PreviewPage query={artworkData} params={querySlug} Container={ArtworkContainer} />
   }
 
   return (

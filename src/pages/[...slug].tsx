@@ -34,7 +34,7 @@ export const getStaticPaths = async () => {
     paths: paths.map((item) => ({
       params: {slug: removePrefixSlug(item.params.slug, '').split('/')},
     })),
-    fallback: true,
+    fallback: false,
   }
 }
 

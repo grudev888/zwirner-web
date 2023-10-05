@@ -4,19 +4,19 @@ import {ReactNode} from 'react'
 
 import BackArrowIcon from '@/components/containers/layout/pages/backArrowIcon'
 
-import styles from './artistsPageLayout.module.css'
+import styles from './backNavPageLayout.module.css'
 
-interface ArtistsPageLayoutProps {
+interface BackNavPageLayoutProps {
   children: ReactNode
   parentPath: string
   parentPageName: string
 }
 
-export default function ArtistsPageLayout({
+export default function BackNavPageLayout({
   children,
   parentPath,
   parentPageName,
-}: ArtistsPageLayoutProps) {
+}: BackNavPageLayoutProps) {
   return parentPath ? (
     <>
       <DzColumn span={12}>
