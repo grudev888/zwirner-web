@@ -30,12 +30,14 @@ const DzCarouselItemTypeSchema = z.enum(['dzCard', 'dzMedia'])
 export const DzCarouselPropsDataSchema = z.object({
   title: z.nullable(z.string()),
   size: z.enum(['XL', 'L', 'M', 'S']),
-  dzCarousel: z.array(
-    z.object({
-      content: ComponentTypesDataSchema,
-      props: z.union([DzCardPropsDataSchema, DzMediaPropsDataSchema]),
-      _type: DzCarouselItemTypeSchema,
-    })
+  dzCarousel: z.nullable(
+    z.array(
+      z.object({
+        content: ComponentTypesDataSchema,
+        props: z.union([DzCardPropsDataSchema, DzMediaPropsDataSchema]),
+        _type: DzCarouselItemTypeSchema,
+      })
+    )
   ),
 })
 

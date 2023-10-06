@@ -38,7 +38,9 @@ const PastExhibitionsPageByNumber = (props: InferGetStaticPropsType<typeof getSt
 
 export const getStaticPaths = async () => {
   return {
-    paths: Array.from({length: 5}).map((_, i) => `${EXHIBITIONS_URL}/past-exhibitions/${i + 2}`),
+    paths: Array.from({length: 5}).map(
+      (_, i) => `${EXHIBITIONS_URL}/past-exhibitions/page/${i + 2}`
+    ),
     fallback: 'blocking',
   }
 }
