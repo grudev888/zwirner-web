@@ -2,7 +2,7 @@ import {groq} from 'next-sanity'
 import {z} from 'zod'
 
 export const exhibitionPageSlugs = groq`
-*[_type in ["exhibitionPage", "exceptionalWork"] && defined(slug.current)]{
+*[_type in ["exhibitionPage", "exceptionalWork", "onlineExhibitionPage"] && defined(slug.current)]{
   "params": { "slug": slug.current },
 }`
 

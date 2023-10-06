@@ -6,7 +6,7 @@ export const recordType = groq`
   _type,
 }`
 
-const RecordTypeTypes = z.enum(['exhibitionPage', 'exceptionalWork'])
+const RecordTypeTypes = z.enum(['exhibitionPage', 'exceptionalWork', 'onlineExhibitionPage'])
 export const RecordTypePropsSchema = z.object({
   slug: z.string(),
 })

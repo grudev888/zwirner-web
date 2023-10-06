@@ -1,6 +1,11 @@
 import {groq} from 'next-sanity'
 import {z} from 'zod'
 
+import {
+  pageBuilderComponentsData,
+  PageBuilderComponentsDataSchema,
+} from '@/sanity/queries/page/pageCommonQueries/pageBuilderComponentsData'
+
 import {pageSEOFields, PageSEOFieldsSchema} from '../components/seo/pageSEOFields'
 import {SanitySlugSchema} from '../components/validationPrimitives'
 
@@ -10,6 +15,9 @@ export const exceptionalWorksData = groq`
   slug,
   title,
   hideToggle,
+  exceptionalWorkContent[] {
+    ${pageBuilderComponentsData}
+  },
   seo {
     ${pageSEOFields}
   },
@@ -26,6 +34,7 @@ export const ExceptionalWorksDataSchema = z.object({
   slug: SanitySlugSchema,
   title: z.string(),
   hideToggle: z.nullable(z.boolean()),
+  exceptionalWorkContent: z.nullable(z.array(PageBuilderComponentsDataSchema)),
   seo: PageSEOFieldsSchema,
 })
 

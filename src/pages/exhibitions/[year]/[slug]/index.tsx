@@ -1,47 +1,91 @@
-import {GetStaticPropsContext, InferGetStaticPropsType} from 'next'
+import {GetStaticPropsContext} from 'next'
 import {useRouter} from 'next/router'
 
 import {SEOComponent} from '@/common/components/seo/seo'
 import {EXHIBITIONS_URL} from '@/common/constants/commonCopies'
 import {ExceptionalWorkContainer} from '@/components/containers/exhibitions/exceptionalWorkContainer'
 import {ExhibitionsContainer} from '@/components/containers/exhibitions/exhibitionDetailContainer/exhibitions'
+import {OnlineExhibitionsContainer} from '@/components/containers/exhibitions/onlineExhibitionsContainer'
 import {PreviewPage} from '@/components/containers/previews/pagePreview'
-import {exhibitionPageBySlug} from '@/sanity/queries/exhibitions/exhibitionPageBySlug'
+import {
+  exceptionalWorksData,
+  ExceptionalWorksDataType,
+} from '@/sanity/queries/exhibitions/exceptionalWorksData'
+import {
+  exhibitionPageBySlug,
+  ExhibitionPageBySlugType,
+} from '@/sanity/queries/exhibitions/exhibitionPageBySlug'
+import {
+  onlineExhibitionsDataBySlug,
+  OnlineExhibitionsType,
+} from '@/sanity/queries/exhibitions/onlineExhibitionsData'
 import {getAllExhibitionPagesSlugs} from '@/sanity/services/exhibitions/getAllExhibitionPagesSlugs'
 import {getExceptionalWorkData} from '@/sanity/services/exhibitions/getExceptionalWorkData'
 import {getExhibitionPageBySlug} from '@/sanity/services/exhibitions/getExhibitionPageBySlug'
+import {getOnlineExhibitionsData} from '@/sanity/services/exhibitions/getOnlineExhibitionsData'
 import {getRecordType} from '@/sanity/services/exhibitions/getRecordType'
 
-export default function ExhibitionsPage(props: InferGetStaticPropsType<typeof getStaticProps>) {
+type ExhibitionShape = ExceptionalWorksDataType | ExhibitionPageBySlugType | OnlineExhibitionsType
+type ExhibitionsPageProps = {
+  data: ExhibitionShape
+  preview: boolean
+  queryParams: any
+  slug: any
+  token: any
+}
+type PageContainerSchema = {
+  query: string
+  params: any
+  container: any
+}
+export default function ExhibitionsPage(props: ExhibitionsPageProps) {
   const {data, queryParams, preview} = props
   const router = useRouter()
+  const {seo, _type} = data ?? {}
 
   if (router.isFallback) {
     return <div>Loading...</div>
   }
+  let PageContainer: PageContainerSchema | null = null
 
-  if (preview) {
+  if (_type === 'exhibitionPage') {
+    PageContainer = {
+      query: exhibitionPageBySlug,
+      params: queryParams,
+      container: ExhibitionsContainer,
+    }
+  }
+  if (_type === 'exceptionalWork') {
+    PageContainer = {
+      query: exceptionalWorksData,
+      params: queryParams,
+      container: ExceptionalWorkContainer,
+    }
+  }
+
+  if (_type === 'onlineExhibitionPage') {
+    PageContainer = {
+      query: onlineExhibitionsDataBySlug,
+      params: queryParams,
+      container: OnlineExhibitionsContainer,
+    }
+  }
+
+  if (preview && PageContainer) {
     return (
       <PreviewPage
-        query={exhibitionPageBySlug}
-        params={queryParams}
-        Container={ExhibitionsContainer}
+        query={PageContainer.query}
+        params={PageContainer.params}
+        Container={PageContainer.container}
       />
     )
   }
-  if (data._type === 'exhibitionPage') {
+
+  if (data && PageContainer) {
     return (
       <>
-        <SEOComponent data={data.seo} />
-        <ExhibitionsContainer data={data} />
-      </>
-    )
-  }
-  if (data._type === 'exceptionalWork') {
-    return (
-      <>
-        <SEOComponent data={data.seo} />
-        <ExceptionalWorkContainer data={data} />
+        <SEOComponent data={seo} />
+        <PageContainer.container data={data as ExhibitionShape} />
       </>
     )
   }
@@ -68,27 +112,22 @@ export const getStaticProps = async (
       },
     }
   }
+
   const pageType = await getRecordType(queryParams)
   if (!pageType) return {notFound: true}
-
+  let data = null
   if (pageType._type === 'exhibitionPage') {
-    const data = await getExhibitionPageBySlug(queryParams)
-    if (!data) return {notFound: true}
-
-    return {
-      props: {
-        data,
-        preview,
-        queryParams,
-        slug: params?.slug || null,
-        token: null,
-      },
-    }
+    data = await getExhibitionPageBySlug(queryParams)
+  }
+  if (pageType._type === 'onlineExhibitionPage') {
+    data = await getOnlineExhibitionsData(queryParams)
   }
   if (pageType._type === 'exceptionalWork') {
-    const data = await getExceptionalWorkData(queryParams)
-    if (!data) return {notFound: true}
+    data = await getExceptionalWorkData(queryParams)
+  }
 
+  if (!data) return {notFound: true}
+  if (data) {
     return {
       props: {
         data,
@@ -99,6 +138,7 @@ export const getStaticProps = async (
       },
     }
   }
+
   return {notFound: true}
 }
 
