@@ -1,9 +1,10 @@
-import {InquireFormContextData} from '@zwirner/design-system'
+import {InquireFormContextData, INQUIRY_TYPES} from '@zwirner/design-system'
 import Image from 'next/image'
 
 import {dzMediaMapper} from '@/common/utilsMappers/image.mapper'
 import {safeText} from '@/common/utilsMappers/safe'
 
+// TODO replace this with unified mapper
 export const mapCardsGrid = (
   data: any[],
   ctaClickHandler: (contextData: InquireFormContextData) => void
@@ -13,8 +14,14 @@ export const mapCardsGrid = (
     const fullName = artwork?.artists?.at(0)?.fullName
     const year = artwork?.dateSelection?.year
     const slug = artwork?.slug?.current
-    const onClickCTA = () => {
-      ctaClickHandler({id: _id, title: artwork?.artists?.[0]?.fullName, artwork})
+    const onClickCTA = (ctaText: string) => {
+      ctaClickHandler({
+        id: _id,
+        title: artwork?.artists?.[0]?.fullName,
+        artwork,
+        ctaText,
+        inquiryType: INQUIRY_TYPES.ARTIST,
+      })
     }
     const framed =
       typeof artwork.framed === 'boolean'
@@ -41,7 +48,7 @@ export const mapCardsGrid = (
       primaryCTA: {
         text: 'Inquire',
         ctaProps: {
-          onClick: onClickCTA,
+          onClick: () => onClickCTA('Inquire'),
         },
       },
     }

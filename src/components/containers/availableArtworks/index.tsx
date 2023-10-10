@@ -1,4 +1,4 @@
-import {DzColumn, FORM_MODAL_TYPES, TITLE_SIZES} from '@zwirner/design-system'
+import {DzColumn, FORM_MODAL_TYPES, INQUIRY_TYPES, TITLE_SIZES} from '@zwirner/design-system'
 import dynamic from 'next/dynamic'
 import {useRouter} from 'next/router'
 import queryString from 'querystring'
@@ -39,6 +39,7 @@ export const AvailableArtworksContainer: FC<AvailableArtworksProps> = ({data}) =
     id: inquireArtworkId,
     artwork: items?.find(({_id}: {_id: string}) => _id === inquireArtworkId),
     title: data.artistName,
+    inquiryType: INQUIRY_TYPES.AVAILABLE_ARTWORKS,
   })
   const complexGridCard = mapCardsGrid(items, inquireFormModalProps.openClickHandler)
   const artwork = items?.find(({_id}: {_id: string}) => _id === inquireArtworkId)

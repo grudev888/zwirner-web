@@ -1,4 +1,4 @@
-import {InquireFormContextData} from '@zwirner/design-system'
+import {InquireFormContextData, INQUIRY_TYPES} from '@zwirner/design-system'
 import {useRouter} from 'next/router'
 import {useEffect, useRef, useState} from 'react'
 
@@ -13,26 +13,31 @@ export const ARTWORK_ID_KEY = 'artworkId'
 
 const FORM_ID_INQUIRY = 'inquiry'
 
-const artworkToPayloadAdapter = (artwork: any) => {
+const INQUIRY_TYPES_TO_INQUIRY_VALUE = {
+  [INQUIRY_TYPES.ARTIST]: 'Artist Page',
+  [INQUIRY_TYPES.EXHIBITION]: 'Exhibition',
+  [INQUIRY_TYPES.AVAILABLE_ARTWORKS]: 'Special Pages',
+}
+const artworkToPayloadAdapter = (artwork: any, status?: string) => {
   if (!artwork) {
     return
   }
   const {_id, artworkType, artists, dimensions, inventoryId, title, photos, dateSelection, price} =
     artwork
-  const firstAsset = photos?.[0]?.asset
+  const firstAsset = photos?.[0]?.image
   const image = firstAsset ? builder.image(firstAsset).url() : ''
 
   return {
-    artistFullName: artists?.[0]?.fullName || 'Artist name unavailable',
-    artworkType,
-    dimensions: portableTextToText(dimensions), // dimension
+    artistFullName: artists?.[0]?.fullName || '',
+    artworkType: artworkType || '',
+    dimensions: portableTextToText(dimensions),
     id: _id,
-    image,
-    inventoryId,
-    price: price || 'Price unavailable',
-    status: 'TODO status',
+    image: image || '',
+    inventoryId: inventoryId || '',
+    price: price || '',
+    status: status || '',
     title,
-    year: dateSelection?.year || 'Year unavailable',
+    year: dateSelection?.year || '',
   }
 }
 
@@ -59,25 +64,27 @@ export const useHashRoutedInquiryModal = (initialContextData?: InquireFormContex
     // TODO check result of recaptcha before submitting form
     await recaptchaRef?.current?.executeAsync()
 
-    const {artwork} = contextData ?? {}
+    const {artwork, ctaText, inquiryType} = contextData ?? {}
     const inquiryPayload = {
       ...formValues,
       id: createRandomUUID(),
       currentUrl: asPath,
       timestamp: new Date().getTime(),
       formId: FORM_ID_INQUIRY,
-      artwork: artworkToPayloadAdapter(artwork),
+      artwork: artworkToPayloadAdapter(artwork, ctaText),
+      ctaText: ctaText || '',
+      inquiryType: INQUIRY_TYPES_TO_INQUIRY_VALUE[inquiryType!] || '',
+      phone: formValues?.phone || '',
+      pageTitle: document.title || '',
       location: {
-        city: location?.city,
-        region: location?.region,
-        country: location?.country,
+        city: location?.city || 'city unavailable',
+        region: location?.region || 'region unavailable',
+        country: location?.country || 'country unavailable',
       },
     }
 
     return sendInquiry(inquiryPayload)
-      .then((result) => {
-        return result.error ? {isSuccess: false, error: result.error} : {isSuccess: true}
-      })
+      .then(() => ({isSuccess: true}))
       .catch((error) => ({isSuccess: false, error}))
   }
 

@@ -13,6 +13,7 @@ import {
   DzTitleMolecule,
   DzTitleMoleculeTypes,
   FORM_MODAL_TYPES,
+  INQUIRY_TYPES,
   SPLIT_TYPES,
   TITLE_SIZES,
   TITLE_TYPES,
@@ -158,7 +159,12 @@ export const ArtistDetailContainer: FC<ArtistsContainerProps> = ({data}) => {
             text: 'Inquire',
             ctaProps: {
               variant: BUTTON_VARIANTS.TERTIARY,
-              onClick: () => inquireModalProps.openClickHandler({title: data.artist.fullName}),
+              onClick: () =>
+                inquireModalProps.openClickHandler({
+                  title: data.artist.fullName,
+                  ctaText: 'Inquire',
+                  inquiryType: INQUIRY_TYPES.ARTIST,
+                }),
             },
           }}
           prefix=""
