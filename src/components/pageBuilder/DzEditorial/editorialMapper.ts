@@ -84,8 +84,8 @@ export const dzEditorialOverrides = (props: DzEditorialSchemaProps) => {
       customStyles: {
         normal:
           textType === EditorialTextTypes.QUOTE
-            ? '!text-lg md:!text-xl !mb-5 md:!mb-10'
-            : '!text-sm md:!text-md !mb-5 md:!mb-10',
+            ? 'text-lg md:!text-xl !mb-5 md:!mb-10'
+            : 'text-sm md:!text-md !mb-5 md:!mb-10',
       },
     }),
   }))
