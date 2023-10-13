@@ -64,7 +64,12 @@ interface ArtistsContainerProps {
 export const ArtistDetailContainer: FC<ArtistsContainerProps> = ({data}) => {
   const {isSmall} = useBreakpoints()
   const router = useRouter()
-  const inquireModalProps = useHashRoutedInquiryModal()
+  const inquireModalProps = useHashRoutedInquiryModal({
+    id: data?.artist?._id,
+    ctaText: 'Inquire',
+    title: data?.artist?.fullName,
+    inquiryType: INQUIRY_TYPES.ARTIST,
+  })
   const featured = mapFeatured(data.featured)
   const survey = mapCarouselArtworks(data.survey, isSmall)
   const availableWorksBooks = mapSplit(data.availableWorksBooks, () =>

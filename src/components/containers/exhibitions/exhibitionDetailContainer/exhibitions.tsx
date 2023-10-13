@@ -6,6 +6,7 @@ import {
   DzTitleMolecule,
   DzTitleMoleculeTypes,
   FORM_MODAL_TYPES,
+  INQUIRY_TYPES,
 } from '@zwirner/design-system'
 import {useRouter} from 'next/router'
 
@@ -37,7 +38,12 @@ type Props = {
 
 export const ExhibitionsContainer = ({data: initialData}: Props) => {
   const router = useRouter()
-  const inquireFormModalProps = useHashRoutedInquiryModal()
+  const inquireFormModalProps = useHashRoutedInquiryModal({
+    inquiryType: INQUIRY_TYPES.EXHIBITION,
+    id: initialData?._id,
+    title: initialData?.title,
+    ctaText: 'Inquire',
+  })
   const {slug, showChecklist, startDate, endDate, title, subtitle} = initialData
   const exhibitionTitle = `${title}${subtitle ? `: ${subtitle}` : ''}`
   const currentSlug = slug.current
