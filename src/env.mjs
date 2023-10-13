@@ -35,6 +35,10 @@ export const env = createEnv({
     NEXT_PUBLIC_FORMS_API: z.string().url(),
     NEXT_PUBLIC_GTM_ID: z.string().min(1),
     NEXT_PUBLIC_INQUIRY_ENDPOINT: z.string().url(),
+    NEXT_PUBLIC_SUBSCRIBE_ENDPOINT: z.string().url(),
+    NEXT_PUBLIC_SUBSCRIBE_TOPIC_NEWS_ID: z.string(),
+    NEXT_PUBLIC_SUBSCRIBE_TOPIC_SALES_ID: z.string(),
+    NEXT_PUBLIC_SUBSCRIBE_TOPIC_BOOKS_ID: z.string(),
   },
   /*
    * Due to how Next.js bundles environment variables on Edge and Client,
@@ -59,6 +63,10 @@ export const env = createEnv({
     NODE_ENV: process.env.NODE_ENV,
     SANITY_API_READ_TOKEN: process.env.SANITY_API_READ_TOKEN,
     NEXT_PUBLIC_INQUIRY_ENDPOINT: process.env.NEXT_PUBLIC_INQUIRY_ENDPOINT,
+    NEXT_PUBLIC_SUBSCRIBE_ENDPOINT: process.env.NEXT_PUBLIC_SUBSCRIBE_ENDPOINT,
+    NEXT_PUBLIC_SUBSCRIBE_TOPIC_NEWS_ID: process.env.NEXT_PUBLIC_SUBSCRIBE_TOPIC_NEWS_ID,
+    NEXT_PUBLIC_SUBSCRIBE_TOPIC_SALES_ID: process.env.NEXT_PUBLIC_SUBSCRIBE_TOPIC_SALES_ID,
+    NEXT_PUBLIC_SUBSCRIBE_TOPIC_BOOKS_ID: process.env.NEXT_PUBLIC_SUBSCRIBE_TOPIC_BOOKS_ID,
   },
   skipValidation: !!process.env.SKIP_ENV_CHECK,
 })
