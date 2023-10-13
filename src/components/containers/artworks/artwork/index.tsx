@@ -13,6 +13,7 @@ import {
   TEXT_SIZES,
   TITLE_SIZES,
   TITLE_TYPES,
+  useBreakpoints,
 } from '@zwirner/design-system'
 import cn from 'classnames'
 import Image from 'next/image'
@@ -42,6 +43,7 @@ export const ArtworkContainer = ({data}: Props) => {
   const firstItemMediaProps = allPhotoGridItems[0]
   const descriptionRef = useRef<HTMLDivElement>(null)
   const detailTextStyles = {normal: 'text-black-60 !text-sm'}
+  const {isSmall} = useBreakpoints()
 
   const onClickImage = (data: any) => {
     const imgProps: Record<string, any> = data?.media?.imgProps
@@ -79,6 +81,44 @@ export const ArtworkContainer = ({data}: Props) => {
   const priceAndCurrency = price && currency ? `${currency} ${price}` : null
   const isFramedShown = artworkType !== 'sculpture' && (framed == 'Framed' || framed == 'Unframed')
 
+  const ctaContainer = (
+    <div className={styles.ctaContainer}>
+      <div className={styles.ctaContainerTop} />
+      <div className={styles.ctaBody}>
+        {salesInformation && (
+          <div className={styles.textSectionContainer}>
+            <DzPortableText
+              portableProps={{value: salesInformation}}
+              customStyles={{normal: '!text-sm'}}
+              builder={builder}
+              ImgElement={Image}
+            />
+          </div>
+        )}
+        <div className={styles.priceAndFramingContainer}>
+          {priceAndCurrency && (
+            <DzText text={priceAndCurrency} className={styles.priceAndCurrency} />
+          )}
+          {isFramedShown && <DzText text={framed} className={styles.framed} />}
+        </div>
+        <div className={styles.ctaButtonsContainer}>
+          {primaryCta ? (
+            <DzButton className={cn(styles.btnCTA)} size={BUTTON_SIZES.LARGE}>
+              {primaryCta.text}
+            </DzButton>
+          ) : null}
+          {secondaryCta ? (
+            <DzButton
+              className={cn(styles.btnCTA, styles.btnCTASecondary)}
+              size={BUTTON_SIZES.LARGE}
+            >
+              {secondaryCta.text}
+            </DzButton>
+          ) : null}
+        </div>
+      </div>
+    </div>
+  )
   console.log('product', product)
   // TODO: add product information for cart
 
@@ -196,42 +236,7 @@ export const ArtworkContainer = ({data}: Props) => {
               </DzLink>
             )}
           </div>
-          <div className={styles.ctaContainer}>
-            <div className={styles.ctaContainerTop} />
-            <div className={styles.ctaBody}>
-              {salesInformation && (
-                <div className={styles.textSectionContainer}>
-                  <DzPortableText
-                    portableProps={{value: salesInformation}}
-                    customStyles={{normal: '!text-sm'}}
-                    builder={builder}
-                    ImgElement={Image}
-                  />
-                </div>
-              )}
-              <div className={styles.priceAndFramingContainer}>
-                {priceAndCurrency && (
-                  <DzText text={priceAndCurrency} className={styles.priceAndCurrency} />
-                )}
-                {isFramedShown && <DzText text={framed} className={styles.framed} />}
-              </div>
-              <div className={styles.ctaButtonsContainer}>
-                {primaryCta ? (
-                  <DzButton className={cn(styles.btnCTA)} size={BUTTON_SIZES.LARGE}>
-                    {primaryCta.text}
-                  </DzButton>
-                ) : null}
-                {secondaryCta ? (
-                  <DzButton
-                    className={cn(styles.btnCTA, styles.btnCTASecondary)}
-                    size={BUTTON_SIZES.LARGE}
-                  >
-                    {secondaryCta.text}
-                  </DzButton>
-                ) : null}
-              </div>
-            </div>
-          </div>
+          {!isSmall && ctaContainer}
         </div>
       </DzColumn>
       <DzColumn span={8} className={cn(styles.rightPane)}>
@@ -252,6 +257,7 @@ export const ArtworkContainer = ({data}: Props) => {
           </div>
         )}
       </DzColumn>
+      {isSmall && ctaContainer}
       <DzImageZoomModal
         alt={currentZoomedImgProps?.alt || 'Zoomed artwork image'}
         imgUrl={currentZoomedImgProps?.src}
