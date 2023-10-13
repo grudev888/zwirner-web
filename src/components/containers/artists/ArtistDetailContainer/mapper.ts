@@ -24,6 +24,7 @@ export const mapCarouselArtworks = (data: any, isSmall: boolean) => {
       const {
         artists,
         dimensions,
+        framedDimensions,
         title,
         dateSelection,
         medium,
@@ -45,7 +46,16 @@ export const mapCarouselArtworks = (data: any, isSmall: boolean) => {
           : undefined
 
       const {media} = dzMediaMapper({data: item?.photos?.[0], ImgElement: Image})
-      const dimensionText = safeText({key: 'dimensions', text: dimensions})
+      const dimensionText = safeText({
+        key: 'dimensions',
+        text: dimensions,
+        customStyles: {normal: 'text-black-60 !text-sm'},
+      })
+      const framedDimensionsText = safeText({
+        key: 'framedDimensions',
+        text: framedDimensions,
+        customStyles: {normal: 'text-black-60 !text-sm'},
+      })
       const ctasOverrides = ctaMapper({
         data: {
           title: 'CTA',
@@ -78,6 +88,7 @@ export const mapCarouselArtworks = (data: any, isSmall: boolean) => {
         artworkYear: year,
         medium: medium,
         ...(dimensionText ?? {}),
+        ...(framedDimensionsText ?? {}),
         edition: edition,
         price: price,
         slug: slug?.current,

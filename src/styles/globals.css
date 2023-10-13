@@ -24,16 +24,6 @@ body {
   margin: 0;
 }
 
-br:active {
-  content: '';
-  display: block;
-  margin: 1.25em 0;
-}
-br {
-  content: '';
-  display: block;
-  margin: 1.25rem 0;
-}
 @layer base {
   @font-face {
     font-family: avenir-regular;

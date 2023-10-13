@@ -329,11 +329,19 @@ export const contentTypesMapper: any = {
       key: 'additionalInformation',
       text: additionalInformation,
     })
-    const dimensionText = safeText({key: 'dimensions', text: dimensions})
+    const dimensionText = safeText({
+      key: 'dimensions',
+      text: dimensions,
+      customStyles: {normal: 'text-black-60 !text-sm'},
+    })
     const mediumText = safeText({key: 'medium', text: medium})
     const editionText = safeText({key: 'edition', text: edition})
     const {year} = dateSelectionArtworkMapper(dateSelection)
-    const framedDimensionsText = safeText({key: 'framedDimensions', text: framedDimensions})
+    const framedDimensionsText = safeText({
+      key: 'framedDimensions',
+      text: framedDimensions,
+      customStyles: {normal: 'text-black-60 !text-sm'},
+    })
     return {
       type: CARD_TYPES.ARTWORK,
       data: {

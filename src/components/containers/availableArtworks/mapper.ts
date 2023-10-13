@@ -10,7 +10,7 @@ export const mapCardsGrid = (
   ctaClickHandler: (contextData: InquireFormContextData) => void
 ) => {
   return data?.map((artwork) => {
-    const {dimensions, title, medium, edition, _id, price} = artwork ?? {}
+    const {dimensions, framedDimensions, title, medium, edition, _id, price} = artwork ?? {}
     const fullName = artwork?.artists?.at(0)?.fullName
     const year = artwork?.dateSelection?.year
     const slug = artwork?.slug?.current
@@ -29,9 +29,17 @@ export const mapCardsGrid = (
           ? 'Framed'
           : 'Unframed'
         : undefined
-
     const {media} = dzMediaMapper({data: artwork?.photos?.[0], ImgElement: Image})
-    const dimensionText = safeText({key: 'dimensions', text: dimensions})
+    const dimensionText = safeText({
+      key: 'dimensions',
+      text: dimensions,
+      customStyles: {normal: 'text-black-60 !text-sm'},
+    })
+    const framedDimensionsText = safeText({
+      key: 'framedDimensions',
+      text: framedDimensions,
+      customStyles: {normal: 'text-black-60 !text-sm'},
+    })
 
     return {
       id: _id,
@@ -41,6 +49,7 @@ export const mapCardsGrid = (
       artworkYear: year,
       medium: medium,
       ...(dimensionText ?? {}),
+      ...(framedDimensionsText ?? {}),
       edition: edition,
       price: price,
       framed,
