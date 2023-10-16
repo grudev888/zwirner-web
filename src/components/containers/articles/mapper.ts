@@ -108,7 +108,7 @@ export const locationTitleMapper = (data: any) => {
   }
 }
 
-export const articleDatesMapper = (date: string | null) => {
+export const articleDatesMapper = (date: string | null, title: string) => {
   if (!date) return null
 
   const parsedDate = new Date(`${date} EST`)
@@ -121,7 +121,8 @@ export const articleDatesMapper = (date: string | null) => {
   })
 
   return {
-    title: dateFormatter.format(parsedDate),
+    title,
+    subtitle: dateFormatter.format(parsedDate),
     titleType: TITLE_TYPES.P,
   }
 }

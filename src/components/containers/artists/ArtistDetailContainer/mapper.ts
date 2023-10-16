@@ -373,7 +373,6 @@ export const mapArticlesCard = (item: any, noMedia = false) => {
         media,
       }),
     title: item.title,
-    subtitle: item.subtitle,
     secondaryTitle: item.subtitle,
     ...safeText({key: 'description', text: item.description}),
     secondarySubtitle: year,

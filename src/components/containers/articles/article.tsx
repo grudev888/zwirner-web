@@ -9,7 +9,9 @@ import {
   DzLink,
   DzTitle,
   LINK_VARIANTS,
+  TEXT_LINK_SIZES,
   TITLE_TYPES,
+  useIsSmallWindowSize,
 } from '@zwirner/design-system'
 import cn from 'classnames'
 import Image from 'next/image'
@@ -28,21 +30,38 @@ interface ArticleContainerProps {
 }
 
 export const ArticleContainer: FC<ArticleContainerProps> = ({data}) => {
-  const {title, body, interstitial, articles, pdfURL, location, publishDate, displayDate} =
-    data ?? {}
+  const {
+    title,
+    subtitle, // note that subtitle is currently "Secondary Title" in schema
+    body,
+    interstitial,
+    articles,
+    pdfURL,
+    location,
+    publishDate,
+    displayDate,
+    externalURL,
+  } = data ?? {}
   const locationProps = locationTitleMapper(location)
-
-  const articleDates = displayDate
-    ? {
-        title: 'Date',
-        subtitle: displayDate,
-        titleType: TITLE_TYPES.P,
-      }
-    : articleDatesMapper(publishDate)
-
   const interstitialData = dzInterstitialOverrides(interstitial)
   const articlesGrid = articlesGridMap(articles)
   const heroData = heroMapper({...data, title})
+  const articleDates = displayDate
+    ? {
+        title: subtitle || 'Date',
+        subtitle: displayDate,
+        titleType: TITLE_TYPES.P,
+      }
+    : articleDatesMapper(publishDate, subtitle || 'Date')
+  const isSmall = useIsSmallWindowSize()
+
+  if (articleDates && externalURL) {
+    articleDates.title = (
+      <DzLink href={externalURL} textLinkSize={isSmall ? TEXT_LINK_SIZES.MD : TEXT_LINK_SIZES.LG}>
+        {articleDates.title}
+      </DzLink>
+    )
+  }
 
   return (
     <DzColumn span={12}>

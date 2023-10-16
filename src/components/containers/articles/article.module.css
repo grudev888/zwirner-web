@@ -13,9 +13,8 @@
 }
 
 .infoTitle {
-  @apply mb-2.5
-    text-md
-    md:text-lg;
+  @apply text-md
+  md:text-lg;
 }
 
 .infoTitleContainer {
