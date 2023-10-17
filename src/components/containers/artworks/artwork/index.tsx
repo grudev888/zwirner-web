@@ -74,7 +74,8 @@ export const ArtworkContainer = ({data}: Props) => {
     framedDimensions,
     additionalCaption,
     dateSelection: {year},
-    product,
+    // TODO: add product information for cart (Ryan)
+    // product,
   } = data
 
   const {artistName, artistSlug, primaryCta, secondaryCta} = mapArtworkData(data)
@@ -119,7 +120,6 @@ export const ArtworkContainer = ({data}: Props) => {
       </div>
     </div>
   )
-  console.log('product', product)
   // TODO: add product information for cart
 
   return (
