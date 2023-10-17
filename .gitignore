@@ -69,3 +69,9 @@ package-lock.json
 
 # Turbo
 .turbo
+
+# bashrc
+.bashrc
+
+# Temp folder
+temp
