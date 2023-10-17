@@ -1,4 +1,4 @@
-import {isValid, isWithinInterval, parseISO} from 'date-fns'
+import {format, isValid, isWithinInterval, parseISO} from 'date-fns'
 
 import {COMING_SOON, NOW_CLOSED, NOW_OPEN} from '@/common/constants/commonCopies'
 import {ExhibitionPageStatus} from '@/sanity/types'
@@ -36,13 +36,9 @@ export const fromToDatesText = (from: string, to: string, includeYear: boolean =
   const fromDate = new Date(from)
   const toDate = new Date(to)
   const shareMonth = fromDate.getMonth() === toDate.getMonth()
-  const parsedYear = new Date(from ?? to).getFullYear()
-
-  const fromText = fromDate.toLocaleString('default', {month: 'long', day: 'numeric'})
-  const toText = toDate.toLocaleString('default', {
-    ...(shareMonth ? {} : {month: 'long'}),
-    day: 'numeric',
-  })
+  const parsedYear = format(new Date(from ?? to), 'yyyy')
+  const fromText = format(fromDate, 'dd MMMM')
+  const toText = shareMonth ? format(toDate, 'dd') : format(toDate, 'dd MMMM')
   const yearText = includeYear ? `, ${parsedYear}` : ''
   return `${fromText}—${toText}${yearText}`
 }
