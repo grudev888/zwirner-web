@@ -24,3 +24,7 @@ Disallow: /
 # User-agent: baiduspider
 # User-agent: Baiduspider+
 # Crawl-delay: 10
+
+
+User-agent: SiteAuditBot
+Allow: /
