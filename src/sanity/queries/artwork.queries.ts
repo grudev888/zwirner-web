@@ -7,6 +7,8 @@ export const artworkFields = groq`
   _id,
   _type,
   price,
+  displayCustomTitle,
+  displayTitle,
   title,
   medium,
   photos[]{${mediaBuilder}},

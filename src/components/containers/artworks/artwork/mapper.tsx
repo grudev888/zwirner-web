@@ -2,10 +2,24 @@ import {CARD_TYPES, CardSizes} from '@zwirner/design-system'
 import Image from 'next/image'
 
 import {dzMediaMapper} from '@/common/utilsMappers/image.mapper'
+import {safeText} from '@/common/utilsMappers/safe'
 import {ArtworkDataType} from '@/sanity/queries/artworks/artworkData'
 import {capitalizeFirstLetter} from '@/utils/string/capitalizeFirstLetter'
 
-export const mapArtworkData = ({artists, artworkCTA}: ArtworkDataType) => {
+export const mapArtworkData = ({
+  artists,
+  artworkCTA,
+  displayCustomTitle,
+  displayTitle,
+}: ArtworkDataType) => {
+  const displayTitleText = displayCustomTitle
+    ? safeText({
+        key: 'displayTitle',
+        text: displayTitle,
+        customStyles: {normal: 'inline'},
+      })
+    : {}
+
   return {
     artistName: artists?.[0]?.fullName,
     artistSlug: artists?.[0]?.artistPage?.slug?.current,
@@ -17,6 +31,7 @@ export const mapArtworkData = ({artists, artworkCTA}: ArtworkDataType) => {
       artworkCTA?.secondaryCTA !== 'none' && {
         text: artworkCTA.SecondaryCTAText || capitalizeFirstLetter(artworkCTA?.secondaryCTA),
       },
+    displayTitle: displayTitleText?.portableTextDisplayTitle,
   }
 }
 

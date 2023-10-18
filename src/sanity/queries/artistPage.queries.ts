@@ -35,6 +35,8 @@ export const artistPageBySlug = groq`
   "artist": artist-> { ..., "cvUrl": cv.asset->url },
   survey {
   ...,
+  displayTitle,
+  displayCustomTitle,
   items[]-> {
     ...,
     photos[]{

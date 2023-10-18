@@ -78,9 +78,11 @@ export const ArtworkContainer = ({data}: Props) => {
     // product,
   } = data
 
-  const {artistName, artistSlug, primaryCta, secondaryCta} = mapArtworkData(data)
+  const {artistName, artistSlug, displayTitle, primaryCta, secondaryCta} = mapArtworkData(data)
   const priceAndCurrency = price && currency ? `${currency} ${price}` : null
   const isFramedShown = artworkType !== 'sculpture' && (framed == 'Framed' || framed == 'Unframed')
+  const isArtworkTitlePortableText = !!displayTitle
+  const artworkTitle = isArtworkTitlePortableText ? displayTitle : title
 
   const ctaContainer = (
     <div className={styles.ctaContainer}>
@@ -148,9 +150,11 @@ export const ArtworkContainer = ({data}: Props) => {
                   ) : (
                     artistName
                   )}
-                  {title && (year || displayDate) && (
+                  {artworkTitle && (year || displayDate) && (
                     <div>
-                      <span className={styles.subtitle}>{title}, </span>
+                      <span className={isArtworkTitlePortableText ? '' : styles.subtitle}>
+                        {artworkTitle},{' '}
+                      </span>
                       <span className={styles.subtitleYear}>{displayDate || year}</span>
                     </div>
                   )}

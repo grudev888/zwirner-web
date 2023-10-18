@@ -26,6 +26,8 @@ export const mapCarouselArtworks = (data: any, isSmall: boolean) => {
         dimensions,
         framedDimensions,
         title,
+        displayCustomTitle,
+        displayTitle,
         dateSelection,
         medium,
         edition,
@@ -56,6 +58,13 @@ export const mapCarouselArtworks = (data: any, isSmall: boolean) => {
         text: framedDimensions,
         customStyles: {normal: 'text-black-60 !text-sm'},
       })
+      const artworkTitleText = displayCustomTitle
+        ? safeText({
+            key: 'artworkTitle',
+            text: displayTitle,
+            customStyles: {normal: 'inline'},
+          })
+        : null
       const ctasOverrides = ctaMapper({
         data: {
           title: 'CTA',
@@ -89,6 +98,7 @@ export const mapCarouselArtworks = (data: any, isSmall: boolean) => {
         medium: medium,
         ...(dimensionText ?? {}),
         ...(framedDimensionsText ?? {}),
+        ...(artworkTitleText ?? {}),
         edition: edition,
         price: price,
         slug: slug?.current,
