@@ -1,17 +1,18 @@
+.leftColumn {
+  @apply md:min-h-[calc(100vh-60px-90px)];
+}
+
 .leftPane {
   @apply relative
   !flex
   h-fit
+  h-full
   flex-col
-  overflow-y-scroll
   scrollbar-none
   md:sticky
   md:top-[60px]
-  md:mb-[7.5rem]
   md:pt-10;
-  min-height: calc(100vh - 60px);
 }
-/*TODO bottom margin above footer should be defined in footer or global layout*/
 
 .leftPaneContent {
   @apply flex-1;
@@ -22,7 +23,6 @@
   flex-col
   md:mb-[7.5rem];
 }
-/*TODO bottom margin above footer should be defined in footer or global layout*/
 
 /*hide first item in mobile*/
 .rightPane > div > div > div:first-child {
@@ -35,7 +35,7 @@
   bottom-0
   left-0
   z-[10]
-  w-screen
+  col-span-12
   md:sticky
   md:w-full
   md:max-w-[580px]
@@ -51,7 +51,8 @@
 
 .ctaBody {
   @apply bg-white-100
-  py-[1.25rem];
+  pt-[1.25rem]
+  pb-[1.25rem];
 }
 
 .ctaButtonsContainer {

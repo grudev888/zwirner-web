@@ -126,7 +126,7 @@ export const ArtworkContainer = ({data}: Props) => {
 
   return (
     <>
-      <DzColumn span={4}>
+      <DzColumn span={4} className={cn(styles.leftColumn)}>
         <div className={cn(styles.leftPane)}>
           <div className={styles.leftPaneContent}>
             {!!firstItemMediaProps && (
