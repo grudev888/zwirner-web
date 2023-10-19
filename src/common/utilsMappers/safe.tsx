@@ -8,6 +8,7 @@ interface SafeTextProps {
   text: any
   prefix?: string
   customStyles?: any
+  charLimit?: number
 }
 
 export const safeText = ({
@@ -15,6 +16,7 @@ export const safeText = ({
   text,
   prefix = 'portableText',
   customStyles = {normal: '!mx-0'},
+  charLimit,
 }: SafeTextProps) => {
   if (!text) return {}
   if (typeof text === 'string') {
@@ -30,6 +32,7 @@ export const safeText = ({
         builder={builder}
         ImgElement={Image}
         customStyles={customStyles}
+        charLimit={charLimit}
       />
     ),
   }
