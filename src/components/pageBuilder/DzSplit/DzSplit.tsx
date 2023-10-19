@@ -10,12 +10,17 @@ interface DzSplitProps {
   componentProps?: DzSplitTypeProps
 }
 
-export const DzSplit: FC<DzSplitProps> = ({data, componentProps}) => {
+export const DzSplit: FC<DzSplitProps> & {notContentDependant: boolean} = ({
+  data,
+  componentProps,
+}) => {
   const {_type} = data ?? {}
-  const mappedData = (splitMappers[_type] ?? ((a: any) => a))(data, componentProps)
+  const mappedData = (splitMappers?.[_type] ?? ((a: any) => a))(data, componentProps)
   const overrideData = componentProps ? dzSplitOverrides(componentProps) : {}
 
   return <DzSplitMolecule {...{...mappedData, ...overrideData}} />
 }
+
+DzSplit.notContentDependant = true
 
 export default DzSplit

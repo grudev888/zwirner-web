@@ -3,36 +3,40 @@ import Link from 'next/link'
 
 import {BUY_NOW, LEARN_MORE} from '@/common/constants/commonCopies'
 import {CTAClickEvent} from '@/events/CTAClickEvent'
-import {CtaActions, CTASchemaType, DzCardSchemaProps} from '@/sanity/types'
+import {CtaActions} from '@/sanity/types'
 
 enum ARTWORK_AVAILABILITY {
   UNABLE = 'unavailable',
   AVAILABLE = 'available',
 }
+
+// TODO UNIFY CTA'S & TYPES FOR THEM
 interface CtaMapperProps {
-  data: DzCardSchemaProps
-  props?: any
-}
-interface CtaMapperInterstitial {
-  data: CTASchemaType
+  data: any
   props?: any
 }
 
-const handleCTAClick = (action?: CtaActions) => {
+// TODO UNIFY CTA'S & TYPES FOR THEM
+interface CtaMapperInterstitial {
+  data: any
+  props?: any
+}
+
+const handleCTAClick = (action?: CtaActions, extraProps?: any) => {
   if (action) {
-    window.document.dispatchEvent(CTAClickEvent(action))
+    window.document.dispatchEvent(CTAClickEvent(action, extraProps))
   }
 }
 
 export const ctaMapper = ({data, props}: CtaMapperProps) => {
   const {primaryCTA, secondaryCTA} = data ?? {}
-  const {action, link, text} = primaryCTA ?? {}
+  const {action, link, text, handleClick} = primaryCTA ?? {}
   // TODO unify CTA inside the studio
   const {blank, href} = (link as any) ?? {}
   const {action: secondaryAction, text: secondaryText} = secondaryCTA ?? {}
   const primaryActionIsLink = action === CtaActions.LINK_CONTENT || action === CtaActions.LINK
 
-  const {url, hideSecondary = false, defaultLinkText} = props ?? {}
+  const {url, hideSecondary = false, defaultLinkText, ctaActionProps: extraProps} = props ?? {}
 
   const primaryCTAMap =
     primaryCTA && !primaryActionIsLink
@@ -41,14 +45,14 @@ export const ctaMapper = ({data, props}: CtaMapperProps) => {
             text: text,
             ctaProps: {
               onClick: () => {
-                handleCTAClick(action)
+                if (handleClick) handleClick(action)
+                handleCTAClick(action, extraProps)
               },
               mode: ButtonModes.DARK,
             },
           },
         }
       : {}
-
   const linkCTAMap = primaryActionIsLink
     ? {
         linkCTA: {
@@ -83,11 +87,9 @@ export const ctaMapper = ({data, props}: CtaMapperProps) => {
 
 // TODO unify ctas everywhere
 export const ctaMapperInterstitial = ({data, props}: CtaMapperInterstitial) => {
-  const {action, link, text} = data ?? {}
+  const {action, text, handleClick} = data ?? {}
   // TODO unify CTA inside the studio
-  const {blank, href} = (link as any) ?? {}
-  const primaryActionIsLink = action === CtaActions.LINK_CONTENT || action === CtaActions.LINK
-  const {url = false, customAction} = props ?? {}
+  const {customAction} = props ?? {}
 
   const primaryCTAMap = text
     ? {
@@ -95,6 +97,8 @@ export const ctaMapperInterstitial = ({data, props}: CtaMapperInterstitial) => {
           text: text,
           ctaProps: {
             onClick: (ctaProps: any) => {
+              // TODO Unify handle click && custom Action
+              if (handleClick) handleClick(action)
               if (customAction && typeof customAction === 'function') {
                 customAction(action, ctaProps)
               } else {
@@ -106,21 +110,8 @@ export const ctaMapperInterstitial = ({data, props}: CtaMapperInterstitial) => {
       }
     : {}
 
-  const linkCTAMap =
-    text && primaryActionIsLink
-      ? {
-          linkCTA: {
-            text: text,
-            linkElement: Link,
-            url: href ?? url,
-            openNewTab: blank,
-          },
-        }
-      : {}
-
   return {
     ...primaryCTAMap,
-    ...linkCTAMap,
   }
 }
 

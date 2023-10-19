@@ -35,6 +35,8 @@ export const UpcomingExhibitions: FC<UpcomingExhibitionsProps> = ({data}) => {
       itemsPerRow: data?.upcomingComponent === UpcomingMolecules['2-Up Grid'] ? 2 : 3,
       wrap: false,
       title: '',
+      displayGridSlider: false,
+      displayNumberOfItems: false,
     },
   })
 

@@ -26,6 +26,8 @@ const PaginationPage = ({
       itemsPerRow: 3,
       wrap: false,
       title: '',
+      displayGridSlider: false,
+      displayNumberOfItems: false,
     },
   })
   return (

@@ -1,3 +1,4 @@
+import {SURVEY} from '@/common/constants/commonCopies'
 import {AvailableArtworksContainer} from '@/components/containers/availableArtworks'
 import BackNavPageLayout from '@/components/containers/layout/pages/backNavPageLayout'
 
@@ -6,10 +7,18 @@ interface PageContainerProps {
 }
 
 const ArtistSurveyPageContainer = ({data}: PageContainerProps) => {
+  const {artist} = data ?? {}
+  const {fullName} = artist ?? {}
   const subPageData = data?.surveySubpage ?? {}
   const pageData = {
-    artworksGrid: subPageData || {items: []},
-    title: subPageData?.title,
+    gridData: subPageData,
+    artworks: subPageData?.props?.grid?.map((component: any) => {
+      const {content} = component ?? {}
+      const [contentSimple] = content ?? []
+      const {_id} = contentSimple ?? {}
+      return {_id}
+    }),
+    title: `${SURVEY}${fullName ? `: ${fullName}` : ''}`,
     artistName: data?.artist?.fullName,
   }
   const parentPath = data?.slug?.current

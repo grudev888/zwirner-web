@@ -1,4 +1,4 @@
-import {CardSizes} from '@zwirner/design-system'
+import {CardSizes, useBreakpoints} from '@zwirner/design-system'
 import dynamic from 'next/dynamic'
 import {FC} from 'react'
 
@@ -15,17 +15,28 @@ interface DzCardProps {
   componentProps: DzCardExtendedProps
 }
 
-export const DzCard: FC<DzCardProps> = ({data, componentProps}) => {
+export const processDzCardData = ({
+  data,
+  componentProps,
+  isSmall = false,
+}: DzCardProps & {isSmall?: boolean}) => {
   const {_type} = data ?? {}
+  const cardSize = componentProps?.cardSize ?? CardSizes['12col']
+
   const mappedData =
     (contentTypesMapper[_type] ?? ((a: any) => a))(data, {
       ...(componentProps ?? {}),
-      cardSize: CardSizes['12col'],
+      cardSize,
+      isSmall,
     }) ?? {}
-  const overrideData =
-    dzCardOverrides({...(componentProps ?? {}), cardSize: CardSizes['12col']}) ?? {}
+  const overrideData = dzCardOverrides({...(componentProps ?? {}), cardSize, isSmall}) ?? {}
 
-  return <DzCardMolecule {...{...mappedData, ...overrideData}} />
+  return {...mappedData, ...overrideData}
+}
+
+export const DzCard: FC<DzCardProps> = ({data, componentProps}) => {
+  const {isSmall} = useBreakpoints()
+  return <DzCardMolecule {...processDzCardData({data, componentProps, isSmall})} />
 }
 
 export default DzCard

@@ -1,4 +1,4 @@
-import {CARD_TYPES, CardViewport, MEDIA_TYPES} from '@zwirner/design-system'
+import {CARD_TYPES, CardViewport, MEDIA_ASPECT_RATIOS, MEDIA_TYPES} from '@zwirner/design-system'
 import Image from 'next/image'
 import Link from 'next/link'
 
@@ -30,12 +30,15 @@ import {
 } from '@/sanity/types'
 
 export const dzCardOverrides = (props: DzCardExtendedProps) => {
-  const {mediaOverride, enableOverrides} = props ?? {}
+  const {mediaOverride, enableOverrides, isSmall} = props ?? {}
   if (!enableOverrides) return {}
 
   const {media, hideImage} = dzMediaMapper({
     data: {image: mediaOverride},
     ImgElement: Image,
+    options: {
+      aspectRatio: isSmall ? MEDIA_ASPECT_RATIOS['4:3'] : MEDIA_ASPECT_RATIOS['16:9'],
+    },
   })
   return {
     data: {
@@ -70,16 +73,21 @@ export const contentTypesMapper: any = {
       cardSize,
       additionalInformation,
       mediaOverride,
+      isSmall,
     } = props ?? {}
 
     const {type: headerImageType} = header?.[0] ?? {}
     const sourceImage = Object.values(MediaTypes).includes(headerImageType)
       ? header?.[0]
       : header?.[0]?.photos?.[0]
+
     const {media, hideImage} = dzMediaMapper({
       override: mediaOverride,
-      data: type === ArticleTypes.INTERNAL ? sourceImage : image,
+      data: sourceImage ?? image,
       ImgElement: Image,
+      options: {
+        aspectRatio: isSmall ? MEDIA_ASPECT_RATIOS['4:3'] : MEDIA_ASPECT_RATIOS['16:9'],
+      },
     })
     const additionalInformationText = safeText({
       key: 'additionalInformation',
@@ -99,9 +107,7 @@ export const contentTypesMapper: any = {
     let cardProps = {}
 
     // RULES FOR ARTICLES
-    const isNewsArticle =
-      (type === ArticleTypes.INTERNAL || type === ArticleTypes.EXTERNAL) &&
-      category === ArticleCategories.NEWS
+
     const isSelectedPressVariant = type === ArticleTypes.PRESS
     const isPressArticle =
       (type === ArticleTypes.INTERNAL || type === ArticleTypes.EXTERNAL) &&
@@ -116,28 +122,12 @@ export const contentTypesMapper: any = {
       (type === ArticleTypes.INTERNAL || type === ArticleTypes.EXTERNAL) &&
       category === ArticleCategories.MUSEUM_EXHIBITION
 
-    if (isNewsArticle) {
+    const isNewsArticle = type === ArticleTypes.INTERNAL || type === ArticleTypes.EXTERNAL
+
+    if (isSelectedPressVariant) {
       cardProps = {
         media,
-        hideImage,
-        category,
-        title,
-        subtitle: primarySubtitle,
-        secondaryTitle: subtitle,
-        secondarySubtitle,
-        cardLink: {href: articleUrl, openNewTab: true, LinkElement: Link},
-        linkCTA: {
-          text: READ_MORE,
-          linkElement: Link,
-          url: articleUrl,
-          openNewTab: false,
-        },
-        ...(descriptionText ?? {}),
-        ...(additionalInformationText ?? {}),
-      }
-    } else if (isSelectedPressVariant) {
-      cardProps = {
-        media,
+        // show only for certain pages
         hideImage: true,
         title,
         secondaryTitle: subtitle,
@@ -156,7 +146,7 @@ export const contentTypesMapper: any = {
         hideImage: hideImage,
         category,
         title,
-        secondaryTitle: secondaryTitleOverride,
+        secondaryTitle: subtitle ?? secondaryTitleOverride,
         subtitle: primarySubtitle ?? primarySubtitleOverride,
         linkCTA: {
           text: READ_MORE,
@@ -174,7 +164,7 @@ export const contentTypesMapper: any = {
         hideImage,
         category,
         subtitle: primarySubtitle,
-        secondarySubtitle: date,
+        secondarySubtitle: displayDate ?? date,
         secondaryTitle: name,
         title,
         cardLink: {href: articleUrl, openNewTab: true, LinkElement: Link},
@@ -218,6 +208,25 @@ export const contentTypesMapper: any = {
           linkElement: Link,
           linkProps: {openNewTab: true},
         },
+      }
+    } else if (isNewsArticle) {
+      cardProps = {
+        media,
+        hideImage,
+        category,
+        title,
+        subtitle: primarySubtitle,
+        secondaryTitle: subtitle,
+        secondarySubtitle,
+        cardLink: {href: articleUrl, openNewTab: true, LinkElement: Link},
+        linkCTA: {
+          text: READ_MORE,
+          linkElement: Link,
+          url: articleUrl,
+          openNewTab: false,
+        },
+        ...(descriptionText ?? {}),
+        ...(additionalInformationText ?? {}),
       }
     }
 
@@ -301,6 +310,7 @@ export const contentTypesMapper: any = {
   },
   artwork: (data: any, props: DzCardExtendedProps) => {
     const {
+      _id,
       artists,
       dimensions,
       title,
@@ -316,8 +326,20 @@ export const contentTypesMapper: any = {
     const {cardSize, additionalInformation, mediaOverride} = props ?? {}
 
     const [mainArtist] = artists ?? []
+    const {fullName} = mainArtist ?? {}
     const {current} = slug ?? {}
-    const ctasOverrides = ctaMapper({data: props, props: {url: current, hideSecondary: true}})
+    const ctasOverrides = ctaMapper({
+      data: props,
+      props: {
+        url: current,
+        hideSecondary: true,
+        ctaActionProps: {
+          id: _id,
+          title: fullName,
+          artwork: data,
+        },
+      },
+    })
 
     const {media} = dzMediaMapper({
       override: mediaOverride,
@@ -347,7 +369,7 @@ export const contentTypesMapper: any = {
       data: {
         size: cardSize,
         media,
-        artistName: mainArtist?.fullName,
+        artistName: fullName,
         artworkTitle: title,
         artworkYear: year,
         price,

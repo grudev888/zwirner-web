@@ -1,6 +1,5 @@
 import {CARD_TYPES, MEDIA_ASPECT_RATIOS, MEDIA_OBJECT_FIT} from '@zwirner/design-system'
 import Image from 'next/image'
-import {Fragment} from 'react'
 
 import {EXHIBITIONS_URL} from '@/common/constants/commonCopies'
 import {dzMediaMapper} from '@/common/utilsMappers/image.mapper'
@@ -84,22 +83,4 @@ export const articlesGridMap = (data: any[]) => {
       secondarySubtitle: cardDate,
     }
   })
-}
-
-export const guideGrid = (data: any) => {
-  const {displayNumberOfResults, items, itemsPerRow} = data ?? {}
-
-  const cards = articlesGridMap(items) ?? []
-  return {
-    cards,
-    displayNumberOfResults,
-    useLink: true,
-    steps: [
-      {
-        id: 1,
-        numberOfColumns: itemsPerRow,
-        icon: <Fragment />,
-      },
-    ],
-  }
 }

@@ -7,6 +7,7 @@ import {mediaBuilder} from '../builders/mediaBuilder'
 import {SanitySlugSchema} from '../validationPrimitives'
 export const artworkContent = groq`
   _type == 'artwork' => {
+    _id,
     _type,
     seo {
       ${pageSEOFields}
@@ -57,6 +58,7 @@ export const ArtworkFramedSchema = z.enum(['Framed', 'Unframed', 'NotApplicable'
 
 // TODO: Describe properly z.any() types
 export const ArtworkContentSchema = z.object({
+  _id: z.string(),
   seo: z.nullable(PageSEOFieldsSchema),
   title: z.string(),
   inventoryId: z.nullable(z.string()),

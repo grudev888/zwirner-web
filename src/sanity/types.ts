@@ -165,7 +165,11 @@ export interface DzCardSchemaProps {
   additionalInformation?: any
 }
 
-export type DzCardExtendedProps = DzCardSchemaProps & {isOnGrid: boolean; cardSize: any}
+export type DzCardExtendedProps = DzCardSchemaProps & {
+  isOnGrid: boolean
+  isSmall: boolean
+  cardSize: any
+}
 
 export interface DzMediaSchemaProps {
   media: any
@@ -222,13 +226,14 @@ export interface DzInterstitialTypeProps {
 }
 
 export interface DzSplitTypeProps {
-  title: string
+  titleOverride: string
   splitType: SplitTypes
   reverse: boolean
   animate: boolean
   media?: any
   enableOverrides: boolean
   primaryCTA?: CTASchemaType
+  subtitleOverride?: string
 }
 
 export interface DzTitleTypeProps {

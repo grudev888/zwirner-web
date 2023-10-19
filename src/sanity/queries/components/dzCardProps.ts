@@ -31,7 +31,7 @@ const BookVariationSchema = z.nullable(z.enum(['productCard', 'contentCard']))
 // TODO: define type instead any
 // props: DzCardPropsDataSchema
 export const DzCardPropsDataSchema = z.object({
-  title: z.string(),
+  title: z.string().nullish(),
   primaryCTA: z.nullable(z.any()),
   secondaryCTA: z.nullable(z.any()),
   mediaOverride: z.nullable(z.any()),

@@ -9,18 +9,14 @@ import {
   TITLE_TYPES,
   useBreakpoints,
 } from '@zwirner/design-system'
-import dynamic from 'next/dynamic'
 import Link from 'next/link'
 import {useRouter} from 'next/router'
 import {useState} from 'react'
 
-const DzComplexGrid = dynamic(
-  () => import('@zwirner/design-system').then((mod) => mod.DzComplexGrid),
-  {ssr: false}
-)
+import PageBuilder from '@/components/pageBuilder'
 
 const MOBILE_CARDS_LIMIT = 2
-const LOAD_MORE_FEATURE_ENABLED = false
+const LOAD_MORE_FEATURE_ENABLED = true
 
 const SelectedPress = ({selectedPress, ...rest}: any) => {
   const router = useRouter()
@@ -32,14 +28,14 @@ const SelectedPress = ({selectedPress, ...rest}: any) => {
       <DzTitleMolecule
         type={DzTitleMoleculeTypes.MOLECULE}
         data={{
-          title: selectedPress.title,
+          title: 'Selected Press',
           titleProps: {
             titleType: TITLE_TYPES.H2,
             titleSize: TITLE_SIZES.LG,
             subtitleSize: TITLE_SIZES.LG,
             subtitleType: TITLE_TYPES.P,
           },
-          customClass: 'mb-5 md:mb-0',
+          customClass: 'mb-5 md:mb-10',
           linkCTA: {
             text: 'Explore Selected Press',
             linkElement: Link,
@@ -47,16 +43,22 @@ const SelectedPress = ({selectedPress, ...rest}: any) => {
           },
         }}
       />
-      <DzComplexGrid
-        {...{
-          ...selectedPress,
-          cards:
-            LOAD_MORE_FEATURE_ENABLED && isSmall
-              ? selectedPress.cards.slice(0, shownCards)
-              : selectedPress.cards,
-        }}
+      <PageBuilder
+        components={[
+          {
+            ...selectedPress,
+            props: {
+              ...selectedPress?.props,
+              grid:
+                LOAD_MORE_FEATURE_ENABLED && isSmall
+                  ? selectedPress?.props?.grid?.slice(0, shownCards)
+                  : selectedPress?.props?.grid,
+            },
+          },
+        ]}
       />
-      {LOAD_MORE_FEATURE_ENABLED && isSmall && shownCards < selectedPress.cards.length ? (
+
+      {LOAD_MORE_FEATURE_ENABLED && isSmall && shownCards < selectedPress?.props?.grid.length ? (
         <div className="flex">
           <DzButton
             className="mx-auto mt-10"

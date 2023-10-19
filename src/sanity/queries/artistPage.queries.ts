@@ -1,15 +1,13 @@
 import {groq} from 'next-sanity'
 
-import {articleContent} from '@/sanity/queries/components/content/articleContent'
+import {dzCarouselFields} from '@/sanity/queries/components/dzCarouselProps'
+import {dzInterstitialFields} from '@/sanity/queries/components/dzInterstitialProps'
+import {dzSplitFields} from '@/sanity/queries/components/dzSplitProps'
+import {dzGridFields} from '@/sanity/queries/components/gridMoleculeProps'
 
-import {artworkFields} from './artwork.queries'
 import {mediaBuilder} from './components/builders/mediaBuilder'
-import {
-  exhibitionComplexFields,
-  exhibitionSimpleFields,
-} from './components/content/exhibitionPageContent'
+import {componentTypesData} from './components/componentTypesData'
 import {pageSEOFields} from './components/seo/pageSEOFields'
-
 export const artistPageSlugs = groq`
 *[_type == "artistPage" && defined(slug.current)][]{
   "params": { "slug": slug.current }
@@ -28,48 +26,57 @@ export const getAllArtistsPages = groq`{
 export const artistPageBySlug = groq`
 *[_type == "artistPage" && slug.current == $slug][0] {
   ...,
+
+  featured {
+    ${dzSplitFields},
+    ${componentTypesData}
+  },
+
+  survey {
+    ${dzCarouselFields}
+  },
+
+  availableWorksBooks {
+    ${dzSplitFields},
+  },
+
+  availableWorksInterstitial {
+    ${dzInterstitialFields}
+  },
+
+  exhibitionsInterstitial {
+    ${dzInterstitialFields}
+  },
+
+  guide {
+    ${dzCarouselFields}
+  },
+
+  availableWorks {
+   ${dzGridFields}
+  },
+
+  latestExhibitions {
+    ${dzGridFields}
+  },
+
+  selectedPress {
+    ${dzGridFields}
+  },
+
+  interstitial {
+    ${dzInterstitialFields}
+  },
+
+  books {
+    ${dzCarouselFields}
+  },
+
   _id,
   title,
-  availableWorksInterstitial,
-  exhibitionsInterstitial,
   "artist": artist-> { ..., "cvUrl": cv.asset->url },
-  survey {
-  ...,
-  displayTitle,
-  displayCustomTitle,
-  items[]-> {
-    ...,
-    photos[]{
-      ...,
-      ${mediaBuilder}
-    },
-    "artists": artists[]->
-    }
-  },
-  latestExhibitions { ..., items[]-> { ..., location->{ _id, name, timezone }, } },
-  guide {
-    ...,
-    items[]->{
-      ...,
-      header {
-        ${mediaBuilder}
-      }
-    }
-  },
   photos[]{
     ${mediaBuilder}
-  },
-  selectedPress { ..., items[]->, },
-  books { ..., items[]->, },
-  featured->{
-    ${articleContent}
-    _type == "artwork"=>{
-      ${artworkFields}
-    },
-    _type == "exhibitionPage"=> {
-      ${exhibitionSimpleFields}
-      ${exhibitionComplexFields}
-    },
   },
   seo {
     ${pageSEOFields}

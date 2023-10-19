@@ -1,41 +1,20 @@
 import {groq} from 'next-sanity'
 
-import {mediaBuilder} from './components/builders/mediaBuilder'
-import {
-  exhibitionComplexFields,
-  exhibitionSimpleFields,
-} from './components/content/exhibitionPageContent'
+import {dzInterstitialFields} from '@/sanity/queries/components/dzInterstitialProps'
+import {dzGridFields} from '@/sanity/queries/components/gridMoleculeProps'
+
 import {pageSEOFields} from './components/seo/pageSEOFields'
 
 export const artistGuidePageBySlug = groq`
 *[_type == "artistPage" && defined(slug.current) && slug.current == $slug][]{
   title,
   slug,
-  artist->,
+  artist->{fullName},
   guideInterstitialSubpage {
-    ...,
-    image {
-      ${mediaBuilder}
-    }
+    ${dzInterstitialFields}
   },
   guideSubpage {
-    title,
-    itemsPerRow,
-    displayNumberOfResults,
-    items[]-> {
-      ...,
-      header[]{
-        ${mediaBuilder}
-      },
-      _type == "exhibitionPage"=> {
-        title,
-        _type,
-        "exhibition":  {
-          ${exhibitionSimpleFields}
-          ${exhibitionComplexFields}
-        },
-      }
-    }
+    ${dzGridFields}
   },
   "seo": guideSeo {
     ${pageSEOFields}

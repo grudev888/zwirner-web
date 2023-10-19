@@ -1,7 +1,9 @@
-import {ColumnSpan, DzColumn, DzGridColumns} from '@zwirner/design-system'
+import {DzColumn, DzGridColumns} from '@zwirner/design-system'
 import {FC} from 'react'
 
 import {DzCard} from '@/components/pageBuilder/DzCard/DzCard'
+import {ComplexGridMolecule} from '@/components/pageBuilder/DzComplexGrid/DzComplexGrid'
+import {getRows} from '@/components/pageBuilder/DzComplexGrid/dzComplexGridMapper'
 
 import {DzMedia} from '../DzMedia/DzMedia'
 
@@ -10,22 +12,32 @@ interface GridMoleculeProps {
   componentProps?: any
 }
 
-export const componentsIndex: any = {
+const componentsIndex: any = {
   dzCard: DzCard,
   dzMedia: DzMedia,
 }
 
-const getRows = (numberOfSections: number): ColumnSpan | ColumnSpan[] => {
-  if (!numberOfSections) return 1
-  if (numberOfSections > 4) return 3
-  return (12 / numberOfSections) as ColumnSpan
-}
-
-export const GridMolecule: FC<GridMoleculeProps> & {multipleContentTypes: boolean} & {
+export const GridMolecule: FC<GridMoleculeProps> & {
+  multipleContentTypes: boolean
   notContentDependant: boolean
-} = ({componentProps}) => {
-  const {itemsPerRow = 1, wrap = false, grid = []} = componentProps
+} = ({componentProps, data}) => {
+  const {
+    itemsPerRow = 1,
+    wrap = false,
+    grid = [],
+    displayNumberOfItems = false,
+    displayGridSlider = false,
+  } = componentProps
   const getColSpan = getRows(itemsPerRow ?? 0)
+  const useComplexGrid = displayNumberOfItems || displayGridSlider
+
+  if (useComplexGrid) {
+    return (
+      <DzColumn className="mb-12" span={12}>
+        <ComplexGridMolecule data={data} componentProps={componentProps} />
+      </DzColumn>
+    )
+  }
 
   return (
     <DzColumn className="mb-12" span={12}>
@@ -52,7 +64,7 @@ export const GridMolecule: FC<GridMoleculeProps> & {multipleContentTypes: boolea
               <ComponentModule
                 key={`${_type}-${key}`}
                 data={componentContent}
-                componentProps={{...props, isOnGrid: true}}
+                componentProps={{...props, isOnGrid: true, cardSize: `${getColSpan}col`}}
               />
             </DzColumn>
           )

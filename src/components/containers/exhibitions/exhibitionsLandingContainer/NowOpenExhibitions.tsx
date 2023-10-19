@@ -94,6 +94,8 @@ export const NowOpenExhibitions: FC<NowOpenExhibitionsProps> = ({data}) => {
       itemsPerRow: 2,
       wrap: false,
       title: '',
+      displayGridSlider: false,
+      displayNumberOfItems: false,
     },
   })
   return (

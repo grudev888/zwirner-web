@@ -12,6 +12,8 @@ export const dzGridFields = groq`
     title,
     wrap,
     itemsPerRow,
+    displayNumberOfItems,
+    displayGridSlider,
     grid[]{
       ${componentTypesData}
       ${dzMediaProps}
@@ -29,9 +31,11 @@ const GridMoleculeItemTypeSchema = z.enum(['dzCard', 'dzMedia'])
 export type GridMoleculeItemType = z.infer<typeof GridMoleculeItemTypeSchema>
 
 export const DzGridMoleculePropsDataSchema = z.object({
-  title: z.nullable(z.string()),
+  title: z.string().nullish(),
   wrap: z.boolean(),
-  itemsPerRow: z.number().int().min(1).max(4),
+  itemsPerRow: z.number().int().min(1).max(4).nullish(),
+  displayNumberOfItems: z.nullable(z.boolean()),
+  displayGridSlider: z.nullable(z.boolean()),
   grid: z.nullable(
     z.array(
       z.object({

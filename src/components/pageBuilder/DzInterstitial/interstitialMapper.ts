@@ -5,10 +5,17 @@ import {ctaMapperInterstitial} from '@/common/utilsMappers/cta.mapper'
 import {dzMediaMapper} from '@/common/utilsMappers/image.mapper'
 import {safeText} from '@/common/utilsMappers/safe'
 import {builder} from '@/sanity/imageBuilder'
+import {PageBuilderComponentsDataSchemaType} from '@/sanity/queries/page/pageCommonQueries/pageBuilderComponentsData'
 import {DzInterstitialTypeProps} from '@/sanity/types'
 
-export const interstitialMapper = (data: any) => {
-  return data
+export const showInterstitialSection = (data: PageBuilderComponentsDataSchemaType) => {
+  if (data?._type !== 'dzInterstitial') return false
+  const {props} = data ?? {}
+  const {cta, title, subtitle, eyebrow} = props ?? {}
+  const {text, action} = cta ?? {}
+  const hasContentToShow = title || subtitle || eyebrow
+  const hasCTAText = text && action
+  return hasContentToShow || hasCTAText
 }
 
 export const dzInterstitialOverrides = (

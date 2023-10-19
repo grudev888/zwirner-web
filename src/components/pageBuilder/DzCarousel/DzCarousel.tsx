@@ -20,7 +20,7 @@ interface CarouselMoleculeProps {
   componentProps?: any
 }
 
-export const componentsIndex: any = {
+const componentsIndex: any = {
   dzCard: DzCard,
   dzMedia: DzMedia,
 }

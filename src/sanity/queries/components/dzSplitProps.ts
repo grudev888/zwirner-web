@@ -7,7 +7,8 @@ import {mediaBuilder} from './builders/mediaBuilder'
 export const dzSplitFields = groq`
   "_type": "dzSplit",
   'props': {
-    title,
+    titleOverride,
+    subtitleOverride,
     splitType,
     reverse,
     animate,
@@ -29,7 +30,8 @@ const SplitTypeSchema = z.enum(['tall', 'short'])
 // TODO: define type instead any
 // props: DzSplitPropsDataSchema
 export const DzSplitPropsDataSchema = z.object({
-  title: z.nullable(z.string()),
+  titleOverride: z.nullable(z.string()),
+  subtitleOverride: z.nullable(z.string()),
   splitType: SplitTypeSchema,
   reverse: z.boolean(),
   animate: z.boolean(),
@@ -37,3 +39,5 @@ export const DzSplitPropsDataSchema = z.object({
   enableOverrides: z.boolean(),
   primaryCTA: z.nullable(z.any()),
 })
+
+export type DzSplitPropsDataSchemaType = z.infer<typeof DzSplitPropsDataSchema>

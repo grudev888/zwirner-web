@@ -3,21 +3,54 @@ import Link from 'next/link'
 
 import {EXHIBITION, EXHIBITIONS_URL, LEARN_MORE} from '@/common/constants/commonCopies'
 import {ctaMapper} from '@/common/utilsMappers/cta.mapper'
-import {mapExhibitionStatus} from '@/common/utilsMappers/date.mapper'
+import {mapExhibitionStatus, mapSingleDateFormat} from '@/common/utilsMappers/date.mapper'
 import {dzMediaMapper} from '@/common/utilsMappers/image.mapper'
 import {safeText} from '@/common/utilsMappers/safe'
+import {PageBuilderComponentsDataSchemaType} from '@/sanity/queries/page/pageCommonQueries/pageBuilderComponentsData'
 import {DzSplitTypeProps} from '@/sanity/types'
+import {ArticleTypes, MediaTypes} from '@/sanity/types'
+
+export const showSplitSection = (data: PageBuilderComponentsDataSchemaType) => {
+  if (data?._type !== 'dzSplit') return false
+  const {content, props} = data ?? {}
+  const {titleOverride, subtitleOverride, enableOverrides} = props ?? {}
+  const hasOverridesField = enableOverrides && (titleOverride || subtitleOverride)
+  return hasOverridesField || !!content
+}
 
 export const dzSplitOverrides = (props: DzSplitTypeProps) => {
-  const {media: mediaOverride, enableOverrides} = props
+  const {
+    media: mediaOverride,
+    titleOverride,
+    splitType,
+    reverse,
+    animate,
+    subtitleOverride,
+    enableOverrides,
+  } = props
+  const ctas = ctaMapper({data: props})
   if (!enableOverrides) return {}
   const {media} = dzMediaMapper({
     data: mediaOverride,
     ImgElement: Image,
   })
+
+  let ctasSplit = {}
+  if (ctas.primaryCTA) {
+    ctasSplit = {
+      buttonCTA: {...ctas.primaryCTA},
+    }
+  }
+
   return {
+    type: splitType,
+    reverse,
+    animate,
     data: {
-      ...media,
+      media,
+      title: titleOverride,
+      description: subtitleOverride,
+      ...ctasSplit,
     },
   }
 }
@@ -42,6 +75,59 @@ export const splitMappers: any = {
         subtitle: birthdate,
         secondaryTitle: summary,
         description,
+      },
+    }
+  },
+  article: (data: any, props: any) => {
+    const {splitType, reverse, animate, mediaOverride} = props ?? {}
+
+    const {
+      category,
+      title,
+      image,
+      header,
+      description,
+      location,
+      subtitle,
+      slug,
+      externalURL,
+      type,
+      publishDate,
+      displayDate,
+      primarySubtitle,
+    } = data ?? {}
+
+    const {name} = location ?? {}
+
+    const {current} = slug ?? {}
+    const {type: headerImageType} = header?.[0] ?? {}
+    const sourceImage = Object.values(MediaTypes).includes(headerImageType)
+    const descriptionText = safeText({key: 'description', text: description})
+    const articleUrl = type === ArticleTypes.EXTERNAL ? externalURL : current ?? '/'
+    const {media} = dzMediaMapper({
+      override: mediaOverride,
+      data: type === ArticleTypes.INTERNAL ? sourceImage : image,
+      ImgElement: Image,
+    })
+    const date = mapSingleDateFormat(publishDate)
+    return {
+      type: splitType,
+      reverse,
+      animate,
+      data: {
+        media,
+        category,
+        title,
+        subtitle: primarySubtitle,
+        secondaryTitle: name ?? subtitle,
+        secondarySubtitle: displayDate ?? date,
+        linkCTA: {
+          text: LEARN_MORE,
+          linkElement: Link,
+          url: articleUrl,
+          openNewTab: false,
+        },
+        ...descriptionText,
       },
     }
   },
@@ -86,9 +172,10 @@ export const splitMappers: any = {
     const {splitType, reverse, animate, media: mediaOverride} = props ?? {}
     const mediaOverrideSource = Object.keys(mediaOverride ?? {}).length > 0 ? mediaOverride : null
     const heroMediaSource = Object.keys(heroMedia ?? {}).length > 0 ? heroMedia : null
+
     const {media} = dzMediaMapper({
-      override: mediaOverrideSource?.type !== 'Unset' ? mediaOverride : heroMedia,
-      data: mediaOverrideSource?.type !== 'Unset' ? mediaOverrideSource : heroMediaSource ?? data,
+      override: mediaOverrideSource?.type !== 'Unset' ? mediaOverride : null,
+      data: heroMediaSource?.type !== 'Unset' ? heroMediaSource : data,
       ImgElement: Image,
     })
 

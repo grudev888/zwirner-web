@@ -1,8 +1,7 @@
 import {DzColumn, FORM_MODAL_TYPES, INQUIRY_TYPES, TITLE_SIZES} from '@zwirner/design-system'
-import dynamic from 'next/dynamic'
 import {useRouter} from 'next/router'
 import queryString from 'querystring'
-import {FC} from 'react'
+import {FC, useEffect} from 'react'
 
 import {
   INTERESTED_IN,
@@ -15,14 +14,11 @@ import {
   ARTWORK_ID_KEY,
   useHashRoutedInquiryModal,
 } from '@/components/hooks/useHashRoutedInquiryModal'
+import PageBuilder from '@/components/pageBuilder'
+import {showGridSection} from '@/components/pageBuilder/GridMolecule/gridMapper'
 import {ContainerTitle} from '@/components/wrappers/title/ContainerTitle'
-
-import {mapCardsGrid} from './mapper'
-
-const DzComplexGrid = dynamic(
-  () => import('@zwirner/design-system').then((mod) => mod.DzComplexGrid),
-  {ssr: false}
-)
+import {EVENT_CTA_CLICKED} from '@/events/CTAClickEvent'
+import {CtaActions} from '@/sanity/types'
 
 interface AvailableArtworksProps {
   data: any
@@ -33,28 +29,50 @@ export const AvailableArtworksContainer: FC<AvailableArtworksProps> = ({data}) =
   const inquireArtworkId = queryString.parse(asPath?.split('?')?.[1] || '')[
     ARTWORK_ID_KEY
   ] as string
-  const {artworksGrid, title} = data ?? {}
-  const {items = [], displayNumberOfResults, itemsPerRow = 1} = artworksGrid ?? {}
+  const {gridData, artworks, title} = data ?? {}
+
   const inquireFormModalProps = useHashRoutedInquiryModal({
     id: inquireArtworkId,
-    artwork: items?.find(({_id}: {_id: string}) => _id === inquireArtworkId),
+    artwork: artworks?.find(({_id}: {_id: string}) => _id === inquireArtworkId),
     title: data.artistName,
     inquiryType: INQUIRY_TYPES.AVAILABLE_ARTWORKS,
   })
-  const complexGridCard = mapCardsGrid(items, inquireFormModalProps.openClickHandler)
-  const artwork = items?.find(({_id}: {_id: string}) => _id === inquireArtworkId)
-  const inquireFormTitle = `${INTERESTED_IN} ${artwork?.artists?.[0].fullName || THIS_ARTWORK}?`
+  const artwork = artworks?.find(({_id}: {_id: string}) => _id === inquireArtworkId)
+  const inquireFormTitle = `${INTERESTED_IN} ${artwork?.artists?.[0]?.fullName || THIS_ARTWORK}?`
+
+  useEffect(() => {
+    const ctaTypesToClickHandlers: Record<string, (props: any) => void> = {
+      [CtaActions.INQUIRE]: (props = {}) => {
+        inquireFormModalProps.openClickHandler({
+          ...props,
+          ctaText: 'Inquire',
+          inquiryType: INQUIRY_TYPES.ARTIST,
+        })
+      },
+    }
+    const ctaClickListener = (ctaClickEvent: any) => {
+      const {detail} = ctaClickEvent ?? {}
+      const {ctaType, props} = detail ?? {}
+      ctaTypesToClickHandlers?.[ctaType]?.(props)
+    }
+
+    if (typeof window !== undefined) {
+      window.document.addEventListener(EVENT_CTA_CLICKED, ctaClickListener)
+    }
+
+    return () => {
+      if (typeof window !== undefined) {
+        window.document.removeEventListener(EVENT_CTA_CLICKED, ctaClickListener)
+      }
+    }
+  }, [inquireFormModalProps])
 
   return (
     <>
       <DzColumn span={12}>
         <ContainerTitle title={title} titleSize={TITLE_SIZES.XL} />
         <FullWidthFlexCol>
-          <DzComplexGrid
-            maxItemsPerRow={itemsPerRow}
-            displayNumberOfResults={!!displayNumberOfResults}
-            cards={complexGridCard}
-          />
+          {showGridSection(gridData) ? <PageBuilder components={[gridData]} /> : null}
         </FullWidthFlexCol>
       </DzColumn>
       <RecaptchaInquireFormModal

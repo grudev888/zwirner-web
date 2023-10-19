@@ -1,4 +1,5 @@
 import {DzColumn} from '@zwirner/design-system'
+import {Fragment} from 'react'
 
 import {FullWidthFlexCol} from '@/components/containers/layout/FullWidthFlexCol'
 import {PageBuilderComponentsDataSchemaType} from '@/sanity/queries/page/pageCommonQueries/pageBuilderComponentsData'
@@ -13,7 +14,7 @@ import {DzSplit} from './DzSplit/DzSplit'
 import {DzTitle} from './DzTitle/DzTitle'
 import {GridMolecule} from './GridMolecule'
 
-export const componentsIndex: any = {
+const componentsIndex: any = {
   dzHero: DzHero,
   dzCard: DzCard,
   dzEditorial: DzEditorial,
@@ -26,13 +27,20 @@ export const componentsIndex: any = {
 }
 
 type PageBuilderProps = {
+  id?: string
   components: PageBuilderComponentsDataSchemaType[]
 }
+type CTATransformer = {
+  component: any
+  data: any
+  onCTAClick?: () => void
+}
 
-export const PageBuilder = ({components = []}: PageBuilderProps) => {
+export const PageBuilder = ({id, components = []}: PageBuilderProps) => {
+  const ContainerComponent = components.length > 1 ? FullWidthFlexCol : Fragment
   return (
-    <DzColumn span={12}>
-      <FullWidthFlexCol>
+    <DzColumn id={id} span={12}>
+      <ContainerComponent>
         {components?.map((component, key) => {
           // content is the reference to the content type (artist, exhibition, article...)
           // props is the extra information required to render the component (CTA's, Overrides)
@@ -47,10 +55,7 @@ export const PageBuilder = ({components = []}: PageBuilderProps) => {
             return null
           }
           if (!componentContent && !notContentDependant) {
-            console.warn(
-              'PAGE BUILDER::: Please add content types to this component:',
-              props?.title ?? _type
-            )
+            console.warn('PAGE BUILDER::: Please add content types to this component:', _type)
             return null
           }
           return (
@@ -61,9 +66,28 @@ export const PageBuilder = ({components = []}: PageBuilderProps) => {
             />
           )
         })}
-      </FullWidthFlexCol>
+      </ContainerComponent>
     </DzColumn>
   )
+}
+
+export const addCTAToComponent = ({
+  component,
+  data,
+  onCTAClick,
+}: CTATransformer): PageBuilderComponentsDataSchemaType => {
+  let ctaKey = 'primaryCTA'
+  if (component === 'dzInterstitial') ctaKey = 'cta'
+  return {
+    props: {
+      ...data?.props,
+      [ctaKey]: {
+        ...data?.props?.[ctaKey],
+        handleClick: onCTAClick,
+      },
+    },
+    _type: data?._type,
+  }
 }
 
 export default PageBuilder
