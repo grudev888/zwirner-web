@@ -1,3 +1,5 @@
+import {CardSizes} from '@zwirner/design-system'
+
 import {
   DzGridMoleculePropsData,
   GridMoleculeItemType,
@@ -8,6 +10,7 @@ type TransformToGridProps = {
   data: any[]
   gridProps: Omit<DzGridMoleculePropsData, 'grid'>
   innerComponentType: GridMoleculeItemType
+  cardSize?: CardSizes
 }
 
 type TransformToHeroProps = {
@@ -19,7 +22,8 @@ export const transformDataToGrid = ({
   data,
   gridProps,
   innerComponentType,
-}: TransformToGridProps): PageBuilderComponentsDataSchemaType => {
+  cardSize,
+}: TransformToGridProps): any => {
   return {
     content: [],
     title: null,
@@ -28,7 +32,7 @@ export const transformDataToGrid = ({
       ...gridProps,
       grid: data?.map((innerData) => ({
         content: [innerData],
-        props: {} as any,
+        props: {cardSize} as any,
         _type: innerComponentType,
       })),
     },

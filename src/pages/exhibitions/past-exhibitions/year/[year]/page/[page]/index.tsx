@@ -6,6 +6,7 @@ import {PastExhibitionsContainer} from '@/components/containers/exhibitions/past
 import {PreviewPage} from '@/components/containers/previews/pagePreview'
 import {getPastExhibitionsQueryByYear} from '@/sanity/queries/exhibitions/pastExhibitionsData'
 import {
+  formatPastExhibitionYears,
   getAllPastExhibitionYears,
   getPastExhibitionsByYear,
   getPastExhibitionsPageData,
@@ -37,17 +38,16 @@ const PastExhibitionsPageByYear = (props: InferGetStaticPropsType<typeof getStat
 
 export const getStaticPaths = async () => {
   const years = await getAllPastExhibitionYears()
-  const yearsList = [
-    ...new Set(
-      years
-        ?.filter((item) => item.endDate)
-        ?.map(({endDate}) => (endDate ? new Date(endDate).getFullYear().toString() : ''))
-    ),
-  ]
+  if (!years || !years.length)
+    return {
+      paths: [],
+      fallback: 'blocking',
+    }
 
-  const yearsSlugs = yearsList
-    ?.map((year) => Array.from({length: 4}).map((_, i) => ({params: {year, page: `${i + 2}`}})))
-    .flat()
+  const yearsList = formatPastExhibitionYears(years)
+  const yearsSlugs = yearsList.flatMap((year) =>
+    Array.from({length: 4}).map((_, i) => ({params: {year, page: `${i + 2}`}}))
+  )
 
   return {
     paths: yearsSlugs,
@@ -86,7 +86,11 @@ export const getStaticProps = async (
 
   const data = await getPastExhibitionsPageData()
   const pastExhibitions = await getPastExhibitionsByYear(queryParams)
-  if (!data || !pastExhibitions) return {notFound: true}
+  const years = await getAllPastExhibitionYears()
+
+  if (!data || !pastExhibitions || !years) return {notFound: true}
+
+  const yearsWithExhibitions = formatPastExhibitionYears(years)
 
   return {
     props: {
@@ -94,6 +98,7 @@ export const getStaticProps = async (
         ...data,
         ...pastExhibitions,
         currentPage: page,
+        yearsWithExhibitions,
       },
       preview: false,
       token: null,

@@ -22,12 +22,10 @@ import {useRef, useState} from 'react'
 import {DzPortableText} from '@/components/wrappers/DzPortableText'
 import {builder} from '@/sanity/imageBuilder'
 import {ArtworkDataType} from '@/sanity/queries/artworks/artworkData'
+import {formatCurrency} from '@/utils/currency/formatCurrency'
 
 import styles from './index.module.css'
-
 import {getImageDimensions, mapArtworkData, photosGrid} from './mapper'
-
-import {formatCurrency} from '@/utils/currency/formatCurrency'
 
 type Props = {
   data: ArtworkDataType

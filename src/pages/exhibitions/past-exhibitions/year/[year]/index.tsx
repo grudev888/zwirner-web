@@ -5,6 +5,7 @@ import {PastExhibitionsContainer} from '@/components/containers/exhibitions/past
 import {PreviewPage} from '@/components/containers/previews/pagePreview'
 import {getPastExhibitionsQueryByYear} from '@/sanity/queries/exhibitions/pastExhibitionsData'
 import {
+  formatPastExhibitionYears,
   getAllPastExhibitionYears,
   getPastExhibitionsByYear,
   getPastExhibitionsPageData,
@@ -55,6 +56,11 @@ export const getStaticProps = async (
   const {params = {}, preview = false, previewData = {}} = ctx
   const page = 1
   const year = Number(params.year)
+  const years = await getAllPastExhibitionYears()
+
+  if (!years) return {notFound: true}
+
+  const yearsWithExhibitions = formatPastExhibitionYears(years)
 
   const queryParams = {year, initialPage: page} as PastExhibitionsByYearProps
 
@@ -79,6 +85,7 @@ export const getStaticProps = async (
         ...data,
         ...pastExhibitions,
         currentPage: page,
+        yearsWithExhibitions,
       },
       preview: false,
       token: null,
