@@ -24,15 +24,15 @@ const componentsIndex: any = {
   dzCard: DzCard,
   dzMedia: DzMedia,
 }
-
+const DEFAULT_CAROUSEL_SIZE = 'S'
 export const CarouselMolecule: FC<CarouselMoleculeProps> & {multipleContentTypes: boolean} & {
   notContentDependant: boolean
 } = ({componentProps}) => {
   const {size, dzCarousel = []} = componentProps ?? {}
-
+  const cardSize = size ?? DEFAULT_CAROUSEL_SIZE
   return (
     <DzColumn className="mb-12" span={12}>
-      <DzCarousel size={size}>
+      <DzCarousel size={cardSize}>
         {dzCarousel?.map((component: any, key: number) => {
           const {_type, props, content = []} = component
           const ComponentModule = componentsIndex[_type]
@@ -56,7 +56,10 @@ export const CarouselMolecule: FC<CarouselMoleculeProps> & {multipleContentTypes
               data={componentContent}
               componentProps={{
                 ...(props ?? {}),
-                cardSize: [CardSizes['12col'], carouselSizeToCardSize[size as DzCarouselCardSize]],
+                cardSize: [
+                  CardSizes['12col'],
+                  carouselSizeToCardSize[cardSize as DzCarouselCardSize],
+                ],
               }}
             />
           )
