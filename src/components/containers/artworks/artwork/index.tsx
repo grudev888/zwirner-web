@@ -25,6 +25,7 @@ import {ArtworkDataType} from '@/sanity/queries/artworks/artworkData'
 
 import styles from './index.module.css'
 import {mapArtworkData, photosGrid} from './mapper'
+import {formatCurrency} from '@/utils/currency/formatCurrency'
 
 type Props = {
   data: ArtworkDataType
@@ -79,7 +80,7 @@ export const ArtworkContainer = ({data}: Props) => {
   } = data
 
   const {artistName, artistSlug, displayTitle, primaryCta, secondaryCta} = mapArtworkData(data)
-  const priceAndCurrency = price && currency ? `${currency} ${price}` : null
+  const priceAndCurrency = price ? formatCurrency(currency || 'USD', price) : null
   const isFramedShown = artworkType !== 'sculpture' && (framed == 'Framed' || framed == 'Unframed')
   const isArtworkTitlePortableText = !!displayTitle
   const artworkTitle = isArtworkTitlePortableText ? displayTitle : title
