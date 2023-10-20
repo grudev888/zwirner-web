@@ -1,5 +1,3 @@
-import {getYear} from 'date-fns'
-
 import {client} from '@/sanity/client'
 import {
   ALL_YEARS,
@@ -12,12 +10,7 @@ import {
   YearType,
 } from '@/sanity/queries/exhibitions/pastExhibitionsData'
 
-export const EXHIBITIONS_PER_PAGE = 24
-
-type YearsItem = NonNullable<Awaited<ReturnType<typeof getAllPastExhibitionYears>>>[0]
-export interface FilteredYear extends YearsItem {
-  endDate: NonNullable<YearsItem['endDate']>
-}
+export const EXHIBITIONS_PER_PAGE = 15
 
 export type PastExhibitionsByYearProps = {
   year?: YearType
@@ -36,14 +29,6 @@ export async function getAllPastExhibitionYears() {
   if (!data) return null
   const validatedData = AllPastExhibitionYearsSchema.parse(data)
   return validatedData
-}
-
-export const formatPastExhibitionYears = (
-  years: NonNullable<Awaited<ReturnType<typeof getAllPastExhibitionYears>>>
-) => {
-  const recordsWithEndDate = years.filter((item) => item.endDate) as FilteredYear[]
-  const yearsWithExhibitions = recordsWithEndDate.map(({endDate}) => getYear(new Date(endDate)))
-  return Array.from(new Set(yearsWithExhibitions))
 }
 
 export const parseParamsForPastExhibitions = ({

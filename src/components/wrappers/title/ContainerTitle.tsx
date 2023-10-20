@@ -16,9 +16,6 @@ interface ContainerTitleProps {
   type?: DzTitleMoleculeTypes
   titleType?: TitleType
   title: string
-  subtitle?: string
-  subtitleType?: TitleType
-  subtitleSize?: string
   category?: string
   description?: string | ReactNode
   titleSize?: string
@@ -39,9 +36,6 @@ export const ContainerTitle: FC<ContainerTitleProps> = ({
   title,
   titleType = TITLE_TYPES.H1,
   titleSize = TITLE_SIZES.MD,
-  subtitleType = TITLE_TYPES.H2,
-  subtitleSize = TITLE_TYPES.H2,
-  subtitle,
   fullLeftContainer = false,
   description,
   category,
@@ -55,13 +49,10 @@ export const ContainerTitle: FC<ContainerTitleProps> = ({
       type={type}
       data={{
         title,
-        subtitle,
         customClass: stylesPerType[type],
         titleProps: {
           titleType: titleType,
           titleSize,
-          subtitleType,
-          subtitleSize,
         },
         category,
         description,

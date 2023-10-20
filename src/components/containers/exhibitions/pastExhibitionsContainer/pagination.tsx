@@ -1,41 +1,45 @@
-import {DzPagination} from '@zwirner/design-system'
 import Link from 'next/link'
 
-type Props = {
+import usePagination from '@/components/hooks/usePagination'
+
+export type PaginationProps = {
   totalItems: number
   currentPage: number
-  renderPagePathname: (page: number) => string
+  renderPageLink: (page: number) => string
   itemsPerPage?: number
-  onPageChange: (pageNumber: number) => void
 }
 
-type PageNumberLinkProps = {
-  pageNumber: number
-  renderPagePathname: (pageNumber: number) => string
-}
+export const dotts = '...'
 
-const PageNumberLink = ({pageNumber, renderPagePathname}: PageNumberLinkProps) => {
-  return <Link href={renderPagePathname(pageNumber)}>{pageNumber}</Link>
-}
-
-export const Pagination = ({
+const Pagination = ({
   totalItems,
   currentPage,
   itemsPerPage = 10,
-  renderPagePathname,
-  onPageChange,
-}: Props) => {
+  renderPageLink,
+}: PaginationProps) => {
+  const pages = usePagination(totalItems, currentPage, itemsPerPage)
+
   return (
-    <DzPagination
-      totalCount={totalItems}
-      currentPage={currentPage}
-      pageSize={itemsPerPage}
-      onPageChange={onPageChange}
-      renderPageNumber={(pageNumber) => (
-        <PageNumberLink pageNumber={pageNumber} renderPagePathname={renderPagePathname} />
+    <div className="my-8 flex items-center justify-center">
+      {pages.map((pageNumber, i) =>
+        pageNumber === dotts ? (
+          <span key={i} className="text-black rounded-full px-4 py-2 text-sm font-semibold">
+            {pageNumber}
+          </span>
+        ) : (
+          <Link
+            key={i}
+            href={renderPageLink(pageNumber as number)}
+            className={`${
+              pageNumber === currentPage ? 'text-success-dark' : 'text-black'
+            } mx-1 rounded-full px-4 py-2 text-sm font-semibold no-underline`}
+          >
+            {pageNumber}
+          </Link>
+        )
       )}
-      prevText=""
-      nextText=""
-    />
+    </div>
   )
 }
+
+export default Pagination

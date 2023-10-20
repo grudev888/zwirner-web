@@ -26,7 +26,7 @@ export const pastExhibitionsPageData = groq`
 }`
 
 export const pastExhibitions = groq`
-*[_type == "exhibitionPage" && defined(endDate) &&
+*[_type == "exhibitionPage" && defined(endDate) && 
     (dateTime(now())>dateTime(string(endDate)+'T00:00:00.000Z'))
   ] | order(endDate desc)
 `
@@ -66,7 +66,7 @@ function getQueryWithYearFilter(strings: TemplateStringsArray, ...rest: any[]) {
     : ''
 
   const query = groq`
-  *[_type == "exhibitionPage" && defined(endDate) &&
+  *[_type == "exhibitionPage" && defined(endDate) && 
       (dateTime(now())>dateTime(string(endDate)+'T00:00:00.000Z'))
       ${filters}
     ] | order(endDate desc)
@@ -106,3 +106,9 @@ export const PastExhibitionsPageDataSchema = z.object({
 })
 
 export type PastExhibitionsDataType = z.infer<typeof PastExhibitionsPageDataSchema>
+
+export const PastExhibitionsFullDataSchema = z
+  .object({})
+  .merge(PastExhibitionsFilteredSchema)
+  .merge(PastExhibitionsPageDataSchema)
+export type PastExhibitionsFullDataType = z.infer<typeof PastExhibitionsFullDataSchema>
