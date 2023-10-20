@@ -17,18 +17,21 @@ const componentsIndex: any = {
   dzMedia: DzMedia,
 }
 
+const DEFAULT_ITEMS_PER_ROW = 1
+
 export const GridMolecule: FC<GridMoleculeProps> & {
   multipleContentTypes: boolean
   notContentDependant: boolean
 } = ({componentProps, data}) => {
   const {
-    itemsPerRow = 1,
+    itemsPerRow,
     wrap = false,
     grid = [],
     displayNumberOfItems = false,
     displayGridSlider = false,
   } = componentProps
-  const getColSpan = getRows(itemsPerRow ?? 0)
+  const numberOfItemsPerRow = itemsPerRow ?? DEFAULT_ITEMS_PER_ROW
+  const getColSpan = getRows(numberOfItemsPerRow ?? 0)
   const useComplexGrid = displayNumberOfItems || displayGridSlider
 
   if (useComplexGrid) {
