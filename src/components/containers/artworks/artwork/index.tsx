@@ -24,16 +24,20 @@ import {builder} from '@/sanity/imageBuilder'
 import {ArtworkDataType} from '@/sanity/queries/artworks/artworkData'
 
 import styles from './index.module.css'
-import {mapArtworkData, photosGrid} from './mapper'
+
+import {getImageDimensions, mapArtworkData, photosGrid} from './mapper'
+
 import {formatCurrency} from '@/utils/currency/formatCurrency'
 
 type Props = {
   data: ArtworkDataType
 }
 
-// TODO relocate
-const gridImageStyles: any = {
-  cursorZoom: 'cursor-zoom-in',
+const MINIMUM_ZOOMABLE_IMAGE_SIZE = 2560
+
+export const isImageZoomable = (dimensions: {width: number; height: number}) => {
+  const {width, height} = dimensions || {}
+  return width >= MINIMUM_ZOOMABLE_IMAGE_SIZE || height >= MINIMUM_ZOOMABLE_IMAGE_SIZE
 }
 
 export const ArtworkContainer = ({data}: Props) => {
@@ -41,17 +45,24 @@ export const ArtworkContainer = ({data}: Props) => {
     Record<string, any> | undefined
   >(undefined)
   const allPhotoGridItems = photosGrid(data) || []
+  const photoDimensionsMap = getImageDimensions(data)
+  const photoGridImageStyleMap: Record<string, string> = {}
+  Object.entries(photoDimensionsMap).forEach(([key, dimensions]) => {
+    photoGridImageStyleMap[key] = isImageZoomable(dimensions as any) ? 'cursor-zoom-in' : ''
+  })
   const firstItemMediaProps = allPhotoGridItems[0]
   const descriptionRef = useRef<HTMLDivElement>(null)
   const detailTextStyles = {normal: 'text-black-60 !text-sm'}
   const {isSmall} = useBreakpoints()
 
-  const onClickImage = (data: any) => {
-    const imgProps: Record<string, any> = data?.media?.imgProps
-    if (imgProps) {
-      setCurrentZoomedImgProps(imgProps)
+  const onClickPhotoCard = (cardData: any) => {
+    if (photoGridImageStyleMap[cardData.id]) {
+      const imgProps: Record<string, any> = cardData?.media?.imgProps
+      const {width, height} = photoDimensionsMap[imgProps.src] ?? {}
+      setCurrentZoomedImgProps({...imgProps, width, height})
     }
   }
+
   const onClickLearnMore = () => {
     if (descriptionRef.current) {
       setTimeout(() => window.scrollTo(0, descriptionRef?.current?.offsetTop || 0), 10)
@@ -84,7 +95,6 @@ export const ArtworkContainer = ({data}: Props) => {
   const isFramedShown = artworkType !== 'sculpture' && (framed == 'Framed' || framed == 'Unframed')
   const isArtworkTitlePortableText = !!displayTitle
   const artworkTitle = isArtworkTitlePortableText ? displayTitle : title
-
   const ctaContainer = (
     <div className={styles.ctaContainer}>
       <div className={styles.ctaContainerTop} />
@@ -135,8 +145,8 @@ export const ArtworkContainer = ({data}: Props) => {
                 <DzCard
                   type={CARD_TYPES.ARTWORK}
                   data={firstItemMediaProps}
-                  onClickImage={onClickImage}
-                  imageStyles={gridImageStyles.cursorZoom}
+                  onClickImage={onClickPhotoCard}
+                  imageStyles={photoGridImageStyleMap[firstItemMediaProps.id] || ''}
                 />
               </div>
             )}
@@ -251,8 +261,8 @@ export const ArtworkContainer = ({data}: Props) => {
         <DzComplexGrid
           cards={allPhotoGridItems}
           maxItemsPerRow={1}
-          onClickImage={onClickImage}
-          imageStyles={gridImageStyles.cursorZoom}
+          onClickImage={onClickPhotoCard}
+          cardStylesMap={photoGridImageStyleMap}
           gridColumnsStyles="!gap-y-[1rem]"
         />
         {description && (

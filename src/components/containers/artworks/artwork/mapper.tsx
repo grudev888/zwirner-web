@@ -5,6 +5,7 @@ import {dzMediaMapper} from '@/common/utilsMappers/image.mapper'
 import {safeText} from '@/common/utilsMappers/safe'
 import {ArtworkDataType} from '@/sanity/queries/artworks/artworkData'
 import {capitalizeFirstLetter} from '@/utils/string/capitalizeFirstLetter'
+import {isImageZoomable} from '@/components/containers/artworks/artwork/index'
 
 export const mapArtworkData = ({
   artists,
@@ -37,7 +38,7 @@ export const mapArtworkData = ({
 
 export const photosGrid = ({photos}: ArtworkDataType) => {
   return photos?.map((photo) => {
-    const {_key} = photo ?? {}
+    const {_key, image} = photo ?? {}
     const {media, extras} = dzMediaMapper({data: photo, ImgElement: Image})
     const {caption} = extras ?? {}
     return {
@@ -46,6 +47,14 @@ export const photosGrid = ({photos}: ArtworkDataType) => {
       size: CardSizes['12col'],
       media,
       description: caption ?? '',
+      enableZoom: isImageZoomable(image?.metadata?.dimensions || {}),
     }
   })
+}
+
+export const getImageDimensions = ({photos}: ArtworkDataType) => {
+  return photos?.reduce((dimensionsMap, photo) => {
+    dimensionsMap[photo._key] = photo.image?.metadata?.dimensions
+    return dimensionsMap
+  }, {})
 }

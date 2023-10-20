@@ -7,7 +7,10 @@ export const mediaBuilder = groq`
     caption,
     type,
     "alt": image.alt,
-    "image": image.asset->,
+    "image": image.asset-> {
+      ...,
+      metadata { dimensions { width, height }}
+    },
   },
   type=='Custom Video' => {
     type,
