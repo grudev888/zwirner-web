@@ -174,7 +174,6 @@ export type DzCardExtendedProps = DzCardSchemaProps & {
 export interface DzMediaSchemaProps {
   media: any
   title: string
-  caption: string
 }
 
 export interface DzCarouselSchemaProps {

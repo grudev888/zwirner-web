@@ -4,6 +4,7 @@ import {z} from 'zod'
 // TODO delete alts
 export const mediaBuilder = groq`
   type=='Image' => {
+    caption,
     type,
     "alt": image.alt,
     "image": image.asset->,
@@ -35,7 +36,7 @@ export const MediaBuilderVideoRecordSchema = z.object({
 })
 
 export const MediaBuilderSchema = z.discriminatedUnion('type', [
-  MediaBuilderImageSchema.extend({type: z.literal('Image')}),
+  MediaBuilderImageSchema.extend({type: z.literal('Image'), caption: z.nullable(z.array(z.any()))}),
   MediaBuilderCustomVideoSchema.extend({type: z.literal('Custom Video')}),
   MediaBuilderVideoRecordSchema.extend({type: z.literal('Video Record')}),
   z.object({}).extend({type: z.literal('Unset')}),

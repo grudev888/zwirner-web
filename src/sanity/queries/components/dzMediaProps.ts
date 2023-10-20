@@ -10,8 +10,7 @@ export const dzMediaFields = groq`
     title,
     media {
       ${mediaBuilder}
-    },
-    caption
+    }
   }
 `
 
@@ -24,5 +23,4 @@ export const dzMediaProps = groq`
 export const DzMediaPropsDataSchema = z.object({
   title: z.nullable(z.string()),
   media: z.nullable(MediaBuilderSchema),
-  caption: z.nullable(z.array(z.any())),
 })

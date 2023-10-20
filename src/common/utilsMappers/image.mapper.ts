@@ -36,19 +36,6 @@ export const validateImage = (data: any) => {
   return image && image?.asset ? !!image.asset : !!asset ?? !!url
 }
 
-// MOVE TOWARDS THIS KIND OF MAPPING ON UPCOMING PRS
-// WE NEED TO DEPRECATE imageBuilder, and alt
-// WE NEED TO STRUCTURE ALL QUERIES
-export const newImageMapper = (data: any) => {
-  const {alt, caption, image} = data ?? {}
-  const {url} = image ?? {}
-  return {
-    alt,
-    src: url,
-    caption,
-  }
-}
-
 export const imageMapper = (data: any) => {
   const {
     photos,

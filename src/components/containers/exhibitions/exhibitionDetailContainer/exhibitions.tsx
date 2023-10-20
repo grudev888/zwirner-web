@@ -1,6 +1,6 @@
 import {
+  DzCard,
   DzColumn,
-  DzHero,
   DzSectionMenu,
   DzTitleExhibition,
   DzTitleMolecule,
@@ -27,10 +27,10 @@ import {
 import {RecaptchaInquireFormModal} from '@/components/forms/recaptchaInquireFormModal'
 import {useHashRoutedInquiryModal} from '@/components/hooks/useHashRoutedInquiryModal'
 import {PageBuilder} from '@/components/pageBuilder'
+import {dzMediaOverrides} from '@/components/pageBuilder/DzMedia/mediaMapper'
 import {ExhibitionPageBySlugType} from '@/sanity/queries/exhibitions/exhibitionPageBySlug'
 
 import styles from './exhibitions.module.css'
-import {heroMapper} from './mapper'
 
 type Props = {
   data: ExhibitionPageBySlugType
@@ -44,10 +44,14 @@ export const ExhibitionsContainer = ({data: initialData}: Props) => {
     title: initialData?.title,
     ctaText: 'Inquire',
   })
-  const {slug, showChecklist, startDate, endDate, title, subtitle} = initialData
+  const {slug, showChecklist, startDate, endDate, title, subtitle, heroMedia} = initialData
   const exhibitionTitle = `${title}${subtitle ? `: ${subtitle}` : ''}`
   const currentSlug = slug.current
-  const heroData = heroMapper(initialData)
+  const heroData = dzMediaOverrides({
+    media: heroMedia,
+    // TODO remove titles
+    title: '',
+  })
 
   const data = {
     ...initialData,
@@ -110,9 +114,11 @@ export const ExhibitionsContainer = ({data: initialData}: Props) => {
         ) : null}
       </DzColumn>
 
-      <DzColumn span={12}>
-        {heroData && <DzHero className={styles.heroContainer} items={[heroData]} />}
-      </DzColumn>
+      {heroData ? (
+        <DzColumn span={12}>
+          <DzCard {...(heroData as any)} />
+        </DzColumn>
+      ) : null}
 
       {data.pressRelease ? <PageBuilder components={[data.pressRelease]} /> : null}
 

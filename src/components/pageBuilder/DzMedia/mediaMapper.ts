@@ -6,7 +6,8 @@ import {safeText} from '@/common/utilsMappers/safe'
 import {DzMediaSchemaProps} from '@/sanity/types'
 
 export const dzMediaOverrides = (props: DzMediaSchemaProps) => {
-  const {media: mediaProps, caption} = props ?? {}
+  const {media: mediaProps} = props ?? {}
+  const {caption} = mediaProps ?? {}
   const {media} = dzMediaMapper({data: mediaProps, ImgElement: Image})
   const descriptionText = safeText({
     key: 'description',
