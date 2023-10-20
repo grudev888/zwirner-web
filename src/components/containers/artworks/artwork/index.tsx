@@ -145,9 +145,12 @@ export const ArtworkContainer = ({data}: Props) => {
               title={
                 <>
                   {artistSlug ? (
-                    <DzLink href={artistSlug} textLinkSize={TEXT_SIZES.MEDIUM}>
-                      {artistName}
-                    </DzLink>
+                    <>
+                      <DzLink href={artistSlug} textLinkSize={TEXT_SIZES.MEDIUM}>
+                        {artistName}
+                      </DzLink>
+                      &nbsp; {/* non breaking space added here for SEO purpose in H1 */}
+                    </>
                   ) : (
                     artistName
                   )}
