@@ -9,7 +9,10 @@ export const dzInterstitialFields = groq`
   'props': {
     title,
     mode,
-    cta,
+    cta {
+      ...,
+      'linkedContent': linkedContent->slug.current
+    },
     image {
       ${mediaBuilder}
     },

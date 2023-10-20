@@ -1,5 +1,6 @@
 import {DzColumn, DzInterstitial, TITLE_SIZES} from '@zwirner/design-system'
 import dynamic from 'next/dynamic'
+import {useRouter} from 'next/router'
 import {Fragment} from 'react'
 
 import {EXHIBITIONS} from '@/common/constants/commonCopies'
@@ -10,7 +11,6 @@ import {ContainerTitle} from '@/components/wrappers/title/ContainerTitle'
 
 import {mapCardsGrid} from './mapper'
 import styles from './styles.module.css'
-
 const DzComplexGrid = dynamic(
   () => import('@zwirner/design-system').then((mod) => mod.DzComplexGrid),
   {ssr: false}
@@ -21,11 +21,12 @@ interface PageContainerProps {
 }
 
 const ArtistExhibitionsPageContainer = ({data}: PageContainerProps) => {
+  const router = useRouter()
   const parentPath = data?.slug.current
   const parentPageTitle = data?.artist?.fullName
   const complexGridCards = mapCardsGrid(data?.artist?.exhibitions)
   const title = `${EXHIBITIONS}: ${parentPageTitle}`
-  const interstitialData = dzInterstitialOverrides(data?.exhibitionsInterstitialSubpage)
+  const interstitialData = dzInterstitialOverrides(data?.exhibitionsInterstitialSubpage, router)
 
   return (
     <BackNavPageLayout parentPageName={parentPageTitle} parentPath={parentPath}>

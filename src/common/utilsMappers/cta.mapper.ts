@@ -87,20 +87,24 @@ export const ctaMapper = ({data, props}: CtaMapperProps) => {
 
 // TODO unify ctas everywhere
 export const ctaMapperInterstitial = ({data, props}: CtaMapperInterstitial) => {
-  const {action, text, handleClick} = data ?? {}
+  const {action, text, handleClick, linkedContent} = data ?? {}
   // TODO unify CTA inside the studio
-  const {customAction} = props ?? {}
+  const {router} = props ?? {}
 
   const primaryCTAMap = text
     ? {
         primaryCta: {
           text: text,
           ctaProps: {
-            onClick: (ctaProps: any) => {
+            onClick: () => {
+              if (router && linkedContent && action === CtaActions.LINK_CONTENT) {
+                router.push(linkedContent)
+              }
+
+              router.push(linkedContent)
               // TODO Unify handle click && custom Action
-              if (handleClick) handleClick(action)
-              if (customAction && typeof customAction === 'function') {
-                customAction(action, ctaProps)
+              if (handleClick) {
+                handleClick(action)
               } else {
                 handleCTAClick(action)
               }

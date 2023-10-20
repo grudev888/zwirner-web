@@ -1,4 +1,5 @@
 import {DzColumn, DzInterstitial, DzList} from '@zwirner/design-system'
+import {useRouter} from 'next/router'
 import {FC} from 'react'
 
 import {ARTISTS} from '@/common/constants/commonCopies'
@@ -13,10 +14,11 @@ interface ArtistsListContainerProps {
 }
 
 export const ArtistsListContainer: FC<ArtistsListContainerProps> = ({data}) => {
+  const router = useRouter()
   const {pageInfo, artistPages} = data ?? {}
   const [pagesInfoData] = pageInfo ?? []
   const listItems = mapListItems(artistPages)
-  const interstitialData = dzInterstitialOverrides(pagesInfoData?.interstitial)
+  const interstitialData = dzInterstitialOverrides(pagesInfoData?.interstitial, router)
 
   return (
     <DzColumn span={12}>

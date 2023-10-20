@@ -15,6 +15,7 @@ import {
 } from '@zwirner/design-system'
 import cn from 'classnames'
 import Image from 'next/image'
+import {useRouter} from 'next/router'
 import {FC} from 'react'
 
 import {FullWidthFlexCol} from '@/components/containers/layout/FullWidthFlexCol'
@@ -42,8 +43,9 @@ export const ArticleContainer: FC<ArticleContainerProps> = ({data}) => {
     displayDate,
     externalURL,
   } = data ?? {}
+  const router = useRouter()
   const locationProps = locationTitleMapper(location)
-  const interstitialData = dzInterstitialOverrides(interstitial)
+  const interstitialData = dzInterstitialOverrides(interstitial, router)
   const articlesGrid = articlesGridMap(articles)
   const heroData = heroMapper({...data, title})
   const articleDates = displayDate
