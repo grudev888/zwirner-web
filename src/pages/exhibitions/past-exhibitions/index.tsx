@@ -8,6 +8,8 @@ import {
   getPastExhibitionsQueryByYear,
 } from '@/sanity/queries/exhibitions/pastExhibitionsData'
 import {
+  formatPastExhibitionYears,
+  getAllPastExhibitionYears,
   getPastExhibitionsByYear,
   getPastExhibitionsPageData,
 } from '@/sanity/services/exhibitions/getPastExhibitionsData'
@@ -36,6 +38,7 @@ export const getStaticProps = async (
   ctx: GetStaticPropsContext & {previewData?: {token?: string}}
 ) => {
   const {preview = false, previewData = {}} = ctx
+  const currentPage = 1
 
   if (preview && previewData.token) {
     return {
@@ -49,13 +52,19 @@ export const getStaticProps = async (
 
   const data = await getPastExhibitionsPageData()
   const pastExhibitions = await getPastExhibitionsByYear({year: ALL_YEARS})
-  if (!data || !pastExhibitions) return {notFound: true}
+  const years = await getAllPastExhibitionYears()
+
+  if (!data || !pastExhibitions || !years) return {notFound: true}
+
+  const yearsWithExhibitions = formatPastExhibitionYears(years)
 
   return {
     props: {
       data: {
         ...data,
         ...pastExhibitions,
+        currentPage,
+        yearsWithExhibitions,
       },
       preview: false,
       token: null,

@@ -1,27 +1,33 @@
+import {CardSizes} from '@zwirner/design-system'
 import React from 'react'
 
-import {EXHIBITIONS_URL} from '@/common/constants/commonCopies'
 import PageBuilder from '@/components/pageBuilder'
 import {transformDataToGrid} from '@/components/pageBuilder/utils/transformers'
 
-import Pagination from './pagination'
+import {Pagination} from './pagination'
 
-type PageProps = {
+type Props = {
+  basePath: string
   exhibitions: any[] | null
   currentPage: number
   totalProducts: number
   perPage: number
+  onPageChange: (pageNumber: number) => void
 }
 
-const PaginationPage = ({
+export const PaginationPage = ({
+  basePath,
   currentPage,
   totalProducts,
   perPage,
   exhibitions,
-}: PageProps): JSX.Element => {
+  onPageChange,
+}: Props) => {
+  const renderPathPageName = (page: number) => `${basePath}/${page}`
   const dzGridPageBuilder = transformDataToGrid({
     data: exhibitions ?? [],
     innerComponentType: 'dzCard',
+    cardSize: CardSizes['4col'],
     gridProps: {
       itemsPerRow: 3,
       wrap: false,
@@ -30,6 +36,7 @@ const PaginationPage = ({
       displayNumberOfItems: false,
     },
   })
+
   return (
     <div>
       {exhibitions && dzGridPageBuilder ? <PageBuilder components={[dzGridPageBuilder]} /> : null}
@@ -37,10 +44,9 @@ const PaginationPage = ({
         totalItems={totalProducts}
         currentPage={currentPage}
         itemsPerPage={perPage}
-        renderPageLink={(page: number) => `${EXHIBITIONS_URL}/${page}`}
+        renderPagePathname={renderPathPageName}
+        onPageChange={onPageChange}
       />
     </div>
   )
 }
-
-export default PaginationPage

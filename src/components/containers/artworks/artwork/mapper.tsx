@@ -3,9 +3,9 @@ import Image from 'next/image'
 
 import {dzMediaMapper} from '@/common/utilsMappers/image.mapper'
 import {safeText} from '@/common/utilsMappers/safe'
+import {isImageZoomable} from '@/components/containers/artworks/artwork/index'
 import {ArtworkDataType} from '@/sanity/queries/artworks/artworkData'
 import {capitalizeFirstLetter} from '@/utils/string/capitalizeFirstLetter'
-import {isImageZoomable} from '@/components/containers/artworks/artwork/index'
 
 export const mapArtworkData = ({
   artists,
