@@ -9,6 +9,6 @@ function onPublicAccessOnly() {
 export const usePreview = definePreview({
   projectId: env.NEXT_PUBLIC_SANITY_PROJECT_ID,
   dataset: env.NEXT_PUBLIC_SANITY_DATASET,
-  documentLimit: 50000,
+  documentLimit: 100000,
   onPublicAccessOnly,
 })
