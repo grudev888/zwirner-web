@@ -101,7 +101,6 @@ export const ctaMapperInterstitial = ({data, props}: CtaMapperInterstitial) => {
                 router.push(linkedContent)
               }
 
-              router.push(linkedContent)
               // TODO Unify handle click && custom Action
               if (handleClick) {
                 handleClick(action)

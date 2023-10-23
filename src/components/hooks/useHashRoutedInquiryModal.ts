@@ -1,4 +1,4 @@
-import {InquireFormContextData, INQUIRY_TYPES} from '@zwirner/design-system'
+import {FORM_MODAL_TYPES, InquireFormContextData, INQUIRY_TYPES} from '@zwirner/design-system'
 import {useRouter} from 'next/router'
 import {useEffect, useRef, useState} from 'react'
 
@@ -7,6 +7,7 @@ import {builder} from '@/sanity/imageBuilder'
 import {createRandomUUID} from '@/sanity/uuid'
 import {sendInquiry} from '@/services/inquireService'
 import {portableTextToText} from '@/utils/sanity/portableTextToText'
+import {useFireGA4FormDirtyEvent} from '@/components/hooks/useFireGA4FormDirtyEvent'
 
 export const INQUIRE_HASH_KEY = 'inquire'
 export const ARTWORK_ID_KEY = 'artworkId'
@@ -46,6 +47,7 @@ export const useHashRoutedInquiryModal = (initialContextData?: InquireFormContex
   const {replace, pathname, query, asPath} = useRouter()
   const recaptchaRef = useRef<HTMLFormElement>()
   const {data: location} = useLocation()
+  const onDirty = useFireGA4FormDirtyEvent(FORM_MODAL_TYPES.INQUIRE)
   const onClose = () => replace({pathname, query, hash: ''})
   const [contextData, setContextData] = useState<InquireFormContextData | undefined>(
     initialContextData
@@ -97,5 +99,6 @@ export const useHashRoutedInquiryModal = (initialContextData?: InquireFormContex
     isOpen,
     onSubmit,
     recaptchaRef,
+    onDirty,
   }
 }
