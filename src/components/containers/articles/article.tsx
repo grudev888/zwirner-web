@@ -95,7 +95,7 @@ export const ArticleContainer: FC<ArticleContainerProps> = ({data}) => {
             <DzPortableText
               portableProps={{value: body}}
               customStyles={{
-                normal: styles.articleXSpacing ?? '',
+                normal: cn(styles.articleXSpacing ?? '', styles.paragraphBottomMargin ?? ''),
               }}
               builder={builder}
               ImgElement={Image}
