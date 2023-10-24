@@ -1,7 +1,6 @@
 import {
   DzColumn,
   DzGridColumns,
-  DzLink,
   DzMedia,
   DzText,
   DzTitle,
@@ -17,6 +16,7 @@ import {
 } from '@zwirner/design-system'
 import Image from 'next/image'
 
+import {DzLink} from '@/components/wrappers/DzLinkWrapper'
 import {DzPortableText} from '@/components/wrappers/DzPortableText'
 import {builder} from '@/sanity/imageBuilder'
 

@@ -6,7 +6,6 @@ import {
   DzGridColumns,
   DzHero,
   DzInterstitial,
-  DzLink,
   DzTitle,
   LINK_VARIANTS,
   TEXT_LINK_SIZES,
@@ -20,6 +19,7 @@ import {FC} from 'react'
 
 import {FullWidthFlexCol} from '@/components/containers/layout/FullWidthFlexCol'
 import {dzInterstitialOverrides} from '@/components/pageBuilder/DzInterstitial/interstitialMapper'
+import {DzLink} from '@/components/wrappers/DzLinkWrapper'
 import {DzPortableText} from '@/components/wrappers/DzPortableText'
 import {builder} from '@/sanity/imageBuilder'
 

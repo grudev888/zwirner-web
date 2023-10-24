@@ -6,7 +6,6 @@ import {
   DzColumn,
   DzComplexGrid,
   DzImageZoomModal,
-  DzLink,
   DzText,
   DzTitle,
   LINK_VARIANTS,
@@ -19,6 +18,7 @@ import cn from 'classnames'
 import Image from 'next/image'
 import {useRef, useState} from 'react'
 
+import {DzLink} from '@/components/wrappers/DzLinkWrapper'
 import {DzPortableText} from '@/components/wrappers/DzPortableText'
 import {builder} from '@/sanity/imageBuilder'
 import {ArtworkDataType} from '@/sanity/queries/artworks/artworkData'

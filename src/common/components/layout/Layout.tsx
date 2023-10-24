@@ -1,4 +1,5 @@
 import {DzFooter, DzGridColumns, DzHeader} from '@zwirner/design-system'
+import Link from 'next/link'
 import {useRouter} from 'next/router'
 import {ReactNode} from 'react'
 
@@ -30,6 +31,7 @@ const Layout = ({children, layoutData}: LayoutProps) => {
           router,
           useRoute: true,
         }}
+        LinkElement={Link}
         // TODO handle newsletter
         newsletterAction={() => null}
       />

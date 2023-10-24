@@ -20,6 +20,11 @@
             "name": "@zwirner/design-system",
             "importNames": ["DzPortableText"],
             "message": "Import it from @/components/wrappers/DzPortableText instead."
+          },
+          {
+            "name": "@zwirner/design-system",
+            "importNames": ["DzLink"],
+            "message": "Import it from @/components/wrappers/DzLink instead."
           }
         ]
       }
