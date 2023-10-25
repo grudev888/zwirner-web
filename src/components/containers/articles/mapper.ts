@@ -12,25 +12,6 @@ import {dzMediaMapper} from '@/common/utilsMappers/image.mapper'
 import {safeText} from '@/common/utilsMappers/safe'
 import {ArticleTypes, MediaTypes} from '@/sanity/types'
 
-export const heroMapper = (data: any) => {
-  const {title, type, header, image} = data ?? {}
-
-  const {type: headerImageType} = header?.[0] ?? {}
-  const sourceImage = Object.values(MediaTypes).includes(headerImageType)
-    ? header?.[0]
-    : header?.[0]?.photos?.[0]
-
-  const {media, hideMedia} = dzMediaMapper({
-    data: type === ArticleTypes.INTERNAL ? sourceImage : image,
-    ImgElement: Image,
-  })
-  return {
-    hideMedia,
-    media,
-    title: title,
-  }
-}
-
 export const articlesGridMap = (data: any[]) => {
   return data?.map((relatedArticles) => {
     const {

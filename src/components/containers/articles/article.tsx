@@ -4,7 +4,6 @@ import {
   DzCard,
   DzColumn,
   DzGridColumns,
-  DzHero,
   DzInterstitial,
   DzTitle,
   LINK_VARIANTS,
@@ -21,10 +20,12 @@ import {FullWidthFlexCol} from '@/components/containers/layout/FullWidthFlexCol'
 import {dzInterstitialOverrides} from '@/components/pageBuilder/DzInterstitial/interstitialMapper'
 import {DzLink} from '@/components/wrappers/DzLinkWrapper'
 import {DzPortableText} from '@/components/wrappers/DzPortableText'
+import {ContainerTitle} from '@/components/wrappers/title/ContainerTitle'
 import {builder} from '@/sanity/imageBuilder'
 
 import styles from './article.module.css'
-import {articleDatesMapper, articlesGridMap, heroMapper, locationTitleMapper} from './mapper'
+import {ArticleHeader} from './articleHeader'
+import {articleDatesMapper, articlesGridMap, locationTitleMapper} from './mapper'
 
 interface ArticleContainerProps {
   data: any
@@ -42,12 +43,13 @@ export const ArticleContainer: FC<ArticleContainerProps> = ({data}) => {
     publishDate,
     displayDate,
     externalURL,
+    header,
+    image,
   } = data ?? {}
   const router = useRouter()
   const locationProps = locationTitleMapper(location)
   const interstitialData = dzInterstitialOverrides(interstitial, router)
   const articlesGrid = articlesGridMap(articles)
-  const heroData = heroMapper({...data, title})
   const articleDates = displayDate
     ? {
         title: subtitle || 'Date',
@@ -67,13 +69,9 @@ export const ArticleContainer: FC<ArticleContainerProps> = ({data}) => {
 
   return (
     <DzColumn span={12}>
+      <ContainerTitle title={title} fullLeftContainer />
       <FullWidthFlexCol>
-        <DzHero
-          className={styles.heroContainer}
-          items={[heroData]}
-          primaryTitleProps={{titleType: TITLE_TYPES.H1}}
-        />
-
+        <ArticleHeader data={{header, image}} />
         <article>
           {location ? (
             <DzTitle

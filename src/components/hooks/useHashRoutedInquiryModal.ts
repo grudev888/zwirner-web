@@ -2,12 +2,12 @@ import {FORM_MODAL_TYPES, InquireFormContextData, INQUIRY_TYPES} from '@zwirner/
 import {useRouter} from 'next/router'
 import {useEffect, useRef, useState} from 'react'
 
+import {useFireGA4FormDirtyEvent} from '@/components/hooks/useFireGA4FormDirtyEvent'
 import {useLocation} from '@/forms/api/useLocation'
 import {builder} from '@/sanity/imageBuilder'
 import {createRandomUUID} from '@/sanity/uuid'
 import {sendInquiry} from '@/services/inquireService'
 import {portableTextToText} from '@/utils/sanity/portableTextToText'
-import {useFireGA4FormDirtyEvent} from '@/components/hooks/useFireGA4FormDirtyEvent'
 
 export const INQUIRE_HASH_KEY = 'inquire'
 export const ARTWORK_ID_KEY = 'artworkId'

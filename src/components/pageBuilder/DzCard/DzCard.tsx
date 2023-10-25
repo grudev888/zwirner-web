@@ -38,5 +38,3 @@ export const DzCard: FC<DzCardProps> = ({data, componentProps}) => {
   const {isSmall} = useBreakpoints()
   return <DzCardMolecule {...processDzCardData({data, componentProps, isSmall})} />
 }
-
-export default DzCard

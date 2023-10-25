@@ -64,9 +64,11 @@ export const articleBySlug = groq`
   },
   header[]{
     _type == 'headerImage' => media {
+      "caption": ^.caption,
       ${mediaBuilder}
     },
     _type == 'artwork' => @-> {
+      _id,
       ${artworkContent}
     },
   },
