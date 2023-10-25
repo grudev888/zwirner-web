@@ -1,5 +1,5 @@
-import {withSentryConfig} from '@sentry/nextjs'
 import analyzer from '@next/bundle-analyzer'
+import {withSentryConfig} from '@sentry/nextjs'
 const {env} = await import('./src/env.mjs')
 
 /** @type {import('next').NextConfig} */

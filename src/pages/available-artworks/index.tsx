@@ -74,6 +74,7 @@ export const getStaticProps: GetStaticProps<PageProps, Query, PreviewData> = asy
         slug: params?.slug || null,
         token: null,
       },
+      revalidate: 1,
     }
   } catch (e: any) {
     console.error('ERROR FETCHING AVAILABLE ARTWORKS DATA:', e?.response?.statusMessage)

@@ -56,6 +56,7 @@ export const getStaticProps = async (ctx: GetStaticPropsContext) => {
       preview: false,
       querySlug: false,
     },
+    revalidate: 1,
   }
 }
 

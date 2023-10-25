@@ -67,5 +67,6 @@ export const getStaticProps = async (
       slug: params?.slug || null,
       token: null,
     },
+    revalidate: 1,
   }
 }

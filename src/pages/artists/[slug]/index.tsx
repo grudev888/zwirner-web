@@ -91,6 +91,7 @@ export const getStaticProps: GetStaticProps<PageProps, Query, PreviewData> = asy
         token: null,
         queryParams,
       },
+      revalidate: 1,
     }
   } catch (e: any) {
     console.error(

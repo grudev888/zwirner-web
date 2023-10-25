@@ -73,5 +73,6 @@ export const getStaticProps: GetStaticProps<PageProps, Query> = async (ctx) => {
       preview: false,
       querySlug: null,
     },
+    revalidate: 1,
   }
 }

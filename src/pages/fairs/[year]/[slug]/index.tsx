@@ -60,6 +60,7 @@ export const getStaticProps = async (
       preview,
       querySlug: false,
     },
+    revalidate: 1,
   }
 }
 

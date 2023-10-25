@@ -92,5 +92,6 @@ export const getStaticProps: GetStaticProps<PageProps, Query, PreviewData> = asy
       preview,
       slug: params?.slug || null,
     },
+    revalidate: 1,
   }
 }
