@@ -1,5 +1,3 @@
-import Image from 'next/image'
-
 import {DzPortableText} from '@/components/wrappers/DzPortableText'
 import {builder} from '@/sanity/imageBuilder'
 
@@ -30,7 +28,6 @@ export const safeText = ({
       <DzPortableText
         portableProps={{value: text}}
         builder={builder}
-        ImgElement={Image}
         customStyles={customStyles}
         charLimit={charLimit}
       />

@@ -25,6 +25,16 @@
             "name": "@zwirner/design-system",
             "importNames": ["DzLink"],
             "message": "Import it from @/components/wrappers/DzLink instead."
+          },
+          {
+            "name": "@zwirner/design-system",
+            "importNames": ["DzMedia"],
+            "message": "Import it from @/components/wrappers/DzMedia instead."
+          },
+          {
+            "name": "@zwirner/design-system",
+            "importNames": ["DzCard"],
+            "message": "Import it from @/components/wrappers/DzCard instead."
           }
         ]
       }

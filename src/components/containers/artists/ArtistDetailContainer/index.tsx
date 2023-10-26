@@ -12,7 +12,7 @@ import {
 import dynamic from 'next/dynamic'
 import Link from 'next/link'
 import {useRouter} from 'next/router'
-import {FC, useMemo} from 'react'
+import {useMemo} from 'react'
 
 import {
   ARTISTS_URL,
@@ -53,11 +53,11 @@ const SelectedPress = dynamic(
   }
 )
 
-interface ArtistsContainerProps {
+type ArtistsContainerProps = {
   data: any
 }
 
-export const ArtistDetailContainer: FC<ArtistsContainerProps> = ({data}) => {
+export const ArtistDetailContainer = ({data}: ArtistsContainerProps) => {
   const {
     featured,
     interstitial,

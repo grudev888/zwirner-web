@@ -1,7 +1,6 @@
 import {
   CARD_TYPES,
   CardSizes,
-  DzCard,
   DzColumn,
   DzGridColumns,
   DzInterstitial,
@@ -12,12 +11,12 @@ import {
   useIsSmallWindowSize,
 } from '@zwirner/design-system'
 import cn from 'classnames'
-import Image from 'next/image'
+import Link from 'next/link'
 import {useRouter} from 'next/router'
-import {FC} from 'react'
 
 import {FullWidthFlexCol} from '@/components/containers/layout/FullWidthFlexCol'
 import {dzInterstitialOverrides} from '@/components/pageBuilder/DzInterstitial/interstitialMapper'
+import {DzCard} from '@/components/wrappers/DzCardWrapper'
 import {DzLink} from '@/components/wrappers/DzLinkWrapper'
 import {DzPortableText} from '@/components/wrappers/DzPortableText'
 import {ContainerTitle} from '@/components/wrappers/title/ContainerTitle'
@@ -27,11 +26,11 @@ import styles from './article.module.css'
 import {ArticleHeader} from './articleHeader'
 import {articleDatesMapper, articlesGridMap, locationTitleMapper} from './mapper'
 
-interface ArticleContainerProps {
+type ArticleContainerProps = {
   data: any
 }
 
-export const ArticleContainer: FC<ArticleContainerProps> = ({data}) => {
+export const ArticleContainer = ({data}: ArticleContainerProps) => {
   const {
     title,
     subtitle, // note that subtitle is currently "Secondary Title" in schema
@@ -96,7 +95,6 @@ export const ArticleContainer: FC<ArticleContainerProps> = ({data}) => {
                 normal: cn(styles.articleXSpacing ?? '', styles.paragraphBottomMargin ?? ''),
               }}
               builder={builder}
-              ImgElement={Image}
             />
           ) : null}
           {pdfURL ? (
@@ -111,7 +109,7 @@ export const ArticleContainer: FC<ArticleContainerProps> = ({data}) => {
           ) : null}
         </article>
 
-        {interstitialData ? <DzInterstitial {...interstitialData} /> : null}
+        {interstitialData ? <DzInterstitial {...interstitialData} LinkElement={Link} /> : null}
 
         {articles ? (
           <section>

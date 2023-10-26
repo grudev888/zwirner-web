@@ -2,11 +2,12 @@ import {
   CARD_TYPES,
   CardSizes,
   carouselSizeToCardSize,
-  DzCard,
   DzCarousel,
   DzCarouselCardSize,
   DzMedia,
 } from '@zwirner/design-system'
+
+import {DzCard} from '@/components/wrappers/DzCardWrapper'
 
 import {getHeaderVariant} from './utils'
 

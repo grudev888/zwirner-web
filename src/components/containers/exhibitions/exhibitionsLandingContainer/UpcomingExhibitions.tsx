@@ -1,4 +1,4 @@
-import {FC, useEffect, useState} from 'react'
+import {useEffect, useState} from 'react'
 
 import {isExhibitionUpcoming} from '@/components/containers/exhibitions/exhibitionsLandingContainer/utils'
 import PageBuilder from '@/components/pageBuilder'
@@ -10,11 +10,11 @@ export enum UpcomingMolecules {
   '3-Up Grid' = '3-up',
 }
 
-interface UpcomingExhibitionsProps {
+type UpcomingExhibitionsProps = {
   data: any
 }
 
-export const UpcomingExhibitions: FC<UpcomingExhibitionsProps> = ({data}) => {
+export const UpcomingExhibitions = ({data}: UpcomingExhibitionsProps) => {
   const [upcomingExhibitions, setUpcomingExhibitions] = useState<Array<any>>([])
   const upcomingAsHero = data?.upcomingComponent === UpcomingMolecules['DZ Hero Carousel']
 

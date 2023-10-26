@@ -15,7 +15,7 @@ const DzCarousel = dynamic(() => import('@zwirner/design-system').then((mod) => 
   ssr: false,
 })
 
-interface CarouselMoleculeProps {
+type CarouselMoleculeProps = {
   data: any
   componentProps?: any
 }
@@ -25,6 +25,7 @@ const componentsIndex: any = {
   dzMedia: DzMedia,
 }
 const DEFAULT_CAROUSEL_SIZE = 'S'
+
 export const CarouselMolecule: FC<CarouselMoleculeProps> & {multipleContentTypes: boolean} & {
   notContentDependant: boolean
 } = ({componentProps}) => {

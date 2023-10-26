@@ -1,5 +1,5 @@
 import {DzEditorial as DzEditorialMolecule} from '@zwirner/design-system'
-import {FC} from 'react'
+import Link from 'next/link'
 
 import {DzEditorialSchemaProps} from '@/sanity/types'
 
@@ -15,20 +15,20 @@ export const EDITORIAL_TEXT_NAMES = [
   EDITORIAL_TEXT_TYPES.QUOTE,
 ] as const
 
-interface DzEditorialProps {
+type DzEditorialProps = {
   data: any
   componentProps: DzEditorialSchemaProps
 }
 
-export const DzEditorial: FC<DzEditorialProps> & {notContentDependant: boolean} = ({
+export const DzEditorial = ({
   data,
   componentProps,
-}) => {
+}: DzEditorialProps & {notContentDependant: boolean}) => {
   const {_type} = data ?? {}
   const mappedData = (contentTypesMapper[_type] ?? ((a: any) => a))(data, componentProps)
   const overrideData = dzEditorialOverrides(componentProps) ?? {}
 
-  return <DzEditorialMolecule {...{...mappedData, ...overrideData}} />
+  return <DzEditorialMolecule {...{...mappedData, ...overrideData}} LinkElement={Link} />
 }
 
 DzEditorial.notContentDependant = true

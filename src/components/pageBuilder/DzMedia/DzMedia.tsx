@@ -1,19 +1,14 @@
-import {DzCard as DzCardMolecule} from '@zwirner/design-system'
-import {FC} from 'react'
-
+import {DzCard as DzCardMolecule} from '@/components/wrappers/DzCardWrapper'
 import {DzMediaSchemaProps} from '@/sanity/types'
 
 import {contentTypesMapper, dzMediaOverrides} from './mediaMapper'
 
-interface DzMediaProps {
+type DzMediaProps = {
   data: any
   componentProps: DzMediaSchemaProps
 }
 
-export const DzMedia: FC<DzMediaProps> & {notContentDependant: boolean} = ({
-  data,
-  componentProps,
-}) => {
+export const DzMedia = ({data, componentProps}: DzMediaProps & {notContentDependant: boolean}) => {
   const {_type} = data ?? {}
   const mappedData = (contentTypesMapper[_type] ?? ((a: any) => a))(data, componentProps) ?? {}
   const overrideData = dzMediaOverrides(componentProps) ?? {}

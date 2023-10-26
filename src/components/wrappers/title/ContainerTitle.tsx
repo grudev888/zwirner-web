@@ -8,7 +8,7 @@ import {
   TITLE_TYPES,
   TitleType,
 } from '@zwirner/design-system'
-import {FC, ReactNode} from 'react'
+import {ReactNode} from 'react'
 
 import styles from './titles.module.css'
 
@@ -34,7 +34,7 @@ const stylesPerType: any = {
   [DzTitleMoleculeTypes.MOLECULE]: styles.moleculeTitleContainer,
 }
 
-export const ContainerTitle: FC<ContainerTitleProps> = ({
+export const ContainerTitle = ({
   type = DzTitleMoleculeTypes.PAGE,
   title,
   titleType = TITLE_TYPES.H1,
@@ -49,7 +49,7 @@ export const ContainerTitle: FC<ContainerTitleProps> = ({
   primaryCTA,
   customCTAContainerProps,
   isWide = false,
-}) => {
+}: ContainerTitleProps) => {
   return (
     <DzTitleMolecule
       type={type}

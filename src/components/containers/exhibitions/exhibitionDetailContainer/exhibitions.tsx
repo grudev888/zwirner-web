@@ -1,5 +1,4 @@
 import {
-  DzCard,
   DzColumn,
   DzSectionMenu,
   DzTitleExhibition,
@@ -28,6 +27,7 @@ import {RecaptchaInquireFormModal} from '@/components/forms/recaptchaInquireForm
 import {useHashRoutedInquiryModal} from '@/components/hooks/useHashRoutedInquiryModal'
 import {PageBuilder} from '@/components/pageBuilder'
 import {dzMediaOverrides} from '@/components/pageBuilder/DzMedia/mediaMapper'
+import {DzCard} from '@/components/wrappers/DzCardWrapper'
 import {ExhibitionPageBySlugType} from '@/sanity/queries/exhibitions/exhibitionPageBySlug'
 
 import styles from './exhibitions.module.css'

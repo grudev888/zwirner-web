@@ -2,7 +2,6 @@ import {
   BUTTON_SIZES,
   CARD_TYPES,
   DzButton,
-  DzCard,
   DzColumn,
   DzComplexGrid,
   DzImageZoomModal,
@@ -15,9 +14,10 @@ import {
   useBreakpoints,
 } from '@zwirner/design-system'
 import cn from 'classnames'
-import Image from 'next/image'
+import Link from 'next/link'
 import {useRef, useState} from 'react'
 
+import {DzCard} from '@/components/wrappers/DzCardWrapper'
 import {DzLink} from '@/components/wrappers/DzLinkWrapper'
 import {DzPortableText} from '@/components/wrappers/DzPortableText'
 import {builder} from '@/sanity/imageBuilder'
@@ -103,7 +103,6 @@ export const ArtworkContainer = ({data}: Props) => {
               portableProps={{value: salesInformation}}
               customStyles={{normal: '!text-sm'}}
               builder={builder}
-              ImgElement={Image}
             />
           </div>
         )}
@@ -186,7 +185,6 @@ export const ArtworkContainer = ({data}: Props) => {
                   portableProps={{value: dimensions}}
                   customStyles={detailTextStyles}
                   builder={builder}
-                  ImgElement={Image}
                 />
               </div>
             )}
@@ -196,7 +194,6 @@ export const ArtworkContainer = ({data}: Props) => {
                   portableProps={{value: framedDimensions}}
                   customStyles={detailTextStyles}
                   builder={builder}
-                  ImgElement={Image}
                 />
               </div>
             )}
@@ -206,7 +203,6 @@ export const ArtworkContainer = ({data}: Props) => {
                   portableProps={{value: editionInformation}}
                   customStyles={detailTextStyles}
                   builder={builder}
-                  ImgElement={Image}
                 />
               </div>
             )}
@@ -216,7 +212,6 @@ export const ArtworkContainer = ({data}: Props) => {
                   portableProps={{value: productInformation}}
                   customStyles={detailTextStyles}
                   builder={builder}
-                  ImgElement={Image}
                 />
               </div>
             )}
@@ -226,7 +221,6 @@ export const ArtworkContainer = ({data}: Props) => {
                   portableProps={{value: copyrightInformation}}
                   customStyles={detailTextStyles}
                   builder={builder}
-                  ImgElement={Image}
                 />
               </div>
             )}
@@ -236,7 +230,6 @@ export const ArtworkContainer = ({data}: Props) => {
                   portableProps={{value: additionalCaption}}
                   customStyles={detailTextStyles}
                   builder={builder}
-                  ImgElement={Image}
                 />
               </div>
             )}
@@ -262,14 +255,11 @@ export const ArtworkContainer = ({data}: Props) => {
           onClickImage={onClickPhotoCard}
           cardStylesMap={photoGridImageStyleMap}
           gridColumnsStyles="!gap-y-[1rem]"
+          LinkElement={Link}
         />
         {description && (
           <div ref={descriptionRef} className={styles.descriptionContainer}>
-            <DzPortableText
-              portableProps={{value: description}}
-              builder={builder}
-              ImgElement={Image}
-            />
+            <DzPortableText portableProps={{value: description}} builder={builder} />
           </div>
         )}
       </DzColumn>

@@ -1,4 +1,5 @@
 import {FORM_MODAL_TYPES, useDzFormModal} from '@zwirner/design-system'
+import Link from 'next/link'
 import React, {useRef} from 'react'
 
 import {
@@ -29,6 +30,7 @@ export const useNewsletterFormModal = (disableBackdrop = false) => {
     onDirty,
     disableBackdrop,
     recaptchaNode: <RecaptchaNode recaptchaRef={recaptchaRef} />,
+    LinkElement: Link,
   })
 
   return {

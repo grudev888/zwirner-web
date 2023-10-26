@@ -1,13 +1,13 @@
-import {CARD_TYPES, CardSizes, DzCard, DzColumn, DzGridColumns} from '@zwirner/design-system'
-import {FC} from 'react'
+import {CARD_TYPES, CardSizes, DzColumn, DzGridColumns} from '@zwirner/design-system'
 
 import {mapHighlightCards} from '@/components/containers/exhibitions/exhibitionsLandingContainer/mapper'
+import {DzCard} from '@/components/wrappers/DzCardWrapper'
 
-interface ExhibitionMuseumHighlightsProps {
+type ExhibitionMuseumHighlightsProps = {
   data: any
 }
 
-export const ExhibitionMuseumHighlights: FC<ExhibitionMuseumHighlightsProps> = ({data}) => {
+export const ExhibitionMuseumHighlights = ({data}: ExhibitionMuseumHighlightsProps) => {
   // TODO do sorting in query after resolving GroqQueryError: Cannot determine property key for type: PipeFuncCall
   const museumHighlightsCardsData = mapHighlightCards(
     data.museumHighlights?.sort((h1: any, h2: any) =>

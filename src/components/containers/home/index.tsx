@@ -1,17 +1,18 @@
 import {DzColumn, DzTabsCards} from '@zwirner/design-system'
 import cn from 'classnames'
-import {FC} from 'react'
+import Link from 'next/link'
 
 import {FullWidthFlexCol} from '@/components/containers/layout/FullWidthFlexCol'
 import {PageBuilder} from '@/components/pageBuilder'
 
 import styles from './home.module.css'
 import {mapTabsLocations} from './mapper'
-interface HomeContainerProps {
+
+type HomeContainerProps = {
   data: any
 }
 
-export const HomeContainer: FC<HomeContainerProps> = ({data}) => {
+export const HomeContainer = ({data}: HomeContainerProps) => {
   const {locations, title, homeContent} = data ?? {}
   const tabsLocations = mapTabsLocations(locations)
 
@@ -26,6 +27,7 @@ export const HomeContainer: FC<HomeContainerProps> = ({data}) => {
             className={cn(styles.spacer, styles.fullSection)}
             tabs={tabsLocations}
             span={[12, 3]}
+            LinkElement={Link}
           />
         </section>
       </FullWidthFlexCol>

@@ -1,6 +1,6 @@
 import {DzColumn, DzInterstitial, DzList} from '@zwirner/design-system'
+import Link from 'next/link'
 import {useRouter} from 'next/router'
-import {FC} from 'react'
 
 import {ARTISTS} from '@/common/constants/commonCopies'
 import {FullWidthFlexCol} from '@/components/containers/layout/FullWidthFlexCol'
@@ -9,11 +9,11 @@ import {ContainerTitle} from '@/components/wrappers/title/ContainerTitle'
 
 import {mapListItems} from './mapper'
 
-interface ArtistsListContainerProps {
+type ArtistsListContainerProps = {
   data: any
 }
 
-export const ArtistsListContainer: FC<ArtistsListContainerProps> = ({data}) => {
+export const ArtistsListContainer = ({data}: ArtistsListContainerProps) => {
   const router = useRouter()
   const {pageInfo, artistPages} = data ?? {}
   const [pagesInfoData] = pageInfo ?? []
@@ -25,7 +25,7 @@ export const ArtistsListContainer: FC<ArtistsListContainerProps> = ({data}) => {
       <ContainerTitle title={ARTISTS} />
       <FullWidthFlexCol>
         <DzList list={listItems} stickyOffset="3.75rem" sort />
-        {interstitialData ? <DzInterstitial {...interstitialData} /> : null}
+        {interstitialData ? <DzInterstitial {...interstitialData} LinkElement={Link} /> : null}
       </FullWidthFlexCol>
     </DzColumn>
   )

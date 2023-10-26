@@ -1,7 +1,7 @@
 import {DzColumn, FORM_MODAL_TYPES, INQUIRY_TYPES, TITLE_SIZES} from '@zwirner/design-system'
 import {useRouter} from 'next/router'
 import queryString from 'querystring'
-import {FC, useEffect} from 'react'
+import {useEffect} from 'react'
 
 import {
   INTERESTED_IN,
@@ -20,11 +20,11 @@ import {ContainerTitle} from '@/components/wrappers/title/ContainerTitle'
 import {EVENT_CTA_CLICKED} from '@/events/CTAClickEvent'
 import {CtaActions} from '@/sanity/types'
 
-interface AvailableArtworksProps {
+type AvailableArtworksProps = {
   data: any
 }
 
-export const AvailableArtworksContainer: FC<AvailableArtworksProps> = ({data}) => {
+export const AvailableArtworksContainer = ({data}: AvailableArtworksProps) => {
   const {asPath} = useRouter()
   const inquireArtworkId = queryString.parse(asPath?.split('?')?.[1] || '')[
     ARTWORK_ID_KEY

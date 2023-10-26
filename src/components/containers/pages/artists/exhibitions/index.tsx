@@ -1,5 +1,6 @@
 import {DzColumn, DzInterstitial, TITLE_SIZES} from '@zwirner/design-system'
 import dynamic from 'next/dynamic'
+import Link from 'next/link'
 import {useRouter} from 'next/router'
 import {Fragment} from 'react'
 
@@ -44,11 +45,12 @@ const ArtistExhibitionsPageContainer = ({data}: PageContainerProps) => {
                 icon: <Fragment />,
               },
             ]}
+            LinkElement={Link}
           />
         </FullWidthFlexCol>
         {interstitialData && (
           <div className={styles.interstitialWrapper}>
-            {interstitialData ? <DzInterstitial {...interstitialData} /> : null}
+            {interstitialData ? <DzInterstitial {...interstitialData} LinkElement={Link} /> : null}
           </div>
         )}
       </DzColumn>

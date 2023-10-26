@@ -1,7 +1,6 @@
 import {
   DzColumn,
   DzGridColumns,
-  DzMedia,
   DzText,
   DzTitle,
   DzTitleMolecule,
@@ -14,9 +13,9 @@ import {
   TITLE_TYPES,
   useBreakpoints,
 } from '@zwirner/design-system'
-import Image from 'next/image'
 
 import {DzLink} from '@/components/wrappers/DzLinkWrapper'
+import {DzMedia} from '@/components/wrappers/DzMediaWrapper'
 import {DzPortableText} from '@/components/wrappers/DzPortableText'
 import {builder} from '@/sanity/imageBuilder'
 
@@ -122,11 +121,7 @@ const Biography = ({title, biography, artist, ...rest}: any) => {
           </DzColumn>
 
           <DzColumn span={6} start={7} className="pt-5 md:pt-0">
-            <DzPortableText
-              portableProps={{value: biography.description}}
-              builder={builder}
-              ImgElement={Image}
-            />
+            <DzPortableText portableProps={{value: biography.description}} builder={builder} />
           </DzColumn>
         </DzGridColumns>
 
