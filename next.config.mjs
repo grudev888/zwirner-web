@@ -1,6 +1,11 @@
 import analyzer from '@next/bundle-analyzer'
 import {withSentryConfig} from '@sentry/nextjs'
+import path from 'path'
+import {fileURLToPath} from 'url'
+
 const {env} = await import('./src/env.mjs')
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = path.dirname(__filename)
 
 /** @type {import('next').NextConfig} */
 const config = {
@@ -10,6 +15,22 @@ const config = {
   },
   images: {remotePatterns: [{hostname: 'cdn.sanity.io'}]},
   transpilePackages: ['@zwirner/design-system'],
+  webpack: (config) => {
+    // This fixes the invalid hook React error which
+    // will occur when multiple versions of React is detected when using yarn link
+    const reactPaths = {
+      react: path.join(__dirname, 'node_modules/react'),
+      'react-dom': path.join(__dirname, 'node_modules/react-dom'),
+    }
+    config.resolve = {
+      ...config.resolve,
+      alias: {
+        ...config.resolve.alias,
+        ...reactPaths,
+      },
+    }
+    return config
+  },
 }
 
 const withBundleAnalyzer = analyzer({
