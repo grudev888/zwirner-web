@@ -22,7 +22,7 @@ export const sendInquiry = async (data: Record<string, any>) => {
     if (!response.ok) {
       return {error: 'Error sending inquiry'}
     }
-    return await response.json()
+    return Promise.resolve({error: null})
   } catch (error) {
     console.error('Error sending inquiry: ', error)
     return {error}

@@ -42,7 +42,10 @@ const artworkToPayloadAdapter = (artwork: any, status?: string) => {
   }
 }
 
-export const useHashRoutedInquiryModal = (initialContextData?: InquireFormContextData) => {
+export const useHashRoutedInquiryModal = (
+  initialContextData: InquireFormContextData | undefined = undefined,
+  appendAnchorLink = true
+) => {
   const [isOpen, setIsOpen] = useState(false)
   const {replace, pathname, query, asPath} = useRouter()
   const recaptchaRef = useRef<HTMLFormElement>()
@@ -60,7 +63,11 @@ export const useHashRoutedInquiryModal = (initialContextData?: InquireFormContex
     setContextData((currentData: any) => {
       return {...currentData, ...(contextData || {})}
     })
-    replace({pathname, query, hash})
+    if (appendAnchorLink) {
+      replace({pathname, query, hash})
+    } else {
+      setIsOpen(true)
+    }
   }
   const onSubmit = async (formValues: Record<string, any>) => {
     // TODO check result of recaptcha before submitting form
@@ -74,8 +81,8 @@ export const useHashRoutedInquiryModal = (initialContextData?: InquireFormContex
       timestamp: new Date().getTime(),
       formId: FORM_ID_INQUIRY,
       artwork: artworkToPayloadAdapter(artwork, ctaText),
-      ctaText: ctaText || '',
-      inquiryType: INQUIRY_TYPES_TO_INQUIRY_VALUE[inquiryType!] || '',
+      ctaText: ctaText || 'inquire',
+      inquiryType: INQUIRY_TYPES_TO_INQUIRY_VALUE[inquiryType!] || 'inquiry',
       phone: formValues?.phone || '',
       pageTitle: document.title || '',
       location: {
@@ -86,11 +93,19 @@ export const useHashRoutedInquiryModal = (initialContextData?: InquireFormContex
     }
 
     return sendInquiry(inquiryPayload)
-      .then(() => ({isSuccess: true}))
-      .catch((error) => ({isSuccess: false, error}))
+      .then((result) => {
+        return {isSuccess: !result?.error, error: result?.error}
+      })
+      .catch((error) => {
+        return {isSuccess: false, error}
+      })
   }
 
-  useEffect(() => setIsOpen(asPath.includes(`#${INQUIRE_HASH_KEY}`)), [asPath])
+  useEffect(() => {
+    if (appendAnchorLink) {
+      setIsOpen(asPath.includes(`#${INQUIRE_HASH_KEY}`))
+    }
+  }, [appendAnchorLink, asPath])
 
   return {
     contextData,

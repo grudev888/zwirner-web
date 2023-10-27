@@ -30,6 +30,11 @@ export const sendSubscribeRequest = async (data: SubscriptionData, sourceUrl?: s
   }
 
   return postJSONRequest(endpointUrl, payload)
-    .then(() => ({isSuccess: true}))
-    .catch((error) => ({isSuccess: false, error}))
+    .then((result) => {
+      return {isSuccess: !result?.error, error: result?.error}
+    })
+    .catch((error) => {
+      console.error('Newsletter subscription error: ', error)
+      return {isSuccess: false, error}
+    })
 }
