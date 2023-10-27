@@ -1,4 +1,5 @@
 import {DzColumn, DzSectionMenu, TITLE_SIZES} from '@zwirner/design-system'
+import Link from 'next/link'
 import {useRouter} from 'next/router'
 import {FC} from 'react'
 
@@ -52,6 +53,7 @@ export const ExhibitionChecklistContainer: FC<ExhibitionChecklistContainerProps>
           }}
           sticky
           useLinks
+          LinkElement={Link}
         />
         <ContainerTitle
           title={`${title}: ${subtitle} — ${CHECKLIST}`}

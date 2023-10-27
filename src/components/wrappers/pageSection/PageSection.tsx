@@ -1,16 +1,13 @@
 import {DzTitleMolecule, DzTitleMoleculeTypes} from '@zwirner/design-system'
-import {FC, PropsWithChildren} from 'react'
+import Link from 'next/link'
+import {PropsWithChildren} from 'react'
 
-interface PageSectionProps {
+type PageSectionProps = {
   title: string
   elementId: string
-}
+} & PropsWithChildren
 
-export const PageSection: FC<PageSectionProps & PropsWithChildren> = ({
-  children,
-  elementId,
-  title,
-}) => {
+export const PageSection = ({children, elementId, title}: PageSectionProps) => {
   return (
     <section id={elementId}>
       <DzTitleMolecule
@@ -19,6 +16,7 @@ export const PageSection: FC<PageSectionProps & PropsWithChildren> = ({
           customClass: 'mb-[2.5rem]',
         }}
         type={DzTitleMoleculeTypes.SECTION}
+        LinkElement={Link}
       />
       {children}
     </section>

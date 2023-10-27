@@ -1,6 +1,6 @@
 import {DzColumn, DzSectionMenu} from '@zwirner/design-system'
+import Link from 'next/link'
 import {useRouter} from 'next/router'
-import {FC} from 'react'
 
 import {
   CHECKLIST,
@@ -16,11 +16,11 @@ import {FullWidthFlexCol} from '@/components/containers/layout/FullWidthFlexCol'
 import {PageBuilder} from '@/components/pageBuilder'
 import {ContainerTitle} from '@/components/wrappers/title/ContainerTitle'
 
-interface InstallationViewsContainerProps {
+type InstallationViewsContainerProps = {
   data: any
 }
 
-export const InstallationViewsContainer: FC<InstallationViewsContainerProps> = ({data}) => {
+export const InstallationViewsContainer = ({data}: InstallationViewsContainerProps) => {
   const router = useRouter()
   const {title, subtitle, showChecklist, installationViewsInterstitial, installationViews, slug} =
     data ?? {}
@@ -53,6 +53,7 @@ export const InstallationViewsContainer: FC<InstallationViewsContainerProps> = (
           }}
           sticky
           useLinks
+          LinkElement={Link}
         />
         <ContainerTitle
           category={EXHIBITION}

@@ -122,9 +122,9 @@ export const ArtistDetailContainer = ({data}: ArtistsContainerProps) => {
               linkCTA: {
                 text: EXPLORE_GUIDE,
                 url: `${ARTISTS_URL}/${router.query.slug}/guide`,
-                linkElement: Link,
               },
             }}
+            LinkElement={Link}
           />
           <PageBuilder components={[guide]} />
         </section>
@@ -178,6 +178,7 @@ export const ArtistDetailContainer = ({data}: ArtistsContainerProps) => {
           prefix=""
           sticky
           usePrefix
+          LinkElement={Link}
         />
         <FullWidthFlexCol>
           <ArtistHeader artist={data.artist} intro={data.artistIntro} />
@@ -201,9 +202,9 @@ export const ArtistDetailContainer = ({data}: ArtistsContainerProps) => {
                   linkCTA: {
                     text: EXPLORE_ALL_ARTWORKS,
                     url: `${ARTISTS_URL}/${router.query.slug}/survey`,
-                    linkElement: Link,
                   },
                 }}
+                LinkElement={Link}
               />
               <PageBuilder components={[survey]} />
             </section>
@@ -231,9 +232,9 @@ export const ArtistDetailContainer = ({data}: ArtistsContainerProps) => {
                   linkCTA: {
                     text: EXPLORE_AVAILABLE_WORKS,
                     url: `${ARTISTS_URL}/${router.query.slug}/available-works`,
-                    linkElement: Link,
                   },
                 }}
+                LinkElement={Link}
               />
               <PageBuilder components={[availableWorks]} />
             </section>
@@ -262,6 +263,7 @@ export const ArtistDetailContainer = ({data}: ArtistsContainerProps) => {
                   },
                   customClass: 'mb-5 md:mb-10',
                 }}
+                LinkElement={Link}
               />
 
               {latestExhibitions ? <PageBuilder components={[latestExhibitions]} /> : null}
@@ -300,9 +302,9 @@ export const ArtistDetailContainer = ({data}: ArtistsContainerProps) => {
                   linkCTA: {
                     text: EXPLORE_BOOKS,
                     url: `${ARTISTS_URL}/${router.query.slug}/books`,
-                    linkElement: Link,
                   },
                 }}
+                LinkElement={Link}
               />
               <PageBuilder components={[books]} />
             </section>

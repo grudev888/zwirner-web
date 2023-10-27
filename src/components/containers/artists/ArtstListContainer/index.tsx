@@ -24,7 +24,7 @@ export const ArtistsListContainer = ({data}: ArtistsListContainerProps) => {
     <DzColumn span={12}>
       <ContainerTitle title={ARTISTS} />
       <FullWidthFlexCol>
-        <DzList list={listItems} stickyOffset="3.75rem" sort />
+        <DzList list={listItems} stickyOffset="3.75rem" sort LinkElement={Link} />
         {interstitialData ? <DzInterstitial {...interstitialData} LinkElement={Link} /> : null}
       </FullWidthFlexCol>
     </DzColumn>

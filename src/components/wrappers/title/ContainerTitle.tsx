@@ -8,6 +8,7 @@ import {
   TITLE_TYPES,
   TitleType,
 } from '@zwirner/design-system'
+import Link from 'next/link'
 import {ReactNode} from 'react'
 
 import styles from './titles.module.css'
@@ -71,6 +72,7 @@ export const ContainerTitle = ({
         customCTAContainerProps,
         isWide,
       }}
+      LinkElement={Link}
     />
   )
 }

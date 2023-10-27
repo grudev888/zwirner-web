@@ -7,6 +7,7 @@ import {
   FORM_MODAL_TYPES,
   INQUIRY_TYPES,
 } from '@zwirner/design-system'
+import Link from 'next/link'
 import {useRouter} from 'next/router'
 
 import {
@@ -94,6 +95,7 @@ export const ExhibitionsContainer = ({data: initialData}: Props) => {
         sticky
         useLinks
         className="col-span-12"
+        LinkElement={Link}
       />
       <DzColumn span={12}>
         {/* TODO: update design system types to accept 'null' in subtitle, checklistPDFURL, displayDate and pressReleasePDFURL*/}
@@ -110,6 +112,7 @@ export const ExhibitionsContainer = ({data: initialData}: Props) => {
             subtitle={data.subtitle ?? undefined}
             showCoordinates
             onClickCTA={inquireFormModalProps.openClickHandler}
+            LinkElement={Link}
           />
         ) : null}
       </DzColumn>
@@ -131,6 +134,7 @@ export const ExhibitionsContainer = ({data: initialData}: Props) => {
                 title: 'Explore',
                 customClass: 'mb-5 md:mb-10',
               }}
+              LinkElement={Link}
             />
           </section>
           <PageBuilder components={data.exploreContent} />

@@ -38,10 +38,10 @@ const SelectedPress = ({selectedPress, ...rest}: any) => {
           customClass: 'mb-5 md:mb-10',
           linkCTA: {
             text: 'Explore Selected Press',
-            linkElement: Link,
             url: `/artists/${router.query.slug}/press`,
           },
         }}
+        LinkElement={Link}
       />
       <PageBuilder
         components={[

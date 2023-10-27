@@ -1,5 +1,5 @@
 import {BUTTON_VARIANTS, DzColumn, DzSectionMenu} from '@zwirner/design-system'
-import {FC} from 'react'
+import Link from 'next/link'
 
 import {
   CURRENT,
@@ -16,7 +16,7 @@ import {PageBuilder} from '@/components/pageBuilder'
 import PageSection from '@/components/wrappers/pageSection/PageSection'
 import {ContainerTitle} from '@/components/wrappers/title/ContainerTitle'
 
-interface ExhibitionLandingContainerProps {
+type ExhibitionLandingContainerProps = {
   data: any
 }
 
@@ -26,7 +26,7 @@ const SECTION_IDS = {
   MUSEUM_HIGHLIGHTS: 'museum-highlights',
 }
 
-export const ExhibitionLandingContainer: FC<ExhibitionLandingContainerProps> = ({data}) => {
+export const ExhibitionLandingContainer = ({data}: ExhibitionLandingContainerProps) => {
   const {title, pageBuilder, museumHighlights, interstitial} = data ?? {}
   return (
     <DzColumn span={12}>
@@ -49,6 +49,7 @@ export const ExhibitionLandingContainer: FC<ExhibitionLandingContainerProps> = (
             url: `/exhibitions#${SECTION_IDS.MUSEUM_HIGHLIGHTS}`,
           },
         ]}
+        LinkElement={Link}
       />
       <ContainerTitle title={title || EXHIBITIONS} />
       <FullWidthFlexCol>

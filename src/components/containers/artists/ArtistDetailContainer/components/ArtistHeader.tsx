@@ -4,6 +4,7 @@ import {
   scrollToElementId,
   TITLE_TYPES,
 } from '@zwirner/design-system'
+import Link from 'next/link'
 
 interface ArtistHeaderProps {
   artist: any
@@ -33,6 +34,7 @@ const ArtistHeader = ({artist, intro}: ArtistHeaderProps) => {
             children: <>Learn More</>,
           },
         }}
+        LinkElement={Link}
       />
     </section>
   )

@@ -10,7 +10,7 @@ import {CtaActions} from '@/sanity/types'
 import styles from './layout.module.css'
 import {getFooterProps, getHeaderProps} from './mappers'
 
-interface LayoutProps {
+type LayoutProps = {
   children: ReactNode
   layoutData?: any
 }
@@ -45,6 +45,7 @@ const Layout = ({children, layoutData}: LayoutProps) => {
         newsletterAction={() => {
           window.document.dispatchEvent(CTAClickEvent(CtaActions.NEWSLETTER))
         }}
+        LinkElement={Link}
       />
     </>
   )
