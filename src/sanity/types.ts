@@ -235,6 +235,10 @@ export interface DzSplitTypeProps {
   subtitleOverride?: string
 }
 
+export type DzSplitTypeExtendedProps = DzSplitTypeProps & {
+  router?: any
+}
+
 export interface DzTitleTypeProps {
   title: string
   enableOverrides: boolean

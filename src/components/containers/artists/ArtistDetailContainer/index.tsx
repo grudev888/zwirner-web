@@ -34,10 +34,12 @@ import {FullWidthFlexCol} from '@/components/containers/layout/FullWidthFlexCol'
 import {RecaptchaInquireFormModal} from '@/components/forms/recaptchaInquireFormModal'
 import {useHashRoutedInquiryModal} from '@/components/hooks/useHashRoutedInquiryModal'
 import PageBuilder, {addCTAToComponent} from '@/components/pageBuilder'
+import {showPageBuilderSection} from '@/components/pageBuilder'
 import {showCarouselSection} from '@/components/pageBuilder/DzCarousel/dzCarouselMapper'
 import {showInterstitialSection} from '@/components/pageBuilder/DzInterstitial/interstitialMapper'
 import {showSplitSection} from '@/components/pageBuilder/DzSplit/splitMappers'
 import {showGridSection} from '@/components/pageBuilder/GridMolecule/gridMapper'
+import {PageBuilderComponentsDataSchemaType} from '@/sanity/queries/page/pageCommonQueries/pageBuilderComponentsData'
 
 import ArtistHeader from './components/ArtistHeader'
 import {mapBiography} from './mapper'
@@ -61,9 +63,6 @@ export const ArtistDetailContainer = ({data}: ArtistsContainerProps) => {
   const {
     featured,
     interstitial,
-    availableWorksBooks,
-    availableWorksInterstitial,
-    exhibitionsInterstitial,
     availableWorks,
     latestExhibitions,
     survey,
@@ -73,25 +72,6 @@ export const ArtistDetailContainer = ({data}: ArtistsContainerProps) => {
   } = data ?? {}
 
   const router = useRouter()
-  // Add custom CTA to DzSplit inside the pageBuilder
-  const availableWorksBooksData = addCTAToComponent({
-    data: availableWorksBooks,
-    onCTAClick: () => router.push(`${ARTISTS_URL}/${router.query.slug}/available-works`),
-    component: 'dzSplit',
-  })
-
-  // Add custom CTA to DzInterstitial inside the pageBuilder
-  const availableWorksInterstitialData = addCTAToComponent({
-    data: availableWorksInterstitial,
-    onCTAClick: () => router.push(`${ARTISTS_URL}/${router.query.slug}/available-works`),
-    component: 'dzInterstitial',
-  })
-
-  const exhibitionsInterstitialData = addCTAToComponent({
-    data: exhibitionsInterstitial,
-    onCTAClick: () => router.push(`${ARTISTS_URL}/${router.query.slug}${EXHIBITIONS_URL}`),
-    component: 'dzInterstitial',
-  })
 
   const inquireModalProps = useHashRoutedInquiryModal({
     id: data?.artist?._id,
@@ -99,6 +79,20 @@ export const ArtistDetailContainer = ({data}: ArtistsContainerProps) => {
     title: data?.artist?.fullName,
     inquiryType: INQUIRY_TYPES.ARTIST,
   })
+
+  const latestExhibitionMapped = latestExhibitions?.map(
+    (item: PageBuilderComponentsDataSchemaType) => {
+      const {_type} = item ?? {}
+      if (_type === 'dzInterstitial') {
+        return addCTAToComponent({
+          data: item,
+          onCTAClick: () => router.push(`${ARTISTS_URL}/${router.query.slug}${EXHIBITIONS_URL}`),
+          component: 'dzInterstitial',
+        })
+      }
+      return item
+    }
+  )
 
   const biography = mapBiography(data.artist)
 
@@ -147,12 +141,12 @@ export const ArtistDetailContainer = ({data}: ArtistsContainerProps) => {
             {
               text: 'Available Works',
               id: 'available-works',
-              hidden: !showSplitSection(availableWorksBooksData),
+              hidden: !showPageBuilderSection(availableWorks),
             },
             {
               text: 'Exhibitions',
               id: 'exhibitions',
-              hidden: !showGridSection(latestExhibitions),
+              hidden: !showPageBuilderSection(latestExhibitions),
             },
             {text: 'Guide', id: 'guide', hidden: !showCarouselSection(guide)},
             {text: 'Biography', id: 'biography'},
@@ -184,7 +178,6 @@ export const ArtistDetailContainer = ({data}: ArtistsContainerProps) => {
           <ArtistHeader artist={data.artist} intro={data.artistIntro} />
           {/* Page Builder SPLIT for featured items*/}
           {showSplitSection(featured) ? <PageBuilder components={[featured]} /> : null}
-
           {/* Page Builder CAROUSEL for survey items*/}
           {showCarouselSection(survey) ? (
             <section className="-mx-5" id="survey">
@@ -209,14 +202,7 @@ export const ArtistDetailContainer = ({data}: ArtistsContainerProps) => {
               <PageBuilder components={[survey]} />
             </section>
           ) : null}
-
-          {/* Page Builder SPLIT for available works books*/}
-          {showSplitSection(availableWorksBooksData) ? (
-            <PageBuilder components={[availableWorksBooksData]} />
-          ) : null}
-
-          {/* Page Builder GRID for available works*/}
-          {showGridSection(availableWorks) ? (
+          {showPageBuilderSection(availableWorks) ? (
             <section id="available-works">
               <DzTitleMolecule
                 type={DzTitleMoleculeTypes.MOLECULE}
@@ -236,20 +222,14 @@ export const ArtistDetailContainer = ({data}: ArtistsContainerProps) => {
                 }}
                 LinkElement={Link}
               />
-              <PageBuilder components={[availableWorks]} />
+              <PageBuilder components={availableWorks} innerSection />
             </section>
           ) : null}
-
-          {/* Page Builder INTERSTITIAL for available works*/}
-          {showInterstitialSection(availableWorksInterstitialData) ? (
-            <PageBuilder components={[availableWorksInterstitialData]} />
-          ) : null}
-
           {/* Page Builder CAROUSEL for guide cards*/}
           {data.moveGuideUp === true && showCarouselSection(guide) ? Guide : null}
-
           {/* Page Builder GRID for latest exhibitions*/}
-          {showGridSection(latestExhibitions) ? (
+
+          {showPageBuilderSection(latestExhibitions) ? (
             <section id="exhibitions">
               <DzTitleMolecule
                 type={DzTitleMoleculeTypes.MOLECULE}
@@ -266,25 +246,17 @@ export const ArtistDetailContainer = ({data}: ArtistsContainerProps) => {
                 LinkElement={Link}
               />
 
-              {latestExhibitions ? <PageBuilder components={[latestExhibitions]} /> : null}
+              <PageBuilder components={latestExhibitionMapped} />
             </section>
-          ) : null}
-
-          {/* Page Builder INTERSTITIAL for exhibitions*/}
-          {showInterstitialSection(exhibitionsInterstitialData) ? (
-            <PageBuilder components={[exhibitionsInterstitialData]} />
           ) : null}
 
           {/* Page Builder CAROUSEL for guide cards*/}
           {!data.moveGuideUp && showCarouselSection(guide) ? Guide : null}
-
           <Biography id="biography" biography={biography} title="Biography" artist={data.artist} />
-
           {/* Page Builder GRID for selected press cards*/}
           {showGridSection(selectedPress) ? (
             <SelectedPress id="selected-press" selectedPress={selectedPress} />
           ) : null}
-
           {/* Page Builder CAROUSEL for guide cards*/}
           {showCarouselSection(books) ? (
             <section className="-mx-5" id="books">
@@ -309,7 +281,6 @@ export const ArtistDetailContainer = ({data}: ArtistsContainerProps) => {
               <PageBuilder components={[books]} />
             </section>
           ) : null}
-
           {/* Page Builder INTERSTITIAL for available works*/}
           {showInterstitialSection(interstitial) ? (
             <PageBuilder components={[interstitial]} />

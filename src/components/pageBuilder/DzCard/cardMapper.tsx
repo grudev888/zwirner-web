@@ -96,10 +96,7 @@ export const contentTypesMapper: any = {
     })
     const descriptionText = safeText({key: 'description', text: description})
     const articleUrl = type === ArticleTypes.EXTERNAL ? externalURL : current ?? '/'
-    // const ctasOverrides = ctaMapper({
-    //   data: props,
-    //   props: {url: articleUrl, hideSecondary: true, defaultLinkText: READ_MORE},
-    // })
+
     const date = mapSingleDateFormat(publishDate)
     const linkText = externalURL
       ? `${LEARN_MORE} at ${new URL(externalURL)?.host?.replace('www.', '')}`
@@ -499,7 +496,7 @@ export const contentTypesMapper: any = {
     const {cardSize, mediaOverride} = props ?? {}
     const {media} = dzMediaMapper({
       override: mediaOverride,
-      data: {},
+      data: null,
       ImgElement: Image,
     })
     const mediaToRender = media?.imgProps?.src

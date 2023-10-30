@@ -199,9 +199,10 @@ export const getImageMedia = ({
   extraImgProps = {},
 }: DzMediaImageMapper) => {
   const mediaOverrideSource =
-    override && Object.keys(override).length > 0 && override?.type && override?.type !== 'Unset'
+    override && Object.keys(override).length > 0 && override?.type !== 'Unset' && override.image
       ? override
       : null
+
   const {src, alt, caption} = imageMapper(mediaOverrideSource ?? data)
   return {
     media: {

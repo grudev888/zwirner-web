@@ -28,6 +28,22 @@ const handleCTAClick = (action?: CtaActions, extraProps?: any) => {
   }
 }
 
+const isExternal = ['www.', 'https://', '.com']
+
+const handleLink = ({router, linkedHref, primaryActionIsLink, blank}: any) => {
+  if (router && linkedHref && primaryActionIsLink) {
+    if (isExternal.some((e) => linkedHref.includes(e))) {
+      if (blank) {
+        window.open(linkedHref, '_blank')
+      } else {
+        router.replace(linkedHref)
+      }
+    } else {
+      router.push(linkedHref)
+    }
+  }
+}
+
 export const ctaMapper = ({data, props}: CtaMapperProps) => {
   const {primaryCTA, secondaryCTA} = data ?? {}
   const {action, link, text, handleClick} = primaryCTA ?? {}
@@ -36,15 +52,25 @@ export const ctaMapper = ({data, props}: CtaMapperProps) => {
   const {action: secondaryAction, text: secondaryText} = secondaryCTA ?? {}
   const primaryActionIsLink = action === CtaActions.LINK_CONTENT || action === CtaActions.LINK
 
-  const {url, hideSecondary = false, defaultLinkText, ctaActionProps: extraProps} = props ?? {}
+  const {
+    url,
+    hideSecondary = false,
+    defaultLinkText,
+    ctaActionProps: extraProps,
+    linkAsButton,
+    router,
+  } = props ?? {}
+
+  const linkedHref = action === CtaActions.LINK_CONTENT ? url : href
 
   const primaryCTAMap =
-    primaryCTA && !primaryActionIsLink
+    primaryCTA && (linkAsButton || !primaryActionIsLink)
       ? {
           primaryCTA: {
             text: text,
             ctaProps: {
               onClick: () => {
+                handleLink({router, primaryActionIsLink, blank, linkedHref})
                 if (handleClick) handleClick(action)
                 handleCTAClick(action, extraProps)
               },
@@ -53,16 +79,17 @@ export const ctaMapper = ({data, props}: CtaMapperProps) => {
           },
         }
       : {}
-  const linkCTAMap = primaryActionIsLink
-    ? {
-        linkCTA: {
-          text: text ?? defaultLinkText ?? LEARN_MORE,
-          linkElement: Link,
-          url: action === CtaActions.LINK_CONTENT ? url : href,
-          openNewTab: blank ?? false,
-        },
-      }
-    : {}
+  const linkCTAMap =
+    primaryActionIsLink && !linkAsButton
+      ? {
+          linkCTA: {
+            text: text ?? defaultLinkText ?? LEARN_MORE,
+            linkElement: Link,
+            url: linkedHref,
+            openNewTab: blank ?? false,
+          },
+        }
+      : {}
 
   const secondaryCTAMap =
     secondaryCTA && !hideSecondary
@@ -87,9 +114,12 @@ export const ctaMapper = ({data, props}: CtaMapperProps) => {
 
 // TODO unify ctas everywhere
 export const ctaMapperInterstitial = ({data, props}: CtaMapperInterstitial) => {
-  const {action, text, handleClick, linkedContent} = data ?? {}
+  const {action, text, handleClick, linkedContent, link} = data ?? {}
   // TODO unify CTA inside the studio
   const {router} = props ?? {}
+  const primaryActionIsLink = action === CtaActions.LINK_CONTENT || action === CtaActions.LINK
+  const {blank, href} = (link as any) ?? {}
+  const linkedHref = action === CtaActions.LINK_CONTENT ? linkedContent : href
 
   const primaryCTAMap = text
     ? {
@@ -97,9 +127,7 @@ export const ctaMapperInterstitial = ({data, props}: CtaMapperInterstitial) => {
           text: text,
           ctaProps: {
             onClick: () => {
-              if (router && linkedContent && action === CtaActions.LINK_CONTENT) {
-                router.push(linkedContent)
-              }
+              handleLink({router, primaryActionIsLink, blank, linkedHref})
 
               // TODO Unify handle click && custom Action
               if (handleClick) {

@@ -7,3 +7,12 @@
     md:mb-[7.5rem]
     md:gap-[7.5rem];
 }
+
+.pageBuilderSection {
+  @apply mb-0
+    flex
+    w-full
+    flex-col
+    gap-[2.5rem]
+    md:gap-[3.75rem];
+}

@@ -7,18 +7,18 @@ import {mapExhibitionStatus, mapSingleDateFormat} from '@/common/utilsMappers/da
 import {dzMediaMapper} from '@/common/utilsMappers/image.mapper'
 import {safeText} from '@/common/utilsMappers/safe'
 import {PageBuilderComponentsDataSchemaType} from '@/sanity/queries/page/pageCommonQueries/pageBuilderComponentsData'
-import {DzSplitTypeProps} from '@/sanity/types'
+import {DzSplitTypeExtendedProps} from '@/sanity/types'
 import {ArticleTypes, MediaTypes} from '@/sanity/types'
 
 export const showSplitSection = (data: PageBuilderComponentsDataSchemaType) => {
   if (data?._type !== 'dzSplit') return false
   const {content, props} = data ?? {}
-  const {titleOverride, subtitleOverride, enableOverrides} = props ?? {}
-  const hasOverridesField = enableOverrides && (titleOverride || subtitleOverride)
+  const {titleOverride, subtitleOverride} = props ?? {}
+  const hasOverridesField = titleOverride || subtitleOverride
   return hasOverridesField || !!content
 }
 
-export const dzSplitOverrides = (props: DzSplitTypeProps) => {
+export const dzSplitOverrides = (props: DzSplitTypeExtendedProps) => {
   const {
     media: mediaOverride,
     titleOverride,
@@ -26,12 +26,13 @@ export const dzSplitOverrides = (props: DzSplitTypeProps) => {
     reverse,
     animate,
     subtitleOverride,
-    enableOverrides,
+    router,
   } = props
-  const ctas = ctaMapper({data: props})
-  if (!enableOverrides) return {}
+  const ctas = ctaMapper({data: props, props: {linkAsButton: true, router}})
+
   const {media} = dzMediaMapper({
-    data: mediaOverride,
+    override: mediaOverride,
+    data: null,
     ImgElement: Image,
   })
 
@@ -47,7 +48,7 @@ export const dzSplitOverrides = (props: DzSplitTypeProps) => {
     reverse,
     animate,
     data: {
-      media,
+      ...(media?.imgProps?.src ? {media} : {}),
       title: titleOverride,
       description: subtitleOverride,
       ...ctasSplit,
@@ -165,7 +166,7 @@ export const splitMappers: any = {
       },
     }
   },
-  exhibitionPage: (data: any, props: DzSplitTypeProps) => {
+  exhibitionPage: (data: any, props: DzSplitTypeExtendedProps) => {
     const {artists, title, summary, locations, slug, heroMedia, subtitle} = data ?? {}
     const [primaryArtist] = artists ?? []
     const {fullName} = primaryArtist ?? {}

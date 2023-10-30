@@ -1,6 +1,7 @@
 import {groq} from 'next-sanity'
 
-import {dzGridFields} from '../components/gridMoleculeProps'
+import {pageBuilderComponentsData} from '@/sanity/queries/page/pageCommonQueries/pageBuilderComponentsData'
+
 import {pageSEOFields} from '../components/seo/pageSEOFields'
 
 export const artworksDataByArtistSlug = groq`
@@ -8,8 +9,8 @@ export const artworksDataByArtistSlug = groq`
   title,
   artist->{fullName},
   slug { current },
-  surveySubpage {
-    ${dzGridFields}
+  surveySubpage []{
+    ${pageBuilderComponentsData}
   },
   "seo": surveySeo {
     ${pageSEOFields}

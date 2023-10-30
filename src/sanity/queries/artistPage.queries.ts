@@ -4,6 +4,7 @@ import {dzCarouselFields} from '@/sanity/queries/components/dzCarouselProps'
 import {dzInterstitialFields} from '@/sanity/queries/components/dzInterstitialProps'
 import {dzSplitFields} from '@/sanity/queries/components/dzSplitProps'
 import {dzGridFields} from '@/sanity/queries/components/gridMoleculeProps'
+import {pageBuilderComponentsData} from '@/sanity/queries/page/pageCommonQueries/pageBuilderComponentsData'
 
 import {mediaBuilder} from './components/builders/mediaBuilder'
 import {componentTypesData} from './components/componentTypesData'
@@ -36,28 +37,16 @@ export const artistPageBySlug = groq`
     ${dzCarouselFields}
   },
 
-  availableWorksBooks {
-    ${dzSplitFields},
-  },
-
-  availableWorksInterstitial {
-    ${dzInterstitialFields}
-  },
-
-  exhibitionsInterstitial {
-    ${dzInterstitialFields}
-  },
-
   guide {
     ${dzCarouselFields}
   },
 
-  availableWorks {
-   ${dzGridFields}
+  availableWorks[]{
+    ${pageBuilderComponentsData}
   },
 
-  latestExhibitions {
-    ${dzGridFields}
+  latestExhibitions []{
+    ${pageBuilderComponentsData}
   },
 
   selectedPress {

@@ -70,7 +70,7 @@ export const AvailableArtworksContainer = ({data}: AvailableArtworksProps) => {
   return (
     <>
       <DzColumn span={12}>
-        <ContainerTitle title={title} titleSize={TITLE_SIZES.XL} />
+        <ContainerTitle title={title} titleSize={TITLE_SIZES.XL} fullLeftContainer />
         <FullWidthFlexCol>
           {showGridSection(gridData) ? <PageBuilder components={[gridData]} /> : null}
         </FullWidthFlexCol>

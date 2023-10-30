@@ -22,7 +22,7 @@ export const dzHeroProps = groq`
 `
 // TODO: define type instead any
 export const DzHeroPropsDataSchema = z.object({
-  title: z.nullable(z.string()),
+  title: z.string().nullish(),
   headingOverride: z.nullable(z.string()),
   subHeadingOverride: z.nullable(z.string()),
   secondaryTitleOverride: z.nullable(z.string()),

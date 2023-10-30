@@ -1,6 +1,5 @@
 import {groq} from 'next-sanity'
 
-import {artworkFields} from '@/sanity/queries/artwork.queries'
 import {dzGridFields} from '@/sanity/queries/components/gridMoleculeProps'
 
 import {pageSEOFields} from './components/seo/pageSEOFields'
@@ -10,8 +9,7 @@ export const availableArtworksData = groq`
   title,
   displayNumberOfResults,
   artworksGrid {
-    ...,
-    items[]->{${artworkFields}}
+    ${dzGridFields}
   },
   seo {
     ${pageSEOFields}
