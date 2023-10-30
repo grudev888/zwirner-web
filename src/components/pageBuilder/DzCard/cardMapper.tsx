@@ -1,6 +1,5 @@
 import {CARD_TYPES, CardViewport, MEDIA_ASPECT_RATIOS, MEDIA_TYPES} from '@zwirner/design-system'
 import Image from 'next/image'
-import Link from 'next/link'
 
 import {
   EXHIBITION,
@@ -21,6 +20,7 @@ import {dzMediaMapper} from '@/common/utilsMappers/image.mapper'
 import {safeText} from '@/common/utilsMappers/safe'
 // TODO: extract utils to a general mapper for availability
 import {parseAvailability} from '@/components/containers/home/utils'
+import {artworkToPayloadAdapter} from '@/components/hooks/useHashRoutedInquiryModal'
 import {
   ArticleCategories,
   ArticleTypes,
@@ -28,7 +28,6 @@ import {
   DzCardExtendedProps,
   MediaTypes,
 } from '@/sanity/types'
-import {artworkToPayloadAdapter} from '@/components/hooks/useHashRoutedInquiryModal'
 
 export const dzCardOverrides = (props: DzCardExtendedProps) => {
   const {mediaOverride, enableOverrides, isSmall} = props ?? {}
@@ -130,10 +129,9 @@ export const contentTypesMapper: any = {
         title,
         secondaryTitle: subtitle,
         secondarySubtitle: date,
-        cardLink: {href: articleUrl, openNewTab: true, LinkElement: Link},
+        cardLink: {href: articleUrl, openNewTab: true},
         linkCTA: {
           text: READ_MORE,
-          linkElement: Link,
           url: articleUrl,
           openNewTab: false,
         },
@@ -148,11 +146,10 @@ export const contentTypesMapper: any = {
         subtitle: primarySubtitle ?? primarySubtitleOverride,
         linkCTA: {
           text: READ_MORE,
-          linkElement: Link,
           url: articleUrl,
           openNewTab: false,
         },
-        cardLink: {href: articleUrl, openNewTab: true, LinkElement: Link},
+        cardLink: {href: articleUrl, openNewTab: true},
         ...(descriptionText ?? {}),
       }
     } else if (isEventNews) {
@@ -165,10 +162,9 @@ export const contentTypesMapper: any = {
         secondarySubtitle: displayDate ?? date,
         secondaryTitle: name,
         title,
-        cardLink: {href: articleUrl, openNewTab: true, LinkElement: Link},
+        cardLink: {href: articleUrl, openNewTab: true},
         linkCTA: {
           text: READ_MORE,
-          linkElement: Link,
           url: articleUrl,
           openNewTab: false,
         },
@@ -183,11 +179,10 @@ export const contentTypesMapper: any = {
         subtitle: primarySubtitle ?? primarySubtitleOverride,
         secondaryTitle: subtitle ?? secondaryTitleOverride,
         secondarySubtitle: displayDate ?? date,
-        cardLink: {href: articleUrl, openNewTab: true, LinkElement: Link},
+        cardLink: {href: articleUrl, openNewTab: true},
         linkCTA: {
           text: linkText,
           url: articleUrl,
-          linkElement: Link,
           linkProps: {openNewTab: true},
         },
       }
@@ -198,12 +193,11 @@ export const contentTypesMapper: any = {
         hideImage,
         category,
         subtitle: primarySubtitle ?? primarySubtitleOverride,
-        cardLink: {href: articleUrl, openNewTab: true, LinkElement: Link},
+        cardLink: {href: articleUrl, openNewTab: true},
         ...(descriptionText ?? {}),
         linkCTA: {
           text: linkText,
           url: articleUrl,
-          linkElement: Link,
           linkProps: {openNewTab: true},
         },
       }
@@ -216,10 +210,9 @@ export const contentTypesMapper: any = {
         subtitle: primarySubtitle,
         secondaryTitle: subtitle,
         secondarySubtitle,
-        cardLink: {href: articleUrl, openNewTab: true, LinkElement: Link},
+        cardLink: {href: articleUrl, openNewTab: true},
         linkCTA: {
           text: READ_MORE,
-          linkElement: Link,
           url: articleUrl,
           openNewTab: false,
         },
@@ -271,7 +264,6 @@ export const contentTypesMapper: any = {
       ctasBook = {
         linkCTA: {
           text: ORDER_NOW,
-          linkElement: Link,
           url: booksUrl,
         },
       }
@@ -520,7 +512,6 @@ export const contentTypesMapper: any = {
           linkCTA: {
             text: LISTEN_NOW,
             url: spotifyUrl,
-            linkElement: Link,
             linkProps: {openNewTab: true},
           },
         }),

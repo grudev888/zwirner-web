@@ -27,9 +27,8 @@ export async function getArtistPageData(): Promise<any[]> {
   return []
 }
 
-export async function getArtistPageBySlug(params: any): Promise<any[]> {
-  if (client) {
-    return (await client.fetch(artistPageBySlug, params)) || []
-  }
-  return []
+export async function getArtistPageBySlug(params: any) {
+  const data = await client.fetch(artistPageBySlug, params)
+  if (!Object.keys(data).length) return null
+  return data
 }

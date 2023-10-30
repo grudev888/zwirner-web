@@ -18,7 +18,6 @@ export const titleMappers: any = {
       description,
       // linkCTA: {
       //   text: 'View All',
-      //   linkElement: 'a',
       //   url: '/',
       // },
     }
@@ -33,7 +32,6 @@ export const titleMappers: any = {
       description: `${edition} ${dimensions}`,
       // linkCTA: {
       //   text: 'View All',
-      //   linkElement: 'a',
       //   url: '/',
       // },
     }
@@ -48,7 +46,6 @@ export const titleMappers: any = {
       description,
       // linkCTA: {
       //   text: 'View All',
-      //   linkElement: 'a',
       //   url: '/',
       // },
     }

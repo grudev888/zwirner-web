@@ -96,7 +96,6 @@ export const mapCardsGrid = (
           linkCTA: showLinkCTA
             ? {
                 text: LEARN_MORE,
-                linkElement: 'a',
                 url: slug?.current,
               }
             : null,

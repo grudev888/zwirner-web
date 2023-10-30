@@ -1,5 +1,4 @@
 import Image from 'next/image'
-import Link from 'next/link'
 
 import {EXHIBITION, EXHIBITIONS_URL, LEARN_MORE} from '@/common/constants/commonCopies'
 import {mapExhibitionStatus} from '@/common/utilsMappers/date.mapper'
@@ -95,7 +94,6 @@ export const contentTypesMapper: any = {
       ...(descriptionText ?? {}),
       linkCTA: {
         text: LEARN_MORE,
-        linkElement: Link,
         url: current ?? EXHIBITIONS_URL,
       },
     }

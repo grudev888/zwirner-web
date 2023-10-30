@@ -73,7 +73,6 @@ export const articlesGridMap = (data: any[]) => {
       description: description ? undefined : summary,
       linkCTA: {
         text: READ_MORE,
-        linkElement: 'a',
         url: exhibitionURL ?? articleURL,
       },
     }

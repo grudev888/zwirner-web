@@ -40,7 +40,6 @@ export const exhibitionCarouselMapper = (exhibitions: any[]) => {
       ...summaryText,
       linkCTA: {
         text: LEARN_MORE_AMP_SUBSCRIBE,
-        linkElement: 'a',
         url: slug?.current,
       },
     }

@@ -1,5 +1,4 @@
 import {BUTTON_VARIANTS, ButtonModes} from '@zwirner/design-system'
-import Link from 'next/link'
 
 import {BUY_NOW, LEARN_MORE} from '@/common/constants/commonCopies'
 import {CTAClickEvent} from '@/events/CTAClickEvent'
@@ -84,7 +83,6 @@ export const ctaMapper = ({data, props}: CtaMapperProps) => {
       ? {
           linkCTA: {
             text: text ?? defaultLinkText ?? LEARN_MORE,
-            linkElement: Link,
             url: linkedHref,
             openNewTab: blank ?? false,
           },
