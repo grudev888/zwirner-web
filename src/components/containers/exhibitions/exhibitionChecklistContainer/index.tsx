@@ -1,5 +1,4 @@
-import {DzColumn, DzSectionMenu, TITLE_SIZES} from '@zwirner/design-system'
-import Link from 'next/link'
+import {DzColumn, TITLE_SIZES} from '@zwirner/design-system'
 import {useRouter} from 'next/router'
 import {FC} from 'react'
 
@@ -15,6 +14,7 @@ import {
 } from '@/common/constants/commonCopies'
 import {FullWidthFlexCol} from '@/components/containers/layout/FullWidthFlexCol'
 import {PageBuilder} from '@/components/pageBuilder'
+import {DzSectionMenu} from '@/components/wrappers/DzSectionMenuWrapper'
 import {ContainerTitle} from '@/components/wrappers/title/ContainerTitle'
 
 interface ExhibitionChecklistContainerProps {
@@ -53,7 +53,6 @@ export const ExhibitionChecklistContainer: FC<ExhibitionChecklistContainerProps>
           }}
           sticky
           useLinks
-          LinkElement={Link}
         />
         <ContainerTitle
           title={`${title}: ${subtitle} — ${CHECKLIST}`}

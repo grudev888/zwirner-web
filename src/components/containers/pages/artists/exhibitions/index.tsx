@@ -1,6 +1,5 @@
-import {DzColumn, DzInterstitial, TITLE_SIZES} from '@zwirner/design-system'
+import {DzColumn, TITLE_SIZES} from '@zwirner/design-system'
 import dynamic from 'next/dynamic'
-import Link from 'next/link'
 import {useRouter} from 'next/router'
 import {Fragment} from 'react'
 
@@ -8,16 +7,17 @@ import {EXHIBITIONS} from '@/common/constants/commonCopies'
 import {FullWidthFlexCol} from '@/components/containers/layout/FullWidthFlexCol'
 import BackNavPageLayout from '@/components/containers/layout/pages/backNavPageLayout'
 import {dzInterstitialOverrides} from '@/components/pageBuilder/DzInterstitial/interstitialMapper'
+import {DzInterstitial} from '@/components/wrappers/DzInterstitialWrapper'
 import {ContainerTitle} from '@/components/wrappers/title/ContainerTitle'
 
 import {mapCardsGrid} from './mapper'
 import styles from './styles.module.css'
 const DzComplexGrid = dynamic(
-  () => import('@zwirner/design-system').then((mod) => mod.DzComplexGrid),
+  () => import('@/components/wrappers/DzComplexGridWrapper').then((mod) => mod.DzComplexGrid),
   {ssr: false}
 )
 
-interface PageContainerProps {
+type PageContainerProps = {
   data: any
 }
 
@@ -45,12 +45,11 @@ const ArtistExhibitionsPageContainer = ({data}: PageContainerProps) => {
                 icon: <Fragment />,
               },
             ]}
-            LinkElement={Link}
           />
         </FullWidthFlexCol>
         {interstitialData && (
           <div className={styles.interstitialWrapper}>
-            {interstitialData ? <DzInterstitial {...interstitialData} LinkElement={Link} /> : null}
+            {interstitialData ? <DzInterstitial {...interstitialData} /> : null}
           </div>
         )}
       </DzColumn>

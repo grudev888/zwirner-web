@@ -3,17 +3,16 @@ import {
   BUTTON_VARIANTS,
   ButtonModes,
   DzButton,
-  DzTitleMolecule,
   DzTitleMoleculeTypes,
   TITLE_SIZES,
   TITLE_TYPES,
   useBreakpoints,
 } from '@zwirner/design-system'
-import Link from 'next/link'
 import {useRouter} from 'next/router'
 import {useState} from 'react'
 
 import PageBuilder from '@/components/pageBuilder'
+import {DzTitleMolecule} from '@/components/wrappers/DzTitleMoleculeWrapper'
 
 const MOBILE_CARDS_LIMIT = 2
 const LOAD_MORE_FEATURE_ENABLED = true
@@ -41,7 +40,6 @@ const SelectedPress = ({selectedPress, ...rest}: any) => {
             url: `/artists/${router.query.slug}/press`,
           },
         }}
-        LinkElement={Link}
       />
       <PageBuilder
         components={[

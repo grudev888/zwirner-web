@@ -1,4 +1,4 @@
-import {DzPortableText} from '@/components/wrappers/DzPortableText'
+import {DzPortableText} from '@/components/wrappers/DzPortableTextWrapper'
 import {builder} from '@/sanity/imageBuilder'
 
 interface SafeTextProps {

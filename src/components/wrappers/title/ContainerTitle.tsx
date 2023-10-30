@@ -2,15 +2,14 @@ import {
   ColumnProps,
   DzMoleculeLinkCTA,
   DzMoleculeTitleCTA,
-  DzTitleMolecule,
   DzTitleMoleculeTypes,
   TITLE_SIZES,
   TITLE_TYPES,
   TitleType,
 } from '@zwirner/design-system'
-import Link from 'next/link'
 import {ReactNode} from 'react'
 
+import {DzTitleMolecule} from '../DzTitleMoleculeWrapper'
 import styles from './titles.module.css'
 
 interface ContainerTitleProps {
@@ -72,7 +71,6 @@ export const ContainerTitle = ({
         customCTAContainerProps,
         isWide,
       }}
-      LinkElement={Link}
     />
   )
 }

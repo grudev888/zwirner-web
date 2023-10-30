@@ -1,7 +1,7 @@
 import {GetStaticProps} from 'next'
 
 import {SEOComponent} from '@/common/components/seo/seo'
-import {ArtistsListContainer} from '@/components/containers/artists/ArtstListContainer'
+import {ArtistsListContainer} from '@/components/containers/artists/ArtistListContainer'
 import {PreviewPage} from '@/components/containers/previews/pagePreview'
 import {getAllArtistsPages} from '@/sanity/queries/artistPage.queries'
 import {getArtistPageData} from '@/sanity/services/artist.service'

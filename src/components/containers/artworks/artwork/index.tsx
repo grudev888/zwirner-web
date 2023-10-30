@@ -3,7 +3,6 @@ import {
   CARD_TYPES,
   DzButton,
   DzColumn,
-  DzComplexGrid,
   DzImageZoomModal,
   DzText,
   DzTitle,
@@ -14,12 +13,12 @@ import {
   useBreakpoints,
 } from '@zwirner/design-system'
 import cn from 'classnames'
-import Link from 'next/link'
 import {useRef, useState} from 'react'
 
 import {DzCard} from '@/components/wrappers/DzCardWrapper'
+import {DzComplexGrid} from '@/components/wrappers/DzComplexGridWrapper'
 import {DzLink} from '@/components/wrappers/DzLinkWrapper'
-import {DzPortableText} from '@/components/wrappers/DzPortableText'
+import {DzPortableText} from '@/components/wrappers/DzPortableTextWrapper'
 import {builder} from '@/sanity/imageBuilder'
 import {ArtworkDataType} from '@/sanity/queries/artworks/artworkData'
 import {formatCurrency} from '@/utils/currency/formatCurrency'
@@ -255,7 +254,6 @@ export const ArtworkContainer = ({data}: Props) => {
           onClickImage={onClickPhotoCard}
           cardStylesMap={photoGridImageStyleMap}
           gridColumnsStyles="!gap-y-[1rem]"
-          LinkElement={Link}
         />
         {description && (
           <div ref={descriptionRef} className={styles.descriptionContainer}>

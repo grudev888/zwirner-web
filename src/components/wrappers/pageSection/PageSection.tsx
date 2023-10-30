@@ -1,6 +1,7 @@
-import {DzTitleMolecule, DzTitleMoleculeTypes} from '@zwirner/design-system'
-import Link from 'next/link'
+import {DzTitleMoleculeTypes} from '@zwirner/design-system'
 import {PropsWithChildren} from 'react'
+
+import {DzTitleMolecule} from '../DzTitleMoleculeWrapper'
 
 type PageSectionProps = {
   title: string
@@ -16,7 +17,6 @@ export const PageSection = ({children, elementId, title}: PageSectionProps) => {
           customClass: 'mb-[2.5rem]',
         }}
         type={DzTitleMoleculeTypes.SECTION}
-        LinkElement={Link}
       />
       {children}
     </section>

@@ -1,7 +1,6 @@
-import {DzSplit as DzSplitMolecule} from '@zwirner/design-system'
-import Link from 'next/link'
 import {useRouter} from 'next/router'
 
+import {DzSplit as DzSplitMolecule} from '@/components/wrappers/DzSplitWrapper'
 import {DzSplitTypeProps} from '@/sanity/types'
 
 import {dzSplitOverrides, splitMappers} from './splitMappers'
@@ -20,9 +19,7 @@ export const DzSplit = ({data, componentProps}: DzSplitProps & {notContentDepend
   const {data: mappedInnerData} = mappedData ?? {}
   const {data: overrideInnerData} = overrideData ?? {}
   const mergedData = {...mappedInnerData, ...overrideInnerData}
-  return (
-    <DzSplitMolecule {...{...mappedData, ...overrideData, data: mergedData}} LinkElement={Link} />
-  )
+  return <DzSplitMolecule {...{...mappedData, ...overrideData, data: mergedData}} />
 }
 
 DzSplit.notContentDependant = true

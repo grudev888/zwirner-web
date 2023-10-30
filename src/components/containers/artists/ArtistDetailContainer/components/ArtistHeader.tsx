@@ -1,10 +1,6 @@
-import {
-  DzTitleMolecule,
-  DzTitleMoleculeTypes,
-  scrollToElementId,
-  TITLE_TYPES,
-} from '@zwirner/design-system'
-import Link from 'next/link'
+import {DzTitleMoleculeTypes, scrollToElementId, TITLE_TYPES} from '@zwirner/design-system'
+
+import {DzTitleMolecule} from '@/components/wrappers/DzTitleMoleculeWrapper'
 
 interface ArtistHeaderProps {
   artist: any
@@ -34,7 +30,6 @@ const ArtistHeader = ({artist, intro}: ArtistHeaderProps) => {
             children: <>Learn More</>,
           },
         }}
-        LinkElement={Link}
       />
     </section>
   )

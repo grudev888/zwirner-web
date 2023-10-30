@@ -1,12 +1,14 @@
 import dynamic from 'next/dynamic'
-import Link from 'next/link'
 
 import {DzHeroSchemaProps} from '@/sanity/types'
 
 import {contentTypesMapper, dzHeroOverrides} from './heroMapper'
-const DzHeroMolecule = dynamic(() => import('@zwirner/design-system').then((mod) => mod.DzHero), {
-  ssr: false,
-})
+const DzHeroMolecule = dynamic(
+  () => import('@/components/wrappers/DzHeroWrapper').then((mod) => mod.DzHero),
+  {
+    ssr: false,
+  }
+)
 type DzHeroProps = {
   data: any
   componentProps?: DzHeroSchemaProps
@@ -19,7 +21,7 @@ export const DzHero = ({data, componentProps}: DzHeroProps & {multipleContentTyp
     const overrideData = componentProps ? dzHeroOverrides(componentProps) : {}
     return {...mappedData, ...overrideData}
   })
-  return <DzHeroMolecule items={heroSlides} LinkElement={Link} />
+  return <DzHeroMolecule items={heroSlides} />
 }
 
 DzHero.multipleContentTypes = true

@@ -1,13 +1,9 @@
 import {
   DzColumn,
-  DzSectionMenu,
-  DzTitleExhibition,
-  DzTitleMolecule,
   DzTitleMoleculeTypes,
   FORM_MODAL_TYPES,
   INQUIRY_TYPES,
 } from '@zwirner/design-system'
-import Link from 'next/link'
 import {useRouter} from 'next/router'
 
 import {
@@ -29,6 +25,9 @@ import {useHashRoutedInquiryModal} from '@/components/hooks/useHashRoutedInquiry
 import {PageBuilder} from '@/components/pageBuilder'
 import {dzMediaOverrides} from '@/components/pageBuilder/DzMedia/mediaMapper'
 import {DzCard} from '@/components/wrappers/DzCardWrapper'
+import {DzSectionMenu} from '@/components/wrappers/DzSectionMenuWrapper'
+import {DzTitleExhibition} from '@/components/wrappers/DzTitleExhibitionWrapper'
+import {DzTitleMolecule} from '@/components/wrappers/DzTitleMoleculeWrapper'
 import {ExhibitionPageBySlugType} from '@/sanity/queries/exhibitions/exhibitionPageBySlug'
 
 import styles from './exhibitions.module.css'
@@ -95,7 +94,6 @@ export const ExhibitionsContainer = ({data: initialData}: Props) => {
         sticky
         useLinks
         className="col-span-12"
-        LinkElement={Link}
       />
       <DzColumn span={12}>
         {/* TODO: update design system types to accept 'null' in subtitle, checklistPDFURL, displayDate and pressReleasePDFURL*/}
@@ -112,7 +110,6 @@ export const ExhibitionsContainer = ({data: initialData}: Props) => {
             subtitle={data.subtitle ?? undefined}
             showCoordinates
             onClickCTA={inquireFormModalProps.openClickHandler}
-            LinkElement={Link}
           />
         ) : null}
       </DzColumn>
@@ -134,7 +131,6 @@ export const ExhibitionsContainer = ({data: initialData}: Props) => {
                 title: 'Explore',
                 customClass: 'mb-5 md:mb-10',
               }}
-              LinkElement={Link}
             />
           </section>
           <PageBuilder components={data.exploreContent} />

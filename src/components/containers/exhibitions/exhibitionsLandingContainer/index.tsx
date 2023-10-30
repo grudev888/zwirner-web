@@ -1,5 +1,4 @@
-import {BUTTON_VARIANTS, DzColumn, DzSectionMenu} from '@zwirner/design-system'
-import Link from 'next/link'
+import {BUTTON_VARIANTS, DzColumn} from '@zwirner/design-system'
 
 import {
   CURRENT,
@@ -13,6 +12,7 @@ import {NowOpenExhibitions} from '@/components/containers/exhibitions/exhibition
 import {UpcomingExhibitions} from '@/components/containers/exhibitions/exhibitionsLandingContainer/UpcomingExhibitions'
 import {FullWidthFlexCol} from '@/components/containers/layout/FullWidthFlexCol'
 import {PageBuilder} from '@/components/pageBuilder'
+import {DzSectionMenu} from '@/components/wrappers/DzSectionMenuWrapper'
 import PageSection from '@/components/wrappers/pageSection/PageSection'
 import {ContainerTitle} from '@/components/wrappers/title/ContainerTitle'
 
@@ -49,7 +49,6 @@ export const ExhibitionLandingContainer = ({data}: ExhibitionLandingContainerPro
             url: `/exhibitions#${SECTION_IDS.MUSEUM_HIGHLIGHTS}`,
           },
         ]}
-        LinkElement={Link}
       />
       <ContainerTitle title={title || EXHIBITIONS} />
       <FullWidthFlexCol>

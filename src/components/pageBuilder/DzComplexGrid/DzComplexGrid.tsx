@@ -1,6 +1,6 @@
-import {DzComplexGrid} from '@zwirner/design-system'
-import Link from 'next/link'
 import {FC} from 'react'
+
+import {DzComplexGrid} from '@/components/wrappers/DzComplexGridWrapper'
 
 import {cardsMapper} from './dzComplexGridMapper'
 
@@ -15,7 +15,7 @@ export const ComplexGridMolecule: FC<DzComplexGridMoleculeProps> & {
 } = ({componentProps}) => {
   const gridData = cardsMapper(componentProps)
 
-  return <DzComplexGrid {...gridData} LinkElement={Link} />
+  return <DzComplexGrid {...gridData} />
 }
 ComplexGridMolecule.notContentDependant = true
 ComplexGridMolecule.multipleContentTypes = true

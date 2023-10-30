@@ -3,7 +3,6 @@ import {
   DzGridColumns,
   DzText,
   DzTitle,
-  DzTitleMolecule,
   DzTitleMoleculeTypes,
   LINK_VARIANTS,
   MEDIA_ASPECT_RATIOS,
@@ -13,11 +12,11 @@ import {
   TITLE_TYPES,
   useBreakpoints,
 } from '@zwirner/design-system'
-import Link from 'next/link'
 
 import {DzLink} from '@/components/wrappers/DzLinkWrapper'
 import {DzMedia} from '@/components/wrappers/DzMediaWrapper'
-import {DzPortableText} from '@/components/wrappers/DzPortableText'
+import {DzPortableText} from '@/components/wrappers/DzPortableTextWrapper'
+import {DzTitleMolecule} from '@/components/wrappers/DzTitleMoleculeWrapper'
 import {builder} from '@/sanity/imageBuilder'
 
 const ArtistFooter = ({artist}: {artist: any}) => {
@@ -89,7 +88,6 @@ const Biography = ({title, biography, artist, ...rest}: any) => {
           },
           customClass: 'mb-5 md:mb-10',
         }}
-        LinkElement={Link}
       />
 
       <div className="flex flex-col gap-5 md:flex-row">

@@ -24,17 +24,72 @@
           {
             "name": "@zwirner/design-system",
             "importNames": ["DzLink"],
-            "message": "Import it from @/components/wrappers/DzLink instead."
+            "message": "Import it from @/components/wrappers/DzLinkWrapper instead."
           },
           {
             "name": "@zwirner/design-system",
             "importNames": ["DzMedia"],
-            "message": "Import it from @/components/wrappers/DzMedia instead."
+            "message": "Import it from @/components/wrappers/DzMediaWrapper instead."
+          },
+          {
+            "name": "@zwirner/design-system",
+            "importNames": ["DzInterstitial"],
+            "message": "Import it from @/components/wrappers/DzInterstitialWrapper instead."
+          },
+          {
+            "name": "@zwirner/design-system",
+            "importNames": ["DzTitleMolecule"],
+            "message": "Import it from @/components/wrappers/DzTitleMoleculeWrapper instead."
+          },
+          {
+            "name": "@zwirner/design-system",
+            "importNames": ["DzSectionMenu"],
+            "message": "Import it from @/components/wrappers/DzSectionMenuWrapper instead."
+          },
+          {
+            "name": "@zwirner/design-system",
+            "importNames": ["DzComplexGrid"],
+            "message": "Import it from @/components/wrappers/DzComplexGridWrapper instead."
+          },
+          {
+            "name": "@zwirner/design-system",
+            "importNames": ["DzTitleExhibition"],
+            "message": "Import it from @/components/wrappers/DzTitleExhibitionWrapper instead."
           },
           {
             "name": "@zwirner/design-system",
             "importNames": ["DzCard"],
-            "message": "Import it from @/components/wrappers/DzCard instead."
+            "message": "Import it from @/components/wrappers/DzCardWrapper instead."
+          },
+          {
+            "name": "@zwirner/design-system",
+            "importNames": ["DzTabsCards"],
+            "message": "Import it from @/components/wrappers/DzTabsCardsWrapper instead."
+          },
+          {
+            "name": "@zwirner/design-system",
+            "importNames": ["DzFormModal"],
+            "message": "Import it from @/components/wrappers/DzFormModalWrapper instead."
+          },
+          {
+            "name": "@zwirner/design-system",
+            "importNames": ["DzEditorial"],
+            "message": "Import it from @/components/wrappers/DzEditorialWrapper instead."
+          },
+          {
+            "name": "@zwirner/design-system",
+            "importNames": ["DzHero"],
+            "message": "Import it from @/components/wrappers/DzHeroWrapper instead."
+          },
+          {
+            "name": "@zwirner/design-system",
+            "importNames": ["DzSplit"],
+            "message": "Import it from @/components/wrappers/DzSplitWrapper instead."
+          },
+          {
+            "name": "@zwirner/design-system",
+            "importNames": ["DzList"],
+            "message": "Import it from @/components/wrappers/DzListWrapper instead."
           }
         ]
       }

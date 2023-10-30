@@ -3,7 +3,6 @@ import {
   CardSizes,
   DzColumn,
   DzGridColumns,
-  DzInterstitial,
   DzTitle,
   LINK_VARIANTS,
   TEXT_LINK_SIZES,
@@ -11,14 +10,14 @@ import {
   useIsSmallWindowSize,
 } from '@zwirner/design-system'
 import cn from 'classnames'
-import Link from 'next/link'
 import {useRouter} from 'next/router'
 
 import {FullWidthFlexCol} from '@/components/containers/layout/FullWidthFlexCol'
 import {dzInterstitialOverrides} from '@/components/pageBuilder/DzInterstitial/interstitialMapper'
 import {DzCard} from '@/components/wrappers/DzCardWrapper'
+import {DzInterstitial} from '@/components/wrappers/DzInterstitialWrapper'
 import {DzLink} from '@/components/wrappers/DzLinkWrapper'
-import {DzPortableText} from '@/components/wrappers/DzPortableText'
+import {DzPortableText} from '@/components/wrappers/DzPortableTextWrapper'
 import {ContainerTitle} from '@/components/wrappers/title/ContainerTitle'
 import {builder} from '@/sanity/imageBuilder'
 
@@ -109,7 +108,7 @@ export const ArticleContainer = ({data}: ArticleContainerProps) => {
           ) : null}
         </article>
 
-        {interstitialData ? <DzInterstitial {...interstitialData} LinkElement={Link} /> : null}
+        {interstitialData ? <DzInterstitial {...interstitialData} /> : null}
 
         {articles ? (
           <section>

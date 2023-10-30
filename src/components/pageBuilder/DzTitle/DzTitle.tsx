@@ -1,6 +1,4 @@
-import {DzTitleMolecule} from '@zwirner/design-system'
-import Link from 'next/link'
-
+import {DzTitleMolecule} from '@/components/wrappers/DzTitleMoleculeWrapper'
 import {DzTitleTypeProps} from '@/sanity/types'
 
 import {dzTitleOverrides, titleMappers} from './titleMapper'
@@ -15,7 +13,7 @@ export const DzTitle = ({data, componentProps}: DzTitleProps) => {
   const mappedData = (titleMappers[_type] ?? ((a: any) => a))(data, componentProps)
   const overrideData = dzTitleOverrides(componentProps) ?? {}
 
-  return <DzTitleMolecule {...{...mappedData, ...overrideData}} LinkElement={Link} />
+  return <DzTitleMolecule {...{...mappedData, ...overrideData}} />
 }
 
 export default DzTitle

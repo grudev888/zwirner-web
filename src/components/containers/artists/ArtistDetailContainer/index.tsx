@@ -1,8 +1,6 @@
 import {
   BUTTON_VARIANTS,
   DzColumn,
-  DzSectionMenu,
-  DzTitleMolecule,
   DzTitleMoleculeTypes,
   FORM_MODAL_TYPES,
   INQUIRY_TYPES,
@@ -10,7 +8,6 @@ import {
   TITLE_TYPES,
 } from '@zwirner/design-system'
 import dynamic from 'next/dynamic'
-import Link from 'next/link'
 import {useRouter} from 'next/router'
 import {useMemo} from 'react'
 
@@ -39,6 +36,8 @@ import {showCarouselSection} from '@/components/pageBuilder/DzCarousel/dzCarouse
 import {showInterstitialSection} from '@/components/pageBuilder/DzInterstitial/interstitialMapper'
 import {showSplitSection} from '@/components/pageBuilder/DzSplit/splitMappers'
 import {showGridSection} from '@/components/pageBuilder/GridMolecule/gridMapper'
+import {DzSectionMenu} from '@/components/wrappers/DzSectionMenuWrapper'
+import {DzTitleMolecule} from '@/components/wrappers/DzTitleMoleculeWrapper'
 import {PageBuilderComponentsDataSchemaType} from '@/sanity/queries/page/pageCommonQueries/pageBuilderComponentsData'
 
 import ArtistHeader from './components/ArtistHeader'
@@ -118,7 +117,6 @@ export const ArtistDetailContainer = ({data}: ArtistsContainerProps) => {
                 url: `${ARTISTS_URL}/${router.query.slug}/guide`,
               },
             }}
-            LinkElement={Link}
           />
           <PageBuilder components={[guide]} />
         </section>
@@ -172,7 +170,6 @@ export const ArtistDetailContainer = ({data}: ArtistsContainerProps) => {
           prefix=""
           sticky
           usePrefix
-          LinkElement={Link}
         />
         <FullWidthFlexCol>
           <ArtistHeader artist={data.artist} intro={data.artistIntro} />
@@ -197,7 +194,6 @@ export const ArtistDetailContainer = ({data}: ArtistsContainerProps) => {
                     url: `${ARTISTS_URL}/${router.query.slug}/survey`,
                   },
                 }}
-                LinkElement={Link}
               />
               <PageBuilder components={[survey]} />
             </section>
@@ -220,7 +216,6 @@ export const ArtistDetailContainer = ({data}: ArtistsContainerProps) => {
                     url: `${ARTISTS_URL}/${router.query.slug}/available-works`,
                   },
                 }}
-                LinkElement={Link}
               />
               <PageBuilder components={availableWorks} innerSection />
             </section>
@@ -243,7 +238,6 @@ export const ArtistDetailContainer = ({data}: ArtistsContainerProps) => {
                   },
                   customClass: 'mb-5 md:mb-10',
                 }}
-                LinkElement={Link}
               />
 
               <PageBuilder components={latestExhibitionMapped} />
@@ -276,7 +270,6 @@ export const ArtistDetailContainer = ({data}: ArtistsContainerProps) => {
                     url: `${ARTISTS_URL}/${router.query.slug}/books`,
                   },
                 }}
-                LinkElement={Link}
               />
               <PageBuilder components={[books]} />
             </section>

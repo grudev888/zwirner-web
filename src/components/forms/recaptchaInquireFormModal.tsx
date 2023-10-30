@@ -1,8 +1,9 @@
-import {DzFormModal, DzFormModalProps} from '@zwirner/design-system'
-import Link from 'next/link'
+import {DzFormModalProps} from '@zwirner/design-system'
 import {Ref} from 'react'
 
 import RecaptchaNode from '@/components/forms/recaptchaNode'
+
+import {DzFormModal} from '../wrappers/DzFormModalWrapper'
 
 export const RecaptchaInquireFormModal = (
   props: Omit<DzFormModalProps, 'LinkElement'> & {recaptchaRef: Ref<any>}
@@ -14,7 +15,6 @@ export const RecaptchaInquireFormModal = (
       {...formModalProps}
       type="inquire"
       recaptchaNode={<RecaptchaNode recaptchaRef={recaptchaRef} />}
-      LinkElement={Link}
     />
   )
 }

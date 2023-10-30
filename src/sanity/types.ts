@@ -1,6 +1,6 @@
 import {ButtonModes, ButtonVariant, EditorialType, SplitTypes} from '@zwirner/design-system'
 
-export interface GlobalSEOScheme {
+export type GlobalSEOScheme = {
   _id: string
   globalSEOTitle: string | null
   globalSEODescription: string | null
@@ -10,7 +10,7 @@ export interface GlobalSEOScheme {
 type CanonicalURL = {
   current: string
 }
-export interface PageSEOSchema {
+export type PageSEOSchema = {
   pageTitle?: string
   metaDescription?: string
   h1Header?: string
@@ -23,7 +23,7 @@ export interface PageSEOSchema {
   jsonLD?: JSONLDSchema
 }
 
-export interface ArticleSchema {
+export type ArticleSchema = {
   title?: string
   images?: any
   author?: any
@@ -32,12 +32,12 @@ export interface ArticleSchema {
   publisherLogo?: string
 }
 
-export interface RedirectSchema {
+export type RedirectSchema = {
   from: string
   to: string
 }
 
-export interface ArtistPageSchemaProps {
+export type ArtistPageSchemaProps = {
   title: string
   slug: any
   seo: any
@@ -46,7 +46,7 @@ export interface ArtistPageSchemaProps {
 
 // UTILS
 
-export interface BreadcrumbItemSchema {
+export type BreadcrumbItemSchema = {
   name: string
   item: string
 }
@@ -92,7 +92,7 @@ export enum MediaTypes {
   VIDEO_RECORD = 'Video Record',
 }
 
-export interface CTASchemaType {
+export type CTASchemaType = {
   type: 'button' | 'link'
   action: CtaActions
   text: string
@@ -100,7 +100,7 @@ export interface CTASchemaType {
   variant?: ButtonVariant
 }
 
-export interface TextComplexSchemaType {
+export type TextComplexSchemaType = {
   text: string
   textType: any
 }
@@ -122,11 +122,11 @@ export const JSON_LD_SCHEMA_TYPE_NAMES = [
 
 type SchemaType = (typeof JSON_LD_SCHEMA_TYPE_NAMES)[number]
 
-interface SearchActionType {
+type SearchActionType = {
   target: string
 }
 
-export interface JSONLDSchema {
+export type JSONLDSchema = {
   schemaType: SchemaType
   article?: any
   breadcrumbs?: BreadcrumbItemSchema[]
@@ -134,12 +134,12 @@ export interface JSONLDSchema {
   manualSchema?: any
 }
 
-interface externalLinkType {
+type externalLinkType = {
   href: string
   blank: boolean
 }
 
-export interface linkSchemaType {
+export type linkSchemaType = {
   externalLink?: externalLinkType
   internalLink?: string
 }
@@ -152,7 +152,7 @@ export enum ExhibitionPageStatus {
 
 // MOLECULES
 
-export interface DzCardSchemaProps {
+export type DzCardSchemaProps = {
   title: string
   primaryCTA?: CTASchemaType
   secondaryCTA?: CTASchemaType
@@ -171,17 +171,17 @@ export type DzCardExtendedProps = DzCardSchemaProps & {
   cardSize: any
 }
 
-export interface DzMediaSchemaProps {
+export type DzMediaSchemaProps = {
   media: any
   title: string
 }
 
-export interface DzCarouselSchemaProps {
+export type DzCarouselSchemaProps = {
   title: string
   enableOverrides: boolean
 }
 
-export interface DzEditorialSchemaProps {
+export type DzEditorialSchemaProps = {
   title: string
   editorialType: EditorialType
   editorialTextOverrides?: TextComplexSchemaType[]
@@ -192,13 +192,13 @@ export interface DzEditorialSchemaProps {
   reverse?: boolean
 }
 
-export interface GridMoleculeTypeProps {
+export type GridMoleculeTypeProps = {
   title: string
   wrap: boolean
   itemsPerRow: number
 }
 
-export interface DzHeroSchemaProps {
+export type DzHeroSchemaProps = {
   title: string
   headingOverride?: string
   subHeadingOverride?: string
@@ -208,14 +208,14 @@ export interface DzHeroSchemaProps {
   enableOverrides: boolean
 }
 
-export interface DzHeroCarouselSchemaProps {
+export type DzHeroCarouselSchemaProps = {
   title: string
   headingOverride?: string
   pictures?: any
   enableOverrides: boolean
 }
 
-export interface DzInterstitialTypeProps {
+export type DzInterstitialTypeProps = {
   title: string
   mode: ButtonModes
   cta: any
@@ -224,7 +224,7 @@ export interface DzInterstitialTypeProps {
   eyebrow: string
 }
 
-export interface DzSplitTypeProps {
+export type DzSplitTypeProps = {
   titleOverride: string
   splitType: SplitTypes
   reverse: boolean
@@ -239,7 +239,7 @@ export type DzSplitTypeExtendedProps = DzSplitTypeProps & {
   router?: any
 }
 
-export interface DzTitleTypeProps {
+export type DzTitleTypeProps = {
   title: string
   enableOverrides: boolean
 }

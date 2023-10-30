@@ -1,10 +1,11 @@
-import {DzColumn, DzInterstitial, DzList} from '@zwirner/design-system'
-import Link from 'next/link'
+import {DzColumn} from '@zwirner/design-system'
 import {useRouter} from 'next/router'
 
 import {ARTISTS} from '@/common/constants/commonCopies'
 import {FullWidthFlexCol} from '@/components/containers/layout/FullWidthFlexCol'
 import {dzInterstitialOverrides} from '@/components/pageBuilder/DzInterstitial/interstitialMapper'
+import {DzInterstitial} from '@/components/wrappers/DzInterstitialWrapper'
+import {DzList} from '@/components/wrappers/DzListWrapper'
 import {ContainerTitle} from '@/components/wrappers/title/ContainerTitle'
 
 import {mapListItems} from './mapper'
@@ -24,8 +25,8 @@ export const ArtistsListContainer = ({data}: ArtistsListContainerProps) => {
     <DzColumn span={12}>
       <ContainerTitle title={ARTISTS} />
       <FullWidthFlexCol>
-        <DzList list={listItems} stickyOffset="3.75rem" sort LinkElement={Link} />
-        {interstitialData ? <DzInterstitial {...interstitialData} LinkElement={Link} /> : null}
+        <DzList list={listItems} stickyOffset="3.75rem" sort />
+        {interstitialData ? <DzInterstitial {...interstitialData} /> : null}
       </FullWidthFlexCol>
     </DzColumn>
   )
