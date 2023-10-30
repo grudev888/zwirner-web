@@ -19,7 +19,7 @@ const INQUIRY_TYPES_TO_INQUIRY_VALUE = {
   [INQUIRY_TYPES.EXHIBITION]: 'Exhibition',
   [INQUIRY_TYPES.AVAILABLE_ARTWORKS]: 'Special Pages',
 }
-const artworkToPayloadAdapter = (artwork: any, status?: string) => {
+export const artworkToPayloadAdapter = (artwork: any, status?: string) => {
   if (!artwork) {
     return
   }

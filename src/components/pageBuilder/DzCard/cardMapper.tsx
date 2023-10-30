@@ -28,6 +28,7 @@ import {
   DzCardExtendedProps,
   MediaTypes,
 } from '@/sanity/types'
+import {artworkToPayloadAdapter} from '@/components/hooks/useHashRoutedInquiryModal'
 
 export const dzCardOverrides = (props: DzCardExtendedProps) => {
   const {mediaOverride, enableOverrides, isSmall} = props ?? {}
@@ -380,6 +381,14 @@ export const contentTypesMapper: any = {
         ...(framedDimensionsText ?? {}),
         ...(additionalInformationText ?? {}),
         ...(ctasOverrides ?? {}),
+      },
+      onViewport: () => {
+        console.info(
+          'TODO ga4 view event for artwork: ',
+          title,
+          ' payload: ',
+          artworkToPayloadAdapter(data)
+        )
       },
     }
   },
