@@ -77,7 +77,7 @@ export const useHashRoutedInquiryModal = (
     const inquiryPayload = {
       ...formValues,
       id: createRandomUUID(),
-      currentUrl: asPath,
+      currentUrl: window.location.href,
       timestamp: new Date().getTime(),
       formId: FORM_ID_INQUIRY,
       artwork: artworkToPayloadAdapter(artwork, ctaText),
