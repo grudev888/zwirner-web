@@ -4,8 +4,8 @@ import {EXHIBITION, EXHIBITIONS_URL, LEARN_MORE} from '@/common/constants/common
 import {mapExhibitionStatus} from '@/common/utilsMappers/date.mapper'
 import {dzMediaMapper} from '@/common/utilsMappers/image.mapper'
 import {safeText} from '@/common/utilsMappers/safe'
+import {cardContentArticle} from '@/components/pageBuilder/utils/commonMappers'
 import {DzHeroSchemaProps, MediaTypes} from '@/sanity/types'
-
 export const heroMapper = (data: any) => {
   return data
 }
@@ -39,6 +39,10 @@ export const dzHeroOverrides = (props: DzHeroSchemaProps) => {
   }
 }
 export const contentTypesMapper: any = {
+  article: (data: any, props: any) => {
+    const cardProps = cardContentArticle({data, props})
+    return cardProps
+  },
   artist: (data: any) => {
     const {birthdate, fullName, deathDate, picture, summary, description} = data
     const {media} = dzMediaMapper({

@@ -228,7 +228,6 @@ export type DzSplitTypeProps = {
   titleOverride: string
   splitType: SplitTypes
   reverse: boolean
-  animate: boolean
   media?: any
   enableOverrides: boolean
   primaryCTA?: CTASchemaType

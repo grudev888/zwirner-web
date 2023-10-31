@@ -2,12 +2,12 @@ import Image from 'next/image'
 
 import {EXHIBITION, EXHIBITIONS_URL, LEARN_MORE} from '@/common/constants/commonCopies'
 import {ctaMapper} from '@/common/utilsMappers/cta.mapper'
-import {mapExhibitionStatus, mapSingleDateFormat} from '@/common/utilsMappers/date.mapper'
+import {mapExhibitionStatus} from '@/common/utilsMappers/date.mapper'
 import {dzMediaMapper} from '@/common/utilsMappers/image.mapper'
 import {safeText} from '@/common/utilsMappers/safe'
+import {cardContentArticle} from '@/components/pageBuilder/utils/commonMappers'
 import {PageBuilderComponentsDataSchemaType} from '@/sanity/queries/page/pageCommonQueries/pageBuilderComponentsData'
 import {DzSplitTypeExtendedProps} from '@/sanity/types'
-import {ArticleTypes, MediaTypes} from '@/sanity/types'
 
 export const showSplitSection = (data: PageBuilderComponentsDataSchemaType) => {
   if (data?._type !== 'dzSplit') return false
@@ -18,15 +18,7 @@ export const showSplitSection = (data: PageBuilderComponentsDataSchemaType) => {
 }
 
 export const dzSplitOverrides = (props: DzSplitTypeExtendedProps) => {
-  const {
-    media: mediaOverride,
-    titleOverride,
-    splitType,
-    reverse,
-    animate,
-    subtitleOverride,
-    router,
-  } = props
+  const {media: mediaOverride, titleOverride, splitType, reverse, subtitleOverride, router} = props
   const ctas = ctaMapper({data: props, props: {linkAsButton: true, router}})
 
   const {media} = dzMediaMapper({
@@ -45,7 +37,6 @@ export const dzSplitOverrides = (props: DzSplitTypeExtendedProps) => {
   return {
     type: splitType,
     reverse,
-    animate,
     data: {
       ...(media?.imgProps?.src ? {media} : {}),
       title: titleOverride,
@@ -57,7 +48,7 @@ export const dzSplitOverrides = (props: DzSplitTypeExtendedProps) => {
 
 export const splitMappers: any = {
   artist: (data: any) => {
-    const {splitType, reverse, animate, birthdate, picture, fullName, description, summary} = data
+    const {splitType, reverse, birthdate, picture, fullName, description, summary} = data
 
     const {media} = dzMediaMapper({
       data: picture,
@@ -67,7 +58,6 @@ export const splitMappers: any = {
     return {
       type: splitType,
       reverse,
-      animate,
       data: {
         media,
         category: 'Artist',
@@ -79,62 +69,19 @@ export const splitMappers: any = {
     }
   },
   article: (data: any, props: any) => {
-    const {splitType, reverse, animate, mediaOverride} = props ?? {}
+    const cardProps = cardContentArticle({data, props})
+    const {splitType, reverse} = props ?? {}
 
-    const {
-      category,
-      title,
-      image,
-      header,
-      description,
-      location,
-      subtitle,
-      slug,
-      externalURL,
-      type,
-      publishDate,
-      displayDate,
-      primarySubtitle,
-    } = data ?? {}
-
-    const {name} = location ?? {}
-
-    const {current} = slug ?? {}
-    const {type: headerImageType} = header?.[0] ?? {}
-    const sourceImage = Object.values(MediaTypes).includes(headerImageType)
-    const descriptionText = safeText({key: 'description', text: description})
-    const articleUrl = type === ArticleTypes.EXTERNAL ? externalURL : current ?? '/'
-    const {media} = dzMediaMapper({
-      override: mediaOverride,
-      data: type === ArticleTypes.INTERNAL ? sourceImage : image,
-      ImgElement: Image,
-    })
-    const date = mapSingleDateFormat(publishDate)
     return {
       type: splitType,
       reverse,
-      animate,
-      data: {
-        media,
-        category,
-        title,
-        subtitle: primarySubtitle,
-        secondaryTitle: name ?? subtitle,
-        secondarySubtitle: displayDate ?? date,
-        linkCTA: {
-          text: LEARN_MORE,
-          url: articleUrl,
-          openNewTab: false,
-        },
-        ...descriptionText,
-      },
+      data: cardProps,
     }
   },
   artwork: (data: any) => {
     const {
       splitType,
       reverse,
-      animate,
       artists,
       availability,
       dimensions,
@@ -153,7 +100,6 @@ export const splitMappers: any = {
     return {
       type: splitType,
       reverse,
-      animate,
       data: {
         media,
         category: availability,
@@ -168,7 +114,7 @@ export const splitMappers: any = {
     const {artists, title, summary, locations, slug, heroMedia, subtitle} = data ?? {}
     const [primaryArtist] = artists ?? []
     const {fullName} = primaryArtist ?? {}
-    const {splitType, reverse, animate, media: mediaOverride} = props ?? {}
+    const {splitType, reverse, media: mediaOverride} = props ?? {}
     const mediaOverrideSource = Object.keys(mediaOverride ?? {}).length > 0 ? mediaOverride : null
     const heroMediaSource = Object.keys(heroMedia ?? {}).length > 0 ? heroMedia : null
 
@@ -210,7 +156,6 @@ export const splitMappers: any = {
     return {
       type: splitType,
       reverse,
-      animate,
       data: {
         media,
         category: EXHIBITION,

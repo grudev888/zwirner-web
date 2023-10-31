@@ -1,15 +1,7 @@
 import {CARD_TYPES, CardViewport, MEDIA_ASPECT_RATIOS, MEDIA_TYPES} from '@zwirner/design-system'
 import Image from 'next/image'
 
-import {
-  EXHIBITION,
-  EXHIBITIONS_URL,
-  LEARN_MORE,
-  LISTEN_NOW,
-  ORDER_NOW,
-  READ_MORE,
-  VIEW_MORE,
-} from '@/common/constants/commonCopies'
+import {EXHIBITION, EXHIBITIONS_URL, LISTEN_NOW, ORDER_NOW} from '@/common/constants/commonCopies'
 import {ctaMapper} from '@/common/utilsMappers/cta.mapper'
 import {
   dateSelectionArtworkMapper,
@@ -21,13 +13,8 @@ import {safeText} from '@/common/utilsMappers/safe'
 // TODO: extract utils to a general mapper for availability
 import {parseAvailability} from '@/components/containers/home/utils'
 import {artworkToPayloadAdapter} from '@/components/hooks/useHashRoutedInquiryModal'
-import {
-  ArticleCategories,
-  ArticleTypes,
-  BookVariation,
-  DzCardExtendedProps,
-  MediaTypes,
-} from '@/sanity/types'
+import {cardContentArticle} from '@/components/pageBuilder/utils/commonMappers'
+import {BookVariation, DzCardExtendedProps} from '@/sanity/types'
 
 export const dzCardOverrides = (props: DzCardExtendedProps) => {
   const {mediaOverride, enableOverrides, isSmall} = props ?? {}
@@ -50,177 +37,8 @@ export const dzCardOverrides = (props: DzCardExtendedProps) => {
 
 export const contentTypesMapper: any = {
   article: (data: any, props: DzCardExtendedProps) => {
-    const {
-      category,
-      title,
-      image,
-      header,
-      description,
-      location,
-      subtitle,
-      slug,
-      externalURL,
-      type,
-      publishDate,
-      displayDate,
-      primarySubtitle,
-    } = data ?? {}
-    const {current} = slug ?? {}
-    const {
-      primarySubtitle: primarySubtitleOverride,
-      secondarySubtitle,
-      secondaryTitle: secondaryTitleOverride,
-      cardSize,
-      additionalInformation,
-      mediaOverride,
-      isSmall,
-    } = props ?? {}
-
-    const {type: headerImageType} = header?.[0] ?? {}
-    const sourceImage = Object.values(MediaTypes).includes(headerImageType)
-      ? header?.[0]
-      : header?.[0]?.photos?.[0]
-
-    const {media, hideImage} = dzMediaMapper({
-      override: mediaOverride,
-      data: sourceImage ?? image,
-      ImgElement: Image,
-      options: {
-        aspectRatio: isSmall ? MEDIA_ASPECT_RATIOS['4:3'] : MEDIA_ASPECT_RATIOS['16:9'],
-      },
-    })
-    const additionalInformationText = safeText({
-      key: 'additionalInformation',
-      text: additionalInformation,
-    })
-    const descriptionText = safeText({key: 'description', text: description})
-    const articleUrl = type === ArticleTypes.EXTERNAL ? externalURL : current ?? '/'
-
-    const date = mapSingleDateFormat(publishDate)
-    const linkText = externalURL
-      ? `${LEARN_MORE} at ${new URL(externalURL)?.host?.replace('www.', '')}`
-      : VIEW_MORE
-
-    let cardProps = {}
-
-    // RULES FOR ARTICLES
-
-    const isSelectedPressVariant = type === ArticleTypes.PRESS
-    const isPressArticle =
-      (type === ArticleTypes.INTERNAL || type === ArticleTypes.EXTERNAL) &&
-      category === ArticleCategories.PRESS
-    const isEventNews =
-      (type === ArticleTypes.INTERNAL || type === ArticleTypes.EXTERNAL) &&
-      category === ArticleCategories.EVENT
-    const isMuseumHighlight =
-      (type === ArticleTypes.INTERNAL || type === ArticleTypes.EXTERNAL) &&
-      category === ArticleCategories.MUSEUM_HIGHLIGHTS
-    const isMuseumExhibition =
-      (type === ArticleTypes.INTERNAL || type === ArticleTypes.EXTERNAL) &&
-      category === ArticleCategories.MUSEUM_EXHIBITION
-
-    const isNewsArticle = type === ArticleTypes.INTERNAL || type === ArticleTypes.EXTERNAL
-
-    if (isSelectedPressVariant) {
-      cardProps = {
-        media,
-        // show only for certain pages
-        hideImage: true,
-        title,
-        secondaryTitle: subtitle,
-        secondarySubtitle: date,
-        cardLink: {href: articleUrl, openNewTab: true},
-        linkCTA: {
-          text: READ_MORE,
-          url: articleUrl,
-          openNewTab: false,
-        },
-      }
-    } else if (isPressArticle) {
-      cardProps = {
-        media,
-        hideImage: hideImage,
-        category,
-        title,
-        secondaryTitle: subtitle ?? secondaryTitleOverride,
-        subtitle: primarySubtitle ?? primarySubtitleOverride,
-        linkCTA: {
-          text: READ_MORE,
-          url: articleUrl,
-          openNewTab: false,
-        },
-        cardLink: {href: articleUrl, openNewTab: true},
-        ...(descriptionText ?? {}),
-      }
-    } else if (isEventNews) {
-      const {name} = location ?? {}
-      cardProps = {
-        media,
-        hideImage,
-        category,
-        subtitle: primarySubtitle,
-        secondarySubtitle: displayDate ?? date,
-        secondaryTitle: name,
-        title,
-        cardLink: {href: articleUrl, openNewTab: true},
-        linkCTA: {
-          text: READ_MORE,
-          url: articleUrl,
-          openNewTab: false,
-        },
-        ...(descriptionText ?? {}),
-      }
-    } else if (isMuseumHighlight) {
-      cardProps = {
-        title,
-        media,
-        hideImage,
-        category,
-        subtitle: primarySubtitle ?? primarySubtitleOverride,
-        secondaryTitle: subtitle ?? secondaryTitleOverride,
-        secondarySubtitle: displayDate ?? date,
-        cardLink: {href: articleUrl, openNewTab: true},
-        linkCTA: {
-          text: linkText,
-          url: articleUrl,
-          linkProps: {openNewTab: true},
-        },
-      }
-    } else if (isMuseumExhibition) {
-      cardProps = {
-        title,
-        media,
-        hideImage,
-        category,
-        subtitle: primarySubtitle ?? primarySubtitleOverride,
-        cardLink: {href: articleUrl, openNewTab: true},
-        ...(descriptionText ?? {}),
-        linkCTA: {
-          text: linkText,
-          url: articleUrl,
-          linkProps: {openNewTab: true},
-        },
-      }
-    } else if (isNewsArticle) {
-      cardProps = {
-        media,
-        hideImage,
-        category,
-        title,
-        subtitle: primarySubtitle,
-        secondaryTitle: subtitle,
-        secondarySubtitle,
-        cardLink: {href: articleUrl, openNewTab: true},
-        linkCTA: {
-          text: READ_MORE,
-          url: articleUrl,
-          openNewTab: false,
-        },
-        ...(descriptionText ?? {}),
-        ...(additionalInformationText ?? {}),
-      }
-    }
-
+    const {cardSize} = props ?? {}
+    const cardProps = cardContentArticle({data, props})
     return {
       type: CARD_TYPES.CONTENT,
       data: {
