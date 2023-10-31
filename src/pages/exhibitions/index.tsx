@@ -1,10 +1,12 @@
 import {GetStaticProps} from 'next'
 
 import {SEOComponent} from '@/common/components/seo/seo'
+import {EXHIBITIONS_SECTION, EXHIBITIONS_SLUG} from '@/common/constants/gtmPageConstants'
 import {ExhibitionLandingContainer} from '@/components/containers/exhibitions/exhibitionsLandingContainer'
 import {PreviewPage} from '@/components/containers/previews/pagePreview'
 import {exhibitionsLandingData} from '@/sanity/queries/exhibitionPage.queries'
 import {getExhibitionsLandingPageData} from '@/sanity/services/exhibition.service'
+import {getGTMPageLoadData} from '@/sanity/services/gtm/pageLoad.service'
 
 interface PageProps {
   data: any
@@ -59,11 +61,16 @@ export const getStaticProps: GetStaticProps<PageProps, Query, PreviewData> = asy
 
   const pageData = await getExhibitionsLandingPageData()
 
+  if (!params.slug) params.slug = EXHIBITIONS_SLUG
+  const dataLayerProps = await getGTMPageLoadData({slug: params.slug})
+  if (dataLayerProps) dataLayerProps.page_data.site_section = EXHIBITIONS_SECTION
+
   return {
     props: {
       data: {
         pageData,
       },
+      dataLayerProps,
       preview,
       slug: params?.slug || null,
       token: null,

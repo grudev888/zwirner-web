@@ -3,8 +3,6 @@
 // artist names that are associated with the page.
 // waiting on search scope for this feature in https://linear.app/zwirner/issue/NWEB-383/ga4-page-load-events
 
-export function gtmPageLoadGetArtists(data: any) {
-  if (data) {
-  }
-  return ''
+export function gtmPageLoadGetArtists(artistPages: Array<any>): string {
+  return artistPages.map((artist) => artist.title).toString()
 }

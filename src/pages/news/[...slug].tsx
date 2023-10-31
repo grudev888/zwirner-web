@@ -2,10 +2,12 @@ import {GetStaticProps} from 'next'
 
 import {SEOComponent} from '@/common/components/seo/seo'
 import {NEWS_URL} from '@/common/constants/commonCopies'
+import {NEWS_SECTION, NEWS_SLUG} from '@/common/constants/gtmPageConstants'
 import {ArticleContainer} from '@/components/containers/articles/article'
 import {PreviewPage} from '@/components/containers/previews/pagePreview'
 import {articleBySlug} from '@/sanity/queries/article.queries'
 import {getAllArticlePages, getArticlePageBySlug} from '@/sanity/services/article.service'
+import {getGTMPageLoadData} from '@/sanity/services/gtm/pageLoad.service'
 import {removePrefixSlug} from '@/utils/slug'
 
 interface QuerySlug {
@@ -86,6 +88,11 @@ export const getStaticProps: GetStaticProps<PageProps, Query, PreviewData> = asy
       notFound: true,
     }
   }
+
+  if (!params.slug) params.slug = NEWS_SLUG
+  const dataLayerProps = await getGTMPageLoadData({slug: params.slug.toString()})
+  if (dataLayerProps) dataLayerProps.page_data.site_section = NEWS_SECTION
+
   return {
     props: {
       data: {queryParams, articleData: data},

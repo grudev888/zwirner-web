@@ -8,11 +8,13 @@ import {
 import {useNewsletterFormModal} from '@/components/containers/ctaModalListener/useNewsletterFormModal'
 import {RecaptchaInquireFormModal} from '@/components/forms/recaptchaInquireFormModal'
 import {useHashRoutedInquiryModal} from '@/components/hooks/useHashRoutedInquiryModal'
+import useGtmNewsletterEvent from '@/components/hooks/gtm/useGtmNewsletterEvent'
 import {EVENT_CTA_CLICKED} from '@/events/CTAClickEvent'
 import {CtaActions} from '@/sanity/types'
 
 export const CtaModalListener = () => {
   const inquireModalProps = useHashRoutedInquiryModal(undefined, false)
+  const {gtmNewsletterSubscriptionViewEvent} = useGtmNewsletterEvent()
   const {NewsletterFormModal, openClickHandler: newsletterOpenClickHandler} =
     useNewsletterFormModal()
 
@@ -22,6 +24,13 @@ export const CtaModalListener = () => {
       [CtaActions.INQUIRE]: inquireModalProps.openClickHandler,
     }
     const ctaClickListener = (ctaClickEvent: any) => {
+      const eventObject = {
+        cta_value: ctaClickEvent.detail?.props?.ctaText ?? ctaClickEvent.detail?.ctaType,
+        method: ctaClickEvent.detail?.props?.method,
+      }
+      if (ctaClickEvent.detail?.ctaType === CtaActions.NEWSLETTER) {
+        gtmNewsletterSubscriptionViewEvent(eventObject)
+      }
       ctaTypesToClickHandlers[ctaClickEvent.detail?.ctaType]?.()
     }
 
@@ -34,7 +43,11 @@ export const CtaModalListener = () => {
         window.document.removeEventListener(EVENT_CTA_CLICKED, ctaClickListener)
       }
     }
-  }, [inquireModalProps.openClickHandler, newsletterOpenClickHandler])
+  }, [
+    inquireModalProps.openClickHandler,
+    gtmNewsletterSubscriptionViewEvent,
+    newsletterOpenClickHandler,
+  ])
 
   return (
     <>

@@ -4,6 +4,7 @@ import '@zwirner/design-system/dist/tailwind.css'
 import {DzColumn} from '@zwirner/design-system'
 import {NextPage} from 'next'
 import App, {AppContext, AppInitialProps, AppProps} from 'next/app'
+import {useRouter} from 'next/router'
 import Script from 'next/script'
 import {ReactElement, ReactNode} from 'react'
 import {useEffect} from 'react'
@@ -12,7 +13,7 @@ import {ErrorBoundary} from 'react-error-boundary'
 import {APIProvider} from '@/common/api'
 import DefaultLayout from '@/common/components/layout/Layout'
 import {SEOComponent} from '@/common/components/seo/seo'
-import {GTMScript} from '@/common/constants/gtmConstants'
+import {GTMPageLoadStartedText, GTMScript} from '@/common/constants/gtmConstants'
 import {mono, sans, serif} from '@/common/styles/fonts'
 import {gtmEvent} from '@/common/utils/gtm/gtmEvent'
 import {gtmPageLoadGetArtists} from '@/common/utils/gtm/gtmPageLoadGetArtists'
@@ -56,11 +57,13 @@ const Wrapper = ({Component, pageProps, globalSEO, layoutData}: WrapperProps) =>
 }
 
 function DzApp({Component, pageProps, globalSEO, layoutData}: AppProps & WrapperProps) {
+  const router = useRouter()
   useEffect(() => {
     const gtmData = pageProps.dataLayerProps
     const pageLoadStarted = () => {
       if (gtmData) {
-        gtmData.page_data.artist = gtmPageLoadGetArtists(pageProps)
+        if (pageProps.data?.artistPages)
+          gtmData.page_data.artist = gtmPageLoadGetArtists(pageProps.data.artistPages)
         gtmData.location = document.location.href
         gtmData.page_data.page_hostname = document.location.hostname
         gtmData.page_data.page_path = document.location.pathname
@@ -68,12 +71,21 @@ function DzApp({Component, pageProps, globalSEO, layoutData}: AppProps & Wrapper
         gtmData.page_data.page_query_hash = document.location.hash
         gtmData.page_data.language = document.documentElement.lang
         gtmData.page_data.page_title = document.title
-        return gtmEvent('page_load_started', gtmData)
+        return gtmEvent(GTMPageLoadStartedText.event, gtmData)
       }
     }
     pageLoadStarted()
   }, [pageProps])
 
+  useEffect(() => {
+    const handleRouteChange = () => {
+      window.dataLayer = []
+    }
+    router.events.on('routeChangeStart', handleRouteChange)
+    return () => {
+      router.events.off('routeChangeStart', handleRouteChange)
+    }
+  }, [router.events])
   return (
     <>
       <style jsx global>

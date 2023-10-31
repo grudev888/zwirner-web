@@ -1,4 +1,14 @@
-import {GTMPageLoadCompletedText, GTMPageLoadStartedText} from '@/common/constants/gtmConstants'
+import {
+  GTMDownloadLinkText,
+  GTMExternalLinkText,
+  GTMInquiryFormSubmitText,
+  GTMInquiryFormViewText,
+  GTMPageLoadCompletedText,
+  GTMPageLoadStartedText,
+  GTMUserSubscriptionFormStartedText,
+  GTMUserSubscriptionFormViewText,
+  GTMUserSubscriptionText,
+} from '@/common/constants/gtmConstants'
 
 export const reset = function (this: any) {
   this.reset()
@@ -15,7 +25,7 @@ export const gtmEvent = (event: string, data: DataLayerProps) => {
   }
 
   switch (data.event) {
-    case GTMPageLoadStartedText.event.toString():
+    case GTMPageLoadStartedText.event:
       return window.dataLayer.push(
         {
           ...defaultData,
@@ -25,6 +35,28 @@ export const gtmEvent = (event: string, data: DataLayerProps) => {
         {
           event: GTMPageLoadCompletedText.event,
           detailed_event: GTMPageLoadCompletedText.detailed_event,
+        },
+        reset
+      )
+    case GTMExternalLinkText.event:
+    case GTMDownloadLinkText.event:
+    case GTMInquiryFormViewText.event:
+    case GTMUserSubscriptionFormViewText.event:
+    case GTMUserSubscriptionFormStartedText.event:
+      return window.dataLayer.push(
+        {
+          ...defaultData,
+          event_data: data.event_data,
+        },
+        reset
+      )
+    case GTMInquiryFormSubmitText.event:
+    case GTMUserSubscriptionText.event:
+      return window.dataLayer.push(
+        {
+          ...defaultData,
+          event_data: data.event_data,
+          user_data: data.user_data,
         },
         reset
       )

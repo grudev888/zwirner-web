@@ -6,6 +6,7 @@ import {PressContainer} from '@/components/containers/artists/artistsPress'
 import {PreviewPage} from '@/components/containers/previews/pagePreview'
 import {artistPressPageBySlug} from '@/sanity/queries/artistsPress.queries'
 import {getAllPressPages, getPressDataBySlug} from '@/sanity/services/artistsPress.service'
+import {getGTMPageLoadData} from '@/sanity/services/gtm/pageLoad.service'
 import {removePrefixSlug} from '@/utils/slug'
 
 interface PageProps {
@@ -68,12 +69,15 @@ export const getStaticProps: GetStaticProps<PageProps, Query, PreviewData> = asy
   }
 
   const data = await getPressDataBySlug(queryParams)
+  const dataLayerProps = await getGTMPageLoadData(queryParams)
+  if (dataLayerProps) dataLayerProps.page_data.artist = data[0]?.artist?.fullName || ''
 
   return {
     props: {
       data,
       preview,
       slug: params?.slug || null,
+      dataLayerProps,
       queryParams,
     },
     revalidate: 1,

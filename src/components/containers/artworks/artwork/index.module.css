@@ -51,8 +51,8 @@
 
 .ctaBody {
   @apply bg-white-100
-  pt-[1.25rem]
-  pb-[1.25rem];
+  pb-[1.25rem]
+  pt-[1.25rem];
 }
 
 .ctaButtonsContainer {

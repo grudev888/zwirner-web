@@ -8580,6 +8580,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-visibility-sensor@npm:^5.1.1":
+  version: 5.1.1
+  resolution: "react-visibility-sensor@npm:5.1.1"
+  dependencies:
+    prop-types: ^15.7.2
+  peerDependencies:
+    react: ">=16.0.0"
+    react-dom: ">=16.0.0"
+  checksum: ebce7bc743071930a2dd333a041c4a99aac24d5059c47a52eff25a8d81ab9307fadc87b8a6655ebb3154f5c1ceafcc309ae04ee07a7d5fad2949a6903d15acd5
+  languageName: node
+  linkType: hard
+
 "react-zoom-pan-pinch@npm:^3.1.0":
   version: 3.1.0
   resolution: "react-zoom-pan-pinch@npm:3.1.0"
@@ -10780,6 +10792,7 @@ __metadata:
     react-error-boundary: ^4.0.4
     react-google-recaptcha: ^3.1.0
     react-hook-form: ^7.43.9
+    react-visibility-sensor: ^5.1.1
     styled-components: ^5.3.10
     swr: ^2.1.1
     tailwind-scrollbar: ^2.1.0

@@ -2,12 +2,14 @@ import {GetStaticPropsContext, InferGetStaticPropsType} from 'next'
 import {useRouter} from 'next/router'
 
 import {SEOComponent} from '@/common/components/seo/seo'
+import {FAIRS_SECTION} from '@/common/constants/gtmPageConstants'
 import {ArtworkContainer} from '@/components/containers/artworks/artwork'
 import {FairDetailesContainer} from '@/components/containers/fairs/fairDetailsContainer'
 import {PreviewPage} from '@/components/containers/previews/pagePreview'
 import {fairPageBySlug} from '@/sanity/queries/fairs/fairPageBySlug'
 import {getFairPageBySlug} from '@/sanity/services/fairs/getFairPageBySlug'
 import {getAllFairPageSlugs} from '@/sanity/services/fairs/getFairPageSlugs'
+import {getGTMPageLoadData} from '@/sanity/services/gtm/pageLoad.service'
 
 const SLUG_PREFIX = '/fairs/'
 
@@ -54,9 +56,13 @@ export const getStaticProps = async (
   const data = await getFairPageBySlug(querySlug)
   if (!data) return {notFound: true}
 
+  const dataLayerProps = await getGTMPageLoadData(querySlug)
+  if (dataLayerProps) dataLayerProps.page_data.site_section = FAIRS_SECTION
+
   return {
     props: {
       data,
+      dataLayerProps,
       preview,
       querySlug: false,
     },

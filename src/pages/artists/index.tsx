@@ -1,10 +1,12 @@
 import {GetStaticProps} from 'next'
 
 import {SEOComponent} from '@/common/components/seo/seo'
+import {ARTISTS_SECTION, ARTISTS_SLUG} from '@/common/constants/gtmPageConstants'
 import {ArtistsListContainer} from '@/components/containers/artists/ArtistListContainer'
 import {PreviewPage} from '@/components/containers/previews/pagePreview'
 import {getAllArtistsPages} from '@/sanity/queries/artistPage.queries'
 import {getArtistPageData} from '@/sanity/services/artist.service'
+import {getGTMPageLoadData} from '@/sanity/services/gtm/pageLoad.service'
 
 interface PageProps {
   data: any
@@ -42,7 +44,7 @@ export default function Artists({data, preview}: PageProps) {
 export const getStaticProps: GetStaticProps<PageProps, Query, PreviewData> = async (ctx) => {
   const {preview = false, previewData = {}} = ctx
 
-  const params = {slug: 'artists'}
+  const params = {slug: ARTISTS_SLUG}
 
   if (preview && previewData.token) {
     return {
@@ -56,9 +58,12 @@ export const getStaticProps: GetStaticProps<PageProps, Query, PreviewData> = asy
   }
 
   const artistPage = await getArtistPageData()
+  const dataLayerProps = await getGTMPageLoadData(params)
+  if (dataLayerProps) dataLayerProps.page_data.site_section = ARTISTS_SECTION
   return {
     props: {
       data: artistPage,
+      dataLayerProps,
       preview,
       slug: params?.slug || null,
       token: null,

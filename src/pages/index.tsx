@@ -1,6 +1,7 @@
 import {GetStaticProps} from 'next'
 
 import {SEOComponent} from '@/common/components/seo/seo'
+import {Home_SLUG} from '@/common/constants/gtmPageConstants'
 import {HomeContainer} from '@/components/containers/home'
 import {PreviewPage} from '@/components/containers/previews/pagePreview'
 import {homePage} from '@/sanity/queries/page/homePage'
@@ -40,7 +41,7 @@ export default function Home({data, preview}: PageProps) {
 export const getStaticProps: GetStaticProps<PageProps, Query, PreviewData> = async (ctx) => {
   const {preview = false, previewData = {}} = ctx
 
-  const params = {slug: 'home'}
+  const params = {slug: Home_SLUG}
 
   if (preview && previewData.token) {
     return {

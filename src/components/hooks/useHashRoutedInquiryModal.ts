@@ -2,7 +2,8 @@ import {FORM_MODAL_TYPES, InquireFormContextData, INQUIRY_TYPES} from '@zwirner/
 import {useRouter} from 'next/router'
 import {useEffect, useRef, useState} from 'react'
 
-import {useFireGA4FormDirtyEvent} from '@/components/hooks/useFireGA4FormDirtyEvent'
+import {gtmInquiryFormSubmitEvent} from '@/common/utils/gtm/gtmInquiryFormEvent'
+import {useFireGA4FormDirtyEvent} from '@/components/hooks/gtm/useFireGA4FormDirtyEvent'
 import {useLocation} from '@/forms/api/useLocation'
 import {builder} from '@/sanity/imageBuilder'
 import {createRandomUUID} from '@/sanity/uuid'
@@ -74,6 +75,8 @@ export const useHashRoutedInquiryModal = (
     await recaptchaRef?.current?.executeAsync()
 
     const {artwork, ctaText, inquiryType} = contextData ?? {}
+    gtmInquiryFormSubmitEvent(artwork, formValues?.email)
+
     const inquiryPayload = {
       ...formValues,
       id: createRandomUUID(),

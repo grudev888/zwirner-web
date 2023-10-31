@@ -1,7 +1,7 @@
 .exitPreview {
   @apply fixed
-  right-[0.3125rem]
   bottom-5
+  right-[0.3125rem]
   z-10
   mx-auto
   mt-10
@@ -9,8 +9,8 @@
   border
   border-black-60
   bg-white-100
-  py-[0.8125rem]
   px-[1.5625rem]
+  py-[0.8125rem]
   text-md
   text-black-100
   underline-offset-[0.375rem]

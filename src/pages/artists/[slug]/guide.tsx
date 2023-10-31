@@ -6,6 +6,7 @@ import {ArtistGuideContainer} from '@/components/containers/artists/guide'
 import {PreviewPage} from '@/components/containers/previews/pagePreview'
 import {artistGuidePageBySlug} from '@/sanity/queries/artistsGuide.queries'
 import {getAllGuidePages, getGuideDataBySlug} from '@/sanity/services/artistsGuide.service'
+import {getGTMPageLoadData} from '@/sanity/services/gtm/pageLoad.service'
 import {removePrefixSlug} from '@/utils/slug'
 
 interface PageProps {
@@ -72,11 +73,14 @@ export const getStaticProps: GetStaticProps<PageProps, Query, PreviewData> = asy
   }
 
   const data = await getGuideDataBySlug(queryParams)
+  const dataLayerProps = await getGTMPageLoadData(queryParams)
+  if (dataLayerProps) dataLayerProps.page_data.artist = data[0]?.artist?.fullName
 
   return {
     props: {
       data,
       preview,
+      dataLayerProps,
       slug: params?.slug || null,
       queryParams,
     },

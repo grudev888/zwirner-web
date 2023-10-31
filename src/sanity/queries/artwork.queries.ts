@@ -20,7 +20,8 @@ export const artworkFields = groq`
   dateSelection,
   artworkTypeToFill,
   inventoryId,
-  artworksEdition[]->
+  artworksEdition[]->,
+  "product": shopify->store{ variants[]->{ store {  inventory { isAvailable } } } },
 `
 
 export const allArtworks = groq`

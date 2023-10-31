@@ -10,12 +10,14 @@ import {
   WANT_TO_KNOW_MORE,
 } from '@/common/constants/commonCopies'
 import RecaptchaNode from '@/components/forms/recaptchaNode'
-import {useFireGA4FormDirtyEvent} from '@/components/hooks/useFireGA4FormDirtyEvent'
+import useGtmNewsletterEvent from '@/components/hooks/gtm/useGtmNewsletterEvent'
 import {sendSubscribeRequest} from '@/services/subscribeService'
 
 export const useNewsletterFormModal = (disableBackdrop = false) => {
   const recaptchaRef = useRef<HTMLFormElement>()
-  const onDirty = useFireGA4FormDirtyEvent(FORM_MODAL_TYPES.NEWSLETTER)
+  const {gtmNewsletterSubscriptionStartedEvent, gtmNewsletterSubscribedEvent} =
+    useGtmNewsletterEvent()
+  const onDirty = gtmNewsletterSubscriptionStartedEvent
   const {FormModal, openClickHandler} = useDzFormModal({
     formType: FORM_MODAL_TYPES.NEWSLETTER,
     title: WANT_TO_KNOW_MORE,
@@ -24,6 +26,7 @@ export const useNewsletterFormModal = (disableBackdrop = false) => {
     successSubtitle: EXPECT_THE_LATEST_INFORMATION,
     errorTitle: JOIN_OUR_MAILING_LIST_ERROR,
     onSubmit: async (data: any) => {
+      gtmNewsletterSubscribedEvent(data)
       await recaptchaRef?.current?.executeAsync()
       return sendSubscribeRequest(data, window.location.href)
     },

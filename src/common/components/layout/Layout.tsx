@@ -3,7 +3,9 @@ import Link from 'next/link'
 import {useRouter} from 'next/router'
 import {ReactNode} from 'react'
 
+import {SUBSCRIBE_METHOD} from '@/common/constants/subscribe'
 import CtaModalListener from '@/components/containers/ctaModalListener/ctaModalListener'
+import LinkClickListener from '@/components/containers/LinkClickListener/LinkClickListener'
 import {CTAClickEvent} from '@/events/CTAClickEvent'
 import {CtaActions} from '@/sanity/types'
 
@@ -39,11 +41,14 @@ const Layout = ({children, layoutData}: LayoutProps) => {
         <DzGridColumns className="h-full min-h-screen w-full">{children}</DzGridColumns>
       </main>
       <CtaModalListener />
+      <LinkClickListener />
       <DzFooter
         footerClass={styles.footer}
         data={data}
         newsletterAction={() => {
-          window.document.dispatchEvent(CTAClickEvent(CtaActions.NEWSLETTER))
+          window.document.dispatchEvent(
+            CTAClickEvent(CtaActions.NEWSLETTER, {method: SUBSCRIBE_METHOD.FOOTER})
+          )
         }}
         LinkElement={Link}
       />

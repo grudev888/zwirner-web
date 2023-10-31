@@ -4,6 +4,8 @@ import {BUY_NOW, LEARN_MORE} from '@/common/constants/commonCopies'
 import {CTAClickEvent} from '@/events/CTAClickEvent'
 import {CtaActions} from '@/sanity/types'
 
+import {SUBSCRIBE_METHOD} from '../constants/subscribe'
+
 enum ARTWORK_AVAILABILITY {
   UNABLE = 'unavailable',
   AVAILABLE = 'available',
@@ -71,7 +73,7 @@ export const ctaMapper = ({data, props}: CtaMapperProps) => {
               onClick: () => {
                 handleLink({router, primaryActionIsLink, blank, linkedHref})
                 if (handleClick) handleClick(action)
-                handleCTAClick(action, extraProps)
+                handleCTAClick(action, {...extraProps, ctaText: primaryCTA})
               },
               mode: ButtonModes.DARK,
             },
@@ -97,7 +99,7 @@ export const ctaMapper = ({data, props}: CtaMapperProps) => {
             ctaProps: {
               variant: BUTTON_VARIANTS.TERTIARY,
               onClick: () => {
-                handleCTAClick(secondaryAction)
+                handleCTAClick(secondaryAction, {ctaText: secondaryCTA})
               },
             },
           },
@@ -131,7 +133,7 @@ export const ctaMapperInterstitial = ({data, props}: CtaMapperInterstitial) => {
               if (handleClick) {
                 handleClick(action)
               } else {
-                handleCTAClick(action)
+                handleCTAClick(action, {ctaText: text, method: SUBSCRIBE_METHOD.INTERSTITIAL})
               }
             },
           },
@@ -156,7 +158,7 @@ export const artworkCTAMapper = (ctaData: any, availability: ARTWORK_AVAILABILIT
             text: primaryCTAText,
             ctaProps: {
               onClick: () => {
-                handleCTAClick(CTA)
+                handleCTAClick(CTA, {ctaText: primaryCTAText})
               },
             },
           },
@@ -170,7 +172,7 @@ export const artworkCTAMapper = (ctaData: any, availability: ARTWORK_AVAILABILIT
             ctaProps: {
               variant: BUTTON_VARIANTS.TERTIARY,
               onClick: () => {
-                handleCTAClick(secondaryCTA)
+                handleCTAClick(secondaryCTA, {ctaText: SecondaryCTAText})
               },
             },
           },
