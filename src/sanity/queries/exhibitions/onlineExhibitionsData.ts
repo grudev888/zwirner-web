@@ -32,6 +32,9 @@ export const onlineExhibitionsDataBySlug = groq`
   startDate,
   endDate,
   "artists": artists[]->{${artistContent}},
+  cardViewMedia {
+    ${mediaBuilder}
+  },
   heroMedia {
     ${mediaBuilder}
   },
@@ -70,6 +73,7 @@ export const OnlineExhibitionsDataBySlugSchema = z.object({
   startDate: z.string(),
   endDate: z.string(),
   artists: z.nullable(z.array(ArtistContentSchema)),
+  cardViewMedia: z.nullable(MediaBuilderSchema),
   heroMedia: z.nullable(MediaBuilderSchema),
   ovrIntro: z.nullable(
     z.object({

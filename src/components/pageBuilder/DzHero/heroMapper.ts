@@ -72,8 +72,17 @@ export const contentTypesMapper: any = {
     }
   },
   exhibitionPage: (data: any) => {
-    const {title, subtitle, artists, locations, summary, heroMedia, slug, videoOverride} =
-      data ?? {}
+    const {
+      title,
+      subtitle,
+      artists,
+      locations,
+      summary,
+      heroMedia,
+      cardViewMedia,
+      slug,
+      videoOverride,
+    } = data ?? {}
     const {videoReference} = videoOverride ?? {}
     const [primaryArtist] = artists ?? []
     const {fullName} = primaryArtist ?? {}
@@ -81,10 +90,11 @@ export const contentTypesMapper: any = {
     const {name} = primaryLocation ?? {}
     const {current} = slug ?? {}
     const {status} = mapExhibitionStatus(data)
+    const cardViewMediaSource = Object.keys(cardViewMedia ?? {}).length > 0 ? cardViewMedia : null
     const {media} = dzMediaMapper({
       data: videoReference
         ? {video: videoReference, type: MediaTypes.VIDEO_RECORD}
-        : heroMedia ?? data,
+        : cardViewMediaSource ?? heroMedia ?? data,
       ImgElement: Image,
     })
     const descriptionText = safeText({key: 'description', text: summary})

@@ -42,7 +42,10 @@ export const exhibitionComplexFields = groq`
   "locations": locations[]->,
   heroMedia {
     ${mediaBuilder}
-  }
+  },
+  cardViewMedia {
+    ${mediaBuilder}
+  },
 `
 
 export const ExhibitionComplexFieldsSchema = z.object({
@@ -52,6 +55,7 @@ export const ExhibitionComplexFieldsSchema = z.object({
   collections: z.nullable(z.array(z.any())),
   locations: z.nullable(z.array(z.any())),
   heroMedia: z.nullable(MediaBuilderSchema),
+  cardViewMedia: z.nullable(MediaBuilderSchema),
 })
 
 export const exhibitionPageContent = groq`

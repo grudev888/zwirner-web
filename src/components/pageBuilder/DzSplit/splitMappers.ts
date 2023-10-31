@@ -110,17 +110,19 @@ export const splitMappers: any = {
       },
     }
   },
+
   exhibitionPage: (data: any, props: DzSplitTypeExtendedProps) => {
-    const {artists, title, summary, locations, slug, heroMedia, subtitle} = data ?? {}
+    const {artists, title, summary, locations, slug, heroMedia, cardViewMedia, subtitle} =
+      data ?? {}
     const [primaryArtist] = artists ?? []
     const {fullName} = primaryArtist ?? {}
     const {splitType, reverse, media: mediaOverride} = props ?? {}
     const mediaOverrideSource = Object.keys(mediaOverride ?? {}).length > 0 ? mediaOverride : null
     const heroMediaSource = Object.keys(heroMedia ?? {}).length > 0 ? heroMedia : null
-
+    const cardViewMediaSource = Object.keys(cardViewMedia ?? {}).length > 0 ? cardViewMedia : null
     const {media} = dzMediaMapper({
       override: mediaOverrideSource?.type !== 'Unset' ? mediaOverride : null,
-      data: heroMediaSource?.type !== 'Unset' ? heroMediaSource : data,
+      data: cardViewMediaSource ?? heroMediaSource?.type !== 'Unset' ? heroMediaSource : data,
       ImgElement: Image,
     })
 

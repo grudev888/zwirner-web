@@ -1,6 +1,7 @@
 import {groq} from 'next-sanity'
 import {z} from 'zod'
 
+import {mediaBuilder, MediaBuilderSchema} from '@/sanity/queries/components/builders/mediaBuilder'
 import {
   pageBuilderComponentsData,
   PageBuilderComponentsDataSchema,
@@ -15,6 +16,12 @@ export const exceptionalWorksData = groq`
   slug,
   title,
   hideToggle,
+  cardViewMedia {
+    ${mediaBuilder}
+  },
+  heroMedia {
+    ${mediaBuilder}
+  },
   exceptionalWorkContent[] {
     ${pageBuilderComponentsData}
   },
@@ -34,6 +41,8 @@ export const ExceptionalWorksDataSchema = z.object({
   slug: SanitySlugSchema,
   title: z.string(),
   hideToggle: z.nullable(z.boolean()),
+  cardViewMedia: z.nullable(MediaBuilderSchema),
+  heroMedia: z.nullable(MediaBuilderSchema),
   exceptionalWorkContent: z.nullable(z.array(PageBuilderComponentsDataSchema)),
   seo: PageSEOFieldsSchema,
 })

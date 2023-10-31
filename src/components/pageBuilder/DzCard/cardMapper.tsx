@@ -1,18 +1,15 @@
 import {CARD_TYPES, CardViewport, MEDIA_ASPECT_RATIOS, MEDIA_TYPES} from '@zwirner/design-system'
 import Image from 'next/image'
 
-import {EXHIBITION, EXHIBITIONS_URL, LISTEN_NOW, ORDER_NOW} from '@/common/constants/commonCopies'
+import {LISTEN_NOW, ORDER_NOW} from '@/common/constants/commonCopies'
 import {ctaMapper} from '@/common/utilsMappers/cta.mapper'
-import {
-  dateSelectionArtworkMapper,
-  mapExhibitionStatus,
-  mapSingleDateFormat,
-} from '@/common/utilsMappers/date.mapper'
+import {dateSelectionArtworkMapper, mapSingleDateFormat} from '@/common/utilsMappers/date.mapper'
 import {dzMediaMapper} from '@/common/utilsMappers/image.mapper'
 import {safeText} from '@/common/utilsMappers/safe'
 // TODO: extract utils to a general mapper for availability
 import {parseAvailability} from '@/components/containers/home/utils'
 import {artworkToPayloadAdapter} from '@/components/hooks/useHashRoutedInquiryModal'
+import {exhibitionCommonMapper} from '@/components/pageBuilder/utils/common'
 import {cardContentArticle} from '@/components/pageBuilder/utils/commonMappers'
 import {BookVariation, DzCardExtendedProps} from '@/sanity/types'
 
@@ -200,59 +197,15 @@ export const contentTypesMapper: any = {
     }
   },
   exhibitionPage: (data: any, props: DzCardExtendedProps) => {
-    const {cardSize, isOnGrid, mediaOverride} = props ?? {}
-    const {
-      subtitle,
-      title,
-      heroMedia,
-      locations,
-      summary,
-      slug,
-      eyebrow,
-      isDisabled = false,
-    } = data ?? {}
-    const [primaryLocation] = locations ?? []
-    const {name} = primaryLocation ?? {}
-    const {current} = slug ?? {}
-    const heroMediaSource = Object.keys(heroMedia ?? {}).length > 0 ? heroMedia : null
-    const {media} = dzMediaMapper({
-      override: mediaOverride,
-      data: heroMediaSource ?? data,
-      ImgElement: Image,
-    })
-    const {status} = mapExhibitionStatus(data)
-    const summaryText = safeText({key: 'description', text: summary})
-    const ctasOverrides = ctaMapper({
-      data: props,
-      props: {url: current ?? EXHIBITIONS_URL, hideSecondary: true},
-    })
-    const cardLinkOnGrid = isOnGrid
-      ? {
-          cardLink: {
-            href: current ?? EXHIBITIONS_URL,
-          },
-        }
-      : {}
-    return {
-      type: CARD_TYPES.CONTENT,
-      data: {
-        media,
-        isDisabled,
-        size: cardSize,
-        category: eyebrow ?? EXHIBITION,
-        title: title,
-        subtitle: subtitle,
-        secondaryTitle: name,
-        secondarySubtitle: status,
-        enableZoom: true,
-        cardLink: {
-          href: current ?? EXHIBITIONS_URL,
-        },
-        ...cardLinkOnGrid,
-        ...(summaryText ?? {}),
-        ...(ctasOverrides ?? {}),
-      },
-    }
+    return exhibitionCommonMapper({data, props})
+  },
+  onlineExhibitionPage: (data: any, props: DzCardExtendedProps) => {
+    //TODO adjust mapper for onlineExhibitions when those are linked
+    return exhibitionCommonMapper({data, props})
+  },
+  exceptionalWork: (data: any, props: DzCardExtendedProps) => {
+    //TODO adjust mapper for exceptionalWork when those are linked
+    return exhibitionCommonMapper({data, props})
   },
   location: (data: any, props: DzCardExtendedProps) => {
     const {name, address, hours} = data ?? {}
