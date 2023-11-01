@@ -10,11 +10,12 @@ import {
   TEXT_SIZES,
   TITLE_SIZES,
   TITLE_TYPES,
-  useBreakpoints,
+  useIsSmallWindowSize,
 } from '@zwirner/design-system'
 import cn from 'classnames'
 import {useRef, useState} from 'react'
 
+import {CTA, CTA_TEXT} from '@/common/constants/cart'
 import {DzCard} from '@/components/wrappers/DzCardWrapper'
 import {DzComplexGrid} from '@/components/wrappers/DzComplexGridWrapper'
 import {DzLink} from '@/components/wrappers/DzLinkWrapper'
@@ -50,7 +51,7 @@ export const ArtworkContainer = ({data}: Props) => {
   const firstItemMediaProps = allPhotoGridItems[0]
   const descriptionRef = useRef<HTMLDivElement>(null)
   const detailTextStyles = {normal: 'text-black-60 !text-sm'}
-  const {isSmall} = useBreakpoints()
+  const isSmall = useIsSmallWindowSize()
 
   const onClickPhotoCard = (cardData: any) => {
     if (photoGridImageStyleMap[cardData.id]) {
@@ -83,11 +84,11 @@ export const ArtworkContainer = ({data}: Props) => {
     framedDimensions,
     additionalCaption,
     dateSelection: {year},
-    // TODO: add product information for cart (Ryan)
-    // product,
+    artworkCTA,
+    product,
   } = data
 
-  const {artistName, artistSlug, displayTitle, primaryCta, secondaryCta} = mapArtworkData(data)
+  const {artistName, artistSlug, displayTitle, secondaryCta} = mapArtworkData(data)
   const priceAndCurrency = price ? formatCurrency(currency || 'USD', price) : null
   const isFramedShown = artworkType !== 'sculpture' && (framed == 'Framed' || framed == 'Unframed')
   const isArtworkTitlePortableText = !!displayTitle
@@ -112,19 +113,41 @@ export const ArtworkContainer = ({data}: Props) => {
           {isFramedShown && <DzText text={framed} className={styles.framed} />}
         </div>
         <div className={styles.ctaButtonsContainer}>
-          {primaryCta ? (
-            <DzButton className={cn(styles.btnCTA)} size={BUTTON_SIZES.LARGE}>
-              {primaryCta.text}
+          {!!product && artworkCTA?.CTA === CTA.ECOMM && (
+            <DzButton
+              className={styles.btnCTA}
+              size={BUTTON_SIZES.LARGE}
+              onClick={() => {}}
+              disabled={!product.variants[0].store.inventory.isAvailable}
+            >
+              {!product.variants[0].store.inventory.isAvailable
+                ? CTA_TEXT.SOLD_OUT
+                : artworkCTA?.CTAText || CTA_TEXT.PURCHASE}
             </DzButton>
-          ) : null}
-          {secondaryCta ? (
+          )}
+          {artworkCTA?.CTA === CTA.SOLDOUT && (
+            <DzButton className={styles.btnCTA} size={BUTTON_SIZES.LARGE} disabled>
+              {artworkCTA?.CTAText || CTA_TEXT.SOLD_OUT}
+            </DzButton>
+          )}
+          {artworkCTA?.CTA === CTA.INQUIRE && (
+            <DzButton className={styles.btnCTA} size={BUTTON_SIZES.LARGE}>
+              {artworkCTA?.CTAText || CTA_TEXT.INQUIRE}
+            </DzButton>
+          )}
+          {artworkCTA?.CTA === CTA.CUSTOM && (
+            <DzButton className={styles.btnCTA} size={BUTTON_SIZES.LARGE}>
+              {artworkCTA?.CTAText || CTA_TEXT.CUSTOM}
+            </DzButton>
+          )}
+          {secondaryCta && (
             <DzButton
               className={cn(styles.btnCTA, styles.btnCTASecondary)}
               size={BUTTON_SIZES.LARGE}
             >
               {secondaryCta.text}
             </DzButton>
-          ) : null}
+          )}
         </div>
       </div>
     </div>
