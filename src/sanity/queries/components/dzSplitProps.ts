@@ -33,6 +33,7 @@ export const DzSplitPropsDataSchema = z.object({
   subtitleOverride: z.nullable(z.string()),
   splitType: SplitTypeSchema,
   reverse: z.boolean(),
+  animate: z.boolean().nullish(),
   media: z.nullable(z.any()),
   enableOverrides: z.boolean(),
   primaryCTA: z.nullable(z.any()),

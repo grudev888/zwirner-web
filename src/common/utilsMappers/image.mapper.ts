@@ -16,6 +16,8 @@ interface DzMediaImageMapper {
 interface VideoSrcLinkProps {
   src: string
   extraVideoProps: any
+  posterImage?: any
+  useMobileKey?: boolean
 }
 
 interface DzMediaVideoMapper {
@@ -26,6 +28,19 @@ interface DzMediaVideoMapper {
 }
 
 type DzMediaMapper = DzMediaImageMapper | DzMediaVideoMapper
+
+const getPrivateVimeoId = (urlObject: any) => {
+  const pathname = urlObject?.pathname || ''
+  const pathnameSplit = pathname.split('/')
+
+  // handle unlisted url format like https://vimeo.com/827055816/318fa72e32
+  if (pathnameSplit.length > 2) {
+    return pathnameSplit.slice(1, 3).join('?h=')
+  }
+
+  const videoId = pathnameSplit.pop()
+  return videoId ? `${videoId}${urlObject?.search}` : ''
+}
 
 export const validateImage = (data: any) => {
   const {photos, heroMedia} = data ?? {}
@@ -62,13 +77,14 @@ export const imageMapper = (data: any) => {
 }
 
 const linksFromSource: any = {
-  youtube: ({src, extraVideoProps = {}}: VideoSrcLinkProps) => {
+  youtube: ({src, extraVideoProps = {}, posterImage, useMobileKey}: VideoSrcLinkProps) => {
     const urlObject = src ? new URL(src).searchParams : null
     return {
       videoSourceType: MEDIA_VIDEO_SOURCE_TYPES.YOUTUBE,
-      videoProps: {
+      [useMobileKey ? 'mobileVideoProps' : 'videoProps']: {
         source: {
           type: 'video',
+          posterImage,
           sources: [
             {
               src: urlObject ? urlObject.get('v') : '',
@@ -94,20 +110,22 @@ const linksFromSource: any = {
       },
     }
   },
-  vimeo: ({src, extraVideoProps = {}}: VideoSrcLinkProps) => {
+  vimeo: ({src, extraVideoProps = {}, posterImage, useMobileKey}: VideoSrcLinkProps) => {
     const urlObject = src ? new URL(src) : null
-    const isEmbedded = urlObject ? ['player.vimeo.com'].includes(urlObject?.host) : false
-    const isPublic = urlObject ? ['vimeo.com'].includes(urlObject?.host) : false
-    const publicId = isPublic ? urlObject?.pathname?.replace(/\//, '') : ''
+    const isPrivate =
+      urlObject?.search?.includes('?h=') || (urlObject?.pathname?.split('/')?.length || 0) > 2
+    const publicId = !isPrivate ? urlObject?.pathname?.replace(/\//, '') : ''
+    const privateId = isPrivate ? getPrivateVimeoId(urlObject) : ''
 
     return {
       videoSourceType: MEDIA_VIDEO_SOURCE_TYPES.VIMEO,
-      videoProps: {
+      [useMobileKey ? 'mobileVideoProps' : 'videoProps']: {
         source: {
           type: 'video',
+          posterImage,
           sources: [
             {
-              src: isEmbedded ? src : publicId,
+              src: isPrivate ? privateId : publicId,
               provider: 'vimeo',
             },
           ],
@@ -139,10 +157,11 @@ const linksFromSource: any = {
       },
     }
   },
-  custom: ({src, extraVideoProps}: VideoSrcLinkProps) => {
+  custom: ({src, extraVideoProps, posterImage, useMobileKey}: VideoSrcLinkProps) => {
     return {
       videoSourceType: MEDIA_VIDEO_SOURCE_TYPES.URL,
-      videoProps: {
+      posterImage,
+      [useMobileKey ? 'mobileVideoProps' : 'videoProps']: {
         width: '100%',
         height: '100%',
         autoPlay: 'autoplay',
@@ -164,23 +183,34 @@ const youtubeRegex =
 
 export const getVideoMedia = ({data, options = {}, extraVideoProps = {}}: DzMediaVideoMapper) => {
   const {video, type} = data ?? {}
-  const {url, desktopProviderURL} = video ?? {}
+  const {url, desktopProviderURL, mobileProviderURL, posterImage} = video ?? {}
   const isVideoRecord = type === MediaTypes.VIDEO_RECORD
   const vimeoChecker = new RegExp(vimeoRegex)
   const youtubeChecker = new RegExp(youtubeRegex)
   const youtubeKey = youtubeChecker.test(desktopProviderURL) ? 'youtube' : null
   const vimeoKey = vimeoChecker.test(desktopProviderURL) ? 'vimeo' : null
+  const youtubeMobileKey = youtubeChecker.test(mobileProviderURL) ? 'youtube' : null
+  const vimeoMobileKey = vimeoChecker.test(mobileProviderURL) ? 'vimeo' : null
   const customKey = type === MediaTypes.VIDEO ? 'custom' : ''
   const videoSource = isVideoRecord ? desktopProviderURL : url
-
   const videoProps = linksFromSource[youtubeKey ?? vimeoKey ?? customKey]?.({
     src: videoSource,
+    posterImage,
     extraVideoProps,
   })
+  const mobileVideoProps = mobileProviderURL
+    ? linksFromSource[youtubeMobileKey ?? vimeoMobileKey ?? '']?.({
+        src: mobileProviderURL,
+        posterImage,
+        useMobileKey: true,
+        extraVideoProps,
+      })
+    : {}
 
   return {
     media: {
       type: MEDIA_TYPES.VIDEO,
+      ...mobileVideoProps,
       ...videoProps,
       ...options,
     },
@@ -199,10 +229,9 @@ export const getImageMedia = ({
   extraImgProps = {},
 }: DzMediaImageMapper) => {
   const mediaOverrideSource =
-    override && Object.keys(override).length > 0 && override?.type !== 'Unset' && override.image
+    override && Object.keys(override).length > 0 && override?.type && override?.type !== 'Unset'
       ? override
       : null
-
   const {src, alt, caption} = imageMapper(mediaOverrideSource ?? data)
   return {
     media: {

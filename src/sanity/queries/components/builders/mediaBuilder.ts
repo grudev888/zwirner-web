@@ -18,7 +18,15 @@ export const mediaBuilder = groq`
   },
   type=='Video Record' => {
     type,
-    "video":  videoSelectorReference.videoReference->,
+    "video": videoSelectorReference.videoReference->{
+       desktopProviderURL,
+       mobileProviderURL,
+       "posterImage": posterImage.asset->{url}.url,
+       publishDate,
+       title,
+       category,
+       description,
+    },
     "videoType": videoSelectorReference.type
   },
   type=='Unset' => {

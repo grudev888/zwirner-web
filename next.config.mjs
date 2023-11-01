@@ -14,7 +14,7 @@ const config = {
     styledComponents: true,
   },
   images: {remotePatterns: [{hostname: 'cdn.sanity.io'}]},
-  transpilePackages: ['@zwirner/design-system'],
+  transpilePackages: ['@zwirner/design-system', '@vime/react'],
   webpack: (config) => {
     // This fixes the invalid hook React error which
     // will occur when multiple versions of React is detected when using yarn link
