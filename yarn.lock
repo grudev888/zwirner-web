@@ -2287,9 +2287,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@zwirner/design-system@npm:v0.0.144":
-  version: 0.0.144
-  resolution: "@zwirner/design-system@npm:0.0.144::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40zwirner%2Fdesign-system%2F0.0.144%2Ffb997272e8557bdc67ad92fbb45b67f09b1e100a"
+"@zwirner/design-system@npm:v0.0.145":
+  version: 0.0.145
+  resolution: "@zwirner/design-system@npm:0.0.145::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40zwirner%2Fdesign-system%2F0.0.145%2Fb794ac4367296c9d12da8e7addaca7ab4328e12d"
   dependencies:
     "@headlessui/react": ^1.7.10
     "@heroicons/react": ^2.0.15
@@ -2306,7 +2306,7 @@ __metadata:
   peerDependencies:
     react: ">=16"
     react-dom: ^17.0.1
-  checksum: 70a2672e3f5977c2dbc969e920bc1a6586ca889c5f2a9103ff63178978cdbcbc88edbfe4120715c830b186f1902e77b278e388521ff051b54cf73c1d06af2ee3
+  checksum: c353831d85b8c0784676dd12084102775f8bb254216c330f3f5bb30206374f6d17a11a8ca09269cb9952b59d5d6bfb5bb24ac13fc4c8172bba685029544a6879
   languageName: node
   linkType: hard
 
@@ -10765,7 +10765,7 @@ __metadata:
     "@types/react-google-recaptcha": ^2.1.5
     "@types/styled-components": ^5.1.26
     "@typescript-eslint/eslint-plugin": ^5.59.7
-    "@zwirner/design-system": v0.0.144
+    "@zwirner/design-system": v0.0.145
     autoprefixer: ^10.4.13
     axios: ^1.3.5
     checkly: ^4.1.0
