@@ -13,6 +13,8 @@ import {exhibitionCommonMapper} from '@/components/pageBuilder/utils/common'
 import {cardContentArticle} from '@/components/pageBuilder/utils/commonMappers'
 import {BookVariation, DzCardExtendedProps} from '@/sanity/types'
 
+const ARTWORK_CARD_TITLE_CHAR_LIMIT = 300
+
 export const dzCardOverrides = (props: DzCardExtendedProps) => {
   const {mediaOverride, enableOverrides, isSmall} = props ?? {}
   if (!enableOverrides) return {}
@@ -118,6 +120,8 @@ export const contentTypesMapper: any = {
       _id,
       artists,
       dimensions,
+      displayCustomTitle,
+      displayTitle,
       title,
       dateSelection,
       medium,
@@ -129,7 +133,6 @@ export const contentTypesMapper: any = {
     } = data ?? {}
 
     const {cardSize, additionalInformation, mediaOverride} = props ?? {}
-
     const [mainArtist] = artists ?? []
     const {fullName} = mainArtist ?? {}
     const {current} = slug ?? {}
@@ -152,6 +155,16 @@ export const contentTypesMapper: any = {
       url: current,
       ImgElement: Image,
     })
+    const artworkTitle = (title || '')
+      .slice(0, ARTWORK_CARD_TITLE_CHAR_LIMIT)
+      .concat(title?.length > ARTWORK_CARD_TITLE_CHAR_LIMIT ? '...' : '')
+    const displayTitleText = displayCustomTitle
+      ? safeText({
+          key: 'artworkTitle',
+          text: displayTitle,
+          charLimit: ARTWORK_CARD_TITLE_CHAR_LIMIT,
+        })
+      : null
     const additionalInformationText = safeText({
       key: 'additionalInformation',
       text: additionalInformation,
@@ -175,7 +188,8 @@ export const contentTypesMapper: any = {
         size: cardSize,
         media,
         artistName: fullName,
-        artworkTitle: title,
+        artworkTitle,
+        ...(displayTitleText ?? {}),
         artworkYear: year,
         price,
         framed,
