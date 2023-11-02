@@ -1,6 +1,10 @@
 import {groq} from 'next-sanity'
 
-import {mediaBuilder} from './components/builders/mediaBuilder'
+import {
+  exhibitionComplexFields,
+  exhibitionSimpleFields,
+} from '@/sanity/queries/components/content/exhibitionPageContent'
+
 import {dzInterstitialFields} from './components/dzInterstitialProps'
 import {dzGridFields} from './components/gridMoleculeProps'
 import {pageSEOFields} from './components/seo/pageSEOFields'
@@ -55,7 +59,6 @@ export const exhibitionsLandingData = groq`
       }
     },
     'exhibitions': *[_type == 'exhibitionPage']{
-      _id,
       'secondaryRank': select(
         locations[0]->address.city == "New York" => select(
           locations[0]->address.addressLine match "West 19th Street" => select(
@@ -72,23 +75,8 @@ export const exhibitionsLandingData = groq`
         locations[0]->address.city == "Paris" => 40,
         locations[0]->address.city == "Hong Kong" => 50,
       ),
-      _type,
-      title,
-      slug,
-      subtitle,
-      description,
-      summary,
-      startDate,
-      endDate,
-      locations[]->,
-
-      photos[],
-      "artists": artists[]->,
-      "artworks": artworks[]->,
-      "collections": collections[]->,
-      heroMedia {
-        ${mediaBuilder}
-      }
+      ${exhibitionSimpleFields}
+      ${exhibitionComplexFields}
     } | order(startDate asc, secondaryRank asc)
   }
 `

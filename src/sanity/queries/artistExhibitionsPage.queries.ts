@@ -1,5 +1,10 @@
 import {groq} from 'next-sanity'
 
+import {
+  exhibitionComplexFields,
+  exhibitionSimpleFields,
+} from '@/sanity/queries/components/content/exhibitionPageContent'
+
 import {mediaBuilder} from './components/builders/mediaBuilder'
 import {pageSEOFields} from './components/seo/pageSEOFields'
 
@@ -8,8 +13,8 @@ export const artistExhibitionsPageData = groq`
   slug,
   artist-> {
     'exhibitions': *[_type == "exhibitionPage" && references(^._id)] | order(startDate desc) {
-      ...,
-      locations[]->{name}
+      ${exhibitionSimpleFields}
+      ${exhibitionComplexFields}
     },
     _id,
     fullName,

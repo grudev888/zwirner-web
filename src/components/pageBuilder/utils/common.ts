@@ -25,7 +25,7 @@ export const exhibitionCommonMapper = ({data, props}: any) => {
   const {current} = slug ?? {}
   const heroMediaSource = Object.keys(heroMedia ?? {}).length > 0 ? heroMedia : null
   const cardViewMediaSource = Object.keys(cardViewMedia ?? {}).length > 0 ? cardViewMedia : null
-  const {media} = dzMediaMapper({
+  const {media, hideImage} = dzMediaMapper({
     override: mediaOverride,
     data: cardViewMediaSource ?? heroMediaSource ?? data,
     ImgElement: Image,
@@ -55,9 +55,7 @@ export const exhibitionCommonMapper = ({data, props}: any) => {
       secondaryTitle: name,
       secondarySubtitle: status,
       enableZoom: true,
-      cardLink: {
-        href: current ?? EXHIBITIONS_URL,
-      },
+      hideImage,
       ...cardLinkOnGrid,
       ...(summaryText ?? {}),
       ...(ctasOverrides ?? {}),
