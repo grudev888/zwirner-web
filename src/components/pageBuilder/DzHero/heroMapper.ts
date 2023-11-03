@@ -92,9 +92,10 @@ export const contentTypesMapper: any = {
     const {status} = mapExhibitionStatus(data)
     const cardViewMediaSource = Object.keys(cardViewMedia ?? {}).length > 0 ? cardViewMedia : null
     const {media} = dzMediaMapper({
+      override: cardViewMediaSource,
       data: videoReference
         ? {video: videoReference, type: MediaTypes.VIDEO_RECORD}
-        : cardViewMediaSource ?? heroMedia ?? data,
+        : heroMedia ?? data,
       ImgElement: Image,
     })
     const descriptionText = safeText({key: 'description', text: summary})

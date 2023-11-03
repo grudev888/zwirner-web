@@ -121,8 +121,8 @@ export const splitMappers: any = {
     const heroMediaSource = Object.keys(heroMedia ?? {}).length > 0 ? heroMedia : null
     const cardViewMediaSource = Object.keys(cardViewMedia ?? {}).length > 0 ? cardViewMedia : null
     const {media} = dzMediaMapper({
-      override: mediaOverrideSource?.type !== 'Unset' ? mediaOverride : null,
-      data: cardViewMediaSource ?? heroMediaSource?.type !== 'Unset' ? heroMediaSource : data,
+      override: cardViewMediaSource ?? mediaOverrideSource?.type !== 'Unset' ? mediaOverride : null,
+      data: heroMediaSource?.type !== 'Unset' ? heroMediaSource : data,
       ImgElement: Image,
     })
 

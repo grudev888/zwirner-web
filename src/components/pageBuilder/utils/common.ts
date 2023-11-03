@@ -26,8 +26,8 @@ export const exhibitionCommonMapper = ({data, props}: any) => {
   const heroMediaSource = Object.keys(heroMedia ?? {}).length > 0 ? heroMedia : null
   const cardViewMediaSource = Object.keys(cardViewMedia ?? {}).length > 0 ? cardViewMedia : null
   const {media, hideImage} = dzMediaMapper({
-    override: mediaOverride,
-    data: cardViewMediaSource ?? heroMediaSource ?? data,
+    override: cardViewMediaSource ?? mediaOverride,
+    data: heroMediaSource ?? data,
     ImgElement: Image,
   })
   const {status} = mapExhibitionStatus(data)
