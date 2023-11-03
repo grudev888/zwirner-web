@@ -37,10 +37,10 @@ const Layout = ({children, layoutData}: LayoutProps) => {
         // TODO handle newsletter
         newsletterAction={() => null}
       />
+      <CtaModalListener />
       <main className={styles.mainLayout} aria-label="Main" role="main">
         <DzGridColumns className="h-full min-h-screen w-full">{children}</DzGridColumns>
       </main>
-      <CtaModalListener />
       <LinkClickListener />
       <DzFooter
         footerClass={styles.footer}

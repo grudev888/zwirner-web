@@ -2,8 +2,6 @@ import {
   BUTTON_VARIANTS,
   DzColumn,
   DzTitleMoleculeTypes,
-  FORM_MODAL_TYPES,
-  INQUIRY_TYPES,
   TITLE_SIZES,
   TITLE_TYPES,
 } from '@zwirner/design-system'
@@ -21,24 +19,24 @@ import {
   EXPLORE_BOOKS,
   EXPLORE_GUIDE,
   GUIDE,
-  INQUIRE,
   LATEST_EXHIBITIONS,
-  PLEASE_PROVIDE_YOUR_CONTACT_SHORT,
   SURVEY,
-  TO_LEARN_MORE_ABOUT,
 } from '@/common/constants/commonCopies'
 import {FullWidthFlexCol} from '@/components/containers/layout/FullWidthFlexCol'
-import {RecaptchaInquireFormModal} from '@/components/forms/recaptchaInquireFormModal'
-import {useHashRoutedInquiryModal} from '@/components/hooks/useHashRoutedInquiryModal'
-import PageBuilder, {addCTAToComponent} from '@/components/pageBuilder'
-import {showPageBuilderSection} from '@/components/pageBuilder'
+import {
+  createInquireModalArtistProps,
+  useOpenInquiryDispatch,
+} from '@/components/hooks/useOpenInquiryDispatch'
+import PageBuilder, {addCTAToComponent, showPageBuilderSection} from '@/components/pageBuilder'
 import {showCarouselSection} from '@/components/pageBuilder/DzCarousel/dzCarouselMapper'
 import {showInterstitialSection} from '@/components/pageBuilder/DzInterstitial/interstitialMapper'
 import {showSplitSection} from '@/components/pageBuilder/DzSplit/splitMappers'
 import {showGridSection} from '@/components/pageBuilder/GridMolecule/gridMapper'
 import {DzSectionMenu} from '@/components/wrappers/DzSectionMenuWrapper'
 import {DzTitleMolecule} from '@/components/wrappers/DzTitleMoleculeWrapper'
+import {CTAClickEvent} from '@/events/CTAClickEvent'
 import {PageBuilderComponentsDataSchemaType} from '@/sanity/queries/page/pageCommonQueries/pageBuilderComponentsData'
+import {CtaActions} from '@/sanity/types'
 
 import ArtistHeader from './components/ArtistHeader'
 import {mapBiography} from './mapper'
@@ -69,15 +67,10 @@ export const ArtistDetailContainer = ({data}: ArtistsContainerProps) => {
     selectedPress,
     books,
   } = data ?? {}
-
   const router = useRouter()
+  const inquireModalProps = createInquireModalArtistProps(data.artist)
 
-  const inquireModalProps = useHashRoutedInquiryModal({
-    id: data?.artist?._id,
-    ctaText: 'Inquire',
-    title: data?.artist?.fullName,
-    inquiryType: INQUIRY_TYPES.ARTIST,
-  })
+  useOpenInquiryDispatch(inquireModalProps)
 
   const latestExhibitionMapped = latestExhibitions?.map(
     (item: PageBuilderComponentsDataSchemaType) => {
@@ -95,7 +88,9 @@ export const ArtistDetailContainer = ({data}: ArtistsContainerProps) => {
 
   const biography = mapBiography(data.artist)
 
-  const inquireModalSubtitle = `${TO_LEARN_MORE_ABOUT} ${data.artist?.fullName}, ${PLEASE_PROVIDE_YOUR_CONTACT_SHORT}`
+  const onClickInquire = () => {
+    window.document.dispatchEvent(CTAClickEvent(CtaActions.INQUIRE, inquireModalProps))
+  }
 
   const Guide = useMemo(
     () =>
@@ -125,161 +120,146 @@ export const ArtistDetailContainer = ({data}: ArtistsContainerProps) => {
   )
 
   return (
-    <>
-      <RecaptchaInquireFormModal
-        type={FORM_MODAL_TYPES.INQUIRE}
-        {...inquireModalProps}
-        title={INQUIRE}
-        subtitle={inquireModalSubtitle}
+    <DzColumn span={12}>
+      <DzSectionMenu
+        sections={[
+          {text: 'Survey', id: 'survey', hidden: !showCarouselSection(survey)},
+          {
+            text: 'Available Works',
+            id: 'available-works',
+            hidden: !showPageBuilderSection(availableWorks),
+          },
+          {
+            text: 'Exhibitions',
+            id: 'exhibitions',
+            hidden: !showPageBuilderSection(latestExhibitions),
+          },
+          {text: 'Guide', id: 'guide', hidden: !showCarouselSection(guide)},
+          {text: 'Biography', id: 'biography'},
+          {
+            text: 'Selected Press',
+            id: 'selected-press',
+            hidden: !showGridSection(selectedPress),
+          },
+          {text: 'Books', id: 'books', hidden: !showCarouselSection(books)},
+        ]}
+        cta={{
+          text: 'Inquire',
+          ctaProps: {
+            variant: BUTTON_VARIANTS.TERTIARY,
+            onClick: onClickInquire,
+          },
+        }}
+        prefix=""
+        sticky
+        usePrefix
       />
-      <DzColumn span={12}>
-        <DzSectionMenu
-          sections={[
-            {text: 'Survey', id: 'survey', hidden: !showCarouselSection(survey)},
-            {
-              text: 'Available Works',
-              id: 'available-works',
-              hidden: !showPageBuilderSection(availableWorks),
-            },
-            {
-              text: 'Exhibitions',
-              id: 'exhibitions',
-              hidden: !showPageBuilderSection(latestExhibitions),
-            },
-            {text: 'Guide', id: 'guide', hidden: !showCarouselSection(guide)},
-            {text: 'Biography', id: 'biography'},
-            {
-              text: 'Selected Press',
-              id: 'selected-press',
-              hidden: !showGridSection(selectedPress),
-            },
-            {text: 'Books', id: 'books', hidden: !showCarouselSection(books)},
-          ]}
-          cta={{
-            text: 'Inquire',
-            ctaProps: {
-              variant: BUTTON_VARIANTS.TERTIARY,
-              onClick: () =>
-                inquireModalProps.openClickHandler({
-                  title: data.artist.fullName,
-                  ctaText: 'Inquire',
-                  inquiryType: INQUIRY_TYPES.ARTIST,
-                }),
-            },
-          }}
-          prefix=""
-          sticky
-          usePrefix
-        />
-        <FullWidthFlexCol>
-          <ArtistHeader artist={data.artist} intro={data.artistIntro} />
-          {/* Page Builder SPLIT for featured items*/}
-          {showSplitSection(featured) ? <PageBuilder components={[featured]} /> : null}
-          {/* Page Builder CAROUSEL for survey items*/}
-          {showCarouselSection(survey) ? (
-            <section className="-mx-5" id="survey">
-              <DzTitleMolecule
-                type={DzTitleMoleculeTypes.MOLECULE}
-                data={{
-                  customClass: 'mx-5 mb-5 md:mb-10',
-                  title: SURVEY,
-                  titleProps: {
-                    titleType: TITLE_TYPES.H2,
-                    titleSize: TITLE_SIZES.LG,
-                    subtitleSize: TITLE_SIZES.LG,
-                    subtitleType: TITLE_TYPES.P,
-                  },
-                  linkCTA: {
-                    text: EXPLORE_ALL_ARTWORKS,
-                    url: `${ARTISTS_URL}/${router.query.slug}/survey`,
-                  },
-                }}
-              />
-              <PageBuilder components={[survey]} />
-            </section>
-          ) : null}
-          {showPageBuilderSection(availableWorks) ? (
-            <section id="available-works">
-              <DzTitleMolecule
-                type={DzTitleMoleculeTypes.MOLECULE}
-                data={{
-                  customClass: 'mr-5 mb-5 md:mb-10',
-                  title: AVAILABLE_WORKS,
-                  titleProps: {
-                    titleType: TITLE_TYPES.H2,
-                    titleSize: TITLE_SIZES.LG,
-                    subtitleSize: TITLE_SIZES.LG,
-                    subtitleType: TITLE_TYPES.P,
-                  },
-                  linkCTA: {
-                    text: EXPLORE_AVAILABLE_WORKS,
-                    url: `${ARTISTS_URL}/${router.query.slug}/available-works`,
-                  },
-                }}
-              />
-              <PageBuilder components={availableWorks} innerSection />
-            </section>
-          ) : null}
-          {/* Page Builder CAROUSEL for guide cards*/}
-          {data.moveGuideUp === true && showCarouselSection(guide) ? Guide : null}
-          {/* Page Builder GRID for latest exhibitions*/}
+      <FullWidthFlexCol>
+        <ArtistHeader artist={data.artist} intro={data.artistIntro} />
+        {/* Page Builder SPLIT for featured items*/}
+        {showSplitSection(featured) ? <PageBuilder components={[featured]} /> : null}
+        {/* Page Builder CAROUSEL for survey items*/}
+        {showCarouselSection(survey) ? (
+          <section className="-mx-5" id="survey">
+            <DzTitleMolecule
+              type={DzTitleMoleculeTypes.MOLECULE}
+              data={{
+                customClass: 'mx-5 mb-5 md:mb-10',
+                title: SURVEY,
+                titleProps: {
+                  titleType: TITLE_TYPES.H2,
+                  titleSize: TITLE_SIZES.LG,
+                  subtitleSize: TITLE_SIZES.LG,
+                  subtitleType: TITLE_TYPES.P,
+                },
+                linkCTA: {
+                  text: EXPLORE_ALL_ARTWORKS,
+                  url: `${ARTISTS_URL}/${router.query.slug}/survey`,
+                },
+              }}
+            />
+            <PageBuilder components={[survey]} />
+          </section>
+        ) : null}
+        {showPageBuilderSection(availableWorks) ? (
+          <section id="available-works">
+            <DzTitleMolecule
+              type={DzTitleMoleculeTypes.MOLECULE}
+              data={{
+                customClass: 'mr-5 mb-5 md:mb-10',
+                title: AVAILABLE_WORKS,
+                titleProps: {
+                  titleType: TITLE_TYPES.H2,
+                  titleSize: TITLE_SIZES.LG,
+                  subtitleSize: TITLE_SIZES.LG,
+                  subtitleType: TITLE_TYPES.P,
+                },
+                linkCTA: {
+                  text: EXPLORE_AVAILABLE_WORKS,
+                  url: `${ARTISTS_URL}/${router.query.slug}/available-works`,
+                },
+              }}
+            />
+            <PageBuilder components={availableWorks} innerSection />
+          </section>
+        ) : null}
+        {/* Page Builder CAROUSEL for guide cards*/}
+        {data.moveGuideUp === true && showCarouselSection(guide) ? Guide : null}
+        {/* Page Builder GRID for latest exhibitions*/}
 
-          {showPageBuilderSection(latestExhibitions) ? (
-            <section id="exhibitions">
-              <DzTitleMolecule
-                type={DzTitleMoleculeTypes.MOLECULE}
-                data={{
-                  title: LATEST_EXHIBITIONS,
-                  titleProps: {
-                    titleType: TITLE_TYPES.H2,
-                    titleSize: TITLE_SIZES.LG,
-                    subtitleSize: TITLE_SIZES.LG,
-                    subtitleType: TITLE_TYPES.P,
-                  },
-                  customClass: 'mb-5 md:mb-10',
-                }}
-              />
+        {showPageBuilderSection(latestExhibitions) ? (
+          <section id="exhibitions">
+            <DzTitleMolecule
+              type={DzTitleMoleculeTypes.MOLECULE}
+              data={{
+                title: LATEST_EXHIBITIONS,
+                titleProps: {
+                  titleType: TITLE_TYPES.H2,
+                  titleSize: TITLE_SIZES.LG,
+                  subtitleSize: TITLE_SIZES.LG,
+                  subtitleType: TITLE_TYPES.P,
+                },
+                customClass: 'mb-5 md:mb-10',
+              }}
+            />
 
-              <PageBuilder components={latestExhibitionMapped} />
-            </section>
-          ) : null}
+            <PageBuilder components={latestExhibitionMapped} />
+          </section>
+        ) : null}
 
-          {/* Page Builder CAROUSEL for guide cards*/}
-          {!data.moveGuideUp && showCarouselSection(guide) ? Guide : null}
-          <Biography id="biography" biography={biography} title="Biography" artist={data.artist} />
-          {/* Page Builder GRID for selected press cards*/}
-          {showGridSection(selectedPress) ? (
-            <SelectedPress id="selected-press" selectedPress={selectedPress} />
-          ) : null}
-          {/* Page Builder CAROUSEL for guide cards*/}
-          {showCarouselSection(books) ? (
-            <section className="-mx-5" id="books">
-              <DzTitleMolecule
-                type={DzTitleMoleculeTypes.MOLECULE}
-                data={{
-                  customClass: 'mx-5 mb-5 md:mb-10',
-                  title: DAVID_ZWIRNER_BOOKS,
-                  titleProps: {
-                    titleType: TITLE_TYPES.H2,
-                    titleSize: TITLE_SIZES.LG,
-                    subtitleSize: TITLE_SIZES.LG,
-                    subtitleType: TITLE_TYPES.P,
-                  },
-                  linkCTA: {
-                    text: EXPLORE_BOOKS,
-                    url: `${ARTISTS_URL}/${router.query.slug}/books`,
-                  },
-                }}
-              />
-              <PageBuilder components={[books]} />
-            </section>
-          ) : null}
-          {/* Page Builder INTERSTITIAL for available works*/}
-          {showInterstitialSection(interstitial) ? (
-            <PageBuilder components={[interstitial]} />
-          ) : null}
-        </FullWidthFlexCol>
-      </DzColumn>
-    </>
+        {/* Page Builder CAROUSEL for guide cards*/}
+        {!data.moveGuideUp && showCarouselSection(guide) ? Guide : null}
+        <Biography id="biography" biography={biography} title="Biography" artist={data.artist} />
+        {/* Page Builder GRID for selected press cards*/}
+        {showGridSection(selectedPress) ? (
+          <SelectedPress id="selected-press" selectedPress={selectedPress} />
+        ) : null}
+        {/* Page Builder CAROUSEL for guide cards*/}
+        {showCarouselSection(books) ? (
+          <section className="-mx-5" id="books">
+            <DzTitleMolecule
+              type={DzTitleMoleculeTypes.MOLECULE}
+              data={{
+                customClass: 'mx-5 mb-5 md:mb-10',
+                title: DAVID_ZWIRNER_BOOKS,
+                titleProps: {
+                  titleType: TITLE_TYPES.H2,
+                  titleSize: TITLE_SIZES.LG,
+                  subtitleSize: TITLE_SIZES.LG,
+                  subtitleType: TITLE_TYPES.P,
+                },
+                linkCTA: {
+                  text: EXPLORE_BOOKS,
+                  url: `${ARTISTS_URL}/${router.query.slug}/books`,
+                },
+              }}
+            />
+            <PageBuilder components={[books]} />
+          </section>
+        ) : null}
+        {/* Page Builder INTERSTITIAL for available works*/}
+        {showInterstitialSection(interstitial) ? <PageBuilder components={[interstitial]} /> : null}
+      </FullWidthFlexCol>
+    </DzColumn>
   )
 }

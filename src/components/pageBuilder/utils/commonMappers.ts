@@ -63,19 +63,12 @@ export const cardContentArticle = ({data, props}: any) => {
 
   // RULES FOR ARTICLES
 
+  const isExternalNews = type === ArticleTypes.EXTERNAL
   const isSelectedPressVariant = type === ArticleTypes.PRESS
-  const isPressArticle =
-    (type === ArticleTypes.INTERNAL || type === ArticleTypes.EXTERNAL) &&
-    category === ArticleCategories.PRESS
-  const isEventNews =
-    (type === ArticleTypes.INTERNAL || type === ArticleTypes.EXTERNAL) &&
-    category === ArticleCategories.EVENT
-  const isMuseumHighlight =
-    (type === ArticleTypes.INTERNAL || type === ArticleTypes.EXTERNAL) &&
-    category === ArticleCategories.MUSEUM_HIGHLIGHTS
-  const isMuseumExhibition =
-    (type === ArticleTypes.INTERNAL || type === ArticleTypes.EXTERNAL) &&
-    category === ArticleCategories.MUSEUM_EXHIBITION
+  const isPressArticle = category === ArticleCategories.PRESS
+  const isEventNews = category === ArticleCategories.EVENT
+  const isMuseumHighlight = category === ArticleCategories.MUSEUM_HIGHLIGHTS
+  const isMuseumExhibition = category === ArticleCategories.MUSEUM_EXHIBITION
 
   const isNewsArticle = type === ArticleTypes.INTERNAL || type === ArticleTypes.EXTERNAL
 
@@ -88,7 +81,7 @@ export const cardContentArticle = ({data, props}: any) => {
       title,
       secondaryTitle: subtitle,
       secondarySubtitle: date,
-      cardLink: {href: articleUrl, openNewTab: true},
+      cardLink: {href: articleUrl, openNewTab: false},
       linkCTA: {
         text: READ_MORE,
         url: articleUrl,
@@ -107,9 +100,9 @@ export const cardContentArticle = ({data, props}: any) => {
       linkCTA: {
         text: READ_MORE,
         url: articleUrl,
-        openNewTab: false,
+        openNewTab: isExternalNews,
       },
-      cardLink: {href: articleUrl, openNewTab: true},
+      cardLink: {href: articleUrl, openNewTab: isExternalNews},
       ...(descriptionText ?? {}),
     }
   } else if (isEventNews) {
@@ -123,11 +116,11 @@ export const cardContentArticle = ({data, props}: any) => {
       secondarySubtitle: displayDate ?? date,
       secondaryTitle: name,
       title,
-      cardLink: {href: articleUrl, openNewTab: true},
+      cardLink: {href: articleUrl, openNewTab: isExternalNews},
       linkCTA: {
         text: READ_MORE,
         url: articleUrl,
-        openNewTab: false,
+        openNewTab: isExternalNews,
       },
       ...(descriptionText ?? {}),
     }
@@ -141,11 +134,11 @@ export const cardContentArticle = ({data, props}: any) => {
       subtitle: primarySubtitle ?? primarySubtitleOverride,
       secondaryTitle: subtitle ?? secondaryTitleOverride,
       secondarySubtitle: displayDate ?? date,
-      cardLink: {href: articleUrl, openNewTab: true},
+      cardLink: {href: articleUrl, openNewTab: isExternalNews},
       linkCTA: {
         text: linkText,
         url: articleUrl,
-        linkProps: {openNewTab: true},
+        linkProps: {openNewTab: isExternalNews},
       },
     }
   } else if (isMuseumExhibition) {
@@ -156,12 +149,12 @@ export const cardContentArticle = ({data, props}: any) => {
       hideMedia,
       category,
       subtitle: primarySubtitle ?? primarySubtitleOverride,
-      cardLink: {href: articleUrl, openNewTab: true},
+      cardLink: {href: articleUrl, openNewTab: isExternalNews},
       ...(descriptionText ?? {}),
       linkCTA: {
         text: linkText,
         url: articleUrl,
-        linkProps: {openNewTab: true},
+        linkProps: {openNewTab: isExternalNews},
       },
     }
   } else if (isNewsArticle) {
@@ -174,11 +167,10 @@ export const cardContentArticle = ({data, props}: any) => {
       subtitle: primarySubtitle,
       secondaryTitle: subtitle,
       secondarySubtitle,
-      cardLink: {href: articleUrl, openNewTab: true},
+      cardLink: {href: articleUrl, openNewTab: isExternalNews},
       linkCTA: {
         text: READ_MORE,
         url: articleUrl,
-        openNewTab: false,
       },
       ...(descriptionText ?? {}),
       ...(additionalInformationText ?? {}),

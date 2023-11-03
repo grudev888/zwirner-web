@@ -11,6 +11,7 @@ export const dzInterstitialFields = groq`
     mode,
     cta {
       ...,
+      'downloadDoc': file.asset->url,
       'linkedContent': linkedContent->slug.current
     },
     image {

@@ -10,12 +10,11 @@ import {
   useIsSmallWindowSize,
 } from '@zwirner/design-system'
 import cn from 'classnames'
-import {useRouter} from 'next/router'
 
 import {FullWidthFlexCol} from '@/components/containers/layout/FullWidthFlexCol'
-import {dzInterstitialOverrides} from '@/components/pageBuilder/DzInterstitial/interstitialMapper'
+import PageBuilder from '@/components/pageBuilder'
+import {showInterstitialSection} from '@/components/pageBuilder/DzInterstitial/interstitialMapper'
 import {DzCard} from '@/components/wrappers/DzCardWrapper'
-import {DzInterstitial} from '@/components/wrappers/DzInterstitialWrapper'
 import {DzLink} from '@/components/wrappers/DzLinkWrapper'
 import {DzPortableText} from '@/components/wrappers/DzPortableTextWrapper'
 import {ContainerTitle} from '@/components/wrappers/title/ContainerTitle'
@@ -44,9 +43,7 @@ export const ArticleContainer = ({data}: ArticleContainerProps) => {
     header,
     image,
   } = data ?? {}
-  const router = useRouter()
   const locationProps = locationTitleMapper(location)
-  const interstitialData = dzInterstitialOverrides(interstitial, router)
   const articlesGrid = articlesGridMap(articles)
   const articleDates = displayDate
     ? {
@@ -108,7 +105,7 @@ export const ArticleContainer = ({data}: ArticleContainerProps) => {
           ) : null}
         </article>
 
-        {interstitialData ? <DzInterstitial {...interstitialData} /> : null}
+        {showInterstitialSection(interstitial) ? <PageBuilder components={[interstitial]} /> : null}
 
         {articles ? (
           <section>

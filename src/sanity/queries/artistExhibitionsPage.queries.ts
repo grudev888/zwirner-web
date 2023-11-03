@@ -4,8 +4,8 @@ import {
   exhibitionComplexFields,
   exhibitionSimpleFields,
 } from '@/sanity/queries/components/content/exhibitionPageContent'
+import {dzInterstitialFields} from '@/sanity/queries/components/dzInterstitialProps'
 
-import {mediaBuilder} from './components/builders/mediaBuilder'
 import {pageSEOFields} from './components/seo/pageSEOFields'
 
 export const artistExhibitionsPageData = groq`
@@ -19,11 +19,8 @@ export const artistExhibitionsPageData = groq`
     _id,
     fullName,
   },
-  exhibitionsInterstitialSubpage{
-    ...,
-    image {
-      ${mediaBuilder}
-    }
+  exhibitionsInterstitialSubpage {
+    ${dzInterstitialFields}
   },
   "seo": exhibitionsInterstitialSeo {
     ${pageSEOFields}

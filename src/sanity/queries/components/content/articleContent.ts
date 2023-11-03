@@ -2,6 +2,10 @@ import {groq} from 'next-sanity'
 import {z} from 'zod'
 
 import {artworkContent} from '@/sanity/queries/components/content/artworkContent'
+import {
+  dzInterstitialFields,
+  DzInterstitialPropsDataSchema,
+} from '@/sanity/queries/components/dzInterstitialProps'
 
 import {mediaBuilder} from '../builders/mediaBuilder'
 import {pageSEOFields, PageSEOFieldsSchema} from '../seo/pageSEOFields'
@@ -22,9 +26,11 @@ export const articleContent = groq`
     description,
     header[]{
       _type == 'headerImage' => media {
+        "caption": ^.caption,
         ${mediaBuilder}
       },
       _type == 'artwork' => @-> {
+        _id,
         ${artworkContent}
       },
     },
@@ -39,7 +45,9 @@ export const articleContent = groq`
     body,
     articles[]->,
     slug,
-    interstitial,
+    interstitial {
+      ${dzInterstitialFields}
+    },
     pdf,
   },
 `
@@ -71,6 +79,11 @@ export const ArticleContentSchema = z.object({
   articles: z.nullable(z.array(z.any())),
   // TODO: refine
   slug: z.nullable(SanitySlugSchema),
-  interstitial: z.nullable(z.any()),
+  interstitial: z.nullable(
+    z.object({
+      _type: z.literal('dzInterstitial'),
+      props: DzInterstitialPropsDataSchema,
+    })
+  ),
   pdf: z.nullable(z.any()),
 })

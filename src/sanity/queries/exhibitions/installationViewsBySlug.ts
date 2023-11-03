@@ -14,8 +14,9 @@ export const installationViewsBySlug = groq`
   title,
   subtitle,
   'showChecklist': count(checklist.grid) > 0,
+  'showInstallationViews': count(installationViews.grid) > 0,
   slug,
-  installationViewsInterstitial{
+  installationViewsInterstitial {
     ${dzInterstitialFields}
   },
   installationViews {
@@ -36,6 +37,7 @@ export const InstallationViewsBySlugSchema = z.object({
   title: z.string(),
   subtitle: z.nullable(z.string()),
   showChecklist: z.nullable(z.boolean()),
+  showInstallationViews: z.nullable(z.boolean()),
   slug: SanitySlugSchema,
   installationViewsInterstitial: z.nullable(
     z.object({

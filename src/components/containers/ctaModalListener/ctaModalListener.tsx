@@ -1,37 +1,52 @@
-import {FORM_MODAL_TYPES} from '@zwirner/design-system'
+import {INQUIRY_TYPES} from '@zwirner/design-system'
 import {useEffect} from 'react'
 
-import {
-  INQUIRE,
-  TO_LEARN_MORE_ABOUT_AVAILABLE_WORKS_EXTENDED,
-} from '@/common/constants/commonCopies'
 import {useNewsletterFormModal} from '@/components/containers/ctaModalListener/useNewsletterFormModal'
 import {RecaptchaInquireFormModal} from '@/components/forms/recaptchaInquireFormModal'
-import {useHashRoutedInquiryModal} from '@/components/hooks/useHashRoutedInquiryModal'
 import useGtmNewsletterEvent from '@/components/hooks/gtm/useGtmNewsletterEvent'
+import {useHashRoutedInquiryModal} from '@/components/hooks/useHashRoutedInquiryModal'
+import {createInquireModalGeneralProps} from '@/components/hooks/useOpenInquiryDispatch'
 import {EVENT_CTA_CLICKED} from '@/events/CTAClickEvent'
 import {CtaActions} from '@/sanity/types'
 
 export const CtaModalListener = () => {
-  const inquireModalProps = useHashRoutedInquiryModal(undefined, false)
+  const inquireModalProps = useHashRoutedInquiryModal()
+  const generalInquireProps = createInquireModalGeneralProps()
+  const {openInquireModal} = inquireModalProps
   const {gtmNewsletterSubscriptionViewEvent} = useGtmNewsletterEvent()
   const {NewsletterFormModal, openClickHandler: newsletterOpenClickHandler} =
     useNewsletterFormModal()
 
   useEffect(() => {
-    const ctaTypesToClickHandlers: Record<string, () => void> = {
+    const ctaTypesToClickHandlers: Record<string, (props: any) => void> = {
       [CtaActions.NEWSLETTER]: newsletterOpenClickHandler,
-      [CtaActions.INQUIRE]: inquireModalProps.openClickHandler,
+      [CtaActions.INQUIRE]: (props: any = {}) => {
+        let {inquireModalProps} = props ?? {}
+
+        if (!inquireModalProps) {
+          inquireModalProps = generalInquireProps?.inquireModalProps
+        }
+        const useAnchor = [
+          INQUIRY_TYPES.AVAILABLE_ARTWORKS,
+          INQUIRY_TYPES.ARTIST,
+          INQUIRY_TYPES.EXHIBITION,
+        ].includes(inquireModalProps?.inquiryType)
+
+        openInquireModal({...inquireModalProps, options: {useAnchor}})
+      },
     }
+
     const ctaClickListener = (ctaClickEvent: any) => {
-      const eventObject = {
-        cta_value: ctaClickEvent.detail?.props?.ctaText ?? ctaClickEvent.detail?.ctaType,
-        method: ctaClickEvent.detail?.props?.method,
+      const {detail} = ctaClickEvent ?? {}
+      const {ctaType, props} = detail ?? {}
+
+      if (detail?.ctaType === CtaActions.NEWSLETTER) {
+        gtmNewsletterSubscriptionViewEvent({
+          cta_value: props?.ctaText ?? ctaType,
+          method: props?.method,
+        })
       }
-      if (ctaClickEvent.detail?.ctaType === CtaActions.NEWSLETTER) {
-        gtmNewsletterSubscriptionViewEvent(eventObject)
-      }
-      ctaTypesToClickHandlers[ctaClickEvent.detail?.ctaType]?.()
+      ctaTypesToClickHandlers[ctaType as keyof typeof ctaTypesToClickHandlers]?.(props)
     }
 
     if (typeof window !== undefined) {
@@ -43,21 +58,13 @@ export const CtaModalListener = () => {
         window.document.removeEventListener(EVENT_CTA_CLICKED, ctaClickListener)
       }
     }
-  }, [
-    inquireModalProps.openClickHandler,
-    gtmNewsletterSubscriptionViewEvent,
-    newsletterOpenClickHandler,
-  ])
+    // eslint-disable-next-line
+  }, [])
 
   return (
     <>
       {NewsletterFormModal}
-      <RecaptchaInquireFormModal
-        type={FORM_MODAL_TYPES.INQUIRE}
-        {...inquireModalProps}
-        title={INQUIRE}
-        subtitle={TO_LEARN_MORE_ABOUT_AVAILABLE_WORKS_EXTENDED}
-      />
+      <RecaptchaInquireFormModal {...inquireModalProps} />
     </>
   )
 }

@@ -15,6 +15,7 @@ export const checklistBySlug = groq`
   title,
   subtitle,
   'showChecklist': count(checklist.grid) > 0,
+  'showInstallationViews': count(installationViews.grid) > 0,
   slug,
   checklistInterstitial {
     ${dzInterstitialFields}

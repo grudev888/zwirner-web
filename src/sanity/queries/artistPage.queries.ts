@@ -16,11 +16,21 @@ export const artistPageSlugs = groq`
 
 export const getAllArtistsPages = groq`{
   "pageInfo": *[_type == "artistListing"] {
-    ...
+    title,
+    interstitial {
+      ${dzInterstitialFields}
+    },
+    seo {
+      ${pageSEOFields}
+    },
   },
   "artistPages":*[_type == "artistPage" && defined(slug.current) && artist->.affiliation == true] {
-    ...,
-    artist->
+    slug,
+    artist-> {
+      fullName,
+      lastName,
+      firstName
+    }
   }
 }`
 

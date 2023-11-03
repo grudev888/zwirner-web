@@ -26,6 +26,7 @@ export const exhibitionPageBySlug = groq`
     ${mediaBuilder}
   },
   'showChecklist': count(checklist.grid) > 0,
+  'showInstallationViews': count(installationViews.grid) > 0,
   'checklistPDFURL': checklistPDF.asset->url,
   'pressReleasePDFURL': pdf.asset->url,
   pressRelease {
@@ -60,6 +61,7 @@ export const ExhibitionPageBySlugSchema = z
     exploreContent: z.nullable(z.array(PageBuilderComponentsDataSchema)),
     components: z.nullable(ComponentsByDataScheme),
     showChecklist: z.nullable(z.boolean()),
+    showInstallationViews: z.nullable(z.boolean()),
     checklistPDFURL: z.nullable(z.string().url()),
     pressReleasePDFURL: z.nullable(z.string().url()),
   })

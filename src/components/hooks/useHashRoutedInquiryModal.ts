@@ -1,6 +1,6 @@
 import {FORM_MODAL_TYPES, InquireFormContextData, INQUIRY_TYPES} from '@zwirner/design-system'
 import {useRouter} from 'next/router'
-import {useEffect, useRef, useState} from 'react'
+import {useRef, useState} from 'react'
 
 import {gtmInquiryFormSubmitEvent} from '@/common/utils/gtm/gtmInquiryFormEvent'
 import {useFireGA4FormDirtyEvent} from '@/components/hooks/gtm/useFireGA4FormDirtyEvent'
@@ -43,32 +43,40 @@ export const artworkToPayloadAdapter = (artwork: any, status?: string) => {
   }
 }
 
-export const useHashRoutedInquiryModal = (
-  initialContextData: InquireFormContextData | undefined = undefined,
-  appendAnchorLink = true
-) => {
+export const useHashRoutedInquiryModal = () => {
   const [isOpen, setIsOpen] = useState(false)
-  const {replace, pathname, query, asPath} = useRouter()
+  const {replace} = useRouter()
+  const [title, setTitle] = useState<string>('')
+  const [subtitle, setSubtitle] = useState<string>('')
   const recaptchaRef = useRef<HTMLFormElement>()
   const {data: location} = useLocation()
   const onDirty = useFireGA4FormDirtyEvent(FORM_MODAL_TYPES.INQUIRE)
-  const onClose = () => replace({pathname, query, hash: ''})
-  const [contextData, setContextData] = useState<InquireFormContextData | undefined>(
-    initialContextData
-  )
-  const openClickHandler = (contextData?: InquireFormContextData) => {
-    const hash = contextData?.id
-      ? `${INQUIRE_HASH_KEY}?${ARTWORK_ID_KEY}=${contextData.id}`
-      : 'inquire'
+  const onClose = () => {
+    const {pathname} = window.location
 
-    setContextData((currentData: any) => {
-      return {...currentData, ...(contextData || {})}
-    })
-    if (appendAnchorLink) {
-      replace({pathname, query, hash})
-    } else {
-      setIsOpen(true)
+    setIsOpen(false)
+    replace({pathname, hash: ''}, undefined, {scroll: false})
+  }
+  const [contextData, setContextData] = useState<InquireFormContextData | undefined>()
+
+  // TODO arg types
+  const openInquireModal = ({inquiryType, title, subtitle, contextData, options}: any) => {
+    const {pathname, search, hash} = window.location
+    setContextData(contextData)
+    setTitle(title)
+    setSubtitle(subtitle)
+
+    if (options?.useAnchor && !hash.includes(`#${INQUIRE_HASH_KEY}`)) {
+      replace({
+        pathname,
+        query: search,
+        hash:
+          inquiryType === INQUIRY_TYPES.AVAILABLE_ARTWORKS && contextData?.id
+            ? `${INQUIRE_HASH_KEY}?${ARTWORK_ID_KEY}=${contextData.id}`
+            : 'inquire',
+      })
     }
+    setIsOpen(true)
   }
   const onSubmit = async (formValues: Record<string, any>) => {
     // TODO check result of recaptcha before submitting form
@@ -104,19 +112,14 @@ export const useHashRoutedInquiryModal = (
       })
   }
 
-  useEffect(() => {
-    if (appendAnchorLink) {
-      setIsOpen(asPath.includes(`#${INQUIRE_HASH_KEY}`))
-    }
-  }, [appendAnchorLink, asPath])
-
   return {
-    contextData,
-    openClickHandler,
-    onClose,
     isOpen,
-    onSubmit,
-    recaptchaRef,
+    onClose,
     onDirty,
+    onSubmit,
+    openInquireModal,
+    recaptchaRef,
+    subtitle,
+    title,
   }
 }

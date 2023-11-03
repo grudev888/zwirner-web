@@ -2,6 +2,7 @@ import {groq} from 'next-sanity'
 
 import {articleContent} from '@/sanity/queries/components/content/articleContent'
 import {artworkContent} from '@/sanity/queries/components/content/artworkContent'
+import {dzInterstitialFields} from '@/sanity/queries/components/dzInterstitialProps'
 
 import {mediaBuilder} from './components/builders/mediaBuilder'
 import {
@@ -57,10 +58,7 @@ export const articleBySlug = groq`
 *[_type == "article" && slug.current == $slug][0]{
   ...,
   interstitial {
-    ...,
-    image {
-      ${mediaBuilder}
-    }
+    ${dzInterstitialFields}
   },
   header[]{
     _type == 'headerImage' => media {

@@ -8,7 +8,7 @@ import {dzMediaMapper} from '@/common/utilsMappers/image.mapper'
 import {safeText} from '@/common/utilsMappers/safe'
 // TODO: extract utils to a general mapper for availability
 import {parseAvailability} from '@/components/containers/home/utils'
-import {artworkToPayloadAdapter} from '@/components/hooks/useHashRoutedInquiryModal'
+import {createInquireModalArtworkProps} from '@/components/hooks/useOpenInquiryDispatch'
 import {exhibitionCommonMapper} from '@/components/pageBuilder/utils/common'
 import {cardContentArticle} from '@/components/pageBuilder/utils/commonMappers'
 import {BookVariation, DzCardExtendedProps} from '@/sanity/types'
@@ -117,7 +117,6 @@ export const contentTypesMapper: any = {
   },
   artwork: (data: any, props: DzCardExtendedProps) => {
     const {
-      _id,
       artists,
       dimensions,
       displayCustomTitle,
@@ -141,11 +140,7 @@ export const contentTypesMapper: any = {
       props: {
         url: current,
         hideSecondary: true,
-        ctaActionProps: {
-          id: _id,
-          title: fullName,
-          artwork: data,
-        },
+        ctaActionProps: createInquireModalArtworkProps(data),
       },
     })
 
@@ -200,14 +195,7 @@ export const contentTypesMapper: any = {
         ...(additionalInformationText ?? {}),
         ...(ctasOverrides ?? {}),
       },
-      onViewport: () => {
-        console.info(
-          'TODO ga4 view event for artwork: ',
-          title,
-          ' payload: ',
-          artworkToPayloadAdapter(data)
-        )
-      },
+      onViewport: () => {},
     }
   },
   exhibitionPage: (data: any, props: DzCardExtendedProps) => {

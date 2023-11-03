@@ -13,18 +13,37 @@ import {
   INTERESTED_IN_THIS_EXHIBITION,
 } from '@/common/constants/commonCopies'
 import {FullWidthFlexCol} from '@/components/containers/layout/FullWidthFlexCol'
+import {
+  createInquireModalExhibitionProps,
+  useOpenInquiryDispatch,
+} from '@/components/hooks/useOpenInquiryDispatch'
 import {PageBuilder} from '@/components/pageBuilder'
 import {DzSectionMenu} from '@/components/wrappers/DzSectionMenuWrapper'
 import {ContainerTitle} from '@/components/wrappers/title/ContainerTitle'
-
+import {CTAClickEvent} from '@/events/CTAClickEvent'
+import {CtaActions} from '@/sanity/types'
 interface ExhibitionChecklistContainerProps {
   data: any
 }
 
 export const ExhibitionChecklistContainer: FC<ExhibitionChecklistContainerProps> = ({data}) => {
   const router = useRouter()
-  const {title, slug, showChecklist, subtitle, checklistInterstitial, checklist} = data ?? {}
+  const {
+    title,
+    slug,
+    showChecklist,
+    subtitle,
+    checklistInterstitial,
+    checklist,
+    showInstallationViews,
+  } = data ?? {}
   const currentSlug = slug?.current ?? ''
+
+  const inquireModalProps = createInquireModalExhibitionProps(data)
+  const onClickInquire = () => {
+    window.document.dispatchEvent(CTAClickEvent(CtaActions.INQUIRE, inquireModalProps))
+  }
+  useOpenInquiryDispatch(inquireModalProps)
 
   return (
     <>
@@ -32,19 +51,17 @@ export const ExhibitionChecklistContainer: FC<ExhibitionChecklistContainerProps>
         <DzSectionMenu
           sections={[
             {text: EXPLORE, id: 'explore', url: `${currentSlug}`},
-            ...(showChecklist
-              ? [
-                  {
-                    text: CHECKLIST,
-                    id: 'checklist',
-                    url: `${currentSlug}${EXHIBITION_CHECKLIST_URL}`,
-                  },
-                ]
-              : []),
+            {
+              text: CHECKLIST,
+              id: 'checklist',
+              url: `${currentSlug}${EXHIBITION_CHECKLIST_URL}`,
+              hidden: !showChecklist,
+            },
             {
               text: INSTALLATION_VIEWS,
               id: 'installation-views',
               url: `${currentSlug}${EXHIBITION_INSTALLATION_URL}`,
+              hidden: !showInstallationViews,
             },
           ]}
           linksProps={{
@@ -55,11 +72,14 @@ export const ExhibitionChecklistContainer: FC<ExhibitionChecklistContainerProps>
           useLinks
         />
         <ContainerTitle
-          title={`${title}: ${subtitle} — ${CHECKLIST}`}
+          title={`${title}: ${subtitle ? `${subtitle} — ` : ''}${CHECKLIST}`}
           titleSize={TITLE_SIZES.XL}
           primaryCTA={{
             title: INQUIRE,
             description: INTERESTED_IN_THIS_EXHIBITION,
+            ctaProps: {
+              onClick: onClickInquire,
+            },
           }}
           customCTAContainerProps={{
             span: 6,
