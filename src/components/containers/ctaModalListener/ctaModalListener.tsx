@@ -1,6 +1,7 @@
 import {INQUIRY_TYPES} from '@zwirner/design-system'
 import {useEffect} from 'react'
 
+import {gtmInquiryFormViewEvent} from '@/common/utils/gtm/gtmInquiryFormEvent'
 import {useNewsletterFormModal} from '@/components/containers/ctaModalListener/useNewsletterFormModal'
 import {RecaptchaInquireFormModal} from '@/components/forms/recaptchaInquireFormModal'
 import useGtmNewsletterEvent from '@/components/hooks/gtm/useGtmNewsletterEvent'
@@ -40,11 +41,14 @@ export const CtaModalListener = () => {
       const {detail} = ctaClickEvent ?? {}
       const {ctaType, props} = detail ?? {}
 
-      if (detail?.ctaType === CtaActions.NEWSLETTER) {
+      if (ctaType === CtaActions.NEWSLETTER) {
         gtmNewsletterSubscriptionViewEvent({
           cta_value: props?.ctaText ?? ctaType,
           method: props?.method,
         })
+      }
+      if (ctaType === CtaActions.INQUIRE) {
+        gtmInquiryFormViewEvent(props?.artwork)
       }
       ctaTypesToClickHandlers[ctaType as keyof typeof ctaTypesToClickHandlers]?.(props)
     }

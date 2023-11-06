@@ -1,9 +1,11 @@
-import {FORM_MODAL_TYPES, InquireFormContextData, INQUIRY_TYPES} from '@zwirner/design-system'
+import {InquireFormContextData, INQUIRY_TYPES} from '@zwirner/design-system'
 import {useRouter} from 'next/router'
 import {useRef, useState} from 'react'
 
-import {gtmInquiryFormSubmitEvent} from '@/common/utils/gtm/gtmInquiryFormEvent'
-import {useFireGA4FormDirtyEvent} from '@/components/hooks/gtm/useFireGA4FormDirtyEvent'
+import {
+  gtmInquiryFormStartedEvent,
+  gtmInquiryFormSubmitEvent,
+} from '@/common/utils/gtm/gtmInquiryFormEvent'
 import {useLocation} from '@/forms/api/useLocation'
 import {builder} from '@/sanity/imageBuilder'
 import {createRandomUUID} from '@/sanity/uuid'
@@ -50,7 +52,6 @@ export const useHashRoutedInquiryModal = () => {
   const [subtitle, setSubtitle] = useState<string>('')
   const recaptchaRef = useRef<HTMLFormElement>()
   const {data: location} = useLocation()
-  const onDirty = useFireGA4FormDirtyEvent(FORM_MODAL_TYPES.INQUIRE)
   const onClose = () => {
     const {pathname} = window.location
 
@@ -58,7 +59,7 @@ export const useHashRoutedInquiryModal = () => {
     replace({pathname, hash: ''}, undefined, {scroll: false})
   }
   const [contextData, setContextData] = useState<InquireFormContextData | undefined>()
-
+  const {artwork, ctaText, inquiryType} = contextData ?? {}
   // TODO arg types
   const openInquireModal = ({inquiryType, title, subtitle, contextData, options}: any) => {
     const {pathname, search, hash} = window.location
@@ -78,11 +79,11 @@ export const useHashRoutedInquiryModal = () => {
     }
     setIsOpen(true)
   }
+  const onDirty = () => gtmInquiryFormStartedEvent(artwork)
   const onSubmit = async (formValues: Record<string, any>) => {
     // TODO check result of recaptcha before submitting form
     await recaptchaRef?.current?.executeAsync()
 
-    const {artwork, ctaText, inquiryType} = contextData ?? {}
     gtmInquiryFormSubmitEvent(artwork, formValues?.email)
 
     const inquiryPayload = {

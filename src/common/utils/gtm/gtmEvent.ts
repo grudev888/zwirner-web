@@ -1,6 +1,7 @@
 import {
   GTMDownloadLinkText,
   GTMExternalLinkText,
+  GTMInquiryFormStartText,
   GTMInquiryFormSubmitText,
   GTMInquiryFormViewText,
   GTMPageLoadCompletedText,
@@ -41,6 +42,7 @@ export const gtmEvent = (event: string, data: DataLayerProps) => {
     case GTMExternalLinkText.event:
     case GTMDownloadLinkText.event:
     case GTMInquiryFormViewText.event:
+    case GTMInquiryFormStartText.event:
     case GTMUserSubscriptionFormViewText.event:
     case GTMUserSubscriptionFormStartedText.event:
       return window.dataLayer.push(

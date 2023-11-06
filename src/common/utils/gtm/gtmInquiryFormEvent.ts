@@ -1,4 +1,8 @@
-import {GTMInquiryFormSubmitText, GTMInquiryFormViewText} from '@/common/constants/gtmConstants'
+import {
+  GTMInquiryFormStartText,
+  GTMInquiryFormSubmitText,
+  GTMInquiryFormViewText,
+} from '@/common/constants/gtmConstants'
 import {gtmEvent} from '@/common/utils/gtm/gtmEvent'
 
 export const INQUIRY_FORM_EVENT_NAME = 'Inquiry Form'
@@ -29,6 +33,13 @@ const mapEventData = (artwork: any) => ({
 export const gtmInquiryFormViewEvent = (artwork: any) => {
   gtmEvent(GTMInquiryFormViewText.event, {
     ...GTMInquiryFormViewText,
+    event_data: mapEventData(artwork),
+  })
+}
+
+export const gtmInquiryFormStartedEvent = (artwork: any) => {
+  gtmEvent(GTMInquiryFormStartText.event, {
+    ...GTMInquiryFormStartText,
     event_data: mapEventData(artwork),
   })
 }
