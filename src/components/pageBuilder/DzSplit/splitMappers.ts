@@ -18,8 +18,8 @@ export const showSplitSection = (data: PageBuilderComponentsDataSchemaType) => {
 }
 
 export const dzSplitOverrides = (props: DzSplitTypeExtendedProps) => {
-  const {media: mediaOverride, titleOverride, splitType, reverse, subtitleOverride, router} = props
-  const ctas = ctaMapper({data: props, props: {linkAsButton: true, router}})
+  const {media: mediaOverride, titleOverride, splitType, reverse, subtitleOverride} = props
+  const ctas = ctaMapper({data: props, props: {linkAsButton: true}})
 
   const {media} = dzMediaMapper({
     override: mediaOverride,

@@ -61,6 +61,7 @@ export enum CtaActions {
   ECOMM = 'ecomm',
   CUSTOM = 'custom',
   NONE = 'none',
+  SOLD_OUT = 'soldout',
   NEWSLETTER = 'Newsletter',
   LINK = 'Link',
   DOWNLOAD_PDF = 'Download PDF',
@@ -134,14 +135,9 @@ export type JSONLDSchema = {
   manualSchema?: any
 }
 
-type externalLinkType = {
+export type linkSchemaType = {
   href: string
   blank: boolean
-}
-
-export type linkSchemaType = {
-  externalLink?: externalLinkType
-  internalLink?: string
 }
 
 export enum ExhibitionPageStatus {

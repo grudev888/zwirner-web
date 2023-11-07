@@ -1,6 +1,5 @@
 import {ButtonModes, MEDIA_TYPES} from '@zwirner/design-system'
 import Image from 'next/image'
-import {NextRouter} from 'next/router'
 
 import {ctaMapperInterstitial} from '@/common/utilsMappers/cta.mapper'
 import {dzMediaMapper} from '@/common/utilsMappers/image.mapper'
@@ -19,11 +18,11 @@ export const showInterstitialSection = (data: PageBuilderComponentsDataSchemaTyp
   return hasContentToShow || hasCTAText
 }
 
-export const dzInterstitialOverrides = (props: DzInterstitialTypeProps, router?: NextRouter) => {
+export const dzInterstitialOverrides = (props: DzInterstitialTypeProps) => {
   if (!props) return null
   const {title, subtitle, eyebrow, mode, cta, image} = props ?? {}
   const {media, hideMedia} = dzMediaMapper({data: image, ImgElement: Image})
-  const ctasOverrides = ctaMapperInterstitial({data: cta, props: {url: '', router}})
+  const ctasOverrides = ctaMapperInterstitial({data: cta, props: {url: ''}})
   const categoryText = safeText({key: 'category', text: eyebrow})
   return {
     data: {

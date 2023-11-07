@@ -1,4 +1,5 @@
 import {BUTTON_VARIANTS, ButtonModes} from '@zwirner/design-system'
+import Router from 'next/router'
 
 import {BUY_NOW, LEARN_MORE} from '@/common/constants/commonCopies'
 import {CTAClickEvent} from '@/events/CTAClickEvent'
@@ -32,30 +33,38 @@ const handleCTAClick = (action?: CtaActions, extraProps?: any) => {
 const externalFlags = ['www.', 'https://', '.com']
 const internalFlags = ['.davidzwirner.com', '.zwirner.dev', '.zwirner.tech']
 
-const handleLink = ({router, linkedHref, action, blank, downloadDoc}: any) => {
+const handleLink = ({linkedHref, action, blank, downloadDoc}: any) => {
   const linkInternalContent = action === CtaActions.LINK_CONTENT
-  const linkCustomUrl = action === CtaActions.LINK
+  const linkCustomUrl = action === CtaActions.LINK || action === CtaActions.CUSTOM
   const downloadPdf = action === CtaActions.DOWNLOAD_PDF
 
-  if (![CtaActions.LINK_CONTENT, CtaActions.LINK, CtaActions.DOWNLOAD_PDF].includes(action)) return
+  if (
+    ![
+      CtaActions.LINK_CONTENT,
+      CtaActions.LINK,
+      CtaActions.DOWNLOAD_PDF,
+      CtaActions.CUSTOM,
+    ].includes(action)
+  )
+    return
 
   if ((linkCustomUrl && blank) || downloadPdf) {
     return window.open(downloadPdf ? downloadDoc : linkedHref, '_blank')
   }
 
-  if (!router || !linkedHref) return
+  if (!Router || !linkedHref) return
 
   if (linkInternalContent) {
-    return router.push(linkedHref)
+    return Router.push(linkedHref)
   }
 
   if (
     externalFlags.some((e) => linkedHref.includes(e)) &&
     !internalFlags.some((e) => linkedHref.includes(e))
   ) {
-    return router.replace(linkedHref)
+    return Router.replace(linkedHref)
   }
-  return router.push(linkedHref)
+  return Router.push(linkedHref)
 }
 
 export const ctaMapper = ({data, props}: CtaMapperProps) => {
@@ -63,7 +72,8 @@ export const ctaMapper = ({data, props}: CtaMapperProps) => {
   const {action, link, text, handleClick, downloadDoc} = primaryCTA ?? {}
   // TODO unify CTA inside the studio
   const {blank, href} = (link as any) ?? {}
-  const {action: secondaryAction, text: secondaryText} = secondaryCTA ?? {}
+  const {action: secondaryAction, text: secondaryText, link: secondaryLink} = secondaryCTA ?? {}
+  const {blank: secondaryBlank, href: secondaryHref} = (secondaryLink as any) ?? {}
   const primaryActionIsLink = action === CtaActions.LINK_CONTENT || action === CtaActions.LINK
 
   const {
@@ -72,7 +82,6 @@ export const ctaMapper = ({data, props}: CtaMapperProps) => {
     defaultLinkText,
     ctaActionProps: extraProps,
     linkAsButton,
-    router,
   } = props ?? {}
 
   const linkedHref = action === CtaActions.LINK_CONTENT ? url : href
@@ -84,12 +93,13 @@ export const ctaMapper = ({data, props}: CtaMapperProps) => {
             text: text,
             ctaProps: {
               onClick: () => {
-                handleLink({router, action, blank, linkedHref, downloadDoc})
+                handleLink({action, blank, linkedHref, downloadDoc})
                 if (handleClick) {
                   handleClick(action)
                 }
                 handleCTAClick(action, extraProps)
               },
+              disabled: action === CtaActions.SOLD_OUT,
               mode: ButtonModes.DARK,
             },
           },
@@ -114,6 +124,11 @@ export const ctaMapper = ({data, props}: CtaMapperProps) => {
             ctaProps: {
               variant: BUTTON_VARIANTS.TERTIARY,
               onClick: () => {
+                handleLink({
+                  action: secondaryAction,
+                  blank: secondaryBlank,
+                  linkedHref: secondaryHref,
+                })
                 handleCTAClick(secondaryAction, {ctaText: secondaryCTA})
               },
             },
@@ -128,10 +143,9 @@ export const ctaMapper = ({data, props}: CtaMapperProps) => {
 }
 
 // TODO unify ctas everywhere
-export const ctaMapperInterstitial = ({data, props}: CtaMapperInterstitial) => {
+export const ctaMapperInterstitial = ({data}: CtaMapperInterstitial) => {
   const {action, text, handleClick, linkedContent, link, downloadDoc} = data ?? {}
   // TODO unify CTA inside the studio
-  const {router} = props ?? {}
   const {blank, href} = (link as any) ?? {}
   const linkedHref = action === CtaActions.LINK_CONTENT ? linkedContent : href
 
@@ -142,7 +156,6 @@ export const ctaMapperInterstitial = ({data, props}: CtaMapperInterstitial) => {
           ctaProps: {
             onClick: () => {
               handleLink({
-                router,
                 action,
                 downloadDoc,
                 blank,

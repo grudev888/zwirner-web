@@ -1,5 +1,3 @@
-import {useRouter} from 'next/router'
-
 import {DzInterstitial as DzInterstitialMolecule} from '@/components/wrappers/DzInterstitialWrapper'
 import {DzInterstitialTypeProps} from '@/sanity/types'
 
@@ -14,10 +12,9 @@ export const DzInterstitial = ({
   data,
   componentProps,
 }: DzInterstitialProps & {notContentDependant: boolean}) => {
-  const router = useRouter()
   const {_type} = data ?? {}
   const mappedData = (interstitialMap?.[_type] ?? ((a: any) => ({data: a})))(data, componentProps)
-  const overrideData = componentProps ? dzInterstitialOverrides(componentProps, router) : {}
+  const overrideData = componentProps ? dzInterstitialOverrides(componentProps) : {}
 
   return <DzInterstitialMolecule {...{...mappedData, ...overrideData}} />
 }
