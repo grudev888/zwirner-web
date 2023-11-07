@@ -1,17 +1,5 @@
 import {client} from '@/sanity/client'
-import {
-  articleBySlug,
-  articlePagesSlugs,
-  pressBySlug,
-  pressPagesSlugs,
-} from '@/sanity/queries/article.queries'
-
-export async function getAllArticlePages(): Promise<any[]> {
-  if (client) {
-    return (await client.fetch(articlePagesSlugs)) || []
-  }
-  return []
-}
+import {articleBySlug, pressBySlug, pressPagesSlugs} from '@/sanity/queries/article.queries'
 
 export async function getArticlePageBySlug(params: any): Promise<any[]> {
   if (client) {

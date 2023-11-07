@@ -62,7 +62,9 @@ export const getStaticProps = async (ctx: GetStaticPropsContext) => {
 
 export const getStaticPaths = async () => {
   const paths = await getAllArtworkSlugs()
-  const filteredPaths = paths.filter((item: any) => item.includes(SLUG_PREFIX))
+  const filteredPaths = paths
+    .filter(({slug}) => slug.includes(SLUG_PREFIX))
+    .map((item) => item.slug)
   return {
     paths: filteredPaths,
     fallback: true,

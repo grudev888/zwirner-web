@@ -1,38 +1,24 @@
 import {DzColumn} from '@zwirner/design-system'
-import {GetStaticProps} from 'next'
+import {GetStaticPropsContext} from 'next'
 import React from 'react'
 
 import {SUBSCRIBE_SECTION, SUBSCRIBE_SLUG} from '@/common/constants/gtmPageConstants'
 import {useNewsletterFormModal} from '@/components/containers/ctaModalListener/useNewsletterFormModal'
 import {getGTMPageLoadData} from '@/sanity/services/gtm/pageLoad.service'
 
-import styles from './subscribePage.module.css'
-
-interface PageProps {
-  data: any
-  preview: boolean
-  slug: string | null
-  token: string | null
-}
-
-interface Query {
-  [key: string]: string
-}
-
-interface PreviewData {
-  token?: string
-}
 export const SubscribePage = () => {
   const {NewsletterFormModal} = useNewsletterFormModal(true)
 
   return (
-    <DzColumn span={12} className={styles.fullHeightContent}>
+    <DzColumn span={12} className="min-h-[calc(100vh-60px-90px)]">
       {NewsletterFormModal}
     </DzColumn>
   )
 }
 
-export const getStaticProps: GetStaticProps<PageProps, Query, PreviewData> = async (ctx) => {
+export const getStaticProps = async (
+  ctx: GetStaticPropsContext & {previewData?: {token?: string}}
+) => {
   const {preview = false, previewData = {}} = ctx
 
   const params = {slug: SUBSCRIBE_SLUG}
@@ -42,7 +28,6 @@ export const getStaticProps: GetStaticProps<PageProps, Query, PreviewData> = asy
       props: {
         data: null,
         preview,
-        slug: params?.slug || null,
         token: previewData.token,
       },
     }
@@ -54,8 +39,7 @@ export const getStaticProps: GetStaticProps<PageProps, Query, PreviewData> = asy
     props: {
       data: {},
       dataLayerProps,
-      preview,
-      slug: params?.slug || null,
+      preview: false,
       token: null,
     },
   }

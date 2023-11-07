@@ -9,10 +9,6 @@ import {pageBuilderComponentsData} from '@/sanity/queries/page/pageCommonQueries
 import {mediaBuilder} from './components/builders/mediaBuilder'
 import {componentTypesData} from './components/componentTypesData'
 import {pageSEOFields} from './components/seo/pageSEOFields'
-export const artistPageSlugs = groq`
-*[_type == "artistPage" && defined(slug.current)][]{
-  "params": { "slug": slug.current }
-}`
 
 export const getAllArtistsPages = groq`{
   "pageInfo": *[_type == "artistListing"] {

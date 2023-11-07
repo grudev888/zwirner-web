@@ -6,7 +6,8 @@ import {NEWS_SECTION, NEWS_SLUG} from '@/common/constants/gtmPageConstants'
 import {ArticleContainer} from '@/components/containers/articles/article'
 import {PreviewPage} from '@/components/containers/previews/pagePreview'
 import {articleBySlug} from '@/sanity/queries/article.queries'
-import {getAllArticlePages, getArticlePageBySlug} from '@/sanity/services/article.service'
+import {getArticlePageBySlug} from '@/sanity/services/article.service'
+import {getAllArticlePagesSlugs} from '@/sanity/services/articles/getAllArticlePagesSlugs'
 import {getGTMPageLoadData} from '@/sanity/services/gtm/pageLoad.service'
 import {removePrefixSlug} from '@/utils/slug'
 
@@ -58,10 +59,10 @@ export default function Article({data, preview}: PageProps) {
 }
 
 export const getStaticPaths = async () => {
-  const paths = await getAllArticlePages()
+  const paths = await getAllArticlePagesSlugs()
   return {
-    paths: paths.map((item: any) => ({
-      params: {slug: removePrefixSlug(item.params.slug[0], '/news/').split('/')},
+    paths: paths.map((item) => ({
+      params: {slug: removePrefixSlug(item.params.slug, '/news/').split('/')},
     })),
     fallback: true,
   }
