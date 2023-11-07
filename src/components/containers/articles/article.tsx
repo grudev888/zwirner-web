@@ -88,7 +88,7 @@ export const ArticleContainer = ({data}: ArticleContainerProps) => {
             <DzPortableText
               portableProps={{value: body}}
               customStyles={{
-                normal: cn(styles.articleXSpacing ?? '', styles.paragraphBottomMargin ?? ''),
+                normal: cn(styles.articleXSpacing),
               }}
               builder={builder}
             />
