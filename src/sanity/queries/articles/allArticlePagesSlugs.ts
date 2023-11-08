@@ -3,7 +3,7 @@ import {z} from 'zod'
 
 // Fetch all pages with body content available and slug. retrieve the url
 export const allArticlePagesSlugs = groq`
-*[_type == "article" && defined(slug.current) && defined(body)][]{
+*[_type == "article" && defined(slug.current) && defined(body)]{
   "params": { "slug": slug.current }
 }`
 

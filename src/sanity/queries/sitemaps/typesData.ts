@@ -4,7 +4,6 @@ export const SitemapResSchema = z.array(
   z.object({
     params: z.object({
       slug: z.string(),
-      showInSitemap: z.boolean(),
       lastmod: z.string(),
     }),
   })

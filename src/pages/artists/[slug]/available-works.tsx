@@ -8,7 +8,7 @@ import PreviewPage from '@/components/containers/previews/pagePreview'
 import type {SharedPageProps} from '@/pages/_app'
 import {getClient, readToken} from '@/sanity/client'
 import {availableArtworksDataByArtistSlug} from '@/sanity/queries/availableArtworks.queries'
-import {getAllArtistPageSlugs} from '@/sanity/services/artists/getAllArtistPageSlugs'
+import {getAllAvailableWorksPageSlugs} from '@/sanity/services/artists/getAllAvailableWorksPageSlugs'
 import {getAvailableArtworksDataByArtistSlug} from '@/sanity/services/availableArtworks.service'
 import {getGTMPageLoadData} from '@/sanity/services/gtm/pageLoad.service'
 import {removePrefixSlug} from '@/utils/slug'
@@ -38,9 +38,9 @@ export default function AvailableWorksPage({data, draftMode, queryParams, token}
 }
 
 export const getStaticPaths = async () => {
-  const paths = await getAllArtistPageSlugs()
+  const paths = await getAllAvailableWorksPageSlugs()
   return {
-    paths: paths.map((item: any) => ({
+    paths: paths.map((item) => ({
       params: {slug: removePrefixSlug(item.params.slug, '/artists/')},
     })),
     fallback: true,

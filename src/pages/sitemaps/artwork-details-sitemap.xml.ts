@@ -24,9 +24,7 @@ export async function getServerSideProps({res}: GetServerSidePropsContext) {
   // We make an API call to gather the URLs for our site
   // artwork details
   const artworks = await getAllArtworkSlugsSitemap()
-  const artworksDetailsList = artworks.filter(
-    (item) => item.params.slug.includes('/artworks/') && item.params.showInSitemap
-  )
+  const artworksDetailsList = artworks.filter((item) => item.params.slug.includes('/artworks/'))
   // We generate the XML sitemap with data
   const artworksXMLUrls = generateXMLUrls(artworksDetailsList)
 

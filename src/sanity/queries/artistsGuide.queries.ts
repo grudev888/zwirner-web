@@ -20,8 +20,3 @@ export const artistGuidePageBySlug = groq`
     ${pageSEOFields}
   },
 }`
-
-export const allGuidePageSlugs = groq`
-*[_type == "artistPage" && defined(slug.current) && defined(guideSubpage.title)][]{
-  "params": { "slug": slug.current }
-}`

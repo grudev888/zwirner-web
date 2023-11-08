@@ -16,6 +16,7 @@ import cn from 'classnames'
 import {useRef, useState} from 'react'
 
 import {CTA, CTA_TEXT} from '@/common/constants/cart'
+import {ARTWORK_BG_COLORS_TO_TW_VALUES} from '@/components/pageBuilder/DzCard/cardMapper'
 import {DzCard} from '@/components/wrappers/DzCardWrapper'
 import {DzComplexGrid} from '@/components/wrappers/DzComplexGridWrapper'
 import {DzLink} from '@/components/wrappers/DzLinkWrapper'
@@ -26,7 +27,6 @@ import {formatCurrency} from '@/utils/currency/formatCurrency'
 
 import styles from './index.module.css'
 import {getImageDimensions, mapArtworkData, photosGrid} from './mapper'
-import {ARTWORK_BG_COLORS_TO_TW_VALUES} from '@/components/pageBuilder/DzCard/cardMapper'
 
 type Props = {
   data: ArtworkDataType

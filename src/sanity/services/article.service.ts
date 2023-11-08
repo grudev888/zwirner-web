@@ -1,25 +1,11 @@
 import {SanityClient} from 'next-sanity'
 
-import {client} from '@/sanity/client'
-import {articleBySlug, pressBySlug, pressPagesSlugs} from '@/sanity/queries/article.queries'
+import {articleBySlug} from '@/sanity/queries/article.queries'
 
 export async function getArticlePageBySlug(client: SanityClient, params: any): Promise<any[]> {
   if (client) {
     return await client.fetch(articleBySlug, params)
   }
-  return []
-}
 
-export async function getAllPressPages(): Promise<any[]> {
-  if (client) {
-    return (await client.fetch(pressPagesSlugs)) || []
-  }
-  return []
-}
-
-export async function getPressPageBySlug(params: any): Promise<any[]> {
-  if (client) {
-    return await client.fetch(pressBySlug, params)
-  }
   return []
 }

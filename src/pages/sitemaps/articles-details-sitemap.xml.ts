@@ -1,6 +1,6 @@
 import {type GetServerSidePropsContext} from 'next/types'
 
-import {getAllArticlePagesSlugsSitemap} from '@/sanity/services/sitemaps/getAllArticlePagesSlugsSitemap'
+import {getAllArticlePageSlugsSitemap} from '@/sanity/services/sitemaps/getAllArticlePageSlugsSitemap'
 import {generateXMLUrls} from '@/utils/string/generateXMLUrls'
 
 /*
@@ -23,10 +23,8 @@ function SiteMap() {
 export async function getServerSideProps({res}: GetServerSidePropsContext) {
   // We make an API call to gather the URLs for our site
   // articles details
-  const articles = await getAllArticlePagesSlugsSitemap()
-  const articlesDetailsList = articles.filter(
-    (item) => item.params.slug.includes('/news/') && item.params.showInSitemap
-  )
+  const articles = await getAllArticlePageSlugsSitemap()
+  const articlesDetailsList = articles.filter((item) => item.params.slug.includes('/news/'))
 
   // We generate the XML sitemap with data
   const articlesXMLUrls = generateXMLUrls(articlesDetailsList)

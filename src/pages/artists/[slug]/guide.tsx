@@ -9,7 +9,8 @@ import PreviewPage from '@/components/containers/previews/pagePreview'
 import {SharedPageProps} from '@/pages/_app'
 import {getClient, readToken} from '@/sanity/client'
 import {artistGuidePageBySlug} from '@/sanity/queries/artistsGuide.queries'
-import {getAllGuidePages, getGuideDataBySlug} from '@/sanity/services/artistsGuide.service'
+import {getAllGuidePageSlugs} from '@/sanity/services/artists/getAllGuidePageSlugs'
+import {getGuideDataBySlug} from '@/sanity/services/artistsGuide.service'
 import {getGTMPageLoadData} from '@/sanity/services/gtm/pageLoad.service'
 import {removePrefixSlug} from '@/utils/slug'
 
@@ -39,9 +40,9 @@ export default function GuidePage({data, draftMode, queryParams, token}: SharedP
 }
 
 export const getStaticPaths = async () => {
-  const paths = await getAllGuidePages()
+  const paths = await getAllGuidePageSlugs()
   return {
-    paths: paths?.map((item: any) => ({
+    paths: paths?.map((item) => ({
       params: {slug: removePrefixSlug(item.params.slug, `${ARTISTS_URL}/`)},
     })),
     fallback: true,

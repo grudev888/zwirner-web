@@ -26,14 +26,6 @@ export const articlesReferences = groq`
   }
 `
 
-export const pressPagesSlugs = groq`
-*[_type == "article" && defined(slug.current)  && defined(body) && type == "pressRelease"][]{
-  "params": {
-    "slug": string::split(slug.current, "/")[2],
-    "press": string::split(slug.current, "/")[4]
-   }
-}`
-
 export const pressBySlug = groq`
 *[_type == "article" && type == "pressRelease" && slug.current == $slug][0]{
   ...,

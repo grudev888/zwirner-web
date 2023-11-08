@@ -9,7 +9,7 @@ import {SharedPageProps} from '@/pages/_app'
 import {getClient, readToken} from '@/sanity/client'
 import {artistExhibitionsPageData} from '@/sanity/queries/artistExhibitionsPage.queries'
 import {getArtistExhibitionsPageData} from '@/sanity/services/artistPages.service'
-import {getAllArtistPageSlugs} from '@/sanity/services/artists/getAllArtistPageSlugs'
+import {getAllExhibitionsPageSlugs} from '@/sanity/services/artists/getAllExhibitionsPageSlugs'
 import {getGTMPageLoadData} from '@/sanity/services/gtm/pageLoad.service'
 import {removePrefixSlug} from '@/utils/slug'
 
@@ -37,9 +37,9 @@ export default function ExhibitionsPage({data, draftMode, queryParams, token}: S
 }
 
 export const getStaticPaths = async () => {
-  const paths = await getAllArtistPageSlugs()
+  const paths = await getAllExhibitionsPageSlugs()
   return {
-    paths: paths.map((item: any) => ({
+    paths: paths.map((item) => ({
       params: {slug: removePrefixSlug(item.params.slug, '/artists/')},
     })),
     fallback: true,

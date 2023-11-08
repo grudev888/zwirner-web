@@ -20,8 +20,3 @@ export const artistPressPageBySlug = groq`
     ${pageSEOFields}
   },
 }`
-
-export const allPressPageSlugs = groq`
-*[_type == "artistPage" && defined(slug.current) && defined(pressSubpage.title)][]{
-  "params": { "slug": slug.current }
-}`

@@ -8,7 +8,7 @@ import PreviewPage from '@/components/containers/previews/pagePreview'
 import type {SharedPageProps} from '@/pages/_app'
 import {getClient, readToken} from '@/sanity/client'
 import {artworksDataByArtistSlug} from '@/sanity/queries/artworks/artworksDataByArtistSlug'
-import {getAllArtistPageSlugs} from '@/sanity/services/artists/getAllArtistPageSlugs'
+import {getAllSurveyPagesSlugs} from '@/sanity/services/artists/getAllSurveyPageSlugs'
 import {getArtworkByArtist} from '@/sanity/services/artworks/getArtworkByArtist'
 import {getGTMPageLoadData} from '@/sanity/services/gtm/pageLoad.service'
 import {removePrefixSlug} from '@/utils/slug'
@@ -38,9 +38,9 @@ export default function SurveyPage({data, draftMode, queryParams, token}: Shared
 }
 
 export const getStaticPaths = async () => {
-  const paths = await getAllArtistPageSlugs()
+  const paths = await getAllSurveyPagesSlugs()
   return {
-    paths: paths.map((item: any) => ({
+    paths: paths.map((item) => ({
       params: {slug: removePrefixSlug(item.params.slug, '/artists/')},
     })),
     fallback: true,

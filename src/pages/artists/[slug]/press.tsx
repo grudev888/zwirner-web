@@ -9,7 +9,8 @@ import PreviewPage from '@/components/containers/previews/pagePreview'
 import {SharedPageProps} from '@/pages/_app'
 import {getClient, readToken} from '@/sanity/client'
 import {artistPressPageBySlug} from '@/sanity/queries/artistsPress.queries'
-import {getAllPressPages, getPressDataBySlug} from '@/sanity/services/artistsPress.service'
+import {getAllPressPageSlugs} from '@/sanity/services/artists/getAllPressPageSlugs'
+import {getPressDataBySlug} from '@/sanity/services/artistsPress.service'
 import {getGTMPageLoadData} from '@/sanity/services/gtm/pageLoad.service'
 import {removePrefixSlug} from '@/utils/slug'
 
@@ -39,7 +40,7 @@ export default function PressPage({data, draftMode, queryParams, token}: SharedP
 }
 
 export const getStaticPaths = async () => {
-  const paths = await getAllPressPages()
+  const paths = await getAllPressPageSlugs()
   return {
     paths: paths?.map((item: any) => ({
       params: {slug: removePrefixSlug(item.params.slug, '/artists/')},
