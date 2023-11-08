@@ -5,6 +5,7 @@ import {useRef, useState} from 'react'
 import {
   gtmInquiryFormStartedEvent,
   gtmInquiryFormSubmitEvent,
+  gtmInquiryFormViewEvent,
 } from '@/common/utils/gtm/gtmInquiryFormEvent'
 import {useLocation} from '@/forms/api/useLocation'
 import {builder} from '@/sanity/imageBuilder'
@@ -77,6 +78,7 @@ export const useHashRoutedInquiryModal = () => {
             : 'inquire',
       })
     }
+    gtmInquiryFormViewEvent(contextData?.artwork)
     setIsOpen(true)
   }
   const onDirty = () => gtmInquiryFormStartedEvent(artwork)
