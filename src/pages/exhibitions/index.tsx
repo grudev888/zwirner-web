@@ -1,38 +1,35 @@
 import {GetStaticProps} from 'next'
 
 import {SEOComponent} from '@/common/components/seo/seo'
+import {DRAFT_MODE_SANITY_READ_TOKEN_ERROR} from '@/common/constants/errorMessages'
 import {EXHIBITIONS_SECTION, EXHIBITIONS_SLUG} from '@/common/constants/gtmPageConstants'
 import {ExhibitionLandingContainer} from '@/components/containers/exhibitions/exhibitionsLandingContainer'
-import {PreviewPage} from '@/components/containers/previews/pagePreview'
+import PreviewPage from '@/components/containers/previews/pagePreview'
+import {getClient, readToken} from '@/sanity/client'
 import {exhibitionsLandingData} from '@/sanity/queries/exhibitionPage.queries'
 import {getExhibitionsLandingPageData} from '@/sanity/services/exhibition.service'
 import {getGTMPageLoadData} from '@/sanity/services/gtm/pageLoad.service'
 
-interface PageProps {
-  data: any
-  preview: boolean
-  slug: string | null
-  token: string | null
-}
+import {SharedPageProps} from '../_app'
 
-interface Query {
-  [key: string]: string
-}
-
-interface PreviewData {
-  token?: string
-}
-
-export default function ExhibitionsLanding({data = {}, preview}: PageProps) {
+export default function ExhibitionsLanding({
+  data = {},
+  draftMode,
+  queryParams,
+  token,
+}: SharedPageProps) {
   const {pageData = {}} = data ?? {}
   const {seo} = pageData ?? {}
 
-  if (preview) {
+  if (draftMode) {
     return (
       <PreviewPage
+        data={pageData}
         query={exhibitionsLandingData}
         seo={seo}
         Container={ExhibitionLandingContainer}
+        params={queryParams}
+        token={token}
       />
     )
   }
@@ -45,24 +42,19 @@ export default function ExhibitionsLanding({data = {}, preview}: PageProps) {
   )
 }
 
-export const getStaticProps: GetStaticProps<PageProps, Query, PreviewData> = async (ctx) => {
-  const {params = {}, preview = false, previewData = {}} = ctx
+export const getStaticProps: GetStaticProps = async (ctx) => {
+  const {params = {}, draftMode = false} = ctx
 
-  if (preview && previewData.token) {
-    return {
-      props: {
-        data: null,
-        preview,
-        slug: params?.slug || null,
-        token: previewData.token,
-      },
-    }
+  const queryParams = {slug: EXHIBITIONS_SLUG}
+
+  const draftViewToken = draftMode ? readToken : ``
+  if (draftMode && !draftViewToken) {
+    throw new Error(DRAFT_MODE_SANITY_READ_TOKEN_ERROR)
   }
+  const client = getClient(draftMode ? {token: draftViewToken} : undefined)
 
-  const pageData = await getExhibitionsLandingPageData()
-
-  if (!params.slug) params.slug = EXHIBITIONS_SLUG
-  const dataLayerProps = await getGTMPageLoadData({slug: params.slug})
+  const pageData = await getExhibitionsLandingPageData(client)
+  const dataLayerProps = await getGTMPageLoadData(queryParams)
   if (dataLayerProps) dataLayerProps.page_data.site_section = EXHIBITIONS_SECTION
 
   return {
@@ -71,9 +63,10 @@ export const getStaticProps: GetStaticProps<PageProps, Query, PreviewData> = asy
         pageData,
       },
       dataLayerProps,
-      preview,
       slug: params?.slug || null,
-      token: null,
+      token: draftViewToken,
+      queryParams,
+      draftMode,
     },
     revalidate: 1,
   }

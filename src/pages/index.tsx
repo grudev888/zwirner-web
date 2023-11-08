@@ -1,79 +1,65 @@
-import {GetStaticProps} from 'next'
+import {GetStaticProps, InferGetStaticPropsType} from 'next'
 
 import {SEOComponent} from '@/common/components/seo/seo'
-import {Home_SLUG} from '@/common/constants/gtmPageConstants'
+import {DRAFT_MODE_SANITY_READ_TOKEN_ERROR} from '@/common/constants/errorMessages'
+import {Home_SECTION, Home_SLUG} from '@/common/constants/gtmPageConstants'
 import {HomeContainer} from '@/components/containers/home'
-import {PreviewPage} from '@/components/containers/previews/pagePreview'
+import PreviewPage from '@/components/containers/previews/pagePreview'
+import {getClient, readToken} from '@/sanity/client'
 import {homePage} from '@/sanity/queries/page/homePage'
 import {getGTMPageLoadData} from '@/sanity/services/gtm/pageLoad.service'
 import {getHomePage} from '@/sanity/services/page/getHomePage'
 
-interface PageProps {
-  data: any
-  preview: boolean
-  slug: string | null
-  token: string | null
-}
+const Home = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
+  const {data, draftMode, token} = props
 
-interface Query {
-  [key: string]: string
-}
-
-interface PreviewData {
-  token?: string
-}
-
-export default function Home({data, preview}: PageProps) {
-  const {seo} = data ?? {}
-
-  if (preview) {
-    return <PreviewPage query={homePage} seo={seo} Container={HomeContainer} />
+  if (draftMode && token) {
+    return (
+      <PreviewPage
+        data={data}
+        query={homePage}
+        seo={data.seo}
+        Container={HomeContainer}
+        token={token}
+      />
+    )
   }
 
   return (
     <>
-      <SEOComponent data={seo} />
+      <SEOComponent data={data.seo} />
       <HomeContainer data={data} />
     </>
   )
 }
 
-export const getStaticProps: GetStaticProps<PageProps, Query, PreviewData> = async (ctx) => {
-  const {preview = false, previewData = {}} = ctx
+export const getStaticProps: GetStaticProps = async (ctx) => {
+  const {draftMode = false} = ctx
+
+  const draftViewToken = draftMode ? readToken : ''
+  if (draftMode && !draftViewToken) {
+    throw new Error(DRAFT_MODE_SANITY_READ_TOKEN_ERROR)
+  }
+  const client = getClient(draftMode ? {token: draftViewToken} : undefined)
 
   const params = {slug: Home_SLUG}
 
-  if (preview && previewData.token) {
-    return {
-      props: {
-        data: null,
-        dataLayerProps: null,
-        preview,
-        slug: params?.slug || null,
-        token: previewData.token,
-      },
-    }
-  }
-
-  const homePage = await getHomePage()
+  const homePage = await getHomePage(client)
   const dataLayerProps = await getGTMPageLoadData(params)
+  if (dataLayerProps) dataLayerProps.page_data.site_section = Home_SECTION
 
   if (!homePage) return {notFound: true}
 
   return {
     props: {
       data: homePage,
-      dataLayerProps: {
-        ...dataLayerProps,
-        page_data: {
-          ...dataLayerProps?.page_data,
-          site_section: 'home',
-        },
-      },
-      preview,
+      dataLayerProps,
       slug: params?.slug || null,
-      token: null,
+      draftMode,
+      token: draftViewToken,
     },
     revalidate: 1,
   }
 }
+
+export default Home

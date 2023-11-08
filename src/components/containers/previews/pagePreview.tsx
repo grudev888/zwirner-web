@@ -1,14 +1,17 @@
-import {PreviewSuspense} from 'next-sanity/preview'
-import {FC, Fragment} from 'react'
+import {useLiveQuery} from 'next-sanity/preview'
+import {LiveQueryProvider} from 'next-sanity/preview'
+import {Fragment} from 'react'
 
 import {SEOComponent} from '@/common/components/seo/seo'
 import {EXIT_PREVIEW, PREVIEW_EXIT_URL} from '@/common/constants/commonCopies'
 import {DzLink} from '@/components/wrappers/DzLinkWrapper'
-import {usePreview} from '@/sanity/preview'
+import {getClient} from '@/sanity/client'
 
 import styles from './index.module.css'
 
 interface PreviewPageProps {
+  data: any
+  token?: string
   seo?: any
   query: string
   params?: any
@@ -31,11 +34,12 @@ const getContainer = ({Container, data}: any) => {
   return <Container data={data} />
 }
 
-const ContainerData: FC<PreviewPageProps> = ({seo, query, params = {}, Container}) => {
-  const data = usePreview(null, query, params)
-  const componentData = getData(data)
+const ContainerData = (props: PreviewPageProps) => {
+  const {data, seo, query, params = {}, Container} = props
+  const liveData = useLiveQuery(data, query, params)
+  const componentData = getData(liveData)
   const container = getContainer({Container, data: componentData})
-  const componentSEO = seo || componentData?.seo
+  const componentSEO = seo
 
   return (
     <>
@@ -43,16 +47,26 @@ const ContainerData: FC<PreviewPageProps> = ({seo, query, params = {}, Container
     </>
   )
 }
+const PreviewPage = (props: PreviewPageProps) => {
+  const {data, query, seo, params, Container, token} = props
 
-export const PreviewPage: FC<PreviewPageProps> = ({seo, query, params = {}, Container}) => {
+  const client = getClient({token})
+
   return (
     <>
-      <PreviewSuspense fallback="Loading...">
-        <ContainerData seo={seo} query={query} params={params} Container={Container} />
+      <LiveQueryProvider client={client} logger={console}>
+        <ContainerData
+          data={data}
+          query={query}
+          seo={seo}
+          params={params}
+          Container={Container}
+          token={token}
+        />
         <DzLink className={styles.exitPreview} href={PREVIEW_EXIT_URL}>
           {EXIT_PREVIEW}
         </DzLink>
-      </PreviewSuspense>
+      </LiveQueryProvider>
     </>
   )
 }

@@ -3,6 +3,7 @@ export const ARTISTS_URL = '/artists'
 export const UPCOMING_FAIRS_URL = '/fairs'
 export const NEWS_URL = '/news'
 export const EXHIBITIONS_URL = '/exhibitions'
+export const PAST_EXHIBITIONS_URL = '/exhibitions/past-exhibitions'
 export const VIDEOS_URL = '/videos'
 export const PODCAST_URL = '/podcast'
 export const EXHIBITION_CHECKLIST_URL = '/checklist'
@@ -10,7 +11,7 @@ export const EXHIBITION_INSTALLATION_URL = '/installation-views'
 export const BOOKS_URL = 'https://www.davidzwirnerbooks.com/'
 export const ARTISTS_PRESS_URL = '/press'
 export const ARTWORK_URL = '/artworks'
-export const PREVIEW_EXIT_URL = '/api/sanity/exit-preview'
+export const PREVIEW_EXIT_URL = '/api/exit-draft'
 
 // ============ COPIES ===========
 export const DAVID_ZWIRNER_BOOKS = 'David Zwirner Books'
@@ -68,7 +69,7 @@ export const PLEASE_PROVIDE_YOUR_CONTACT =
   'please provide your contact information and a member of the gallery will be in touch shortly.'
 export const TO_LEARN_MORE_ABOUT_THIS_ARTWORK =
   'To learn more about this artwork, please provide your contact information.'
-export const EXIT_PREVIEW = 'Exit preview'
+export const EXIT_PREVIEW = 'Exit Draft View'
 export const JOIN_OUR_MAILING_LIST =
   'Join our mailing list to be among the first to receive gallery news'
 export const JOIN_OUR_MAILING_LIST_ERROR = 'Failed to send your request'

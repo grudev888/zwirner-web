@@ -1,25 +1,37 @@
-import {GetStaticPropsContext, InferGetStaticPropsType} from 'next'
+import {GetStaticProps, InferGetStaticPropsType} from 'next'
 import {useRouter} from 'next/router'
 
 import {SEOComponent} from '@/common/components/seo/seo'
+import {DRAFT_MODE_SANITY_READ_TOKEN_ERROR} from '@/common/constants/errorMessages'
 import {ArtworkContainer} from '@/components/containers/artworks/artwork'
-import {PreviewPage} from '@/components/containers/previews/pagePreview'
+import PreviewPage from '@/components/containers/previews/pagePreview'
+import {getClient, readToken} from '@/sanity/client'
 import {artworkData} from '@/sanity/queries/artworks/artworkData'
 import {getAllArtworkSlugs} from '@/sanity/services/artworks/getAllArtworkSlugs'
 import {getArtworkData} from '@/sanity/services/artworks/getArtworkData'
+import {getGTMPageLoadData} from '@/sanity/services/gtm/pageLoad.service'
 
 const SLUG_PREFIX = '/artworks/'
 
 const ArtworkPage = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
-  const {data, preview, querySlug} = props
+  const {data, draftMode, token, slug} = props
   const router = useRouter()
 
   if (router.isFallback) {
     return <div>Loading...</div>
   }
 
-  if (preview) {
-    return <PreviewPage query={artworkData} params={querySlug} Container={ArtworkContainer} />
+  if (draftMode && token) {
+    return (
+      <PreviewPage
+        data={data}
+        query={artworkData}
+        seo={data.seo}
+        params={slug}
+        Container={ArtworkContainer}
+        token={token}
+      />
+    )
   }
 
   return (
@@ -30,36 +42,6 @@ const ArtworkPage = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
   )
 }
 
-export const getStaticProps = async (ctx: GetStaticPropsContext) => {
-  const {params, preview = false} = ctx
-
-  if (!params?.slug) return {notFound: true}
-
-  const querySlug = {slug: `${SLUG_PREFIX}${params.slug}`}
-
-  if (preview) {
-    return {
-      props: {
-        data: null,
-        preview,
-        querySlug,
-      },
-    }
-  }
-
-  const data = await getArtworkData(querySlug)
-  if (!data) return {notFound: true}
-
-  return {
-    props: {
-      data,
-      preview: false,
-      querySlug: false,
-    },
-    revalidate: 1,
-  }
-}
-
 export const getStaticPaths = async () => {
   const paths = await getAllArtworkSlugs()
   const filteredPaths = paths
@@ -68,6 +50,41 @@ export const getStaticPaths = async () => {
   return {
     paths: filteredPaths,
     fallback: true,
+  }
+}
+
+export const getStaticProps: GetStaticProps = async (ctx) => {
+  const {params, draftMode = false} = ctx
+
+  if (!params?.slug) return {notFound: true}
+
+  const querySlug = {slug: `${SLUG_PREFIX}${params.slug}`}
+
+  const draftViewToken = draftMode ? readToken : ''
+  if (draftMode && !draftViewToken) {
+    throw new Error(DRAFT_MODE_SANITY_READ_TOKEN_ERROR)
+  }
+  const client = getClient(draftMode ? {token: draftViewToken} : undefined)
+
+  const data = await getArtworkData(client, querySlug)
+  const dataLayerProps = await getGTMPageLoadData(querySlug)
+  if (!data) return {notFound: true}
+
+  return {
+    props: {
+      data,
+      dataLayerProps: {
+        ...dataLayerProps,
+        page_data: {
+          ...dataLayerProps?.page_data,
+          site_section: 'artworks',
+        },
+      },
+      slug: querySlug || null,
+      draftMode,
+      token: draftViewToken,
+    },
+    revalidate: 1,
   }
 }
 

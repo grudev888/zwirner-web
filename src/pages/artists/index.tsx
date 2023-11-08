@@ -1,36 +1,33 @@
 import {GetStaticProps} from 'next'
 
 import {SEOComponent} from '@/common/components/seo/seo'
+import {DRAFT_MODE_SANITY_READ_TOKEN_ERROR} from '@/common/constants/errorMessages'
 import {ARTISTS_SECTION, ARTISTS_SLUG} from '@/common/constants/gtmPageConstants'
 import {ArtistsListContainer} from '@/components/containers/artists/ArtistListContainer'
-import {PreviewPage} from '@/components/containers/previews/pagePreview'
+import PreviewPage from '@/components/containers/previews/pagePreview'
+import {getClient, readToken} from '@/sanity/client'
 import {getAllArtistsPages} from '@/sanity/queries/artistPage.queries'
 import {getArtistPageData} from '@/sanity/services/artist.service'
 import {getGTMPageLoadData} from '@/sanity/services/gtm/pageLoad.service'
 
-interface PageProps {
-  data: any
-  preview: boolean
-  slug: string | null
-  token: string | null
-}
+import {SharedPageProps} from '../_app'
 
-interface Query {
-  [key: string]: string
-}
-
-interface PreviewData {
-  token?: string
-}
-
-export default function Artists({data, preview}: PageProps) {
+export default function Artists({data, draftMode, token}: SharedPageProps) {
   const {pageInfo} = data
   const [pagesInfoData] = pageInfo
 
   const {seo} = pagesInfoData ?? {}
 
-  if (preview) {
-    return <PreviewPage query={getAllArtistsPages} seo={seo} Container={ArtistsListContainer} />
+  if (draftMode) {
+    return (
+      <PreviewPage
+        data={data}
+        query={getAllArtistsPages}
+        seo={seo}
+        Container={ArtistsListContainer}
+        token={token}
+      />
+    )
   }
 
   return (
@@ -41,32 +38,27 @@ export default function Artists({data, preview}: PageProps) {
   )
 }
 
-export const getStaticProps: GetStaticProps<PageProps, Query, PreviewData> = async (ctx) => {
-  const {preview = false, previewData = {}} = ctx
+export const getStaticProps: GetStaticProps = async (ctx) => {
+  const {draftMode = false} = ctx
 
   const params = {slug: ARTISTS_SLUG}
 
-  if (preview && previewData.token) {
-    return {
-      props: {
-        data: null,
-        preview,
-        slug: params?.slug || null,
-        token: previewData.token,
-      },
-    }
+  const draftViewToken = draftMode ? readToken : ``
+  if (draftMode && !draftViewToken) {
+    throw new Error(DRAFT_MODE_SANITY_READ_TOKEN_ERROR)
   }
+  const client = getClient(draftMode ? {token: draftViewToken} : undefined)
 
-  const artistPage = await getArtistPageData()
+  const artistPage = await getArtistPageData(client)
   const dataLayerProps = await getGTMPageLoadData(params)
   if (dataLayerProps) dataLayerProps.page_data.site_section = ARTISTS_SECTION
   return {
     props: {
       data: artistPage,
       dataLayerProps,
-      preview,
+      draftMode,
       slug: params?.slug || null,
-      token: null,
+      token: draftViewToken,
     },
     revalidate: 1,
   }

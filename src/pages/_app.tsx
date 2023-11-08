@@ -24,6 +24,16 @@ import {GlobalSEOScheme} from '@/sanity/types'
 export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
   getLayout?: (page: ReactElement) => ReactNode
 }
+export interface SharedPageProps {
+  data: any
+  slug: string | null
+  draftMode: boolean
+  token: string
+  draftViewToken: string
+  queryParams: {
+    [key: string]: string
+  }
+}
 
 type LayoutData = {
   headerData: any
@@ -40,19 +50,22 @@ type WrapperProps = AppGeneralProps & {
 const Wrapper = ({Component, pageProps, globalSEO, layoutData}: WrapperProps) => {
   const getLayout =
     Component.getLayout || ((page) => <DefaultLayout layoutData={layoutData}>{page}</DefaultLayout>)
+
   return (
-    <APIProvider>
-      <SEOComponent isDefault data={globalSEO} />
-      <ErrorBoundary
-        fallback={
-          <DzColumn className="mb-12 h-full" span={12}>
-            <div className="flex justify-center p-5">Something went wrong</div>
-          </DzColumn>
-        }
-      >
-        {getLayout(<Component {...pageProps} />)}
-      </ErrorBoundary>
-    </APIProvider>
+    <>
+      <APIProvider>
+        <SEOComponent isDefault data={globalSEO} />
+        <ErrorBoundary
+          fallback={
+            <DzColumn className="mb-12 h-full" span={12}>
+              <div className="flex justify-center p-5">Something went wrong</div>
+            </DzColumn>
+          }
+        >
+          {getLayout(<Component {...pageProps} />)}
+        </ErrorBoundary>
+      </APIProvider>
+    </>
   )
 }
 

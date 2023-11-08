@@ -1,4 +1,5 @@
-import {client} from '@/sanity/client'
+import {SanityClient} from 'next-sanity'
+
 import {
   type PageBySlugPropsType,
   pageBySlug,
@@ -7,7 +8,7 @@ import {
 } from '@/sanity/queries/page/pageBySlug'
 
 // TODO: add validation error handling
-export async function getPageBySlug(params: PageBySlugPropsType) {
+export async function getPageBySlug(client: SanityClient, params: PageBySlugPropsType) {
   const validatedParams = PageBySlugPropsSchema.parse(params)
   const data = await client.fetch(pageBySlug, validatedParams)
   if (!data) return null

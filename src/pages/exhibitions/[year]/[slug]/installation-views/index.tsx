@@ -3,29 +3,19 @@ import {useRouter} from 'next/router'
 
 import {SEOComponent} from '@/common/components/seo/seo'
 import {EXHIBITIONS_URL} from '@/common/constants/commonCopies'
+import {DRAFT_MODE_SANITY_READ_TOKEN_ERROR} from '@/common/constants/errorMessages'
+import {EXHIBITIONS_SECTION} from '@/common/constants/gtmPageConstants'
 import {InstallationViewsContainer} from '@/components/containers/exhibitions/exhibitionViewsContainer'
-import {PreviewPage} from '@/components/containers/previews/pagePreview'
+import PreviewPage from '@/components/containers/previews/pagePreview'
+import {SharedPageProps} from '@/pages/_app'
+import {getClient, readToken} from '@/sanity/client'
 import {installationViewsBySlug} from '@/sanity/queries/exhibitions/installationViewsBySlug'
 import {getAllExhibitionPagesSlugs} from '@/sanity/services/exhibitions/getAllExhibitionPagesSlugs'
 import {getExhibitionInstallationViews} from '@/sanity/services/exhibitions/getExhibitionInstallationViews'
-
-interface PageProps {
-  data: any
-  preview: boolean
-  slug: string | null
-  token: string | null
-}
-
-interface Query {
-  [key: string]: string
-}
-
-interface PreviewData {
-  token?: string
-}
+import {getGTMPageLoadData} from '@/sanity/services/gtm/pageLoad.service'
 
 // TODO: update component typings to infer correct types
-export default function SubPageInstallationView({data = {}, preview}: PageProps) {
+export default function SubPageInstallationView({data = {}, draftMode, token}: SharedPageProps) {
   const {pageData = {}, queryParams} = data ?? {}
   const {seo} = pageData ?? {}
   const router = useRouter()
@@ -34,13 +24,15 @@ export default function SubPageInstallationView({data = {}, preview}: PageProps)
     return <div>Loading...</div>
   }
 
-  if (preview) {
+  if (draftMode) {
     return (
       <PreviewPage
+        data={pageData}
         query={installationViewsBySlug}
         params={queryParams}
         seo={seo}
         Container={InstallationViewsContainer}
+        token={token}
       />
     )
   }
@@ -75,28 +67,26 @@ export const getStaticPaths = async () => {
   }
 }
 
-export const getStaticProps: GetStaticProps<PageProps, Query, PreviewData> = async (ctx) => {
-  const {params = {}, preview = false, previewData = {}} = ctx
+export const getStaticProps: GetStaticProps = async (ctx) => {
+  const {params = {}, draftMode = false} = ctx
   const queryParams = {slug: `${EXHIBITIONS_URL}/${params?.year}/${params?.slug}`}
 
-  if (preview && previewData.token) {
-    return {
-      props: {
-        data: {queryParams},
-        preview,
-        slug: params?.slug || null,
-        token: previewData.token,
-      },
-    }
+  const draftViewToken = draftMode ? readToken : ``
+  if (draftMode && !draftViewToken) {
+    throw new Error(DRAFT_MODE_SANITY_READ_TOKEN_ERROR)
   }
+  const client = getClient(draftMode ? {token: draftViewToken} : undefined)
 
-  const data = await getExhibitionInstallationViews(queryParams)
+  const data = await getExhibitionInstallationViews(client, queryParams)
+  const dataLayerProps = await getGTMPageLoadData(queryParams)
+  if (dataLayerProps) dataLayerProps.page_data.site_section = EXHIBITIONS_SECTION
   if (!data) return {notFound: true}
 
   return {
     props: {
       data: {queryParams, pageData: data},
-      preview,
+      dataLayerProps,
+      draftMode,
       slug: params?.slug || null,
       token: null,
     },

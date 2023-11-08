@@ -1,4 +1,5 @@
 import {getYear} from 'date-fns'
+import {SanityClient} from 'next-sanity'
 
 import {client} from '@/sanity/client'
 import {
@@ -24,7 +25,7 @@ export type PastExhibitionsByYearProps = {
   initialPage?: number
   endPage?: number
 }
-export async function getPastExhibitionsPageData() {
+export async function getPastExhibitionsPageData(client: SanityClient) {
   const data = await client.fetch(pastExhibitionsPageData)
   if (!data) return null
   const validatedData = PastExhibitionsPageDataSchema.parse(data)
@@ -62,11 +63,10 @@ export const parseParamsForPastExhibitions = ({
   }
 }
 
-export async function getPastExhibitionsByYear({
-  year,
-  initialPage,
-  endPage,
-}: PastExhibitionsByYearProps) {
+export async function getPastExhibitionsByYear(
+  client: SanityClient,
+  {year, initialPage, endPage}: PastExhibitionsByYearProps
+) {
   const params = parseParamsForPastExhibitions({
     year,
     initialPage,

@@ -1,8 +1,12 @@
-import {GetStaticPropsContext, InferGetStaticPropsType} from 'next'
+import {GetStaticProps, InferGetStaticPropsType} from 'next'
 
 import {SEOComponent} from '@/common/components/seo/seo'
+import {PAST_EXHIBITIONS_URL} from '@/common/constants/commonCopies'
+import {DRAFT_MODE_SANITY_READ_TOKEN_ERROR} from '@/common/constants/errorMessages'
+import {EXHIBITIONS_SECTION} from '@/common/constants/gtmPageConstants'
 import {PastExhibitionsContainer} from '@/components/containers/exhibitions/pastExhibitionsContainer'
-import {PreviewPage} from '@/components/containers/previews/pagePreview'
+import PreviewPage from '@/components/containers/previews/pagePreview'
+import {getClient, readToken} from '@/sanity/client'
 import {getPastExhibitionsQueryByYear} from '@/sanity/queries/exhibitions/pastExhibitionsData'
 import {
   formatPastExhibitionYears,
@@ -12,17 +16,21 @@ import {
   parseParamsForPastExhibitions,
   PastExhibitionsByYearProps,
 } from '@/sanity/services/exhibitions/getPastExhibitionsData'
+import {getGTMPageLoadData} from '@/sanity/services/gtm/pageLoad.service'
 
 const PastExhibitionsPageByYear = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
-  const {data, preview, queryParams} = props
+  const {data, draftMode, queryParams, token} = props
 
-  if (preview && queryParams) {
+  if (draftMode && queryParams) {
     const params = parseParamsForPastExhibitions(queryParams)
     return (
       <PreviewPage
+        data={data}
+        seo={data.seo}
         query={getPastExhibitionsQueryByYear(params.year)}
         params={params}
         Container={PastExhibitionsContainer}
+        token={token}
       />
     )
   }
@@ -50,10 +58,8 @@ export const getStaticPaths = async () => {
   }
 }
 
-export const getStaticProps = async (
-  ctx: GetStaticPropsContext & {previewData?: {token?: string}}
-) => {
-  const {params = {}, preview = false, previewData = {}} = ctx
+export const getStaticProps: GetStaticProps = async (ctx) => {
+  const {params = {}, draftMode = false} = ctx
   const page = 1
   const year = Number(params.year)
   const years = await getAllPastExhibitionYears()
@@ -64,19 +70,18 @@ export const getStaticProps = async (
 
   const queryParams = {year, initialPage: page} as PastExhibitionsByYearProps
 
-  if (preview && previewData.token) {
-    return {
-      props: {
-        data: null,
-        queryParams,
-        preview,
-        token: previewData.token,
-      },
-    }
-  }
+  const gtmQueryParams = {slug: PAST_EXHIBITIONS_URL}
 
-  const data = await getPastExhibitionsPageData()
-  const pastExhibitions = await getPastExhibitionsByYear(queryParams)
+  const draftViewToken = draftMode ? readToken : ``
+  if (draftMode && !draftViewToken) {
+    throw new Error(DRAFT_MODE_SANITY_READ_TOKEN_ERROR)
+  }
+  const client = getClient(draftMode ? {token: draftViewToken} : undefined)
+
+  const data = await getPastExhibitionsPageData(client)
+  const pastExhibitions = await getPastExhibitionsByYear(client, queryParams)
+  const dataLayerProps = await getGTMPageLoadData(gtmQueryParams)
+  if (dataLayerProps) dataLayerProps.page_data.site_section = EXHIBITIONS_SECTION
   if (!data || !pastExhibitions) return {notFound: true}
 
   return {
@@ -87,10 +92,12 @@ export const getStaticProps = async (
         currentPage: page,
         yearsWithExhibitions,
       },
-      preview: false,
-      token: null,
-      revalidate: 1,
+      dataLayerProps,
+      queryParams,
+      draftMode,
+      token: draftViewToken,
     },
+    revalidate: 1,
   }
 }
 

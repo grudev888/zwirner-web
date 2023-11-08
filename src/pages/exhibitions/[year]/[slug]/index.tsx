@@ -3,10 +3,13 @@ import {useRouter} from 'next/router'
 
 import {SEOComponent} from '@/common/components/seo/seo'
 import {EXHIBITIONS_URL} from '@/common/constants/commonCopies'
+import {DRAFT_MODE_SANITY_READ_TOKEN_ERROR} from '@/common/constants/errorMessages'
+import {EXHIBITIONS_SECTION} from '@/common/constants/gtmPageConstants'
 import {ExceptionalWorkContainer} from '@/components/containers/exhibitions/exceptionalWorkContainer'
 import {ExhibitionsContainer} from '@/components/containers/exhibitions/exhibitionDetailContainer/exhibitions'
 import {OnlineExhibitionsContainer} from '@/components/containers/exhibitions/onlineExhibitionsContainer'
-import {PreviewPage} from '@/components/containers/previews/pagePreview'
+import PreviewPage from '@/components/containers/previews/pagePreview'
+import {getClient, readToken} from '@/sanity/client'
 import {
   exceptionalWorksData,
   ExceptionalWorksDataType,
@@ -24,11 +27,12 @@ import {getExceptionalWorkData} from '@/sanity/services/exhibitions/getException
 import {getExhibitionPageBySlug} from '@/sanity/services/exhibitions/getExhibitionPageBySlug'
 import {getOnlineExhibitionsData} from '@/sanity/services/exhibitions/getOnlineExhibitionsData'
 import {getRecordType} from '@/sanity/services/exhibitions/getRecordType'
+import {getGTMPageLoadData} from '@/sanity/services/gtm/pageLoad.service'
 
 type ExhibitionShape = ExceptionalWorksDataType | ExhibitionPageBySlugType | OnlineExhibitionsType
 type ExhibitionsPageProps = {
   data: ExhibitionShape
-  preview: boolean
+  draftMode: boolean
   queryParams: any
   slug: any
   token: any
@@ -39,7 +43,7 @@ type PageContainerSchema = {
   container: any
 }
 export default function ExhibitionsPage(props: ExhibitionsPageProps) {
-  const {data, queryParams, preview} = props
+  const {data, queryParams, draftMode, token} = props
   const router = useRouter()
   const {seo, _type} = data ?? {}
 
@@ -71,12 +75,15 @@ export default function ExhibitionsPage(props: ExhibitionsPageProps) {
     }
   }
 
-  if (preview && PageContainer) {
+  if (draftMode && PageContainer) {
     return (
       <PreviewPage
+        data={data as ExhibitionShape}
+        seo={seo}
         query={PageContainer.query}
         params={PageContainer.params}
         Container={PageContainer.container}
+        token={token}
       />
     )
   }
@@ -90,57 +97,6 @@ export default function ExhibitionsPage(props: ExhibitionsPageProps) {
     )
   }
   return null
-}
-
-export const getStaticProps = async (
-  ctx: GetStaticPropsContext & {previewData?: {token?: string}}
-) => {
-  const {params = {}, preview = false, previewData} = ctx
-
-  if (!params?.slug || !params.year) return {notFound: true}
-
-  const queryParams = {slug: `${EXHIBITIONS_URL}/${params?.year}/${params?.slug}`}
-
-  if (preview && previewData?.token) {
-    return {
-      props: {
-        data: null,
-        preview,
-        queryParams,
-        slug: params?.slug || null,
-        token: previewData.token,
-      },
-    }
-  }
-
-  const pageType = await getRecordType(queryParams)
-  if (!pageType) return {notFound: true}
-  let data = null
-  if (pageType._type === 'exhibitionPage') {
-    data = await getExhibitionPageBySlug(queryParams)
-  }
-  if (pageType._type === 'onlineExhibitionPage') {
-    data = await getOnlineExhibitionsData(queryParams)
-  }
-  if (pageType._type === 'exceptionalWork') {
-    data = await getExceptionalWorkData(queryParams)
-  }
-
-  if (!data) return {notFound: true}
-  if (data) {
-    return {
-      props: {
-        data,
-        preview,
-        queryParams,
-        slug: params?.slug || null,
-        token: null,
-      },
-      revalidate: 1,
-    }
-  }
-
-  return {notFound: true}
 }
 
 export const getStaticPaths = async () => {
@@ -163,4 +119,53 @@ export const getStaticPaths = async () => {
       }),
     fallback: true,
   }
+}
+
+export const getStaticProps = async (
+  ctx: GetStaticPropsContext & {previewData?: {token?: string}}
+) => {
+  const {params = {}, draftMode = false} = ctx
+
+  if (!params?.slug || !params.year) return {notFound: true}
+
+  const queryParams = {slug: `${EXHIBITIONS_URL}/${params?.year}/${params?.slug}`}
+
+  const draftViewToken = draftMode ? readToken : ``
+  if (draftMode && !draftViewToken) {
+    throw new Error(DRAFT_MODE_SANITY_READ_TOKEN_ERROR)
+  }
+  const client = getClient(draftMode ? {token: draftViewToken} : undefined)
+
+  const pageType = await getRecordType(queryParams)
+  if (!pageType) return {notFound: true}
+  let data = null
+  if (pageType._type === 'exhibitionPage') {
+    data = await getExhibitionPageBySlug(client, queryParams)
+  }
+  if (pageType._type === 'onlineExhibitionPage') {
+    data = await getOnlineExhibitionsData(client, queryParams)
+  }
+  if (pageType._type === 'exceptionalWork') {
+    data = await getExceptionalWorkData(client, queryParams)
+  }
+
+  const dataLayerProps = await getGTMPageLoadData(queryParams)
+  if (dataLayerProps) dataLayerProps.page_data.site_section = EXHIBITIONS_SECTION
+
+  if (!data) return {notFound: true}
+  if (data) {
+    return {
+      props: {
+        data,
+        dataLayerProps,
+        draftMode,
+        queryParams,
+        slug: params?.slug || null,
+        token: draftViewToken,
+      },
+      revalidate: 1,
+    }
+  }
+
+  return {notFound: true}
 }

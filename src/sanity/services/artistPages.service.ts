@@ -1,4 +1,5 @@
-import {client} from '@/sanity/client'
+import {SanityClient} from 'next-sanity'
+
 import {artistExhibitionsPageData} from '@/sanity/queries/artistExhibitionsPage.queries'
 
 interface ArtistExhibitionsPageData {
@@ -8,6 +9,7 @@ interface ArtistExhibitionsPageData {
 }
 
 export async function getArtistExhibitionsPageData(
+  client: SanityClient,
   slug: string
 ): Promise<ArtistExhibitionsPageData> {
   if (client) {

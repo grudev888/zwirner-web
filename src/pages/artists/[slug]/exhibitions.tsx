@@ -1,32 +1,29 @@
 import {GetStaticProps} from 'next'
 
 import {SEOComponent} from '@/common/components/seo/seo'
+import {DRAFT_MODE_SANITY_READ_TOKEN_ERROR} from '@/common/constants/errorMessages'
+import {ARTISTS_SECTION} from '@/common/constants/gtmPageConstants'
 import ArtistExhibitionsPageContainer from '@/components/containers/pages/artists/exhibitions'
-import {PreviewPage} from '@/components/containers/previews/pagePreview'
+import PreviewPage from '@/components/containers/previews/pagePreview'
+import {SharedPageProps} from '@/pages/_app'
+import {getClient, readToken} from '@/sanity/client'
 import {artistExhibitionsPageData} from '@/sanity/queries/artistExhibitionsPage.queries'
 import {getArtistExhibitionsPageData} from '@/sanity/services/artistPages.service'
 import {getAllArtistPageSlugs} from '@/sanity/services/artists/getAllArtistPageSlugs'
 import {getGTMPageLoadData} from '@/sanity/services/gtm/pageLoad.service'
 import {removePrefixSlug} from '@/utils/slug'
 
-interface PageProps {
-  data: any
-  preview: boolean
-  queryArtistSlug?: Record<string, any>
-}
-
-interface Query {
-  [key: string]: string
-}
-
-export default function ExhibitionsPage({data, preview, queryArtistSlug}: PageProps) {
+export default function ExhibitionsPage({data, draftMode, queryParams, token}: SharedPageProps) {
   const {seo} = data ?? {}
-  if (preview) {
+  if (draftMode) {
     return (
       <PreviewPage
+        data={data}
         query={artistExhibitionsPageData}
-        params={queryArtistSlug}
+        seo={data.seo}
+        params={queryParams}
         Container={ArtistExhibitionsPageContainer}
+        token={token}
       />
     )
   }
@@ -49,31 +46,31 @@ export const getStaticPaths = async () => {
   }
 }
 
-export const getStaticProps: GetStaticProps<PageProps, Query> = async (ctx) => {
-  const {params = {}, preview = false} = ctx
+export const getStaticProps: GetStaticProps = async (ctx) => {
+  const {params = {}, draftMode = false} = ctx
   const artistSlug = `/artists/${params.slug}`
-  const queryArtistSlug = {slug: artistSlug}
+  const queryParams = {slug: artistSlug}
 
-  if (preview) {
-    return {
-      props: {
-        data: null,
-        preview,
-        queryArtistSlug,
-      },
-    }
+  const draftViewToken = draftMode ? readToken : ``
+  if (draftMode && !draftViewToken) {
+    throw new Error(DRAFT_MODE_SANITY_READ_TOKEN_ERROR)
   }
+  const client = getClient(draftMode ? {token: draftViewToken} : undefined)
 
-  const data = await getArtistExhibitionsPageData(artistSlug)
-  const dataLayerProps = await getGTMPageLoadData(queryArtistSlug)
+  const data = await getArtistExhibitionsPageData(client, artistSlug)
+  const dataLayerProps = await getGTMPageLoadData(queryParams)
   if (dataLayerProps) dataLayerProps.page_data.artist = data?.artist?.fullName || ''
+  if (dataLayerProps) dataLayerProps.page_data.site_section = ARTISTS_SECTION
 
   return {
     props: {
       data,
       preview: false,
       dataLayerProps,
-      queryArtistSlug,
+      slug: params?.slug || null,
+      token: draftViewToken,
+      queryParams,
+      draftMode,
     },
     revalidate: 1,
   }

@@ -1,7 +1,9 @@
+import {SanityClient} from 'next-sanity'
+
 import {client} from '@/sanity/client'
 import {allGuidePageSlugs, artistGuidePageBySlug} from '@/sanity/queries/artistsGuide.queries'
 
-export async function getGuideDataBySlug(slug: any): Promise<any[]> {
+export async function getGuideDataBySlug(client: SanityClient, slug: any): Promise<any[]> {
   if (client) {
     return (await client.fetch(artistGuidePageBySlug, slug)) || []
   }

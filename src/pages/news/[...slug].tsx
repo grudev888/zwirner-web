@@ -2,50 +2,32 @@ import {GetStaticProps} from 'next'
 
 import {SEOComponent} from '@/common/components/seo/seo'
 import {NEWS_URL} from '@/common/constants/commonCopies'
+import {DRAFT_MODE_SANITY_READ_TOKEN_ERROR} from '@/common/constants/errorMessages'
 import {NEWS_SECTION, NEWS_SLUG} from '@/common/constants/gtmPageConstants'
 import {ArticleContainer} from '@/components/containers/articles/article'
-import {PreviewPage} from '@/components/containers/previews/pagePreview'
+import PreviewPage from '@/components/containers/previews/pagePreview'
+import {getClient, readToken} from '@/sanity/client'
 import {articleBySlug} from '@/sanity/queries/article.queries'
 import {getArticlePageBySlug} from '@/sanity/services/article.service'
 import {getAllArticlePagesSlugs} from '@/sanity/services/articles/getAllArticlePagesSlugs'
 import {getGTMPageLoadData} from '@/sanity/services/gtm/pageLoad.service'
 import {removePrefixSlug} from '@/utils/slug'
 
-interface QuerySlug {
-  slug: string
-}
+import {SharedPageProps} from '../_app'
 
-interface ArticleCMSData {
-  articleData: any
-  queryParams: QuerySlug
-}
-
-interface PageProps {
-  data: ArticleCMSData
-  preview: boolean
-  slug: string | null
-}
-
-interface Query {
-  [key: string]: any
-}
-
-interface PreviewData {
-  token?: string
-}
-
-export default function Article({data, preview}: PageProps) {
+export default function Article({data, draftMode, token}: SharedPageProps) {
   const {articleData = {}, queryParams} = data ?? {}
   const {seo} = articleData ?? {}
-  if (preview) {
+  if (draftMode) {
     return (
       <>
-        <SEOComponent data={seo} />
         <PreviewPage
+          data={articleData}
+          seo={seo}
           query={articleBySlug}
           params={queryParams}
-          seo={seo}
           Container={ArticleContainer}
+          token={token}
         />
       </>
     )
@@ -68,22 +50,20 @@ export const getStaticPaths = async () => {
   }
 }
 
-export const getStaticProps: GetStaticProps<PageProps, Query, PreviewData> = async (ctx) => {
-  const {params = {}, preview = false} = ctx
+export const getStaticProps: GetStaticProps = async (ctx) => {
+  const {params = {}, draftMode = false} = ctx
 
-  const queryParams = {slug: `${NEWS_URL}/${params?.slug.join('/')}` ?? ``}
+  const querySlug = (params?.slug as string[]).join('/')
 
-  if (preview) {
-    return {
-      props: {
-        data: {queryParams, articleData: null},
-        preview,
-        slug: params?.slug || null,
-      },
-    }
+  const queryParams = {slug: `${NEWS_URL}/${querySlug}`}
+
+  const draftViewToken = draftMode ? readToken : ``
+  if (draftMode && !draftViewToken) {
+    throw new Error(DRAFT_MODE_SANITY_READ_TOKEN_ERROR)
   }
+  const client = getClient(draftMode ? {token: draftViewToken} : undefined)
 
-  const data: any = await getArticlePageBySlug(queryParams)
+  const data: any = await getArticlePageBySlug(client, queryParams)
   if (!data) {
     return {
       notFound: true,
@@ -97,8 +77,9 @@ export const getStaticProps: GetStaticProps<PageProps, Query, PreviewData> = asy
   return {
     props: {
       data: {queryParams, articleData: data},
-      preview,
+      draftMode,
       slug: params?.slug || null,
+      token: draftViewToken,
     },
     revalidate: 1,
   }

@@ -1,4 +1,5 @@
-import {client} from '@/sanity/client'
+import {SanityClient} from 'next-sanity'
+
 import {
   exhibitionPageBySlug,
   ExhibitionPageBySlugPropsSchema,
@@ -6,7 +7,10 @@ import {
   ExhibitionPageBySlugSchema,
 } from '@/sanity/queries/exhibitions/exhibitionPageBySlug'
 
-export async function getExhibitionPageBySlug(params: ExhibitionPageBySlugPropsType) {
+export async function getExhibitionPageBySlug(
+  client: SanityClient,
+  params: ExhibitionPageBySlugPropsType
+) {
   const validatedParams = ExhibitionPageBySlugPropsSchema.parse(params)
   const data = await client.fetch(exhibitionPageBySlug, validatedParams)
   if (!data) return null

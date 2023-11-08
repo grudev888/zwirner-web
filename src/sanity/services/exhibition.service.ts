@@ -1,3 +1,5 @@
+import {SanityClient} from 'next-sanity'
+
 import {client} from '@/sanity/client'
 import {allExhibitions, exhibitionById} from '@/sanity/queries/exhibition.queries'
 import {exhibitionsLandingData} from '@/sanity/queries/exhibitionPage.queries'
@@ -10,7 +12,7 @@ export async function getAllExhibitions(): Promise<any[]> {
   return []
 }
 
-export async function getExhibitionsLandingPageData(): Promise<any> {
+export async function getExhibitionsLandingPageData(client: SanityClient): Promise<any> {
   if (client) {
     return (await client.fetch(exhibitionsLandingData)) || {}
   }
@@ -24,7 +26,7 @@ export async function getExhibitionById(id: any): Promise<any[]> {
   return []
 }
 
-export async function getExhibitionChecklist(params: any): Promise<any[]> {
+export async function getExhibitionChecklist(client: SanityClient, params: any): Promise<any[]> {
   if (client) {
     return (await client.fetch(checklistBySlug, params)) || []
   }

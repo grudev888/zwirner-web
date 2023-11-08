@@ -21,7 +21,7 @@ export const getStaticProps = async (
 ) => {
   const {preview = false, previewData = {}} = ctx
 
-  const params = {slug: SUBSCRIBE_SLUG}
+  const queryParams = {slug: SUBSCRIBE_SLUG}
 
   if (preview && previewData.token) {
     return {
@@ -33,8 +33,11 @@ export const getStaticProps = async (
     }
   }
 
-  const dataLayerProps = await getGTMPageLoadData(params)
-  if (dataLayerProps) dataLayerProps.page_data.site_section = SUBSCRIBE_SECTION
+  const dataLayerProps = await getGTMPageLoadData(queryParams)
+  if (dataLayerProps) {
+    dataLayerProps.page_data.site_section = SUBSCRIBE_SECTION
+    dataLayerProps.page_data.page_update_date = ''
+  }
   return {
     props: {
       data: {},
