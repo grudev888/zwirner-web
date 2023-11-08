@@ -26,6 +26,7 @@ import {formatCurrency} from '@/utils/currency/formatCurrency'
 
 import styles from './index.module.css'
 import {getImageDimensions, mapArtworkData, photosGrid} from './mapper'
+import {ARTWORK_BG_COLORS_TO_TW_VALUES} from '@/components/pageBuilder/DzCard/cardMapper'
 
 type Props = {
   data: ArtworkDataType
@@ -45,9 +46,6 @@ export const ArtworkContainer = ({data}: Props) => {
   const allPhotoGridItems = photosGrid(data) || []
   const photoDimensionsMap = getImageDimensions(data)
   const photoGridImageStyleMap: Record<string, string> = {}
-  Object.entries(photoDimensionsMap).forEach(([key, dimensions]) => {
-    photoGridImageStyleMap[key] = isImageZoomable(dimensions as any) ? 'cursor-zoom-in' : ''
-  })
   const firstItemMediaProps = allPhotoGridItems[0]
   const descriptionRef = useRef<HTMLDivElement>(null)
   const detailTextStyles = {normal: 'text-black-60 !text-sm'}
@@ -69,6 +67,7 @@ export const ArtworkContainer = ({data}: Props) => {
 
   const {
     artworkType,
+    backgroundColor,
     editionInformation,
     title,
     medium,
@@ -89,10 +88,19 @@ export const ArtworkContainer = ({data}: Props) => {
   } = data
 
   const {artistName, artistSlug, displayTitle, secondaryCta} = mapArtworkData(data)
+  const imageBgColor = backgroundColor ? ARTWORK_BG_COLORS_TO_TW_VALUES[backgroundColor] : ''
   const priceAndCurrency = price ? formatCurrency(currency || 'USD', price) : null
   const isFramedShown = artworkType !== 'sculpture' && (framed == 'Framed' || framed == 'Unframed')
   const isArtworkTitlePortableText = !!displayTitle
   const artworkTitle = isArtworkTitlePortableText ? displayTitle : title
+
+  Object.entries(photoDimensionsMap).forEach(([key, dimensions]) => {
+    const zoomStyle = isImageZoomable(dimensions as any) ? 'cursor-zoom-in' : ''
+    const bgStyle = imageBgColor || ''
+
+    photoGridImageStyleMap[key] = `${zoomStyle} ${bgStyle}`
+  })
+
   const ctaContainer = (
     <div className={styles.ctaContainer}>
       <div className={styles.ctaContainerTop} />
@@ -165,7 +173,10 @@ export const ArtworkContainer = ({data}: Props) => {
                   type={CARD_TYPES.ARTWORK}
                   data={firstItemMediaProps}
                   onClickImage={onClickPhotoCard}
-                  imageStyles={photoGridImageStyleMap[firstItemMediaProps.id] || ''}
+                  imageStyles={cn(
+                    photoGridImageStyleMap[firstItemMediaProps.id] || '',
+                    imageBgColor
+                  )}
                 />
               </div>
             )}

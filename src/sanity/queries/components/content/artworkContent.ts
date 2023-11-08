@@ -38,6 +38,7 @@ export const artworkContent = groq`
     salesInformation,
     productInformation,
     description,
+    backgroundColor,
     "product": shopify->store{ id, variants[]->{ store { id, price, inventory { isAvailable } } } },
     "artists": artists[]->
   },
@@ -55,7 +56,7 @@ export const ArtworkTypeSchema = z.enum([
 export const ArtworkCurrencySchema = z.enum(['EUR', 'USD', 'GBP', 'HKD'])
 export const ArtworkAvailabilitySchema = z.enum(['available', 'unavailable'])
 export const ArtworkFramedSchema = z.enum(['Framed', 'Unframed', 'NotApplicable'])
-
+export const ArtworkBackgroundColorSchema = z.enum(['transparent', 'lightGrey', 'darkGrey'])
 // TODO: Describe properly z.any() types
 export const ArtworkContentSchema = z.object({
   _id: z.string(),
@@ -87,4 +88,5 @@ export const ArtworkContentSchema = z.object({
   productInformation: z.array(z.any()).nullish(),
   description: z.array(z.any()).nullish(),
   product: z.nullable(z.any()),
+  backgroundColor: z.nullable(ArtworkBackgroundColorSchema),
 })

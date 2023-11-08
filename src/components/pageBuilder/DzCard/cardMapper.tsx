@@ -16,6 +16,14 @@ import {BookVariation, CtaActions, CTASchemaType, DzCardExtendedProps} from '@/s
 
 const ARTWORK_CARD_TITLE_CHAR_LIMIT = 300
 
+type ARTWORK_BG_COLOR_NAMES = 'transparent' | 'lightGrey' | 'darkGrey'
+
+export const ARTWORK_BG_COLORS_TO_TW_VALUES = {
+  transparent: '!bg-transparent',
+  lightGrey: '!bg-[#f7f7f7]',
+  darkGrey: '!bg-black-20',
+}
+
 export const dzCardOverrides = (props: DzCardExtendedProps) => {
   const {mediaOverride, enableOverrides, isSmall} = props ?? {}
   if (!enableOverrides) return {}
@@ -119,6 +127,7 @@ export const contentTypesMapper: any = {
   artwork: (data: any, props: DzCardExtendedProps) => {
     const {
       artists,
+      backgroundColor,
       dimensions,
       displayCustomTitle,
       displayTitle,
@@ -133,7 +142,9 @@ export const contentTypesMapper: any = {
       product,
       artworkCTA,
     } = data ?? {}
-
+    const imageBgColor = backgroundColor
+      ? ARTWORK_BG_COLORS_TO_TW_VALUES[backgroundColor as ARTWORK_BG_COLOR_NAMES]
+      : ''
     const {cardSize, additionalInformation, mediaOverride} = props ?? {}
     const [mainArtist] = artists ?? []
     const {fullName} = mainArtist ?? {}
@@ -236,6 +247,7 @@ export const contentTypesMapper: any = {
       text: framedDimensions,
       customStyles: {normal: 'text-black-60 !text-sm'},
     })
+
     return {
       type: CARD_TYPES.ARTWORK,
       data: {
@@ -255,6 +267,7 @@ export const contentTypesMapper: any = {
         ...(ctasOverrides ?? {}),
       },
       onViewport: () => {},
+      imageStyles: imageBgColor,
     }
   },
   exhibitionPage: (data: any, props: DzCardExtendedProps) => {
