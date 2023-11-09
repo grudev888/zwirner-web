@@ -2,6 +2,7 @@ import {InquireFormContextData, INQUIRY_TYPES} from '@zwirner/design-system'
 import {useRouter} from 'next/router'
 import {useRef, useState} from 'react'
 
+import {ErrorType, GTMErrorMessageEvent} from '@/common/utils/gtm/GTMErrorMessageEvent'
 import {
   gtmInquiryFormStartedEvent,
   gtmInquiryFormSubmitEvent,
@@ -111,6 +112,10 @@ export const useHashRoutedInquiryModal = () => {
         return {isSuccess: !result?.error, error: result?.error}
       })
       .catch((error) => {
+        GTMErrorMessageEvent({
+          error_message: error.error.message,
+          type: ErrorType.FORM,
+        })
         return {isSuccess: false, error}
       })
   }
