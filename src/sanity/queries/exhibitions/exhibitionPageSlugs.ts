@@ -1,16 +1,14 @@
 import {groq} from 'next-sanity'
 import {z} from 'zod'
 
-import {env} from '@/env.mjs'
 import {DEV_GROQ_BUILD_LIMIT} from '@/sanity/constants'
 
-// Only run a full build of exhibition pages on production. Other envs will build only first 100 pages, the rest will be rendered on demand
-const limit = env.NEXT_PUBLIC_VERCEL_ENV === 'production' ? '' : DEV_GROQ_BUILD_LIMIT
-
+// There's a limit of returned pages for envs different than production.
+// Pages not returned in this query will be generated on demand
 export const exhibitionPageSlugs = groq`
 *[_type in ["exhibitionPage", "exceptionalWork", "onlineExhibitionPage"] && defined(slug.current)]{
   "params": { "slug": slug.current },
-}${limit}`
+}${DEV_GROQ_BUILD_LIMIT}`
 
 export const ExhibitionPageSlugsSchema = z.array(
   z.object({
