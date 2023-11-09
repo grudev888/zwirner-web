@@ -89,4 +89,5 @@ export const SURVEY = 'Survey'
 export const AVAILABLE_WORKS = 'Available Works'
 export const TO_LEARN_MORE_ABOUT_AVAILABLE_WORKS_EXTENDED =
   'To learn more about available works, please provide your contact information and a member of the gallery will be in touch shortly.'
+export const DOWNLOAD_PRESS_RELEASE = 'Download Press Release'
 export const RECAPTCHA_ERROR_MESSAGE = 'reCAPTCHA connect error'

@@ -79,6 +79,17 @@ export const getHeaderVariant = (data: any) => {
         const safeDescription = safeText({text: extras?.caption, key: 'description'})
         prevCopy.items = [...prevCopy.items, {media, ...safeDescription}]
       }
+
+      if (MediaTypes.VIDEO_RECORD === type || MediaTypes.VIDEO === type) {
+        prevCopy.numberOfVideos = prevCopy.numberOfVideos + 1
+
+        const {media, extras} = dzMediaMapper({
+          data: act,
+          ImgElement: Image,
+        })
+        const safeDescription = safeText({text: extras?.caption, key: 'description'})
+        prevCopy.items = [...prevCopy.items, {media, ...safeDescription}]
+      }
       if (_type === 'artwork') {
         const props = mapMultipleArtworkCardForArticle(act)
         prevCopy.numberOfArtWorks = prevCopy.numberOfArtWorks + 1
@@ -86,18 +97,23 @@ export const getHeaderVariant = (data: any) => {
       }
       return prevCopy
     },
-    {items: [], numberOfImages: 0, numberOfArtWorks: 0}
+    {items: [], numberOfImages: 0, numberOfArtWorks: 0, numberOfVideos: 0}
   )
 
-  const isSimpleImage = headerObjects?.numberOfImages === 1
+  const isSimpleMedia =
+    (headerObjects?.numberOfImages ?? 0) + (headerObjects?.numberOfVideos ?? 0) === 1
+
   const is1UpArtwork = headerObjects?.numberOfArtWorks === 1
 
   return {
-    isSimpleImage,
+    isSimpleMedia,
     is1UpArtwork,
-    isImageCarousel: headerObjects?.numberOfImages > 1,
+    isMediaCarousel:
+      (headerObjects?.numberOfImages ?? 0) + (headerObjects?.numberOfVideos ?? 0) > 1,
     isArtworkCarousel: headerObjects?.numberOfArtWorks > 1,
-    isMixedCarousel: headerObjects?.numberOfArtWorks > 0 && headerObjects?.numberOfImages > 0,
-    items: is1UpArtwork || isSimpleImage ? headerObjects?.items[0] : headerObjects?.items,
+    isMixedCarousel:
+      headerObjects?.numberOfArtWorks > 0 &&
+      (headerObjects?.numberOfImages > 0 || headerObjects?.numberOfVideos > 0),
+    items: is1UpArtwork || isSimpleMedia ? headerObjects?.items[0] : headerObjects?.items,
   }
 }

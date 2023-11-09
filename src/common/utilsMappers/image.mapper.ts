@@ -27,7 +27,7 @@ interface DzMediaVideoMapper {
   extraVideoProps?: any
 }
 
-type DzMediaMapper = DzMediaImageMapper | DzMediaVideoMapper
+type DzMediaMapper = (DzMediaImageMapper | DzMediaVideoMapper) & {asMediaCard?: boolean}
 
 const getPrivateVimeoId = (urlObject: any) => {
   const pathname = urlObject?.pathname || ''
@@ -255,8 +255,55 @@ export const getImageMedia = ({
 }
 
 export const dzMediaMapper = (media: DzMediaMapper) => {
-  const {type} = media?.data ?? {}
-  return type === MediaTypes.VIDEO || type === MediaTypes.VIDEO_RECORD
-    ? getVideoMedia(media as DzMediaVideoMapper)
-    : getImageMedia(media as DzMediaImageMapper)
+  const {type, ImgElement} = media?.data ?? {}
+  const mediaMapped =
+    type === MediaTypes.VIDEO || type === MediaTypes.VIDEO_RECORD
+      ? getVideoMedia(media as DzMediaVideoMapper)
+      : getImageMedia(media as DzMediaImageMapper)
+
+  const {asMediaCard} = media ?? {}
+
+  /*
+    Image -> Image, Image is used as the card view
+    Image -> Custom Video, do no show video in card
+    Image -> Video Record
+    * If poster image is added, then the poster image should be used in the card view
+    * If no poster image is added, then do not display video in card view.
+  */
+
+  const videoAsMediaCard = asMediaCard && mediaMapped?.media?.type === MEDIA_TYPES.VIDEO
+  if (videoAsMediaCard && type === MediaTypes.VIDEO) {
+    return {
+      media: {},
+      hideMedia: true,
+      hideImage: true,
+      extras: null,
+    }
+  }
+
+  if (videoAsMediaCard) {
+    const {videoProps, url} = mediaMapped?.media ?? {}
+    const {source} = videoProps ?? {}
+    const {posterImage} = source ?? {}
+    const hideVideo = !posterImage
+    return {
+      media: {
+        url,
+        type: MEDIA_TYPES.IMAGE,
+        ImgElement,
+        imgProps: {
+          src: posterImage,
+          alt: 'Media Image',
+          fill: true,
+          ...(media as DzMediaImageMapper)?.extraImgProps,
+        },
+        ...(media as DzMediaImageMapper)?.options,
+      },
+      hideMedia: hideVideo,
+      hideImage: hideVideo,
+      extras: null,
+    }
+  }
+
+  return mediaMapped
 }

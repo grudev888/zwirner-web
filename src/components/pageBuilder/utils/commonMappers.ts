@@ -46,6 +46,7 @@ export const cardContentArticle = ({data, props}: any) => {
     options: {
       aspectRatio: isSmall ? MEDIA_ASPECT_RATIOS['4:3'] : MEDIA_ASPECT_RATIOS['16:9'],
     },
+    asMediaCard: true,
   })
   const additionalInformationText = safeText({
     key: 'additionalInformation',

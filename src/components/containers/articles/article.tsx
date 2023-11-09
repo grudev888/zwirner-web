@@ -11,6 +11,7 @@ import {
 } from '@zwirner/design-system'
 import cn from 'classnames'
 
+import {DOWNLOAD_PRESS_RELEASE} from '@/common/constants/commonCopies'
 import {FullWidthFlexCol} from '@/components/containers/layout/FullWidthFlexCol'
 import PageBuilder from '@/components/pageBuilder'
 import {showInterstitialSection} from '@/components/pageBuilder/DzInterstitial/interstitialMapper'
@@ -100,7 +101,7 @@ export const ArticleContainer = ({data}: ArticleContainerProps) => {
               openNewTab
               variant={LINK_VARIANTS.TEXT}
             >
-              Download Press Release
+              {DOWNLOAD_PRESS_RELEASE}
             </DzLink>
           ) : null}
         </article>
