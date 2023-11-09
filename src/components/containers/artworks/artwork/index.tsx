@@ -15,7 +15,8 @@ import {
 import cn from 'classnames'
 import {useRef, useState} from 'react'
 
-import {CTA, CTA_TEXT} from '@/common/constants/cart'
+import {artworkCTAMapper, ctaMapper} from '@/common/utilsMappers/cta.mapper'
+import {createInquireModalArtworkProps} from '@/components/hooks/useOpenInquiryDispatch'
 import {ARTWORK_BG_COLORS_TO_TW_VALUES} from '@/components/pageBuilder/DzCard/cardMapper'
 import {DzCard} from '@/components/wrappers/DzCardWrapper'
 import {DzComplexGrid} from '@/components/wrappers/DzComplexGridWrapper'
@@ -23,6 +24,7 @@ import {DzLink} from '@/components/wrappers/DzLinkWrapper'
 import {DzPortableText} from '@/components/wrappers/DzPortableTextWrapper'
 import {builder} from '@/sanity/imageBuilder'
 import {ArtworkDataType} from '@/sanity/queries/artworks/artworkData'
+import {CtaActions} from '@/sanity/types'
 import {formatCurrency} from '@/utils/currency/formatCurrency'
 
 import styles from './index.module.css'
@@ -66,6 +68,7 @@ export const ArtworkContainer = ({data}: Props) => {
   }
 
   const {
+    artworkCTA,
     artworkType,
     backgroundColor,
     editionInformation,
@@ -83,16 +86,26 @@ export const ArtworkContainer = ({data}: Props) => {
     framedDimensions,
     additionalCaption,
     dateSelection: {year},
-    artworkCTA,
     product,
   } = data
 
-  const {artistName, artistSlug, displayTitle, secondaryCta} = mapArtworkData(data)
+  const {artistName, artistSlug, displayTitle} = mapArtworkData(data)
   const imageBgColor = backgroundColor ? ARTWORK_BG_COLORS_TO_TW_VALUES[backgroundColor] : ''
   const priceAndCurrency = price ? formatCurrency(currency || 'USD', price) : null
   const isFramedShown = artworkType !== 'sculpture' && (framed == 'Framed' || framed == 'Unframed')
   const isArtworkTitlePortableText = !!displayTitle
   const artworkTitle = isArtworkTitlePortableText ? displayTitle : title
+  const artworkCTAs = artworkCTAMapper(data, product)
+  const inquiryModalProps = createInquireModalArtworkProps(data)
+  const {primaryCTA, secondaryCTA} = ctaMapper({
+    data: {primaryCTA: artworkCTAs.primaryCTA, secondaryCTA: artworkCTAs.secondaryCTA},
+    props: {
+      hideSecondary: false,
+      ctaActionProps: artworkCTA?.CTA === CtaActions.INQUIRE ? inquiryModalProps : null,
+      secondaryCtaActionProps:
+        artworkCTA?.secondaryCTA === CtaActions.INQUIRE ? inquiryModalProps : null,
+    },
+  })
 
   Object.entries(photoDimensionsMap).forEach(([key, dimensions]) => {
     const zoomStyle = isImageZoomable(dimensions as any) ? 'cursor-zoom-in' : ''
@@ -121,41 +134,28 @@ export const ArtworkContainer = ({data}: Props) => {
           {isFramedShown && <DzText text={framed} className={styles.framed} />}
         </div>
         <div className={styles.ctaButtonsContainer}>
-          {!!product && artworkCTA?.CTA === CTA.ECOMM && (
-            <DzButton
-              className={styles.btnCTA}
-              size={BUTTON_SIZES.LARGE}
-              onClick={() => {}}
-              disabled={!product.variants[0].store.inventory.isAvailable}
-            >
-              {!product.variants[0].store.inventory.isAvailable
-                ? CTA_TEXT.SOLD_OUT
-                : artworkCTA?.CTAText || CTA_TEXT.PURCHASE}
-            </DzButton>
-          )}
-          {artworkCTA?.CTA === CTA.SOLDOUT && (
-            <DzButton className={styles.btnCTA} size={BUTTON_SIZES.LARGE} disabled>
-              {artworkCTA?.CTAText || CTA_TEXT.SOLD_OUT}
-            </DzButton>
-          )}
-          {artworkCTA?.CTA === CTA.INQUIRE && (
-            <DzButton className={styles.btnCTA} size={BUTTON_SIZES.LARGE}>
-              {artworkCTA?.CTAText || CTA_TEXT.INQUIRE}
-            </DzButton>
-          )}
-          {artworkCTA?.CTA === CTA.CUSTOM && (
-            <DzButton className={styles.btnCTA} size={BUTTON_SIZES.LARGE}>
-              {artworkCTA?.CTAText || CTA_TEXT.CUSTOM}
-            </DzButton>
-          )}
-          {secondaryCta && (
-            <DzButton
-              className={cn(styles.btnCTA, styles.btnCTASecondary)}
-              size={BUTTON_SIZES.LARGE}
-            >
-              {secondaryCta.text}
-            </DzButton>
-          )}
+          {primaryCTA || secondaryCTA ? (
+            <>
+              {primaryCTA ? (
+                <DzButton
+                  size={BUTTON_SIZES.LARGE}
+                  {...(primaryCTA.ctaProps ?? {})}
+                  className={styles.btnCTA}
+                >
+                  {primaryCTA.text}
+                </DzButton>
+              ) : null}
+              {secondaryCTA ? (
+                <DzButton
+                  size={BUTTON_SIZES.LARGE}
+                  {...(secondaryCTA.ctaProps ?? {})}
+                  className={cn(styles.btnCTA, styles.btnCTASecondary)}
+                >
+                  {secondaryCTA.text}
+                </DzButton>
+              ) : null}
+            </>
+          ) : null}
         </div>
       </div>
     </div>

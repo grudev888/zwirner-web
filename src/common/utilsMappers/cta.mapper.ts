@@ -1,16 +1,12 @@
 import {BUTTON_VARIANTS, ButtonModes} from '@zwirner/design-system'
 import Router from 'next/router'
 
-import {BUY_NOW, LEARN_MORE} from '@/common/constants/commonCopies'
+import {CTA, CTA_TEXT} from '@/common/constants/cart'
+import {LEARN_MORE} from '@/common/constants/commonCopies'
 import {CTAClickEvent} from '@/events/CTAClickEvent'
-import {CtaActions} from '@/sanity/types'
+import {CtaActions, CTASchemaType} from '@/sanity/types'
 
 import {SUBSCRIBE_METHOD} from '../constants/subscribe'
-
-enum ARTWORK_AVAILABILITY {
-  UNABLE = 'unavailable',
-  AVAILABLE = 'available',
-}
 
 // TODO UNIFY CTA'S & TYPES FOR THEM
 interface CtaMapperProps {
@@ -22,6 +18,7 @@ interface CtaMapperProps {
 interface CtaMapperInterstitial {
   data: any
   props?: any
+  secondaryProps?: any
 }
 
 const handleCTAClick = (action?: CtaActions, extraProps?: any) => {
@@ -80,7 +77,8 @@ export const ctaMapper = ({data, props}: CtaMapperProps) => {
     url,
     hideSecondary = false,
     defaultLinkText,
-    ctaActionProps: extraProps,
+    ctaActionProps,
+    secondaryCtaActionProps,
     linkAsButton,
   } = props ?? {}
 
@@ -97,7 +95,7 @@ export const ctaMapper = ({data, props}: CtaMapperProps) => {
                 if (handleClick) {
                   handleClick(action)
                 }
-                handleCTAClick(action, extraProps)
+                handleCTAClick(action, ctaActionProps)
               },
               disabled: action === CtaActions.SOLD_OUT,
               mode: ButtonModes.DARK,
@@ -129,7 +127,7 @@ export const ctaMapper = ({data, props}: CtaMapperProps) => {
                   blank: secondaryBlank,
                   linkedHref: secondaryHref,
                 })
-                handleCTAClick(secondaryAction, {ctaText: secondaryCTA})
+                handleCTAClick(secondaryAction, secondaryCtaActionProps)
               },
             },
           },
@@ -179,41 +177,63 @@ export const ctaMapperInterstitial = ({data}: CtaMapperInterstitial) => {
   }
 }
 
-export const artworkCTAMapper = (ctaData: any, availability: ARTWORK_AVAILABILITY) => {
-  // If Artwork is available to Purchase, the Primary CTA should be ‘Buy Now’ and ‘Inquire’ moves to the Tertiary CTA styling
-  const {CTA, CTAText, SecondaryCTAText, secondaryCTA} = ctaData ?? {}
-  const isAvailableToPurchase = availability === ARTWORK_AVAILABILITY.AVAILABLE
-  const primaryCTAText = isAvailableToPurchase ? BUY_NOW : CTAText
-  const primaryCTAMap =
-    CTAText && CTA
-      ? {
-          primaryCTA: {
-            text: primaryCTAText,
-            ctaProps: {
-              onClick: () => {
-                handleCTAClick(CTA, {ctaText: primaryCTAText})
-              },
-            },
-          },
+export const artworkCTAMapper = (data: any, product: any) => {
+  const {artworkCTA} = data ?? {}
+  let primaryCTA!: Omit<CTASchemaType, 'type'> & {disabled?: boolean}
+  let secondaryCTA!: Omit<CTASchemaType, 'type'> & {disabled?: boolean}
+
+  switch (artworkCTA?.CTA) {
+    case CTA.ECOMM:
+      if (product)
+        primaryCTA = {
+          action: product.variants[0].store.inventory.isAvailable
+            ? CtaActions.ECOMM
+            : CtaActions.SOLD_OUT,
+          text: !product.variants[0].store.inventory.isAvailable
+            ? CTA_TEXT.SOLD_OUT
+            : artworkCTA?.CTAText || CTA_TEXT.PURCHASE,
+          disabled: !product.variants[0].store.inventory.isAvailable,
         }
-      : {}
-  const secondaryCTAMap =
-    SecondaryCTAText && secondaryCTA
-      ? {
-          secondaryCTA: {
-            text: SecondaryCTAText,
-            ctaProps: {
-              variant: BUTTON_VARIANTS.TERTIARY,
-              onClick: () => {
-                handleCTAClick(secondaryCTA, {ctaText: SecondaryCTAText})
-              },
-            },
-          },
-        }
-      : {}
+      break
+    case CTA.SOLDOUT:
+      primaryCTA = {
+        action: CtaActions.SOLD_OUT,
+        text: artworkCTA?.CTAText || CTA_TEXT.SOLD_OUT,
+        disabled: true,
+      }
+      break
+    case CTA.INQUIRE:
+      primaryCTA = {
+        action: CtaActions.INQUIRE,
+        text: artworkCTA?.CTAText || CTA_TEXT.INQUIRE,
+      }
+      break
+    case CTA.CUSTOM:
+      primaryCTA = {
+        action: CtaActions.CUSTOM,
+        text: artworkCTA?.CTAText,
+        link: {href: artworkCTA?.CTALink, blank: true},
+      }
+      break
+    default:
+      break
+  }
+
+  if (artworkCTA?.secondaryCTA == CTA.INQUIRE) {
+    secondaryCTA = {
+      action: CtaActions.INQUIRE,
+      text: artworkCTA?.SecondaryCTAText || CTA_TEXT.INQUIRE,
+    }
+  } else if (artworkCTA?.secondaryCTA == CTA.CUSTOM) {
+    secondaryCTA = {
+      action: CtaActions.CUSTOM,
+      text: artworkCTA?.SecondaryCTAText,
+      link: {href: artworkCTA?.SecondaryCTALink, blank: true},
+    }
+  }
 
   return {
-    ...primaryCTAMap,
-    ...secondaryCTAMap,
+    primaryCTA,
+    secondaryCTA,
   }
 }

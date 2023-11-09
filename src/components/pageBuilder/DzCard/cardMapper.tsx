@@ -1,9 +1,8 @@
 import {CARD_TYPES, CardViewport, MEDIA_ASPECT_RATIOS, MEDIA_TYPES} from '@zwirner/design-system'
 import Image from 'next/image'
 
-import {CTA, CTA_TEXT} from '@/common/constants/cart'
 import {LISTEN_NOW, ORDER_NOW} from '@/common/constants/commonCopies'
-import {ctaMapper} from '@/common/utilsMappers/cta.mapper'
+import {artworkCTAMapper, ctaMapper} from '@/common/utilsMappers/cta.mapper'
 import {dateSelectionArtworkMapper, mapSingleDateFormat} from '@/common/utilsMappers/date.mapper'
 import {dzMediaMapper} from '@/common/utilsMappers/image.mapper'
 import {safeText} from '@/common/utilsMappers/safe'
@@ -12,7 +11,7 @@ import {parseAvailability} from '@/components/containers/home/utils'
 import {createInquireModalArtworkProps} from '@/components/hooks/useOpenInquiryDispatch'
 import {exhibitionCommonMapper} from '@/components/pageBuilder/utils/common'
 import {cardContentArticle} from '@/components/pageBuilder/utils/commonMappers'
-import {BookVariation, CtaActions, CTASchemaType, DzCardExtendedProps} from '@/sanity/types'
+import {BookVariation, DzCardExtendedProps} from '@/sanity/types'
 
 const ARTWORK_CARD_TITLE_CHAR_LIMIT = 300
 
@@ -140,7 +139,6 @@ export const contentTypesMapper: any = {
       slug,
       framedDimensions,
       product,
-      artworkCTA,
     } = data ?? {}
     const imageBgColor = backgroundColor
       ? ARTWORK_BG_COLORS_TO_TW_VALUES[backgroundColor as ARTWORK_BG_COLOR_NAMES]
@@ -149,61 +147,7 @@ export const contentTypesMapper: any = {
     const [mainArtist] = artists ?? []
     const {fullName} = mainArtist ?? {}
     const {current} = slug ?? {}
-    let primaryCTA!: CTASchemaType
-    let secondaryCTA!: CTASchemaType
-    switch (data?.artworkCTA?.CTA) {
-      case CTA.ECOMM:
-        if (product)
-          primaryCTA = {
-            type: 'button',
-            action: product.variants[0].store.inventory.isAvailable
-              ? CtaActions.ECOMM
-              : CtaActions.SOLD_OUT,
-            text: !product.variants[0].store.inventory.isAvailable
-              ? CTA_TEXT.SOLD_OUT
-              : artworkCTA?.CTAText || CTA_TEXT.PURCHASE,
-          }
-        break
-      case CTA.SOLDOUT:
-        primaryCTA = {
-          type: 'button',
-          action: CtaActions.SOLD_OUT,
-          text: artworkCTA?.CTAText || CTA_TEXT.SOLD_OUT,
-        }
-        break
-      case CTA.INQUIRE:
-        primaryCTA = {
-          type: 'button',
-          action: CtaActions.INQUIRE,
-          text: artworkCTA?.CTAText || CTA_TEXT.INQUIRE,
-        }
-        break
-      case CTA.CUSTOM:
-        primaryCTA = {
-          type: 'button',
-          action: CtaActions.CUSTOM,
-          text: artworkCTA?.CTAText,
-          link: {href: artworkCTA?.CTALink, blank: true},
-        }
-        break
-      default:
-        break
-    }
-    if (artworkCTA?.secondaryCTA == CTA.INQUIRE) {
-      secondaryCTA = {
-        type: 'button',
-        action: CtaActions.INQUIRE,
-        text: artworkCTA?.SecondaryCTAText || CTA_TEXT.INQUIRE,
-      }
-    }
-    if (artworkCTA?.secondaryCTA == CTA.CUSTOM) {
-      secondaryCTA = {
-        type: 'button',
-        action: CtaActions.CUSTOM,
-        text: artworkCTA?.SecondaryCTAText,
-        link: {href: artworkCTA?.SecondaryCTALink, blank: true},
-      }
-    }
+    const {primaryCTA, secondaryCTA} = artworkCTAMapper(data, product)
 
     const ctasOverrides = ctaMapper({
       data: {...props, primaryCTA, secondaryCTA},
