@@ -18,6 +18,7 @@ export const mapArtworkData = ({
         key: 'displayTitle',
         text: displayTitle,
         customStyles: {normal: 'inline'},
+        containerStyles: 'inline',
       })
     : {}
 

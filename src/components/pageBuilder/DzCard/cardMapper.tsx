@@ -172,6 +172,8 @@ export const contentTypesMapper: any = {
           key: 'artworkTitle',
           text: displayTitle,
           charLimit: ARTWORK_CARD_TITLE_CHAR_LIMIT,
+          customStyles: {normal: 'inline'},
+          containerStyles: 'inline',
         })
       : null
     const additionalInformationText = safeText({

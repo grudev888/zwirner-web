@@ -6,6 +6,7 @@ interface SafeTextProps {
   text: any
   prefix?: string
   customStyles?: any
+  containerStyles?: string
   charLimit?: number
 }
 
@@ -14,6 +15,7 @@ export const safeText = ({
   text,
   prefix = 'portableText',
   customStyles = {normal: '!mx-0'},
+  containerStyles = '',
   charLimit,
 }: SafeTextProps) => {
   if (!text) return {}
@@ -29,6 +31,7 @@ export const safeText = ({
         portableProps={{value: text}}
         builder={builder}
         customStyles={customStyles}
+        containerStyles={containerStyles}
         charLimit={charLimit}
       />
     ),
