@@ -1,0 +1,28 @@
+name: Lighthouse Analysis
+on: [deployment_status]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.deployment_status.environment_url }}
+  cancel-in-progress: true
+
+jobs:
+  lighthouse_staging:
+    name: Staging
+    runs-on: ubuntu-latest
+    if: github.event.deployment_status.state == 'success' && contains(github.event.deployment_status.environment_url, 'web-staging')
+
+    env:
+      CONFIG: .github/workflows/lighthouserc.js
+      ENVIRONMENT_URL: ${{ github.event.deployment_status.environment_url }}
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.deployment_status.deployment.ref }}
+          sparse-checkout: ${{ env.CONFIG }}
+          sparse-checkout-cone-mode: false
+
+      - name: Analyze
+        run: npx -y @lhci/cli@0.12.0 autorun --config ${{ env.CONFIG }}
+        env:
+          LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
