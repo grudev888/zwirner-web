@@ -160,7 +160,7 @@ export const GTMPodcastCompleteText = {
 // Product Events
 export const GTMProductListingViewedText = {
   event: 'view_item_list',
-  detailed_event: 'Product Listing Viewed',
+  detailed_event: 'Product Listing Displayed',
 }
 
 export const GTMProductListingClickedText = {

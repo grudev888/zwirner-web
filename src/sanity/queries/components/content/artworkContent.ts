@@ -39,6 +39,7 @@ export const artworkContent = groq`
     productInformation,
     description,
     backgroundColor,
+    _createdAt,
     "product": shopify->store{ id, variants[]->{ store { id, price, inventory { isAvailable } } } },
     "artists": artists[]->
   },
@@ -78,6 +79,7 @@ export const ArtworkContentSchema = z.object({
   framedDimensions: z.array(z.any()).nullish(),
   framed: ArtworkFramedSchema,
   availability: z.nullable(ArtworkAvailabilitySchema),
+  _createdAt: z.string(),
   artworkCTA: z.nullable(z.any()),
   price: z.number().nullish(),
   currency: ArtworkCurrencySchema.nullish(),

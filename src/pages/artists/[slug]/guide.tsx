@@ -62,8 +62,10 @@ export const getStaticProps: GetStaticProps = async (ctx) => {
 
   const data = await getGuideDataBySlug(client, queryParams)
   const dataLayerProps = await getGTMPageLoadData(queryParams)
-  if (dataLayerProps) dataLayerProps.page_data.artist = data[0]?.artist?.fullName
-  if (dataLayerProps) dataLayerProps.page_data.site_section = ARTISTS_SECTION
+  if (dataLayerProps) {
+    dataLayerProps.page_data.artist = data[0]?.artist?.fullName || ''
+    dataLayerProps.page_data.site_section = ARTISTS_SECTION
+  }
 
   return {
     props: {

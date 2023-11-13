@@ -3,6 +3,7 @@ import {useRouter} from 'next/router'
 
 import {SEOComponent} from '@/common/components/seo/seo'
 import {DRAFT_MODE_SANITY_READ_TOKEN_ERROR} from '@/common/constants/errorMessages'
+import {ARTWORKS_SECTION} from '@/common/constants/gtmPageConstants'
 import {ArtworkContainer} from '@/components/containers/artworks/artwork'
 import PreviewPage from '@/components/containers/previews/pagePreview'
 import {getClient, readToken} from '@/sanity/client'
@@ -67,19 +68,14 @@ export const getStaticProps: GetStaticProps = async (ctx) => {
   const client = getClient(draftMode ? {token: draftViewToken} : undefined)
 
   const data = await getArtworkData(client, querySlug)
-  const dataLayerProps = await getGTMPageLoadData(querySlug)
   if (!data) return {notFound: true}
 
+  const dataLayerProps = await getGTMPageLoadData(querySlug)
+  if (dataLayerProps) dataLayerProps.page_data.site_section = ARTWORKS_SECTION
   return {
     props: {
       data,
-      dataLayerProps: {
-        ...dataLayerProps,
-        page_data: {
-          ...dataLayerProps?.page_data,
-          site_section: 'artworks',
-        },
-      },
+      dataLayerProps,
       slug: querySlug || null,
       draftMode,
       token: draftViewToken,

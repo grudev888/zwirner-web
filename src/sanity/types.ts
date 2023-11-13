@@ -1,5 +1,7 @@
 import {ButtonModes, ButtonVariant, EditorialType, SplitTypes} from '@zwirner/design-system'
 
+import {PageState} from '@/store/pageStore'
+
 export type GlobalSEOScheme = {
   _id: string
   globalSEOTitle: string | null
@@ -165,6 +167,7 @@ export type DzCardExtendedProps = DzCardSchemaProps & {
   isOnGrid: boolean
   isSmall: boolean
   cardSize: any
+  pageData: PageState
 }
 
 export type DzMediaSchemaProps = {

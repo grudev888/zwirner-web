@@ -2,6 +2,10 @@ import {CARD_TYPES, CardViewport, MEDIA_ASPECT_RATIOS, MEDIA_TYPES} from '@zwirn
 import Image from 'next/image'
 
 import {LISTEN_NOW, ORDER_NOW} from '@/common/constants/commonCopies'
+import {
+  gtmProductListingItemClickedEvent,
+  gtmProductListingViewedEvent,
+} from '@/common/utils/gtm/gtmProductEvent'
 import {artworkCTAMapper, ctaMapper} from '@/common/utilsMappers/cta.mapper'
 import {dateSelectionArtworkMapper, mapSingleDateFormat} from '@/common/utilsMappers/date.mapper'
 import {dzMediaMapper} from '@/common/utilsMappers/image.mapper'
@@ -212,7 +216,12 @@ export const contentTypesMapper: any = {
         ...(additionalInformationText ?? {}),
         ...(ctasOverrides ?? {}),
       },
-      onViewport: () => {},
+      onClickImage: () => {
+        gtmProductListingItemClickedEvent(data)
+      },
+      onViewport: () => {
+        gtmProductListingViewedEvent(data)
+      },
       imageStyles: imageBgColor,
     }
   },

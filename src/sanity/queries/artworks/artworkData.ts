@@ -8,6 +8,7 @@ import {mediaBuilder} from '../components/builders/mediaBuilder'
 
 export const artworkData = groq`
 *[_type == "artwork" && defined(slug.current) && slug.current == $slug][0]{
+  _id,
   additionalCaption,
   artists[]-> {fullName, artistPage->{slug}},
   artworkCTA,
@@ -18,6 +19,7 @@ export const artworkData = groq`
   dateSelection,
   description,
   dimensions,
+  inventoryId,
   displayDate,
   displayCustomTitle,
   displayTitle,
@@ -31,6 +33,7 @@ export const artworkData = groq`
   },
   price,
   productInformation,
+  _createdAt,
   salesInformation,
   seo {
     ${pageSEOFields}
@@ -46,6 +49,7 @@ export const ArtworkDataPropsSchema = z.object({
 export type ArtworkDataPropsType = z.infer<typeof ArtworkDataPropsSchema>
 
 export const ArtworkDataSchema = z.object({
+  _id: ArtworkContentSchema.shape._id,
   additionalCaption: ArtworkContentSchema.shape.additionalCaption,
   artists: z.nullable(z.array(z.any())),
   artworkCTA: ArtworkContentSchema.shape.artworkCTA,
@@ -64,6 +68,8 @@ export const ArtworkDataSchema = z.object({
   framedDimensions: ArtworkContentSchema.shape.framedDimensions,
   medium: ArtworkContentSchema.shape.medium,
   photos: ArtworkContentSchema.shape.photos,
+  _createdAt: ArtworkContentSchema.shape._createdAt,
+  inventoryId: ArtworkContentSchema.shape.inventoryId,
   price: ArtworkContentSchema.shape.price,
   productInformation: ArtworkContentSchema.shape.productInformation,
   salesInformation: ArtworkContentSchema.shape.salesInformation,

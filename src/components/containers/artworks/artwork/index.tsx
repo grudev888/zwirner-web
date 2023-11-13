@@ -13,8 +13,9 @@ import {
   useIsSmallWindowSize,
 } from '@zwirner/design-system'
 import cn from 'classnames'
-import {useRef, useState} from 'react'
+import {useEffect, useRef, useState} from 'react'
 
+import {gtmProductViewEvent} from '@/common/utils/gtm/gtmProductEvent'
 import {artworkCTAMapper, ctaMapper} from '@/common/utilsMappers/cta.mapper'
 import {createInquireModalArtworkProps} from '@/components/hooks/useOpenInquiryDispatch'
 import {ARTWORK_BG_COLORS_TO_TW_VALUES} from '@/components/pageBuilder/DzCard/cardMapper'
@@ -25,6 +26,7 @@ import {DzPortableText} from '@/components/wrappers/DzPortableTextWrapper'
 import {builder} from '@/sanity/imageBuilder'
 import {ArtworkDataType} from '@/sanity/queries/artworks/artworkData'
 import {CtaActions} from '@/sanity/types'
+import usePageStore from '@/store/pageStore'
 import {formatCurrency} from '@/utils/currency/formatCurrency'
 
 import styles from './index.module.css'
@@ -45,6 +47,11 @@ export const ArtworkContainer = ({data}: Props) => {
   const [currentZoomedImgProps, setCurrentZoomedImgProps] = useState<
     Record<string, any> | undefined
   >(undefined)
+  const pageTitle = usePageStore((state) => state.title)
+  useEffect(() => {
+    if (pageTitle) gtmProductViewEvent(data)
+  }, [data, pageTitle])
+
   const allPhotoGridItems = photosGrid(data) || []
   const photoDimensionsMap = getImageDimensions(data)
   const photoGridImageStyleMap: Record<string, string> = {}

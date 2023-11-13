@@ -59,8 +59,10 @@ export const getStaticProps: GetStaticProps = async (ctx) => {
 
   const data = await getArtistExhibitionsPageData(client, artistSlug)
   const dataLayerProps = await getGTMPageLoadData(queryParams)
-  if (dataLayerProps) dataLayerProps.page_data.artist = data?.artist?.fullName || ''
-  if (dataLayerProps) dataLayerProps.page_data.site_section = ARTISTS_SECTION
+  if (dataLayerProps) {
+    dataLayerProps.page_data.artist = data?.artist?.fullName || ''
+    dataLayerProps.page_data.site_section = ARTISTS_SECTION
+  }
 
   return {
     props: {

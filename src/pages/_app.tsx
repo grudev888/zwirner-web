@@ -20,6 +20,7 @@ import {gtmPageLoadGetArtists} from '@/common/utils/gtm/gtmPageLoadGetArtists'
 import {getFooterData, getHeaderData} from '@/sanity/services/layout.service'
 import {getGeneralSettings} from '@/sanity/services/settings.service'
 import {GlobalSEOScheme} from '@/sanity/types'
+import usePageStore from '@/store/pageStore'
 
 export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
   getLayout?: (page: ReactElement) => ReactNode
@@ -71,10 +72,16 @@ const Wrapper = ({Component, pageProps, globalSEO, layoutData}: WrapperProps) =>
 
 function DzApp({Component, pageProps, globalSEO, layoutData}: AppProps & WrapperProps) {
   const router = useRouter()
+  const setPageState = usePageStore((state) => state.setPageState)
   useEffect(() => {
     const gtmData = pageProps.dataLayerProps
     const pageLoadStarted = () => {
       if (gtmData) {
+        setPageState({
+          title: gtmData.page_data.page_title,
+          hash: gtmData.page_data.page_hash,
+          section: gtmData.page_data.site_section,
+        })
         if (pageProps.data?.artistPages)
           gtmData.page_data.artist = gtmPageLoadGetArtists(pageProps.data.artistPages)
         gtmData.location = document.location.href
@@ -88,17 +95,18 @@ function DzApp({Component, pageProps, globalSEO, layoutData}: AppProps & Wrapper
       }
     }
     pageLoadStarted()
-  }, [pageProps])
+  }, [pageProps, setPageState])
 
   useEffect(() => {
     const handleRouteChange = () => {
       window.dataLayer = []
+      setPageState({title: '', hash: '', section: ''})
     }
     router.events.on('routeChangeStart', handleRouteChange)
     return () => {
       router.events.off('routeChangeStart', handleRouteChange)
     }
-  }, [router.events])
+  }, [router.events, setPageState])
   return (
     <>
       <style jsx global>
