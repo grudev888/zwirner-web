@@ -31,7 +31,7 @@
   },
   "dependencies": {
     "@headlessui/tailwindcss": "^0.1.2",
-    "@portabletext/react": "^3.0.4",
+    "@portabletext/react": "^3.0.11",
     "@sanity/client": "^6.4.12",
     "@sanity/image-url": "^1.0.2",
     "@sanity/preview-kit": "^3.1.6",
