@@ -20,6 +20,6 @@ export async function getArtistPageData(client: SanityClient): Promise<any[]> {
 
 export async function getArtistPageBySlug(client: SanityClient, params: any) {
   const data = await client.fetch(artistPageBySlug, params)
-  if (!Object.keys(data).length) return null
+  if (!data || !Object.keys(data).length) return null
   return data
 }
