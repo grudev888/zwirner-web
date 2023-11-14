@@ -23,7 +23,7 @@ export const mapEcommerceData: MapEcommerceData = (artwork, extra) => {
           ? 'yes'
           : 'no',
         artwork_frame: artwork?.framed,
-        artwork_price: artwork?.price,
+        artwork_price: artwork?.price?.toString(),
         artwork_size: artwork?.dimensions ? artwork?.dimensions[0]?.children[0]?.text : '',
         artwork_status: artwork?.product?.variants[0].store?.inventory?.isAvailable
           ? 'available'
@@ -81,7 +81,7 @@ declare global {
       affiliation: string
       artwork_ecommerce: string
       artwork_frame: string
-      artwork_price: number | null | undefined
+      artwork_price: string | null | undefined
       artwork_size: string
       artwork_status: string
       item_brand: string
