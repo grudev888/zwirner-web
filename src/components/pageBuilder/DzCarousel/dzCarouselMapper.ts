@@ -5,5 +5,5 @@ export const showCarouselSection = (data: PageBuilderComponentsDataSchemaType) =
   const {props} = data ?? {}
   const {dzCarousel} = props ?? {}
   const hasCarouselItems = dzCarousel?.length
-  return hasCarouselItems
+  return !!hasCarouselItems
 }

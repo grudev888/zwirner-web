@@ -1,9 +1,11 @@
 import {client} from '@/sanity/client'
-import {allArticlePageSlugsSitemap} from '@/sanity/queries/sitemaps/allArticlePageSlugsSitemap'
-import {SitemapResSchema} from '@/sanity/queries/sitemaps/typesData'
+import {
+  allArticlePageSlugsSitemap,
+  ArticleSitemapResSchema,
+} from '@/sanity/queries/sitemaps/allArticlePageSlugsSitemap'
 
 export async function getAllArticlePageSlugsSitemap() {
   const data = await client.fetch(allArticlePageSlugsSitemap)
-  const validatedData = SitemapResSchema.parse(data)
+  const validatedData = ArticleSitemapResSchema.parse(data)
   return validatedData
 }

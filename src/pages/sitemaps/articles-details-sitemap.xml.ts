@@ -1,5 +1,6 @@
 import {type GetServerSidePropsContext} from 'next/types'
 
+import {env} from '@/env.mjs'
 import {getAllArticlePageSlugsSitemap} from '@/sanity/services/sitemaps/getAllArticlePageSlugsSitemap'
 import {generateXMLUrls} from '@/utils/string/generateXMLUrls'
 
@@ -21,13 +22,25 @@ function SiteMap() {
 }
 
 export async function getServerSideProps({res}: GetServerSidePropsContext) {
+  if (
+    env.NEXT_PUBLIC_VERCEL_ENV !== 'production' &&
+    env.NEXT_PUBLIC_SANITY_DATASET !== 'production-v1'
+  ) {
+    res.setHeader('Content-Type', 'text/xml')
+    // we send the XML to the browser
+    res.write(generateSiteMap(''))
+    res.end()
+
+    return {
+      props: {},
+    }
+  }
   // We make an API call to gather the URLs for our site
   // articles details
   const articles = await getAllArticlePageSlugsSitemap()
-  const articlesDetailsList = articles.filter((item) => item.params.slug.includes('/news/'))
 
   // We generate the XML sitemap with data
-  const articlesXMLUrls = generateXMLUrls(articlesDetailsList)
+  const articlesXMLUrls = generateXMLUrls(articles)
 
   const sitemap = generateSiteMap(articlesXMLUrls)
 

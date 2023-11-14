@@ -1,4 +1,5 @@
 import {groq} from 'next-sanity'
+import {z} from 'zod'
 
 // Fetch all pages with body content available and slug. retrieve the url
 export const allArticlePageSlugsSitemap = groq`
@@ -8,3 +9,15 @@ export const allArticlePageSlugsSitemap = groq`
     "lastmod": _updatedAt
   }
 }`
+
+// should fit SitemapResSchemaType type!
+export const ArticleSitemapResSchema = z.array(
+  z.object({
+    params: z.object({
+      slug: z.string().refine((slug) => slug.includes('/news/'), {
+        message: "Slug must contain '/news/'",
+      }),
+      lastmod: z.string(),
+    }),
+  })
+)

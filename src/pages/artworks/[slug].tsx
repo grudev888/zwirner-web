@@ -45,9 +45,7 @@ const ArtworkPage = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
 
 export const getStaticPaths = async () => {
   const paths = await getAllArtworkSlugs()
-  const filteredPaths = paths
-    .filter(({slug}) => slug.includes(SLUG_PREFIX))
-    .map((item) => item.slug)
+  const filteredPaths = paths.map((item) => item.slug)
   return {
     paths: filteredPaths,
     fallback: true,

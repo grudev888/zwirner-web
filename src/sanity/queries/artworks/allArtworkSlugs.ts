@@ -13,6 +13,8 @@ export const allArtworkSlugs = groq`
 
 export const AllArtworkSlugsSchema = z.array(
   z.object({
-    slug: z.string(),
+    slug: z.string().refine((slug) => slug.includes('/artworks/'), {
+      message: "Slug must contain '/artworks/'",
+    }),
   })
 )

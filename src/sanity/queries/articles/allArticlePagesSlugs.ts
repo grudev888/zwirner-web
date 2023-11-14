@@ -8,13 +8,17 @@ import {DEV_GROQ_BUILD_LIMIT} from '@/sanity/constants'
 // Pages not returned in this query will be generated on demand
 export const allArticlePagesSlugs = groq`
 *[_type == "article" && defined(slug.current) && defined(body)]{
-  "params": { "slug": slug.current }
+  "params": {
+    "slug": slug.current
+  }
 }${DEV_GROQ_BUILD_LIMIT}`
 
 export const AllArticlePageSlugsSchema = z.array(
   z.object({
     params: z.object({
-      slug: z.string(),
+      slug: z.string().refine((slug) => slug.includes('/news/'), {
+        message: "Slug must contain '/news/'",
+      }),
     }),
   })
 )

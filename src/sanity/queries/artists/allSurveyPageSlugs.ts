@@ -2,7 +2,7 @@ import {groq} from 'next-sanity'
 import {z} from 'zod'
 
 export const allSurveyPageSlugs = groq`
-*[_type == "artistPage" && defined(slug.current) && defined(surveySubpage)]{
+*[_type == "artistPage" && defined(slug.current) && count(surveySubpage) > 0]{
   "params": {
     "slug": slug.current
   }

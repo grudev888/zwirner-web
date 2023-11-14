@@ -1,4 +1,4 @@
-import {GetStaticProps} from 'next'
+import {GetStaticPropsContext} from 'next'
 
 import {SEOComponent} from '@/common/components/seo/seo'
 import {NEWS_URL} from '@/common/constants/commonCopies'
@@ -50,7 +50,7 @@ export const getStaticPaths = async () => {
   }
 }
 
-export const getStaticProps: GetStaticProps = async (ctx) => {
+export const getStaticProps = async (ctx: GetStaticPropsContext) => {
   const {params = {}, draftMode = false} = ctx
 
   const querySlug = (params?.slug as string[]).join('/')
@@ -64,11 +64,7 @@ export const getStaticProps: GetStaticProps = async (ctx) => {
   const client = getClient(draftMode ? {token: draftViewToken} : undefined)
 
   const data: any = await getArticlePageBySlug(client, queryParams)
-  if (!data) {
-    return {
-      notFound: true,
-    }
-  }
+  if (!data) return {notFound: true}
 
   if (!params.slug) params.slug = NEWS_SLUG
   const dataLayerProps = await getGTMPageLoadData({slug: params.slug.toString()})

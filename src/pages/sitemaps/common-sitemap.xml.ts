@@ -7,6 +7,7 @@ import {
   ARTISTS_PRESS_URL,
   ARTISTS_SURVEY_URL,
 } from '@/common/constants/commonCopies'
+import {env} from '@/env.mjs'
 import {getAllArtistPageSlugsSitemap} from '@/sanity/services/sitemaps/getAllArtistPageSlugsSitemap'
 import {getAllAvailableWorksPageSlugsSitemap} from '@/sanity/services/sitemaps/getAllAvailableWorksPageSlugsSitemap'
 import {getAllExhibitionsPageSlugsSitemap} from '@/sanity/services/sitemaps/getAllExhibitionsPageSlugsSitemap'
@@ -46,6 +47,19 @@ function SiteMap() {
 }
 
 export async function getServerSideProps({res}: GetServerSidePropsContext) {
+  if (
+    env.NEXT_PUBLIC_VERCEL_ENV !== 'production' &&
+    env.NEXT_PUBLIC_SANITY_DATASET !== 'production-v1'
+  ) {
+    res.setHeader('Content-Type', 'text/xml')
+    // we send the XML to the browser
+    res.write(generateSiteMap(''))
+    res.end()
+
+    return {
+      props: {},
+    }
+  }
   // We make an API call to gather the URLs for our site
   const artistListingLastmod = await getArtistListingLastmod()
 

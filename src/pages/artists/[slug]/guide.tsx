@@ -61,6 +61,8 @@ export const getStaticProps: GetStaticProps = async (ctx) => {
   const client = getClient(draftMode ? {token: draftViewToken} : undefined)
 
   const data = await getGuideDataBySlug(client, queryParams)
+  if (!data?.[0]?.guideSubpage?.props?.grid?.length) return {notFound: true}
+
   const dataLayerProps = await getGTMPageLoadData(queryParams)
   if (dataLayerProps) {
     dataLayerProps.page_data.artist = data[0]?.artist?.fullName || ''

@@ -5,5 +5,5 @@ export const showGridSection = (data: PageBuilderComponentsDataSchemaType) => {
   const {props} = data ?? {}
   const {grid} = props ?? {}
   const hasGridItems = grid?.length
-  return hasGridItems
+  return !!hasGridItems
 }

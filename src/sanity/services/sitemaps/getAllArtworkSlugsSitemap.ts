@@ -1,10 +1,12 @@
 import {client} from '@/sanity/client'
-import {allArtworkSlugsSitemap} from '@/sanity/queries/sitemaps/allArtworkSlugsSitemap'
-import {SitemapResSchema} from '@/sanity/queries/sitemaps/typesData'
+import {
+  allArtworkSlugsSitemap,
+  ArtworkSitemapResSchema,
+} from '@/sanity/queries/sitemaps/allArtworkSlugsSitemap'
 
 // TODO: add validation error handling
 export async function getAllArtworkSlugsSitemap() {
   const data = await client.fetch(allArtworkSlugsSitemap)
-  const validatedData = SitemapResSchema.parse(data)
+  const validatedData = ArtworkSitemapResSchema.parse(data)
   return validatedData
 }
