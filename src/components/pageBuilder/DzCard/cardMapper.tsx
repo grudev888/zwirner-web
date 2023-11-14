@@ -209,6 +209,7 @@ export const contentTypesMapper: any = {
         artworkYear: year,
         price,
         framed,
+        slug: slug?.current,
         ...(mediumText ?? {}),
         ...(dimensionText ?? {}),
         ...(editionText ?? {}),
