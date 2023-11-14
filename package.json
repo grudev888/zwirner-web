@@ -86,7 +86,7 @@
     "prettier-plugin-packagejson": "^2.4.6",
     "prettier-plugin-tailwindcss": "^0.2.1",
     "tailwindcss": "^3.2.4",
-    "turbo": "^1.10.14",
+    "turbo": "^1.10.16",
     "typescript": "^4.9.4",
     "zukeeper": "^1.0.2"
   },
