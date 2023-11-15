@@ -1,5 +1,6 @@
 import {groq} from 'next-sanity'
 
+import {seriesContent} from '@/sanity/queries/components/content/seriesContent'
 import {pageBuilderComponentsData} from '@/sanity/queries/page/pageCommonQueries/pageBuilderComponentsData'
 
 import {pageSEOFields} from '../components/seo/pageSEOFields'
@@ -11,6 +12,9 @@ export const artworksDataByArtistSlug = groq`
   slug { current },
   surveySubpage []{
     ${pageBuilderComponentsData}
+  },
+  surveySeries []-> {
+    ${seriesContent}
   },
   "seo": surveySeo {
     ${pageSEOFields}

@@ -30,7 +30,6 @@ export interface SharedPageProps {
   slug: string | null
   draftMode: boolean
   token: string
-  draftViewToken: string
   queryParams: {
     [key: string]: string
   }

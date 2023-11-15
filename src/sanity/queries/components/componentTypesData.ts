@@ -9,6 +9,7 @@ import {exhibitionPageContent, ExhibitionPageContentSchema} from './content/exhi
 import {locationContent, LocationContentSchema} from './content/locationContent'
 import {podcastContent, PodcastContentSchema} from './content/podcastContent'
 import {pressContent, PressContentSchema} from './content/pressContent'
+import {seriesContent} from './content/seriesContent'
 
 export const fieldsPerType = groq`
   _type,
@@ -20,6 +21,7 @@ export const fieldsPerType = groq`
   ${pressContent}
   ${locationContent}
   ${podcastContent}
+  ${seriesContent}
 `
 export const componentTypesData = groq`
   content[]-> {

@@ -16,6 +16,7 @@ export const ARTISTS_EXHIBITIONS_URL = '/exhibitions'
 export const ARTISTS_AVAILABLE_WORKS_URL = '/available-works'
 export const ARTWORK_URL = '/artworks'
 export const PREVIEW_EXIT_URL = '/api/exit-draft'
+export const SURVEY_URL = '/survey'
 
 // ============ COPIES ===========
 export const DAVID_ZWIRNER_BOOKS = 'David Zwirner Books'

@@ -1,11 +1,10 @@
-import {GetStaticProps} from 'next'
+import {GetStaticProps, InferGetStaticPropsType} from 'next'
 
 import {SEOComponent} from '@/common/components/seo/seo'
 import {DRAFT_MODE_SANITY_READ_TOKEN_ERROR} from '@/common/constants/errorMessages'
 import {ARTISTS_SECTION} from '@/common/constants/gtmPageConstants'
 import ArtistSurveyPageContainer from '@/components/containers/pages/artists/survey/index'
 import PreviewPage from '@/components/containers/previews/pagePreview'
-import type {SharedPageProps} from '@/pages/_app'
 import {getClient, readToken} from '@/sanity/client'
 import {artworksDataByArtistSlug} from '@/sanity/queries/artworks/artworksDataByArtistSlug'
 import {getAllSurveyPagesSlugs} from '@/sanity/services/artists/getAllSurveyPageSlugs'
@@ -13,16 +12,21 @@ import {getArtworkByArtist} from '@/sanity/services/artworks/getArtworkByArtist'
 import {getGTMPageLoadData} from '@/sanity/services/gtm/pageLoad.service'
 import {removePrefixSlug} from '@/utils/slug'
 
-export default function SurveyPage({data, draftMode, queryParams, token}: SharedPageProps) {
-  const [surveyData] = data ?? []
-  const {seo} = surveyData ?? {}
+export default function SurveyPage({
+  data,
+  draftMode,
+  queryParams,
+  token,
+}: InferGetStaticPropsType<typeof getStaticProps>) {
+  const {seo} = data?.[0] ?? {}
 
   if (draftMode) {
     return (
       <PreviewPage
-        data={surveyData}
+        data={data}
         query={artworksDataByArtistSlug}
         params={queryParams}
+        seo={seo}
         Container={ArtistSurveyPageContainer}
         token={token}
       />
@@ -32,7 +36,7 @@ export default function SurveyPage({data, draftMode, queryParams, token}: Shared
   return (
     <>
       <SEOComponent data={seo} />
-      <ArtistSurveyPageContainer data={surveyData} />
+      <ArtistSurveyPageContainer data={data} />
     </>
   )
 }

@@ -43,6 +43,11 @@ export const artistPageBySlug = groq`
     ${dzCarouselFields}
   },
 
+  // Remove this special case of Thomas Ruff on series unification
+  surveyThomas {
+    ${dzCarouselFields}
+  },
+
   guide {
     ${dzCarouselFields}
   },

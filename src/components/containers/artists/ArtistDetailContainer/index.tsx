@@ -63,6 +63,7 @@ export const ArtistDetailContainer = ({data}: ArtistsContainerProps) => {
     availableWorks,
     latestExhibitions,
     survey,
+    surveyThomas,
     guide,
     selectedPress,
     books,
@@ -123,7 +124,7 @@ export const ArtistDetailContainer = ({data}: ArtistsContainerProps) => {
     <DzColumn span={12}>
       <DzSectionMenu
         sections={[
-          {text: 'Survey', id: 'survey', hidden: !showCarouselSection(survey)},
+          {text: 'Survey', id: 'survey', hidden: !showCarouselSection(surveyThomas ?? survey)},
           {
             text: 'Available Works',
             id: 'available-works',
@@ -159,7 +160,7 @@ export const ArtistDetailContainer = ({data}: ArtistsContainerProps) => {
         {/* Page Builder SPLIT for featured items*/}
         {showSplitSection(featured) ? <PageBuilder components={[featured]} /> : null}
         {/* Page Builder CAROUSEL for survey items*/}
-        {showCarouselSection(survey) ? (
+        {showCarouselSection(surveyThomas ?? survey) ? (
           <section className="-mx-5" id="survey">
             <DzTitleMolecule
               type={DzTitleMoleculeTypes.MOLECULE}
@@ -178,7 +179,7 @@ export const ArtistDetailContainer = ({data}: ArtistsContainerProps) => {
                 },
               }}
             />
-            <PageBuilder components={[survey]} />
+            <PageBuilder components={[surveyThomas ?? survey]} />
           </section>
         ) : null}
         {showPageBuilderSection(availableWorks) ? (

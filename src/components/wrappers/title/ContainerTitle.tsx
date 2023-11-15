@@ -7,6 +7,7 @@ import {
   TITLE_TYPES,
   TitleType,
 } from '@zwirner/design-system'
+import cn from 'classnames'
 import {ReactNode} from 'react'
 
 import {DzTitleMolecule} from '../DzTitleMoleculeWrapper'
@@ -27,6 +28,7 @@ interface ContainerTitleProps {
   fullLeftContainer?: boolean
   customCTAContainerProps?: ColumnProps
   isWide?: boolean
+  customTitleClass?: string
 }
 
 const stylesPerType: any = {
@@ -49,6 +51,7 @@ export const ContainerTitle = ({
   primaryCTA,
   customCTAContainerProps,
   isWide = false,
+  customTitleClass = '',
 }: ContainerTitleProps) => {
   return (
     <DzTitleMolecule
@@ -56,7 +59,7 @@ export const ContainerTitle = ({
       data={{
         title,
         subtitle,
-        customClass: stylesPerType[type],
+        customClass: cn(stylesPerType[type], customTitleClass),
         titleProps: {
           titleType: titleType,
           titleSize,

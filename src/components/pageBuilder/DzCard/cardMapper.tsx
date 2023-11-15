@@ -319,4 +319,32 @@ export const contentTypesMapper: any = {
       },
     }
   },
+  series: (data: any, props: DzCardExtendedProps) => {
+    const {title, image, slug, displayDate} = data ?? {}
+    const {cardSize, mediaOverride} = props ?? {}
+    const {media, hideImage} = dzMediaMapper({
+      override: mediaOverride,
+      data: image,
+      ImgElement: Image,
+    })
+    const {current} = slug ?? {}
+
+    return {
+      viewport: CardViewport.Desktop,
+      type: CARD_TYPES.CONTENT,
+      data: {
+        media,
+        hideImage,
+        title: (
+          <>
+            <em>{title}</em> {displayDate ? `(${displayDate})` : ''}
+          </>
+        ),
+        size: cardSize,
+        cardLink: {
+          href: current,
+        },
+      },
+    }
+  },
 }
