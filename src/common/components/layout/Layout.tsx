@@ -26,8 +26,6 @@ const Layout = ({children, layoutData}: LayoutProps) => {
       <DzHeader
         menu={menu}
         footerData={data}
-        // TODO handle search
-        handleSearch={() => null}
         headerClass={styles.header}
         linkProps={{
           router,

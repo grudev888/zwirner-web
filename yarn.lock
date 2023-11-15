@@ -1356,7 +1356,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@portabletext/react@npm:^3.0.11":
+"@portabletext/react@npm:^3.0.11, @portabletext/react@npm:^3.0.4":
   version: 3.0.11
   resolution: "@portabletext/react@npm:3.0.11"
   dependencies:
@@ -2522,13 +2522,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@zwirner/design-system@npm:v0.0.159":
-  version: 0.0.159
-  resolution: "@zwirner/design-system@npm:0.0.159::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40zwirner%2Fdesign-system%2F0.0.159%2F2542fac6286206d540dce6e576c27ad3c45a8f4e"
+"@zwirner/design-system@npm:v0.0.164":
+  version: 0.0.164
+  resolution: "@zwirner/design-system@npm:0.0.164::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40zwirner%2Fdesign-system%2F0.0.164%2F73baa1b507df3277243b2263045784c541951ca1"
   dependencies:
     "@headlessui/react": ^1.7.10
     "@heroicons/react": ^2.0.15
-    "@portabletext/react": ^3.0.11
+    "@portabletext/react": ^3.0.4
     "@seznam/compose-react-refs": ^1.0.6
     "@vime/core": ^5.4.1
     "@vime/react": ^5.4.1
@@ -2536,14 +2536,14 @@ __metadata:
     date-fns: ^2.30.0
     plyr-react: ^5.1.2
     react-drag-drop-files: ^2.3.10
-    react-zoom-pan-pinch: ^3.3.0
-    swiper: ^11.0.4
+    react-zoom-pan-pinch: ^3.1.0
+    swiper: 9.3.1
     use-is-in-viewport: ^1.0.9
     uuid: ^9.0.0
   peerDependencies:
     react: ">=16"
     react-dom: ^17.0.1
-  checksum: cbc79059c66c1e3687470100bae3c1c9b58018091d89510c68a2ed3753ec6c71e5a7cc761d21bebb74326f1e588bc4f6e453f2f2724c57353dd65a67acbf9b01
+  checksum: e7bf81568d0fa5432a9683c986db435550ba94464dc2087ee4ac2e346029b29bd90bda1c7afa3a10e5ae578013f4f45f376f93a547fe8fbd096b54a72f008ec8
   languageName: node
   linkType: hard
 
@@ -9082,7 +9082,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-zoom-pan-pinch@npm:^3.3.0":
+"react-zoom-pan-pinch@npm:^3.1.0":
   version: 3.3.0
   resolution: "react-zoom-pan-pinch@npm:3.3.0"
   peerDependencies:
@@ -9814,6 +9814,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"ssr-window@npm:^4.0.2":
+  version: 4.0.2
+  resolution: "ssr-window@npm:4.0.2"
+  checksum: df182600927f4f3225224cf8c02338ea637c9750519505bbfb9a9236741a2a7ec088386fb948bca7b447b8303d9109e7dc7672e3de041c79ac2a0e03665af7d2
+  languageName: node
+  linkType: hard
+
 "ssri@npm:^9.0.0":
   version: 9.0.1
   resolution: "ssri@npm:9.0.1"
@@ -10138,10 +10145,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"swiper@npm:^11.0.4":
-  version: 11.0.4
-  resolution: "swiper@npm:11.0.4"
-  checksum: 520a4c0c1aeb94eadc5c2cf52ae4a479a2c7fc416ed15a7623135c4f1b0dc9ad255c2d0c1ec8e7a138e685ac37e95668aebfbd5a8d86887326a08e8b683bed51
+"swiper@npm:9.3.1":
+  version: 9.3.1
+  resolution: "swiper@npm:9.3.1"
+  dependencies:
+    ssr-window: ^4.0.2
+  checksum: e418d5462fc11f7f26624897203decef131a1c7f2a46bc197b2813857631674c0b44a6943f5b784644a7051fa56f807cca4803813b7456ee2d2d6dbfb8708f16
   languageName: node
   linkType: hard
 
@@ -11324,7 +11333,7 @@ __metadata:
     "@types/react-google-recaptcha": ^2.1.5
     "@types/styled-components": ^5.1.26
     "@typescript-eslint/eslint-plugin": ^5.59.7
-    "@zwirner/design-system": v0.0.159
+    "@zwirner/design-system": v0.0.164
     autoprefixer: ^10.4.16
     axios: ^1.3.5
     checkly: ^4.1.0
