@@ -24,9 +24,9 @@ export const bookContent = groq`
 export const BookContentSchema = z.object({
   title: z.string(),
   subtitle: z.nullable(z.string()),
-  tagline: z.array(z.any()),
-  publisher: z.string(),
-  booksUrl: z.string().url(),
+  tagline: z.nullable(z.array(z.any())),
+  publisher: z.nullable(z.string()),
+  booksUrl: z.nullable(z.string().url()),
   photos: z.array(z.any()),
   isbn: z.nullable(z.string()),
   dateSelection: z.nullable(z.any()),
@@ -35,3 +35,5 @@ export const BookContentSchema = z.object({
   authors: z.nullable(z.array(z.any())),
   artists: z.nullable(z.array(ArtistContentSchema)),
 })
+
+export type BookContentType = z.infer<typeof BookContentSchema>

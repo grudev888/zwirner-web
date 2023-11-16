@@ -15,6 +15,7 @@ import {parseAvailability} from '@/components/containers/home/utils'
 import {createInquireModalArtworkProps} from '@/components/hooks/useOpenInquiryDispatch'
 import {exhibitionCommonMapper} from '@/components/pageBuilder/utils/common'
 import {cardContentArticle} from '@/components/pageBuilder/utils/commonMappers'
+import {BookContentType} from '@/sanity/queries/components/content/bookContent'
 import {BookVariation, DzCardExtendedProps} from '@/sanity/types'
 
 const ARTWORK_CARD_TITLE_CHAR_LIMIT = 300
@@ -77,7 +78,7 @@ export const contentTypesMapper: any = {
       },
     }
   },
-  book: (data: any, props: DzCardExtendedProps) => {
+  book: (data: BookContentType, props: DzCardExtendedProps) => {
     const {title, subtitle, price, tagline, dateSelection, publisher, booksUrl} = data ?? {}
     const {cardSize, bookVariation, mediaOverride} = props ?? {}
     const {media, hideImage} = dzMediaMapper({
@@ -85,18 +86,10 @@ export const contentTypesMapper: any = {
       data: data,
       ImgElement: Image,
     })
-    const ctasOverrides = ctaMapper({data: props})
     const {year} = dateSelectionArtworkMapper(dateSelection)
     const descriptionText = safeText({key: 'description', text: tagline})
-    let ctasBook = {}
-    if (!ctasOverrides.linkCTA || !ctasOverrides.primaryCTA) {
-      ctasBook = {
-        linkCTA: {
-          text: ORDER_NOW,
-          url: booksUrl,
-        },
-      }
-    }
+
+    const ctaBook = booksUrl ? {linkCTA: {text: ORDER_NOW, url: booksUrl}} : {}
 
     const bookCardProps =
       bookVariation === BookVariation.PRODUCT
@@ -109,7 +102,7 @@ export const contentTypesMapper: any = {
               media,
               hideImage,
               price,
-              ...ctasBook,
+              ...ctaBook,
             },
           }
         : {
@@ -121,7 +114,7 @@ export const contentTypesMapper: any = {
               title,
               subtitle,
               ...(descriptionText ?? {}),
-              ...ctasBook,
+              ...ctaBook,
             },
           }
 
