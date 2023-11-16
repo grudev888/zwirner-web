@@ -5,5 +5,5 @@ export const SUBSCRIBE_TYPE = {
 }
 export const SUBSCRIBE_METHOD = {
   FOOTER: 'footer',
-  INTERSTITIAL: 'Interstitial',
+  POPUP: 'popup',
 }

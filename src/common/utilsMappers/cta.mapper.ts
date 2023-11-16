@@ -164,7 +164,7 @@ export const ctaMapperInterstitial = ({data}: CtaMapperInterstitial) => {
               if (handleClick) {
                 handleClick(action)
               } else {
-                handleCTAClick(action, {ctaText: text, method: SUBSCRIBE_METHOD.INTERSTITIAL})
+                handleCTAClick(action, {ctaText: text, method: SUBSCRIBE_METHOD.POPUP})
               }
             },
           },

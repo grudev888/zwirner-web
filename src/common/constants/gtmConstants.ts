@@ -114,15 +114,15 @@ export const GTMInquiryFormViewText = {
   detailed_event: 'Inquiry Form Viewed',
 }
 
-// Interstitial Events
-export const GTMInterstitialViewText = {
-  event: 'view_interstitial',
-  detailed_event: 'Interstitial Viewed',
+// Popup Events
+export const GTMPopupViewText = {
+  event: 'view_popup',
+  detailed_event: 'Popup Viewed',
 }
 
-export const GTMInterstitialClickText = {
-  event: 'interstitial_click',
-  detailed_event: 'Interstitial Clicked',
+export const GTMPopupClickText = {
+  event: 'popup_click',
+  detailed_event: 'Popup Clicked',
 }
 
 // Search and Filter Events
