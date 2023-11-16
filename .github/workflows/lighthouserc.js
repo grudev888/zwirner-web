@@ -7,7 +7,6 @@ module.exports = {
         `${APP_URL}/`,
         `${APP_URL}/artists`,
         `${APP_URL}/exhibitions`,
-        `${APP_URL}/exhibitions/2023/ethan-exhibition-test-primary-subtitle`,
         `${APP_URL}/available-artworks`,
         `${APP_URL}/artists/tomma-abts`,
         `${APP_URL}/artists/tomma-abts/survey`,
