@@ -7,6 +7,7 @@ import {CTAClickEvent} from '@/events/CTAClickEvent'
 import {CtaActions, CTASchemaType} from '@/sanity/types'
 
 import {SUBSCRIBE_METHOD} from '../constants/subscribe'
+import {GTMExitLinkEvent} from '../utils/gtm/gtmExitLinkEvent'
 
 // TODO UNIFY CTA'S & TYPES FOR THEM
 interface CtaMapperProps {
@@ -30,7 +31,7 @@ const handleCTAClick = (action?: CtaActions, extraProps?: any) => {
 const externalFlags = ['www.', 'https://', '.com']
 const internalFlags = ['.davidzwirner.com', '.zwirner.dev', '.zwirner.tech']
 
-const handleLink = ({linkedHref, action, blank, downloadDoc}: any) => {
+const handleLink = ({linkedHref, action, blank, downloadDoc, identifier}: any) => {
   const linkInternalContent = action === CtaActions.LINK_CONTENT
   const linkCustomUrl = action === CtaActions.LINK || action === CtaActions.CUSTOM
   const downloadPdf = action === CtaActions.DOWNLOAD_PDF
@@ -46,6 +47,7 @@ const handleLink = ({linkedHref, action, blank, downloadDoc}: any) => {
     return
 
   if ((linkCustomUrl && blank) || downloadPdf) {
+    GTMExitLinkEvent(identifier, linkedHref)
     return window.open(downloadPdf ? downloadDoc : linkedHref, '_blank')
   }
 
@@ -59,6 +61,7 @@ const handleLink = ({linkedHref, action, blank, downloadDoc}: any) => {
     externalFlags.some((e) => linkedHref.includes(e)) &&
     !internalFlags.some((e) => linkedHref.includes(e))
   ) {
+    GTMExitLinkEvent(identifier, linkedHref)
     return Router.replace(linkedHref)
   }
   return Router.push(linkedHref)
@@ -91,7 +94,7 @@ export const ctaMapper = ({data, props}: CtaMapperProps) => {
             text: text,
             ctaProps: {
               onClick: () => {
-                handleLink({action, blank, linkedHref, downloadDoc})
+                handleLink({action, blank, linkedHref, downloadDoc, identifier: text})
                 if (handleClick) {
                   handleClick(action)
                 }
@@ -126,6 +129,7 @@ export const ctaMapper = ({data, props}: CtaMapperProps) => {
                   action: secondaryAction,
                   blank: secondaryBlank,
                   linkedHref: secondaryHref,
+                  identifier: secondaryText,
                 })
                 handleCTAClick(secondaryAction, secondaryCtaActionProps)
               },
@@ -158,6 +162,7 @@ export const ctaMapperInterstitial = ({data}: CtaMapperInterstitial) => {
                 downloadDoc,
                 blank,
                 linkedHref,
+                identifier: text,
               })
 
               // TODO Unify handle click && custom Action
