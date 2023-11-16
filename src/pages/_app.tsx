@@ -70,6 +70,7 @@ const Wrapper = ({Component, pageProps, globalSEO, layoutData}: WrapperProps) =>
 }
 
 function DzApp({Component, pageProps, globalSEO, layoutData}: AppProps & WrapperProps) {
+  const draftMode = pageProps.draftMode ?? false
   const router = useRouter()
   const setPageState = usePageStore((state) => state.setPageState)
   useEffect(() => {
@@ -117,9 +118,11 @@ function DzApp({Component, pageProps, globalSEO, layoutData}: AppProps & Wrapper
           }
         `}
       </style>
-      <Script id="google-tag-manager" strategy="afterInteractive">
-        {GTMScript}
-      </Script>
+      {!draftMode && (
+        <Script id="google-tag-manager" strategy="afterInteractive">
+          {GTMScript}
+        </Script>
+      )}
       <Wrapper
         Component={Component}
         pageProps={pageProps}

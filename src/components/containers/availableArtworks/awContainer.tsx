@@ -1,11 +1,9 @@
 import {AVAILABLE_WORKS} from '@/common/constants/commonCopies'
 import {AvailableArtworksContainer} from '@/components/containers/availableArtworks'
 
-interface PageContainerProps {
-  data: any
-}
+const AWContainer = ({data: queryData}: any) => {
+  const [data] = queryData ?? []
 
-const AWContainer = ({data}: PageContainerProps) => {
   const subPageData = data?.artworksGrid ?? {}
   const pageData = {
     gridData: subPageData,

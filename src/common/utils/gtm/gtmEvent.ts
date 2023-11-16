@@ -24,6 +24,10 @@ export const gtmEvent = (event: string, data: DataLayerProps) => {
     return
   }
 
+  if (!window.dataLayer) {
+    return
+  }
+
   const defaultData = {
     event,
     detailed_event: data.detailed_event,

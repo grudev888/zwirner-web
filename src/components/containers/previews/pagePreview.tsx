@@ -18,27 +18,14 @@ interface PreviewPageProps {
   Container: any
 }
 
-const getData = (data: any) => {
-  if (data && Array.isArray(data)) {
-    const [previewData] = data ?? []
-    return previewData
-  }
-  if (data && typeof data === 'object') {
-    return data
-  }
-  return null
-}
-
 const getContainer = ({Container, data}: any) => {
   if (!Container) return <Fragment />
   return <Container data={data} />
 }
 
-const ContainerData = (props: PreviewPageProps) => {
-  const {data, seo, query, params = {}, Container} = props
-  const liveData = useLiveQuery(data, query, params)
-  const componentData = getData(liveData)
-  const container = getContainer({Container, data: componentData})
+const ContainerData = ({data, seo, query, params = {}, Container}: PreviewPageProps) => {
+  const [liveData] = useLiveQuery(data, query, params)
+  const container = getContainer({Container, data: liveData})
   const componentSEO = seo
 
   return (
@@ -49,7 +36,6 @@ const ContainerData = (props: PreviewPageProps) => {
 }
 const PreviewPage = (props: PreviewPageProps) => {
   const {data, query, seo, params, Container, token} = props
-
   const client = getClient({token})
 
   return (

@@ -15,14 +15,15 @@ import {getGTMPageLoadData} from '@/sanity/services/gtm/pageLoad.service'
 
 const AvailableArtworks = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
   const {data, draftMode, token} = props
+
   const {artworksPage = []} = data
   const [pageData] = artworksPage ?? []
-  const {seo} = pageData ?? {}
+  const {seo} = pageData
 
   if (draftMode) {
     return (
       <PreviewPage
-        data={pageData}
+        data={artworksPage}
         query={availableArtworksData}
         seo={seo}
         Container={AWContainer}
@@ -34,7 +35,7 @@ const AvailableArtworks = (props: InferGetStaticPropsType<typeof getStaticProps>
   return (
     <>
       <SEOComponent data={seo} />
-      <AWContainer data={pageData} />
+      <AWContainer data={artworksPage} />
     </>
   )
 }

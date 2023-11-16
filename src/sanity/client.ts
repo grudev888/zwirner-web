@@ -1,4 +1,4 @@
-import type {ClientConfig} from '@sanity/client'
+import type {ClientConfig} from 'next-sanity'
 import {type SanityClient, createClient} from 'next-sanity'
 
 import {env} from '@/env.mjs'
@@ -11,6 +11,7 @@ export const config: ClientConfig = {
   projectId: env.NEXT_PUBLIC_SANITY_PROJECT_ID,
   useCdn: false,
   perspective: 'published',
+  resultSourceMap: true,
 }
 
 export const client = createClient(config)

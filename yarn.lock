@@ -1426,7 +1426,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@sanity/client@npm:^6.4.12, @sanity/client@npm:^6.4.9":
+"@sanity/client@npm:^6.4.9":
   version: 6.4.12
   resolution: "@sanity/client@npm:6.4.12"
   dependencies:
@@ -1437,14 +1437,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@sanity/client@npm:^6.6.0":
-  version: 6.6.0
-  resolution: "@sanity/client@npm:6.6.0"
+"@sanity/client@npm:^6.7.0":
+  version: 6.8.5
+  resolution: "@sanity/client@npm:6.8.5"
   dependencies:
     "@sanity/eventsource": ^5.0.0
-    get-it: ^8.4.3
+    "@vercel/stega": 0.1.0
+    get-it: ^8.4.4
     rxjs: ^7.0.0
-  checksum: 4e507e113198416364c7a9c976952bd4f3ecc5eea32dc6e0b7865b40bbee32fdbd5a5b5a31371b6b17ad0eb6361ee4eafedc6ae1d473714450e01e8cf9b31052
+  checksum: 5414bb6203a7ef6af47ef4c04a0997f52ff3933afbe15c097e023f74deb2a3c2912973b31558fcd42efcb996c82cfa729b6b2601ae3193adf80d6c4f254218d0
   languageName: node
   linkType: hard
 
@@ -1455,7 +1456,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@sanity/eventsource@npm:5.0.0, @sanity/eventsource@npm:^5.0.0":
+"@sanity/eventsource@npm:5.0.1":
+  version: 5.0.1
+  resolution: "@sanity/eventsource@npm:5.0.1"
+  dependencies:
+    "@types/event-source-polyfill": 1.0.2
+    "@types/eventsource": 1.1.12
+    event-source-polyfill: 1.0.31
+    eventsource: 2.0.2
+  checksum: ec4025a06b973bdfdd76aede8a8ad32ccabc03aea6e37c28bd259231d485f7cf3e2efd43ebdf1ae177c3dca603999feb10977563ec5658d1f8c3e9e31072c682
+  languageName: node
+  linkType: hard
+
+"@sanity/eventsource@npm:^5.0.0":
   version: 5.0.0
   resolution: "@sanity/eventsource@npm:5.0.0"
   dependencies:
@@ -1467,26 +1480,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@sanity/groq-store@npm:4.1.1":
-  version: 4.1.1
-  resolution: "@sanity/groq-store@npm:4.1.1"
-  dependencies:
-    "@sanity/eventsource": ^5.0.0
-    "@sanity/types": ^3.14.5
-    fast-deep-equal: 3.1.3
-    groq: ^3.14.5
-    groq-js: 1.2.0
-    mendoza: 3.0.3
-    simple-get: 4.0.1
-    split2: 4.2.0
-    throttle-debounce: 5.0.0
-  checksum: 8a2f86e720bb559add2cf2da1a9bc1e697242aa4c6254ec4c863bd03ea6c9f2a5ff0fbaaf85f45874060f09fc2dc8e553bf40237ff1282543ba815bb99766d70
-  languageName: node
-  linkType: hard
-
-"@sanity/groq-store@npm:4.1.2":
-  version: 4.1.2
-  resolution: "@sanity/groq-store@npm:4.1.2"
+"@sanity/groq-store@npm:4.1.3":
+  version: 4.1.3
+  resolution: "@sanity/groq-store@npm:4.1.3"
   dependencies:
     "@sanity/eventsource": ^5.0.0
     "@sanity/types": ^3.14.5
@@ -1497,7 +1493,7 @@ __metadata:
     simple-get: 4.0.1
     split2: 4.2.0
     throttle-debounce: 5.0.0
-  checksum: 13062e758c278f6d2317c70cd159417150174c5a230a1f9afed70d8601cff2635ef702e9ac7fe7c674bc12f68c8b412685039386140bf47843a0d14eb41750f9
+  checksum: e20cc11ba23d23b197f8c82859d153dd5ff54ad6c1518ae18fa2380ed0e49ff7cc6c4b3d695f6d095bb27705de7c1707cfcd672b2bf6e5114d9cd8ea0d55bf2d
   languageName: node
   linkType: hard
 
@@ -1539,12 +1535,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@sanity/preview-kit@npm:3.2.0":
-  version: 3.2.0
-  resolution: "@sanity/preview-kit@npm:3.2.0"
+"@sanity/preview-kit@npm:3.2.6":
+  version: 3.2.6
+  resolution: "@sanity/preview-kit@npm:3.2.6"
   dependencies:
-    "@sanity/eventsource": 5.0.0
-    "@sanity/groq-store": 4.1.2
+    "@sanity/eventsource": 5.0.1
+    "@sanity/groq-store": 4.1.3
     "@vercel/stega": 0.1.0
     lodash.get: 4.4.2
     lodash.isplainobject: 4.0.6
@@ -1553,35 +1549,12 @@ __metadata:
     react-fast-compare: 3.2.2
     use-sync-external-store: 1.2.0
   peerDependencies:
-    "@sanity/client": ^6.6.0
+    "@sanity/client": ^6.7.0
     react: ^18.0.0
   peerDependenciesMeta:
     react:
       optional: true
-  checksum: 89920f37fe4149d1b8644b0a39c471e77c5f2701b986aaaf97f8de1f85e54d6fd098f212943ae0e2d28dd55770b93f97d456cb1a7d8f9b728274759b0004ba00
-  languageName: node
-  linkType: hard
-
-"@sanity/preview-kit@npm:^3.1.6":
-  version: 3.1.6
-  resolution: "@sanity/preview-kit@npm:3.1.6"
-  dependencies:
-    "@sanity/eventsource": 5.0.0
-    "@sanity/groq-store": 4.1.1
-    "@vercel/stega": 0.1.0
-    lodash.get: 4.4.2
-    lodash.isplainobject: 4.0.6
-    lru-cache: 10.0.1
-    mendoza: 3.0.3
-    react-fast-compare: 3.2.2
-    use-sync-external-store: 1.2.0
-  peerDependencies:
-    "@sanity/client": ^6.4.9
-    react: ^18.0.0
-  peerDependenciesMeta:
-    react:
-      optional: true
-  checksum: 2cc25749f8e28bcbe9cfc13c9bd04081142f5876da295fdaa3a36a2cb82412caa3c3bbf2d10110d653243d0816021b782494537bf49c4c8aa3d170a65033bf60
+  checksum: 592cc6c3d0e935e98a2475becd40b556140fec1e1fa8cbb3f52303009c02973134adda59ca98e4324f0f6c84ab03959aa0b9c0b6599641e20ba9ce9c14440afa
   languageName: node
   linkType: hard
 
@@ -2036,10 +2009,24 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/event-source-polyfill@npm:1.0.2":
+  version: 1.0.2
+  resolution: "@types/event-source-polyfill@npm:1.0.2"
+  checksum: f0813edfee0af768e6e0994b48f9f618df7a5d9023c383a8f35e9e805dec560222dc40fc583d5f1404977febb7353c27c1d0606c67d948a2d18634c18ae437a9
+  languageName: node
+  linkType: hard
+
 "@types/eventsource@npm:1.1.11":
   version: 1.1.11
   resolution: "@types/eventsource@npm:1.1.11"
   checksum: 84cd8595b43f8d0cdb857102e78ae35e9ff7284daa72085b114caaf90de14bca96b1c604553b9055eda19a76e2b161fb764e8cd4aba1824f81feec98fa331c1c
+  languageName: node
+  linkType: hard
+
+"@types/eventsource@npm:1.1.12":
+  version: 1.1.12
+  resolution: "@types/eventsource@npm:1.1.12"
+  checksum: 19039099c2dc8fb369517b248856ba30dca3c36cf58cb2d62137d7c907db40871c6c4e67b1960ebba2b6f84a6bba7add4c25dc647fefbb4a37cdb7ccfa3b3f15
   languageName: node
   linkType: hard
 
@@ -5347,7 +5334,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"get-it@npm:^8.4.3":
+"get-it@npm:^8.4.3, get-it@npm:^8.4.4":
   version: 8.4.4
   resolution: "get-it@npm:8.4.4"
   dependencies:
@@ -5591,13 +5578,6 @@ __metadata:
   version: 1.4.0
   resolution: "graphemer@npm:1.4.0"
   checksum: bab8f0be9b568857c7bec9fda95a89f87b783546d02951c40c33f84d05bb7da3fd10f863a9beb901463669b6583173a8c8cc6d6b306ea2b9b9d5d3d943c3a673
-  languageName: node
-  linkType: hard
-
-"groq-js@npm:1.2.0":
-  version: 1.2.0
-  resolution: "groq-js@npm:1.2.0"
-  checksum: bc48b28b1e760aca8bf86ac3290e07747dbbc882c1658b7b19669e92463ae66e131cff5935e10756fb4e3baed9ca6c250db220dfbec313665c1c21a85774b2c8
   languageName: node
   linkType: hard
 
@@ -7833,12 +7813,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"next-sanity@npm:^5.5.8":
-  version: 5.5.8
-  resolution: "next-sanity@npm:5.5.8"
+"next-sanity@npm:^5.5.10":
+  version: 5.5.10
+  resolution: "next-sanity@npm:5.5.10"
   dependencies:
-    "@sanity/client": ^6.6.0
-    "@sanity/preview-kit": 3.2.0
+    "@sanity/client": ^6.7.0
+    "@sanity/preview-kit": 3.2.6
     "@sanity/webhook": 3.0.1
     groq: ^3.0.0
   peerDependencies:
@@ -7846,11 +7826,11 @@ __metadata:
     "@sanity/icons": ^2.0.0
     "@sanity/types": ^3.0.0
     "@sanity/ui": ^1.0.0
-    next: ^13.0.0
+    next: ^13.0.0 || ^14.0.0
     react: ^18.0.0
     sanity: ^3.0.0
     styled-components: ^5.2.0 || ^6.0.0
-  checksum: a0ced36ed77a4ccab7aaa164f4224f33f688008938d727c626927b43540d14365e89176c2818a0f1929c296c884ce8170edeaf491d4eb97de2cb01fe3cfec1fa
+  checksum: ca54cbaa97df98aecb214d715237a6c44f198efad29fe1eb0701f6b59569c6ef0f7b65a70273bcb264e7bf9db63659a59f617983c8e7cf4c58d77145d4bc1d71
   languageName: node
   linkType: hard
 
@@ -9035,6 +9015,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-is@npm:18.2.0, react-is@npm:^18.0.0":
+  version: 18.2.0
+  resolution: "react-is@npm:18.2.0"
+  checksum: e72d0ba81b5922759e4aff17e0252bd29988f9642ed817f56b25a3e217e13eea8a7f2322af99a06edb779da12d5d636e9fda473d620df9a3da0df2a74141d53e
+  languageName: node
+  linkType: hard
+
 "react-is@npm:^16.13.1, react-is@npm:^16.7.0":
   version: 16.13.1
   resolution: "react-is@npm:16.13.1"
@@ -9046,13 +9033,6 @@ __metadata:
   version: 17.0.2
   resolution: "react-is@npm:17.0.2"
   checksum: 9d6d111d8990dc98bc5402c1266a808b0459b5d54830bbea24c12d908b536df7883f268a7868cfaedde3dd9d4e0d574db456f84d2e6df9c4526f99bb4b5344d8
-  languageName: node
-  linkType: hard
-
-"react-is@npm:^18.0.0":
-  version: 18.2.0
-  resolution: "react-is@npm:18.2.0"
-  checksum: e72d0ba81b5922759e4aff17e0252bd29988f9642ed817f56b25a3e217e13eea8a7f2322af99a06edb779da12d5d636e9fda473d620df9a3da0df2a74141d53e
   languageName: node
   linkType: hard
 
@@ -11319,9 +11299,7 @@ __metadata:
     "@next/bundle-analyzer": ^13.3.1
     "@playwright/test": ^1.34.0
     "@portabletext/react": ^3.0.11
-    "@sanity/client": ^6.4.12
     "@sanity/image-url": ^1.0.2
-    "@sanity/preview-kit": ^3.1.6
     "@sentry/nextjs": ^7.70.0
     "@t3-oss/env-nextjs": ^0.6.1
     "@tailwindcss/typography": ^0.5.9
@@ -11348,7 +11326,7 @@ __metadata:
     jest: ^29.4.1
     jest-environment-jsdom: ^29.4.1
     next: ^13.5.6
-    next-sanity: ^5.5.8
+    next-sanity: ^5.5.10
     next-seo: ^5.15.0
     postcss: ^8.4.21
     prettier: ^2.8.3
@@ -11360,6 +11338,7 @@ __metadata:
     react-error-boundary: ^4.0.4
     react-google-recaptcha: ^3.1.0
     react-hook-form: ^7.43.9
+    react-is: 18.2.0
     react-visibility-sensor: ^5.1.1
     sanity-plugin-iframe-pane: ^2.6.0
     styled-components: ^5.3.10
