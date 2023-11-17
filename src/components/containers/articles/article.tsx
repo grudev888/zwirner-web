@@ -48,11 +48,11 @@ export const ArticleContainer = ({data}: ArticleContainerProps) => {
   const articlesGrid = articlesGridMap(articles)
   const articleDates = displayDate
     ? {
-        title: subtitle || 'Date',
+        title: subtitle,
         subtitle: displayDate,
         titleType: TITLE_TYPES.P,
       }
-    : articleDatesMapper(publishDate, subtitle || 'Date')
+    : articleDatesMapper(publishDate, subtitle)
   const isSmall = useIsSmallWindowSize()
 
   if (articleDates && externalURL) {

@@ -167,7 +167,7 @@ export const cardContentArticle = ({data, props}: any) => {
       title,
       subtitle: primarySubtitle,
       secondaryTitle: subtitle,
-      secondarySubtitle,
+      secondarySubtitle: displayDate ?? secondarySubtitle,
       cardLink: {href: articleUrl, openNewTab: isExternalNews},
       linkCTA: {
         text: READ_MORE,
