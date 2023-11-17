@@ -90,6 +90,5 @@ export const getStaticProps: GetStaticProps = async (ctx) => {
       slug: params?.slug || null,
       token: null,
     },
-    revalidate: 1,
   }
 }

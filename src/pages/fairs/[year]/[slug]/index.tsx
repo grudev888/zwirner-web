@@ -96,7 +96,6 @@ export const getStaticProps = async (
       querySlug: false,
       token: draftViewToken,
     },
-    revalidate: 1,
   }
 }
 

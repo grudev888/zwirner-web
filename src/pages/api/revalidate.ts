@@ -1,49 +1,136 @@
+import {isValidSignature, SIGNATURE_HEADER_NAME} from '@sanity/webhook'
+import * as Sentry from '@sentry/nextjs'
 import {NextApiRequest, NextApiResponse} from 'next'
 
+import {ARTISTPAGE_TYPE, EXHIBITIONPAGE_TYPE, HOMEPAGE_TYPE} from '@/common/constants/pageTypes'
+import {ARTIST_SUBPAGES, EXHIBITION_SUBPAGES} from '@/common/constants/subPages'
 import {env} from '@/env.mjs'
-import TypesToPathsMap from '@/sanity/typesToPathsMap'
-import camelToDash from '@/utils/string/camelToDash'
+import {getReferencedSlugs} from '@/sanity/services/revalidate/getReferencedSlugs'
+
+const secret = env.ISR_TOKEN as string
+
+type responseType = {
+  success?: boolean
+  revalidated?: boolean
+  message?: string
+  slug?: string
+}[]
+
+type reqBody = {
+  slug: string
+  type: string
+}
+
+type revalPaths = string[]
 
 /**
  * ISR endpoint called by Sanity Webhook defined in Sanity Project -> API -> Webhooks
  */
+
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  // TODO: this should report to exception tracker
-  if (req.query.secret !== env.ISR_TOKEN) {
-    return res.status(401).json({message: 'Invalid token'})
-  }
-  const slug = req.body?.slug?.current
-  const type = req.body?._type
-  let basePath
+  const signature = req.headers[SIGNATURE_HEADER_NAME]?.toString() as string
+  const id = req.headers['sanity-document-id']?.toString()
+  const body = await readBody(req)
+  const jsonBody = JSON.parse(body)
+  const {slug, type}: reqBody = jsonBody
 
-  // externalNews is content hosted on an external site so we cannot update it
-  if (req.body?.type === 'externalNews') {
-    return res.json({revalidated: false})
+  // get all document types and slugs that reference the source document
+  const refDocs = id ? await getReferencedSlugs(id) : []
+
+  // set the source document path to '/' if this is the homepage
+  const docPath = type === HOMEPAGE_TYPE ? '/' : slug
+
+  // create array of source doc and all referenced docs to revalidate
+  const docsArray = [{slug: docPath, type: type}, ...refDocs]
+
+  // create final array of slugs based on docs, subpages, and referral docs
+  const finalPaths: revalPaths = []
+
+  docsArray.map((doc) => {
+    const {slug, type} = doc
+    finalPaths.push(slug)
+
+    // get slugs for any subpages of the doc
+    const subPages = defineSubPages(type)
+    subPages.map((subPage) => {
+      const path = `${slug}/${subPage}`
+      finalPaths.push(path)
+    })
+
+    // TODO add slugs for pages and year filters if exhibitions
+  })
+
+  //error handling
+  const errorDetails = `| Slug: ${slug} Type: ${type}`
+
+  if (req.method !== 'POST') {
+    Sentry.captureMessage(`non POST request sent to revalidate API ${errorDetails}`)
+    return res.status(405).json({message: 'Must be a POST request'})
   }
-  // TODO Enable ISR for these when https://zwirner.atlassian.net/browse/NWEB-553 is fixed
-  if (['exhibitionPage', 'article'].includes(type)) {
+
+  if (!id) {
+    Sentry.captureMessage(`No document id sent from Sanity webhook ${errorDetails}`)
+    return res.status(401).json({success: false, message: 'No document id'})
+  }
+
+  if (!isValidSignature(body, signature, secret)) {
+    Sentry.captureMessage(`Invalid signature sent to revalidate API ${errorDetails}`)
+    res.status(401).json({success: false, message: 'Invalid signature'})
+    return
+  }
+
+  if (!finalPaths.length) {
+    Sentry.captureMessage(
+      `Final revalidation request contained no slugs in revalidate API ${errorDetails}`
+    )
     return res.json({revalidated: false})
   }
 
-  // Reconstruct the NextJS page route to revalidate based on the respective Sanity schema
-  // e.g. /artists/tomma-abts, /utopia-editions
-  if (type === 'home') {
-    basePath = '/'
-  } else if (slug) {
-    basePath = TypesToPathsMap[type] ? `/${TypesToPathsMap[type]}` : undefined
-  } else {
-    basePath = `/${camelToDash(type)}`
+  //revalidate array of slugs
+  let response: responseType = []
+  await Promise.all(
+    finalPaths.map(async (page) => {
+      try {
+        await res.revalidate(page)
+        response.push({revalidated: true, slug: page})
+      } catch (e) {
+        const message = e instanceof Error ? e.message : String(e)
+        Sentry.captureMessage(`${message} | Slug: ${page}`)
+        response.push({revalidated: false, slug: page, message: message})
+      }
+    })
+  )
+
+  return res.json(response)
+}
+
+// Next.js will by default parse the body, which can lead to invalid signatures
+export const config = {
+  api: {
+    bodyParser: false,
+  },
+}
+
+async function readBody(readable: NextApiRequest) {
+  const chunks = []
+  for await (const chunk of readable) {
+    chunks.push(typeof chunk === 'string' ? Buffer.from(chunk) : chunk)
+  }
+  return Buffer.concat(chunks).toString('utf8')
+}
+
+function defineSubPages(type: string): string[] {
+  let subPages: string[] = []
+  switch (type) {
+    case ARTISTPAGE_TYPE:
+      subPages = ARTIST_SUBPAGES
+      break
+    case EXHIBITIONPAGE_TYPE:
+      subPages = EXHIBITION_SUBPAGES
+      break
+    default:
+      break
   }
 
-  if (!type || !basePath) {
-    return res.json({revalidated: false})
-  }
-  try {
-    await res.revalidate(slug ? `${basePath}${slug}` : basePath)
-    return res.json({revalidated: true})
-  } catch (error) {
-    const message = error instanceof Error ? error.message : String(error)
-    console.error('[revalidate]', message)
-    return res.json({revalidated: false})
-  }
+  return subPages
 }

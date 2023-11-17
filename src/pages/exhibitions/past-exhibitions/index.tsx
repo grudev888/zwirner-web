@@ -80,7 +80,6 @@ export const getStaticProps: GetStaticProps = async (ctx) => {
       token: draftViewToken,
       draftMode,
     },
-    revalidate: 1,
   }
 }
 

@@ -66,7 +66,6 @@ export const getStaticProps: GetStaticProps = async (ctx) => {
       queryParams,
       draftMode,
     },
-    revalidate: 1,
   }
 }
 

@@ -33,6 +33,7 @@
     "@headlessui/tailwindcss": "^0.1.2",
     "@portabletext/react": "^3.0.11",
     "@sanity/image-url": "^1.0.2",
+    "@sanity/webhook": "^3.0.1",
     "@sentry/nextjs": "^7.70.0",
     "@t3-oss/env-nextjs": "^0.6.1",
     "@tailwindcss/typography": "^0.5.9",

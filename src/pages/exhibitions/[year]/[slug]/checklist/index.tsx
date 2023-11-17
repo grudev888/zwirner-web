@@ -90,6 +90,5 @@ export const getStaticProps: GetStaticProps = async (ctx) => {
       token: draftViewToken,
       queryParams,
     },
-    revalidate: 1,
   }
 }

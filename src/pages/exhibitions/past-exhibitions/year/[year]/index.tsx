@@ -97,7 +97,7 @@ export const getStaticProps: GetStaticProps = async (ctx) => {
       draftMode,
       token: draftViewToken,
     },
-    revalidate: 1,
+    revalidate: 3600,
   }
 }
 

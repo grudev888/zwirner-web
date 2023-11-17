@@ -77,6 +77,5 @@ export const getStaticProps = async (
       slug: params?.slug || null,
       token: draftViewToken,
     },
-    revalidate: 1,
   }
 }
