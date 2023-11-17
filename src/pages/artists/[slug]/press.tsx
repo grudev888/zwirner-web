@@ -61,7 +61,7 @@ export const getStaticProps: GetStaticProps = async (ctx) => {
   const client = getClient(draftMode ? {token: draftViewToken} : undefined)
 
   const data = await getPressDataBySlug(client, queryParams)
-  if (!data?.[0].pressSubpage?.props?.grid?.length) return {notFound: true}
+  if (!data?.[0]?.pressSubpage?.props?.grid?.length) return {notFound: true}
 
   const dataLayerProps = await getGTMPageLoadData(queryParams)
   if (dataLayerProps) {
