@@ -10,6 +10,7 @@ import {
   WANT_TO_KNOW_MORE,
 } from '@/common/constants/commonCopies'
 import {ErrorType, GTMErrorMessageEvent} from '@/common/utils/gtm/GTMErrorMessageEvent'
+import {captchaInitObserver, removeCaptchaObserver} from '@/common/utils/recaptcha/observer'
 import RecaptchaNode from '@/components/forms/recaptchaNode'
 import useGtmNewsletterEvent from '@/components/hooks/gtm/useGtmNewsletterEvent'
 import {sendSubscribeRequest} from '@/services/subscribeService'
@@ -28,7 +29,9 @@ export const useNewsletterFormModal = (disableBackdrop = false) => {
     errorTitle: JOIN_OUR_MAILING_LIST_ERROR,
     onSubmit: async (data: any) => {
       gtmNewsletterSubscribedEvent(data)
+      const observer = captchaInitObserver()
       await recaptchaRef?.current?.executeAsync()
+      removeCaptchaObserver(observer)
       const response = await sendSubscribeRequest(data, window.location.href)
       if (!response.isSuccess)
         GTMErrorMessageEvent({

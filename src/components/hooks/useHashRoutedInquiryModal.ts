@@ -8,6 +8,7 @@ import {
   gtmInquiryFormSubmitEvent,
   gtmInquiryFormViewEvent,
 } from '@/common/utils/gtm/gtmInquiryFormEvent'
+import {captchaInitObserver, removeCaptchaObserver} from '@/common/utils/recaptcha/observer'
 import {useLocation} from '@/forms/api/useLocation'
 import {builder} from '@/sanity/imageBuilder'
 import {createRandomUUID} from '@/sanity/uuid'
@@ -85,8 +86,9 @@ export const useHashRoutedInquiryModal = () => {
   const onDirty = () => gtmInquiryFormStartedEvent(artwork)
   const onSubmit = async (formValues: Record<string, any>) => {
     // TODO check result of recaptcha before submitting form
+    const observer = captchaInitObserver()
     await recaptchaRef?.current?.executeAsync()
-
+    removeCaptchaObserver(observer)
     gtmInquiryFormSubmitEvent(artwork, formValues?.email)
 
     const inquiryPayload = {
