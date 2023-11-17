@@ -32,8 +32,11 @@ const Layout = ({children, layoutData}: LayoutProps) => {
           useRoute: true,
         }}
         LinkElement={Link}
-        // TODO handle newsletter
-        newsletterAction={() => null}
+        newsletterAction={() => {
+          window.document.dispatchEvent(
+            CTAClickEvent(CtaActions.NEWSLETTER, {method: SUBSCRIBE_METHOD.NAV})
+          )
+        }}
       />
       <CtaModalListener />
       <main className={styles.mainLayout} aria-label="Main" role="main">
