@@ -1,4 +1,3 @@
-import {INQUIRY_TYPES} from '@zwirner/design-system'
 import {useEffect} from 'react'
 
 import {useNewsletterFormModal} from '@/components/containers/ctaModalListener/useNewsletterFormModal'
@@ -21,18 +20,10 @@ export const CtaModalListener = () => {
     const ctaTypesToClickHandlers: Record<string, (props: any) => void> = {
       [CtaActions.NEWSLETTER]: newsletterOpenClickHandler,
       [CtaActions.INQUIRE]: (props: any = {}) => {
-        let {inquireModalProps} = props ?? {}
+        const inquireModalProps = props || generalInquireProps
+        const {useAnchor} = props ?? {}
 
-        if (!inquireModalProps) {
-          inquireModalProps = generalInquireProps?.inquireModalProps
-        }
-        const useAnchor = [
-          INQUIRY_TYPES.AVAILABLE_ARTWORKS,
-          INQUIRY_TYPES.ARTIST,
-          INQUIRY_TYPES.EXHIBITION,
-        ].includes(inquireModalProps?.inquiryType)
-
-        openInquireModal({...inquireModalProps, options: {useAnchor}})
+        openInquireModal({inquireModalProps, options: {useAnchor}})
       },
     }
 

@@ -17,7 +17,10 @@ import {useEffect, useRef, useState} from 'react'
 
 import {gtmProductViewEvent} from '@/common/utils/gtm/gtmProductEvent'
 import {artworkCTAMapper, ctaMapper} from '@/common/utilsMappers/cta.mapper'
-import {createInquireModalArtworkProps} from '@/components/hooks/useOpenInquiryDispatch'
+import {
+  createInquireModalArtworkProps,
+  useOpenInquiryDispatch,
+} from '@/components/hooks/useOpenInquiryDispatch'
 import {ARTWORK_BG_COLORS_TO_TW_VALUES} from '@/components/pageBuilder/DzCard/cardMapper'
 import {DzCard} from '@/components/wrappers/DzCardWrapper'
 import {DzComplexGrid} from '@/components/wrappers/DzComplexGridWrapper'
@@ -113,6 +116,8 @@ export const ArtworkContainer = ({data}: Props) => {
         artworkCTA?.secondaryCTA === CtaActions.INQUIRE ? inquiryModalProps : null,
     },
   })
+
+  useOpenInquiryDispatch(inquiryModalProps)
 
   Object.entries(photoDimensionsMap).forEach(([key, dimensions]) => {
     const zoomStyle = isImageZoomable(dimensions as any) ? 'cursor-zoom-in' : ''

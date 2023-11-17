@@ -1,4 +1,4 @@
-import {InquireFormContextData, INQUIRY_TYPES, InquiryType} from '@zwirner/design-system'
+import {InquireFormContextData, INQUIRY_CATEGORIES, InquiryCategory} from '@zwirner/design-system'
 import {useRouter} from 'next/router'
 import {useEffect} from 'react'
 
@@ -16,13 +16,12 @@ import {INQUIRE_HASH_KEY} from '@/components/hooks/useHashRoutedInquiryModal'
 import {CTAClickEvent} from '@/events/CTAClickEvent'
 import {CtaActions} from '@/sanity/types'
 
-interface InquireModalProps {
-  inquireModalProps: {
-    contextData: InquireFormContextData
-    inquiryType: InquiryType
-    subtitle: string
-    title: string
-  }
+export interface InquireModalProps {
+  contextData?: InquireFormContextData
+  inquiryCategory: InquiryCategory
+  subtitle: string
+  title: string
+  useAnchor?: boolean
 }
 
 export const useOpenInquiryDispatch = (inquireModalProps: InquireModalProps) => {
@@ -36,67 +35,61 @@ export const useOpenInquiryDispatch = (inquireModalProps: InquireModalProps) => 
   }, [])
 }
 
-export const createInquireModalExhibitionProps = (exhibition: Record<string, any>) => {
+export const createInquireModalExhibitionProps = (
+  exhibition: Record<string, any>
+): InquireModalProps => {
   const {title, subtitle} = exhibition
   const exhibitionTitle = `${title}${subtitle ? `: ${subtitle}` : ''}`
 
   return {
-    inquireModalProps: {
-      contextData: {
-        ctaText: INQUIRE,
-        id: exhibition._id,
-        inquiryType: INQUIRY_TYPES.EXHIBITION,
-        title: exhibition.title,
-      },
-      inquiryType: INQUIRY_TYPES.EXHIBITION,
-      subtitle: `${TO_LEARN_MORE_ABOUT} ${exhibitionTitle}, ${PLEASE_PROVIDE_YOUR_CONTACT}`,
-      title: WANT_TO_KNOW_MORE,
+    contextData: {
+      ctaText: INQUIRE,
+      id: exhibition._id,
+      title: exhibition.title,
     },
+    useAnchor: true,
+    inquiryCategory: INQUIRY_CATEGORIES.GENERAL,
+    subtitle: `${TO_LEARN_MORE_ABOUT} ${exhibitionTitle}, ${PLEASE_PROVIDE_YOUR_CONTACT}`,
+    title: WANT_TO_KNOW_MORE,
   }
 }
 
-export const createInquireModalArtistProps = (artist: Record<string, any>) => {
+export const createInquireModalArtistProps = (artist: Record<string, any>): InquireModalProps => {
   return {
-    inquireModalProps: {
-      contextData: {
-        ctaText: 'Inquire',
-        id: artist.id,
-        title: artist.fullName,
-        inquiryType: INQUIRY_TYPES.ARTIST,
-      },
-      inquiryType: INQUIRY_TYPES.ARTIST,
-      subtitle: `${TO_LEARN_MORE_ABOUT} ${artist.fullName}, ${PLEASE_PROVIDE_YOUR_CONTACT_SHORT}`,
-      title: INQUIRE,
+    contextData: {
+      ctaText: 'Inquire',
+      id: artist.id,
+      title: artist.fullName,
     },
+    inquiryCategory: INQUIRY_CATEGORIES.GENERAL,
+    useAnchor: true,
+    subtitle: `${TO_LEARN_MORE_ABOUT} ${artist.fullName}, ${PLEASE_PROVIDE_YOUR_CONTACT_SHORT}`,
+    title: INQUIRE,
   }
 }
 
-export const createInquireModalArtworkProps = (artwork: Record<string, any>) => {
+export const createInquireModalArtworkProps = (artwork: Record<string, any>): InquireModalProps => {
   const [mainArtist] = artwork?.artists ?? []
   const {fullName} = mainArtist ?? {}
 
   return {
-    inquireModalProps: {
-      contextData: {
-        ctaText: 'Inquire',
-        id: artwork?._id,
-        title: fullName || 'this artist',
-        inquiryType: INQUIRY_TYPES.AVAILABLE_ARTWORKS,
-        artwork,
-      },
-      inquiryType: INQUIRY_TYPES.AVAILABLE_ARTWORKS,
-      subtitle: `${TO_LEARN_MORE_ABOUT} ${fullName}, ${PLEASE_PROVIDE_YOUR_CONTACT_SHORT}`,
-      title: `${INTERESTED_IN} ${mainArtist?.fullName || THIS_ARTWORK}?`,
+    contextData: {
+      ctaText: 'Inquire',
+      id: artwork?._id,
+      title: fullName || 'this artist',
+      artwork,
     },
+    useAnchor: true,
+    inquiryCategory: INQUIRY_CATEGORIES.ARTWORK,
+    subtitle: `${TO_LEARN_MORE_ABOUT} ${fullName}, ${PLEASE_PROVIDE_YOUR_CONTACT_SHORT}`,
+    title: `${INTERESTED_IN} ${mainArtist?.fullName || THIS_ARTWORK}?`,
   }
 }
 
-export const createInquireModalGeneralProps = () => {
+export const createInquireModalGeneralProps = (): InquireModalProps => {
   return {
-    inquireModalProps: {
-      inquiryType: INQUIRY_TYPES.GENERAL,
-      subtitle: TO_LEARN_MORE_ABOUT_AVAILABLE_WORKS_EXTENDED,
-      title: INQUIRE,
-    },
+    inquiryCategory: INQUIRY_CATEGORIES.GENERAL,
+    subtitle: TO_LEARN_MORE_ABOUT_AVAILABLE_WORKS_EXTENDED,
+    title: INQUIRE,
   }
 }

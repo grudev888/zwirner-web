@@ -1,8 +1,12 @@
-import {BUTTON_VARIANTS, ButtonModes} from '@zwirner/design-system'
+import {BUTTON_VARIANTS, ButtonModes, INQUIRY_CATEGORIES} from '@zwirner/design-system'
 import Router from 'next/router'
 
 import {CTA, CTA_TEXT} from '@/common/constants/cart'
-import {LEARN_MORE} from '@/common/constants/commonCopies'
+import {
+  INQUIRE,
+  LEARN_MORE,
+  TO_LEARN_MORE_ABOUT_AVAILABLE_WORKS_EXTENDED,
+} from '@/common/constants/commonCopies'
 import {CTAClickEvent} from '@/events/CTAClickEvent'
 import {CtaActions, CTASchemaType} from '@/sanity/types'
 
@@ -24,7 +28,16 @@ interface CtaMapperInterstitial {
 
 const handleCTAClick = (action?: CtaActions, extraProps?: any) => {
   if (action) {
-    window.document.dispatchEvent(CTAClickEvent(action, extraProps))
+    const modalProps =
+      action === CtaActions.INQUIRE && extraProps?.method === SUBSCRIBE_METHOD.INTERSTITIAL
+        ? {
+            title: INQUIRE,
+            subtitle: TO_LEARN_MORE_ABOUT_AVAILABLE_WORKS_EXTENDED,
+            inquiryCategory: INQUIRY_CATEGORIES.GENERAL,
+          }
+        : {}
+
+    window.document.dispatchEvent(CTAClickEvent(action, {...extraProps, ...modalProps}))
   }
 }
 

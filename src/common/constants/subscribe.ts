@@ -3,6 +3,7 @@ export const SUBSCRIBE_TYPE = {
   EVENTS: 'books',
   NEWS: 'news',
 } as const
+
 export const SUBSCRIBE_METHOD = {
   FOOTER: 'footer',
   POPUP: 'popup',
