@@ -10,7 +10,7 @@ export const allReferencedSlugs = groq`
 
 export const allReferencedSlugsSchema = z.array(
   z.object({
-    slug: z.string(),
+    slug: z.string().nullish(),
     type: z.string(),
   })
 )

@@ -17,7 +17,7 @@ type responseType = {
 }[]
 
 type reqBody = {
-  slug: string
+  slug: string | null | undefined
   type: string
 }
 
@@ -41,22 +41,21 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   const docPath = type === HOMEPAGE_TYPE ? '/' : slug
 
   // create array of source doc and all referenced docs to revalidate
-  const docsArray = [{slug: docPath, type: type}, ...refDocs]
+  const docsArray = docPath ? [{slug: docPath, type: type}, ...refDocs] : [...refDocs]
 
   // create final array of slugs based on docs, subpages, and referral docs
   const finalPaths: revalPaths = []
-
   docsArray.map((doc) => {
     const {slug, type} = doc
-    finalPaths.push(slug)
-
-    // get slugs for any subpages of the doc
-    const subPages = defineSubPages(type)
-    subPages.map((subPage) => {
-      const path = `${slug}/${subPage}`
-      finalPaths.push(path)
-    })
-
+    if (slug) {
+      finalPaths.push(slug)
+      // get slugs for any subpages of the doc
+      const subPages = defineSubPages(type)
+      subPages.map((subPage) => {
+        const path = `${slug}/${subPage}`
+        finalPaths.push(path)
+      })
+    }
     // TODO add slugs for pages and year filters if exhibitions
   })
 
