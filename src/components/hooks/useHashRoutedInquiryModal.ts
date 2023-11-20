@@ -43,7 +43,6 @@ export const artworkToPayloadAdapter = (artwork: any, status?: string) => {
     artwork
   const firstAsset = photos?.[0]?.image
   const image = firstAsset ? builder.image(firstAsset).url() : ''
-
   const payload: Record<string, any> = {
     artistFullName: artists?.[0]?.fullName || '',
     artworkType: artworkType || '',
@@ -118,7 +117,7 @@ export const useHashRoutedInquiryModal = () => {
     removeCaptchaObserver(observer)
     gtmInquiryFormSubmitEvent(artwork, formValues?.email)
 
-    const inquiryPayload = {
+    const inquiryPayload: Record<string, any> = {
       ...formValues,
       id: createRandomUUID(),
       currentUrl: window.location.href,
@@ -135,6 +134,10 @@ export const useHashRoutedInquiryModal = () => {
         region: location?.region || 'region unavailable',
         country: location?.country || 'country unavailable',
       },
+    }
+
+    if (inquiryType === INQUIRY_TYPES.ARTIST) {
+      inquiryPayload.artistFullName = contextData?.title
     }
 
     return sendInquiry(inquiryPayload)
