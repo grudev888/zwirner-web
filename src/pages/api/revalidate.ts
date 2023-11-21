@@ -37,18 +37,17 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   // get all document types and slugs that reference the source document
   const refDocs = id ? await getReferencedSlugs(id) : []
 
-  // set the source document path to '/' if this is the homepage
-  const docPath = type === HOMEPAGE_TYPE ? '/' : slug
-
   // create array of source doc and all referenced docs to revalidate
-  const docsArray = docPath ? [{slug: docPath, type: type}, ...refDocs] : [...refDocs]
+  const docsArray = slug ? [{slug: slug, type: type}, ...refDocs] : [...refDocs]
 
   // create final array of slugs based on docs, subpages, and referral docs
   const finalPaths: revalPaths = []
   docsArray.map((doc) => {
     const {slug, type} = doc
-    if (slug) {
-      finalPaths.push(slug)
+    // set path to '/' if this is the homepage
+    const docPath = type === HOMEPAGE_TYPE ? '/' : slug
+    if (docPath) {
+      finalPaths.push(docPath)
       // get slugs for any subpages of the doc
       const subPages = defineSubPages(type)
       subPages.map((subPage) => {
@@ -94,7 +93,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         response.push({revalidated: true, slug: page})
       } catch (e) {
         const message = e instanceof Error ? e.message : String(e)
-        Sentry.captureMessage(`${message} | Slug: ${page}`)
+        Sentry.captureMessage(message)
         response.push({revalidated: false, slug: page, message: message})
       }
     })
