@@ -12,10 +12,10 @@ import {dzMediaMapper} from '@/common/utilsMappers/image.mapper'
 import {safeText} from '@/common/utilsMappers/safe'
 // TODO: extract utils to a general mapper for availability
 import {parseAvailability} from '@/components/containers/home/utils'
-import {ArtworkFramedSchema} from '@/sanity/queries/components/content/artworkContent'
 import {createInquireModalArtworkProps} from '@/components/hooks/useOpenInquiryDispatch'
 import {exhibitionCommonMapper} from '@/components/pageBuilder/utils/common'
 import {cardContentArticle} from '@/components/pageBuilder/utils/commonMappers'
+import {ArtworkFramedSchema} from '@/sanity/queries/components/content/artworkContent'
 import {BookContentType} from '@/sanity/queries/components/content/bookContent'
 import {BookVariation, DzCardExtendedProps} from '@/sanity/types'
 
