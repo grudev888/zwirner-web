@@ -10,6 +10,7 @@ import {
   THIS_ARTWORK,
   TO_LEARN_MORE_ABOUT,
   TO_LEARN_MORE_ABOUT_AVAILABLE_WORKS_EXTENDED,
+  TO_LEARN_MORE_ABOUT_THIS_ARTWORK,
   WANT_TO_KNOW_MORE,
 } from '@/common/constants/commonCopies'
 import {INQUIRE_HASH_KEY} from '@/components/hooks/useHashRoutedInquiryModal'
@@ -81,7 +82,7 @@ export const createInquireModalArtworkProps = (artwork: Record<string, any>): In
     },
     useAnchor: true,
     inquiryCategory: INQUIRY_CATEGORIES.ARTWORK,
-    subtitle: `${TO_LEARN_MORE_ABOUT} ${fullName}, ${PLEASE_PROVIDE_YOUR_CONTACT_SHORT}`,
+    subtitle: TO_LEARN_MORE_ABOUT_THIS_ARTWORK,
     title: `${INTERESTED_IN} ${mainArtist?.fullName || THIS_ARTWORK}?`,
   }
 }
