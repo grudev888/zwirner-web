@@ -7,7 +7,7 @@ import {useNewsletterFormModal} from '@/components/containers/ctaModalListener/u
 import {getGTMPageLoadData} from '@/sanity/services/gtm/pageLoad.service'
 
 export const SubscribePage = () => {
-  const {NewsletterFormModal} = useNewsletterFormModal(true)
+  const {NewsletterFormModal} = useNewsletterFormModal({disableBackdrop: true})
 
   return (
     <DzColumn span={12} className="min-h-[calc(100vh-60px-90px)]">

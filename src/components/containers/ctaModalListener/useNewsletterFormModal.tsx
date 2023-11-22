@@ -1,6 +1,7 @@
 import {FORM_MODAL_TYPES, useDzFormModal} from '@zwirner/design-system'
+import Image from 'next/image'
 import Link from 'next/link'
-import React, {useRef} from 'react'
+import {useRef} from 'react'
 
 import {
   EXPECT_THE_LATEST_INFORMATION,
@@ -15,17 +16,38 @@ import RecaptchaNode from '@/components/forms/recaptchaNode'
 import useGtmNewsletterEvent from '@/components/hooks/gtm/useGtmNewsletterEvent'
 import {sendSubscribeRequest} from '@/services/subscribeService'
 
-export const useNewsletterFormModal = (disableBackdrop = false) => {
+type Props = {
+  disableBackdrop?: boolean
+  title?: string
+  subtitle?: string
+  successTitle?: string
+  successSubtitle?: string
+  image?: {
+    src: string
+    alt: string
+  }
+}
+
+export const useNewsletterFormModal = (props?: Props) => {
+  const {
+    disableBackdrop = false,
+    title = WANT_TO_KNOW_MORE,
+    subtitle = JOIN_OUR_MAILING_LIST,
+    successTitle = JOIN_OUR_MAILING_LIST_SUCCESS,
+    successSubtitle = EXPECT_THE_LATEST_INFORMATION,
+    image,
+  } = props ?? {}
   const recaptchaRef = useRef<HTMLFormElement>()
   const {gtmNewsletterSubscriptionStartedEvent, gtmNewsletterSubscribedEvent} =
     useGtmNewsletterEvent()
   const onDirty = gtmNewsletterSubscriptionStartedEvent
   const {FormModal, openClickHandler} = useDzFormModal({
     formType: FORM_MODAL_TYPES.NEWSLETTER,
-    title: WANT_TO_KNOW_MORE,
-    subtitle: JOIN_OUR_MAILING_LIST,
-    successTitle: JOIN_OUR_MAILING_LIST_SUCCESS,
-    successSubtitle: EXPECT_THE_LATEST_INFORMATION,
+    title,
+    subtitle,
+    successTitle,
+    successSubtitle,
+    image,
     errorTitle: JOIN_OUR_MAILING_LIST_ERROR,
     onSubmit: async (data: any) => {
       gtmNewsletterSubscribedEvent(data)
@@ -44,6 +66,7 @@ export const useNewsletterFormModal = (disableBackdrop = false) => {
     disableBackdrop,
     recaptchaNode: <RecaptchaNode recaptchaRef={recaptchaRef} />,
     LinkElement: Link,
+    ImgElement: Image,
   })
 
   return {
