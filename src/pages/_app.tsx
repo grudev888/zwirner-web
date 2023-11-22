@@ -14,7 +14,6 @@ import {APIProvider} from '@/common/api'
 import DefaultLayout from '@/common/components/layout/Layout'
 import {SEOComponent} from '@/common/components/seo/seo'
 import {GTMPageLoadStartedText, GTMScript} from '@/common/constants/gtmConstants'
-import {mono, sans, serif} from '@/common/styles/fonts'
 import {gtmEvent} from '@/common/utils/gtm/gtmEvent'
 import {gtmPageLoadGetArtists} from '@/common/utils/gtm/gtmPageLoadGetArtists'
 import {getFooterData, getHeaderData} from '@/sanity/services/layout.service'
@@ -109,15 +108,6 @@ function DzApp({Component, pageProps, globalSEO, layoutData}: AppProps & Wrapper
   }, [router.events, setPageState])
   return (
     <>
-      <style jsx global>
-        {`
-          :root {
-            --font-mono: ${mono.style.fontFamily};
-            --font-sans: ${sans.style.fontFamily};
-            --font-serif: ${serif.style.fontFamily};
-          }
-        `}
-      </style>
       {!draftMode && (
         <Script id="google-tag-manager" strategy="afterInteractive">
           {GTMScript}
