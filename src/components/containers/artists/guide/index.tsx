@@ -13,7 +13,8 @@ interface ArtistGuideContainerProps {
   data: any
 }
 
-export const ArtistGuideContainer: FC<ArtistGuideContainerProps> = ({data}) => {
+export const ArtistGuideContainer: FC<ArtistGuideContainerProps> = ({data: queryData}) => {
+  const [data] = queryData ?? []
   const {artist, title: parentPageName, guideSubpage, guideInterstitialSubpage, slug} = data ?? {}
   const {fullName} = artist ?? {}
 

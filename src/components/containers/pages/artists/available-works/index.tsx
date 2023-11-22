@@ -5,7 +5,8 @@ interface PageContainerProps {
   data: any
 }
 
-const ArtistAvailableWorksPageContainer = ({data}: PageContainerProps) => {
+const ArtistAvailableWorksPageContainer = ({data: queryData}: PageContainerProps) => {
+  const [data] = queryData ?? []
   const subPageData = data?.availableWorksSubpage ?? {}
   const {artist} = data ?? {}
   const {fullName} = artist ?? {}

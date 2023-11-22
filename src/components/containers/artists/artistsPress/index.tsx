@@ -13,7 +13,8 @@ interface PressContainerProps {
   data: any
 }
 
-export const PressContainer: FC<PressContainerProps> = ({data}) => {
+export const PressContainer: FC<PressContainerProps> = ({data: queryData}) => {
+  const [data] = queryData ?? []
   const {artist, title: parentPageName, pressSubpage, pressInterstitialSubpage, slug} = data ?? {}
   const {fullName} = artist ?? {}
 

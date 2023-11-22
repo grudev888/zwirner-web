@@ -1,11 +1,10 @@
-import {GetStaticProps} from 'next'
+import {GetStaticProps, InferGetStaticPropsType} from 'next'
 
 import {SEOComponent} from '@/common/components/seo/seo'
 import {DRAFT_MODE_SANITY_READ_TOKEN_ERROR} from '@/common/constants/errorMessages'
 import {ARTISTS_SECTION} from '@/common/constants/gtmPageConstants'
 import ArtistAvailableWorksPageContainer from '@/components/containers/pages/artists/available-works/index'
 import PreviewPage from '@/components/containers/previews/pagePreview'
-import type {SharedPageProps} from '@/pages/_app'
 import {getClient, readToken} from '@/sanity/client'
 import {availableArtworksDataByArtistSlug} from '@/sanity/queries/availableArtworks.queries'
 import {getAllAvailableWorksPageSlugs} from '@/sanity/services/artists/getAllAvailableWorksPageSlugs'
@@ -13,14 +12,19 @@ import {getAvailableArtworksDataByArtistSlug} from '@/sanity/services/availableA
 import {getGTMPageLoadData} from '@/sanity/services/gtm/pageLoad.service'
 import {removePrefixSlug} from '@/utils/slug'
 
-export default function AvailableWorksPage({data, draftMode, queryParams, token}: SharedPageProps) {
+export default function AvailableWorksPage({
+  data,
+  draftMode,
+  queryParams,
+  token,
+}: InferGetStaticPropsType<typeof getStaticProps>) {
   const [artworksData] = data ?? []
   const {seo} = artworksData ?? {}
 
   if (draftMode) {
     return (
       <PreviewPage
-        data={artworksData}
+        data={data}
         query={availableArtworksDataByArtistSlug}
         seo={data.seo}
         params={queryParams}
@@ -32,7 +36,7 @@ export default function AvailableWorksPage({data, draftMode, queryParams, token}
   return (
     <>
       <SEOComponent data={seo} />
-      <ArtistAvailableWorksPageContainer data={artworksData} />
+      <ArtistAvailableWorksPageContainer data={data} />
     </>
   )
 }

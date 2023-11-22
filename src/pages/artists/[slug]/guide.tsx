@@ -21,7 +21,7 @@ export default function GuidePage({data, draftMode, queryParams, token}: SharedP
   if (draftMode) {
     return (
       <PreviewPage
-        data={guidePageData}
+        data={data}
         query={artistGuidePageBySlug}
         seo={seo}
         params={queryParams}
@@ -34,7 +34,7 @@ export default function GuidePage({data, draftMode, queryParams, token}: SharedP
   return (
     <>
       <SEOComponent data={seo} />
-      <ArtistGuideContainer data={guidePageData} />
+      <ArtistGuideContainer data={data} />
     </>
   )
 }

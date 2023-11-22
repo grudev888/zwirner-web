@@ -21,7 +21,7 @@ export default function PressPage({data, draftMode, queryParams, token}: SharedP
   if (draftMode) {
     return (
       <PreviewPage
-        data={PressPageData}
+        data={data}
         query={artistPressPageBySlug}
         seo={seo}
         params={queryParams}
@@ -34,7 +34,7 @@ export default function PressPage({data, draftMode, queryParams, token}: SharedP
   return (
     <>
       <SEOComponent data={seo} />
-      <PressContainer data={PressPageData} />
+      <PressContainer data={data} />
     </>
   )
 }
