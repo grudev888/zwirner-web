@@ -1,4 +1,4 @@
-import {GetStaticPropsContext} from 'next'
+import {type GetStaticPropsContext} from 'next'
 
 import {SEOComponent} from '@/common/components/seo/seo'
 import {NEWS_URL} from '@/common/constants/commonCopies'

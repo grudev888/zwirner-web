@@ -1,4 +1,4 @@
-import {GetStaticProps, InferGetStaticPropsType} from 'next'
+import {type GetStaticPropsContext, InferGetStaticPropsType} from 'next'
 
 import {SEOComponent} from '@/common/components/seo/seo'
 import {DRAFT_MODE_SANITY_READ_TOKEN_ERROR} from '@/common/constants/errorMessages'
@@ -26,7 +26,7 @@ export default function AvailableWorksPage({
       <PreviewPage
         data={data}
         query={availableArtworksDataByArtistSlug}
-        seo={data.seo}
+        seo={seo}
         params={queryParams}
         Container={ArtistAvailableWorksPageContainer}
         token={token}
@@ -51,7 +51,7 @@ export const getStaticPaths = async () => {
   }
 }
 
-export const getStaticProps: GetStaticProps = async (ctx) => {
+export const getStaticProps = async (ctx: GetStaticPropsContext) => {
   const {params = {}, draftMode = false} = ctx
 
   const queryParams = {slug: `/artists/${params?.slug ?? ``}`}

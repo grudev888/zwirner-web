@@ -1,4 +1,4 @@
-import {GetStaticPropsContext} from 'next'
+import {type GetStaticPropsContext} from 'next'
 import {useRouter} from 'next/router'
 
 import {SEOComponent} from '@/common/components/seo/seo'

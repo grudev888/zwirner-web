@@ -1,4 +1,4 @@
-import {GetStaticProps} from 'next'
+import {type GetStaticPropsContext} from 'next'
 
 import {SEOComponent} from '@/common/components/seo/seo'
 import {DRAFT_MODE_SANITY_READ_TOKEN_ERROR} from '@/common/constants/errorMessages'
@@ -42,7 +42,7 @@ export default function ExhibitionsLanding({
   )
 }
 
-export const getStaticProps: GetStaticProps = async (ctx) => {
+export const getStaticProps = async (ctx: GetStaticPropsContext) => {
   const {params = {}, draftMode = false} = ctx
 
   const queryParams = {slug: EXHIBITIONS_SLUG}

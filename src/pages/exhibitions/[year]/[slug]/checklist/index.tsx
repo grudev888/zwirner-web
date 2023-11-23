@@ -1,4 +1,4 @@
-import {GetStaticProps} from 'next'
+import {type GetStaticPropsContext} from 'next'
 import {useRouter} from 'next/router'
 
 import {SEOComponent} from '@/common/components/seo/seo'
@@ -66,7 +66,7 @@ export const getStaticPaths = async () => {
   }
 }
 
-export const getStaticProps: GetStaticProps = async (ctx) => {
+export const getStaticProps = async (ctx: GetStaticPropsContext) => {
   const {params = {}, draftMode = false} = ctx
   const queryParams = {slug: `${EXHIBITIONS_URL}/${params?.year}/${params?.slug}` ?? ``}
 

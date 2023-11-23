@@ -1,5 +1,5 @@
 import {DzColumn} from '@zwirner/design-system'
-import {GetStaticPropsContext} from 'next'
+import {type GetStaticPropsContext} from 'next'
 import React from 'react'
 
 import {SUBSCRIBE_SECTION, SUBSCRIBE_SLUG} from '@/common/constants/gtmPageConstants'

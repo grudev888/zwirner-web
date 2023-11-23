@@ -1,4 +1,4 @@
-import {GetStaticProps, InferGetStaticPropsType} from 'next'
+import {type GetStaticPropsContext, InferGetStaticPropsType} from 'next'
 import {useRouter} from 'next/router'
 
 import {SEOComponent} from '@/common/components/seo/seo'
@@ -52,7 +52,7 @@ export const getStaticPaths = async () => {
   }
 }
 
-export const getStaticProps: GetStaticProps = async (ctx) => {
+export const getStaticProps = async (ctx: GetStaticPropsContext) => {
   const {params, draftMode = false} = ctx
 
   if (!params?.slug) return {notFound: true}

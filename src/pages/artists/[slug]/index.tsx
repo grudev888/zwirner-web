@@ -1,5 +1,5 @@
 import {DzColumn} from '@zwirner/design-system'
-import {GetStaticProps} from 'next'
+import {type GetStaticPropsContext} from 'next'
 import {ErrorBoundary} from 'react-error-boundary'
 
 import {SEOComponent} from '@/common/components/seo/seo'
@@ -55,7 +55,7 @@ export const getStaticPaths = async () => {
   }
 }
 
-export const getStaticProps: GetStaticProps = async (ctx) => {
+export const getStaticProps = async (ctx: GetStaticPropsContext) => {
   const {params = {}, draftMode = false} = ctx
 
   const queryParams = {slug: `/artists/${params?.slug ?? ``}`}

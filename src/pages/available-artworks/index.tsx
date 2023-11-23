@@ -1,4 +1,4 @@
-import {GetStaticProps, InferGetStaticPropsType} from 'next'
+import {type GetStaticPropsContext, InferGetStaticPropsType} from 'next'
 
 import {SEOComponent} from '@/common/components/seo/seo'
 import {DRAFT_MODE_SANITY_READ_TOKEN_ERROR} from '@/common/constants/errorMessages'
@@ -40,7 +40,7 @@ const AvailableArtworks = (props: InferGetStaticPropsType<typeof getStaticProps>
   )
 }
 
-export const getStaticProps: GetStaticProps = async (ctx) => {
+export const getStaticProps = async (ctx: GetStaticPropsContext) => {
   const {draftMode = false} = ctx
   const queryParams = {slug: AVAILABLE_ARTWORKS_SLUG}
 

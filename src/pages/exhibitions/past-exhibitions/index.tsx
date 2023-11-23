@@ -1,4 +1,4 @@
-import {GetStaticProps, InferGetStaticPropsType} from 'next'
+import {type GetStaticPropsContext, InferGetStaticPropsType} from 'next'
 
 import {SEOComponent} from '@/common/components/seo/seo'
 import {PAST_EXHIBITIONS_URL} from '@/common/constants/commonCopies'
@@ -47,7 +47,7 @@ const PastExhibitionsPage = (props: InferGetStaticPropsType<typeof getStaticProp
   )
 }
 
-export const getStaticProps: GetStaticProps = async (ctx) => {
+export const getStaticProps = async (ctx: GetStaticPropsContext) => {
   const {draftMode = false} = ctx
   const currentPage = 1
 

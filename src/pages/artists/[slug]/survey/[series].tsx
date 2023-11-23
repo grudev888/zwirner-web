@@ -1,4 +1,4 @@
-import {GetStaticProps, InferGetStaticPropsType} from 'next'
+import {type GetStaticPropsContext, InferGetStaticPropsType} from 'next'
 
 import {SEOComponent} from '@/common/components/seo/seo'
 import {ARTISTS_URL, SURVEY_URL} from '@/common/constants/commonCopies'
@@ -67,7 +67,7 @@ export const getStaticPaths = async () => {
   }
 }
 
-export const getStaticProps: GetStaticProps = async (ctx) => {
+export const getStaticProps = async (ctx: GetStaticPropsContext) => {
   const {params = {}, draftMode = false} = ctx
 
   const queryParams = {

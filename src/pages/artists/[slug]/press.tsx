@@ -1,4 +1,4 @@
-import {GetStaticProps} from 'next'
+import {type GetStaticPropsContext} from 'next'
 
 import {SEOComponent} from '@/common/components/seo/seo'
 import {ARTISTS_URL} from '@/common/constants/commonCopies'
@@ -49,7 +49,7 @@ export const getStaticPaths = async () => {
   }
 }
 
-export const getStaticProps: GetStaticProps = async (ctx) => {
+export const getStaticProps = async (ctx: GetStaticPropsContext) => {
   const {params = {}, draftMode = false} = ctx
 
   const queryParams = {slug: `${ARTISTS_URL}/${params?.slug}` ?? ``}
