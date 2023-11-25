@@ -1,0 +1,25 @@
+name: 'Get release candidate fully-qualified domain name'
+description:
+  'Composes the domain name using the release version and the production root domain.'
+inputs:
+  version:
+    description: 'The release version.'
+    required: true
+    type: string
+outputs:
+  value:
+    description: 'The fully-qualified domain name for the provided release candidate.'
+    value: ${{ steps.compose_domain_name.outputs.value }}
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Compose domain name
+      id: compose_domain_name
+      shell: bash
+      run: |
+        VERSION=${{ inputs.version }}
+        RC_SUBDOMAIN=rc-${VERSION//./-}
+        PRODUCTION_ROOT_DOMAIN=zwirner.dev
+        RC_DOMAIN_NAME=$RC_SUBDOMAIN.$PRODUCTION_ROOT_DOMAIN
+        echo "value=$RC_DOMAIN_NAME" >> $GITHUB_OUTPUT
