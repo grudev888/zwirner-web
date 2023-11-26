@@ -12,6 +12,7 @@ updates:
      interval: "weekly"
      time: "16:30"
      day: "friday"
+   rebase-strategy: "disabled"
 
  - package-ecosystem: "npm"
    directory: "/"
@@ -22,3 +23,5 @@ updates:
      time: "16:30"
      day: "friday"
    open-pull-requests-limit: 3
+   # Disable rebasing for npm pull requests
+   rebase-strategy: "disabled"
