@@ -16,7 +16,10 @@ export const artistPressPageBySlug = groq`
   pressSubpage {
     ${dzGridFields}
   },
-  "seo": pressSeo {
-    ${pageSEOFields}
-  },
+  "seo": {
+    title,
+    ...pressSeo {
+      ${pageSEOFields}
+    },
+  }
 }`

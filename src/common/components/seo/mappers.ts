@@ -12,6 +12,7 @@ export const defaultSeoMapper = (data: GlobalSEOScheme | undefined): DefaultSeoP
   const {alt, asset} = globalSEOImage ?? {}
   const imgSrc = asset ? builder.image(asset).url() : ''
   const title = globalSEOTitle ?? DEFAULT_SEO_PROPERTIES.title
+  const titleTemplate = `%s | ${title}`
   const description = globalSEODescription ?? DEFAULT_SEO_PROPERTIES?.description
   const imageOG = imgSrc
     ? {
@@ -29,7 +30,7 @@ export const defaultSeoMapper = (data: GlobalSEOScheme | undefined): DefaultSeoP
   return {
     title,
     description,
-    titleTemplate: DEFAULT_SEO_PROPERTIES?.titleTemplate,
+    titleTemplate,
     defaultTitle: DEFAULT_SEO_PROPERTIES?.defaultTitle,
     openGraph: {
       ...DEFAULT_SEO_PROPERTIES.openGraph,
@@ -44,6 +45,7 @@ export const defaultSeoMapper = (data: GlobalSEOScheme | undefined): DefaultSeoP
 
 export const perPageSeoMapper = (data: PageSEOSchema): NextSeoProps => {
   const {
+    title: _title,
     pageTitle,
     metaDescription,
     canonicalURL,
@@ -52,12 +54,14 @@ export const perPageSeoMapper = (data: PageSEOSchema): NextSeoProps => {
     imageMeta,
     socialTitle,
     socialDescription,
+    titleTemplate: _titleTemplate,
   } = data ?? {}
 
   const {alt, asset} = imageMeta ?? {}
   const imgSrc = asset ? builder.image(asset).url() : ''
 
-  const title = pageTitle ? {title: pageTitle} : {}
+  const title = pageTitle || _title ? {title: (pageTitle || _title)?.slice(0, 160)} : {}
+  const titleTemplate = _titleTemplate ? {titleTemplate: _titleTemplate} : {}
   const description = metaDescription ? {description: metaDescription} : {}
   const canonical = canonicalURL?.current
     ? `${DEFAULT_SEO_PROPERTIES?.canonical}${canonicalURL?.current}`
@@ -84,6 +88,7 @@ export const perPageSeoMapper = (data: PageSEOSchema): NextSeoProps => {
     : {}
   return {
     ...title,
+    ...titleTemplate,
     ...description,
     canonical,
     noindex,

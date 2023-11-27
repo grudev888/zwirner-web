@@ -8,7 +8,7 @@ import {
 } from '@/sanity/queries/components/dzInterstitialProps'
 
 import {mediaBuilder} from '../builders/mediaBuilder'
-import {pageSEOFields, PageSEOFieldsSchema} from '../seo/pageSEOFields'
+import {pageSEOFields, PageSEOFieldsWithTitleSchema} from '../seo/pageSEOFields'
 import {SanitySlugSchema} from '../validationPrimitives'
 
 export const articleContent = groq`
@@ -62,7 +62,7 @@ const ArticleCategorySchema = z.enum([
 const ArticleTypeSchema = z.enum(['internalNews', 'pressRelease', 'externalNews'])
 // TODO: define type instead any
 export const ArticleContentSchema = z.object({
-  seo: z.nullable(PageSEOFieldsSchema),
+  seo: z.nullable(PageSEOFieldsWithTitleSchema),
   type: ArticleTypeSchema,
   category: z.nullable(ArticleCategorySchema),
   title: z.string(),

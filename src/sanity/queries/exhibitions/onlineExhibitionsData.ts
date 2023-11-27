@@ -18,6 +18,8 @@ import {
   PageBuilderComponentsDataSchema,
 } from '@/sanity/queries/page/pageCommonQueries/pageBuilderComponentsData'
 
+import {ExhibitionPageContentSchema} from '../components/content/exhibitionPageContent'
+
 export const onlineExhibitionsDataBySlug = groq`
 *[_type == "onlineExhibitionPage" && slug.current == $slug][0] {
   _type,
@@ -31,6 +33,7 @@ export const onlineExhibitionsDataBySlug = groq`
   displayDate,
   startDate,
   endDate,
+  locations[]->,
   "artists": artists[]->{${artistContent}},
   cardViewMedia {
     ${mediaBuilder}
@@ -65,11 +68,12 @@ export const OnlineExhibitionsDataBySlugSchema = z.object({
   title: z.string(),
   subtitle: z.nullable(z.string()),
   hideToggle: z.nullable(z.boolean()),
+  locations: ExhibitionPageContentSchema.shape.locations,
+  displayDate: z.nullable(z.string()),
   slug: SanitySlugSchema,
   summary: z.nullable(z.array(z.any())),
   eyebrow: z.nullable(z.string()),
   status: z.nullable(OnlineExhibitionsStatusSchema),
-  displayDate: z.nullable(z.string()),
   startDate: z.string(),
   endDate: z.string(),
   artists: z.nullable(z.array(ArtistContentSchema)),

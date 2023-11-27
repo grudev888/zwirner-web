@@ -35,8 +35,14 @@ export const artworkData = groq`
   productInformation,
   _createdAt,
   salesInformation,
-  seo {
-    ${pageSEOFields}
+  "seo": {
+    "title": select(
+      displayCustomTitle == true => pt::text(displayTitle),
+      displayCustomTitle != true => artists[][0]->fullName + ": " + title + ", " + select(defined(displayDate)==true=>displayDate, dateSelection.year)
+    ),
+    ...seo {
+      ${pageSEOFields}
+    }
   },
   title,
   "product": shopify->store{ id, variants[]->{ store { id, price, inventory { isAvailable } } } },

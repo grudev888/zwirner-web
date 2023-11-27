@@ -10,6 +10,7 @@ import {pageSEOFields} from './components/seo/pageSEOFields'
 
 export const artistExhibitionsPageData = groq`
 *[_type == "artistPage" && slug.current == $slug][0] {
+  title,
   slug,
   artist-> {
     'exhibitions': *[_type == "exhibitionPage" && references(^._id)] | order(startDate desc) {
@@ -22,7 +23,10 @@ export const artistExhibitionsPageData = groq`
   exhibitionsInterstitialSubpage {
     ${dzInterstitialFields}
   },
-  "seo": exhibitionsInterstitialSeo {
-    ${pageSEOFields}
-  },
+  "seo": {
+    "title": title + " - Past Exhibitions",
+    ...exhibitionsInterstitialSeo {
+      ${pageSEOFields}
+    },
+  }
 }`

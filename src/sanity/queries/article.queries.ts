@@ -9,6 +9,7 @@ import {
   exhibitionComplexFields,
   exhibitionSimpleFields,
 } from './components/content/exhibitionPageContent'
+import {pageSEOFields} from './components/seo/pageSEOFields'
 
 export const articlesReferences = groq`
   articles[]-> {
@@ -43,6 +44,12 @@ export const pressBySlug = groq`
 export const articleBySlug = groq`
 *[_type == "article" && slug.current == $slug][0]{
   ...,
+  "seo":  {
+    title,
+    ...seo {
+      ${pageSEOFields}
+    }
+  },
   interstitial {
     ${dzInterstitialFields}
   },

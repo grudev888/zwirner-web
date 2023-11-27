@@ -11,7 +11,7 @@ import {
   dzInterstitialFields,
   DzInterstitialPropsDataSchema,
 } from '../components/dzInterstitialProps'
-import {pageSEOFields, PageSEOFieldsSchema} from '../components/seo/pageSEOFields'
+import {pageSEOFields, PageSEOFieldsWithTitleSchema} from '../components/seo/pageSEOFields'
 import {componentsByData, ComponentsByDataScheme} from '../page/pageCommonQueries/componentsByData'
 import {
   pageBuilderComponentsData,
@@ -22,9 +22,12 @@ export const fairPageBySlug = groq`
 *[_type == "fairPage" && slug.current == $slug][0] {
   ${fairSimpleFields}
   ${fairComplexFields}
-  seo {
-    ${pageSEOFields}
-  },
+  "seo": {
+    title,
+    ...surveySeo {
+      ${pageSEOFields}
+    }
+  }
   interstitial {
     ${dzInterstitialFields}
   },
@@ -46,7 +49,7 @@ export type FairPageBySlugPropsType = z.infer<typeof FairPageBySlugPropsSchema>
 
 export const FairPageBySlugSchema = z
   .object({
-    seo: PageSEOFieldsSchema,
+    seo: PageSEOFieldsWithTitleSchema,
     interstitial: z.nullable(
       z.object({
         _type: z.literal('dzInterstitial'),

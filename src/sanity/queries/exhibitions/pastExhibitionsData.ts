@@ -10,15 +10,18 @@ import {
   dzInterstitialFields,
   DzInterstitialPropsDataSchema,
 } from '../components/dzInterstitialProps'
-import {pageSEOFields, PageSEOFieldsSchema} from '../components/seo/pageSEOFields'
+import {pageSEOFields, PageSEOFieldsWithTitleSchema} from '../components/seo/pageSEOFields'
 export const ALL_YEARS = 'ALL'
 export type YearType = typeof ALL_YEARS | string | number
 
 export const pastExhibitionsPageData = groq`
 *[_type == "exhibitionsPast"][0]{
   title,
-  seo {
-    ${pageSEOFields}
+  "seo":  {
+    title,
+    ...seo {
+      ${pageSEOFields}
+    }
   },
   pastExhibitionsInterstitial {
     ${dzInterstitialFields}
@@ -96,7 +99,7 @@ export type PastExhibitionsFilteredType = z.infer<typeof PastExhibitionsFiltered
 
 export const PastExhibitionsPageDataSchema = z.object({
   title: z.string(),
-  seo: PageSEOFieldsSchema,
+  seo: PageSEOFieldsWithTitleSchema,
   pastExhibitionsInterstitial: z.nullable(
     z.object({
       _type: z.literal('dzInterstitial'),

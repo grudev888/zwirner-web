@@ -11,8 +11,11 @@ export const availableArtworksData = groq`
   artworksGrid {
     ${dzGridFields}
   },
-  seo {
-    ${pageSEOFields}
+  "seo": {
+    title,
+    ...seo {
+      ${pageSEOFields}
+    }
   }
 }`
 
@@ -24,7 +27,10 @@ export const availableArtworksDataByArtistSlug = groq`
   availableWorksSubpage{
    ${dzGridFields}
   },
-  "seo": availableWorksSeo {
+  "seo": {
+    title,
+    ...availableWorksSeo {
     ${pageSEOFields}
   },
+  }
 }`

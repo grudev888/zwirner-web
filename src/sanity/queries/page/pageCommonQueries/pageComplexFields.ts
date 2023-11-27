@@ -1,7 +1,7 @@
 import {groq} from 'next-sanity'
 import {z} from 'zod'
 
-import {pageSEOFields, PageSEOFieldsSchema} from '../../components/seo/pageSEOFields'
+import {pageSEOFields, PageSEOFieldsWithTitleSchema} from '../../components/seo/pageSEOFields'
 import {
   pageBuilderComponentsData,
   PageBuilderComponentsDataSchema,
@@ -11,12 +11,15 @@ export const pageComplexFields = groq`
  content[] {
     ${pageBuilderComponentsData}
   },
-  seo {
-    ${pageSEOFields}
+  "seo": {
+    title,
+    ...seo {
+      ${pageSEOFields}
+    }
   }
 `
 
 export const PageComplexFieldsSchema = z.object({
-  seo: z.nullable(PageSEOFieldsSchema),
+  seo: z.nullable(PageSEOFieldsWithTitleSchema),
   content: z.nullable(z.array(PageBuilderComponentsDataSchema)),
 })

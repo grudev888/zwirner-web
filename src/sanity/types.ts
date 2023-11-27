@@ -13,7 +13,9 @@ type CanonicalURL = {
   current: string
 }
 export type PageSEOSchema = {
+  title?: string
   pageTitle?: string
+  titleTemplate?: string
   metaDescription?: string
   h1Header?: string
   canonicalURL?: CanonicalURL

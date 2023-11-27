@@ -120,7 +120,7 @@ export const generalMock = {
 }
 
 export const DEFAULT_SEO_PROPERTIES = {
-  title: 'New York, London, Paris and Hong Kong Art Galleries',
+  title: 'David Zwirner',
   description:
     'David Zwirner is a gallery with locations in New York, London, Paris and Hong Kong. We present physical and online exhibitions as well as podcasts, books, and more.',
   titleTemplate: '%s | David Zwirner',

@@ -16,7 +16,10 @@ export const artistGuidePageBySlug = groq`
   guideSubpage {
     ${dzGridFields}
   },
-  "seo": guideSeo {
-    ${pageSEOFields}
-  },
+  "seo": {
+    "title": title + " - Guide",
+    ...guideSeo {
+      ${pageSEOFields}
+    },
+  }
 }`

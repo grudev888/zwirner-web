@@ -1,7 +1,10 @@
 import {groq} from 'next-sanity'
 import {z} from 'zod'
 
-import {pageSEOFields, PageSEOFieldsSchema} from '@/sanity/queries/components/seo/pageSEOFields'
+import {
+  pageSEOFields,
+  PageSEOFieldsWithTitleSchema,
+} from '@/sanity/queries/components/seo/pageSEOFields'
 
 import {mediaBuilder} from '../builders/mediaBuilder'
 import {SanitySlugSchema} from '../validationPrimitives'
@@ -61,7 +64,7 @@ export const ArtworkBackgroundColorSchema = z.enum(['transparent', 'lightGrey', 
 // TODO: Describe properly z.any() types
 export const ArtworkContentSchema = z.object({
   _id: z.string(),
-  seo: z.nullable(PageSEOFieldsSchema),
+  seo: z.nullable(PageSEOFieldsWithTitleSchema),
   title: z.string(),
   inventoryId: z.nullable(z.string()),
   displayCustomTitle: z.nullable(z.boolean()),

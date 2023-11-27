@@ -5,6 +5,7 @@ import {SEOComponent} from '@/common/components/seo/seo'
 import {EXHIBITIONS_URL} from '@/common/constants/commonCopies'
 import {DRAFT_MODE_SANITY_READ_TOKEN_ERROR} from '@/common/constants/errorMessages'
 import {EXHIBITIONS_SECTION} from '@/common/constants/gtmPageConstants'
+import {getExhibitionsTitle} from '@/common/utilsMappers/seo.mapper'
 import {InstallationViewsContainer} from '@/components/containers/exhibitions/exhibitionViewsContainer'
 import PreviewPage from '@/components/containers/previews/pagePreview'
 import {SharedPageProps} from '@/pages/_app'
@@ -17,7 +18,10 @@ import {getGTMPageLoadData} from '@/sanity/services/gtm/pageLoad.service'
 // TODO: update component typings to infer correct types
 export default function SubPageInstallationView({data = {}, draftMode, token}: SharedPageProps) {
   const {pageData = {}, queryParams} = data ?? {}
-  const {seo} = pageData ?? {}
+  const seo = pageData?.title
+    ? {...(pageData?.seo ?? {}), title: getExhibitionsTitle(pageData)}
+    : null
+
   const router = useRouter()
 
   if (router.isFallback) {

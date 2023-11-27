@@ -1,6 +1,7 @@
 import {groq} from 'next-sanity'
 import {z} from 'zod'
 
+import {ExhibitionPageContentSchema} from '../components/content/exhibitionPageContent'
 import {
   dzInterstitialFields,
   DzInterstitialPropsDataSchema,
@@ -13,6 +14,10 @@ export const installationViewsBySlug = groq`
 *[_type == "exhibitionPage" && slug.current == $slug][0] {
   title,
   subtitle,
+  startDate,
+  endDate,
+  displayDate,
+  locations[]->,
   'showChecklist': count(checklist.grid) > 0,
   'showInstallationViews': count(installationViews.grid) > 0,
   slug,
@@ -36,6 +41,10 @@ export type InstallationViewsBySlugPropsType = z.infer<typeof InstallationViewsB
 export const InstallationViewsBySlugSchema = z.object({
   title: z.string(),
   subtitle: z.nullable(z.string()),
+  locations: ExhibitionPageContentSchema.shape.locations,
+  displayDate: z.nullable(z.string()),
+  startDate: z.string(),
+  endDate: z.string(),
   showChecklist: z.nullable(z.boolean()),
   showInstallationViews: z.nullable(z.boolean()),
   slug: SanitySlugSchema,

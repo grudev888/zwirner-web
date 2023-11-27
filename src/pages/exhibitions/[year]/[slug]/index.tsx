@@ -5,6 +5,7 @@ import {SEOComponent} from '@/common/components/seo/seo'
 import {EXHIBITIONS_URL} from '@/common/constants/commonCopies'
 import {DRAFT_MODE_SANITY_READ_TOKEN_ERROR} from '@/common/constants/errorMessages'
 import {EXHIBITIONS_SECTION} from '@/common/constants/gtmPageConstants'
+import {getExhibitionsTitle} from '@/common/utilsMappers/seo.mapper'
 import {ExceptionalWorkContainer} from '@/components/containers/exhibitions/exceptionalWorkContainer'
 import {ExhibitionsContainer} from '@/components/containers/exhibitions/exhibitionDetailContainer/exhibitions'
 import {OnlineExhibitionsContainer} from '@/components/containers/exhibitions/onlineExhibitionsContainer'
@@ -45,7 +46,8 @@ type PageContainerSchema = {
 export default function ExhibitionsPage(props: ExhibitionsPageProps) {
   const {data, queryParams, draftMode, token} = props
   const router = useRouter()
-  const {seo, _type} = data ?? {}
+  const {_type} = data ?? {}
+  const seo = data?.title ? {title: getExhibitionsTitle(data), ...(data?.seo ?? {})} : null
 
   if (router.isFallback) {
     return <div>Loading...</div>

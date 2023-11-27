@@ -7,6 +7,7 @@ import {
   PageBuilderComponentsDataSchema,
 } from '@/sanity/queries/page/pageCommonQueries/pageBuilderComponentsData'
 
+import {ExhibitionPageContentSchema} from '../components/content/exhibitionPageContent'
 import {pageSEOFields, PageSEOFieldsSchema} from '../components/seo/pageSEOFields'
 import {SanitySlugSchema} from '../components/validationPrimitives'
 
@@ -15,6 +16,10 @@ export const exceptionalWorksData = groq`
   _type,
   slug,
   title,
+  subtitle,
+  startDate,
+  endDate,
+  locations[]->,
   hideToggle,
   cardViewMedia {
     ${mediaBuilder}
@@ -40,6 +45,11 @@ export const ExceptionalWorksDataSchema = z.object({
   _type: z.literal('exceptionalWork'),
   slug: SanitySlugSchema,
   title: z.string(),
+  subtitle: z.nullable(z.string()),
+  locations: ExhibitionPageContentSchema.shape.locations,
+  startDate: z.string(),
+  endDate: z.string(),
+  displayDate: z.nullable(z.string()),
   hideToggle: z.nullable(z.boolean()),
   cardViewMedia: z.nullable(MediaBuilderSchema),
   heroMedia: z.nullable(MediaBuilderSchema),

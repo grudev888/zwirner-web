@@ -16,7 +16,10 @@ export const artworksDataByArtistSlug = groq`
   surveySeries []-> {
     ${seriesContent}
   },
-  "seo": surveySeo {
-    ${pageSEOFields}
+  "seo": {
+    title,
+    ...surveySeo {
+      ${pageSEOFields}
+    }
   }
 }`

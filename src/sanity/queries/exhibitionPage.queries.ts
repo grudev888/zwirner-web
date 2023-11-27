@@ -14,6 +14,9 @@ export const checklistBySlug = groq`
 *[_type == "exhibitionPage" && slug.current == $slug][0] {
   title,
   subtitle,
+  startDate,
+  endDate,
+  locations[]->,
   'showChecklist': count(checklist.grid) > 0,
   'showInstallationViews': count(installationViews.grid) > 0,
   slug,
@@ -30,6 +33,12 @@ export const checklistBySlug = groq`
 
 export const exhibitionsLandingData = groq`
   {
+    "seo": *[_type == "exhibitionsLanding"][0] {
+      title,
+      ...seo {
+        ${pageSEOFields}
+      }
+    },
     'cities': array::unique(*[_type == "location"].address.city),
     'pageBuilder': *[_type == "exhibitionsLanding"][0] {
       introContent[]{

@@ -16,8 +16,11 @@ export const getAllArtistsPages = groq`{
     interstitial {
       ${dzInterstitialFields}
     },
-    seo {
-      ${pageSEOFields}
+    "seo": {
+      title,
+      ...seo {
+        ${pageSEOFields}
+      }
     },
   },
   "artistPages":*[_type == "artistPage" && defined(slug.current) && artist->.affiliation == true] {
@@ -78,8 +81,11 @@ export const artistPageBySlug = groq`
   photos[]{
     ${mediaBuilder}
   },
-  seo {
-    ${pageSEOFields}
+  "seo": {
+    title,
+    ...seo {
+      ${pageSEOFields}
+    },
   },
   slug,
 }

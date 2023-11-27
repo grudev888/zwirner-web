@@ -70,4 +70,10 @@ export const PageSEOFieldsSchema = z.object({
   ),
 })
 
+export const PageSEOFieldsWithTitleSchema = PageSEOFieldsSchema.merge(
+  z.object({title: z.string().nullish()})
+)
+
+export type PageSEOFieldsWithTitleType = z.infer<typeof PageSEOFieldsWithTitleSchema>
+
 export type PageSEOFieldsType = z.infer<typeof PageSEOFieldsSchema>
