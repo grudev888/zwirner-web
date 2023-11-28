@@ -1,4 +1,10 @@
-import {CARD_TYPES, CardViewport, MEDIA_ASPECT_RATIOS, MEDIA_TYPES} from '@zwirner/design-system'
+import {
+  CARD_TYPES,
+  CardViewport,
+  MEDIA_ASPECT_RATIOS,
+  MEDIA_OBJECT_FIT,
+  MEDIA_TYPES,
+} from '@zwirner/design-system'
 import Image from 'next/image'
 
 import {LISTEN_NOW, ORDER_NOW} from '@/common/constants/commonCopies'
@@ -89,18 +95,20 @@ export const contentTypesMapper: any = {
     })
     const {year} = dateSelectionArtworkMapper(dateSelection)
     const descriptionText = safeText({key: 'description', text: tagline})
-
     const ctaBook = booksUrl ? {linkCTA: {text: ORDER_NOW, url: booksUrl}} : {}
-
     const bookCardProps =
       bookVariation === BookVariation.PRODUCT
         ? {
             type: CARD_TYPES.ARTWORK,
+            imageStyles: 'bg-white-100',
             data: {
               size: cardSize,
               artistName: title,
               medium: year,
-              media,
+              media: {
+                ...media,
+                objectFit: MEDIA_OBJECT_FIT.CONTAIN,
+              },
               hideImage,
               price,
               ...ctaBook,
@@ -108,10 +116,14 @@ export const contentTypesMapper: any = {
           }
         : {
             type: CARD_TYPES.CONTENT,
+            imageStyles: 'bg-white-100',
             data: {
-              media,
               size: cardSize,
               category: publisher,
+              media: {
+                ...media,
+                objectFit: MEDIA_OBJECT_FIT.CONTAIN,
+              },
               title,
               subtitle,
               ...(descriptionText ?? {}),
