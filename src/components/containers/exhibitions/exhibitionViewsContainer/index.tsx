@@ -69,7 +69,6 @@ export const InstallationViewsContainer = ({data}: InstallationViewsContainerPro
             useRoute: true,
           }}
           sticky
-          useLinks
         />
         <ContainerTitle
           category={EXHIBITION}

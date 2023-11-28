@@ -78,7 +78,6 @@ export const ExhibitionsContainer = ({data: initialData}: Props) => {
           useRoute: true,
         }}
         sticky
-        useLinks
         className="col-span-12"
       />
       <DzColumn span={12}>

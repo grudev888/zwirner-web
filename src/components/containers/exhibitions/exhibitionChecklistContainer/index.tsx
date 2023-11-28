@@ -69,7 +69,6 @@ export const ExhibitionChecklistContainer: FC<ExhibitionChecklistContainerProps>
             useRoute: true,
           }}
           sticky
-          useLinks
         />
         <ContainerTitle
           title={`${title}: ${subtitle ? `${subtitle} — ` : ''}${CHECKLIST}`}
