@@ -25,7 +25,7 @@ jobs:
         id: create_deployment
         with:
           step: start
-          env: Production - web-prod
+          env: Production – web-prod
           desc: Promoting release candidate to production
 
       - name: Compose release candidate domain name

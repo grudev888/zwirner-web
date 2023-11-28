@@ -53,7 +53,7 @@ jobs:
         id: create_deployment
         with:
           step: start
-          env: Preview - web-prod
+          env: Preview – web-prod
           desc: Deploying as preview in `web-prod`
 
       - name: Compose release candidate domain name

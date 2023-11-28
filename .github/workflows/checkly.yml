@@ -1,6 +1,11 @@
 name: 'checkly'
 on: [deployment_status]
 
+permissions:
+  contents: read
+  packages: read
+  deployments: read
+
 # Set the necessary credentials and export variables we can use to instrument our test run. Use the ENVIRONMENT_URL
 # to run your checks against staging, preview or production.
 env:
@@ -15,7 +20,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           ref: '${{ github.event.deployment_status.deployment.ref }}'
           fetch-depth: 0
@@ -34,7 +39,7 @@ jobs:
         if: steps.cache-node-modules.outputs.cache-hit != 'true'
         run: yarn install --immutable
         env:
-          GH_TOKEN: ${{ secrets.READ_GH_PACKAGES_TOKEN }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Run checks # run the checks passing in the ENVIRONMENT_URL and recording a test session.
         id: run-checks
         run: npx checkly test -e ENVIRONMENT_URL=${{ env.ENVIRONMENT_URL }} --reporter=github --record
@@ -53,7 +58,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           ref: '${{ github.event.deployment_status.deployment.ref }}'
           fetch-depth: 0
@@ -72,7 +77,7 @@ jobs:
         if: steps.cache-node-modules.outputs.cache-hit != 'true'
         run: yarn install --immutable
         env:
-          GH_TOKEN: ${{ secrets.READ_GH_PACKAGES_TOKEN }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Run checks # run the checks passing in the ENVIRONMENT_URL and recording a test session.
         id: run-checks
         run: npx checkly test -e ENVIRONMENT_URL=${{ env.ENVIRONMENT_URL }} --reporter=github --record

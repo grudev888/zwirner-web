@@ -23,15 +23,13 @@ export const env = createEnv({
    * 💡 You'll get type errors if these are not prefixed with NEXT_PUBLIC_.
    */
   client: {
-    NEXT_PUBLIC_VERCEL_GIT_PROVIDER: z.literal('github'),
-    NEXT_PUBLIC_VERCEL_GIT_REPO_OWNER: z.literal('Zwirner'),
-    NEXT_PUBLIC_VERCEL_GIT_REPO_SLUG: z.literal('web'),
     NEXT_PUBLIC_SANITY_PROJECT_ID: z.string().min(1),
     // primary values for NEXT_PUBLIC_SANITY_DATASET could be (['test', 'sandbox', 'production-v1', 'dev', 'migration', 'formspoc']),
     NEXT_PUBLIC_SANITY_DATASET: z.string().min(1),
     NEXT_PUBLIC_SANITY_API_VERSION: z.string().min(1),
     NEXT_PUBLIC_VERCEL_URL: z.string().min(1),
     NEXT_PUBLIC_VERCEL_ENV: z.enum(['production', 'preview', 'development', 'local']),
+    NEXT_PUBLIC_PARTIAL_BUILD: booleanString().default('false'),
     NEXT_PUBLIC_RECAPTCHA_SITE_KEY: z.string().min(1),
     NEXT_PUBLIC_FORMS_API: z.string().url(),
     NEXT_PUBLIC_GTM_ID: z.string().min(1),
@@ -48,14 +46,12 @@ export const env = createEnv({
    * 💡 You'll get type errors if not all variables from `server` & `client` are included here.
    */
   runtimeEnv: {
-    NEXT_PUBLIC_VERCEL_GIT_PROVIDER: process.env.NEXT_PUBLIC_VERCEL_GIT_PROVIDER,
-    NEXT_PUBLIC_VERCEL_GIT_REPO_OWNER: process.env.NEXT_PUBLIC_VERCEL_GIT_REPO_OWNER,
-    NEXT_PUBLIC_VERCEL_GIT_REPO_SLUG: process.env.NEXT_PUBLIC_VERCEL_GIT_REPO_SLUG,
     NEXT_PUBLIC_SANITY_PROJECT_ID: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID,
     NEXT_PUBLIC_SANITY_DATASET: process.env.NEXT_PUBLIC_SANITY_DATASET,
     NEXT_PUBLIC_SANITY_API_VERSION: process.env.NEXT_PUBLIC_SANITY_API_VERSION,
     NEXT_PUBLIC_VERCEL_URL: process.env.NEXT_PUBLIC_VERCEL_URL,
     NEXT_PUBLIC_VERCEL_ENV: process.env.NEXT_PUBLIC_VERCEL_ENV,
+    NEXT_PUBLIC_PARTIAL_BUILD: process.env.NEXT_PUBLIC_PARTIAL_BUILD,
     NEXT_PUBLIC_RECAPTCHA_SITE_KEY: process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY,
     NEXT_PUBLIC_FORMS_API: process.env.NEXT_PUBLIC_FORMS_API,
     NEXT_PUBLIC_GTM_ID: process.env.NEXT_PUBLIC_GTM_ID,
@@ -71,3 +67,12 @@ export const env = createEnv({
   },
   skipValidation: !!process.env.SKIP_ENV_CHECK,
 })
+
+/**
+ * Interprets "true" and "false" strings as boolean values.
+ *
+ * Workaround for reading boolean values from environment variables using `zod`.
+ */
+function booleanString() {
+  return z.enum(['true', 'false']).transform((s) => s === 'true')
+}
