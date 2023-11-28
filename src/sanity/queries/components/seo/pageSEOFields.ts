@@ -59,15 +59,15 @@ export const PageSEOFieldsSchema = z.object({
   socialTitle: z.string().max(60).nullish(),
   socialDescription: z.any(),
   canonicalURL: SanitySlugSchema.nullish(),
-  jsonLD: z.nullable(
-    z.object({
-      schemaType: z.nullable(JsonLDSchemaTypeSchema),
-      article: z.nullable(z.any()),
+  jsonLD: z
+    .object({
+      schemaType: JsonLDSchemaTypeSchema.nullish(),
+      article: z.any().nullish(),
       breadcrumbs: z.array(z.any()).nullish(),
       searchPotentialActions: z.array(z.any()).nullish(),
-      manualSchema: z.nullable(z.any()),
+      manualSchema: z.any().nullish(),
     })
-  ),
+    .nullish(),
 })
 
 export const PageSEOFieldsWithTitleSchema = PageSEOFieldsSchema.merge(
