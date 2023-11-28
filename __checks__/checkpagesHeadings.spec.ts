@@ -1,7 +1,7 @@
 import {defaults} from './defaults'
 import {expect, test} from './fixtures/base'
 
-const PAGES = ['/']
+const PAGES = ['/artists']
 
 test.describe('Check headings', () => {
   test.afterEach(async ({page}) => {
