@@ -3,6 +3,7 @@ import {
   BUTTON_VARIANTS,
   ButtonModes,
   DzButton,
+  DzSection,
   DzTitleMoleculeTypes,
   TITLE_SIZES,
   TITLE_TYPES,
@@ -23,7 +24,7 @@ const SelectedPress = ({selectedPress, ...rest}: any) => {
   const [shownCards, setShownCards] = useState<number>(MOBILE_CARDS_LIMIT)
 
   return (
-    <section {...rest}>
+    <DzSection {...rest}>
       <DzTitleMolecule
         type={DzTitleMoleculeTypes.MOLECULE}
         data={{
@@ -70,7 +71,7 @@ const SelectedPress = ({selectedPress, ...rest}: any) => {
           </DzButton>
         </div>
       ) : null}
-    </section>
+    </DzSection>
   )
 }
 

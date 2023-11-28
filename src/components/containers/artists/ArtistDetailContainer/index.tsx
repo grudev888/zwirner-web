@@ -1,6 +1,7 @@
 import {
   BUTTON_VARIANTS,
   DzColumn,
+  DzSection,
   DzTitleMoleculeTypes,
   TITLE_SIZES,
   TITLE_TYPES,
@@ -96,7 +97,7 @@ export const ArtistDetailContainer = ({data}: ArtistsContainerProps) => {
   const Guide = useMemo(
     () =>
       guide ? (
-        <section className="-mx-5" id="guide">
+        <DzSection className="-mx-5" id="guide">
           <DzTitleMolecule
             type={DzTitleMoleculeTypes.MOLECULE}
             data={{
@@ -115,7 +116,7 @@ export const ArtistDetailContainer = ({data}: ArtistsContainerProps) => {
             }}
           />
           <PageBuilder components={[guide]} />
-        </section>
+        </DzSection>
       ) : null,
     [guide, router.query.slug]
   )
@@ -161,7 +162,7 @@ export const ArtistDetailContainer = ({data}: ArtistsContainerProps) => {
         {showSplitSection(featured) ? <PageBuilder components={[featured]} /> : null}
         {/* Page Builder CAROUSEL for survey items*/}
         {showCarouselSection(surveyThomas ?? survey) ? (
-          <section className="-mx-5" id="survey">
+          <DzSection className="-mx-5" id="survey">
             <DzTitleMolecule
               type={DzTitleMoleculeTypes.MOLECULE}
               data={{
@@ -180,10 +181,10 @@ export const ArtistDetailContainer = ({data}: ArtistsContainerProps) => {
               }}
             />
             <PageBuilder components={[surveyThomas ?? survey]} />
-          </section>
+          </DzSection>
         ) : null}
         {showPageBuilderSection(availableWorks) ? (
-          <section id="available-works">
+          <DzSection id="available-works">
             <DzTitleMolecule
               type={DzTitleMoleculeTypes.MOLECULE}
               data={{
@@ -202,14 +203,14 @@ export const ArtistDetailContainer = ({data}: ArtistsContainerProps) => {
               }}
             />
             <PageBuilder components={availableWorks} innerSection />
-          </section>
+          </DzSection>
         ) : null}
         {/* Page Builder CAROUSEL for guide cards*/}
         {data.moveGuideUp === true && showCarouselSection(guide) ? Guide : null}
         {/* Page Builder GRID for latest exhibitions*/}
 
         {showPageBuilderSection(latestExhibitions) ? (
-          <section id="exhibitions">
+          <DzSection id="exhibitions">
             <DzTitleMolecule
               type={DzTitleMoleculeTypes.MOLECULE}
               data={{
@@ -225,7 +226,7 @@ export const ArtistDetailContainer = ({data}: ArtistsContainerProps) => {
             />
 
             <PageBuilder components={latestExhibitionMapped} />
-          </section>
+          </DzSection>
         ) : null}
 
         {/* Page Builder CAROUSEL for guide cards*/}
@@ -237,7 +238,7 @@ export const ArtistDetailContainer = ({data}: ArtistsContainerProps) => {
         ) : null}
         {/* Page Builder CAROUSEL for guide cards*/}
         {showCarouselSection(books) ? (
-          <section className="-mx-5" id="books">
+          <DzSection className="-mx-5" id="books">
             <DzTitleMolecule
               type={DzTitleMoleculeTypes.MOLECULE}
               data={{
@@ -256,7 +257,7 @@ export const ArtistDetailContainer = ({data}: ArtistsContainerProps) => {
               }}
             />
             <PageBuilder components={[books]} />
-          </section>
+          </DzSection>
         ) : null}
         {/* Page Builder INTERSTITIAL for available works*/}
         {showInterstitialSection(interstitial) ? <PageBuilder components={[interstitial]} /> : null}

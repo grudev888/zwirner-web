@@ -1,6 +1,7 @@
 import {
   DzColumn,
   DzGridColumns,
+  DzSection,
   DzText,
   DzTitle,
   DzTitleMoleculeTypes,
@@ -75,7 +76,7 @@ const Biography = ({title, biography, artist, ...rest}: any) => {
     : ''
 
   return (
-    <section {...rest}>
+    <DzSection {...rest}>
       <DzTitleMolecule
         type={DzTitleMoleculeTypes.MOLECULE}
         data={{
@@ -127,7 +128,7 @@ const Biography = ({title, biography, artist, ...rest}: any) => {
 
         {isSmall && <ArtistFooter artist={artist} />}
       </div>
-    </section>
+    </DzSection>
   )
 }
 

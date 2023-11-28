@@ -1,4 +1,5 @@
 import {DzColumn, DzTitleMoleculeTypes} from '@zwirner/design-system'
+import DzSection from '@zwirner/design-system/src/atoms/DzSection'
 import {useRouter} from 'next/router'
 
 import {
@@ -109,7 +110,7 @@ export const ExhibitionsContainer = ({data: initialData}: Props) => {
 
       {data.exploreContent ? (
         <>
-          <section id="explore">
+          <DzSection id="explore">
             <DzTitleMolecule
               type={DzTitleMoleculeTypes.SECTION}
               data={{
@@ -117,7 +118,7 @@ export const ExhibitionsContainer = ({data: initialData}: Props) => {
                 customClass: 'mb-5 md:mb-10',
               }}
             />
-          </section>
+          </DzSection>
           <PageBuilder components={data.exploreContent} />
         </>
       ) : null}
