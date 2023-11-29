@@ -22,6 +22,7 @@ import {dzMediaProps, DzMediaPropsDataSchema} from '../../components/dzMediaProp
 import {dzSplitProps, DzSplitPropsDataSchema} from '../../components/dzSplitProps'
 import {dzTitleProps, DzTitlePropsDataSchema} from '../../components/dzTitleProps'
 import {DzGridMoleculePropsDataSchema, gridMoleculeProps} from '../../components/gridMoleculeProps'
+import {dzOneUpProps} from '../../components/oneupProps'
 
 export const moleculesProps = groq`
   ${gridMoleculeProps}
@@ -34,6 +35,7 @@ export const moleculesProps = groq`
   ${dzSplitProps}
   ${dzTitleProps}
   ${dzMediaProps}
+  ${dzOneUpProps}
 `
 
 export const pageBuilderComponentsData = groq`
