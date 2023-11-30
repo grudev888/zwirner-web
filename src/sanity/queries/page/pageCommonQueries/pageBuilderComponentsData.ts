@@ -22,7 +22,7 @@ import {dzMediaProps, DzMediaPropsDataSchema} from '../../components/dzMediaProp
 import {dzSplitProps, DzSplitPropsDataSchema} from '../../components/dzSplitProps'
 import {dzTitleProps, DzTitlePropsDataSchema} from '../../components/dzTitleProps'
 import {DzGridMoleculePropsDataSchema, gridMoleculeProps} from '../../components/gridMoleculeProps'
-import {dzOneUpProps} from '../../components/oneupProps'
+import {oneUpDataSchema, OneUpProps} from '../../components/oneupProps'
 
 export const moleculesProps = groq`
   ${gridMoleculeProps}
@@ -35,7 +35,7 @@ export const moleculesProps = groq`
   ${dzSplitProps}
   ${dzTitleProps}
   ${dzMediaProps}
-  ${dzOneUpProps}
+  ${OneUpProps}
 `
 
 export const pageBuilderComponentsData = groq`
@@ -85,6 +85,7 @@ export const PageBuilderComponentsDataSchema = z.discriminatedUnion('_type', [
   PageBuilderBase.extend({_type: z.literal('grid')}).merge(
     z.object({props: DzGridMoleculePropsDataSchema})
   ),
+  PageBuilderBase.extend({_type: z.literal('oneUp')}).merge(z.object({props: oneUpDataSchema})),
 ])
 
 export type PageBuilderComponentsDataSchemaType = z.infer<typeof PageBuilderComponentsDataSchema>

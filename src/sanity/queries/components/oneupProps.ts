@@ -4,7 +4,7 @@ import {z} from 'zod'
 import {dzCardFields, DzCardPropsDataSchema} from './dzCardProps'
 import {dzMediaFields, DzMediaPropsDataSchema} from './dzMediaProps'
 
-export const dzOneUpProps = groq`
+export const OneUpProps = groq`
   _type == 'oneUp' => {
     type == 'dzCard' => {
       ${dzCardFields}
