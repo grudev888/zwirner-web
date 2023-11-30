@@ -76,13 +76,14 @@ jobs:
         uses: actions/checkout@v4
         with:
           sparse-checkout: ${{ env.MESSAGE_BUILDER }}
+          sparse-checkout-cone-mode: false
 
       - name: Build message
         id: message
         env:
           GH_RELEASE_URL: ${{ github.event.release.html_url }}
         run: |
-          npm i --save-dev @types/node
+          npm i --save-dev @types/node && npm i commander
           MESSAGE=$(npx ts-node $MESSAGE_BUILDER --releaseVersion $VERSION \
             --deploymentUrl $PROD_URL --ghReleaseUrl $GH_RELEASE_URL)
           echo "value=$MESSAGE" >> $GITHUB_OUTPUT
@@ -109,13 +110,14 @@ jobs:
         uses: actions/checkout@v4
         with:
           sparse-checkout: ${{ env.MESSAGE_BUILDER }}
+          sparse-checkout-cone-mode: false
 
       - name: Build message
         id: message
         env:
           RUN_DETAILS: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
         run: |
-          npm i --save-dev @types/node
+          npm i --save-dev @types/node && npm i commander
           MESSAGE=$(npx ts-node $MESSAGE_BUILDER --releaseVersion $VERSION --failedRunDetails $RUN_DETAILS)
           echo "value=$MESSAGE" >> $GITHUB_OUTPUT
 
