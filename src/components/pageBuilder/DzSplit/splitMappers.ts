@@ -39,8 +39,8 @@ export const dzSplitOverrides = (props: DzSplitTypeExtendedProps) => {
     reverse,
     data: {
       ...(media?.imgProps?.src ? {media} : {}),
-      title: titleOverride,
-      description: subtitleOverride,
+      ...(titleOverride ? {title: titleOverride} : {}),
+      ...(subtitleOverride ? {description: subtitleOverride} : {}),
       ...ctasSplit,
     },
   }
