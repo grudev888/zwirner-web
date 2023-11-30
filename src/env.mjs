@@ -16,6 +16,7 @@ export const env = createEnv({
       .transform((s) => s === 'true'),
     ISR_TOKEN: z.string().nullish(),
     NODE_ENV: z.enum(['development', 'test', 'production']),
+    SENTRY_AUTH_TOKEN: z.string(),
   },
   /*
    * Environment variables available on the client (and server).
@@ -59,6 +60,7 @@ export const env = createEnv({
     ISR_TOKEN: process.env.ISR_TOKEN,
     NODE_ENV: process.env.NODE_ENV,
     SANITY_API_READ_TOKEN: process.env.SANITY_API_READ_TOKEN,
+    SENTRY_AUTH_TOKEN: process.env.SENTRY_AUTH_TOKEN,
     NEXT_PUBLIC_INQUIRY_ENDPOINT: process.env.NEXT_PUBLIC_INQUIRY_ENDPOINT,
     NEXT_PUBLIC_SUBSCRIBE_ENDPOINT: process.env.NEXT_PUBLIC_SUBSCRIBE_ENDPOINT,
     NEXT_PUBLIC_SUBSCRIBE_TOPIC_NEWS_ID: process.env.NEXT_PUBLIC_SUBSCRIBE_TOPIC_NEWS_ID,
