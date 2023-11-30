@@ -2,7 +2,7 @@ name: Initiate release
 on:
   push:
     tags:
-      - '2[3-9].[01][0-9].[0-3][0-9].[0-2][0-9]' # A calendar version in the "YY.0M.0D.0H" format.
+      - "2[3-9].[01][0-9].[0-3][0-9].[0-2][0-9]" # A calendar version in the "YY.0M.0D.0H" format.
 
 env:
   VERSION: ${{ github.ref_name }}
@@ -14,6 +14,9 @@ jobs:
 
     permissions:
       contents: write
+
+    outputs:
+      url: ${{ steps.pre_release.outputs.url }}
 
     steps:
       - name: Check out `${{ env.VERSION }}` tag
@@ -31,6 +34,7 @@ jobs:
 
       - name: Create GitHub pre-release
         uses: softprops/action-gh-release@v1
+        id: pre_release
         with:
           prerelease: true
           generate_release_notes: true
@@ -43,6 +47,9 @@ jobs:
     permissions:
       contents: read
       deployments: write
+
+    outputs:
+      url: ${{ steps.deploy_preview.outputs.preview-url }}
 
     steps:
       - name: Check out `${{ env.VERSION }}` tag
@@ -81,4 +88,78 @@ jobs:
           deployment_id: ${{ steps.create_deployment.outputs.deployment_id }}
           status: ${{ job.status }}
           auto_inactive: true
-          env_url: ${{ steps.deploy_preview.outputs.preview_url }}
+          env_url: ${{ steps.deploy_preview.outputs.preview-url }}
+
+  notify_on_success:
+    name: Notify in Slack about new release candidate
+    runs-on: ubuntu-latest
+    needs: [create_release_candidate, deploy_release_candidate]
+
+    env:
+      MESSAGE_BUILDER: .github/workflows/slack-message-builders/initiate-release/rc-arrived.ts
+
+    steps:
+      - name: Check out message builder
+        uses: actions/checkout@v4
+        with:
+          sparse-checkout: ${{ env.MESSAGE_BUILDER }}
+
+      - name: Create promote to production URL
+        id: promote_url
+        run: |
+          RELEASE_URL=${{ needs.create_release_candidate.outputs.url }}
+          EDIT_RELEASE_URL=${RELEASE_URL/tag/edit}
+          echo "value=$EDIT_RELEASE_URL" >> $GITHUB_OUTPUT
+
+      - name: Build message
+        id: message
+        env:
+          DEPLOYMENT_URL: ${{ needs.deploy_release_candidate.outputs.url }}
+          GH_RELEASE_URL: ${{ needs.create_release_candidate.outputs.url }}
+          PROMOTE_URL: ${{ steps.promote_url.outputs.value }}
+        run: |
+          npm i --save-dev @types/node
+          MESSAGE=$(npx ts-node $MESSAGE_BUILDER --releaseVersion $VERSION \
+            --deploymentUrl $DEPLOYMENT_URL --ghReleaseUrl $GH_RELEASE_URL \
+            --promoteUrl $PROMOTE_URL) 
+          echo "value=$MESSAGE" >> $GITHUB_OUTPUT
+
+      - name: Send message
+        uses: slackapi/slack-github-action@v1.24.0
+        env:
+          SLACK_BOT_TOKEN: ${{ secrets.RELEASE_WATCHER_BOT_TOKEN }}
+        with:
+          channel-id: ${{ secrets.RELEASE_CANDIDATES_CHANNEL_ID }}
+          payload: ${{ steps.message.outputs.value }}
+
+  notify_on_failure:
+    name: Notify in Slack about failure to deploy release candidate
+    runs-on: ubuntu-latest
+    needs: [create_release_candidate, deploy_release_candidate]
+    if: failure()
+
+    env:
+      MESSAGE_BUILDER: .github/workflows/slack-message-builders/initiate-release/rc-deployment-failed.ts
+
+    steps:
+      - name: Check out message builder
+        uses: actions/checkout@v4
+        with:
+          sparse-checkout: ${{ env.MESSAGE_BUILDER }}
+
+      - name: Build message
+        id: message
+        env:
+          RUN_DETAILS: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          npm i --save-dev @types/node
+          MESSAGE=$(npx ts-node $MESSAGE_BUILDER --releaseVersion $VERSION --failedRunDetails $RUN_DETAILS)
+          echo "value=$MESSAGE" >> $GITHUB_OUTPUT
+
+      - name: Send message
+        uses: slackapi/slack-github-action@v1.24.0
+        env:
+          SLACK_BOT_TOKEN: ${{ secrets.RELEASE_WATCHER_BOT_TOKEN }}
+        with:
+          channel-id: ${{ secrets.RELEASE_CANDIDATES_CHANNEL_ID }}
+          payload: ${{ steps.message.outputs.value }}
