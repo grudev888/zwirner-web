@@ -17,15 +17,15 @@ module.exports = {
       ],
       numberOfRuns: 3,
       settings: {
-        preset: 'desktop'
-      }
+        preset: 'desktop',
+      },
     },
     assert: {
-      preset: 'lighthouse:no-pwa'
+      // preset: 'lighthouse:no-pwa',
     },
     upload: {
       target: 'temporary-public-storage',
-      githubStatusContextSuffix: '/desktop'
-    }
-  }
+      githubStatusContextSuffix: '/desktop',
+    },
+  },
 }

@@ -6,3 +6,4 @@ pnpm-lock.yaml
 .vercel/project.json
 vercel.json
 public/styles
+.lighthouseci/
