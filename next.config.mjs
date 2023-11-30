@@ -11,7 +11,7 @@ const withBundleAnalyzer = analyzer({
   enabled: env.ANALYZE,
 })
 
-const sentryNextOptions = {
+const sentryOptions = {
   // For all available options, see:
   // https://docs.sentry.io/platforms/javascript/guides/nextjs/manual-setup/
 
@@ -47,7 +47,6 @@ const sentryWebpackPluginOptions = {
 
 /** @type {import('next').NextConfig} */
 const config = {
-  sentry: sentryNextOptions,
   compiler: {
     // Enables the styled-components SWC transform
     styledComponents: true,
@@ -72,4 +71,8 @@ const config = {
   },
 }
 
-export default withSentryConfig(withBundleAnalyzer(config), sentryWebpackPluginOptions)
+export default withSentryConfig(
+  withBundleAnalyzer(config),
+  sentryWebpackPluginOptions,
+  sentryOptions
+)
