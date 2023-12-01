@@ -62,6 +62,7 @@ const Wrapper = ({Component, pageProps, globalSEO, layoutData}: WrapperProps) =>
           }
         >
           {getLayout(<Component {...pageProps} />)}
+          <div id="scroll-observer-target" />
         </ErrorBoundary>
       </APIProvider>
     </>
