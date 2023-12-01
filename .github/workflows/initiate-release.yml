@@ -1,11 +1,8 @@
 name: Initiate release
 on:
-  push:
-    tags:
-      - "2[3-9].[01][0-9].[0-3][0-9].[0-2][0-9]" # A calendar version in the "YY.0M.0D.0H" format.
-
-env:
-  VERSION: ${{ github.ref_name }}
+  workflow_dispatch: { }
+  schedule:
+    - cron: '0 15 * * 1' # Every Monday at 15:00 UTC.
 
 jobs:
   create_release_candidate:
@@ -16,26 +13,39 @@ jobs:
       contents: write
 
     outputs:
+      version: ${{ steps.new_version.outputs.value }}
       url: ${{ steps.pre_release.outputs.url }}
 
     steps:
-      - name: Check out `${{ env.VERSION }}` tag
+      - name: Workflow must be dispatched from `main`
+        if: github.event_name == 'workflow_dispatch' && !contains(github.ref,'refs/heads/main')
+        run:
+          echo '::error title=Wrong branch::Releases must be created on the main branch.'
+          exit 1
+
+      - name: Check out `main`
         uses: actions/checkout@v4
         with:
           ref: main
-          fetch-tags: true
 
-      - name: Check tag is on `main`
+      - name: Compose new calendar version
+        id: new_version
         run: |
-          if [[ $(git branch --contains ${{ env.VERSION }} 2>/dev/null) != *main* ]]; then
-            echo '::error title=Wrong branch::Release tags must be created on the main branch.'
-            exit 1
-          fi
+          # Current date and time in the "YY.0M.0D.0H" format.
+          VERSION=$(date +"%y.%m.%d.%H") 
+          echo "value=$VERSION" >> $GITHUB_OUTPUT
+
+      - name: Tag last commit with ${{ steps.new_version.outputs.value }}
+        env:
+          VERSION: ${{ steps.new_version.outputs.value }}
+        run: |
+          git tag $VERSION && git push origin $VERSION
 
       - name: Create GitHub pre-release
         uses: softprops/action-gh-release@v1
         id: pre_release
         with:
+          tag_name: ${{ steps.new_version.outputs.value }}
           prerelease: true
           generate_release_notes: true
 
@@ -48,12 +58,17 @@ jobs:
       contents: read
       deployments: write
 
+    env:
+      VERSION: ${{ needs.create_release_candidate.outputs.version }}
+
     outputs:
       url: ${{ steps.deploy_preview.outputs.preview-url }}
 
     steps:
       - name: Check out `${{ env.VERSION }}` tag
         uses: actions/checkout@v4
+        with:
+          ref: ${{ env.VERSION }}
 
       - name: Create GitHub Deployment
         uses: bobheadxi/deployments@v1
@@ -96,7 +111,9 @@ jobs:
     needs: [create_release_candidate, deploy_release_candidate]
 
     env:
+      VERSION: ${{ needs.create_release_candidate.outputs.version }}
       MESSAGE_BUILDER: .github/workflows/slack-message-builders/initiate-release/rc-arrived.ts
+      GH_RELEASE_URL: ${{ needs.create_release_candidate.outputs.url }}
 
     steps:
       - name: Check out message builder
@@ -104,19 +121,18 @@ jobs:
         with:
           sparse-checkout: ${{ env.MESSAGE_BUILDER }}
           sparse-checkout-cone-mode: false
+          ref: ${{ env.VERSION }}
 
       - name: Create promote to production URL
         id: promote_url
         run: |
-          RELEASE_URL=${{ needs.create_release_candidate.outputs.url }}
-          EDIT_RELEASE_URL=${RELEASE_URL/tag/edit}
+          EDIT_RELEASE_URL=${GH_RELEASE_URL/tag/edit}
           echo "value=$EDIT_RELEASE_URL" >> $GITHUB_OUTPUT
 
       - name: Build message
         id: message
         env:
           DEPLOYMENT_URL: ${{ needs.deploy_release_candidate.outputs.url }}
-          GH_RELEASE_URL: ${{ needs.create_release_candidate.outputs.url }}
           PROMOTE_URL: ${{ steps.promote_url.outputs.value }}
         run: |
           npm i --save-dev @types/node && npm i commander
@@ -140,6 +156,7 @@ jobs:
     if: failure()
 
     env:
+      VERSION: ${{ needs.create_release_candidate.outputs.version }}
       MESSAGE_BUILDER: .github/workflows/slack-message-builders/initiate-release/rc-deployment-failed.ts
 
     steps:
@@ -148,6 +165,7 @@ jobs:
         with:
           sparse-checkout: ${{ env.MESSAGE_BUILDER }}
           sparse-checkout-cone-mode: false
+          ref: ${{ env.VERSION }}
 
       - name: Build message
         id: message
