@@ -79,7 +79,7 @@
 }
 
 .subtitleYear {
-  @apply !text-black-100;
+  @apply text-sm !text-black-100 md:text-md;
 }
 
 .learnMore {

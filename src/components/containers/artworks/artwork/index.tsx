@@ -8,7 +8,6 @@ import {
   DzTitle,
   LINK_VARIANTS,
   TEXT_SIZES,
-  TITLE_SIZES,
   TITLE_TYPES,
   useIsSmallWindowSize,
 } from '@zwirner/design-system'
@@ -216,12 +215,12 @@ export const ArtworkContainer = ({data}: Props) => {
                   )}
                 </>
               }
-              titleSize={TITLE_SIZES.MD}
+              titleSize={isSmall ? TEXT_SIZES.SMALL : TEXT_SIZES.MEDIUM}
               className={styles.header}
             />
             <DzText
               text={medium}
-              textSize={TEXT_SIZES.SMALL}
+              textSize={isSmall ? TEXT_SIZES.SMALL : TEXT_SIZES.MEDIUM}
               className={styles.artworkDetailText}
             />
             {dimensions && (
