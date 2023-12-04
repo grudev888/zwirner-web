@@ -99,7 +99,6 @@ function DzApp({Component, pageProps, globalSEO, layoutData}: AppProps & Wrapper
 
   useEffect(() => {
     const handleRouteChange = () => {
-      window.dataLayer = []
       setPageState({title: '', hash: '', section: ''})
     }
     router.events.on('routeChangeStart', handleRouteChange)
