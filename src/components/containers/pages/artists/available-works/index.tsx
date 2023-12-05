@@ -1,33 +1,33 @@
+import {DzColumn} from '@zwirner/design-system'
+
 import {AVAILABLE_WORKS} from '@/common/constants/commonCopies'
-import {AvailableArtworksContainer} from '@/components/containers/availableArtworks'
 import BackNavPageLayout from '@/components/containers/layout/pages/backNavPageLayout'
+import PageBuilder, {showPageBuilderSection} from '@/components/pageBuilder'
+import {ContainerTitle} from '@/components/wrappers/title/ContainerTitle'
 interface PageContainerProps {
   data: any
 }
 
 const ArtistAvailableWorksPageContainer = ({data: queryData}: PageContainerProps) => {
   const [data] = queryData ?? []
-  const subPageData = data?.availableWorksSubpage ?? {}
-  const {artist} = data ?? {}
+
+  const {artist, availableWorksSubpage} = data ?? {}
   const {fullName} = artist ?? {}
-  const pageData = {
-    gridData: subPageData,
-    artworks: subPageData?.props?.grid?.map((component: any) => {
-      const {content} = component ?? {}
-      const [contentSimple] = content ?? []
-      const {_id} = contentSimple ?? {}
-      return {_id}
-    }),
-    title: `${AVAILABLE_WORKS}${fullName ? `: ${fullName}` : ''}`,
-    artistName: data?.artist?.fullName,
-  }
 
   const parentPath = data?.slug?.current
   const parentPageTitle = data?.title
 
   return (
     <BackNavPageLayout parentPageName={parentPageTitle} parentPath={parentPath}>
-      <AvailableArtworksContainer data={pageData} />
+      <DzColumn className="!gap-y-[1rem]" span={12}>
+        <ContainerTitle
+          title={`${AVAILABLE_WORKS}${fullName ? `: ${fullName}` : ''}`}
+          fullLeftContainer
+        />
+        {availableWorksSubpage && showPageBuilderSection(availableWorksSubpage) ? (
+          <PageBuilder components={availableWorksSubpage} innerSection />
+        ) : null}
+      </DzColumn>
     </BackNavPageLayout>
   )
 }

@@ -1,6 +1,7 @@
 import {groq} from 'next-sanity'
 
 import {dzGridFields} from '@/sanity/queries/components/gridMoleculeProps'
+import {pageBuilderComponentsData} from '@/sanity/queries/page/pageCommonQueries/pageBuilderComponentsData'
 
 import {pageSEOFields} from './components/seo/pageSEOFields'
 
@@ -24,8 +25,9 @@ export const availableArtworksDataByArtistSlug = groq`
   title,
   slug { current },
   artist->{fullName},
-  availableWorksSubpage{
-   ${dzGridFields}
+  
+  availableWorksSubpage []{
+    ${pageBuilderComponentsData}
   },
   "seo": {
     title,
