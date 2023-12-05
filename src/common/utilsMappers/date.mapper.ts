@@ -1,6 +1,6 @@
 import {format, isValid, isWithinInterval, parseISO} from 'date-fns'
 
-import {COMING_SOON, NOW_CLOSED, NOW_OPEN} from '@/common/constants/commonCopies'
+import {COMING_SOON, NOW_OPEN} from '@/common/constants/commonCopies'
 import {ExhibitionPageStatus} from '@/sanity/types'
 
 interface DateRange {
@@ -87,8 +87,6 @@ export const mapExhibitionStatus = (exhibition: any) => {
       dateLabel = NOW_OPEN
     } else if (currentDate.getTime() < startDateParsed.getTime()) {
       dateLabel = COMING_SOON
-    } else {
-      dateLabel = NOW_CLOSED
     }
     if (status) {
       switch (status) {
@@ -98,9 +96,6 @@ export const mapExhibitionStatus = (exhibition: any) => {
         case ExhibitionPageStatus.OPEN:
           dateLabel = NOW_OPEN
           break
-        case ExhibitionPageStatus.CLOSE:
-          dateLabel = NOW_CLOSED
-          break
         default:
           break
       }
@@ -109,7 +104,7 @@ export const mapExhibitionStatus = (exhibition: any) => {
       isOpen,
       isClosed,
       isComingSoon,
-      status: `${dateLabel}: ${datesText}`,
+      status: `${dateLabel ? `${dateLabel}: ` : ''}${datesText}`,
     }
   }
   return {
