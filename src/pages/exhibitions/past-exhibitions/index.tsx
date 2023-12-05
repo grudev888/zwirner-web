@@ -77,6 +77,7 @@ export const getStaticProps = async (ctx: GetStaticPropsContext) => {
         currentPage,
         yearsWithExhibitions,
       },
+      dataLayerProps,
       token: draftViewToken,
       draftMode,
     },

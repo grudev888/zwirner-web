@@ -115,11 +115,11 @@ export const useHashRoutedInquiryModal = () => {
       })
     }
 
-    gtmInquiryFormViewEvent(contextData?.artwork)
+    gtmInquiryFormViewEvent(inquireModalProps)
     setInquireModalProps(inquireModalProps)
     setIsOpen(true)
   }
-  const onDirty = () => gtmInquiryFormStartedEvent(artwork)
+  const onDirty = () => inquireModalProps && gtmInquiryFormStartedEvent(inquireModalProps)
   const onSubmit = async (formValues: Record<string, any>) => {
     // special paths like /collect have a pathname of '/[..slug]' so we must use asPath
     // but a few asPath instances have #inquire like /exhibitions/xyz#inquire so we use pathname
@@ -134,7 +134,8 @@ export const useHashRoutedInquiryModal = () => {
     const observer = captchaInitObserver()
     await recaptchaRef?.current?.executeAsync()
     removeCaptchaObserver(observer)
-    gtmInquiryFormSubmitEvent(artwork, formValues?.email)
+
+    inquireModalProps && gtmInquiryFormSubmitEvent(inquireModalProps, formValues?.email)
 
     const inquiryPayload: Record<string, any> = {
       ...formValues,

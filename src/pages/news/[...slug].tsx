@@ -67,12 +67,13 @@ export const getStaticProps = async (ctx: GetStaticPropsContext) => {
   if (!data) return {notFound: true}
 
   if (!params.slug) params.slug = NEWS_SLUG
-  const dataLayerProps = await getGTMPageLoadData({slug: params.slug.toString()})
+  const dataLayerProps = await getGTMPageLoadData(queryParams)
   if (dataLayerProps) dataLayerProps.page_data.site_section = NEWS_SECTION
 
   return {
     props: {
       data: {queryParams, articleData: data},
+      dataLayerProps,
       draftMode,
       slug: params?.slug || null,
       token: draftViewToken,

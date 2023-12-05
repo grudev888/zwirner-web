@@ -8,6 +8,8 @@ Notice we use two sets of URLs:
   with the Preview URL when a Vercel deploy happens.
 */
 
+require('dotenv').config()
+import axios from 'axios'
 const LOCAL_DEV_URL = 'http://localhost:3000'
 const PREVIEW_URL = process.env.ENVIRONMENT_URL
 const PROD_URL = 'https://prod-www.zwirner.tech'
@@ -21,6 +23,23 @@ export const defaults = {
     },
   },
   screenshotPath: 'test-results/screenshots',
+}
+
+export const sanityFetch = async (query: string, params: any = {}) => {
+  const mapParams: any = {}
+  for (const key in params) {
+    mapParams[`$${key}`] = `"${params[key]}"`
+  }
+  const response = await axios.get(
+    `https://${process.env.NEXT_PUBLIC_SANITY_PROJECT_ID}.api.sanity.io/v${process.env.NEXT_PUBLIC_SANITY_API_VERSION}/data/query/${process.env.NEXT_PUBLIC_SANITY_DATASET}`,
+    {
+      params: {
+        query,
+        ...mapParams,
+      },
+    }
+  )
+  return response.data.result
 }
 
 // TODO Copped this file from https://github.com/checkly/docs.checklyhq.com/blob/main/__checks__/defaults.ts

@@ -165,6 +165,7 @@ export const contentTypesMapper: any = {
         url: current,
         hideSecondary: false,
         ctaActionProps: createInquireModalArtworkProps(data),
+        secondaryCtaActionProps: createInquireModalArtworkProps(data),
       },
     })
 

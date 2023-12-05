@@ -84,7 +84,7 @@ function DzApp({Component, pageProps, globalSEO, layoutData}: AppProps & Wrapper
         })
         if (pageProps.data?.artistPages)
           gtmData.page_data.artist = gtmPageLoadGetArtists(pageProps.data.artistPages)
-        gtmData.location = document.location.href
+        gtmData.page_data.page_location = document.location.href
         gtmData.page_data.page_hostname = document.location.hostname
         gtmData.page_data.page_path = document.location.pathname
         gtmData.page_data.page_query_string = document.location.search

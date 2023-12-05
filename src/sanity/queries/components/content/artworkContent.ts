@@ -95,3 +95,5 @@ export const ArtworkContentSchema = z.object({
   product: z.nullable(z.any()),
   backgroundColor: z.nullable(ArtworkBackgroundColorSchema),
 })
+
+export type ArtworkContentType = z.infer<typeof ArtworkContentSchema>

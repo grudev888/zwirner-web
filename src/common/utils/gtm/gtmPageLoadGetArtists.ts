@@ -4,5 +4,5 @@
 // waiting on search scope for this feature in https://linear.app/zwirner/issue/NWEB-383/ga4-page-load-events
 
 export function gtmPageLoadGetArtists(artistPages: Array<any>): string {
-  return artistPages.map((artist) => artist.title).toString()
+  return artistPages.map((artist) => artist.artist.fullName).toString()
 }
