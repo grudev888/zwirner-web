@@ -36,10 +36,7 @@ export const artworkData = groq`
   _createdAt,
   salesInformation,
   "seo": {
-    "title": select(
-      displayCustomTitle == true => pt::text(displayTitle),
-      displayCustomTitle != true => artists[][0]->fullName + ": " + title + ", " + select(defined(displayDate)==true=>displayDate, dateSelection.year)
-    ),
+    "title": artists[][0]->fullName + ": " + select(displayCustomTitle == true => pt::text(displayTitle), title) + ", " + select(defined(displayDate)==true=>displayDate, dateSelection.year),
     ...seo {
       ${pageSEOFields}
     }
