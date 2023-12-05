@@ -27,7 +27,7 @@ export const fairPageBySlug = groq`
     ...surveySeo {
       ${pageSEOFields}
     }
-  }
+  },
   interstitial {
     ${dzInterstitialFields}
   },

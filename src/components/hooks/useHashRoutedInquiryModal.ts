@@ -39,8 +39,22 @@ export const artworkToPayloadAdapter = (artwork: any, status?: string) => {
   if (!artwork) {
     return
   }
-  const {_id, artworkType, artists, dimensions, inventoryId, title, photos, dateSelection, price} =
-    artwork
+  const {
+    _id,
+    artworkType,
+    artists,
+    dimensions,
+    inventoryId,
+    title,
+    photos,
+    dateSelection,
+    price,
+    editionInformation,
+    productInformation,
+    additionalCaption,
+    salesInformation,
+    medium,
+  } = artwork
   const firstAsset = photos?.[0]?.image
   const image = firstAsset ? builder.image(firstAsset).url() : ''
   const payload: Record<string, any> = {
@@ -53,6 +67,11 @@ export const artworkToPayloadAdapter = (artwork: any, status?: string) => {
     status: status || '',
     title,
     year: dateSelection?.year || '',
+    editionInformation: portableTextToText(editionInformation),
+    medium: medium || '',
+    productInformation: portableTextToText(productInformation),
+    additionalCaption: portableTextToText(additionalCaption),
+    salesInformation: portableTextToText(salesInformation),
   }
 
   if (price) {
