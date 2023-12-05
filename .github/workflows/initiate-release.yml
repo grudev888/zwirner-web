@@ -31,8 +31,8 @@ jobs:
       - name: Compose new calendar version
         id: new_version
         run: |
-          # Current date and time in the "YY.0M.0D.0H" format.
-          VERSION=$(date +"%y.%m.%d.%H") 
+          # Current date and time in the "YYYY.0M.0D.0H" format.
+            VERSION=$(date +"%Y.%m.%d.%H")
           echo "value=$VERSION" >> $GITHUB_OUTPUT
 
       - name: Tag last commit with ${{ steps.new_version.outputs.value }}
