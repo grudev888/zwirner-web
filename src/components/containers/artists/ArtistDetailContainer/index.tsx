@@ -70,6 +70,7 @@ export const ArtistDetailContainer = ({data}: ArtistsContainerProps) => {
     books,
   } = data ?? {}
   const router = useRouter()
+
   const inquireModalProps = createInquireModalArtistProps(data.artist)
 
   useOpenInquiryDispatch(inquireModalProps)

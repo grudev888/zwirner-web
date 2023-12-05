@@ -1,10 +1,16 @@
 import {useEffect} from 'react'
 
 import {useNewsletterFormModal} from '@/components/containers/ctaModalListener/useNewsletterFormModal'
+import {
+  PromoModalProps,
+  usePromoModal,
+} from '@/components/containers/ctaModalListener/usePromoModal'
+import {NewsletterFormModal} from '@/components/forms/newsletterFormModal'
 import {RecaptchaInquireFormModal} from '@/components/forms/recaptchaInquireFormModal'
 import useGtmNewsletterEvent from '@/components/hooks/gtm/useGtmNewsletterEvent'
 import {useHashRoutedInquiryModal} from '@/components/hooks/useHashRoutedInquiryModal'
 import {createInquireModalGeneralProps} from '@/components/hooks/useOpenInquiryDispatch'
+import {DzPromoModal} from '@/components/wrappers/DzPromoModalWrapper'
 import {EVENT_CTA_CLICKED} from '@/events/CTAClickEvent'
 import {CtaActions} from '@/sanity/types'
 
@@ -13,17 +19,22 @@ export const CtaModalListener = () => {
   const generalInquireProps = createInquireModalGeneralProps()
   const {openInquireModal} = inquireModalProps
   const {gtmNewsletterSubscriptionViewEvent} = useGtmNewsletterEvent()
-  const {NewsletterFormModal, openClickHandler: newsletterOpenClickHandler} =
-    useNewsletterFormModal()
+  const {newsletterFormProps, openNewsletterModal} = useNewsletterFormModal()
+  const {promoModalProps, openPromoModal} = usePromoModal()
 
   useEffect(() => {
     const ctaTypesToClickHandlers: Record<string, (props: any) => void> = {
-      [CtaActions.NEWSLETTER]: newsletterOpenClickHandler,
+      [CtaActions.NEWSLETTER]: (props) => {
+        openNewsletterModal(props)
+      },
       [CtaActions.INQUIRE]: (props: any = {}) => {
         const inquireModalProps = props || generalInquireProps
         const {useAnchor} = props ?? {}
 
         openInquireModal({inquireModalProps, options: {useAnchor}})
+      },
+      [CtaActions.PROMO]: (props: PromoModalProps) => {
+        openPromoModal(props)
       },
     }
 
@@ -54,8 +65,9 @@ export const CtaModalListener = () => {
 
   return (
     <>
-      {NewsletterFormModal}
+      <NewsletterFormModal {...newsletterFormProps} />
       <RecaptchaInquireFormModal {...inquireModalProps} />
+      {promoModalProps && <DzPromoModal {...promoModalProps} />}
     </>
   )
 }

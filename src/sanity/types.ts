@@ -70,6 +70,7 @@ export enum CtaActions {
   LINK = 'Link',
   DOWNLOAD_PDF = 'Download PDF',
   LINK_CONTENT = 'Link Content',
+  PROMO = 'promo',
 }
 
 export enum ArticleCategories {

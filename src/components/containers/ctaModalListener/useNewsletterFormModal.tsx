@@ -1,7 +1,4 @@
-import {FORM_MODAL_TYPES, useDzFormModal} from '@zwirner/design-system'
-import Image from 'next/image'
-import Link from 'next/link'
-import {useRef} from 'react'
+import {useRef, useState} from 'react'
 
 import {
   EXPECT_THE_LATEST_INFORMATION,
@@ -14,40 +11,39 @@ import {ErrorType, GTMErrorMessageEvent} from '@/common/utils/gtm/GTMErrorMessag
 import {captchaInitObserver, removeCaptchaObserver} from '@/common/utils/recaptcha/observer'
 import RecaptchaNode from '@/components/forms/recaptchaNode'
 import useGtmNewsletterEvent from '@/components/hooks/gtm/useGtmNewsletterEvent'
+import {PopUpInfo} from '@/sanity/services/popups/getAllCampaigns'
 import {sendSubscribeRequest} from '@/services/subscribeService'
 
 type Props = {
   disableBackdrop?: boolean
-  title?: string
-  subtitle?: string
-  successTitle?: string
-  successSubtitle?: string
-  image?: {
-    src: string
-    alt: string
-  }
 }
 
+type ModalProps = {
+  subtitle: PopUpInfo['description']
+  title: PopUpInfo['title']
+  image: PopUpInfo['image']
+  primaryCTA: PopUpInfo['primaryCTA']
+} | null
+
 export const useNewsletterFormModal = (props?: Props) => {
-  const {
-    disableBackdrop = false,
-    title = WANT_TO_KNOW_MORE,
-    subtitle = JOIN_OUR_MAILING_LIST,
-    successTitle = JOIN_OUR_MAILING_LIST_SUCCESS,
-    successSubtitle = EXPECT_THE_LATEST_INFORMATION,
-    image,
-  } = props ?? {}
+  const {disableBackdrop = false} = props ?? {}
+  const [isOpen, setIsOpen] = useState(false)
+  const [customModalProps, setCustomModalProps] = useState<ModalProps>(null)
   const recaptchaRef = useRef<HTMLFormElement>()
   const {gtmNewsletterSubscriptionStartedEvent, gtmNewsletterSubscribedEvent} =
     useGtmNewsletterEvent()
   const onDirty = gtmNewsletterSubscriptionStartedEvent
-  const {FormModal, openClickHandler} = useDzFormModal({
-    formType: FORM_MODAL_TYPES.NEWSLETTER,
-    title,
-    subtitle,
-    successTitle,
-    successSubtitle,
-    image,
+  const onClose = () => {
+    setIsOpen(false)
+    setCustomModalProps(null)
+  }
+  const newsletterFormProps = {
+    title: customModalProps?.title || WANT_TO_KNOW_MORE,
+    subtitle: customModalProps?.subtitle || JOIN_OUR_MAILING_LIST,
+    successTitle: JOIN_OUR_MAILING_LIST_SUCCESS,
+    successSubtitle: EXPECT_THE_LATEST_INFORMATION,
+    isOpen,
+    onClose,
     errorTitle: JOIN_OUR_MAILING_LIST_ERROR,
     onSubmit: async (data: any) => {
       gtmNewsletterSubscribedEvent(data)
@@ -64,13 +60,21 @@ export const useNewsletterFormModal = (props?: Props) => {
     },
     onDirty,
     disableBackdrop,
+    recaptchaRef,
     recaptchaNode: <RecaptchaNode recaptchaRef={recaptchaRef} />,
-    LinkElement: Link,
-    ImgElement: Image,
-  })
+    image: customModalProps?.image ? customModalProps.image : null,
+    primaryCTA: customModalProps?.primaryCTA ? customModalProps.primaryCTA : null,
+  }
+
+  const openNewsletterModal = (modalProps?: ModalProps) => {
+    setIsOpen(true)
+    if (modalProps) {
+      setCustomModalProps(modalProps)
+    }
+  }
 
   return {
-    NewsletterFormModal: FormModal,
-    openClickHandler,
+    newsletterFormProps,
+    openNewsletterModal,
   }
 }

@@ -47,8 +47,14 @@ type WrapperProps = AppGeneralProps & {
 }
 
 const Wrapper = ({Component, pageProps, globalSEO, layoutData}: WrapperProps) => {
+  const pageType = pageProps?.data?._type
   const getLayout =
-    Component.getLayout || ((page) => <DefaultLayout layoutData={layoutData}>{page}</DefaultLayout>)
+    Component.getLayout ||
+    ((page) => (
+      <DefaultLayout pageType={pageType} layoutData={layoutData}>
+        {page}
+      </DefaultLayout>
+    ))
 
   return (
     <>

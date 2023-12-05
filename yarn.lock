@@ -2516,9 +2516,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@zwirner/design-system@npm:v0.0.178":
-  version: 0.0.178
-  resolution: "@zwirner/design-system@npm:0.0.178::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40zwirner%2Fdesign-system%2F0.0.178%2F04a2613b54c5b9292048f2d94b41317600335337"
+"@zwirner/design-system@npm:v0.0.182":
+  version: 0.0.182
+  resolution: "@zwirner/design-system@npm:0.0.182::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40zwirner%2Fdesign-system%2F0.0.182%2Feca7e7a9085689b0071215ddeb6de26d17556c14"
   dependencies:
     "@headlessui/react": ^1.7.10
     "@heroicons/react": ^2.0.15
@@ -2537,7 +2537,7 @@ __metadata:
   peerDependencies:
     react: ">=16"
     react-dom: ^17.0.1
-  checksum: 8f536fae2c19c2b839f412f5871de7b6dc974260f8b150d1931bb0adfb1d3f7c5f2b3b69027f42ee3331701cb74e034a47d2667a624be8461f7326a80277a1ef
+  checksum: b8d450a8fb7865d320e450798d3e52df77c79295c4d1f8dd8936cd71c5d9c1090dca6e6e3452ff429864b1859d7bb5dfc65a918a8817bc35198329aefb8923c4
   languageName: node
   linkType: hard
 
@@ -11278,9 +11278,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"zustand@npm:^4.4.3":
-  version: 4.4.3
-  resolution: "zustand@npm:4.4.3"
+"zustand@npm:4.4.6":
+  version: 4.4.6
+  resolution: "zustand@npm:4.4.6"
   dependencies:
     use-sync-external-store: 1.2.0
   peerDependencies:
@@ -11294,7 +11294,7 @@ __metadata:
       optional: true
     react:
       optional: true
-  checksum: 3ed16457a3a4b9fe6523f52d397af37db8fab5687dd21a23ede25f657346b25df374490baea27f10d416faae5e96acf7b4065c86044746d775881d266d1500f0
+  checksum: da7b00cc6dbe5cf5fc2e3fbca745317da4bbaf53bf4a6909bbd3e335242704df9689027f613461aff07eb5f672d5570bc1a2ef99d0ad7bc868920a3b331613d4
   languageName: node
   linkType: hard
 
@@ -11320,7 +11320,7 @@ __metadata:
     "@types/react-google-recaptcha": ^2.1.5
     "@types/styled-components": ^5.1.26
     "@typescript-eslint/eslint-plugin": ^5.59.7
-    "@zwirner/design-system": v0.0.178
+    "@zwirner/design-system": v0.0.182
     autoprefixer: ^10.4.16
     axios: ^1.3.5
     checkly: ^4.1.0
@@ -11360,6 +11360,6 @@ __metadata:
     uuidv4: ^6.2.13
     zod: ^3.22.2
     zukeeper: ^1.0.2
-    zustand: ^4.4.3
+    zustand: 4.4.6
   languageName: unknown
   linkType: soft

@@ -4,14 +4,15 @@ import React from 'react'
 
 import {SUBSCRIBE_SECTION, SUBSCRIBE_SLUG} from '@/common/constants/gtmPageConstants'
 import {useNewsletterFormModal} from '@/components/containers/ctaModalListener/useNewsletterFormModal'
+import {NewsletterFormModal} from '@/components/forms/newsletterFormModal'
 import {getGTMPageLoadData} from '@/sanity/services/gtm/pageLoad.service'
 
 export const SubscribePage = () => {
-  const {NewsletterFormModal} = useNewsletterFormModal({disableBackdrop: true})
+  const {newsletterFormProps} = useNewsletterFormModal({disableBackdrop: true})
 
   return (
     <DzColumn span={12} className="min-h-[calc(100vh-60px-90px)]">
-      {NewsletterFormModal}
+      <NewsletterFormModal {...newsletterFormProps} isOpen />
     </DzColumn>
   )
 }

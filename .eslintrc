@@ -90,6 +90,11 @@
             "name": "@zwirner/design-system",
             "importNames": ["DzList"],
             "message": "Import it from @/components/wrappers/DzListWrapper instead."
+          },
+          {
+            "name": "@zwirner/design-system",
+            "importNames": ["DzPromoModal"],
+            "message": "Import it from @/components/wrappers/DzPromoModalWrapper instead."
           }
         ]
       }
