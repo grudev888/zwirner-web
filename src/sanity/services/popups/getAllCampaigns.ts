@@ -1,3 +1,5 @@
+import * as Sentry from '@sentry/nextjs'
+
 import {client} from '@/sanity/client'
 import {
   AllCampaignsSchema,
@@ -206,7 +208,10 @@ const getPopupDictionary = (campaigns: AllCampaignsType) => {
 // called client-side with SWR
 export async function getAllCampaigns(query: string) {
   const data = await client.fetch(query)
-  const validatedData = AllCampaignsSchema.parse(data)
-  const parsedData = getPopupDictionary(validatedData)
-  return parsedData
+  const validatedData = AllCampaignsSchema.safeParse(data)
+  if (!validatedData.success) {
+    Sentry.captureException(validatedData.error)
+    return [] as unknown as PopUpDictionary
+  }
+  return getPopupDictionary(validatedData.data)
 }
