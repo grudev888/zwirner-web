@@ -212,7 +212,7 @@ export const ArtworkContainer = ({data}: Props) => {
                       &nbsp; {/* non breaking space added here for SEO purpose in H1 */}
                     </>
                   ) : (
-                    artistName
+                    <>{artistName}&nbsp;</>
                   )}
                   {artworkTitle && (year || displayDate) && (
                     <div>
