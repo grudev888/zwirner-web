@@ -45,3 +45,12 @@ body {
 .grecaptcha-badge {
   visibility: hidden;
 }
+
+/* fix toast style */
+.react-toast-notifications__container {
+  padding: 0 !important;
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}

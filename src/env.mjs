@@ -17,6 +17,7 @@ export const env = createEnv({
     ISR_TOKEN: z.string().nullish(),
     NODE_ENV: z.enum(['development', 'test', 'production']),
     SENTRY_AUTH_TOKEN: z.string(),
+    NEXT_PRIVATE_STOREFRONT_API_TOKEN: z.string().min(1),
   },
   /*
    * Environment variables available on the client (and server).
@@ -40,6 +41,9 @@ export const env = createEnv({
     NEXT_PUBLIC_SUBSCRIBE_TOPIC_NEWS_ID: z.string(),
     NEXT_PUBLIC_SUBSCRIBE_TOPIC_SALES_ID: z.string(),
     NEXT_PUBLIC_SUBSCRIBE_TOPIC_BOOKS_ID: z.string(),
+    NEXT_PUBLIC_STOREFRONT_API_TOKEN: z.string().min(1),
+    NEXT_PUBLIC_STORE_DOMAIN: z.string().min(1),
+    NEXT_PUBLIC_STOREFRONT_API_VERSION: z.string().min(1),
   },
   /*
    * Due to how Next.js bundles environment variables on Edge and Client,
@@ -68,6 +72,10 @@ export const env = createEnv({
     NEXT_PUBLIC_SUBSCRIBE_TOPIC_NEWS_ID: process.env.NEXT_PUBLIC_SUBSCRIBE_TOPIC_NEWS_ID,
     NEXT_PUBLIC_SUBSCRIBE_TOPIC_SALES_ID: process.env.NEXT_PUBLIC_SUBSCRIBE_TOPIC_SALES_ID,
     NEXT_PUBLIC_SUBSCRIBE_TOPIC_BOOKS_ID: process.env.NEXT_PUBLIC_SUBSCRIBE_TOPIC_BOOKS_ID,
+    NEXT_PUBLIC_STOREFRONT_API_TOKEN: process.env.NEXT_PUBLIC_STOREFRONT_API_TOKEN,
+    NEXT_PRIVATE_STOREFRONT_API_TOKEN: process.env.NEXT_PRIVATE_STOREFRONT_API_TOKEN,
+    NEXT_PUBLIC_STORE_DOMAIN: process.env.NEXT_PUBLIC_STORE_DOMAIN,
+    NEXT_PUBLIC_STOREFRONT_API_VERSION: process.env.NEXT_PUBLIC_STOREFRONT_API_VERSION,
   },
   skipValidation: !!process.env.SKIP_ENV_CHECK,
 })

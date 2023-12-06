@@ -1,6 +1,7 @@
 import {CardSizes, useBreakpoints} from '@zwirner/design-system'
 import dynamic from 'next/dynamic'
 
+import useEcommActions from '@/components/hooks/useEcommActions'
 import {DzCardExtendedProps} from '@/sanity/types'
 
 import {contentTypesMapper, dzCardOverrides} from './cardMapper'
@@ -35,6 +36,15 @@ export const processDzCardData = ({
 }
 
 export const DzCard = ({data, componentProps}: DzCardProps) => {
+  const {handleLineAdd} = useEcommActions()
   const {isSmall} = useBreakpoints()
-  return <DzCardMolecule {...processDzCardData({data, componentProps, isSmall})} />
+  return (
+    <DzCardMolecule
+      {...processDzCardData({
+        data: {...data},
+        componentProps: {...componentProps, handleLineAdd},
+        isSmall,
+      })}
+    />
+  )
 }

@@ -1,7 +1,7 @@
 import {Ref} from 'react'
 import ReCAPTCHA from 'react-google-recaptcha'
 
-import {RECAPTCHA_ERROR_MESSAGE} from '@/common/constants/commonCopies'
+import {RECAPTCHA_ERROR} from '@/common/constants/errorMessages'
 import {ErrorType, GTMErrorMessageEvent} from '@/common/utils/gtm/GTMErrorMessageEvent'
 import {env} from '@/env.mjs'
 
@@ -16,7 +16,7 @@ export const RecaptchaNode = ({recaptchaRef}: RecaptchaNodeProps) => (
     sitekey={env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}
     onErrored={() => {
       GTMErrorMessageEvent({
-        error_message: RECAPTCHA_ERROR_MESSAGE,
+        error_message: RECAPTCHA_ERROR,
         type: ErrorType.CAPTCHA,
       })
     }}

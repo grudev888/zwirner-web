@@ -43,7 +43,7 @@ export const artworkContent = groq`
     description,
     backgroundColor,
     _createdAt,
-    "product": shopify->store{ id, variants[]->{ store { id, price, inventory { isAvailable } } } },
+    "product": shopify->store{ id, gid, variants[]->{ store { id, price, inventory { isAvailable }, gid } } },
     "artists": artists[]->
   },
 `

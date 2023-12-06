@@ -51,7 +51,9 @@ const config = {
     // Enables the styled-components SWC transform
     styledComponents: true,
   },
-  images: {remotePatterns: [{hostname: 'cdn.sanity.io'}]},
+  images: {
+    remotePatterns: [{hostname: 'cdn.sanity.io'}, {hostname: 'cdn.shopify.com'}],
+  },
   transpilePackages: ['@zwirner/design-system', '@vime/react'],
   webpack: (config) => {
     // This fixes the invalid hook React error which

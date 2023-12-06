@@ -81,7 +81,7 @@ const handleLink = ({linkedHref, action, blank, downloadDoc, identifier}: any) =
 }
 
 export const ctaMapper = ({data, props}: CtaMapperProps) => {
-  const {primaryCTA, secondaryCTA} = data ?? {}
+  const {primaryCTA, secondaryCTA, handleLineAdd} = data ?? {}
   const {action, link, text, handleClick, downloadDoc} = primaryCTA ?? {}
   // TODO unify CTA inside the studio
   const {blank, href} = (link as any) ?? {}
@@ -108,6 +108,7 @@ export const ctaMapper = ({data, props}: CtaMapperProps) => {
             ctaProps: {
               onClick: () => {
                 handleLink({action, blank, linkedHref, downloadDoc, identifier: text})
+                if (action === CtaActions.ECOMM) handleLineAdd(ctaActionProps)
                 if (handleClick) {
                   handleClick(action)
                 }
@@ -195,10 +196,10 @@ export const ctaMapperInterstitial = ({data}: CtaMapperInterstitial) => {
   }
 }
 
-export const artworkCTAMapper = (data: any, product: any) => {
-  const {artworkCTA} = data ?? {}
-  let primaryCTA!: Omit<CTASchemaType, 'type'> & {disabled?: boolean}
-  let secondaryCTA!: Omit<CTASchemaType, 'type'> & {disabled?: boolean}
+export const artworkCTAMapper = (data: any) => {
+  const {artworkCTA, product} = data ?? {}
+  let primaryCTA!: CTASchemaType
+  let secondaryCTA!: CTASchemaType
 
   switch (artworkCTA?.CTA) {
     case CTA.ECOMM:
@@ -210,14 +211,12 @@ export const artworkCTAMapper = (data: any, product: any) => {
           text: !product.variants[0].store.inventory.isAvailable
             ? CTA_TEXT.SOLD_OUT
             : artworkCTA?.CTAText || CTA_TEXT.PURCHASE,
-          disabled: !product.variants[0].store.inventory.isAvailable,
         }
       break
     case CTA.SOLDOUT:
       primaryCTA = {
         action: CtaActions.SOLD_OUT,
         text: artworkCTA?.CTAText || CTA_TEXT.SOLD_OUT,
-        disabled: true,
       }
       break
     case CTA.INQUIRE:

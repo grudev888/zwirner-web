@@ -23,7 +23,7 @@ import {exhibitionCommonMapper} from '@/components/pageBuilder/utils/common'
 import {cardContentArticle} from '@/components/pageBuilder/utils/commonMappers'
 import {ArtworkFramedSchema} from '@/sanity/queries/components/content/artworkContent'
 import {BookContentType} from '@/sanity/queries/components/content/bookContent'
-import {BookVariation, DzCardExtendedProps} from '@/sanity/types'
+import {BookVariation, CtaActions, DzCardExtendedProps} from '@/sanity/types'
 
 const ARTWORK_CARD_TITLE_CHAR_LIMIT = 300
 
@@ -145,10 +145,10 @@ export const contentTypesMapper: any = {
       medium,
       edition,
       price,
+      currency,
       framed,
       slug,
       framedDimensions,
-      product,
     } = data ?? {}
     const imageBgColor = backgroundColor
       ? ARTWORK_BG_COLORS_TO_TW_VALUES[backgroundColor as ARTWORK_BG_COLOR_NAMES]
@@ -157,14 +157,17 @@ export const contentTypesMapper: any = {
     const [mainArtist] = artists ?? []
     const {fullName} = mainArtist ?? {}
     const {current} = slug ?? {}
-    const {primaryCTA, secondaryCTA} = artworkCTAMapper(data, product)
-
+    const {primaryCTA, secondaryCTA} = artworkCTAMapper(data)
+    let ctaActionProps: any = null
+    if (primaryCTA?.action === CtaActions.INQUIRE)
+      ctaActionProps = createInquireModalArtworkProps(data)
+    if (primaryCTA?.action === CtaActions.ECOMM) ctaActionProps = data
     const ctasOverrides = ctaMapper({
       data: {...props, primaryCTA, secondaryCTA},
       props: {
         url: current,
         hideSecondary: false,
-        ctaActionProps: createInquireModalArtworkProps(data),
+        ctaActionProps,
         secondaryCtaActionProps: createInquireModalArtworkProps(data),
       },
     })
@@ -215,6 +218,7 @@ export const contentTypesMapper: any = {
         ...(displayTitleText ?? {}),
         artworkYear: year,
         price,
+        currency: currency || 'USD',
         framed: framed === ArtworkFramedSchema.enum.NotApplicable ? '' : framed,
         slug: slug?.current,
         ...(mediumText ?? {}),

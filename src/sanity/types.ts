@@ -99,7 +99,7 @@ export enum MediaTypes {
 }
 
 export type CTASchemaType = {
-  type: 'button' | 'link'
+  type?: 'button' | 'link'
   action: CtaActions
   text: string
   link?: linkSchemaType
@@ -171,6 +171,7 @@ export type DzCardExtendedProps = DzCardSchemaProps & {
   isSmall: boolean
   cardSize: any
   pageData: PageState
+  handleLineAdd: any
 }
 
 export type DzMediaSchemaProps = {

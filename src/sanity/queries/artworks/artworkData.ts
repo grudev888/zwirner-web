@@ -12,9 +12,11 @@ export const artworkData = groq`
   additionalCaption,
   artists[]-> {fullName, artistPage->{slug}},
   artworkCTA,
+  slug,
   artworkType,
   availability,
   backgroundColor,
+  availability,
   copyrightInformation,
   currency,
   dateSelection,
@@ -43,7 +45,7 @@ export const artworkData = groq`
     }
   },
   title,
-  "product": shopify->store{ id, variants[]->{ store { id, price, inventory { isAvailable } } } },
+  "product": shopify->store{ id, gid, variants[]->{ store { id, price, inventory { isAvailable }, gid } } },
 }`
 
 export const ArtworkDataPropsSchema = z.object({
@@ -60,6 +62,7 @@ export const ArtworkDataSchema = z.object({
   availability: ArtworkContentSchema.shape.availability,
   artworkType: ArtworkContentSchema.shape.artworkType,
   backgroundColor: ArtworkContentSchema.shape.backgroundColor,
+  slug: ArtworkContentSchema.shape.slug,
   copyrightInformation: ArtworkContentSchema.shape.copyrightInformation,
   currency: ArtworkContentSchema.shape.currency,
   dateSelection: ArtworkContentSchema.shape.dateSelection,

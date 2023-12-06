@@ -1,0 +1,12 @@
+.container {
+  @apply flex justify-between max-lg:flex-col;
+}
+.checkoutContainer {
+  @apply flex w-[21.875rem] flex-col-reverse gap-9 pt-10 text-sm max-lg:w-full md:flex-col;
+}
+.checkoutAction {
+  @apply flex flex-col gap-9 max-md:gap-4;
+}
+.checkoutActionTotalCountCurrencyCode {
+  @apply pr-2 text-xs text-black-60;
+}

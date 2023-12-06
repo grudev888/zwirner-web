@@ -16,6 +16,7 @@ import {useEffect, useRef, useState} from 'react'
 
 import {gtmProductViewEvent} from '@/common/utils/gtm/gtmProductEvent'
 import {artworkCTAMapper, ctaMapper} from '@/common/utilsMappers/cta.mapper'
+import useEcommActions from '@/components/hooks/useEcommActions'
 import {
   createInquireModalArtworkProps,
   useOpenInquiryDispatch,
@@ -53,6 +54,8 @@ export const ArtworkContainer = ({data}: Props) => {
   useEffect(() => {
     if (pageTitle) gtmProductViewEvent(data)
   }, [data, pageTitle])
+
+  const {handleLineAdd} = useEcommActions()
 
   const allPhotoGridItems = photosGrid(data) || []
   const photoDimensionsMap = getImageDimensions(data)
@@ -95,7 +98,6 @@ export const ArtworkContainer = ({data}: Props) => {
     framedDimensions,
     additionalCaption,
     dateSelection: {year},
-    product,
   } = data
 
   const {artistName, artistSlug, displayTitle} = mapArtworkData(data)
@@ -104,13 +106,20 @@ export const ArtworkContainer = ({data}: Props) => {
   const isFramedShown = artworkType !== 'sculpture' && (framed == 'Framed' || framed == 'Unframed')
   const isArtworkTitlePortableText = !!displayTitle
   const artworkTitle = isArtworkTitlePortableText ? displayTitle : title
-  const artworkCTAs = artworkCTAMapper(data, product)
+  const artworkCTAs = artworkCTAMapper(data)
   const inquiryModalProps = createInquireModalArtworkProps(data)
+  let ctaActionProps: any = null
+  if (artworkCTA?.CTA === CtaActions.INQUIRE) ctaActionProps = inquiryModalProps
+  if (artworkCTA?.CTA === CtaActions.ECOMM) ctaActionProps = data
   const {primaryCTA, secondaryCTA} = ctaMapper({
-    data: {primaryCTA: artworkCTAs.primaryCTA, secondaryCTA: artworkCTAs.secondaryCTA},
+    data: {
+      primaryCTA: artworkCTAs.primaryCTA,
+      secondaryCTA: artworkCTAs.secondaryCTA,
+      handleLineAdd,
+    },
     props: {
       hideSecondary: false,
-      ctaActionProps: artworkCTA?.CTA === CtaActions.INQUIRE ? inquiryModalProps : null,
+      ctaActionProps,
       secondaryCtaActionProps:
         artworkCTA?.secondaryCTA === CtaActions.INQUIRE ? inquiryModalProps : null,
     },
