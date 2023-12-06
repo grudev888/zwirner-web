@@ -44,6 +44,12 @@ export const pressBySlug = groq`
 export const articleBySlug = groq`
 *[_type == "article" && slug.current == $slug][0]{
   ...,
+  body[] {
+    ...,
+    _type == 'bodyImage' => media {
+      ${mediaBuilder}
+    }
+  },
   "seo":  {
     title,
     ...seo {

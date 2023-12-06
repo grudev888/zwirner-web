@@ -42,7 +42,12 @@ export const articleContent = groq`
     publishDate,
     displayDate,
     location->,
-    body,
+    body[] {
+      ...,
+      _type == 'bodyImage' => media {
+        ${mediaBuilder}
+      }
+    },
     articles[]->,
     slug,
     interstitial {
