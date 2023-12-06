@@ -8,12 +8,7 @@ export const openPopupCb = (data?: PopUpInfo) => {
   if (!data) return
 
   if (!data.displayAlways) {
-    setCookie(
-      `${data.campaignName}-${data.id}${data.sectionUrl ? `-${data.sectionUrl}` : ''}`,
-      data,
-      {},
-      data.daysToExpire
-    )
+    setCookie(`${data.campaignName}-${data.id}`, data, {}, data.daysToExpire)
   }
 
   if (data.type === 'newsletter') {

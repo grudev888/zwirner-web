@@ -29,7 +29,6 @@ export type PopUpInfo = {
       blank?: boolean
     }
   } | null
-  sectionUrl?: string
 }
 
 type PopUpDictionary = {
@@ -95,18 +94,16 @@ export const getPopupPerPage = ({url, pageType, popupsPerPages}: GetPopupPerPage
 
   // pick record by section if exists (group of pages. Ex.: /artists/*)
   const popupDataBySectionKey = popupsPerPages[sectionKey]
-  const popupDataBySection = popupDataBySectionKey
-    ? ({...popupDataBySectionKey, sectionUrl: url} as PopUpInfo)
-    : undefined
-  if (popupDataBySection) {
+
+  if (popupDataBySectionKey) {
     // check that the popup is not already displayed
     const hasCookieBySection = getCookie(
-      `${popupDataBySection.campaignName}-${popupDataBySection.id}-${url}`
+      `${popupDataBySectionKey.campaignName}-${popupDataBySectionKey.id}`
     )
     if (hasCookieBySection) return undefined
   }
 
-  return popupDataByUrl ?? popupDataBySection
+  return popupDataByUrl ?? popupDataBySectionKey
 }
 
 type AddToDictionaryType = {
