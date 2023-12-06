@@ -14,13 +14,13 @@ import {
   ARTISTS_URL,
   AVAILABLE_WORKS,
   DAVID_ZWIRNER_BOOKS,
+  EXHIBITIONS,
   EXHIBITIONS_URL,
   EXPLORE_ALL_ARTWORKS,
   EXPLORE_AVAILABLE_WORKS,
   EXPLORE_BOOKS,
   EXPLORE_GUIDE,
   GUIDE,
-  LATEST_EXHIBITIONS,
   SURVEY,
 } from '@/common/constants/commonCopies'
 import {FullWidthFlexCol} from '@/components/containers/layout/FullWidthFlexCol'
@@ -215,7 +215,7 @@ export const ArtistDetailContainer = ({data}: ArtistsContainerProps) => {
             <DzTitleMolecule
               type={DzTitleMoleculeTypes.MOLECULE}
               data={{
-                title: LATEST_EXHIBITIONS,
+                title: EXHIBITIONS,
                 titleProps: {
                   titleType: TITLE_TYPES.H2,
                   titleSize: TITLE_SIZES.LG,
