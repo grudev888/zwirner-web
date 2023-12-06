@@ -62,17 +62,17 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   const errorDetails = `| Slug: ${slug} Type: ${type}`
 
   if (req.method !== 'POST') {
-    Sentry.captureMessage(`non POST request sent to revalidate API ${errorDetails}`)
+    Sentry.captureException(`non POST request sent to revalidate API ${errorDetails}`)
     return res.status(405).json({message: 'Must be a POST request'})
   }
 
   if (!id) {
-    Sentry.captureMessage(`No document id sent from Sanity webhook ${errorDetails}`)
+    Sentry.captureException(`No document id sent from Sanity webhook ${errorDetails}`)
     return res.status(401).json({success: false, message: 'No document id'})
   }
 
   if (!isValidSignature(body, signature, secret)) {
-    Sentry.captureMessage(`Invalid signature sent to revalidate API ${errorDetails}`)
+    Sentry.captureException(`Invalid signature sent to revalidate API ${errorDetails}`)
     res.status(401).json({success: false, message: 'Invalid signature'})
     return
   }
@@ -93,12 +93,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         response.push({revalidated: true, slug: page})
       } catch (e) {
         const message = e instanceof Error ? e.message : String(e)
-        Sentry.captureMessage(message)
-        response.push({revalidated: false, slug: page, message: message})
+        Sentry.captureException(message)
+        return res.status(500).send(message)
       }
     })
   )
-
   return res.json(response)
 }
 
