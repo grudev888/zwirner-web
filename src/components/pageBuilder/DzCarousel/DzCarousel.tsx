@@ -31,6 +31,8 @@ export const CarouselMolecule: FC<CarouselMoleculeProps> & {multipleContentTypes
 } = ({componentProps}) => {
   const {size, dzCarousel = []} = componentProps ?? {}
   const cardSize = size ?? DEFAULT_CAROUSEL_SIZE
+  const displayFilters = componentProps?.artworkFilters
+
   return (
     <DzColumn className="mb-12" span={12}>
       <DzCarousel size={cardSize}>
@@ -61,6 +63,7 @@ export const CarouselMolecule: FC<CarouselMoleculeProps> & {multipleContentTypes
                   CardSizes['12col'],
                   carouselSizeToCardSize[cardSize as DzCarouselCardSize],
                 ],
+                displayFilters,
               }}
             />
           )

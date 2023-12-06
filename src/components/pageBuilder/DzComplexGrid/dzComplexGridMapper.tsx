@@ -38,6 +38,7 @@ export const cardsMapper = (componentProps: any) => {
     displayNumberOfItems = false,
     itemsPerRow = 1,
     displayGridSlider = false,
+    artworkFilters,
   } = componentProps ?? {}
 
   const getColSpan = getRows(itemsPerRow ?? 0)
@@ -66,6 +67,7 @@ export const cardsMapper = (componentProps: any) => {
   return {
     cards,
     displayNumberOfResults: displayNumberOfItems,
+    displayFilters: artworkFilters,
     defaultStart: itemsPerRow,
     ...steps,
   }

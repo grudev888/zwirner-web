@@ -153,7 +153,7 @@ export const contentTypesMapper: any = {
     const imageBgColor = backgroundColor
       ? ARTWORK_BG_COLORS_TO_TW_VALUES[backgroundColor as ARTWORK_BG_COLOR_NAMES]
       : ''
-    const {cardSize, additionalInformation, mediaOverride} = props ?? {}
+    const {cardSize, additionalInformation, mediaOverride, displayFilters} = props ?? {}
     const [mainArtist] = artists ?? []
     const {fullName} = mainArtist ?? {}
     const {current} = slug ?? {}
@@ -210,6 +210,7 @@ export const contentTypesMapper: any = {
 
     return {
       type: CARD_TYPES.ARTWORK,
+      displayFilters,
       data: {
         size: cardSize,
         media,

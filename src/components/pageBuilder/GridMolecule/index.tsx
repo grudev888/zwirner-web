@@ -33,7 +33,7 @@ export const GridMolecule: FC<GridMoleculeProps> & {
   const numberOfItemsPerRow = itemsPerRow ?? DEFAULT_ITEMS_PER_ROW
   const getColSpan = getRows(numberOfItemsPerRow ?? 0)
   const useComplexGrid = displayNumberOfItems || displayGridSlider
-
+  const displayFilters = componentProps.artworkFilters
   if (useComplexGrid) {
     return (
       <DzColumn className="mb-12" span={12}>
@@ -67,7 +67,12 @@ export const GridMolecule: FC<GridMoleculeProps> & {
               <ComponentModule
                 key={`${_type}-${key}`}
                 data={componentContent}
-                componentProps={{...props, isOnGrid: true, cardSize: `${getColSpan}col`}}
+                componentProps={{
+                  ...props,
+                  isOnGrid: true,
+                  cardSize: `${getColSpan}col`,
+                  displayFilters,
+                }}
               />
             </DzColumn>
           )

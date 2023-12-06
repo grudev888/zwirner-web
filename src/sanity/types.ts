@@ -171,6 +171,7 @@ export type DzCardExtendedProps = DzCardSchemaProps & {
   isSmall: boolean
   cardSize: any
   pageData: PageState
+  displayFilters?: Record<string, boolean | undefined>
   handleLineAdd: any
 }
 

@@ -96,4 +96,20 @@ export const ArtworkContentSchema = z.object({
   backgroundColor: z.nullable(ArtworkBackgroundColorSchema),
 })
 
+export const ArtworkFiltersSchema = z.object({
+  artistName: z.nullable(z.boolean()),
+  artworkAdditionalInformation: z.nullable(z.boolean()),
+  artworkCTA: z.nullable(z.boolean()),
+  artworkDateSelection: z.nullable(z.boolean()),
+  artworkDescription: z.nullable(z.boolean()),
+  artworkDimensions: z.nullable(z.boolean()),
+  artworkEdition: z.nullable(z.boolean()),
+  artworkFramed: z.nullable(z.boolean()),
+  artworkFramedDimensions: z.nullable(z.boolean()),
+  artworkMedia: z.nullable(z.boolean()),
+  artworkMedium: z.nullable(z.boolean()),
+  artworkPrice: z.nullable(z.boolean()),
+  artworkTitle: z.nullable(z.boolean()),
+})
+
 export type ArtworkContentType = z.infer<typeof ArtworkContentSchema>

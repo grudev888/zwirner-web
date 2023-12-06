@@ -1,6 +1,8 @@
 import {groq} from 'next-sanity'
 import {z} from 'zod'
 
+import {ArtworkFiltersSchema} from '@/sanity/queries/components/content/artworkContent'
+
 import {componentTypesData, ComponentTypesDataSchema} from './componentTypesData'
 import {dzCardProps, DzCardPropsDataSchema} from './dzCardProps'
 import {dzMediaProps, DzMediaPropsDataSchema} from './dzMediaProps'
@@ -11,6 +13,7 @@ export const dzCarouselFields = groq`
   'props': {
     title,
     size,
+    artworkFilters,
     dzCarousel[]{
       ${componentTypesData}
       ${dzMediaProps}
@@ -30,6 +33,7 @@ const DzCarouselItemTypeSchema = z.enum(['dzCard', 'dzMedia'])
 export const DzCarouselPropsDataSchema = z.object({
   title: z.nullable(z.string()),
   size: z.enum(['XL', 'L', 'M', 'S']).nullish(),
+  artworkFilters: ArtworkFiltersSchema.nullish(),
   dzCarousel: z.nullable(
     z.array(
       z.object({

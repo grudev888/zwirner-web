@@ -1,6 +1,8 @@
 import {groq} from 'next-sanity'
 import {z} from 'zod'
 
+import {ArtworkFiltersSchema} from '@/sanity/queries/components/content/artworkContent'
+
 import {mediaBuilder} from './builders/mediaBuilder'
 
 export const dzCardFields = groq`
@@ -18,6 +20,9 @@ export const dzCardFields = groq`
     primarySubtitle,
     secondarySubtitle,
     additionalInformation,
+    _type == 'oneUp' => {
+     "displayFilters": artworkFilters
+    }
   }
 `
 
@@ -40,6 +45,7 @@ export const DzCardPropsDataSchema = z.object({
   bookVariation: BookVariationSchema,
   primarySubtitle: z.nullable(z.string()),
   secondarySubtitle: z.nullable(z.string()),
+  displayFilters: ArtworkFiltersSchema.nullish(),
   // TODO: https://www.sanity.io/docs/block-type
   additionalInformation: z.nullable(z.array(z.any())),
 })
