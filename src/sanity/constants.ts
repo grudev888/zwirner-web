@@ -3,12 +3,6 @@
 import {env} from '@/env.mjs'
 
 /**
- * The secret protects against unauthorized access to your draft content and
- * has a lifetime of 60 minutes, to protect against bruteforcing.
- */
-export const previewSecretId: `${string}.${string}` = 'preview.secret'
-
-/**
  * Limits the number of returned documents when the query is executed if
  * the env variable `NEXT_PUBLIC_PARTIAL_BUILD` is set to `true`.
  *
