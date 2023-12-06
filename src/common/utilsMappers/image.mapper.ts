@@ -1,6 +1,7 @@
 import {DzMediaProps, MEDIA_TYPES, MEDIA_VIDEO_SOURCE_TYPES} from '@zwirner/design-system'
 
 import {SourceElement} from '@/common/utilsMappers/components/elements'
+import {ARTWORK_BG_COLOR_NAMES} from '@/components/pageBuilder/DzCard/cardMapper'
 import {builder} from '@/sanity/imageBuilder'
 import {MediaTypes} from '@/sanity/types'
 
@@ -11,6 +12,7 @@ interface DzMediaImageMapper {
   ImgElement: any
   options?: Partial<DzMediaProps>
   extraImgProps?: any
+  backgroundColor?: ARTWORK_BG_COLOR_NAMES
 }
 
 interface VideoSrcLinkProps {
@@ -233,11 +235,13 @@ export const getImageMedia = ({
       ? override
       : null
   const {src, alt, caption} = imageMapper(mediaOverrideSource ?? data)
+  const {backgroundColor} = override ?? {}
   return {
     media: {
       url,
       type: MEDIA_TYPES.IMAGE,
       ImgElement,
+      backgroundColor,
       imgProps: {
         src,
         alt,

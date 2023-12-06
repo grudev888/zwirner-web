@@ -27,7 +27,7 @@ import {BookVariation, DzCardExtendedProps} from '@/sanity/types'
 
 const ARTWORK_CARD_TITLE_CHAR_LIMIT = 300
 
-type ARTWORK_BG_COLOR_NAMES = 'transparent' | 'lightGrey' | 'darkGrey'
+export type ARTWORK_BG_COLOR_NAMES = 'transparent' | 'lightGrey' | 'darkGrey'
 
 export const ARTWORK_BG_COLORS_TO_TW_VALUES = {
   transparent: '!bg-transparent',

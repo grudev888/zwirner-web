@@ -11,6 +11,7 @@ export const mediaBuilder = groq`
       ...,
       metadata { dimensions { width, height }}
     },
+    backgroundColor,
   },
   type=='Custom Video' => {
     type,
