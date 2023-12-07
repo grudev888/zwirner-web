@@ -18,6 +18,7 @@ import {DzTitleMolecule} from '@/components/wrappers/DzTitleMoleculeWrapper'
 const MOBILE_CARDS_LIMIT = 2
 const LOAD_MORE_FEATURE_ENABLED = true
 const DEFAULT_ITEMS_PER_ROW = 3
+
 const SelectedPress = ({selectedPress, ...rest}: any) => {
   const router = useRouter()
   const {isSmall} = useBreakpoints()
@@ -49,6 +50,9 @@ const SelectedPress = ({selectedPress, ...rest}: any) => {
             props: {
               ...selectedPress?.props,
               itemsPerRow: DEFAULT_ITEMS_PER_ROW,
+              wrap: false,
+              displayNumberOfItems: false,
+              displayGridSlider: false,
               grid:
                 LOAD_MORE_FEATURE_ENABLED && isSmall
                   ? selectedPress?.props?.grid?.slice(0, shownCards)

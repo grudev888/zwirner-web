@@ -25,7 +25,22 @@ export const PressContainer: FC<PressContainerProps> = ({data: queryData}) => {
           <ContainerTitle title={`${SELECTED_PRESS}${fullName ? `: ${fullName}` : ''}`} />
           <FullWidthFlexCol>
             {/* Page Builder GRID for guide items*/}
-            {showGridSection(pressSubpage) ? <PageBuilder components={[pressSubpage]} /> : null}
+            {showGridSection(pressSubpage) ? (
+              <PageBuilder
+                components={[
+                  {
+                    ...pressSubpage,
+                    props: {
+                      ...pressSubpage.props,
+                      itemsPerRow: 3,
+                      wrap: false,
+                      displayNumberOfItems: false,
+                      displayGridSlider: false,
+                    },
+                  },
+                ]}
+              />
+            ) : null}
 
             {/* Page Builder INTERSTITIAL for exhibitions*/}
             {showInterstitialSection(pressInterstitialSubpage) ? (

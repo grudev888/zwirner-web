@@ -19,22 +19,35 @@ export const ArtistGuideContainer: FC<ArtistGuideContainerProps> = ({data: query
   const {fullName} = artist ?? {}
 
   return (
-    <>
-      <BackNavPageLayout parentPageName={parentPageName} parentPath={slug?.current}>
-        <DzColumn span={12}>
-          <ContainerTitle title={`${GUIDE}${fullName ? `: ${fullName}` : ''}`} />
+    <BackNavPageLayout parentPageName={parentPageName} parentPath={slug?.current}>
+      <DzColumn span={12}>
+        <ContainerTitle title={`${GUIDE}${fullName ? `: ${fullName}` : ''}`} />
 
-          <FullWidthFlexCol>
-            {/* Page Builder GRID for guide items*/}
-            {showGridSection(guideSubpage) ? <PageBuilder components={[guideSubpage]} /> : null}
+        <FullWidthFlexCol>
+          {/* Page Builder GRID for guide items*/}
+          {showGridSection(guideSubpage) ? (
+            <PageBuilder
+              components={[
+                {
+                  ...guideSubpage,
+                  props: {
+                    ...guideSubpage.props,
+                    itemsPerRow: 4,
+                    wrap: false,
+                    displayNumberOfItems: false,
+                    displayGridSlider: false,
+                  },
+                },
+              ]}
+            />
+          ) : null}
 
-            {/* Page Builder INTERSTITIAL for exhibitions*/}
-            {showInterstitialSection(guideInterstitialSubpage) ? (
-              <PageBuilder components={[guideInterstitialSubpage]} />
-            ) : null}
-          </FullWidthFlexCol>
-        </DzColumn>
-      </BackNavPageLayout>
-    </>
+          {/* Page Builder INTERSTITIAL for exhibitions*/}
+          {showInterstitialSection(guideInterstitialSubpage) ? (
+            <PageBuilder components={[guideInterstitialSubpage]} />
+          ) : null}
+        </FullWidthFlexCol>
+      </DzColumn>
+    </BackNavPageLayout>
   )
 }
