@@ -24,6 +24,7 @@
 .vscode
 *.iml
 .idea
+*.code-workspace
 
 # debug
 npm-debug.log*
