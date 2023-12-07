@@ -67,12 +67,12 @@ export const getStaticProps = async (ctx: GetStaticPropsContext) => {
   const client = getClient(draftMode ? {token: draftViewToken} : undefined)
 
   const data: any = await getArtistPageBySlug(client, queryParams)
+  if (!data) return {notFound: true}
   const dataLayerProps = await getGTMPageLoadData(queryParams)
   if (dataLayerProps) {
     dataLayerProps.page_data.artist = data[0]?.artist?.fullName || ''
     dataLayerProps.page_data.site_section = ARTISTS_SECTION
   }
-  if (!data) return {notFound: true}
 
   return {
     props: {

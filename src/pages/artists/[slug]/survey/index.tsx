@@ -64,7 +64,10 @@ export const getStaticProps = async (ctx: GetStaticPropsContext) => {
 
   const data = await getArtworkByArtist(client, queryParams)
 
-  if (!data?.[0]?.surveySubpage?.[0]?.props?.grid?.length) return {notFound: true}
+  const isThomasRuff = params?.slug === 'thomas-ruff'
+  if (isThomasRuff && !data?.[0]?.surveySeries?.length) return {notFound: true}
+  if (!isThomasRuff && !data?.[0]?.surveySubpage?.length) return {notFound: true}
+
   const dataLayerProps = await getGTMPageLoadData(queryParams)
   if (dataLayerProps) {
     dataLayerProps.page_data.artist = data[0]?.artist?.fullName || ''

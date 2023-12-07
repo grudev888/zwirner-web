@@ -4,8 +4,5 @@ import {artworksDataByArtistSlug} from '@/sanity/queries/artworks/artworksDataBy
 
 // TODO: add validation error handling
 export async function getArtworkByArtist(client: SanityClient, artwork: any): Promise<any[]> {
-  if (client) {
-    return (await client.fetch(artworksDataByArtistSlug, artwork)) || []
-  }
-  return []
+  return await client.fetch(artworksDataByArtistSlug, artwork)
 }
