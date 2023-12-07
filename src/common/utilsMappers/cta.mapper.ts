@@ -7,8 +7,8 @@ import {
   LEARN_MORE,
   TO_LEARN_MORE_ABOUT_AVAILABLE_WORKS_EXTENDED,
 } from '@/common/constants/commonCopies'
-import {CTAClickEvent} from '@/events/CTAClickEvent'
-import {CtaActions, CTASchemaType} from '@/sanity/types'
+import {ModalTriggerEvent, ModalTriggerTypes} from '@/events/ModalTriggerEvent'
+import {CTAActionTypes, CTASchemaType, ModalTypes} from '@/sanity/types'
 
 import {SUBSCRIBE_METHOD} from '../constants/subscribe'
 import {GTMExitLinkEvent} from '../utils/gtm/gtmExitLinkEvent'
@@ -26,10 +26,10 @@ interface CtaMapperInterstitial {
   secondaryProps?: any
 }
 
-const handleCTAClick = (action?: CtaActions, extraProps?: any) => {
+const handleCTAClick = (action?: ModalTypes, extraProps?: any) => {
   if (action) {
     const modalProps =
-      action === CtaActions.INQUIRE && extraProps?.method === SUBSCRIBE_METHOD.INTERSTITIAL
+      action === ModalTypes.INQUIRE && extraProps?.method === SUBSCRIBE_METHOD.INTERSTITIAL
         ? {
             title: INQUIRE,
             subtitle: TO_LEARN_MORE_ABOUT_AVAILABLE_WORKS_EXTENDED,
@@ -37,7 +37,9 @@ const handleCTAClick = (action?: CtaActions, extraProps?: any) => {
           }
         : {}
 
-    window.document.dispatchEvent(CTAClickEvent(action, {...extraProps, ...modalProps}))
+    window.document.dispatchEvent(
+      ModalTriggerEvent(action, {...extraProps, ...modalProps}, ModalTriggerTypes.CTA)
+    )
   }
 }
 
@@ -45,16 +47,16 @@ const externalFlags = ['www.', 'https://', '.com']
 const internalFlags = ['.davidzwirner.com', '.zwirner.dev', '.zwirner.tech']
 
 const handleLink = ({linkedHref, action, blank, downloadDoc, identifier}: any) => {
-  const linkInternalContent = action === CtaActions.LINK_CONTENT
-  const linkCustomUrl = action === CtaActions.LINK || action === CtaActions.CUSTOM
-  const downloadPdf = action === CtaActions.DOWNLOAD_PDF
+  const linkInternalContent = action === CTAActionTypes.LINK_CONTENT
+  const linkCustomUrl = action === CTAActionTypes.LINK || action === CTAActionTypes.CUSTOM
+  const downloadPdf = action === CTAActionTypes.DOWNLOAD_PDF
 
   if (
     ![
-      CtaActions.LINK_CONTENT,
-      CtaActions.LINK,
-      CtaActions.DOWNLOAD_PDF,
-      CtaActions.CUSTOM,
+      CTAActionTypes.LINK_CONTENT,
+      CTAActionTypes.LINK,
+      CTAActionTypes.DOWNLOAD_PDF,
+      CTAActionTypes.CUSTOM,
     ].includes(action)
   )
     return
@@ -87,7 +89,8 @@ export const ctaMapper = ({data, props}: CtaMapperProps) => {
   const {blank, href} = (link as any) ?? {}
   const {action: secondaryAction, text: secondaryText, link: secondaryLink} = secondaryCTA ?? {}
   const {blank: secondaryBlank, href: secondaryHref} = (secondaryLink as any) ?? {}
-  const primaryActionIsLink = action === CtaActions.LINK_CONTENT || action === CtaActions.LINK
+  const primaryActionIsLink =
+    action === CTAActionTypes.LINK_CONTENT || action === CTAActionTypes.LINK
 
   const {
     url,
@@ -98,7 +101,7 @@ export const ctaMapper = ({data, props}: CtaMapperProps) => {
     linkAsButton,
   } = props ?? {}
 
-  const linkedHref = action === CtaActions.LINK_CONTENT ? url : href
+  const linkedHref = action === CTAActionTypes.LINK_CONTENT ? url : href
 
   const primaryCTAMap =
     primaryCTA && (linkAsButton || !primaryActionIsLink)
@@ -108,13 +111,13 @@ export const ctaMapper = ({data, props}: CtaMapperProps) => {
             ctaProps: {
               onClick: () => {
                 handleLink({action, blank, linkedHref, downloadDoc, identifier: text})
-                if (action === CtaActions.ECOMM) handleLineAdd(ctaActionProps)
+                if (action === CTAActionTypes.ECOMM) handleLineAdd(ctaActionProps)
                 if (handleClick) {
                   handleClick(action)
                 }
                 handleCTAClick(action, ctaActionProps)
               },
-              disabled: action === CtaActions.SOLD_OUT,
+              disabled: action === CTAActionTypes.SOLD_OUT,
               mode: ButtonModes.DARK,
             },
           },
@@ -163,7 +166,7 @@ export const ctaMapperInterstitial = ({data}: CtaMapperInterstitial) => {
   const {action, text, handleClick, linkedContent, link, downloadDoc} = data ?? {}
   // TODO unify CTA inside the studio
   const {blank, href} = (link as any) ?? {}
-  const linkedHref = action === CtaActions.LINK_CONTENT ? linkedContent : href
+  const linkedHref = action === CTAActionTypes.LINK_CONTENT ? linkedContent : href
 
   const primaryCTAMap = text
     ? {
@@ -206,8 +209,8 @@ export const artworkCTAMapper = (data: any) => {
       if (product)
         primaryCTA = {
           action: product.variants[0].store.inventory.isAvailable
-            ? CtaActions.ECOMM
-            : CtaActions.SOLD_OUT,
+            ? CTAActionTypes.ECOMM
+            : CTAActionTypes.SOLD_OUT,
           text: !product.variants[0].store.inventory.isAvailable
             ? CTA_TEXT.SOLD_OUT
             : artworkCTA?.CTAText || CTA_TEXT.PURCHASE,
@@ -215,19 +218,19 @@ export const artworkCTAMapper = (data: any) => {
       break
     case CTA.SOLDOUT:
       primaryCTA = {
-        action: CtaActions.SOLD_OUT,
+        action: CTAActionTypes.SOLD_OUT,
         text: artworkCTA?.CTAText || CTA_TEXT.SOLD_OUT,
       }
       break
     case CTA.INQUIRE:
       primaryCTA = {
-        action: CtaActions.INQUIRE,
+        action: ModalTypes.INQUIRE,
         text: artworkCTA?.CTAText || CTA_TEXT.INQUIRE,
       }
       break
     case CTA.CUSTOM:
       primaryCTA = {
-        action: CtaActions.CUSTOM,
+        action: CTAActionTypes.CUSTOM,
         text: artworkCTA?.CTAText,
         link: {href: artworkCTA?.CTALink, blank: true},
       }
@@ -238,12 +241,12 @@ export const artworkCTAMapper = (data: any) => {
 
   if (artworkCTA?.secondaryCTA == CTA.INQUIRE) {
     secondaryCTA = {
-      action: CtaActions.INQUIRE,
+      action: ModalTypes.INQUIRE,
       text: artworkCTA?.SecondaryCTAText || CTA_TEXT.INQUIRE,
     }
   } else if (artworkCTA?.secondaryCTA == CTA.CUSTOM) {
     secondaryCTA = {
-      action: CtaActions.CUSTOM,
+      action: CTAActionTypes.CUSTOM,
       text: artworkCTA?.SecondaryCTAText,
       link: {href: artworkCTA?.SecondaryCTALink, blank: true},
     }

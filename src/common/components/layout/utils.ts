@@ -1,7 +1,7 @@
 import {SUBSCRIBE_METHOD} from '@/common/constants/subscribe'
-import {CTAClickEvent} from '@/events/CTAClickEvent'
+import {ModalTriggerEvent, ModalTriggerTypes} from '@/events/ModalTriggerEvent'
 import {PopUpInfo} from '@/sanity/services/popups/getAllCampaigns'
-import {CtaActions} from '@/sanity/types'
+import {ModalTypes} from '@/sanity/types'
 import {setCookie} from '@/utils/cookies/setCookie'
 
 export const openPopupCb = (data?: PopUpInfo) => {
@@ -18,7 +18,9 @@ export const openPopupCb = (data?: PopUpInfo) => {
       image: data.image,
       primaryCTA: data.primaryCTA,
     }
-    window.document.dispatchEvent(CTAClickEvent(CtaActions.NEWSLETTER, parsedData))
+    window.document.dispatchEvent(
+      ModalTriggerEvent(ModalTypes.NEWSLETTER, parsedData, ModalTriggerTypes.POPUP)
+    )
     return
   }
   if (data.type === 'customPromo') {
@@ -30,18 +32,24 @@ export const openPopupCb = (data?: PopUpInfo) => {
       url: data.primaryCTA?.link?.href,
       openNewTab: data.primaryCTA?.link?.blank,
     }
-    window.document.dispatchEvent(CTAClickEvent(CtaActions.PROMO, parsedData))
+    window.document.dispatchEvent(
+      ModalTriggerEvent(ModalTypes.PROMO, parsedData, ModalTriggerTypes.POPUP)
+    )
     return
   }
 }
 
 export const openNewsletterHeader = () => {
   window.document.dispatchEvent(
-    CTAClickEvent(CtaActions.NEWSLETTER, {method: SUBSCRIBE_METHOD.NAV})
+    ModalTriggerEvent(ModalTypes.NEWSLETTER, {method: SUBSCRIBE_METHOD.NAV}, ModalTriggerTypes.CTA)
   )
 }
 export const openNewsletterFooter = () => {
   window.document.dispatchEvent(
-    CTAClickEvent(CtaActions.NEWSLETTER, {method: SUBSCRIBE_METHOD.FOOTER})
+    ModalTriggerEvent(
+      ModalTypes.NEWSLETTER,
+      {method: SUBSCRIBE_METHOD.FOOTER},
+      ModalTriggerTypes.CTA
+    )
   )
 }

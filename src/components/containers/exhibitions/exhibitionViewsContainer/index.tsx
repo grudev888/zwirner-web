@@ -19,8 +19,8 @@ import {
 import {PageBuilder} from '@/components/pageBuilder'
 import {DzSectionMenu} from '@/components/wrappers/DzSectionMenuWrapper'
 import {ContainerTitle} from '@/components/wrappers/title/ContainerTitle'
-import {CTAClickEvent} from '@/events/CTAClickEvent'
-import {CtaActions} from '@/sanity/types'
+import {ModalTriggerEvent, ModalTriggerTypes} from '@/events/ModalTriggerEvent'
+import {ModalTypes} from '@/sanity/types'
 
 type InstallationViewsContainerProps = {
   data: any
@@ -41,7 +41,9 @@ export const InstallationViewsContainer = ({data}: InstallationViewsContainerPro
 
   const inquireModalProps = createInquireModalExhibitionProps(data)
   const onClickInquire = () => {
-    window.document.dispatchEvent(CTAClickEvent(CtaActions.INQUIRE, inquireModalProps))
+    window.document.dispatchEvent(
+      ModalTriggerEvent(ModalTypes.INQUIRE, inquireModalProps, ModalTriggerTypes.CTA)
+    )
   }
   useOpenInquiryDispatch(inquireModalProps)
 

@@ -60,17 +60,20 @@ export enum EditorialTextTypes {
   QUOTE = 'quote',
 }
 
-export enum CtaActions {
+export enum ModalTypes {
   INQUIRE = 'inquire',
+  NEWSLETTER = 'newsletter',
+  PROMO = 'promo',
+}
+
+export enum CTAActionTypes {
   ECOMM = 'ecomm',
   CUSTOM = 'custom',
   NONE = 'none',
   SOLD_OUT = 'soldout',
-  NEWSLETTER = 'Newsletter',
   LINK = 'Link',
   DOWNLOAD_PDF = 'Download PDF',
   LINK_CONTENT = 'Link Content',
-  PROMO = 'promo',
 }
 
 export enum ArticleCategories {
@@ -100,7 +103,7 @@ export enum MediaTypes {
 
 export type CTASchemaType = {
   type?: 'button' | 'link'
-  action: CtaActions
+  action: ModalTypes | CTAActionTypes
   text: string
   link?: linkSchemaType
   variant?: ButtonVariant

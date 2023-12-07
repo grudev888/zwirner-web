@@ -6,8 +6,8 @@ import {ReactNode} from 'react'
 import useSWRImmutable from 'swr/immutable'
 
 import CartPanel from '@/components/containers/cartPanel'
-import CtaModalListener from '@/components/containers/ctaModalListener/ctaModalListener'
 import LinkClickListener from '@/components/containers/LinkClickListener/LinkClickListener'
+import ModalTriggerListener from '@/components/containers/modalTriggerListener/modalTriggerListener'
 import {useTimeDelayedRoutePopup} from '@/components/hooks/useTimeDelayedRoutePopup'
 import {allCampaigns} from '@/sanity/queries/popups/allCampaigns'
 import {getAllCampaigns, getPopupPerPage} from '@/sanity/services/popups/getAllCampaigns'
@@ -44,7 +44,7 @@ const Layout = ({children, layoutData, pageType}: LayoutProps) => {
         newsletterAction={openNewsletterHeader}
         collections={totalQuantity}
       />
-      <CtaModalListener />
+      <ModalTriggerListener />
       <main className={styles.mainLayout} aria-label="Main" role="main">
         <DzGridColumns className="h-full min-h-screen w-full">{children}</DzGridColumns>
       </main>

@@ -23,7 +23,7 @@ import {exhibitionCommonMapper} from '@/components/pageBuilder/utils/common'
 import {cardContentArticle} from '@/components/pageBuilder/utils/commonMappers'
 import {ArtworkFramedSchema} from '@/sanity/queries/components/content/artworkContent'
 import {BookContentType} from '@/sanity/queries/components/content/bookContent'
-import {BookVariation, CtaActions, DzCardExtendedProps} from '@/sanity/types'
+import {BookVariation, CTAActionTypes, DzCardExtendedProps, ModalTypes} from '@/sanity/types'
 
 const ARTWORK_CARD_TITLE_CHAR_LIMIT = 300
 
@@ -159,9 +159,9 @@ export const contentTypesMapper: any = {
     const {current} = slug ?? {}
     const {primaryCTA, secondaryCTA} = artworkCTAMapper(data)
     let ctaActionProps: any = null
-    if (primaryCTA?.action === CtaActions.INQUIRE)
+    if (primaryCTA?.action === ModalTypes.INQUIRE)
       ctaActionProps = createInquireModalArtworkProps(data)
-    if (primaryCTA?.action === CtaActions.ECOMM) ctaActionProps = data
+    if (primaryCTA?.action === CTAActionTypes.ECOMM) ctaActionProps = data
     const ctasOverrides = ctaMapper({
       data: {...props, primaryCTA, secondaryCTA},
       props: {

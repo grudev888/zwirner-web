@@ -7,7 +7,6 @@ import {ErrorType, GTMErrorMessageEvent} from '@/common/utils/gtm/GTMErrorMessag
 import {
   gtmInquiryFormStartedEvent,
   gtmInquiryFormSubmitEvent,
-  gtmInquiryFormViewEvent,
 } from '@/common/utils/gtm/gtmInquiryFormEvent'
 import {captchaInitObserver, removeCaptchaObserver} from '@/common/utils/recaptcha/observer'
 import {InquireModalProps} from '@/components/hooks/useOpenInquiryDispatch'
@@ -115,7 +114,6 @@ export const useHashRoutedInquiryModal = () => {
       })
     }
 
-    gtmInquiryFormViewEvent(inquireModalProps)
     setInquireModalProps(inquireModalProps)
     setIsOpen(true)
   }

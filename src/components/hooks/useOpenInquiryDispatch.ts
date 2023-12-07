@@ -14,8 +14,8 @@ import {
   WANT_TO_KNOW_MORE,
 } from '@/common/constants/commonCopies'
 import {INQUIRE_HASH_KEY} from '@/components/hooks/useHashRoutedInquiryModal'
-import {CTAClickEvent} from '@/events/CTAClickEvent'
-import {CtaActions} from '@/sanity/types'
+import {ModalTriggerEvent, ModalTriggerTypes} from '@/events/ModalTriggerEvent'
+import {ModalTypes} from '@/sanity/types'
 
 export interface InquireModalProps {
   contextData?: InquireFormContextData
@@ -30,7 +30,9 @@ export const useOpenInquiryDispatch = (inquireModalProps: InquireModalProps) => 
 
   useEffect(() => {
     if (asPath.includes(`#${INQUIRE_HASH_KEY}`)) {
-      window.document.dispatchEvent(CTAClickEvent(CtaActions.INQUIRE, inquireModalProps))
+      window.document.dispatchEvent(
+        ModalTriggerEvent(ModalTypes.INQUIRE, inquireModalProps, ModalTriggerTypes.CTA)
+      )
     }
     // eslint-disable-next-line
   }, [])

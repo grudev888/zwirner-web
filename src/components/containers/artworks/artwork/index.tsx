@@ -28,7 +28,7 @@ import {DzLink} from '@/components/wrappers/DzLinkWrapper'
 import {DzPortableText} from '@/components/wrappers/DzPortableTextWrapper'
 import {builder} from '@/sanity/imageBuilder'
 import {ArtworkDataType} from '@/sanity/queries/artworks/artworkData'
-import {CtaActions} from '@/sanity/types'
+import {CTAActionTypes, ModalTypes} from '@/sanity/types'
 import usePageStore from '@/store/pageStore'
 import {formatCurrency} from '@/utils/currency/formatCurrency'
 
@@ -109,8 +109,8 @@ export const ArtworkContainer = ({data}: Props) => {
   const artworkCTAs = artworkCTAMapper(data)
   const inquiryModalProps = createInquireModalArtworkProps(data)
   let ctaActionProps: any = null
-  if (artworkCTA?.CTA === CtaActions.INQUIRE) ctaActionProps = inquiryModalProps
-  if (artworkCTA?.CTA === CtaActions.ECOMM) ctaActionProps = data
+  if (artworkCTA?.CTA === ModalTypes.INQUIRE) ctaActionProps = inquiryModalProps
+  if (artworkCTA?.CTA === CTAActionTypes.ECOMM) ctaActionProps = data
   const {primaryCTA, secondaryCTA} = ctaMapper({
     data: {
       primaryCTA: artworkCTAs.primaryCTA,
@@ -121,7 +121,7 @@ export const ArtworkContainer = ({data}: Props) => {
       hideSecondary: false,
       ctaActionProps,
       secondaryCtaActionProps:
-        artworkCTA?.secondaryCTA === CtaActions.INQUIRE ? inquiryModalProps : null,
+        artworkCTA?.secondaryCTA === ModalTypes.INQUIRE ? inquiryModalProps : null,
     },
   })
 

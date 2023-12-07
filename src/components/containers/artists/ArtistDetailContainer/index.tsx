@@ -35,9 +35,9 @@ import {showSplitSection} from '@/components/pageBuilder/DzSplit/splitMappers'
 import {showGridSection} from '@/components/pageBuilder/GridMolecule/gridMapper'
 import {DzSectionMenu} from '@/components/wrappers/DzSectionMenuWrapper'
 import {DzTitleMolecule} from '@/components/wrappers/DzTitleMoleculeWrapper'
-import {CTAClickEvent} from '@/events/CTAClickEvent'
+import {ModalTriggerEvent, ModalTriggerTypes} from '@/events/ModalTriggerEvent'
 import {PageBuilderComponentsDataSchemaType} from '@/sanity/queries/page/pageCommonQueries/pageBuilderComponentsData'
-import {CtaActions} from '@/sanity/types'
+import {ModalTypes} from '@/sanity/types'
 
 import ArtistHeader from './components/ArtistHeader'
 import {mapBiography} from './mapper'
@@ -92,7 +92,9 @@ export const ArtistDetailContainer = ({data}: ArtistsContainerProps) => {
   const biography = mapBiography(data.artist)
 
   const onClickInquire = () => {
-    window.document.dispatchEvent(CTAClickEvent(CtaActions.INQUIRE, inquireModalProps))
+    window.document.dispatchEvent(
+      ModalTriggerEvent(ModalTypes.INQUIRE, inquireModalProps, ModalTriggerTypes.CTA)
+    )
   }
 
   const Guide = useMemo(

@@ -23,9 +23,9 @@ import {DzCard} from '@/components/wrappers/DzCardWrapper'
 import {DzSectionMenu} from '@/components/wrappers/DzSectionMenuWrapper'
 import {DzTitleExhibition} from '@/components/wrappers/DzTitleExhibitionWrapper'
 import {DzTitleMolecule} from '@/components/wrappers/DzTitleMoleculeWrapper'
-import {CTAClickEvent} from '@/events/CTAClickEvent'
+import {ModalTriggerEvent, ModalTriggerTypes} from '@/events/ModalTriggerEvent'
 import {ExhibitionPageBySlugType} from '@/sanity/queries/exhibitions/exhibitionPageBySlug'
-import {CtaActions} from '@/sanity/types'
+import {ModalTypes} from '@/sanity/types'
 
 import styles from './exhibitions.module.css'
 
@@ -39,7 +39,9 @@ export const ExhibitionsContainer = ({data: initialData}: Props) => {
   const currentSlug = slug.current
   const inquireModalProps = createInquireModalExhibitionProps(initialData)
   const onClickInquire = () => {
-    window.document.dispatchEvent(CTAClickEvent(CtaActions.INQUIRE, inquireModalProps))
+    window.document.dispatchEvent(
+      ModalTriggerEvent(ModalTypes.INQUIRE, inquireModalProps, ModalTriggerTypes.CTA)
+    )
   }
   useOpenInquiryDispatch(inquireModalProps)
 

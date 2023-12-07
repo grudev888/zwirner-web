@@ -3,7 +3,7 @@ import {type GetStaticPropsContext} from 'next'
 import React from 'react'
 
 import {SUBSCRIBE_SECTION, SUBSCRIBE_SLUG} from '@/common/constants/gtmPageConstants'
-import {useNewsletterFormModal} from '@/components/containers/ctaModalListener/useNewsletterFormModal'
+import {useNewsletterFormModal} from '@/components/containers/modalTriggerListener/useNewsletterFormModal'
 import {NewsletterFormModal} from '@/components/forms/newsletterFormModal'
 import {getGTMPageLoadData} from '@/sanity/services/gtm/pageLoad.service'
 
