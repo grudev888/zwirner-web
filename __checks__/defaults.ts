@@ -12,7 +12,7 @@ require('dotenv').config()
 import axios from 'axios'
 const LOCAL_DEV_URL = 'http://localhost:3000'
 const PREVIEW_URL = process.env.ENVIRONMENT_URL
-const PROD_URL = 'https://prod-www.zwirner.tech'
+const PROD_URL = 'https://zwirner.dev'
 
 export const defaults = {
   baseURL: process.env.NODE_ENV === 'development' ? LOCAL_DEV_URL : PREVIEW_URL || PROD_URL,
