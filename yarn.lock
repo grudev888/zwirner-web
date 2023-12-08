@@ -690,18 +690,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@headlessui/react@npm:^1.7.10":
-  version: 1.7.13
-  resolution: "@headlessui/react@npm:1.7.13"
-  dependencies:
-    client-only: ^0.0.1
-  peerDependencies:
-    react: ^16 || ^17 || ^18
-    react-dom: ^16 || ^17 || ^18
-  checksum: 132e5fce86978b9a6fd9d669fb556acec783debcd8f510c99226b3b3229dad50a13aeed69fc9af66465fc7029487ecfc46e6226f14218b760d5a309e08c0d059
-  languageName: node
-  linkType: hard
-
 "@headlessui/react@npm:^1.7.17":
   version: 1.7.17
   resolution: "@headlessui/react@npm:1.7.17"
@@ -720,15 +708,6 @@ __metadata:
   peerDependencies:
     tailwindcss: ^3.0
   checksum: 3499f69eee3d127c2c43c3ba87f8d13bd5778cad4257801314b9aaf6bc085d8f9fcb9f400c4613df5faaa2b9c5e1721500a9abaf9138fa7ca74fe81e6fb9803d
-  languageName: node
-  linkType: hard
-
-"@heroicons/react@npm:^2.0.15":
-  version: 2.0.16
-  resolution: "@heroicons/react@npm:2.0.16"
-  peerDependencies:
-    react: ">= 16"
-  checksum: 1e51bfec722bfd68f27fd4f37a024141938eb4b0058c3eab073a6d1aa08cf4f6deb1e8533ca85473cb16be1d1b528e2d57b8617f8b967e66292bf243daec5dd0
   languageName: node
   linkType: hard
 
@@ -2701,12 +2680,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@zwirner/design-system@npm:0.0.193--canary.286.f30c8c3.0":
-  version: 0.0.193--canary.286.f30c8c3.0
-  resolution: "@zwirner/design-system@npm:0.0.193--canary.286.f30c8c3.0::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40zwirner%2Fdesign-system%2F0.0.193--canary.286.f30c8c3.0%2F112f1961096a5fc3f955538c3477a6c58fe60816"
+"@zwirner/design-system@npm:v0.0.193":
+  version: 0.0.193
+  resolution: "@zwirner/design-system@npm:0.0.193::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40zwirner%2Fdesign-system%2F0.0.193%2F0e59777a6a42064227897b96f9221d5811393a41"
   dependencies:
-    "@headlessui/react": ^1.7.10
-    "@heroicons/react": ^2.0.15
+    "@headlessui/react": ^1.7.17
+    "@heroicons/react": ^2.0.18
     "@portabletext/react": ^3.0.11
     "@seznam/compose-react-refs": ^1.0.6
     "@vime/core": ^5.4.1
@@ -2722,7 +2701,7 @@ __metadata:
   peerDependencies:
     react: ">=16"
     react-dom: ^17.0.1
-  checksum: 7ad426d642ebb42a7c3ddd9ef8dbbcd472c0366fc971d1e053d3cd3efd53c14a2154321b4ae73f7c6d16ef1ff080056e403d01b0bddfe440ba33f5c09a4793ab
+  checksum: 15a91a256088fec3d1cf57329d14d3945dcb3af28e934e87a20b13e4ee137419a0f9ac723fd762447a1e06d8c7bc37eb35f1b06dc967d8bc759440157bff10f7
   languageName: node
   linkType: hard
 
@@ -11693,7 +11672,7 @@ __metadata:
     "@types/react-google-recaptcha": ^2.1.5
     "@types/styled-components": ^5.1.26
     "@typescript-eslint/eslint-plugin": ^5.59.7
-    "@zwirner/design-system": 0.0.193--canary.286.f30c8c3.0
+    "@zwirner/design-system": v0.0.193
     autoprefixer: ^10.4.16
     axios: ^1.3.5
     checkly: ^4.1.0
