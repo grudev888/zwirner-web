@@ -61,7 +61,7 @@ export const getStaticProps = async (ctx: GetStaticPropsContext) => {
   const client = getClient(draftMode ? {token: draftViewToken} : undefined)
 
   const data = await getGuideDataBySlug(client, queryParams)
-  if (!data?.[0]?.guideSubpage) return {notFound: true}
+  if (!data?.[0]?.guideSubpage?.grid?.length) return {notFound: true}
 
   const dataLayerProps = await getGTMPageLoadData(queryParams)
   if (dataLayerProps) {
