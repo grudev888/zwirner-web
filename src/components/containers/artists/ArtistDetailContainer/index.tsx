@@ -71,8 +71,13 @@ export const ArtistDetailContainer = ({data}: ArtistsContainerProps) => {
   } = data ?? {}
   const router = useRouter()
 
-  const inquireModalProps = createInquireModalArtistProps(data.artist)
+  const surveyToShow = router?.query?.slug === 'thomas-ruff' ? surveyThomas : survey
 
+  const inquireModalProps = createInquireModalArtistProps(data.artist)
+  const hideAWTitle = availableWorks?.some((component: PageBuilderComponentsDataSchemaType) => {
+    const {_type} = component ?? {}
+    return _type === 'dzSplit' || _type === 'dzInterstitial'
+  })
   useOpenInquiryDispatch(inquireModalProps)
 
   const latestExhibitionMapped = latestExhibitions?.map(
@@ -128,7 +133,7 @@ export const ArtistDetailContainer = ({data}: ArtistsContainerProps) => {
     <DzColumn span={12}>
       <DzSectionMenu
         sections={[
-          {text: 'Survey', id: 'survey', hidden: !showCarouselSection(surveyThomas ?? survey)},
+          {text: 'Survey', id: 'survey', hidden: !showCarouselSection(surveyToShow)},
           {
             text: 'Available Works',
             id: 'available-works',
@@ -164,7 +169,7 @@ export const ArtistDetailContainer = ({data}: ArtistsContainerProps) => {
         {/* Page Builder SPLIT for featured items*/}
         {showSplitSection(featured) ? <PageBuilder components={[featured]} /> : null}
         {/* Page Builder CAROUSEL for survey items*/}
-        {showCarouselSection(surveyThomas ?? survey) ? (
+        {showCarouselSection(surveyToShow) ? (
           <DzSection className="-mx-5" id="survey">
             <DzTitleMolecule
               type={DzTitleMoleculeTypes.MOLECULE}
@@ -183,29 +188,35 @@ export const ArtistDetailContainer = ({data}: ArtistsContainerProps) => {
                 },
               }}
             />
-            <PageBuilder components={[surveyThomas ?? survey]} />
+            <PageBuilder components={[surveyToShow]} />
           </DzSection>
         ) : null}
         {showPageBuilderSection(availableWorks) ? (
           <DzSection id="available-works">
-            <DzTitleMolecule
-              type={DzTitleMoleculeTypes.MOLECULE}
-              data={{
-                customClass: 'mr-5 mb-5 md:mb-10',
-                title: AVAILABLE_WORKS,
-                titleProps: {
-                  titleType: TITLE_TYPES.H2,
-                  titleSize: TITLE_SIZES.LG,
-                  subtitleSize: TITLE_SIZES.LG,
-                  subtitleType: TITLE_TYPES.P,
-                },
-                linkCTA: {
-                  text: EXPLORE_AVAILABLE_WORKS,
-                  url: `${ARTISTS_URL}/${router.query.slug}/available-works`,
-                },
-              }}
-            />
-            <PageBuilder components={availableWorks} innerSection />
+            {!hideAWTitle ? (
+              <>
+                <DzTitleMolecule
+                  type={DzTitleMoleculeTypes.MOLECULE}
+                  data={{
+                    customClass: 'mr-5 mb-5 md:mb-10',
+                    title: AVAILABLE_WORKS,
+                    titleProps: {
+                      titleType: TITLE_TYPES.H2,
+                      titleSize: TITLE_SIZES.LG,
+                      subtitleSize: TITLE_SIZES.LG,
+                      subtitleType: TITLE_TYPES.P,
+                    },
+                    linkCTA: {
+                      text: EXPLORE_AVAILABLE_WORKS,
+                      url: `${ARTISTS_URL}/${router.query.slug}/available-works`,
+                    },
+                  }}
+                />
+                <PageBuilder components={availableWorks} innerSection />
+              </>
+            ) : (
+              <PageBuilder components={availableWorks} innerSection />
+            )}
           </DzSection>
         ) : null}
         {/* Page Builder CAROUSEL for guide cards*/}

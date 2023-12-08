@@ -67,7 +67,6 @@ export const getStaticProps = async (ctx: GetStaticPropsContext) => {
   const isThomasRuff = params?.slug === 'thomas-ruff'
   if (isThomasRuff && !data?.[0]?.surveySeries?.length) return {notFound: true}
   if (!isThomasRuff && !data?.[0]?.surveySubpage?.length) return {notFound: true}
-
   const dataLayerProps = await getGTMPageLoadData(queryParams)
   if (dataLayerProps) {
     dataLayerProps.page_data.artist = data[0]?.artist?.fullName || ''
