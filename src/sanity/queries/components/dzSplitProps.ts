@@ -14,7 +14,6 @@ export const dzSplitFields = groq`
     media {
       ${mediaBuilder}
     },
-    enableOverrides,
     primaryCTA
   }
 `
@@ -35,7 +34,6 @@ export const DzSplitPropsDataSchema = z.object({
   reverse: z.boolean(),
   animate: z.boolean().nullish(),
   media: z.nullable(z.any()),
-  enableOverrides: z.boolean(),
   primaryCTA: z.nullable(z.any()),
 })
 
