@@ -13,6 +13,7 @@ import {useMemo} from 'react'
 import {
   ARTISTS_URL,
   AVAILABLE_WORKS,
+  BOOKS_URL,
   DAVID_ZWIRNER_BOOKS,
   EXHIBITIONS,
   EXHIBITIONS_URL,
@@ -266,7 +267,7 @@ export const ArtistDetailContainer = ({data}: ArtistsContainerProps) => {
                 },
                 linkCTA: {
                   text: EXPLORE_BOOKS,
-                  url: `${ARTISTS_URL}/${router.query.slug}/books`,
+                  url: BOOKS_URL,
                 },
               }}
             />

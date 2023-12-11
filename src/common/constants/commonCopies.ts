@@ -83,7 +83,7 @@ export const EXPECT_THE_LATEST_INFORMATION =
   'Expect the latest information from David Zwirner to arrive soon in your Inbox.'
 export const EXPLORE_ALL_ARTWORKS = 'Explore all Artworks'
 export const EXPLORE_AVAILABLE_WORKS = 'Explore Available Works'
-export const EXPLORE_BOOKS = 'Explore Books'
+export const EXPLORE_BOOKS = 'Explore David Zwirner Books'
 export const EXPLORE_GUIDE = 'Explore Guide'
 export const SURVEY = 'Survey'
 export const AVAILABLE_WORKS = 'Available Works'
