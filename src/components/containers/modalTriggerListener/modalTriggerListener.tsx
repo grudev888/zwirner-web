@@ -31,7 +31,7 @@ export const ModalTriggerListener = () => {
       [ModalTypes.NEWSLETTER]: (props, triggerType) => {
         if (triggerType === ModalTriggerTypes.CTA) {
           gtmNewsletterSubscriptionViewEvent({
-            cta_value: props?.ctaText ?? 'Newsletter',
+            cta_value: props?.ctaText ?? ModalTypes.NEWSLETTER,
             method: props?.method,
           })
         }
