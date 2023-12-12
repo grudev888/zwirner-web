@@ -1,4 +1,3 @@
-import {CardSizes} from '@zwirner/design-system'
 import React from 'react'
 
 import PageBuilder from '@/components/pageBuilder'
@@ -27,7 +26,6 @@ export const PaginationPage = ({
   const dzGridPageBuilder = transformDataToGrid({
     data: exhibitions ?? [],
     innerComponentType: 'dzCard',
-    cardSize: CardSizes['4col'],
     gridProps: {
       itemsPerRow: 3,
       wrap: false,
