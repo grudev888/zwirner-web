@@ -7,3 +7,4 @@ pnpm-lock.yaml
 vercel.json
 public/styles
 .lighthouseci/
+playwright-report/
