@@ -8,7 +8,7 @@ interface PageContainerProps {
   data: any
 }
 
-const ArtistAvailableWorksPageContainer = ({data: queryData}: PageContainerProps) => {
+const ArtistAvailableArtworksPageContainer = ({data: queryData}: PageContainerProps) => {
   const [data] = queryData ?? []
 
   const {artist, availableWorksSubpage} = data ?? {}
@@ -32,4 +32,4 @@ const ArtistAvailableWorksPageContainer = ({data: queryData}: PageContainerProps
   )
 }
 
-export default ArtistAvailableWorksPageContainer
+export default ArtistAvailableArtworksPageContainer

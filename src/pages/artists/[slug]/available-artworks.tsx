@@ -3,7 +3,7 @@ import {type GetStaticPropsContext, InferGetStaticPropsType} from 'next'
 import {SEOComponent} from '@/common/components/seo/seo'
 import {DRAFT_MODE_SANITY_READ_TOKEN_ERROR} from '@/common/constants/errorMessages'
 import {ARTISTS_SECTION} from '@/common/constants/gtmPageConstants'
-import ArtistAvailableWorksPageContainer from '@/components/containers/pages/artists/available-works/index'
+import ArtistAvailableArtworksPageContainer from '@/components/containers/pages/artists/available-artworks/index'
 import PreviewPage from '@/components/containers/previews/pagePreview'
 import {getClient, readToken} from '@/sanity/client'
 import {availableArtworksDataByArtistSlug} from '@/sanity/queries/availableArtworks.queries'
@@ -28,7 +28,7 @@ export default function AvailableWorksPage({
         query={availableArtworksDataByArtistSlug}
         seo={seo}
         params={queryParams}
-        Container={ArtistAvailableWorksPageContainer}
+        Container={ArtistAvailableArtworksPageContainer}
         token={token}
       />
     )
@@ -36,7 +36,7 @@ export default function AvailableWorksPage({
   return (
     <>
       <SEOComponent data={seo} />
-      <ArtistAvailableWorksPageContainer data={data} />
+      <ArtistAvailableArtworksPageContainer data={data} />
     </>
   )
 }

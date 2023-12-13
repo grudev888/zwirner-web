@@ -10,6 +10,7 @@ import {useRouter} from 'next/router'
 import {useMemo} from 'react'
 
 import {
+  ARTISTS_AVAILABLE_WORKS_URL,
   ARTISTS_URL,
   AVAILABLE_WORKS,
   BOOKS_URL,
@@ -199,7 +200,7 @@ export const ArtistDetailContainer = ({data}: ArtistsContainerProps) => {
                     },
                     linkCTA: {
                       text: EXPLORE_AVAILABLE_WORKS,
-                      url: `${ARTISTS_URL}/${router.query.slug}/available-works`,
+                      url: `${ARTISTS_URL}/${router.query.slug}${ARTISTS_AVAILABLE_WORKS_URL}`,
                     },
                   }}
                 />
