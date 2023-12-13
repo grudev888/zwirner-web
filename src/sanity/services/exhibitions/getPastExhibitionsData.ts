@@ -43,7 +43,9 @@ export const formatPastExhibitionYears = (
   years: NonNullable<Awaited<ReturnType<typeof getAllPastExhibitionYears>>>
 ) => {
   const recordsWithEndDate = years.filter((item) => item.endDate) as FilteredYear[]
-  const yearsWithExhibitions = recordsWithEndDate.map(({endDate}) => getYear(new Date(endDate)))
+  const yearsWithExhibitions = recordsWithEndDate.map(({endDate}) =>
+    getYear(new Date(`${endDate} EST`))
+  )
   return Array.from(new Set(yearsWithExhibitions))
 }
 

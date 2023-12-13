@@ -30,7 +30,7 @@ export const pastExhibitionsPageData = groq`
 
 export const pastExhibitions = groq`
 *[_type == "exhibitionPage" && defined(endDate) &&
-    (dateTime(now())>dateTime(string(endDate)+'T00:00:00.000Z'))
+    (dateTime(now())>dateTime(string(endDate)+'T23:59:59.000Z'))
   ] | order(endDate desc)
 `
 
@@ -63,14 +63,14 @@ function getQueryWithYearFilter(strings: TemplateStringsArray, ...rest: any[]) {
   // endDate must be between Jan 01 and Dec 31 of the selected year
   const filters = year
     ? ` && (
-          dateTime(string('${year}-01-01T00:00:00.000Z')) <= dateTime(string(endDate)+'T00:00:00.000Z')
-          && dateTime(string(endDate)+'T00:00:00.000Z') <= dateTime(string('${year}-12-31T00:00:00.000Z'))
+          dateTime(string('${year}-01-01T00:00:00.000Z')) <= dateTime(string(endDate)+'T23:59:59.000Z')
+          && dateTime(string(endDate)+'T23:59:59.000Z') <= dateTime(string('${year}-12-31T00:00:00.000Z'))
         )`
     : ''
 
   const query = groq`
   *[_type == "exhibitionPage" && defined(endDate) &&
-      (dateTime(now())>dateTime(string(endDate)+'T00:00:00.000Z'))
+      (dateTime(now())>dateTime(string(endDate)+'T23:59:59.000Z'))
       ${filters}
     ] | order(endDate desc)
   `

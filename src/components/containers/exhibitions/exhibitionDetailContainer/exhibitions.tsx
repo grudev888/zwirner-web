@@ -9,10 +9,8 @@ import {
   EXPLORE,
   INSTALLATION_VIEWS,
 } from '@/common/constants/commonCopies'
-import {
-  formatDateRange,
-  getExhibitionState,
-} from '@/components/containers/exhibitions/exhibitionsLandingContainer/utils'
+import {fromToDatesText} from '@/common/utilsMappers/date.mapper'
+import {getExhibitionState} from '@/components/containers/exhibitions/exhibitionsLandingContainer/utils'
 import {
   createInquireModalExhibitionProps,
   useOpenInquiryDispatch,
@@ -55,7 +53,7 @@ export const ExhibitionsContainer = ({data: initialData}: Props) => {
     ...initialData,
     location: initialData.locations?.[0],
     exhibitionState: getExhibitionState(initialData),
-    exhibitionDateRangeText: formatDateRange(startDate, endDate),
+    exhibitionDateRangeText: fromToDatesText(startDate, endDate),
   }
 
   return data ? (

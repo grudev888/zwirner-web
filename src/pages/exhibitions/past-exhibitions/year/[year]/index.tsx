@@ -4,6 +4,7 @@ import {SEOComponent} from '@/common/components/seo/seo'
 import {PAST_EXHIBITIONS_URL} from '@/common/constants/commonCopies'
 import {DRAFT_MODE_SANITY_READ_TOKEN_ERROR} from '@/common/constants/errorMessages'
 import {EXHIBITIONS_SECTION} from '@/common/constants/gtmPageConstants'
+import {getCurrentYear} from '@/common/utilsMappers/date.mapper'
 import {PastExhibitionsContainer} from '@/components/containers/exhibitions/pastExhibitionsContainer'
 import PreviewPage from '@/components/containers/previews/pagePreview'
 import {getClient, readToken} from '@/sanity/client'
@@ -49,7 +50,7 @@ export const getStaticPaths = async () => {
     ?.filter((item) => item.endDate)
     ?.map(({endDate}) => ({
       params: {
-        year: endDate ? new Date(endDate).getFullYear().toString() : '',
+        year: endDate ? getCurrentYear(endDate).toString() : '',
       },
     }))
   return {

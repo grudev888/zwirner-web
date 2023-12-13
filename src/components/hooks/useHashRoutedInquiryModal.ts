@@ -9,6 +9,7 @@ import {
   gtmInquiryFormSubmitEvent,
 } from '@/common/utils/gtm/gtmInquiryFormEvent'
 import {captchaInitObserver, removeCaptchaObserver} from '@/common/utils/recaptcha/observer'
+import {getNewYorkTimestamp} from '@/common/utilsMappers/date.mapper'
 import {InquireModalProps} from '@/components/hooks/useOpenInquiryDispatch'
 import {useLocation} from '@/forms/api/useLocation'
 import {builder} from '@/sanity/imageBuilder'
@@ -139,7 +140,7 @@ export const useHashRoutedInquiryModal = () => {
       ...formValues,
       id: createRandomUUID(),
       currentUrl: window.location.href,
-      timestamp: new Date().getTime(),
+      timestamp: (getNewYorkTimestamp({getDate: true}) as Date).getTime(),
       formId: FORM_ID_INQUIRY,
       artwork: artworkToPayloadAdapter(artwork, ctaText),
       ctaText: ctaText || 'inquire',

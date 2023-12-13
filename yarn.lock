@@ -4115,6 +4115,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"date-fns-tz@npm:^2.0.0":
+  version: 2.0.0
+  resolution: "date-fns-tz@npm:2.0.0"
+  peerDependencies:
+    date-fns: ">=2.0.0"
+  checksum: a6553603a9d26dd9669326c99a58a2335ac550bc060c74b86a5ad9e1de73c9d4e3e5236f0f552f990e616e4e8dcc2b6a637913a04d2e04396e6a9f8ae83c73da
+  languageName: node
+  linkType: hard
+
 "date-fns@npm:^2.30.0":
   version: 2.30.0
   resolution: "date-fns@npm:2.30.0"
@@ -11680,6 +11689,7 @@ __metadata:
     clsx: ^2.0.0
     cross-env: ^7.0.3
     date-fns: ^2.30.0
+    date-fns-tz: ^2.0.0
     del-cli: ^5.1.0
     eslint: ^8.53.0
     eslint-config-next: 13.5.6
