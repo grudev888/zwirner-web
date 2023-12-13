@@ -8,6 +8,7 @@ import useSWRImmutable from 'swr/immutable'
 import CartPanel from '@/components/containers/cartPanel'
 import LinkClickListener from '@/components/containers/LinkClickListener/LinkClickListener'
 import ModalTriggerListener from '@/components/containers/modalTriggerListener/modalTriggerListener'
+import {useImagePreload} from '@/components/hooks/useImagePreload'
 import {useTimeDelayedRoutePopup} from '@/components/hooks/useTimeDelayedRoutePopup'
 import {allCampaigns} from '@/sanity/queries/popups/allCampaigns'
 import {getAllCampaigns, getPopupPerPage} from '@/sanity/services/popups/getAllCampaigns'
@@ -30,6 +31,8 @@ const Layout = ({children, layoutData, pageType}: LayoutProps) => {
   const popupForPage = getPopupPerPage({url: router.asPath, pageType, popupsPerPages})
   useTimeDelayedRoutePopup(() => openPopupCb(popupForPage), popupForPage?.triggers.triggerTime)
   const {totalQuantity} = useCart()
+  useImagePreload(popupForPage?.image?.src)
+
   return (
     <>
       <DzHeader
