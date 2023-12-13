@@ -3,7 +3,6 @@ import {
   DzColumn,
   DzSection,
   DzTitleMoleculeTypes,
-  TITLE_SIZES,
   TITLE_TYPES,
 } from '@zwirner/design-system'
 import dynamic from 'next/dynamic'
@@ -114,9 +113,6 @@ export const ArtistDetailContainer = ({data}: ArtistsContainerProps) => {
               title: GUIDE,
               titleProps: {
                 titleType: TITLE_TYPES.H2,
-                titleSize: TITLE_SIZES.LG,
-                subtitleSize: TITLE_SIZES.LG,
-                subtitleType: TITLE_TYPES.P,
               },
               linkCTA: {
                 text: EXPLORE_GUIDE,
@@ -179,9 +175,6 @@ export const ArtistDetailContainer = ({data}: ArtistsContainerProps) => {
                 title: SURVEY,
                 titleProps: {
                   titleType: TITLE_TYPES.H2,
-                  titleSize: TITLE_SIZES.LG,
-                  subtitleSize: TITLE_SIZES.LG,
-                  subtitleType: TITLE_TYPES.P,
                 },
                 linkCTA: {
                   text: EXPLORE_ALL_ARTWORKS,
@@ -203,9 +196,6 @@ export const ArtistDetailContainer = ({data}: ArtistsContainerProps) => {
                     title: AVAILABLE_WORKS,
                     titleProps: {
                       titleType: TITLE_TYPES.H2,
-                      titleSize: TITLE_SIZES.LG,
-                      subtitleSize: TITLE_SIZES.LG,
-                      subtitleType: TITLE_TYPES.P,
                     },
                     linkCTA: {
                       text: EXPLORE_AVAILABLE_WORKS,
@@ -232,9 +222,6 @@ export const ArtistDetailContainer = ({data}: ArtistsContainerProps) => {
                 title: EXHIBITIONS,
                 titleProps: {
                   titleType: TITLE_TYPES.H2,
-                  titleSize: TITLE_SIZES.LG,
-                  subtitleSize: TITLE_SIZES.LG,
-                  subtitleType: TITLE_TYPES.P,
                 },
                 customClass: 'mb-5 md:mb-10',
               }}
@@ -261,9 +248,6 @@ export const ArtistDetailContainer = ({data}: ArtistsContainerProps) => {
                 title: DAVID_ZWIRNER_BOOKS,
                 titleProps: {
                   titleType: TITLE_TYPES.H2,
-                  titleSize: TITLE_SIZES.LG,
-                  subtitleSize: TITLE_SIZES.LG,
-                  subtitleType: TITLE_TYPES.P,
                 },
                 linkCTA: {
                   text: EXPLORE_BOOKS,
