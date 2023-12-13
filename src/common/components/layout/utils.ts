@@ -16,7 +16,7 @@ export const openPopupCb = (data?: PopUpInfo) => {
       title: data.title,
       subtitle: data.description,
       image: data.image,
-      primaryCTA: data.primaryCTA,
+      cta_value: data.primaryCTA,
     }
     window.document.dispatchEvent(
       ModalTriggerEvent(ModalTypes.NEWSLETTER, parsedData, ModalTriggerTypes.POPUP)

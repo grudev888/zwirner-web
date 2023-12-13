@@ -1,6 +1,7 @@
 import {useEffect} from 'react'
 
 import {gtmInquiryFormViewEvent} from '@/common/utils/gtm/gtmInquiryFormEvent'
+import {gtmPopupViewedEvent, MethodTypes, TypeTypes} from '@/common/utils/gtm/gtmPopupEvent'
 import {useNewsletterFormModal} from '@/components/containers/modalTriggerListener/useNewsletterFormModal'
 import {
   PromoModalProps,
@@ -35,6 +36,13 @@ export const ModalTriggerListener = () => {
             method: props?.method,
           })
         }
+        if (triggerType === ModalTriggerTypes.POPUP) {
+          gtmPopupViewedEvent({
+            cta_value: props?.ctaText ?? ModalTypes.NEWSLETTER,
+            method: MethodTypes.CENTER,
+            type: TypeTypes.FORM,
+          })
+        }
         openNewsletterModal(props)
       },
       [ModalTypes.INQUIRE]: (props: any = {}, triggerType: ModalTriggerTypes) => {
@@ -44,10 +52,24 @@ export const ModalTriggerListener = () => {
         if (triggerType === ModalTriggerTypes.CTA) {
           gtmInquiryFormViewEvent(inquireModalProps)
         }
+        if (triggerType === ModalTriggerTypes.POPUP) {
+          gtmPopupViewedEvent({
+            cta_value: props?.ctaText ?? ModalTypes.INQUIRE,
+            method: MethodTypes.CENTER,
+            type: TypeTypes.FORM,
+          })
+        }
         openInquireModal({inquireModalProps, options: {useAnchor}})
       },
-      [ModalTypes.PROMO]: (props: PromoModalProps) => {
+      [ModalTypes.PROMO]: (props: PromoModalProps, triggerType: ModalTriggerTypes) => {
         openPromoModal(props)
+        if (triggerType === ModalTriggerTypes.POPUP) {
+          gtmPopupViewedEvent({
+            cta_value: ModalTypes.PROMO,
+            method: MethodTypes.CENTER,
+            type: TypeTypes.FORM,
+          })
+        }
       },
     }
 
