@@ -132,8 +132,8 @@ export const ArtistDetailContainer = ({data}: ArtistsContainerProps) => {
         sections={[
           {text: 'Survey', id: 'survey', hidden: !showCarouselSection(surveyToShow)},
           {
-            text: 'Available Works',
-            id: 'available-works',
+            text: AVAILABLE_WORKS,
+            id: 'available-artworks',
             hidden: !showPageBuilderSection(availableWorks),
           },
           {
@@ -186,7 +186,7 @@ export const ArtistDetailContainer = ({data}: ArtistsContainerProps) => {
           </DzSection>
         ) : null}
         {showPageBuilderSection(availableWorks) ? (
-          <DzSection id="available-works">
+          <DzSection id="available-artworks">
             {!hideAWTitle ? (
               <>
                 <DzTitleMolecule
@@ -258,7 +258,7 @@ export const ArtistDetailContainer = ({data}: ArtistsContainerProps) => {
             <PageBuilder components={[books]} />
           </DzSection>
         ) : null}
-        {/* Page Builder INTERSTITIAL for available works*/}
+        {/* Page Builder INTERSTITIAL for available artworks*/}
         {showInterstitialSection(interstitial) ? <PageBuilder components={[interstitial]} /> : null}
       </FullWidthFlexCol>
     </DzColumn>
