@@ -1,6 +1,5 @@
 import {type GetServerSidePropsContext} from 'next/types'
 
-import {env} from '@/env.mjs'
 import {getAllArtworkSlugsSitemap} from '@/sanity/services/sitemaps/getAllArtworkSlugsSitemap'
 import {generateXMLUrls} from '@/utils/string/generateXMLUrls'
 
@@ -22,19 +21,6 @@ function SiteMap() {
 }
 
 export async function getServerSideProps({res}: GetServerSidePropsContext) {
-  if (
-    env.NEXT_PUBLIC_VERCEL_ENV !== 'production' &&
-    env.NEXT_PUBLIC_SANITY_DATASET !== 'production-v1'
-  ) {
-    res.setHeader('Content-Type', 'text/xml')
-    // we send the XML to the browser
-    res.write(generateSiteMap(''))
-    res.end()
-
-    return {
-      props: {},
-    }
-  }
   // We make an API call to gather the URLs for our site
   // artwork details
   const artworks = await getAllArtworkSlugsSitemap()
