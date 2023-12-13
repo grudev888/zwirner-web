@@ -8,7 +8,7 @@ import {
   ARTISTS_SURVEY_URL,
 } from '@/common/constants/commonCopies'
 import {getAllArtistPageSlugsSitemap} from '@/sanity/services/sitemaps/getAllArtistPageSlugsSitemap'
-import {getAllAvailableWorksPageSlugsSitemap} from '@/sanity/services/sitemaps/getAllAvailableWorksPageSlugsSitemap'
+import {getAllAvailableArtworksPageSlugsSitemap} from '@/sanity/services/sitemaps/getAllAvailableWorksPageSlugsSitemap'
 import {getAllExhibitionsPageSlugsSitemap} from '@/sanity/services/sitemaps/getAllExhibitionsPageSlugsSitemap'
 import {getAllGuidePageSlugsSitemap} from '@/sanity/services/sitemaps/getAllGuidePageSlugsSitemap'
 import {getAllPressPageSlugsSitemap} from '@/sanity/services/sitemaps/getAllPressPageSlugsSitemap'
@@ -26,7 +26,7 @@ import {generateXMLUrls} from '@/utils/string/generateXMLUrls'
   /artists/[slug]/guide
   /artists/[slug]/press
   /artists/[slug]/exhibitions
-  /artists/[slug]/available-works
+  /artists/[slug]/available-artworks
 */
 
 function generateSiteMap(...args: string[]) {
@@ -71,9 +71,9 @@ export async function getServerSideProps({res}: GetServerSidePropsContext) {
   const exhibitionsDetailsList = exhibitions.map(({params}) => ({
     params: {...params, slug: `${params.slug}${ARTISTS_EXHIBITIONS_URL}`},
   }))
-  // artists/[slug]/available-works
-  const availableWorks = await getAllAvailableWorksPageSlugsSitemap()
-  const availableWorksDetailsList = availableWorks.map(({params}) => ({
+  // artists/[slug]/available-artworks
+  const availableArtworks = await getAllAvailableArtworksPageSlugsSitemap()
+  const availableArtworksDetailsList = availableArtworks.map(({params}) => ({
     params: {...params, slug: `${params.slug}${ARTISTS_AVAILABLE_WORKS_URL}`},
   }))
 
@@ -84,7 +84,7 @@ export async function getServerSideProps({res}: GetServerSidePropsContext) {
   const guidesXMLUrls = generateXMLUrls(guidesDetailsList)
   const pressXMLUrls = generateXMLUrls(pressDetailsList)
   const exhibitionsXMLUrls = generateXMLUrls(exhibitionsDetailsList)
-  const availableWorksXMLUrls = generateXMLUrls(availableWorksDetailsList)
+  const availableWorksXMLUrls = generateXMLUrls(availableArtworksDetailsList)
 
   const sitemap = generateSiteMap(
     artistListingXMLUrls,

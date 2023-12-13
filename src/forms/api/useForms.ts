@@ -1,6 +1,7 @@
 import useSWR from 'swr'
 
 import {client} from '@/common/api'
+import {getNewYorkTimestamp} from '@/common/utilsMappers/date.mapper'
 import {env} from '@/env.mjs'
 
 import {IFormInput, ILocation} from '../types'
@@ -16,7 +17,7 @@ export const useForms = () => {
   const addOrUpdate = async (form: IFormInput & {location: ILocation}) =>
     await client.post(BASE_URL('forms/submissions'), {
       ...form,
-      timestamp: new Date().toISOString(),
+      timestamp: (getNewYorkTimestamp({getDate: true}) as Date).toISOString(),
     })
 
   return {data, error, isLoading, addOrUpdate}

@@ -87,22 +87,3 @@ export const locationTitleMapper = (data: any) => {
     titleType: TITLE_TYPES.P,
   }
 }
-
-export const articleDatesMapper = (date: string | null, title: string) => {
-  if (!date) return null
-
-  const parsedDate = new Date(`${date} EST`)
-
-  const dateFormatter = new Intl.DateTimeFormat('en-US', {
-    timeZone: 'America/New_York',
-    month: 'long',
-    day: 'numeric',
-    year: 'numeric',
-  })
-
-  return {
-    title,
-    subtitle: dateFormatter.format(parsedDate),
-    titleType: TITLE_TYPES.P,
-  }
-}

@@ -30,7 +30,7 @@ test(`GA4:subscribe event test`, async ({page}) => {
   })
 
   await test.step(`Emit GA4:${GTMUserSubscriptionFormStartedText.event} event when email field is started to insert`, async () => {
-    await page.getByPlaceholder('Enter your Email Address here').fill(TEST_EMAIL)
+    await page.getByPlaceholder('Enter Your Email Address Here').fill(TEST_EMAIL)
     await expect(
       await gtmEvent.getFilteredDataLayer(GTMUserSubscriptionFormStartedText.event, ['event_data'])
     ).toContainEqual({

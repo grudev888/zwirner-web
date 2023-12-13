@@ -10,6 +10,7 @@ import {useRouter} from 'next/router'
 import {useMemo} from 'react'
 
 import {
+  ARTISTS_AVAILABLE_WORKS_URL,
   ARTISTS_URL,
   AVAILABLE_WORKS,
   BOOKS_URL,
@@ -98,7 +99,11 @@ export const ArtistDetailContainer = ({data}: ArtistsContainerProps) => {
 
   const onClickInquire = () => {
     window.document.dispatchEvent(
-      ModalTriggerEvent(ModalTypes.INQUIRE, inquireModalProps, ModalTriggerTypes.CTA)
+      ModalTriggerEvent({
+        modalType: ModalTypes.INQUIRE,
+        props: inquireModalProps,
+        triggerType: ModalTriggerTypes.CTA,
+      })
     )
   }
 
@@ -132,8 +137,8 @@ export const ArtistDetailContainer = ({data}: ArtistsContainerProps) => {
         sections={[
           {text: 'Survey', id: 'survey', hidden: !showCarouselSection(surveyToShow)},
           {
-            text: 'Available Works',
-            id: 'available-works',
+            text: AVAILABLE_WORKS,
+            id: 'available-artworks',
             hidden: !showPageBuilderSection(availableWorks),
           },
           {
@@ -186,7 +191,7 @@ export const ArtistDetailContainer = ({data}: ArtistsContainerProps) => {
           </DzSection>
         ) : null}
         {showPageBuilderSection(availableWorks) ? (
-          <DzSection id="available-works">
+          <DzSection id="available-artworks">
             {!hideAWTitle ? (
               <>
                 <DzTitleMolecule
@@ -199,7 +204,7 @@ export const ArtistDetailContainer = ({data}: ArtistsContainerProps) => {
                     },
                     linkCTA: {
                       text: EXPLORE_AVAILABLE_WORKS,
-                      url: `${ARTISTS_URL}/${router.query.slug}/available-works`,
+                      url: `${ARTISTS_URL}/${router.query.slug}${ARTISTS_AVAILABLE_WORKS_URL}`,
                     },
                   }}
                 />
@@ -258,7 +263,7 @@ export const ArtistDetailContainer = ({data}: ArtistsContainerProps) => {
             <PageBuilder components={[books]} />
           </DzSection>
         ) : null}
-        {/* Page Builder INTERSTITIAL for available works*/}
+        {/* Page Builder INTERSTITIAL for available artworks*/}
         {showInterstitialSection(interstitial) ? <PageBuilder components={[interstitial]} /> : null}
       </FullWidthFlexCol>
     </DzColumn>

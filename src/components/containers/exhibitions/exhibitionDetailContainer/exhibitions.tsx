@@ -9,10 +9,8 @@ import {
   EXPLORE,
   INSTALLATION_VIEWS,
 } from '@/common/constants/commonCopies'
-import {
-  formatDateRange,
-  getExhibitionState,
-} from '@/components/containers/exhibitions/exhibitionsLandingContainer/utils'
+import {fromToDatesText} from '@/common/utilsMappers/date.mapper'
+import {getExhibitionState} from '@/components/containers/exhibitions/exhibitionsLandingContainer/utils'
 import {
   createInquireModalExhibitionProps,
   useOpenInquiryDispatch,
@@ -40,7 +38,11 @@ export const ExhibitionsContainer = ({data: initialData}: Props) => {
   const inquireModalProps = createInquireModalExhibitionProps(initialData)
   const onClickInquire = () => {
     window.document.dispatchEvent(
-      ModalTriggerEvent(ModalTypes.INQUIRE, inquireModalProps, ModalTriggerTypes.CTA)
+      ModalTriggerEvent({
+        modalType: ModalTypes.INQUIRE,
+        props: inquireModalProps,
+        triggerType: ModalTriggerTypes.CTA,
+      })
     )
   }
   useOpenInquiryDispatch(inquireModalProps)
@@ -55,7 +57,7 @@ export const ExhibitionsContainer = ({data: initialData}: Props) => {
     ...initialData,
     location: initialData.locations?.[0],
     exhibitionState: getExhibitionState(initialData),
-    exhibitionDateRangeText: formatDateRange(startDate, endDate),
+    exhibitionDateRangeText: fromToDatesText(startDate, endDate),
   }
 
   return data ? (

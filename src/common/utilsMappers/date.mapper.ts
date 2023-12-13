@@ -1,6 +1,9 @@
-import {format, isValid, isWithinInterval, parseISO} from 'date-fns'
+import {endOfDay, format, isValid, parseISO, startOfDay} from 'date-fns'
+import {utcToZonedTime} from 'date-fns-tz'
 
 import {COMING_SOON, NOW_OPEN} from '@/common/constants/commonCopies'
+import {newYorkTimeZone} from '@/common/constants/timezone'
+import {isExhibitionOpen} from '@/components/containers/exhibitions/exhibitionsLandingContainer/utils'
 import {ExhibitionPageStatus} from '@/sanity/types'
 
 interface DateRange {
@@ -12,17 +15,34 @@ interface DateSelectionMapperProps {
   dateRange?: DateRange
   approximate?: string
 }
+type StampOptions = {
+  getDate?: boolean
+}
+
+export const getNewYorkTimestamp = ({getDate = false}: StampOptions): Date | string => {
+  const currentTimeInNY = utcToZonedTime(new Date(), newYorkTimeZone)
+  if (getDate) return currentTimeInNY
+  return format(currentTimeInNY, 'EEE MMM dd yyyy HH:mm:ss zzz')
+}
+
+export const getCurrentYear = (date: string | number | Date = new Date()): number => {
+  const dateInNY = utcToZonedTime(date, newYorkTimeZone)
+  const currentYear = dateInNY.getFullYear()
+  return currentYear
+}
+
 export const dateSelectionArtworkMapper = (data: DateSelectionMapperProps) => {
   if (typeof data === 'string') {
     return {
-      year: new Date(data).getFullYear(),
+      year: getCurrentYear(),
     }
   }
+
   const {year, dateRange, approximate} = data ?? {}
   const {from, to} = dateRange ?? {}
-  const fromYear = from ? new Date(from).getFullYear() : ''
-  const toYear = to ? new Date(to).getFullYear() : ''
-  const approximateParse = approximate ? new Date(approximate).getFullYear() : ''
+  const fromYear = from ? getCurrentYear(from) : ''
+  const toYear = to ? getCurrentYear(to) : ''
+  const approximateParse = approximate ? getCurrentYear(approximate) : ''
   const approximateYear = approximateParse && !isNaN(approximateParse) ? approximateParse : ''
   const rangeYear = fromYear === toYear ? fromYear : `${fromYear} - ${toYear}`
   const selectedYear = year ?? approximateYear ?? (fromYear && toYear ? rangeYear : '')
@@ -32,26 +52,30 @@ export const dateSelectionArtworkMapper = (data: DateSelectionMapperProps) => {
   }
 }
 
-export const fromToDatesText = (from: string, to: string, includeYear: boolean = false) => {
-  const fromDate = new Date(from)
-  const toDate = new Date(to)
-  const shareMonth = fromDate.getMonth() === toDate.getMonth()
-  const parsedYear = format(new Date(from ?? to), 'yyyy')
-  const fromText = format(fromDate, 'dd MMMM')
-  const toText = shareMonth ? format(toDate, 'dd') : format(toDate, 'dd MMMM')
-  const yearText = includeYear ? `, ${parsedYear}` : ''
-  return `${fromText}—${toText}${yearText}`
+export const fromToDatesText = (startDateISO: string, endDateISO: string): string => {
+  const startDateNY = startOfDay(utcToZonedTime(parseISO(startDateISO), newYorkTimeZone))
+  const endDateNY = endOfDay(utcToZonedTime(parseISO(endDateISO), newYorkTimeZone))
+
+  const monthFormat = 'MMMM'
+  const monthAndDayFormat = 'MMMM d'
+  const yearFormat = 'yyyy'
+  const startYear = format(startDateNY, yearFormat)
+  const startMonthAndDay = format(startDateNY, monthAndDayFormat)
+
+  const endDateFormatted =
+    format(startDateNY, monthFormat) === format(endDateNY, monthFormat)
+      ? format(endDateNY, 'd')
+      : format(endDateNY, monthAndDayFormat)
+
+  return `${startMonthAndDay}—${endDateFormatted}, ${startYear}`
 }
 
-export const mapSingleDateFormat = (dateSelection: any) => {
+export const mapSingleDateFormat = (dateSelection: string | null): string => {
   if (!dateSelection) return ''
-  const dateFormatter = new Intl.DateTimeFormat('en-US', {
-    timeZone: 'America/New_York',
-    month: 'long',
-    day: 'numeric',
-    year: 'numeric',
-  })
-  return dateFormatter.format(new Date(dateSelection.replace(/-/g, '/')))
+  const dateInNY = utcToZonedTime(parseISO(dateSelection), newYorkTimeZone)
+  const formattedDate = format(dateInNY, 'MMMM d, yyyy')
+
+  return formattedDate
 }
 
 export const mapExhibitionStatus = (exhibition: any) => {
@@ -65,27 +89,27 @@ export const mapExhibitionStatus = (exhibition: any) => {
     }
   }
 
-  const startDateParsed = new Date(startDate)
-  const endDateParsed = new Date(endDate)
+  const startDateInNY = startOfDay(utcToZonedTime(parseISO(startDate), newYorkTimeZone))
+  const endDateInNY = endOfDay(utcToZonedTime(parseISO(endDate), newYorkTimeZone))
+  const currentTimeInNY = utcToZonedTime(new Date(), newYorkTimeZone)
+
   const startDateObj = parseISO(startDate)
   const endDateObj = parseISO(endDate)
   const datesText = fromToDatesText(startDate, endDate)
 
-  const currentDate = new Date()
-
   if (isValid(startDateObj) && isValid(endDateObj)) {
-    const isOpen = isWithinInterval(new Date(), {start: startDateObj, end: endDateObj})
-    const isComingSoon = currentDate.getTime() < startDateParsed.getTime()
-    const isClosed = currentDate.getTime() > endDateParsed.getTime()
+    const isOpen = isExhibitionOpen(exhibition)
+    const isComingSoon = currentTimeInNY.getTime() < startDateInNY.getTime()
+    const isClosed = currentTimeInNY.getTime() > endDateInNY.getTime()
 
     let dateLabel = ''
 
     if (
-      currentDate.getTime() <= endDateParsed.getTime() &&
-      currentDate.getTime() >= startDateParsed.getTime()
+      currentTimeInNY.getTime() <= endDateInNY.getTime() &&
+      currentTimeInNY.getTime() >= startDateInNY.getTime()
     ) {
       dateLabel = NOW_OPEN
-    } else if (currentDate.getTime() < startDateParsed.getTime()) {
+    } else if (currentTimeInNY.getTime() < startDateInNY.getTime()) {
       dateLabel = COMING_SOON
     }
     if (status) {
@@ -113,4 +137,10 @@ export const mapExhibitionStatus = (exhibition: any) => {
     isComingSoon: false,
     status: datesText,
   }
+}
+
+export const articleDatesMapper = (date: string | null) => {
+  if (!date) return null
+  const currentTimeInNY = utcToZonedTime(new Date(`${date} EST`), newYorkTimeZone)
+  return format(currentTimeInNY, 'MMMM d, yyyy')
 }

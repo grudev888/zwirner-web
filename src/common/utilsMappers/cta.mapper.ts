@@ -1,4 +1,9 @@
-import {BUTTON_VARIANTS, ButtonModes, INQUIRY_CATEGORIES} from '@zwirner/design-system'
+import {
+  BUTTON_VARIANTS,
+  ButtonModes,
+  INQUIRY_CATEGORIES,
+  matchInternalPath,
+} from '@zwirner/design-system'
 import Router from 'next/router'
 
 import {CTA, CTA_TEXT} from '@/common/constants/cart'
@@ -38,7 +43,11 @@ const handleCTAClick = (action?: ModalTypes, extraProps?: any) => {
         : {}
 
     window.document.dispatchEvent(
-      ModalTriggerEvent(action, {...extraProps, ...modalProps}, ModalTriggerTypes.CTA)
+      ModalTriggerEvent({
+        modalType: action,
+        props: {...extraProps, ...modalProps},
+        triggerType: ModalTriggerTypes.CTA,
+      })
     )
   }
 }
@@ -69,7 +78,11 @@ const handleLink = ({linkedHref, action, blank, downloadDoc, identifier}: any) =
   if (!Router || !linkedHref) return
 
   if (linkInternalContent) {
-    return Router.push(linkedHref)
+    if (matchInternalPath(linkedHref)) {
+      return Router.push(linkedHref)
+    } else {
+      return Router.replace(linkedHref)
+    }
   }
 
   if (

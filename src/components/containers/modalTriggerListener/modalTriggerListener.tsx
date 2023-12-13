@@ -1,4 +1,4 @@
-import {useEffect} from 'react'
+import {useCallback, useEffect} from 'react'
 
 import {gtmInquiryFormViewEvent} from '@/common/utils/gtm/gtmInquiryFormEvent'
 import {
@@ -8,10 +8,7 @@ import {
   TypeTypes,
 } from '@/common/utils/gtm/gtmPopupEvent'
 import {useNewsletterFormModal} from '@/components/containers/modalTriggerListener/useNewsletterFormModal'
-import {
-  PromoModalProps,
-  usePromoModal,
-} from '@/components/containers/modalTriggerListener/usePromoModal'
+import {usePromoModal} from '@/components/containers/modalTriggerListener/usePromoModal'
 import {NewsletterFormModal} from '@/components/forms/newsletterFormModal'
 import {RecaptchaInquireFormModal} from '@/components/forms/recaptchaInquireFormModal'
 import useGtmNewsletterEvent from '@/components/hooks/gtm/useGtmNewsletterEvent'
@@ -19,7 +16,9 @@ import {useHashRoutedInquiryModal} from '@/components/hooks/useHashRoutedInquiry
 import {createInquireModalGeneralProps} from '@/components/hooks/useOpenInquiryDispatch'
 import {DzPromoModal} from '@/components/wrappers/DzPromoModalWrapper'
 import {EVENT_TRIGGER_MODAL, ModalTriggerTypes} from '@/events/ModalTriggerEvent'
+import {PopUpInfo} from '@/sanity/services/popups/getAllCampaigns'
 import {ModalTypes} from '@/sanity/types'
+import {setCookie} from '@/utils/cookies/setCookie'
 
 export const ModalTriggerListener = () => {
   const inquireModalProps = useHashRoutedInquiryModal()
@@ -28,59 +27,73 @@ export const ModalTriggerListener = () => {
   const {gtmNewsletterSubscriptionViewEvent} = useGtmNewsletterEvent()
   const {newsletterFormProps, openNewsletterModal} = useNewsletterFormModal()
   const {promoModalProps, openPromoModal} = usePromoModal()
+  const isModalOpen =
+    inquireModalProps.isOpen || newsletterFormProps.isOpen || promoModalProps?.isOpen
+  const setPopupCookie = (popupInfo: PopUpInfo) => {
+    if (popupInfo && !popupInfo.displayAlways) {
+      setCookie(`${popupInfo.campaignName}-${popupInfo.id}`, popupInfo, {}, popupInfo.daysToExpire)
+    }
+  }
 
-  useEffect(() => {
-    const modalTypesToClickHandlers: Record<
-      string,
-      (props: any, triggerType: ModalTriggerTypes) => void
-    > = {
-      [ModalTypes.NEWSLETTER]: (props, triggerType) => {
-        gtmNewsletterSubscriptionViewEvent({
-          cta_value:
-            triggerType === ModalTriggerTypes.POPUP ? ModalTypes.NEWSLETTER : props?.cta_value,
-          method: triggerType === ModalTriggerTypes.POPUP ? MethodTypes.CENTER : props?.method,
-        })
-        if (triggerType === ModalTriggerTypes.POPUP) {
-          gtmPopupViewedEvent({
-            cta_value: CTA_TEXT.NEWSLETTER,
-            method: MethodTypes.CENTER,
-            type: TypeTypes.FORM,
+  const modalTriggerListener = useCallback(
+    (event: any) => {
+      const {detail} = event ?? {}
+      const {modalType, props, triggerType, popupInfo} = detail ?? {}
+
+      if (isModalOpen) {
+        return
+      }
+
+      switch (modalType) {
+        case ModalTypes.NEWSLETTER:
+          openNewsletterModal(props, triggerType)
+          gtmNewsletterSubscriptionViewEvent({
+            cta_value: props?.ctaText ?? ModalTypes.NEWSLETTER,
+            method: props?.method,
           })
-        }
-        openNewsletterModal(props, triggerType)
-      },
-      [ModalTypes.INQUIRE]: (props: any = {}, triggerType: ModalTriggerTypes) => {
-        const inquireModalProps = props || generalInquireProps
-        const {useAnchor} = props ?? {}
+          if (triggerType === ModalTriggerTypes.POPUP) {
+            gtmPopupViewedEvent({
+              cta_value: CTA_TEXT.NEWSLETTER,
+              method: MethodTypes.CENTER,
+              type: TypeTypes.FORM,
+            })
+          }
+          setPopupCookie(popupInfo)
+          break
 
-        if (triggerType === ModalTriggerTypes.CTA) {
+        case ModalTypes.INQUIRE:
+          const inquireModalProps = props || generalInquireProps
+          const {useAnchor} = props ?? {}
+
+          openInquireModal({inquireModalProps, options: {useAnchor}})
           gtmInquiryFormViewEvent(inquireModalProps)
-        }
-        openInquireModal({inquireModalProps, options: {useAnchor}})
-      },
-      [ModalTypes.PROMO]: (props: PromoModalProps, triggerType: ModalTriggerTypes) => {
-        openPromoModal(props)
-        if (triggerType === ModalTriggerTypes.POPUP) {
+          setPopupCookie(popupInfo)
+          break
+
+        case ModalTypes.PROMO:
+          openPromoModal(props)
           gtmPopupViewedEvent({
             cta_value: props.linkText,
             method: MethodTypes.CENTER,
             type: TypeTypes.NON_FORM,
           })
-        }
-      },
-    }
+          setPopupCookie(popupInfo)
+          break
+      }
+    },
+    [
+      generalInquireProps,
+      gtmNewsletterSubscriptionViewEvent,
+      isModalOpen,
+      openInquireModal,
+      openNewsletterModal,
+      openPromoModal,
+    ]
+  )
 
-    const modalTriggerListener = (event: any) => {
-      const {detail} = event ?? {}
-      const {modalType, props, triggerType} = detail ?? {}
-
-      modalTypesToClickHandlers[modalType as keyof typeof modalTypesToClickHandlers]?.(
-        props,
-        triggerType
-      )
-    }
-
+  useEffect(() => {
     if (typeof window !== undefined) {
+      window.document.removeEventListener(EVENT_TRIGGER_MODAL, modalTriggerListener)
       window.document.addEventListener(EVENT_TRIGGER_MODAL, modalTriggerListener)
     }
 
@@ -89,8 +102,7 @@ export const ModalTriggerListener = () => {
         window.document.removeEventListener(EVENT_TRIGGER_MODAL, modalTriggerListener)
       }
     }
-    // eslint-disable-next-line
-  }, [])
+  }, [modalTriggerListener])
 
   return (
     <>

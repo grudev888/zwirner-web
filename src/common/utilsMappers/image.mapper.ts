@@ -44,7 +44,7 @@ export const imageMapper = (data: any) => {
   } = data ?? {}
 
   const [mainPicture] = photos ?? []
-  const {asset, alt, image, caption, url} = mainPicture ?? heroMedia ?? sourceImage ?? {}
+  const {asset, alt, image, caption, url, altText} = mainPicture ?? heroMedia ?? sourceImage ?? {}
   const {alt: imageBuilderAlt, asset: imageBuilderAsset, caption: imageBuilderCaption} = image ?? {}
   const pictureAsset = imageBuilderAsset ?? srcAsset ?? asset
   const imgCaption = imageBuilderCaption ?? captionAsset ?? caption
@@ -52,7 +52,7 @@ export const imageMapper = (data: any) => {
   const imgAlt = imageBuilderAlt ?? altAsset ?? alt
 
   return {
-    alt: imgAlt,
+    alt: altText ?? imgAlt,
     src: pictureAsset ? imgSrc : url,
     caption: imgCaption,
   }
@@ -72,6 +72,7 @@ export const getImageMedia = ({
       : null
   const {src, alt, caption} = imageMapper(mediaOverrideSource ?? data)
   const {backgroundColor} = override ?? {}
+  if (!src) return {}
   return {
     media: {
       url,

@@ -42,7 +42,11 @@ export const InstallationViewsContainer = ({data}: InstallationViewsContainerPro
   const inquireModalProps = createInquireModalExhibitionProps(data)
   const onClickInquire = () => {
     window.document.dispatchEvent(
-      ModalTriggerEvent(ModalTypes.INQUIRE, inquireModalProps, ModalTriggerTypes.CTA)
+      ModalTriggerEvent({
+        modalType: ModalTypes.INQUIRE,
+        props: inquireModalProps,
+        triggerType: ModalTriggerTypes.CTA,
+      })
     )
   }
   useOpenInquiryDispatch(inquireModalProps)

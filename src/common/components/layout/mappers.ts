@@ -1,3 +1,5 @@
+import {getCurrentYear} from '@/common/utilsMappers/date.mapper'
+
 const emptyHeaderItems = {items: []}
 const emptySocialMedia = {
   weChat: '',
@@ -7,7 +9,7 @@ const emptySocialMedia = {
 }
 const defaultFooterCopies = {
   copies: {
-    rights: `David Zwirner - All rights reserved ${new Date().getFullYear()}`,
+    rights: `David Zwirner - All rights reserved ${getCurrentYear()}`,
   },
 }
 

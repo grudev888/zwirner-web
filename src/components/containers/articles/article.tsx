@@ -12,6 +12,7 @@ import {
 import cn from 'classnames'
 
 import {DOWNLOAD_PRESS_RELEASE} from '@/common/constants/commonCopies'
+import {articleDatesMapper} from '@/common/utilsMappers/date.mapper'
 import {FullWidthFlexCol} from '@/components/containers/layout/FullWidthFlexCol'
 import PageBuilder from '@/components/pageBuilder'
 import {showInterstitialSection} from '@/components/pageBuilder/DzInterstitial/interstitialMapper'
@@ -23,7 +24,7 @@ import {builder} from '@/sanity/imageBuilder'
 
 import styles from './article.module.css'
 import {ArticleHeader} from './articleHeader'
-import {articleDatesMapper, articlesGridMap, locationTitleMapper} from './mapper'
+import {articlesGridMap, locationTitleMapper} from './mapper'
 
 type ArticleContainerProps = {
   data: any
@@ -46,13 +47,12 @@ export const ArticleContainer = ({data}: ArticleContainerProps) => {
   } = data ?? {}
   const locationProps = locationTitleMapper(location)
   const articlesGrid = articlesGridMap(articles)
-  const articleDates = displayDate
-    ? {
-        title: subtitle,
-        subtitle: displayDate,
-        titleType: TITLE_TYPES.P,
-      }
-    : articleDatesMapper(publishDate, subtitle)
+  const articleDates = {
+    title: subtitle,
+    subtitle: displayDate ? displayDate : articleDatesMapper(publishDate),
+    titleType: TITLE_TYPES.P,
+  }
+
   const isSmall = useIsSmallWindowSize()
 
   if (articleDates && externalURL) {
