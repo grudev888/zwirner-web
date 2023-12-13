@@ -38,7 +38,11 @@ export const ExhibitionsContainer = ({data: initialData}: Props) => {
   const inquireModalProps = createInquireModalExhibitionProps(initialData)
   const onClickInquire = () => {
     window.document.dispatchEvent(
-      ModalTriggerEvent(ModalTypes.INQUIRE, inquireModalProps, ModalTriggerTypes.CTA)
+      ModalTriggerEvent({
+        modalType: ModalTypes.INQUIRE,
+        props: inquireModalProps,
+        triggerType: ModalTriggerTypes.CTA,
+      })
     )
   }
   useOpenInquiryDispatch(inquireModalProps)

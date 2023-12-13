@@ -31,7 +31,11 @@ export const useOpenInquiryDispatch = (inquireModalProps: InquireModalProps) => 
   useEffect(() => {
     if (asPath.includes(`#${INQUIRE_HASH_KEY}`)) {
       window.document.dispatchEvent(
-        ModalTriggerEvent(ModalTypes.INQUIRE, inquireModalProps, ModalTriggerTypes.CTA)
+        ModalTriggerEvent({
+          modalType: ModalTypes.INQUIRE,
+          props: inquireModalProps,
+          triggerType: ModalTriggerTypes.CTA,
+        })
       )
     }
     // eslint-disable-next-line

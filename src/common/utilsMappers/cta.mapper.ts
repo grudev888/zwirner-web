@@ -43,7 +43,11 @@ const handleCTAClick = (action?: ModalTypes, extraProps?: any) => {
         : {}
 
     window.document.dispatchEvent(
-      ModalTriggerEvent(action, {...extraProps, ...modalProps}, ModalTriggerTypes.CTA)
+      ModalTriggerEvent({
+        modalType: action,
+        props: {...extraProps, ...modalProps},
+        triggerType: ModalTriggerTypes.CTA,
+      })
     )
   }
 }

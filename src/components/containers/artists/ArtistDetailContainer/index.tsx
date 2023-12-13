@@ -99,7 +99,11 @@ export const ArtistDetailContainer = ({data}: ArtistsContainerProps) => {
 
   const onClickInquire = () => {
     window.document.dispatchEvent(
-      ModalTriggerEvent(ModalTypes.INQUIRE, inquireModalProps, ModalTriggerTypes.CTA)
+      ModalTriggerEvent({
+        modalType: ModalTypes.INQUIRE,
+        props: inquireModalProps,
+        triggerType: ModalTriggerTypes.CTA,
+      })
     )
   }
 

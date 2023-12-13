@@ -1,7 +1,8 @@
+import {IncomingHttpHeaders} from 'node:http2'
+
+import * as Sentry from '@sentry/nextjs'
 import {NextApiRequest, NextApiResponse} from 'next'
 import {ILocation} from 'src/forms/types'
-import {IncomingHttpHeaders} from 'node:http2'
-import * as Sentry from '@sentry/nextjs'
 
 /**
  * Determines the request source [location]{@link ILocation} if CloudFront or Vercel
