@@ -63,7 +63,8 @@ export const getStaticProps = async (ctx: GetStaticPropsContext) => {
   const client = getClient(draftMode ? {token: draftViewToken} : undefined)
 
   const data = await getAvailableArtworksDataByArtistSlug(client, queryParams)
-  if (!data?.[0]?.availableWorksSubpage?.length && !draftMode) return {notFound: true}
+  // available artworks support page builder items inside availableWorksSubpage so check for the length
+  if (!draftMode && !data?.[0]?.availableWorksSubpage?.length) return {notFound: true}
 
   const dataLayerProps = await getGTMPageLoadData(queryParams)
   if (dataLayerProps) {

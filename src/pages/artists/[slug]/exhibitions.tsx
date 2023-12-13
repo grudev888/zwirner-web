@@ -58,7 +58,8 @@ export const getStaticProps = async (ctx: GetStaticPropsContext) => {
   const client = getClient(draftMode ? {token: draftViewToken} : undefined)
 
   const data = await getArtistExhibitionsPageData(client, artistSlug)
-  if (!data?.artist?.exhibitions?.length) return {notFound: true}
+  // Exhibitions is the array of exhibitions for the artist, we should be checking for the length of it
+  if (!draftMode && !data?.artist?.exhibitions?.length) return {notFound: true}
 
   const dataLayerProps = await getGTMPageLoadData(queryParams)
   if (dataLayerProps) {
