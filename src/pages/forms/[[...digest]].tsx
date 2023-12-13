@@ -105,7 +105,7 @@ const Forms = () => {
         <DzInputText
           className="mb-5"
           title="Email"
-          placeholder="Enter your email address here"
+          placeholder="Enter Your Email Address Here"
           errorMsg={errors?.email?.message}
           hasError={!!errors?.email?.message}
           disabled={!!data?.payload?.email}

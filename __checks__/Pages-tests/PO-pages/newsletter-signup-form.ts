@@ -38,7 +38,7 @@ export class NewsletterSignup {
       .getByRole('paragraph')
       .getByText('Join our mailing list')
     this.newsletterFormEmailInput = this.newsletterForm.getByPlaceholder(
-      'Enter your Email Address here'
+      'Enter Your Email Address Here'
     )
     this.newsletterCheckboxUpdates = this.newsletterForm.getByRole('checkbox', {
       name: 'Updates on Artists',
