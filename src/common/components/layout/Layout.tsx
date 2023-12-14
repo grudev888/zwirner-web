@@ -24,13 +24,14 @@ type LayoutProps = {
 }
 
 const Layout = ({children, layoutData, pageType}: LayoutProps) => {
+  const router = useRouter()
+  const {totalQuantity} = useCart()
   const {menu} = getHeaderProps(layoutData)
   const {data} = getFooterProps(layoutData)
-  const router = useRouter()
   const {data: popupsPerPages} = useSWRImmutable(allCampaigns, (query) => getAllCampaigns(query))
   const popupForPage = getPopupPerPage({url: router.asPath, pageType, popupsPerPages})
+
   useTimeDelayedRoutePopup(() => openPopupCb(popupForPage), popupForPage?.triggers.triggerTime)
-  const {totalQuantity} = useCart()
   useImagePreload(popupForPage?.image?.src)
 
   return (
