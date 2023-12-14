@@ -149,6 +149,7 @@ export const contentTypesMapper: any = {
       framed,
       slug,
       framedDimensions,
+      displayDate,
     } = data ?? {}
     const imageBgColor = backgroundColor
       ? ARTWORK_BG_COLORS_TO_TW_VALUES[backgroundColor as ARTWORK_BG_COLOR_NAMES]
@@ -217,7 +218,7 @@ export const contentTypesMapper: any = {
         artistName: fullName,
         artworkTitle,
         ...(displayTitleText ?? {}),
-        artworkYear: year,
+        artworkYear: displayDate || year,
         price,
         currency: currency || 'USD',
         framed: framed === ArtworkFramedSchema.enum.NotApplicable ? '' : framed,

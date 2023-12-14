@@ -17,7 +17,7 @@ export interface CardMapperForDzCard {
 
 export const cardMapperForDzCard = ({data, imageOptions = {}}: CardMapperForDzCard) => {
   return data?.map((card) => {
-    const {dimensions, title, medium, edition, _id, price} = card ?? {}
+    const {dimensions, title, medium, edition, _id, price, displayDate} = card ?? {}
     const fullName = card?.artists?.at(0)?.fullName
     const year = card?.dateSelection?.year
 
@@ -36,7 +36,7 @@ export const cardMapperForDzCard = ({data, imageOptions = {}}: CardMapperForDzCa
       media,
       artistName: fullName,
       artworkTitle: title,
-      artworkYear: year,
+      artworkYear: displayDate || year,
       medium: medium,
       ...(dimensionText ?? {}),
       edition: edition,
