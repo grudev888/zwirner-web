@@ -8,6 +8,13 @@ export enum ModalTriggerTypes {
   POPUP = 'POPUP',
 }
 
+export enum MethodTypes {
+  TOP = 'top',
+  BOTTOM = 'bottom',
+  CENTER = 'center',
+  POPUP = 'popup',
+}
+
 type ModalTriggerEventProps = {
   modalType: ModalTypes
   props: any

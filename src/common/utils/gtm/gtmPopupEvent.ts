@@ -1,11 +1,6 @@
 import {GTMPopupClickText, GTMPopupViewText} from '@/common/constants/gtmConstants'
 import {gtmEvent} from '@/common/utils/gtm/gtmEvent'
-
-export enum MethodTypes {
-  TOP = 'top',
-  BOTTOM = 'bottom',
-  CENTER = 'center',
-}
+import {MethodTypes} from '@/events/ModalTriggerEvent'
 
 export enum TypeTypes {
   FORM = 'form',

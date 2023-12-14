@@ -12,13 +12,12 @@ import {
   CTA_TEXT,
   gtmPopupClickedEvent,
   LINK_URL_CLOSE,
-  MethodTypes,
   TypeTypes,
 } from '@/common/utils/gtm/gtmPopupEvent'
 import {captchaInitObserver, removeCaptchaObserver} from '@/common/utils/recaptcha/observer'
 import RecaptchaNode from '@/components/forms/recaptchaNode'
 import useGtmNewsletterEvent from '@/components/hooks/gtm/useGtmNewsletterEvent'
-import {ModalTriggerTypes} from '@/events/ModalTriggerEvent'
+import {MethodTypes, ModalTriggerTypes} from '@/events/ModalTriggerEvent'
 import {PopUpInfo} from '@/sanity/services/popups/getAllCampaigns'
 import {sendSubscribeRequest} from '@/services/subscribeService'
 

@@ -1,12 +1,7 @@
 import {useCallback, useEffect} from 'react'
 
 import {gtmInquiryFormViewEvent} from '@/common/utils/gtm/gtmInquiryFormEvent'
-import {
-  CTA_TEXT,
-  gtmPopupViewedEvent,
-  MethodTypes,
-  TypeTypes,
-} from '@/common/utils/gtm/gtmPopupEvent'
+import {CTA_TEXT, gtmPopupViewedEvent, TypeTypes} from '@/common/utils/gtm/gtmPopupEvent'
 import {useNewsletterFormModal} from '@/components/containers/modalTriggerListener/useNewsletterFormModal'
 import {usePromoModal} from '@/components/containers/modalTriggerListener/usePromoModal'
 import {NewsletterFormModal} from '@/components/forms/newsletterFormModal'
@@ -15,7 +10,7 @@ import useGtmNewsletterEvent from '@/components/hooks/gtm/useGtmNewsletterEvent'
 import {useHashRoutedInquiryModal} from '@/components/hooks/useHashRoutedInquiryModal'
 import {createInquireModalGeneralProps} from '@/components/hooks/useOpenInquiryDispatch'
 import {DzPromoModal} from '@/components/wrappers/DzPromoModalWrapper'
-import {EVENT_TRIGGER_MODAL, ModalTriggerTypes} from '@/events/ModalTriggerEvent'
+import {EVENT_TRIGGER_MODAL, MethodTypes, ModalTriggerTypes} from '@/events/ModalTriggerEvent'
 import {PopUpInfo} from '@/sanity/services/popups/getAllCampaigns'
 import {ModalTypes} from '@/sanity/types'
 import {setCookie} from '@/utils/cookies/setCookie'
@@ -49,7 +44,7 @@ export const ModalTriggerListener = () => {
           openNewsletterModal(props, triggerType)
           gtmNewsletterSubscriptionViewEvent({
             cta_value: props?.ctaText ?? ModalTypes.NEWSLETTER,
-            method: props?.method,
+            method: triggerType === ModalTriggerTypes.POPUP ? MethodTypes.POPUP : props?.method,
           })
           if (triggerType === ModalTriggerTypes.POPUP) {
             gtmPopupViewedEvent({

@@ -4,10 +4,10 @@ import {
   CTA_TEXT,
   gtmPopupClickedEvent,
   LINK_URL_CLOSE,
-  MethodTypes,
   TypeTypes,
 } from '@/common/utils/gtm/gtmPopupEvent'
 import {DzPromoModal} from '@/components/wrappers/DzPromoModalWrapper'
+import {MethodTypes} from '@/events/ModalTriggerEvent'
 
 export type PromoModalProps = Omit<ComponentProps<typeof DzPromoModal>, 'isOpen' | 'onClose'>
 
