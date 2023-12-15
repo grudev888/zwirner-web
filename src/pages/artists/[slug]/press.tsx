@@ -1,4 +1,6 @@
+import {DzColumn, DzSpinner} from '@zwirner/design-system'
 import {type GetStaticPropsContext} from 'next'
+import {useRouter} from 'next/router'
 
 import {SEOComponent} from '@/common/components/seo/seo'
 import {ARTISTS_URL} from '@/common/constants/commonCopies'
@@ -17,6 +19,15 @@ import {removePrefixSlug} from '@/utils/slug'
 export default function PressPage({data, draftMode, queryParams, token}: SharedPageProps) {
   const [PressPageData] = data ?? []
   const {seo} = PressPageData ?? {}
+
+  const router = useRouter()
+  if (router.isFallback) {
+    return (
+      <DzColumn span={12}>
+        <DzSpinner />
+      </DzColumn>
+    )
+  }
 
   if (draftMode) {
     return (

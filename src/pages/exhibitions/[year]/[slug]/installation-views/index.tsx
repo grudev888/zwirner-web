@@ -1,3 +1,4 @@
+import {DzColumn, DzSpinner} from '@zwirner/design-system'
 import {type GetStaticPropsContext} from 'next'
 import {useRouter} from 'next/router'
 
@@ -25,7 +26,11 @@ export default function SubPageInstallationView({data = {}, draftMode, token}: S
   const router = useRouter()
 
   if (router.isFallback) {
-    return <div>Loading...</div>
+    return (
+      <DzColumn span={12}>
+        <DzSpinner />
+      </DzColumn>
+    )
   }
 
   if (draftMode) {
