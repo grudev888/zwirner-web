@@ -71,6 +71,46 @@ const config = {
     }
     return config
   },
+  redirects: async () => {
+    return [
+      {
+        source: '/artist/:path',
+        destination: '/artists/:path',
+        statusCode: 301,
+      },
+      {
+        source: '/artists/:name/biography',
+        destination: '/artists/:name',
+        statusCode: 301,
+      },
+      {
+        source:
+          '/artists/:name/:exhibitionType(past-exhibitions|current-exhibitions|upcoming-exhibitions)',
+        destination: '/artists/:name/exhibitions',
+        statusCode: 301,
+      },
+      {
+        source: '/artists/:name/artist-press',
+        destination: '/artists/:name/press',
+        statusCode: 301,
+      },
+      {
+        source: '/artists/:name/available-works',
+        destination: '/artists/:name/available-artworks',
+        statusCode: 301,
+      },
+      {
+        source:
+          '/artists/thomas-ruff/:series(dope|bonfils|tableaux-russes|tableaux-chinois|' +
+          'flowers|tripe|wgl-and-mnop|press-series|negatives|photograms|mars|cassini|' +
+          'zycles|jpegs|machines|substratum|nudes|lmvdr|other-portraits|nights|' +
+          'blaue-augen|herzog-and-de-meuron|newspaper-photographs|stars|houses|' +
+          'lempereur|portraits|interiors)',
+        destination: '/artists/thomas-ruff/survey/:series',
+        statusCode: 301,
+      },
+    ]
+  },
 }
 
 export default withSentryConfig(
