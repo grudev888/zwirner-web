@@ -1,5 +1,6 @@
-import {DzColumn} from '@zwirner/design-system'
+import {DzColumn, DzSpinner} from '@zwirner/design-system'
 import {type GetStaticPropsContext} from 'next'
+import {useRouter} from 'next/router'
 import {ErrorBoundary} from 'react-error-boundary'
 
 import {SEOComponent} from '@/common/components/seo/seo'
@@ -16,6 +17,16 @@ import {getGTMPageLoadData} from '@/sanity/services/gtm/pageLoad.service'
 import {removePrefixSlug} from '@/utils/slug'
 
 export default function ArtistPage({data = {}, draftMode, queryParams, token}: SharedPageProps) {
+  const router = useRouter()
+
+  if (router.isFallback) {
+    return (
+      <DzColumn span={12}>
+        <DzSpinner />
+      </DzColumn>
+    )
+  }
+
   if (draftMode) {
     return (
       <PreviewPage

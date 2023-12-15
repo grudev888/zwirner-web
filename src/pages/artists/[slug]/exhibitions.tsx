@@ -1,4 +1,6 @@
+import {DzColumn, DzSpinner} from '@zwirner/design-system'
 import {type GetStaticPropsContext} from 'next'
+import {useRouter} from 'next/router'
 
 import {SEOComponent} from '@/common/components/seo/seo'
 import {DRAFT_MODE_SANITY_READ_TOKEN_ERROR} from '@/common/constants/errorMessages'
@@ -15,6 +17,16 @@ import {removePrefixSlug} from '@/utils/slug'
 
 export default function ExhibitionsPage({data, draftMode, queryParams, token}: SharedPageProps) {
   const {seo} = data ?? {}
+
+  const router = useRouter()
+  if (router.isFallback) {
+    return (
+      <DzColumn span={12}>
+        <DzSpinner />
+      </DzColumn>
+    )
+  }
+
   if (draftMode) {
     return (
       <PreviewPage

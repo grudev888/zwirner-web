@@ -1,4 +1,6 @@
+import {DzColumn, DzSpinner} from '@zwirner/design-system'
 import {type GetStaticPropsContext, InferGetStaticPropsType} from 'next'
+import {useRouter} from 'next/router'
 
 import {SEOComponent} from '@/common/components/seo/seo'
 import {DRAFT_MODE_SANITY_READ_TOKEN_ERROR} from '@/common/constants/errorMessages'
@@ -20,6 +22,15 @@ export default function AvailableWorksPage({
 }: InferGetStaticPropsType<typeof getStaticProps>) {
   const [artworksData] = data ?? []
   const {seo} = artworksData ?? {}
+
+  const router = useRouter()
+  if (router.isFallback) {
+    return (
+      <DzColumn span={12}>
+        <DzSpinner />
+      </DzColumn>
+    )
+  }
 
   if (draftMode) {
     return (
