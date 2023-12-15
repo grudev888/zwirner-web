@@ -31,10 +31,18 @@ interface CtaMapperInterstitial {
   secondaryProps?: any
 }
 
-const handleCTAClick = (action?: ModalTypes, extraProps?: any) => {
+const CTA_CLICK_SOURCE = {
+  INTERSTITIAL: 'INTERSTITIAL',
+} as const
+
+const handleCTAClick = (
+  action?: ModalTypes,
+  extraProps?: any,
+  source?: keyof typeof CTA_CLICK_SOURCE
+) => {
   if (action) {
     const modalProps =
-      action === ModalTypes.INQUIRE && extraProps?.method === SUBSCRIBE_METHOD.INTERSTITIAL
+      action === ModalTypes.INQUIRE && source === CTA_CLICK_SOURCE.INTERSTITIAL
         ? {
             title: INQUIRE,
             subtitle: TO_LEARN_MORE_ABOUT_AVAILABLE_WORKS_EXTENDED,
@@ -199,7 +207,14 @@ export const ctaMapperInterstitial = ({data}: CtaMapperInterstitial) => {
               if (handleClick) {
                 handleClick(action)
               } else {
-                handleCTAClick(action, {ctaText: text, method: SUBSCRIBE_METHOD.POPUP})
+                handleCTAClick(
+                  action,
+                  {
+                    ctaText: text,
+                    method: SUBSCRIBE_METHOD.POPUP,
+                  },
+                  CTA_CLICK_SOURCE.INTERSTITIAL
+                )
               }
             },
           },
