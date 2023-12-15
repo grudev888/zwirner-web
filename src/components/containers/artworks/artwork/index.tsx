@@ -65,6 +65,7 @@ export const ArtworkContainer = ({data}: Props) => {
   const detailTextStyles = {normal: 'text-black-60 !text-sm'}
   const isSmall = useIsSmallWindowSize()
 
+  /*
   const onClickPhotoCard = (cardData: any) => {
     if (photoGridImageStyleMap[cardData.id]) {
       const imgProps: Record<string, any> = cardData?.media?.imgProps
@@ -72,6 +73,7 @@ export const ArtworkContainer = ({data}: Props) => {
       setCurrentZoomedImgProps({...imgProps, width, height})
     }
   }
+  */
 
   const onClickLearnMore = () => {
     if (descriptionRef.current) {
@@ -127,8 +129,8 @@ export const ArtworkContainer = ({data}: Props) => {
 
   useOpenInquiryDispatch(inquiryModalProps)
 
-  Object.entries(photoDimensionsMap).forEach(([key, dimensions]) => {
-    const zoomStyle = isImageZoomable(dimensions as any) ? 'cursor-zoom-in' : ''
+  Object.entries(photoDimensionsMap).forEach(([key /*dimensions*/]) => {
+    const zoomStyle = '' //isImageZoomable(dimensions as any) ? 'cursor-zoom-in' : ''
     const bgStyle = imageBgColor || ''
 
     photoGridImageStyleMap[key] = `${zoomStyle} ${bgStyle}`
@@ -192,7 +194,7 @@ export const ArtworkContainer = ({data}: Props) => {
                 <DzCard
                   type={CARD_TYPES.ARTWORK}
                   data={firstItemMediaProps}
-                  onClickImage={onClickPhotoCard}
+                  onClickImage={() => {} /*onClickPhotoCard*/}
                   imageStyles={cn(
                     photoGridImageStyleMap[firstItemMediaProps.id] || '',
                     imageBgColor
@@ -305,7 +307,7 @@ export const ArtworkContainer = ({data}: Props) => {
         <DzComplexGrid
           cards={allPhotoGridItems}
           maxItemsPerRow={1}
-          onClickImage={onClickPhotoCard}
+          onClickImage={() => {} /*onClickPhotoCard*/}
           cardStylesMap={photoGridImageStyleMap}
           gridColumnsStyles="!gap-y-[1rem]"
         />
@@ -321,6 +323,7 @@ export const ArtworkContainer = ({data}: Props) => {
         imgUrl={currentZoomedImgProps?.src}
         onClose={() => setCurrentZoomedImgProps(undefined)}
         isOpen={!!currentZoomedImgProps?.src}
+        isZoomEnabled={false}
       />
     </>
   )
