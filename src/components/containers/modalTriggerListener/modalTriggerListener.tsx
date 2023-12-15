@@ -1,7 +1,8 @@
 import {useCallback, useEffect} from 'react'
 
+import {SIGN_UP} from '@/common/constants/commonCopies'
 import {gtmInquiryFormViewEvent} from '@/common/utils/gtm/gtmInquiryFormEvent'
-import {CTA_TEXT, gtmPopupViewedEvent, TypeTypes} from '@/common/utils/gtm/gtmPopupEvent'
+import {gtmPopupViewedEvent, TypeTypes} from '@/common/utils/gtm/gtmPopupEvent'
 import {useNewsletterFormModal} from '@/components/containers/modalTriggerListener/useNewsletterFormModal'
 import {usePromoModal} from '@/components/containers/modalTriggerListener/usePromoModal'
 import {NewsletterFormModal} from '@/components/forms/newsletterFormModal'
@@ -48,7 +49,7 @@ export const ModalTriggerListener = () => {
           })
           if (triggerType === ModalTriggerTypes.POPUP) {
             gtmPopupViewedEvent({
-              cta_value: CTA_TEXT.NEWSLETTER,
+              cta_value: SIGN_UP,
               method: MethodTypes.CENTER,
               type: TypeTypes.FORM,
             })

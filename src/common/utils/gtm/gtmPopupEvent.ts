@@ -7,12 +7,6 @@ export enum TypeTypes {
   NON_FORM = 'non-form',
 }
 
-export const LINK_URL_CLOSE = 'close'
-export const CTA_TEXT = {
-  NEWSLETTER: 'Sign Up',
-  PROMO: 'Explore',
-} as const
-
 export const gtmPopupViewedEvent = (event_data: {
   cta_value: string
   method: MethodTypes

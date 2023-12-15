@@ -1,5 +1,6 @@
 import {expect, Locator, Page} from '@playwright/test'
 
+import {SIGN_UP} from '../../../src/common/constants/commonCopies'
 import {defaults} from '../../defaults'
 import {testData} from '../../Pages-tests/testData'
 
@@ -52,7 +53,7 @@ export class NewsletterSignup {
     this.newsletterPrivacyPolicyText = this.newsletterForm
       .getByRole('paragraph')
       .filter({hasText: 'By sharing your email you agree to our'})
-    this.newsletterSignUpButton = this.newsletterForm.getByRole('button', {name: 'Sign Up'})
+    this.newsletterSignUpButton = this.newsletterForm.getByRole('button', {name: SIGN_UP})
     this.newsletterSignUpCloseIcon = this.page.getByText('Close IconClose')
     this.newsletterEmailInlineError = this.newsletterForm.getByText(
       'Please enter a valid email address.'

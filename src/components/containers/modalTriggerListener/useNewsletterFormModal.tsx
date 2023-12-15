@@ -1,19 +1,16 @@
 import {useRef, useState} from 'react'
 
 import {
+  CLOSE,
   EXPECT_THE_LATEST_INFORMATION,
   JOIN_OUR_MAILING_LIST,
   JOIN_OUR_MAILING_LIST_ERROR,
   JOIN_OUR_MAILING_LIST_SUCCESS,
+  SIGN_UP,
   WANT_TO_KNOW_MORE,
 } from '@/common/constants/commonCopies'
 import {ErrorType, GTMErrorMessageEvent} from '@/common/utils/gtm/GTMErrorMessageEvent'
-import {
-  CTA_TEXT,
-  gtmPopupClickedEvent,
-  LINK_URL_CLOSE,
-  TypeTypes,
-} from '@/common/utils/gtm/gtmPopupEvent'
+import {gtmPopupClickedEvent, TypeTypes} from '@/common/utils/gtm/gtmPopupEvent'
 import {captchaInitObserver, removeCaptchaObserver} from '@/common/utils/recaptcha/observer'
 import RecaptchaNode from '@/components/forms/recaptchaNode'
 import useGtmNewsletterEvent from '@/components/hooks/gtm/useGtmNewsletterEvent'
@@ -46,10 +43,10 @@ export const useNewsletterFormModal = (props?: Props) => {
     setCustomModalProps(null)
     if (triggerType === ModalTriggerTypes.POPUP) {
       gtmPopupClickedEvent({
-        cta_value: CTA_TEXT.NEWSLETTER,
+        cta_value: SIGN_UP,
         method: MethodTypes.CENTER,
         type: TypeTypes.FORM,
-        link_url: LINK_URL_CLOSE,
+        link_url: CLOSE,
       })
     }
   }

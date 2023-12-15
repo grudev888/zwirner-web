@@ -1,5 +1,7 @@
 import {expect, test} from '@playwright/test'
 
+import {SIGN_UP} from '@/common/constants/commonCopies'
+
 import {defaults} from '../defaults'
 import {TEST_EMAIL} from './constants/common.constants'
 import {
@@ -44,7 +46,7 @@ test(`GA4:subscribe event test`, async ({page}) => {
   })
 
   await test.step(`Emit GA4:${GTMUserSubscriptionText.event} event when clicking Sign Up Button is clicked`, async () => {
-    await page.getByRole('button', {name: 'Sign Up'}).click()
+    await page.getByRole('button', {name: SIGN_UP}).click()
     await expect(
       await gtmEvent.getFilteredDataLayer(GTMUserSubscriptionText.event, [
         'event_data',

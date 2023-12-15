@@ -1,11 +1,7 @@
 import {ComponentProps, useState} from 'react'
 
-import {
-  CTA_TEXT,
-  gtmPopupClickedEvent,
-  LINK_URL_CLOSE,
-  TypeTypes,
-} from '@/common/utils/gtm/gtmPopupEvent'
+import {CLOSE, EXPLORE} from '@/common/constants/commonCopies'
+import {gtmPopupClickedEvent, TypeTypes} from '@/common/utils/gtm/gtmPopupEvent'
 import {DzPromoModal} from '@/components/wrappers/DzPromoModalWrapper'
 import {MethodTypes} from '@/events/ModalTriggerEvent'
 
@@ -17,15 +13,15 @@ export const usePromoModal = () => {
   const onClose = () => {
     setIsOpen(false)
     gtmPopupClickedEvent({
-      cta_value: promoModalProps?.linkText || CTA_TEXT.PROMO,
+      cta_value: promoModalProps?.linkText || EXPLORE,
       method: MethodTypes.CENTER,
       type: TypeTypes.NON_FORM,
-      link_url: LINK_URL_CLOSE,
+      link_url: CLOSE,
     })
   }
   const onClickCTA = (url: string) => {
     gtmPopupClickedEvent({
-      cta_value: promoModalProps?.linkText || CTA_TEXT.PROMO,
+      cta_value: promoModalProps?.linkText || EXPLORE,
       method: MethodTypes.CENTER,
       type: TypeTypes.NON_FORM,
       link_url: url,
