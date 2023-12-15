@@ -13,6 +13,7 @@ import {getAllExhibitionsPageSlugsSitemap} from '@/sanity/services/sitemaps/getA
 import {getAllGuidePageSlugsSitemap} from '@/sanity/services/sitemaps/getAllGuidePageSlugsSitemap'
 import {getAllPressPageSlugsSitemap} from '@/sanity/services/sitemaps/getAllPressPageSlugsSitemap'
 import {getAllSurveyPageSlugsSitemap} from '@/sanity/services/sitemaps/getAllSurveyPageSlugsSitemap'
+import {getAllSurveySeriesSlugsSitemap} from '@/sanity/services/sitemaps/getAllSurveySeriesSlugsSitemap'
 import {getArtistListingLastmod} from '@/sanity/services/sitemaps/getArtistListingLastmod'
 import {generateXMLUrls} from '@/utils/string/generateXMLUrls'
 
@@ -51,11 +52,6 @@ export async function getServerSideProps({res}: GetServerSidePropsContext) {
 
   // artists details
   const artists = await getAllArtistPageSlugsSitemap()
-  // artists/[slug]/survey
-  const surveys = await getAllSurveyPageSlugsSitemap()
-  const surveysDetailsList = surveys.map(({params}) => ({
-    params: {...params, slug: `${params.slug}${ARTISTS_SURVEY_URL}`},
-  }))
   // artists/[slug]/guide
   const guides = await getAllGuidePageSlugsSitemap()
   const guidesDetailsList = guides.map(({params}) => ({
@@ -76,24 +72,33 @@ export async function getServerSideProps({res}: GetServerSidePropsContext) {
   const availableArtworksDetailsList = availableArtworks.map(({params}) => ({
     params: {...params, slug: `${params.slug}${ARTISTS_AVAILABLE_WORKS_URL}`},
   }))
+  // artists/[slug]/survey
+  const surveys = await getAllSurveyPageSlugsSitemap()
+  const surveysDetailsList = surveys.map(({params}) => ({
+    params: {...params, slug: `${params.slug}${ARTISTS_SURVEY_URL}`},
+  }))
+  // artists/[slug]/survey/[series]
+  const surveySeries = await getAllSurveySeriesSlugsSitemap()
 
   // We generate the XML sitemap with data
   const artistListingXMLUrls = generateXMLUrls(artistListingLastmod)
   const artistsXMLUrls = generateXMLUrls(artists)
-  const surveysXMLUrls = generateXMLUrls(surveysDetailsList)
   const guidesXMLUrls = generateXMLUrls(guidesDetailsList)
   const pressXMLUrls = generateXMLUrls(pressDetailsList)
   const exhibitionsXMLUrls = generateXMLUrls(exhibitionsDetailsList)
   const availableWorksXMLUrls = generateXMLUrls(availableArtworksDetailsList)
+  const surveysXMLUrls = generateXMLUrls(surveysDetailsList)
+  const surveySeriesXMLUrls = generateXMLUrls(surveySeries)
 
   const sitemap = generateSiteMap(
     artistListingXMLUrls,
     artistsXMLUrls,
-    surveysXMLUrls,
     guidesXMLUrls,
     pressXMLUrls,
     exhibitionsXMLUrls,
-    availableWorksXMLUrls
+    availableWorksXMLUrls,
+    surveysXMLUrls,
+    surveySeriesXMLUrls
   )
 
   res.setHeader('Content-Type', 'text/xml')

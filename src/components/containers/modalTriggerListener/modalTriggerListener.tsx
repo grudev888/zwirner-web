@@ -15,6 +15,7 @@ import {EVENT_TRIGGER_MODAL, MethodTypes, ModalTriggerTypes} from '@/events/Moda
 import {PopUpInfo} from '@/sanity/services/popups/getAllCampaigns'
 import {ModalTypes} from '@/sanity/types'
 import {setCookie} from '@/utils/cookies/setCookie'
+import {capitalizeFirstLetter} from '@/utils/string/capitalizeFirstLetter'
 
 export const ModalTriggerListener = () => {
   const inquireModalProps = useHashRoutedInquiryModal()
@@ -42,6 +43,7 @@ export const ModalTriggerListener = () => {
 
       switch (modalType) {
         case ModalTypes.NEWSLETTER:
+        case capitalizeFirstLetter(ModalTypes.NEWSLETTER): // some CTAs send 'Newsletter' as their action value
           openNewsletterModal(props, triggerType)
           gtmNewsletterSubscriptionViewEvent({
             cta_value: props?.ctaText ?? ModalTypes.NEWSLETTER,
