@@ -7,28 +7,9 @@ import {
   seriesContentWithInnerPageBuilder,
 } from '@/sanity/queries/series/seriesComplexContent'
 
-import {pageSEOFields, PageSEOFieldsSchema} from './components/seo/pageSEOFields'
+import {pageSEOFields, PageSEOFieldsSchema} from '../components/seo/pageSEOFields'
 
-export const allArtistsPageSurveyBySlug = groq`
-*[_type == "artistPage" && defined(slug.current) && defined(surveySeries)]{
-  "surveySlugs":surveySeries[]->{"params": { "slug": slug.current  }}
-}`
-
-export const AllArtistsPageSurveyBySlugSchema = z.array(
-  z.object({
-    surveySlugs: z
-      .array(
-        z.object({
-          params: z.object({
-            slug: z.string(),
-          }),
-        })
-      )
-      .nullable(),
-  })
-)
-
-export const seriesPageSurveyBySlug = groq`
+export const surveySeriesPageBySlug = groq`
 *[_type == "series" && defined(slug.current) && slug.current == $slug]{
   "seriesData": {
     title,
@@ -43,7 +24,7 @@ export const seriesPageSurveyBySlug = groq`
   }
 }`
 
-export const SeriesPageSurveyBySlugSchema = z
+export const SurveySeriesPageBySlugSchema = z
   .array(
     z.object({
       seriesData: SeriesContentSchemaWithPageBuilder.merge(

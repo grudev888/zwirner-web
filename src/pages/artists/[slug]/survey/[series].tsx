@@ -5,11 +5,9 @@ import {ARTISTS_URL, SURVEY_URL} from '@/common/constants/commonCopies'
 import ArtistSurveySeriesPageContainer from '@/components/containers/pages/artists/survey/series'
 import PreviewPage from '@/components/containers/previews/pagePreview'
 import {getClient, readToken} from '@/sanity/client'
-import {seriesPageSurveyBySlug} from '@/sanity/queries/artistsPageSurvey'
-import {
-  getAllArtistPageSurveySlugs,
-  getArtistPageSeriesBySlug,
-} from '@/sanity/services/artistsPagesSurvey.service'
+import {surveySeriesPageBySlug} from '@/sanity/queries/artists/surveySeriesPageBySlug'
+import {getAllSurveySeriesPageSlugs} from '@/sanity/services/artists/getAllSurveySeriesPageSlugs'
+import {getSurveySeriesPageBySlug} from '@/sanity/services/artists/getSurveySeriesPageBySlug'
 import {getGTMPageLoadData} from '@/sanity/services/gtm/pageLoad.service'
 
 export default function SeriesPage({
@@ -24,7 +22,7 @@ export default function SeriesPage({
     return (
       <PreviewPage
         data={data}
-        query={seriesPageSurveyBySlug}
+        query={surveySeriesPageBySlug}
         params={queryParams}
         seo={seo}
         Container={ArtistSurveySeriesPageContainer}
@@ -42,10 +40,10 @@ export default function SeriesPage({
 }
 
 export const getStaticPaths = async () => {
-  const artistPages = await getAllArtistPageSurveySlugs()
+  const artistPages = await getAllSurveySeriesPageSlugs()
   const paths = artistPages
     .map((page: any) => {
-      return page.surveySlugs
+      return page.surveySeriesSlugs
     })
     .flat()
     .filter((item: any) => {
@@ -78,7 +76,8 @@ export const getStaticProps = async (ctx: GetStaticPropsContext) => {
   const draftViewToken = draftMode ? readToken : ``
   const client = getClient(draftMode ? {token: draftViewToken} : undefined)
 
-  const data = await getArtistPageSeriesBySlug(client, queryParams)
+  const data = await getSurveySeriesPageBySlug(client, queryParams)
+  if (data?.length === 0 || !data?.[0]?.seriesData.detailContent?.length) return {notFound: true}
 
   const dataLayerProps = await getGTMPageLoadData(queryParams)
 

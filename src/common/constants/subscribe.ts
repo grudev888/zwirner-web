@@ -7,6 +7,5 @@ export const SUBSCRIBE_TYPE = {
 export const SUBSCRIBE_METHOD = {
   FOOTER: 'footer',
   POPUP: 'popup',
-  INTERSTITIAL: 'interstitial',
   NAV: 'nav',
 } as const
