@@ -11,6 +11,7 @@ import {getCookie} from '@/utils/cookies/getCookie'
 
 export type PopUpInfo = {
   id: PopupItemType['_key']
+  campaignId: AllCampaignsType[0]['_id']
   campaignName: AllCampaignsType[0]['title']
   popupName: PopupItemType['name']
   type: PopupItemType['type']
@@ -133,7 +134,7 @@ const addPopupToDictionary = (
 const getPopupDictionary = (campaigns: AllCampaignsType) => {
   return campaigns.reduce((prev, curr) => {
     const prevCopy = {...prev}
-    const {title, popupsList = [], cookieDaysToExpire} = curr ?? {}
+    const {_id, title, popupsList = [], cookieDaysToExpire} = curr ?? {}
     popupsList?.forEach((item) => {
       const {displayAlways = false, type: popUpType, name, triggers, filterSections = []} = item
 
@@ -145,6 +146,7 @@ const getPopupDictionary = (campaigns: AllCampaignsType) => {
         const sectionKey = Object.keys(PageSections)[indexType]
         const isNewsOrPromo = item.type === 'newsletter' || item.type === 'customPromo'
         const popupInf = {
+          campaignId: _id,
           campaignName: title,
           popupName: name,
           type: popUpType,

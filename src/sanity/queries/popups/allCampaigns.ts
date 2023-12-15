@@ -119,6 +119,7 @@ export type PopupItemType = z.infer<typeof PopupItemSchema>
 
 export const allCampaigns = groq`
 *[_type == "campaign"]{
+    _id,
     title,
     orderRank,
     cookieDaysToExpire,
@@ -129,6 +130,7 @@ export const allCampaigns = groq`
 
 export const AllCampaignsSchema = z.array(
   z.object({
+    _id: z.string(),
     title: z.string(),
     cookieDaysToExpire: z.number(),
     popupsList: z.nullable(z.array(PopupItemSchema)),
