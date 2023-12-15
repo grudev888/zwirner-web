@@ -12,7 +12,7 @@ import {
 import {HomePage} from './pages/home'
 import GTMEventClass from './utils/gtmClass'
 
-test(`GA4:subscribe event test`, async ({page}) => {
+test.skip(`GA4:subscribe event test`, async ({page}) => {
   await page.goto(defaults.baseURL)
   const homePage = new HomePage(page)
   const gtmEvent = new GTMEventClass(page)

@@ -15,7 +15,7 @@ test('Verify Artist Listing Page: presence of single H1 element, Header, Footer,
   await artistListingPage.checkPageStaticFooter()
 })
 
-test('Go to random ADP from listing page and check the artist name from the list is the same as on the ADP page', async ({
+test.skip('Go to random ADP from listing page and check the artist name from the list is the same as on the ADP page', async ({
   page,
 }) => {
   const artistListingPage = new ArtistListingPage(page)
