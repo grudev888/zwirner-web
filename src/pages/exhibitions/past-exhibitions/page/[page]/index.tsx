@@ -1,4 +1,6 @@
+import {DzColumn, DzSpinner} from '@zwirner/design-system'
 import {type GetStaticPropsContext, InferGetStaticPropsType} from 'next'
+import {useRouter} from 'next/router'
 
 import {SEOComponent} from '@/common/components/seo/seo'
 import {EXHIBITIONS_URL, PAST_EXHIBITIONS_URL} from '@/common/constants/commonCopies'
@@ -23,6 +25,15 @@ import {getGTMPageLoadData} from '@/sanity/services/gtm/pageLoad.service'
 
 const PastExhibitionsPageByNumber = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
   const {data, draftMode, queryParams, token} = props
+
+  const router = useRouter()
+  if (router.isFallback) {
+    return (
+      <DzColumn span={12}>
+        <DzSpinner />
+      </DzColumn>
+    )
+  }
 
   if (draftMode && queryParams) {
     const params = parseParamsForPastExhibitions(queryParams)

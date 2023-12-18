@@ -1,3 +1,4 @@
+import {DzColumn, DzSpinner} from '@zwirner/design-system'
 import {type GetStaticPropsContext, InferGetStaticPropsType} from 'next'
 import {useRouter} from 'next/router'
 
@@ -20,7 +21,11 @@ const FairDetailPage = (props: InferGetStaticPropsType<typeof getStaticProps>) =
   const router = useRouter()
 
   if (router.isFallback) {
-    return <div>Loading...</div>
+    return (
+      <DzColumn span={12}>
+        <DzSpinner />
+      </DzColumn>
+    )
   }
 
   if (draftMode) {

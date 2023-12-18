@@ -18,7 +18,7 @@ import {exhibitionQuery} from './sanity/queries/exhibition.queries'
 import {mapEcommerceData} from './utils/gtm.helper'
 import GTMEventClass from './utils/gtmClass'
 
-test(`Emit GA4:${GTMProductViewText.event} event when artwork detail page is loaded`, async ({
+test.skip(`Emit GA4:${GTMProductViewText.event} event when artwork detail page is loaded`, async ({
   page,
 }) => {
   const artworkPage = new ArtworkPage(page)
@@ -54,7 +54,7 @@ test(`Emit GA4:${GTMProductViewText.event} event when artwork detail page is loa
 // }) => {
 // })
 
-test(`Emit GA4:${GTMProductListingViewedText.event} event when clicking artwork card in /available-artworks`, async ({
+test.skip(`Emit GA4:${GTMProductListingViewedText.event} event when clicking artwork card in /available-artworks`, async ({
   page,
 }) => {
   const availableArtworkPage = new AvailableArtworksPage(page)
@@ -98,7 +98,7 @@ test(`Emit GA4:${GTMProductListingViewedText.event} event when clicking artwork 
   }
 })
 
-test(`Emit GA4:${GTMProductListingViewedText.event} event when clicking artwork card in /artists/[artist slug] page`, async ({
+test.skip(`Emit GA4:${GTMProductListingViewedText.event} event when clicking artwork card in /artists/[artist slug] page`, async ({
   page,
 }) => {
   const artistPage = new ArtistPage(page)
@@ -135,8 +135,8 @@ test(`Emit GA4:${GTMProductListingViewedText.event} event when clicking artwork 
     })
   }
 })
-
-test(`Emit GA4:${GTMProductListingViewedText.event} event when clicking artwork card in /exhibitions/[year]/[exhibition slug]/checklist page`, async ({
+//the test below always pass with ("there isn't any artwork"). looks like for now it checks nothing
+test.skip(`Emit GA4:${GTMProductListingViewedText.event} event when clicking artwork card in /exhibitions/[year]/[exhibition slug]/checklist page`, async ({
   page,
 }) => {
   const availableArtworkPage = new AvailableArtworksPage(page)

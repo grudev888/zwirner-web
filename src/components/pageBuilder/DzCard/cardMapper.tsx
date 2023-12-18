@@ -144,6 +144,7 @@ export const contentTypesMapper: any = {
       dateSelection,
       medium,
       edition,
+      editionInformation,
       price,
       currency,
       framed,
@@ -195,6 +196,12 @@ export const contentTypesMapper: any = {
       key: 'additionalInformation',
       text: additionalInformation,
     })
+    const editionInformationText = safeText({
+      key: 'edition',
+      text: editionInformation,
+      customStyles: {normal: 'text-black-60 !text-sm'},
+    })
+
     const dimensionText = safeText({
       key: 'dimensions',
       text: dimensions,
@@ -223,6 +230,7 @@ export const contentTypesMapper: any = {
         currency: currency || 'USD',
         framed: framed === ArtworkFramedSchema.enum.NotApplicable ? '' : framed,
         slug: slug?.current,
+        ...(editionInformationText ?? {}),
         ...(mediumText ?? {}),
         ...(dimensionText ?? {}),
         ...(editionText ?? {}),

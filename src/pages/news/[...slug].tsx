@@ -1,4 +1,6 @@
+import {DzColumn, DzSpinner} from '@zwirner/design-system'
 import {type GetStaticPropsContext} from 'next'
+import {useRouter} from 'next/router'
 
 import {SEOComponent} from '@/common/components/seo/seo'
 import {NEWS_URL} from '@/common/constants/commonCopies'
@@ -18,6 +20,16 @@ import {SharedPageProps} from '../_app'
 export default function Article({data, draftMode, token}: SharedPageProps) {
   const {articleData = {}, queryParams} = data ?? {}
   const {seo} = articleData ?? {}
+
+  const router = useRouter()
+  if (router.isFallback) {
+    return (
+      <DzColumn span={12}>
+        <DzSpinner />
+      </DzColumn>
+    )
+  }
+
   if (draftMode) {
     return (
       <>

@@ -1,4 +1,6 @@
+import {DzColumn, DzSpinner} from '@zwirner/design-system'
 import {type GetStaticPropsContext, InferGetStaticPropsType} from 'next'
+import {useRouter} from 'next/router'
 
 import {SEOComponent} from '@/common/components/seo/seo'
 import {ARTISTS_URL, SURVEY_URL} from '@/common/constants/commonCopies'
@@ -17,6 +19,15 @@ export default function SeriesPage({
   token,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
   const {seo} = data?.[0]?.seriesData ?? {}
+
+  const router = useRouter()
+  if (router.isFallback) {
+    return (
+      <DzColumn span={12}>
+        <DzSpinner />
+      </DzColumn>
+    )
+  }
 
   if (draftMode) {
     return (

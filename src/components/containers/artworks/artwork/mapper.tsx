@@ -3,7 +3,7 @@ import Image from 'next/image'
 
 import {dzMediaMapper} from '@/common/utilsMappers/image.mapper'
 import {safeText} from '@/common/utilsMappers/safe'
-import {isImageZoomable} from '@/components/containers/artworks/artwork/index'
+//import {isImageZoomable} from '@/components/containers/artworks/artwork/index'
 import {ArtworkDataType} from '@/sanity/queries/artworks/artworkData'
 import {capitalizeFirstLetter} from '@/utils/string/capitalizeFirstLetter'
 
@@ -39,7 +39,7 @@ export const mapArtworkData = ({
 
 export const photosGrid = ({photos}: ArtworkDataType) => {
   return photos?.map((photo) => {
-    const {_key, image} = photo ?? {}
+    const {_key /*image*/} = photo ?? {}
     const {media, extras} = dzMediaMapper({data: photo, ImgElement: Image})
     const {caption} = extras ?? {}
     return {
@@ -48,7 +48,7 @@ export const photosGrid = ({photos}: ArtworkDataType) => {
       size: CardSizes['12col'],
       media,
       description: caption ?? '',
-      enableZoom: isImageZoomable(image?.metadata?.dimensions || {}),
+      enableZoom: false, //isImageZoomable(image?.metadata?.dimensions || {}),
     }
   })
 }

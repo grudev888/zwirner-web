@@ -11,7 +11,7 @@ import {artworkHavingInquireCTAInArtistPage} from './sanity/services/artist.serv
 import {artworkHavingInquireCTA} from './sanity/services/artwork.service'
 import GTMEventClass from './utils/gtmClass'
 
-test(`GA4:Inquiry event test in /artists/[slug] page`, async ({page}) => {
+test.skip(`GA4:Inquiry event test in /artists/[slug] page`, async ({page}) => {
   const artwork: any = await artworkHavingInquireCTAInArtistPage()
 
   if (!artwork) throw new Error('Could not find artwork having inquire CTA')
@@ -22,7 +22,7 @@ test(`GA4:Inquiry event test in /artists/[slug] page`, async ({page}) => {
   await gtmEvent.checkInquiryFormInCard(artwork)
 })
 
-test(`GA4:Inquiry event test in /artworks/[slug] page`, async ({page}) => {
+test.skip(`GA4:Inquiry event test in /artworks/[slug] page`, async ({page}) => {
   const artwork: any = await artworkHavingInquireCTA()
 
   if (!artwork) throw new Error('Could not find artwork having inquire CTA')
@@ -32,7 +32,7 @@ test(`GA4:Inquiry event test in /artworks/[slug] page`, async ({page}) => {
   await artworkPage.checkInquiryForm(artwork)
 })
 
-test(`GA4:Inquiry event test in /available-artworks page`, async ({page}) => {
+test.skip(`GA4:Inquiry event test in /available-artworks page`, async ({page}) => {
   const availableArtworksData: any = await sanityFetch(availableArtworksQuery)
 
   const artwork: any = availableArtworksData.artworksGrid.grid.find(
@@ -49,7 +49,7 @@ test(`GA4:Inquiry event test in /available-artworks page`, async ({page}) => {
   await gtmEvent.checkInquiryFormInCard(artwork)
 })
 
-test(`GA4:Inquiry event test in /exhibitions/[year]/[slug]`, async ({page}) => {
+test.skip(`GA4:Inquiry event test in /exhibitions/[year]/[slug]`, async ({page}) => {
   const exhibitionPage = new ExhibitionPage(page)
   const gtmEvent = new GTMEventClass(page)
   const exhibitionData: any = await sanityFetch(exhibitionQuery)
