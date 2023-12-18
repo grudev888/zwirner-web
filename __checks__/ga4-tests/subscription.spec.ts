@@ -1,7 +1,6 @@
 import {expect, test} from '@playwright/test'
 
-import {SIGN_UP} from '@/common/constants/commonCopies'
-
+import {SIGN_UP} from '../../src/common/constants/commonCopies'
 import {defaults} from '../defaults'
 import {TEST_EMAIL} from './constants/common.constants'
 import {
