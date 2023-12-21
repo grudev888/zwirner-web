@@ -2680,9 +2680,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@zwirner/design-system@npm:v0.0.208":
-  version: 0.0.208
-  resolution: "@zwirner/design-system@npm:0.0.208::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40zwirner%2Fdesign-system%2F0.0.208%2F8369ca50bf65d77b4b978480ffda5ee36d283cd0"
+"@zwirner/design-system@npm:0.0.209--canary.310.093c8be.0":
+  version: 0.0.209--canary.310.093c8be.0
+  resolution: "@zwirner/design-system@npm:0.0.209--canary.310.093c8be.0::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40zwirner%2Fdesign-system%2F0.0.209--canary.310.093c8be.0%2F26c351802365e94d2c8dfccf6f2f8287bea2cbcd"
   dependencies:
     "@headlessui/react": ^1.7.17
     "@heroicons/react": ^2.0.18
@@ -2701,7 +2701,7 @@ __metadata:
   peerDependencies:
     react: ">=16"
     react-dom: ^17.0.1
-  checksum: 871da0a7a2fec03130d6089c2163b969faa7ee46af4e5a6d47456ebd21535e2990780c4cfb33ac65da81bd91cb3c285f151b16abcdb3a50d65f1d9be60e5b3b8
+  checksum: 6ec2f69154f6e7ff65bd0f2d9d21c6f3a76db7e8ca8f5e38bf8d0afd7a1249d1a67c3855d0870872fc68d3a64f1615c9db2283a2fb61ddd394d74c82cbc5ff89
   languageName: node
   linkType: hard
 
@@ -11681,7 +11681,7 @@ __metadata:
     "@types/react-google-recaptcha": ^2.1.5
     "@types/styled-components": ^5.1.26
     "@typescript-eslint/eslint-plugin": ^5.59.7
-    "@zwirner/design-system": v0.0.208
+    "@zwirner/design-system": 0.0.209--canary.310.093c8be.0
     autoprefixer: ^10.4.16
     axios: ^1.3.5
     checkly: ^4.1.0
