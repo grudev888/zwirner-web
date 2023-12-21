@@ -1,11 +1,6 @@
-import {GTMPopupViewText} from '@/common/constants/gtmConstants'
+import {GTMPopupClickText, GTMPopupViewText} from '@/common/constants/gtmConstants'
 import {gtmEvent} from '@/common/utils/gtm/gtmEvent'
-
-export enum MethodTypes {
-  TOP = 'top',
-  BOTTOM = 'bottom',
-  CENTER = 'center',
-}
+import {MethodTypes} from '@/events/ModalTriggerEvent'
 
 export enum TypeTypes {
   FORM = 'form',
@@ -19,6 +14,18 @@ export const gtmPopupViewedEvent = (event_data: {
 }) => {
   gtmEvent(GTMPopupViewText.event, {
     ...GTMPopupViewText,
+    event_data,
+  })
+}
+
+export const gtmPopupClickedEvent = (event_data: {
+  cta_value: string
+  method: MethodTypes
+  type: TypeTypes
+  link_url: string
+}) => {
+  gtmEvent(GTMPopupClickText.event, {
+    ...GTMPopupClickText,
     event_data,
   })
 }

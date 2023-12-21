@@ -1,16 +1,20 @@
 import {useRef, useState} from 'react'
 
 import {
+  CLOSE,
   EXPECT_THE_LATEST_INFORMATION,
   JOIN_OUR_MAILING_LIST,
   JOIN_OUR_MAILING_LIST_ERROR,
   JOIN_OUR_MAILING_LIST_SUCCESS,
+  SIGN_UP,
   WANT_TO_KNOW_MORE,
 } from '@/common/constants/commonCopies'
 import {ErrorType, GTMErrorMessageEvent} from '@/common/utils/gtm/GTMErrorMessageEvent'
+import {gtmPopupClickedEvent, TypeTypes} from '@/common/utils/gtm/gtmPopupEvent'
 import {captchaInitObserver, removeCaptchaObserver} from '@/common/utils/recaptcha/observer'
 import RecaptchaNode from '@/components/forms/recaptchaNode'
 import useGtmNewsletterEvent from '@/components/hooks/gtm/useGtmNewsletterEvent'
+import {MethodTypes, ModalTriggerTypes} from '@/events/ModalTriggerEvent'
 import {PopUpInfo} from '@/sanity/services/popups/getAllCampaigns'
 import {sendSubscribeRequest} from '@/services/subscribeService'
 
@@ -29,6 +33,7 @@ export const useNewsletterFormModal = (props?: Props) => {
   const {disableBackdrop = false} = props ?? {}
   const [isOpen, setIsOpen] = useState(false)
   const [customModalProps, setCustomModalProps] = useState<ModalProps>(null)
+  const [triggerType, setTriggerType] = useState<ModalTriggerTypes | null>(null)
   const recaptchaRef = useRef<HTMLFormElement>()
   const {gtmNewsletterSubscriptionStartedEvent, gtmNewsletterSubscribedEvent} =
     useGtmNewsletterEvent()
@@ -36,6 +41,14 @@ export const useNewsletterFormModal = (props?: Props) => {
   const onClose = () => {
     setIsOpen(false)
     setCustomModalProps(null)
+    if (triggerType === ModalTriggerTypes.POPUP) {
+      gtmPopupClickedEvent({
+        cta_value: SIGN_UP,
+        method: MethodTypes.CENTER,
+        type: TypeTypes.FORM,
+        link_url: CLOSE,
+      })
+    }
   }
   const newsletterFormProps = {
     title: customModalProps?.title || WANT_TO_KNOW_MORE,
@@ -66,11 +79,12 @@ export const useNewsletterFormModal = (props?: Props) => {
     primaryCTA: customModalProps?.primaryCTA ? customModalProps.primaryCTA : null,
   }
 
-  const openNewsletterModal = (modalProps?: ModalProps) => {
+  const openNewsletterModal = (modalProps: ModalProps, triggerType: ModalTriggerTypes) => {
     setIsOpen(true)
     if (modalProps) {
       setCustomModalProps(modalProps)
     }
+    setTriggerType(triggerType)
   }
 
   return {

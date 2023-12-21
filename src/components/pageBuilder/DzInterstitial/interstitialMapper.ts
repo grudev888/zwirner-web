@@ -1,6 +1,7 @@
 import {ButtonModes, MEDIA_TYPES} from '@zwirner/design-system'
 import Image from 'next/image'
 
+import {SIGN_UP} from '@/common/constants/commonCopies'
 import {ctaMapperInterstitial} from '@/common/utilsMappers/cta.mapper'
 import {dzMediaMapper} from '@/common/utilsMappers/image.mapper'
 import {safeText} from '@/common/utilsMappers/safe'
@@ -50,7 +51,7 @@ export const interstitialMap: any = {
         title: fullName,
         description,
         primaryCta: {
-          text: 'Sign Up',
+          text: SIGN_UP,
         },
         media: {
           url: '/',
@@ -75,7 +76,7 @@ export const interstitialMap: any = {
         title,
         description: `${medium} // ${dimensions} // ${edition}`,
         primaryCta: {
-          text: 'Sign Up',
+          text: SIGN_UP,
         },
         media: {
           url: '/',
@@ -102,7 +103,7 @@ export const interstitialMap: any = {
         title,
         description,
         primaryCta: {
-          text: 'Sign Up',
+          text: SIGN_UP,
         },
         media: {
           url: '/',

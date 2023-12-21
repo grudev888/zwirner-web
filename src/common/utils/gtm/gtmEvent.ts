@@ -7,6 +7,7 @@ import {
   GTMInquiryFormViewText,
   GTMPageLoadCompletedText,
   GTMPageLoadStartedText,
+  GTMPopupClickText,
   GTMPopupViewText,
   GTMProductListingClickedText,
   GTMProductListingViewedText,
@@ -56,6 +57,7 @@ export const gtmEvent = (event: string, data: DataLayerProps) => {
     case GTMUserSubscriptionFormStartedText.event:
     case GTMErrorMessageText.event:
     case GTMPopupViewText.event:
+    case GTMPopupClickText.event:
       return window.dataLayer.push(
         {
           ...defaultData,

@@ -90,3 +90,5 @@ export const AVAILABLE_WORKS = 'Available Artworks'
 export const TO_LEARN_MORE_ABOUT_AVAILABLE_WORKS_EXTENDED =
   'To learn more about available works, please provide your contact information and a member of the gallery will be in touch shortly.'
 export const DOWNLOAD_PRESS_RELEASE = 'Download Press Release'
+export const CLOSE = 'close'
+export const SIGN_UP = 'Sign Up'

@@ -1,6 +1,8 @@
 import {useCallback, useEffect} from 'react'
 
+import {SIGN_UP} from '@/common/constants/commonCopies'
 import {gtmInquiryFormViewEvent} from '@/common/utils/gtm/gtmInquiryFormEvent'
+import {gtmPopupViewedEvent, TypeTypes} from '@/common/utils/gtm/gtmPopupEvent'
 import {useNewsletterFormModal} from '@/components/containers/modalTriggerListener/useNewsletterFormModal'
 import {usePromoModal} from '@/components/containers/modalTriggerListener/usePromoModal'
 import {NewsletterFormModal} from '@/components/forms/newsletterFormModal'
@@ -9,7 +11,7 @@ import useGtmNewsletterEvent from '@/components/hooks/gtm/useGtmNewsletterEvent'
 import {useHashRoutedInquiryModal} from '@/components/hooks/useHashRoutedInquiryModal'
 import {createInquireModalGeneralProps} from '@/components/hooks/useOpenInquiryDispatch'
 import {DzPromoModal} from '@/components/wrappers/DzPromoModalWrapper'
-import {EVENT_TRIGGER_MODAL, ModalTriggerTypes} from '@/events/ModalTriggerEvent'
+import {EVENT_TRIGGER_MODAL, MethodTypes, ModalTriggerTypes} from '@/events/ModalTriggerEvent'
 import {PopUpInfo} from '@/sanity/services/popups/getAllCampaigns'
 import {ModalTypes} from '@/sanity/types'
 import {setCookie} from '@/utils/cookies/setCookie'
@@ -42,11 +44,16 @@ export const ModalTriggerListener = () => {
       switch (modalType) {
         case ModalTypes.NEWSLETTER:
         case capitalizeFirstLetter(ModalTypes.NEWSLETTER): // some CTAs send 'Newsletter' as their action value
-          openNewsletterModal(props)
-          if (triggerType === ModalTriggerTypes.CTA) {
-            gtmNewsletterSubscriptionViewEvent({
-              cta_value: props?.ctaText ?? ModalTypes.NEWSLETTER,
-              method: props?.method,
+          openNewsletterModal(props, triggerType)
+          gtmNewsletterSubscriptionViewEvent({
+            cta_value: props?.ctaText ?? ModalTypes.NEWSLETTER,
+            method: triggerType === ModalTriggerTypes.POPUP ? MethodTypes.POPUP : props?.method,
+          })
+          if (triggerType === ModalTriggerTypes.POPUP) {
+            gtmPopupViewedEvent({
+              cta_value: SIGN_UP,
+              method: MethodTypes.CENTER,
+              type: TypeTypes.FORM,
             })
           }
           setPopupCookie(popupInfo)
@@ -57,14 +64,17 @@ export const ModalTriggerListener = () => {
           const {useAnchor} = props ?? {}
 
           openInquireModal({inquireModalProps, options: {useAnchor}})
-          if (triggerType === ModalTriggerTypes.CTA) {
-            gtmInquiryFormViewEvent(inquireModalProps)
-          }
+          gtmInquiryFormViewEvent(inquireModalProps)
           setPopupCookie(popupInfo)
           break
 
         case ModalTypes.PROMO:
           openPromoModal(props)
+          gtmPopupViewedEvent({
+            cta_value: props.linkText,
+            method: MethodTypes.CENTER,
+            type: TypeTypes.NON_FORM,
+          })
           setPopupCookie(popupInfo)
           break
       }
