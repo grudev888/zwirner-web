@@ -24,12 +24,13 @@ export const openPopupCb = (data?: PopUpInfo) => {
     return
   }
   if (data.type === 'customPromo') {
+    const href = data.primaryCTA?.link?.href
     const parsedData = {
       title: data.title,
       subtitle: data.description,
       image: data.image,
       linkText: data.primaryCTA?.text,
-      url: data.primaryCTA?.link?.href,
+      url: `${href}${href?.includes('?') ? '&' : '?'}cta=${data.campaignId}`,
       openNewTab: data.primaryCTA?.link?.blank,
     }
     window.document.dispatchEvent(
